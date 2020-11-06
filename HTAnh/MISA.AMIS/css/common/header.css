@@ -1,0 +1,55 @@
+﻿.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	float: left;
+	width: calc(100% - 221px);
+	height: 48px;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+	.header .header-title {
+		display: flex;
+		padding-left: 16px;
+	}
+	.header .header-title .title-btn {
+		width: 16px;
+		height: 16px;
+		margin-left: 16px;
+		background-image: url('../../content/img/down-arrow.png');
+	}
+
+	.header .control {
+		display:flex;
+		padding-right: 16px;
+	}
+
+		.header .control .username, .header .control .control-btn, .header .control .avatar {
+			display: flex;
+			align-items: center;
+			margin-right: 16px;
+		}
+
+		.header .control .avatar {
+			display: flex;
+			background-color: #FFBF00;
+			border-radius: 50%;
+			width: 24px;
+			height: 24px;
+			align-items: center;
+			justify-content: center;
+		}
+		#pic{
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+		}
+
+		.header .control .control-btn {
+			background-image: url('../../content/img/more.png');
+			background-size: contain;
+			width: 16px;
+			height: 16px;
+			margin:auto 0 auto 0;
+		}
+	

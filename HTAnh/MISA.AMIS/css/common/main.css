@@ -1,0 +1,52 @@
+﻿body {
+	margin:0;
+	font-family: GoogleSans-Regular;
+	font-size:13px;
+}
+
+select {
+	color: #bbbbbb;
+	width: 200px;
+	font-family: GoogleSans-Regular;
+}
+input {
+	font-family: GoogleSans-Regular;
+}
+	select:focus {
+		outline: none !important;
+		box-shadow:0 0 0px 1px #2FBE8E;
+	}
+	option{
+		color: #000000;
+	}
+		
+::-webkit-input-placeholder { 
+	color: #bbbbbb;
+	font-size: 12px;
+}
+
+
+option[value=""][disabled] {
+	display: none;
+}
+
+@font-face {
+	font-family: 'GoogleSans-Regular';
+	src: url('../../content/font/GoogleSans-Regular.otf') format('opentype');
+}
+@font-face {
+	font-family: 'GoogleSans-Bold';
+	src: url('../../content/font/GoogleSans-Bold.otf') format('opentype');
+}
+@font-face {
+	font-family: 'GoogleSans-Italic';
+	src: url('../../content/font/GoogleSans-Italic.otf') format('opentype');
+}
+@font-face {
+	font-family: 'GoogleSans-Light';
+	src: url('../../content/font/GoogleSans-Light.otf') format('opentype');
+}
+@font-face {
+	font-family: 'GoogleSans-Thin';
+	src: url('../../content/font/GoogleSans-Thin.otf') format('opentype');
+}
