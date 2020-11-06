@@ -1,0 +1,54 @@
+﻿.navbar {
+    float: left;
+    width: 220px;
+    height: 100vh;
+    background-color: #ffffff;
+    border-right: 1px solid #e5e5e5;
+}
+    .navbar .logo-site, .navbar .logo-box {
+        display: flex;
+        width: 100%;
+        height: 50px;
+    }
+        .navbar .logo-box {
+            padding: 12px 0 0 24px;
+        }
+            .navbar .logo-box .toggle-icon {
+                background-image: url('/content/img/toggle.png');
+                width: 24px;
+                height: 24px;
+                cursor: pointer;
+                margin-right: 10px;
+                background-size: contain;
+                background-repeat: no-repeat;
+            }
+            .navbar .logo-box .amis-logo {
+                background-image: url('/content/img/amis-logo.png');
+                width: 100%;
+                height: 24px;
+                cursor: pointer;
+                background-size: contain;
+                background-repeat: no-repeat;
+            }
+    .navbar .navbar-content {
+        width: 100%;
+    }
+        .navbar .navbar-content .navbar-item {
+            display: flex;
+            padding-left: 24px;
+            height: 44px;
+            cursor: pointer;
+            line-height: 44px;
+        }
+            .navbar .navbar-content .navbar-item:hover {
+                background-color: #e5e5e5;
+                color: #000000;
+            }
+            .navbar-item .nav-item-icon {
+                width: 20px;
+                height: 20px;
+                border: 1px solid;
+                margin: auto 0; /*2 cách căn giữa icon trong div
+            align-self: center (với display: flex;)*/
+                margin-right: 10px;
+            }

@@ -1,0 +1,12 @@
+﻿.content {
+    float: right;
+    width: calc(100% - 221px);
+    height: calc(100vh - 51px);
+    background-color: #e9ebee;
+}
+    .content .content-title {
+        padding-left: 16px;
+        padding-right: 10px;
+        line-height: 50px;
+        cursor: pointer;
+    }

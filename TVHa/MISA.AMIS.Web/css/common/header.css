@@ -1,0 +1,51 @@
+﻿.header {
+    width: calc(100% - 221px);
+    height: 50px;
+    border-bottom: 1px solid #e5e5e5;
+    display: flex;
+}
+    .header .header-title {
+        padding-left: 16px;
+        padding-right: 10px;
+        line-height: 50px;
+        cursor: pointer;
+    }
+    .header .header-icon {
+        width: 8px;
+        height: 8px;
+        cursor: pointer;
+        border: 1px solid;
+        align-self: center;
+    }
+    .header .extra {
+        position: absolute;
+        right: 16px;
+        float: right;
+        margin-right: 16px;
+        width: 8px;
+        height: 8px;
+        cursor: pointer;
+        border: 1px solid;
+        align-self: center;
+    }
+    .header .name {
+        position: absolute;
+        right: 42px;
+        float: right;
+        margin-right: 16px;
+        line-height: 50px;
+        cursor: pointer;
+    }
+    .header .avatar {
+        background-image: url('../../content/img/Ảnh thẻ vuông.png');
+        /*border-radius: 50%;*/
+        -webkit-border-radius: 50%;
+        align-self: center;
+        height: 30px;
+        width: 30px;
+        position: absolute;
+        right: 140px;
+        background-size: contain;
+        /*background-repeat: no-repeat;*/
+        background-position: center;
+    }
