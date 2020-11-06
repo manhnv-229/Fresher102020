@@ -1,0 +1,86 @@
+.sidebar {
+      float: left;
+      width: 220px;
+      background-color: #FFFFFF;
+      border-right:1px solid #E5E5E5;
+      height: 100vh ;
+}
+.sidebar .logo-site{
+      width: 100%;
+      height: 60px;
+}
+.sidebar .sidebar-content{
+      width: 100%;      
+}
+.logo-site .logo-box{
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      display: flex;
+}
+
+.logo-site .toggle{     
+      width: 24px;
+      height: 24px;
+      background-image: url(/assets/img/toggle.png);
+      background-repeat: no-repeat;
+      background-size: contain;
+}
+.logo-site .amis-logo{
+      width: 100px;
+      height: 24px;
+      background-image: url(/assets/img/amis-logo.png);
+      background-repeat: no-repeat;
+      background-size: contain;
+}
+
+.sidebar .sidebar-content .sidebar-item {
+      padding-left: 24px;
+      display: flex;
+      height: 44px;
+      line-height: 44px;
+      cursor: pointer;
+}
+.sidebar .sidebar-content .sidebar-item:hover{
+      background-color:#e5e5e5;
+      font-family: GoogleSans-Regular;
+}
+.sidebar .sidebar-content .sidebar-item:focus{
+      background-color:#019160;
+}
+.sidebar-item .sidebar-item-icon {
+      width: 20px;
+      height: 20px;
+      align-self: center;
+}
+.sidebar-item .sidebar-item-icon img {
+      width: 20px;
+      height: 20px;
+      vertical-align: top;
+}
+.sidebar-item .sidebar-item-title {
+      margin-left: 9px;
+      font-size: 13px;
+      color: #000000;
+      font-family: GoogleSans-Medium;
+}
+.header-right {
+      display: flex;
+      margin: auto;
+      font-family: GoogleSans-Regular;
+      text-align: center;
+      font-size: 15px;
+      margin-top: 17px;
+      height: 100%;
+}
+.header-right-avatar img {
+      margin-top: -5px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      
+}
+.header-right > div{
+      margin-left: 16px;
+      cursor: pointer;
+}
