@@ -10,9 +10,9 @@
         width: 100%;
         height: 50px;
     }
-        .navbar .logo-box {
-            padding: 12px 0 0 24px;
-        }
+    .navbar .logo-box {
+        padding: 12px 0 0 24px;
+    }
             .navbar .logo-box .toggle-icon {
                 background-image: url('/content/img/toggle.png');
                 width: 24px;

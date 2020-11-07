@@ -11,22 +11,26 @@
         cursor: pointer;
     }
     .header .header-icon {
-        width: 8px;
-        height: 8px;
+        width: 16px;
+        height: 16px;
         cursor: pointer;
-        border: 1px solid;
         align-self: center;
+        background-size: contain;
+        background-image: url('/content/icon/expand-icon(1).png');
+        background-repeat: no-repeat;
     }
     .header .extra {
         position: absolute;
         right: 16px;
         float: right;
         margin-right: 16px;
-        width: 8px;
-        height: 8px;
+        width: 16px;
+        height: 16px;
         cursor: pointer;
-        border: 1px solid;
         align-self: center;
+        background-size: contain;
+        background-image: url('/content/icon/more-icon.jpg');
+        background-repeat: no-repeat;
     }
     .header .name {
         position: absolute;
