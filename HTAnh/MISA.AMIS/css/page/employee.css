@@ -154,7 +154,9 @@
 	}
 		tr {
 			border-bottom: 1px solid #DDDDDD;
-	
+		}
+		th {
+			border-top: 1px solid white;
 		}
 		th,td {
 			padding-bottom: 15.5px;
