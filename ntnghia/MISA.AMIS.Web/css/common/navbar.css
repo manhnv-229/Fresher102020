@@ -1,0 +1,70 @@
+﻿.navbar {
+    float: left;
+    width: 220px;
+    height: 100vh;
+    background-color: #fff;
+    border-right: 1px solid #e5e5e5;
+}
+
+    .navbar .logo-site, .navbar .logo-box {
+        display: flex;
+        width: 100%;
+        height: 60px;
+    }
+
+    .navbar .logo-box {
+        padding: 15px 0 0 24px;
+    }
+
+        /*Logo page*/
+        .navbar .logo-box .toggle-icon {
+            width: 30px;
+            height: 30px;
+            background-image: url('/content/img/toggle.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .navbar .logo-box .amis-logo {
+            width: 100%;
+            height: 30px;
+            margin-left: 5px;
+            background-size: contain;
+            background-image: url('/content/img/amis-logo.png');
+            background-repeat: no-repeat;
+        }
+
+    .navbar .navbar-content {
+        width: 100%; 
+
+    }
+
+        .navbar .navbar-content .nav-item {
+            display: flex;
+            padding-left: 24px;
+            height: 44px;
+            cursor: pointer;
+            align-items: center;
+        }
+
+        .navbar .navbar-content .nav-item:hover {
+            background-color: #e5e5e5;
+            color: #000000;
+
+        }
+
+            .navbar .navbar-content .nav-item:focus {
+                background-color: #019160;
+                color: #fff;
+            }
+
+        .navbar-content .nav-item-icon {
+            display:flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+
