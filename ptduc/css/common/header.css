@@ -7,16 +7,17 @@
     border-bottom: 1px solid #E5E5E5;
     display: flex;
 }
-.header-left{
+.header-left {
     height: 100%;
     display: flex;
     margin-left: 16px;
-}
-.header-left .icon-header-left img {
-    display: block;
+    align-items: center;
 }
 
 .header-right{
     position: absolute;
     right: 16px;
+}
+.icon-header-left {
+    padding-left: 16px;
 }
