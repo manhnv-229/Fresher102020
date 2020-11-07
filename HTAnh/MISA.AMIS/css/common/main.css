@@ -19,7 +19,12 @@ input {
 	option{
 		color: #000000;
 	}
-		
+
+.selected {
+	background-color: #019160;
+	font-family: GoogleSans-Medium;
+	color: #ffffff;
+}		
 ::-webkit-input-placeholder { 
 	color: #bbbbbb;
 	font-size: 12px;
@@ -49,4 +54,8 @@ option[value=""][disabled] {
 @font-face {
 	font-family: 'GoogleSans-Thin';
 	src: url('../../content/font/GoogleSans-Thin.otf') format('opentype');
+}
+@font-face {
+	font-family: 'GoogleSans-Medium';
+	src: url('../../content/font/GoogleSans-Medium.otf') format('opentype');
 }
