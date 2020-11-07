@@ -1,0 +1,54 @@
+﻿.content {
+    width: 100%;
+}
+    .content .action {
+        width: calc(100% - 48px);
+        height: 48px;
+        margin: 24px auto;
+        display: flex;
+    }
+        .content .action>span{
+            font-size: 20px;
+            font-weight: bold;
+            width: 50%;
+        }
+        .content .action .button{
+            display: flex;
+            justify-content: flex-end;
+            width: 50%;
+        }
+        .content .action .action-button {
+            padding: 0 16px;
+            height: 36px;
+            color: #01B075;
+            font-size: 13px;
+            border: 1px solid #bbbbbb;
+            border-radius: 4px;
+            line-height: 36px;  
+            margin-right:16px;
+        }
+        .content .action .add-button {
+            height: 40px;
+            color: #fff;
+            background-color: #01B075;
+            font-size: 13px;
+            border: 1px solid #bbbbbb;
+            border-radius: 4px;
+            line-height: 40px;
+            margin-right: 16px;
+            font-weight: normal;
+        }
+
+            .content .action .add-button .button-left {
+                padding: 0 16px;
+            }
+            .content .action .add-button>i{
+                padding-right: 8px;
+            }   
+            .content .action .add-button .down-button {
+                border-left: 1px solid #bbbbbb; 
+                padding: 0px 12px;
+                
+            }
+               
+            
