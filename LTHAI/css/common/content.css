@@ -61,12 +61,13 @@
 
             .right-content .content .header-content .header-features .add-employee {
                 background-color: #019160;
+                margin-right: 10px;
             }
 
                 .right-content .content .header-content .header-features .add-employee .title-add-employee {
                     display: flex;
                     padding-right: 10px;
-                    border-right: 1px solid #e5e5e5;
+                    border-right: 1px solid #674e4e;
                 }
 
                     .right-content .content .header-content .header-features .add-employee .title-add-employee .icon-title-add-employee {
@@ -91,67 +92,130 @@
                     background-size: contain;
                     background-repeat: no-repeat;
                     align-self: center;
-                    margin-left: 10px;
+                    margin-left: 8px;
                 }
 
     .right-content .content .header-form {
         display: flex;
+        justify-content: space-between;
     }
 
-        .right-content .content .header-form .search-name {
-            height: 32px;
-            margin-left: 20px;
-            border-radius: 5px;
+        .right-content .content .header-form .left-header-form {
             display: flex;
         }
 
-            .right-content .content .header-form .search-name .icon-search {
-                background-image: url('/content/img/icons8-search-50.png');
-                width: 20px;
-                height: 20px;
+            .right-content .content .header-form .left-header-form .search-name {
+                height: 32px;
+                display: flex;
+            }
+
+            .right-content .content .header-form .left-header-form .icon-search, .icon-select-office, .icon-select-state {
+                width: 16px;
+                height: 16px;
                 background-size: contain;
                 align-self: center;
+                background-repeat: no-repeat;
+            }
+
+            .right-content .content .header-form .left-header-form .search-name .icon-search {
+                background-image: url('/content/img/icons8-search-50.png');
                 position: relative;
-                left: 50px;
+                left: 25px;
             }
 
-            .right-content .content .header-form .search-name .form-search {
-                align-self: center;
+            .right-content .content .header-form .left-header-form .search-name .form-search {
             }
 
-                .right-content .content .header-form .search-name .form-search input {
+                .right-content .content .header-form .left-header-form .search-name .form-search input {
                     height: 30px;
-                    margin-left: 25px;
-                    width: 300px;
+                    width: 280px;
                     text-indent: 30px;
-                    border: none;
                     background-color: #ffffff;
                     border: 1px solid #e5e5e5;
                     border-radius: 5px;
                 }
 
-                    .right-content .content .header-form .search-name .form-search input:focus {
+                    .right-content .content .header-form .left-header-form .search-name .form-search input:focus {
                         outline: none;
                         border: 1px solid #01b075;
                         border-radius: 5px;
                     }
 
-        .right-content .content .header-form .select-office {
+            .right-content .content .header-form .left-header-form .select-office {
+                height: 32px;
+                width: 220px;
+                text-align: center;
+                line-height: 32px;
+                border: 1px solid #e5e5e5;
+                border-radius: 5px;
+                margin-left: 15px;
+                display: flex;
+            }
+
+                .right-content .content .header-form .left-header-form .select-office .text-select {
+                    padding-left: 10px;
+                }
+
+                .right-content .content .header-form .left-header-form .select-office .icon-select-office {
+                    background-image: url('/content/img/icons8-sort-down-26.png');
+                    width: 12px;
+                    height: 12px;
+                    margin-left: 40px;
+                }
+
+            .right-content .content .header-form .left-header-form .select-state {
+                height: 32px;
+                width: 260px;
+                border: 1px solid #e5e5e5;
+                border-radius: 5px;
+                line-height: 32px;
+                margin-left: 15px;
+                display: flex;
+            }
+
+                .right-content .content .header-form .left-header-form .select-state .text-select {
+                    border-right: 1px solid #e5e5e5;
+                    padding: 0 10px 0 10px;
+                }
+
+                .right-content .content .header-form .left-header-form .select-state .icon-select-state {
+                    background-image: url('/content/img/caret.png');
+                    margin-left: 8px;
+                }
+
+        .right-content .content .header-form .icon-right-header-form {
+            display: flex;
+            margin-right: 38px;
         }
 
-            .right-content .content .header-form .select-office .text-select {
+            .right-content .content .header-form .icon-right-header-form .icon-insert, .icon-refresh {
+                width: 20px;
+                height: 20px;
+                background-size: contain;
+                background-repeat: no-repeat;
+                align-self: center;
+                position: relative;
+                left: 7px;
             }
 
-            .right-content .content .header-form .select-office .icon-select-office {
-                background-image: url('/content/img/icons8-sort-down-26.png');
+            .right-content .content .header-form .icon-right-header-form .border-icon-insert, .border-icon-refresh {
+                border: 1px solid #e5e5e5;
+                width: 33px;
+                display: flex;
+                border-radius: 5px;
             }
 
-        .right-content .content .header-form .select-state {
-        }
-
-            .right-content .content .header-form .select-state .text-select {
+            .right-content .content .header-form .icon-right-header-form .border-icon-insert {
+                margin-right: 10px;
             }
 
-            .right-content .content .header-form .select-state .icon-select-state {
-                background-image: url('/content/img/caret.png');
+                .right-content .content .header-form .icon-right-header-form .border-icon-insert .icon-insert {
+                    background-image: url('/content/img/icons8-insert-30.png');                }
+
+            .right-content .content .header-form .icon-right-header-form .border-icon-refresh {
+                margin-right: -7px;
             }
+
+                .right-content .content .header-form .icon-right-header-form .border-icon-refresh .icon-refresh {
+                    background-image: url('/content/img/icons8-refresh-24.png');
+                }

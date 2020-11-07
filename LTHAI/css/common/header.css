@@ -5,7 +5,13 @@
     display: flex;
     justify-content: space-between;
 }
-
+    .right-content .header .caret-icon, .profile-icon {
+        width: 16px;
+        height: 16px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        align-self: center;
+    }
     .right-content .header .name-company {
         height: 60px;
         line-height: 60px;
@@ -21,10 +27,6 @@
 
             .right-content .header .name-company .dropdown-btn .caret-icon {
                 background-image: url('/content/img/caret.png');
-                width: 20px;
-                height: 20px;
-                background-size: contain;
-                align-self: center;
                 margin-left: 10px;
             }
 
@@ -53,10 +55,5 @@
 
         .right-content .header .profile .profile-icon {
             background-image: url('/content/img/three-dot.png');
-            width: 20px;
-            height: 13px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            align-self: center;
             margin-left: 16px;
         }
