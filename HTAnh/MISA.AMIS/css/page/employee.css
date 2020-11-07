@@ -141,5 +141,33 @@
 				background-position: center;
 			}
 
+	.content .content-tbl {
+		width: calc( 100% - 32px);
+		padding: 16px;
+		display: flex;
+	}
 
-
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		color: #454545;
+	}
+		tr {
+			border-bottom: 1px solid #DDDDDD;
+	
+		}
+		th,td {
+			padding-bottom: 15.5px;
+			padding-top: 15.5px;
+			text-align:left;
+		}
+		.first-column{
+			width: 50px;
+			height: auto;
+			text-align: center;
+	}
+@media screen and (max-width: 1100px) {
+	.content .content-filter .content-filter-group .search-content {
+		width: 30%;
+	}
+}

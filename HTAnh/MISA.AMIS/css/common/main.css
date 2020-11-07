@@ -8,7 +8,9 @@ select {
 	color: #bbbbbb;
 	width: 200px;
 	font-family: GoogleSans-Regular;
+	
 }
+
 	select:focus {
 		outline: none !important;
 		box-shadow:0 0 0px 1px #2FBE8E;
@@ -26,7 +28,9 @@ option{
 	background-color: #019160;
 	font-family: GoogleSans-Medium;
 	color: #ffffff;
-}		
+	pointer-events: none;
+}
+	
 ::-webkit-input-placeholder { 
 	color: #bbbbbb;
 	font-size: 12px;
