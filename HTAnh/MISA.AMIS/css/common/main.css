@@ -9,16 +9,18 @@ select {
 	width: 200px;
 	font-family: GoogleSans-Regular;
 }
-input {
-	font-family: GoogleSans-Regular;
-}
 	select:focus {
 		outline: none !important;
 		box-shadow:0 0 0px 1px #2FBE8E;
 	}
-	option{
-		color: #000000;
-	}
+
+input {
+	font-family: GoogleSans-Regular;
+}
+	
+option{
+	color: #000000;
+}
 
 .selected {
 	background-color: #019160;

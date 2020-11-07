@@ -12,12 +12,12 @@
 		display: flex;
 		padding-left: 16px;
 	}
-	.header .header-title .title-btn {
-		width: 16px;
-		height: 16px;
-		margin-left: 16px;
-		background-image: url('../../content/icon/down-arrow.png');
-	}
+		.header .header-title .title-btn {
+			width: 16px;
+			height: 16px;
+			margin-left: 16px;
+			background-image: url('../../content/icon/down-arrow.png');
+		}
 
 	.header .control {
 		display:flex;
@@ -34,14 +34,14 @@
 			display: flex;
 			background-color: #FFBF00;
 			border-radius: 50%;
-			width: 24px;
-			height: 24px;
+			width: 30px;
+			height: 30px;
 			align-items: center;
 			justify-content: center;
 		}
-		#pic{
-			width: 20px;
-			height: 20px;
+		.header .control #pic{
+			width: 24px;
+			height: 24px;
 			border-radius: 50%;
 		}
 

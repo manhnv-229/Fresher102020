@@ -55,30 +55,36 @@
 				color: #000000;
 
 			}
-		.nav-item .nav-item-icon {
-			width: 20px;
-			height: 20px;
-			margin: auto 8px auto 0;
-			background-size: contain;
-		}
-		.nav-item .item-first {
-			background-image: url('../../content/icon/database.png');
-		}
-		.nav-item .item-second {
-			background-image: url('../../content/icon/documents.png');
-		}
-		.nav-item .item-third {
-			background-image: url('../../content/icon/stats.png');
-		}
-		.nav-item .item-fourth {
-			background-image: url('../../content/icon/analytics.png');
-		}
-		.nav-item .item-fifth {
-			background-image: url('../../content/icon/group.png');
-		}
-		.nav-item .item-sixth {
-			background-image: url('../../content/icon/settings.png');
-		}
+				.navbar .navbar-content .nav-item .nav-item-icon {
+					width: 20px;
+					height: 20px;
+					margin: auto 8px auto 0;
+					background-size: contain;
+				}
+
+				.navbar .navbar-content .nav-item .item-first {
+					background-image: url('../../content/icon/database.png');
+				}
+
+				.navbar .navbar-content .nav-item .item-second {
+					background-image: url('../../content/icon/documents.png');
+				}
+
+				.navbar .navbar-content .nav-item .item-third {
+					background-image: url('../../content/icon/stats.png');
+				}
+
+				.navbar .navbar-content .nav-item .item-fourth {
+					background-image: url('../../content/icon/analytics.png');
+				}
+
+				.navbar .navbar-content .nav-item .item-fifth {
+					background-image: url('../../content/icon/group.png');
+				}
+
+				.navbar .navbar-content .nav-item .item-sixth {
+					background-image: url('../../content/icon/settings.png');
+				}
 
 
 
