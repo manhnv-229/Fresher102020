@@ -34,10 +34,11 @@
 
 		.navbar .logo-site .logo-box .amis-logo {
 			width: calc(100% - 34px);
-			height: 24px;
+			height: 28px;
 			background-image: url('../../content/img/amis-logo.png');
 			background-size: contain;
 			background-repeat: no-repeat;
+			background-position:0px -2px;
 		}
 	.navbar .navbar-content {
 		width: 100%;
