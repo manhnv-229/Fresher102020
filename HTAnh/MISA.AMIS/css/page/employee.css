@@ -28,13 +28,14 @@
 		height: 38px;
 		border-radius: 5px;
 		padding-left: 16px;
-		padding-right:16px;
+		
 		
 
 	}
-		.content .content-title .content-control .control-sync{
-			border: 1px solid #E5E5E5;
-		}
+	.content .content-title .content-control .control-sync {
+		border: 1px solid #E5E5E5;
+		padding-right: 16px;
+	}
 		.content .content-title .content-control .control-mix {
 			background-color: #01B075;
 			color: white;
@@ -48,8 +49,8 @@
 				margin: 0;
 				width: 38px;
 				height: 100%;
-				border-left: 1px solid #5e5e5e;
-				background-image: url('../../content/img/down-arrow.png');
+				border-left: 1px solid #E5E5E5;
+				background-image: url('../../content/icon/down-arrow.png');
 				background-position: center;
 				background-repeat: no-repeat;
 			}
@@ -90,7 +91,7 @@
 	}
 
 	.content .content-filter .content-filter-group .search-content {
-		background-image: url('../../content/img/search-icon.png');
+		background-image: url('../../content/icon/search-icon.png');
 		background-repeat: no-repeat;
 		background-position: 16px 12px;
 		width: 250px;
@@ -115,7 +116,7 @@
 			width: 38px;
 			height: 100%;
 			border-left: 1px solid #E5E5E5;
-			background-image: url('../../content/img/down-arrow.png');
+			background-image: url('../../content/icon/down-arrow-black.png');
 			background-repeat: no-repeat;
 			background-position: 11px 11px;
 		}
@@ -131,7 +132,7 @@
 			border: 1px solid #E5E5E5;
 			height: 38px;
 			width: 38px;
-			background-image: url('../../content/img/download.png');
+			background-image: url('../../content/icon/download.png');
 			background-repeat: no-repeat;
 			background-position: center;
 			margin-right: 16px;
@@ -141,7 +142,7 @@
 			border: 1px solid #E5E5E5;
 			height: 38px;
 			width: 38px;
-			background-image: url('../../content/img/refresh.png');
+			background-image: url('../../content/icon/refresh.png');
 			background-repeat: no-repeat;
 			background-position: center;
 		}

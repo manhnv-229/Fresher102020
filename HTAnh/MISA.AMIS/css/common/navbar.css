@@ -24,7 +24,7 @@
 		.navbar .logo-site .logo-box .toggle-icon {
 			width: 24px;
 			height: 24px;
-			background-image: url('../../content/img/toggle.png');
+			background-image: url('../../content/icon/toggle.png');
 			background-size: contain;
 			background-repeat: no-repeat;
 			margin-right: 10px;
@@ -59,8 +59,6 @@
 			width: 20px;
 			height: 20px;
 			margin: auto 8px auto 0;
-			/*background-image: url(../../content/img/iconMenu.png);*/
-			
 			background-size: contain;
 		}
 		.nav-item .item-first {

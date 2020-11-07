@@ -16,12 +16,12 @@
 		width: 16px;
 		height: 16px;
 		margin-left: 16px;
-		background-image: url('../../content/img/down-arrow.png');
+		background-image: url('../../content/icon/down-arrow.png');
 	}
 
 	.header .control {
 		display:flex;
-		padding-right: 16px;
+		padding-right: 24px;
 	}
 
 		.header .control .username, .header .control .control-btn, .header .control .avatar {
@@ -46,7 +46,7 @@
 		}
 
 		.header .control .control-btn {
-			background-image: url('../../content/img/more.png');
+			background-image: url('../../content/icon/more.png');
 			background-size: contain;
 			width: 16px;
 			height: 16px;
