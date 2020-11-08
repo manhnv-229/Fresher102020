@@ -210,7 +210,8 @@
             }
 
                 .right-content .content .header-form .icon-right-header-form .border-icon-insert .icon-insert {
-                    background-image: url('/content/img/icons8-insert-30.png');                }
+                    background-image: url('/content/img/icons8-insert-30.png');
+                }
 
             .right-content .content .header-form .icon-right-header-form .border-icon-refresh {
                 margin-right: -7px;
@@ -218,4 +219,80 @@
 
                 .right-content .content .header-form .icon-right-header-form .border-icon-refresh .icon-refresh {
                     background-image: url('/content/img/icons8-refresh-24.png');
+                }
+
+    .right-content .content .data-table {
+    }
+
+        .right-content .content .data-table .table {
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+            .right-content .content .data-table .table tr {
+                height: 50px;
+            }
+
+                .right-content .content .data-table .table tr th {
+                    border-bottom: 1px solid #e5e5e5;
+                    text-align: left;
+                }
+
+                .right-content .content .data-table .table tr td {
+                    text-align: left;
+                    border: none;
+                    border-bottom: 1px solid #e5e5e5;
+                }
+
+                .right-content .content .data-table .table tr:hover td {
+                    background-color: #ddd;
+                    cursor: pointer;
+                }
+
+                .right-content .content .data-table .table tr .checkbox-row {
+                    opacity: 0;
+                    border: none;
+                }
+
+                .right-content .content .data-table .table tr .index {
+                    width: 30px;
+                    text-align: center;
+                }
+
+                .right-content .content .data-table .table tr .employee-id {
+                    width: 90px;
+                }
+
+                .right-content .content .data-table .table tr .employee-name {
+                    width: 130px;
+                }
+
+                .right-content .content .data-table .table tr .employee-id-bhxh {
+                    width: 80px;
+                }
+
+                .right-content .content .data-table .table tr .employee-gender {
+                    width: 60px;
+                }
+
+                .right-content .content .data-table .table tr .employee-pos {
+                    width: 100px;
+                }
+
+                .right-content .content .data-table .table tr .employee-department {
+                    width: 120px;
+                }
+
+                .right-content .content .data-table .table tr .employee-coefficient {
+                    width: 140px;
+                    text-align: right;
+                    padding-right: 10px;
+                }
+
+                .right-content .content .data-table .table tr .employee-state {
+                    width: 130px;
+                }
+
+                .right-content .content .data-table .table tr .employee-hospital {
+                    width: 120px;
                 }
