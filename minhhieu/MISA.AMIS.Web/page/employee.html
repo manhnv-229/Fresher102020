@@ -1,0 +1,366 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="/css/common/main.css" rel="stylesheet" />
+    <link href="/css/common/header.css" rel="stylesheet" />
+    <link href="/css/common/navbar.css" rel="stylesheet" />
+    <link href="/css/page/employee.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/common/content.css">
+    <link rel="stylesheet" href="/content/font/fontawesome-5.14/css/all.min.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo-site">
+            <div class="logo-box">
+                <div class="toggle-icon">
+                    <img class="toggle-icon-img" src="/content/img/toggle.png" alt="">
+                </div>
+                <div class="amis-logo">
+                    <img class="amis-logo-img" src="/content/img/amis-logo.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="navbar-content">
+            <div class="nav-item">
+                <i class="nav-item-icon far fa-file"></i>
+                <div class="nav-item-text">Lập hồ sơ điện tử</div>
+            </div>
+            <div class="nav-item">
+                <i class="nav-item-icon far fa-file-alt"></i>
+                <div class="nav-item-text">Lập hồ sơ giấy</div>
+            </div>
+            <div class="nav-item">
+                <i class="nav-item-icon far fa-chart-bar"></i>
+                <div class="nav-item-text">Theo dõi chi</div>
+            </div>
+            <div class="nav-item">
+                <i class="nav-item-icon fas fas fa-chart-pie"></i>
+                <div class="nav-item-text">Theo dõi đóng</div>
+            </div>
+            <div class="nav-item nav-item-active">
+                <!-- <div class="nav-item-icon">
+                    <img class="nav-item-img" src="/content/img/toggle.png" alt="">
+                </div> -->
+                <i class="nav-item-icon fas fa-users"></i>
+                <div class="nav-item-text">Quản lí lao động
+                </div>
+            </div>
+            <div class="nav-item">
+                <i class="icon-svg"></i>
+                <i class="nav-item-icon fas fa-cog"></i>
+                <div class="nav-item-text">Thiết lập</div>
+            </div>
+        </div>
+    </div>
+    <div class="header">
+        <div class="header-title">
+            <span class="header-title-text"> Công ty cổ phần MISA TEST BHXH </span>
+            <i class="header-title-down-icon fas fa-chevron-down"></i>
+        </div>
+        <div class="header-user">
+            <img src="/content/img/cat.jpg" alt="" class="header-user-img">
+            <span class="header-user-text"> Demo AMIS BHXH </span>
+            <i class="header-user-ellipsis fas fa-ellipsis-h"></i>
+        </div>
+    </div>
+    <div class="content">
+        <div class="content-header">
+            <span class="content-title"><b>Quản lý lao động</b></span>
+            <div class="content-header-function">
+                <div>
+                    <button class="button button-sync">
+                        <span class="sync-icon"></span>
+                        Đồng bộ từ HRM
+                    </button>
+                </div>
+                <div>
+                    <button class="button button-add">
+                        <i class="content-header-user-icon fas fa-user-plus"></i>
+                        Thêm lao động
+                        <i class="content-header-down-icon fas fa-chevron-down"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="content-toolbar">
+            <div class="filter-toolbar">
+                <input class="text-input" type="text" placeholder="Tìm kiếm theo mã nhân viên, họ tên">
+                <div class="select-input">
+                    <span class="select-input-label">Chọn bộ phận phòng ban</span>
+                    <i class="select-input-icon fas fa-caret-down"></i>
+                    <ul class="select-input-list">
+                        <li class="select-input-item select-input-item--active">
+                            <i class="fas fa-check"></i>
+                            <span class="select-input-option">Phòng ban 1</span>
+                        </li>
+                        <li class="select-input-item">
+                            <i class="fas fa-check"></i>
+                            <span class="select-input-option">Phòng ban 2</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="select-input">
+                    <span class="select-input-label">Trạng thái tham gia BHXH</span>
+                    <i class="select-input-icon fas fa-angle-down"></i>
+                </div>
+            </div>
+            <div class="action-toolbar">
+                <button class="button download">
+
+                </button>
+                <button class="button refresh">
+
+                </button>
+            </div>
+        </div>
+        <div class="content-table">
+            <div class="table">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th></th>
+                            <th>Mã nhân viên</th>
+                            <th>Họ và tên</th>
+                            <th>Mã số BHXH</th>
+                            <th>Giới tính</th>
+                            <th>Vị trí/chức vụ</th>
+                            <th>Bộ phận/phòng ban</th>
+                            <th>Hệ số/Mức lương đóng...</th>
+                            <th>Trạng thái tham gia...</th>
+                            <th>Bệnh viện</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>NV003</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>123456</td>
+                            <td>Nam</td>
+                            <td>Nhân viên</td>
+                            <td>Phòng ban 1</td>
+                            <td>10.000.000</td>
+                            <td>Đang tham gia</td>
+                            <td>Bệnh viện A</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>NV003</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>123456</td>
+                            <td>Nam</td>
+                            <td>Nhân viên</td>
+                            <td>Phòng ban 1</td>
+                            <td>10.000.000</td>
+                            <td>Đang tham gia</td>
+                            <td>Bệnh viện A</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>NV003</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>123456</td>
+                            <td>Nam</td>
+                            <td>Nhân viên</td>
+                            <td>Phòng ban 1</td>
+                            <td>10.000.000</td>
+                            <td>Đang tham gia</td>
+                            <td>Bệnh viện A</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>NV003</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>123456</td>
+                            <td>Nam</td>
+                            <td>Nhân viên</td>
+                            <td>Phòng ban 1</td>
+                            <td>10.000.000</td>
+                            <td>Đang tham gia</td>
+                            <td>Bệnh viện A</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>NV003</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>123456</td>
+                            <td>Nam</td>
+                            <td>Nhân viên</td>
+                            <td>Phòng ban 1</td>
+                            <td>10.000.000</td>
+                            <td>Đang tham gia</td>
+                            <td>Bệnh viện A</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>NV003</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>123456</td>
+                            <td>Nam</td>
+                            <td>Nhân viên</td>
+                            <td>Phòng ban 1</td>
+                            <td>10.000.000</td>
+                            <td>Đang tham gia</td>
+                            <td>Bệnh viện A</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>NV003</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>123456</td>
+                            <td>Nam</td>
+                            <td>Nhân viên</td>
+                            <td>Phòng ban 1</td>
+                            <td>10.000.000</td>
+                            <td>Đang tham gia</td>
+                            <td>Bệnh viện A</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>NV003</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>123456</td>
+                            <td>Nam</td>
+                            <td>Nhân viên</td>
+                            <td>Phòng ban 1</td>
+                            <td>10.000.000</td>
+                            <td>Đang tham gia</td>
+                            <td>Bệnh viện A</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>NV003</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>123456</td>
+                            <td>Nam</td>
+                            <td>Nhân viên</td>
+                            <td>Phòng ban 1</td>
+                            <td>10.000.000</td>
+                            <td>Đang tham gia</td>
+                            <td>Bệnh viện A</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>NV003</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>123456</td>
+                            <td>Nam</td>
+                            <td>Nhân viên</td>
+                            <td>Phòng ban 1</td>
+                            <td>10.000.000</td>
+                            <td>Đang tham gia</td>
+                            <td>Bệnh viện A</td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td>NV003</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>123456</td>
+                            <td>Nam</td>
+                            <td>Nhân viên</td>
+                            <td>Phòng ban 1</td>
+                            <td>10.000.000</td>
+                            <td>Đang tham gia</td>
+                            <td>Bệnh viện A</td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>NV003</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>123456</td>
+                            <td>Nam</td>
+                            <td>Nhân viên</td>
+                            <td>Phòng ban 1</td>
+                            <td>10.000.000</td>
+                            <td>Đang tham gia</td>
+                            <td>Bệnh viện A</td>
+                        </tr>
+                        <tr>
+                            <td>13</td>
+                            <td>NV003</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>123456</td>
+                            <td>Nam</td>
+                            <td>Nhân viên</td>
+                            <td>Phòng ban 1</td>
+                            <td>10.000.000</td>
+                            <td>Đang tham gia</td>
+                            <td>Bệnh viện A</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="footer">
+                <div class="footer-left">
+                    Hiển thị
+                    <b>
+                        1-15/59
+                    </b>
+                    lao động
+                </div>
+
+                <ul class="pagination">
+                    <li class="pagination-item">
+                        <a href="#" class="pagination-item__link">
+                            <i class="pagination-item__icon fas fa-angle-double-left"></i>
+                        </a>
+                    </li>
+                    <li class="pagination-item">
+                        <a href="#" class="pagination-item__link">
+                            <i class="pagination-item__icon fas fa-angle-left"></i>
+                        </a>
+                    </li>
+                    <li class="pagination-item pagination-item--active">
+                        <a href="#" class="pagination-item__link">1</a>
+                    </li>
+                    <li class="pagination-item">
+                        <a href="#" class="pagination-item__link">2</a>
+                    </li>
+                    <li class="pagination-item">
+                        <a href="#" class="pagination-item__link">3</a>
+                    </li>
+                    <li class="pagination-item">
+                        <a href="#" class="pagination-item__link">4</a>
+                    </li>
+                    <li class="pagination-item">
+                        <a href="#" class="pagination-item__link">5</a>
+                    </li>
+                    <li class="pagination-item">
+                        <a href="#" class="pagination-item__link">...</a>
+                    </li>
+                    <li class="pagination-item">
+                        <a href="#" class="pagination-item__link">14</a>
+                    </li>
+        
+                    <li class="pagination-item">
+                        <a href="#" class="pagination-item__link">
+                            <i class="pagination-item__icon fas fa-angle-right"></i>
+                        </a>
+                    </li>
+                    <li class="pagination-item">
+                        <a href="#" class="pagination-item__link">
+                            <i class="pagination-item__icon fas fa-angle-double-right"></i>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="footer-right">
+                    <div class="number-employee">
+                        <div class="number-employee-text">
+                            <b>20</b>
+                            <span> lao động/trang</span>
+                        </div>
+                        <div class="number-employee-icon">
+                            <img src="/content/img/up-and-down.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</body>
+
+</html>

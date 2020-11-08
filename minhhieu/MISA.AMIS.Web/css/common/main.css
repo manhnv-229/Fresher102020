@@ -1,0 +1,40 @@
+﻿body {
+    font-family: GoogleSans-Regular, GoogleSans-Bold, GoogleSans-Italic, GoogleSans-Light, GoogleSans-Thin;
+    font-size: 13px;
+    margin: 0;
+    position: relative;
+}
+
+
+@font-face {
+    font-family: 'GoogleSans-Regular';
+    src: url('/content/font/GoogleSans-Regular.otf') format('opentype');
+}
+@font-face {
+    font-family: 'GoogleSans-Bold';
+    src: url('/content/font/GoogleSans-Bold.otf') format('opentype');
+}
+@font-face {
+    font-family: 'GoogleSans-Italic';
+    src: url('/content/font/GoogleSans-Italic.otf') format('opentype');
+}
+@font-face {
+    font-family: 'GoogleSans-Light';
+    src: url('/content/font/GoogleSans-Light.otf') format('opentype');
+}
+@font-face {
+    font-family: 'GoogleSans-Thin';
+    src: url('/content/font/GoogleSans-Thin.otf') format('opentype');
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+tr {
+    height: 48px;
+    padding: 0;
+    border-bottom: 1px solid #000000;
+}
