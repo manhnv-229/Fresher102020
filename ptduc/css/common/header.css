@@ -1,0 +1,23 @@
+.header {
+    position: absolute;
+    top: 0;
+    left: 221px;
+    width: calc(100% - 221px);
+    height: 60px;
+    border-bottom: 1px solid #E5E5E5;
+    display: flex;
+}
+.header-left {
+    height: 100%;
+    display: flex;
+    margin-left: 16px;
+    align-items: center;
+}
+
+.header-right{
+    position: absolute;
+    right: 16px;
+}
+.icon-header-left {
+    padding-left: 16px;
+}
