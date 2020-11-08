@@ -1,0 +1,103 @@
+﻿.navbar {
+    float: left;
+    width: 220px;
+    height: 100vh;
+    background-color: #ffffff;
+    border-right: 1px solid #e5e5e5;
+}
+
+
+    .navbar .logo-site {
+        height: 48px;
+        width: 100%;
+        position:relative;
+    }
+
+        .navbar .logo-box {
+            display: flex;
+            width:calc(100% - 24px);
+            position:absolute;
+            top:12px;
+            left:24px;
+            
+            
+        }
+
+            /*logo-page*/
+
+            .navbar  .logo-box .toggle-icon {
+                background-image: url(/content/img/toggle.png);
+                width: 24px;
+                height: 24px;
+                background-size: contain;
+            }
+
+            .navbar .logo-box .amis-logo {
+                background-image: url(/content/img/amis-logo.png);
+                width: calc(100% - 24px);
+                height: 24px;
+                background-size: contain;
+                background-repeat: no-repeat;
+                margin-left: 10px;
+            }
+    /*nav-item css*/
+    .navbar .navbar-content {
+        width:100%;
+    }
+
+    .navbar .navbar-content .nav-item {
+        display: flex;
+        height: 20px;
+        padding: 12px 0px 12px 24px;
+        cursor:pointer;
+    }
+
+.nav-item-icon {
+            width: 20px;
+            height: 20px;
+            /*border: 1px solid #808080;*/
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .navbar .navbar-content .nav-item .nav-item-text {
+            margin: auto 0px;
+            margin-left: 10px;
+            /*color:#d2d2d2;*/
+        }
+
+        /*set-nav-icon*/
+
+.nav-item-icon-document-offline {
+    background-image: url('../../content/img/document-offline.PNG');
+}
+
+.nav-item-icon-document-online {
+    background-image: url('../../content/img/document-online.PNG');
+}
+
+.nav-item-icon-manager {
+    background-image: url('../../content/img/manager.PNG');
+    margin-top: 4px;
+}
+
+.nav-item-icon-optimize {
+    background-image: url('../../content/img/optimize.PNG');
+}
+
+.nav-item-icon-track-dong {
+    background-image: url('../../content/img/track-dong.PNG');
+}
+
+.nav-item-icon-track-money {
+    background-image: url('../../content/img/track-money.PNG');
+}
+
+/*nav-item-hover*/
+/*.navbar .navbar-content .nav-item {
+    color: #505252;
+}*/
+.navbar .navbar-content .nav-item:hover {
+    background-color: #e5e5e5;
+    color: #000000;
+}
