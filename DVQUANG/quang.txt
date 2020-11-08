@@ -1,1 +1,1 @@
-dong quang
+cout << "Dong Van Quang"

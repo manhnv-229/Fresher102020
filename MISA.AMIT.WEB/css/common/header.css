@@ -1,0 +1,32 @@
+﻿.header{
+    float:left;
+    width: calc(100% - 221px);
+    height:60px;
+    border-bottom:1px solid #E5E5E5;
+    display: flex;
+}
+    .header .title-page {
+        position:relative;
+        align-self: center;
+        margin-left: 16px;
+    }
+    .header .header-user {
+        position: absolute;
+        right: 16px;
+        display: flex;
+        line-height: 60px;
+    }
+
+        .header .header-user .head-img-user {
+            width: 50px;
+            height: 50px;
+            margin-right: 16px;
+            background-image: url('/content/img/icons8-user-male-50.png');
+            align-self: center;
+        }
+
+
+        .header .header-user .head-name-user {
+            margin-right: 16px;
+        }
+
