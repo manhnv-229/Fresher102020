@@ -1,0 +1,91 @@
+﻿.header {
+    width: calc(100% - 221px);
+    height: 48px;
+    border-bottom: 1px solid #e5e5e5;
+    float: left;
+}
+
+    .header .header-selector-box {
+        float: left;
+        height: 48px;
+        display:flex;
+        width: 50%;
+    }
+
+        .header .header-selector-box .header-icon {
+            height: 30px;
+            width: 30px;
+            margin:auto 0px;
+            margin-left: 24px;
+            background-image: url('/content/icon/toggle.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 5px;
+            float: left;
+        }
+
+        .header .header-selector-box .selector-box {
+            height: 20px;
+            display: inline-flex;
+            margin: auto 0px;
+        }
+
+            .header .header-selector-box .selector-box .header-text {
+                margin: auto 10px;
+            }
+
+            .header .header-selector-box .selector-box .header-selector {
+                height: 16px;
+                width: 16px;
+                background-image: url('../../content/icon/down.png');
+                background-repeat: no-repeat;
+                background-size: contain;
+                margin: auto;
+            }
+                .header .header-selector-box .selector-box .header-selector:hover{
+                    cursor:pointer;
+                }
+
+                .header .header-account {
+                    display: inline-flex;
+                    float: right;
+                    height: 48px;
+                    margin-right: 16px;
+                }
+
+        .header .header-account .header-icon-notify {
+            background-image: url('/content/icon/notification.png');
+            background-size: 20px 20px;
+            width: 20px;
+            height: 20px;
+            margin: auto 0px;
+        }
+
+            .header .header-account .header-icon-notify:hover {
+                cursor: pointer;
+            }
+
+        .header .header-account .header-icon-avatar {
+            background-image: url('/content/icon/avatar.png');
+            background-size: 28px 28px;
+            width: 28px;
+            height: 28px;
+            border-radius: initial;
+            margin: auto 16px;
+        }
+
+        .header .header-account .header-account-name {
+            margin: auto;
+        }
+
+        .header .header-account .header-icon-more {
+            background-image: url('/content/icon/more-512.png');
+            background-size: 16px;
+            width: 16px;
+            height: 16px;
+            margin: auto 16px;
+        }
+
+            .header .header-account .header-icon-more:hover {
+                cursor: pointer;
+            }
