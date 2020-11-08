@@ -1,0 +1,62 @@
+﻿.header {
+    float: left;
+    width: calc(100% - 221px);
+    height: 48px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+}
+
+.company {
+    display: flex;
+    margin-left: 24px;
+    align-self: center;
+}
+    .company_logo {
+        width: 30px;
+        height: 30px;
+        border: 1px solid;
+        margin-right: 10px;
+    }
+    .company_name {
+        align-self: center;
+        font-size: 13px;
+        font-weight: 600;
+        margin-right: 10px;
+    }
+
+    .company_more {
+        align-self: center;
+        width: 10px;
+        height: 10px;
+        border: 1px solid;
+    }
+
+.profile {
+    display: flex;
+    align-items: center;
+    margin-right: 16px;
+}
+
+    .profile .icon_bell {
+        width: 16px;
+        height: 16px;
+        border: 1px solid;
+        margin-right: 16px;
+    }
+
+    .profile .profile_avt {
+        width: 24px;
+        height: 24px;
+        border: 1px solid;
+        margin-right: 16px;
+    }
+
+    .profile .profile_name {
+        margin-right: 16px;
+    }
+    .profil_more {
+        width: 10px;
+        height: 10px;
+        border: 1px solid;
+    }
