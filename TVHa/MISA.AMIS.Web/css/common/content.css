@@ -1,0 +1,239 @@
+﻿.content {
+    padding-left: 221px;
+    /*width: calc(100% - 221px);*/
+    height: calc(100vh - 51px);
+}
+    .content .content-box {
+        padding:12px 12px 20px 12px;
+        width: calc(100% - 24px);
+        height: calc(100% - 32px);
+        align-items: center;
+    }
+        .content .content-box .head-content {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+        }
+            .content .content-box .head-content .head-content-left {
+                width: 200px;
+                font-size: 21px;
+            }
+            .content .content-box .head-content .head-content-right {
+                width: 600px;
+                display: flex;
+                justify-content: flex-end;
+            }
+                .content .content-box .head-content .head-content-right .btn-sync {
+                    width: 161px;
+                    height: 38px;
+                    display: flex;
+                    border-radius: 4px;
+                    align-items: center;
+                    cursor: pointer;
+                    border: 1px solid;
+                }
+                    .content .content-box .head-content .head-content-right .btn-sync .btn-sync-icon {
+                        width: 20px;
+                        height: 20px;
+                        align-self: center;
+                        margin-right: 12px;
+                        margin-left: 16px;
+                        background-image: url('../../content/icon/sync-icon.png');
+                        background-size: contain;
+                    }
+                    .content .content-box .head-content .head-content-right .btn-sync .btn-sync-text {
+                        color: #2fbe8e;
+                        margin-right: 16px;
+                    }
+                .content .content-box .head-content .head-content-right .btn-add {
+                    width: 182px;
+                    height: 40px;
+                    display: flex;
+                    margin-left: 16px;
+                    background-color: #01b075;
+                    border-radius: 4px;
+                    align-items: center;
+                    cursor: pointer;
+                    justify-content: space-around;
+                }
+                    .content .content-box .head-content .head-content-right .btn-add .btn-add-left {
+                        width: calc(100% - 40px);
+                        height: 100%;
+                        display: flex;
+                        border-radius: 4px;
+                        color: #ffffff;
+                    }
+                        .content .content-box .head-content .head-content-right .btn-add .btn-add-left:hover {
+                            background-color: #2fbe8e;
+                        }
+                        .content .content-box .head-content .head-content-right .btn-add .btn-add-left .btn-add-icon {
+                            width: 20px;
+                            height: 20px;
+                            align-self: center;
+                            margin-left: 16px;
+                            margin-right: 8px;
+                            background-size: contain;
+                            background-image: url('/content/icon/add-icon.jpg');
+                        }
+                        .content .content-box .head-content .head-content-right .btn-add .btn-add-left .btn-add-text {
+                            align-self: center;
+                            margin-right: 8px;
+                        }
+                    .content .content-box .head-content .head-content-right .btn-add .btn-add-select {
+                        height: 100%;
+                        width: 40px;
+                        display: flex;
+                        border-left: 1px solid;
+                    }
+                        .content .content-box .head-content .head-content-right .btn-add .btn-add-select:hover {
+                            background-color: #2fbe8e;
+                            outline: none;
+                            border-radius: 4px;
+                        }
+                        .content .content-box .head-content .head-content-right .btn-add .btn-add-select .btn-add-select-icon {
+                            width: 14px;
+                            height: 14px;
+                            align-self: center;
+                            margin-left: 12px;
+                            margin-right: 12px;
+                            color: #ffffff;
+                            background-size: contain;
+                            background-image: url('/content/icon/expand-icon.png');
+                        }
+        .content .content-box .content-toolbox {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+        }
+            .content .content-box .content-toolbox .toolbox-left {
+                width: 700px;
+                display: flex;
+            }
+                .content .content-box .content-toolbox .toolbox-left .searchbox {
+                    width: 320px;
+                    height: 40px;
+                    vertical-align: middle;
+                    white-space: nowrap;
+                    position: relative;
+                    display: flex;
+                }
+                        .content .content-box .content-toolbox .toolbox-left .searchbox input#search {
+                            width: 320px;
+                            font-size: 12px;
+                            font-family: 'GoogleSans-Regular';
+                            float: left;
+                            color: #000000;
+                            padding-left: 38px;
+                            border-radius: 4px;
+                        }
+                        .searchbox input#search::-webkit-input-placeholder {
+                            color: #65737e;
+                        }
+
+                        .searchbox input#search:-moz-placeholder { /* Firefox 18- */
+                            color: #65737e;
+                        }
+
+                        .searchbox input#search::-moz-placeholder { /* Firefox 19+ */
+                            color: #65737e;
+                        }
+
+                        .searchbox input#search:-ms-input-placeholder {
+                            color: #65737e;
+                        }
+                        .content .content-box .content-toolbox .toolbox-left .searchbox .searchbox-icon {
+                            width: 16px;
+                            height: 16px;
+                            position: absolute;
+                            top: 33%;
+                            z-index: 1;
+                            margin-left: 16px;
+                            background-image: url('/content/icon/search-icon.png');
+                            background-size: contain;
+                            background-repeat: no-repeat;
+                        }
+                            .searchbox input#search:hover, .searchbox input#search:focus, .searchbox input#search:active {
+                                outline: none;
+                            }
+                .content .content-box .content-toolbox .toolbox-left .department {
+                    color: #bbbbbb;
+                    width: 280px;
+                    height: 40px;
+                    position: relative;
+                    display: inline-block;
+                    margin-left: 16px;
+                }
+                    .content .content-box .content-toolbox .toolbox-left .department .btn-department {
+                        width: 100%;
+                        height: 100%;
+                        cursor: pointer;
+                        color: #bbbbbb;
+                        font-family: 'GoogleSans-Regular';
+                        font-size: 13px;
+                        border-radius: 4px;
+                        text-align: center;
+                    }
+                .content .content-box .content-toolbox .toolbox-left .status {
+                    color: #bbbbbb;
+                    width: 180px;
+                    height: 40px;
+                    position: relative;
+                    margin-left: 16px;
+                }
+                    .content .content-box .content-toolbox .toolbox-left .status .btn-status {
+                        width: 100%;
+                        height: 100%;
+                        cursor: pointer;
+                        color: #bbbbbb;
+                        font-family: 'GoogleSans-Regular';
+                        font-size: 13px;
+                        border-radius: 4px;
+                        text-align: center;
+                    }
+            .content .content-box .content-toolbox .toolbox-right {
+                width: 150px;
+                display: flex;
+                justify-content: flex-end;
+            }
+                .content .content-box .content-toolbox .toolbox-right .btn-download {
+                    width: 40px;
+                    height: 40px;
+                    color: #bbbbbb;
+                    cursor: pointer;
+                    background-color: white;
+                    border: 1px solid;
+                    border-radius: 4px;
+                    display: flex;
+                }
+
+                    .content .content-box .content-toolbox .toolbox-right .btn-download .download-icon {
+                        width: 16px;
+                        height: 16px;
+                        margin: 9px 0 0 6px;
+                        background-image: url('/content/icon/download-icon.png');
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                    }
+
+                .content .content-box .content-toolbox .toolbox-right .btn-refresh {
+                    width: 40px;
+                    height: 40px;
+                    margin-left: 16px;
+                    color: #bbbbbb;
+                    cursor: pointer;
+                    background-color: white;
+                    border: 1px solid;
+                    border-radius: 4px;
+                    display: flex;
+                }
+
+                    .content .content-box .content-toolbox .toolbox-right .btn-refresh .refresh-icon {
+                        width: 16px;
+                        height: 16px;
+                        margin: 9px 0 0 6px;
+                        background-image: url('/content/icon/refresh-icon.png');
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                    }
