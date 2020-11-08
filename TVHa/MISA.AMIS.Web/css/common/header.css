@@ -49,6 +49,7 @@
         width: 30px;
         position: absolute;
         right: 140px;
+        cursor: pointer;
         background-size: contain;
         /*background-repeat: no-repeat;*/
         background-position: center;

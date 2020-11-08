@@ -47,8 +47,27 @@
             .navbar-item .nav-item-icon {
                 width: 20px;
                 height: 20px;
-                border: 1px solid;
                 margin: auto 0; /*2 cách căn giữa icon trong div
             align-self: center (với display: flex;)*/
                 margin-right: 10px;
+                background-size: contain;
+                background-repeat: no-repeat;
+            }
+            .clouddoc-icon {
+                background-image: url('/content/icon/clouddoc-icon.png');
+            }
+            .document-icon {
+                background-image: url('/content/icon/document-icon.png');
+            }
+            .chart-icon {
+                background-image: url('/content/icon/chart-icon.png');
+            }
+            .roundchart-icon {
+                background-image: url('/content/icon/roundchart-icon.jpg');
+            }
+            .people-icon {
+                background-image: url('/content/icon/people-icon.png');
+            }
+            .gear-icon {
+                background-image: url('/content/icon/gear-icon.jpg');
             }
