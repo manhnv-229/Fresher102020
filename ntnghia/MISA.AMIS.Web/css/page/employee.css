@@ -197,12 +197,11 @@ p, h2 {
         }
 
         .content .content-footer {
-            position: absolute;
             display: flex;
-            bottom: 10px;
             justify-content: space-between;
             width: calc(100% - 40px);
             align-items: center;
+            margin-top: 10px;
             padding: 0 20px;
         }
 
@@ -268,3 +267,32 @@ p, h2 {
     height: 10px;
     margin-left:5px;
 }
+
+
+/* width */
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+
+/* Track */
+
+::-webkit-scrollbar-track {
+    border-radius: 5px;
+}
+
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 4px;
+}
+
+
+    /* Handle on hover */
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #ccc;
+    }

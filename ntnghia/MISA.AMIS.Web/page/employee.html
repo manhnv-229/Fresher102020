@@ -10,6 +10,7 @@
     <link href="/css/common/main.css" rel="stylesheet" />
     <link href="/css/page/employee.css" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/0f72905f9f.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -21,7 +22,7 @@
             </div>
         </div>
         <div class="navbar-content">
-            <div class="nav-item">
+            <div class="nav-item" id="nav-item">
                 <img class="nav-item-icon" src="../content/icon/file.svg" />
                 <div class="nav-item-text">Lập hồ sơ điện tử</div>
             </div>
@@ -59,6 +60,7 @@
             </div>
         </div>
     </div>
+
     <div class="content">
         <div class="content-header">
             <h2>Quản lý lao động</h2>
@@ -82,7 +84,7 @@
                 <i class="fas fa-search"></i>
                 <input class="search-employee" type="text" placeholder="Tìm kiếm theo mã nhân viên, họ tên" />
             </div>
-            <div class="input-container">
+            <div class="input-container" id="select-department">
                 <p class="search-department">Chọn bộ phận phòng ban</p>
                 <i class="fas fa-caret-down"></i>
             </div>
@@ -333,26 +335,28 @@
 
             </table>
         </div>
-    <div class="content-footer">
-        <p>Hiển thị 1 - 15/59 lao động</p>
-        <div class="content-footer-page">
-            <div class="arrow-icon">
-                <i class="fas fa-angle-left"></i>
+        <div class="content-footer">
+            <p>Hiển thị 1 - 15/59 lao động</p>
+            <div class="content-footer-page">
+                <div class="arrow-icon">
+                    <i class="fas fa-angle-left"></i>
+                </div>
+                <div class="page-number">1</div>
+                <div class="page-number">2</div>
+                <div class="page-number">3</div>
+                <div class="page-number">4</div>
+                <div class="arrow-icon" style="margin-left: 10px;">
+                    <i class="fas fa-angle-right"></i>
+                </div>
             </div>
-            <div class="page-number">1</div>
-            <div class="page-number">2</div>
-            <div class="page-number">3</div>
-            <div class="page-number">4</div>
-            <div class="arrow-icon" style="margin-left: 10px;">
-                <i class="fas fa-angle-right"></i>
+            <div class="page-container">
+                <p class="page-btn">15 trang</p>
+                <img class="updown-btn" src="../content/icon/up-and-down.svg" />
             </div>
         </div>
-        <div class="page-container">
-            <p class="page-btn">15 trang</p>
-            <img class="updown-btn" src="../content/icon/up-and-down.svg" />
-        </div>
     </div>
-    </div>
+    <script src="/js/lib/jquery.js"></script>
+    <script src="/js/page/employee.js"></script>
 </body>
 
 </html>
