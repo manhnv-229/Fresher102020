@@ -2,7 +2,37 @@
     position: absolute;
     top: 61px;
     left: 221px;
-    width: calc(100% - 221px);
-    height: calc(100vh - 61px);
-    background-color: #E9EBEE;
+    width: calc(100% - 253px);
+    background-color: #ffffff;
+    padding:16px;
 }
+
+/*Page tile*/
+    .content .header-content {
+        padding: 16px;
+        display: flex;
+        align-items: center;
+    }
+
+        .content .header-content .title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .content .header-content .content-feature{
+            position: absolute;
+            right: 16px;
+        }
+
+        /*filter bar*/
+        .content .filter-bar {
+        }
+
+
+
+/* Paging */
+.content .paging-bar{
+    height: 56px;
+    background-color: #ff0000;
+}
+

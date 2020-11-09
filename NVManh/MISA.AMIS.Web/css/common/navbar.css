@@ -58,13 +58,29 @@
                 color: #000000;
             }
 
-.nav-item .nav-item-icon {
-    width: 20px;
-    height: 20px;
-    align-self: center;
-    margin-right: 10px;
-    background-size: contain;
-}
+            .navbar .navbar-content .nav-item:focus{
+                background-color:aqua;
+            }
+
+            .navbar .navbar-content .nav-item:active{
+                background-color:aquamarine;
+            }
+
+            .navbar .navbar-content .nav-item:visited{
+                background-color:black;
+            }
+
+            .navbar .navbar-content .nav-item: {
+                background-color: black;
+            }
+
+            .nav-item .nav-item-icon {
+                width: 20px;
+                height: 20px;
+                align-self: center;
+                margin-right: 10px;
+                background-size: contain;
+            }
 
 /*Tổng quan*/
 .nav-item-dashboard {
