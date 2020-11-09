@@ -222,6 +222,8 @@
                 }
 
     .right-content .content .data-table {
+        height: 400px;
+        overflow: auto;
     }
 
         .right-content .content .data-table .table {
@@ -296,3 +298,40 @@
                 .right-content .content .data-table .table tr .employee-hospital {
                     width: 120px;
                 }
+
+    .right-content .content .footer {
+        display: flex;
+        justify-content: space-between;
+        height: 50px;
+        margin-top: 20px;
+    }
+
+        .right-content .content .footer .left-footer {
+            line-height: 60px;
+        }
+
+        .right-content .content .footer .panagition ul {
+            display: flex;
+            height: 50px;
+        }
+
+            .right-content .content .footer .panagition ul li {
+                list-style: none;
+                width: 30px;
+                height: 30px;
+                border: 1px solid #e5e5e5;
+                text-align: center;
+                border-radius: 10px;
+                line-height: 30px;
+                margin: 0px 21px 0 0;
+            }
+
+                .right-content .content .footer .panagition ul li a {
+                    text-decoration: none;
+                    color: #000000;
+                }
+
+        .right-content .content .footer .choose-quantity-employee {
+            line-height: 60px;
+            margin-right: 80px;
+        }
