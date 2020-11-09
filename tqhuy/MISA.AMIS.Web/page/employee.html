@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="../css/common/main.css" rel="stylesheet" />
+    <link href="../css/common/header.css" rel="stylesheet" />
+    <link href="../css/common/navbar.css" rel="stylesheet" />
+    <link href="../css/common/content.css" rel="stylesheet" />
+    <link href="../css/page/employee.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo-site">
+            <div class="logo-box">
+                <div class="toggle-icon"></div>
+                <div class="logo-amis"></div>
+            </div>
+        </div>
+        <div class="navbar-content">
+            <div class="nav-item">
+                <div class="nav-item-icon icon-document-online"></div>
+                <div class="nav-item-text">Lập hồ sơ điện tử</div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-icon icon-document"></div>
+                <div class="nav-item-text">Lập hồ sơ giấy</div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-icon icon-track-spending"></div>
+                <div class="nav-item-text">Theo dõi chi</div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-icon icon-track-contribution"></div>
+                <div class="nav-item-text">Theo dõi đóng</div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-icon icon-laborer"></div>
+                <div class="nav-item-text">Quản lý lao động</div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-icon icon-setting"></div>
+                <div class="nav-item-text">Thiết lập</div>
+   
+            </div>
+        </div>
+    </div>
+    <div class="header">
+        <div class="header-title">
+            <div class="header-title-text">Công ty cổ phần MISA TEST BHXH</div>
+            <i class="fa fa-angle-down"></i>
+        </div>
+        <div class="header-account">
+            <div class="header-account-photo"></div>
+            <div class="header-account-text">AMIS BHXH</div>
+            <i class="material-icons">more_horiz</i>
+        </div>
+
+    </div>
+    <div class="content">
+        <div class="header-content">
+            <h2 class="header-content-left" >Quản lý lao động</h2>
+            <div class="hearder-content-right">
+                <button class="button-sync">
+                    <i class="fas fa-retweet"></i>
+                    <p class="button-text">Đồng bộ từ HRM</p>
+                </button>
+                <button class="button-insert">
+                    <i class="fas fa-user-plus"></i>
+                    <p class="button-text">Thêm lao động</p>
+                    <button class="icon-down">
+                        <i class="fa fa-angle-down"></i>
+                    </button>
+                </button>             
+            </div>
+        </div>
+
+        <div class="navbar-content">
+            <i class="fa fa-search"></i>
+            <input id="search-employee" type="search" placeholder="Tìm kiếm theo mã nhân viên, họ tên" />
+            <select id="department">
+                <option value="" disabled selected hidden>Chọn bộ phận phòng ban</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
+
+            <select id="insurrance">
+                <option value="" disabled selected hidden>Trạng thái tham gia BHXH</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
+
+            <div class="navbar-content-right">
+                <button>
+                    <span class="glyphicon glyphicon-download-alt"></span>
+                </button>
+                <button>
+                    <span class="glyphicon glyphicon-refresh"></span>
+                </button>
+            </div>
+
+
+        </div>
+        <div class="table">
+            table
+        </div>
+
+    </div>
+</body>
+</html>
