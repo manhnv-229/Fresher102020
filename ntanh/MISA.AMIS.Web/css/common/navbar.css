@@ -66,24 +66,24 @@
         background-image: url('../../content/img/toggle.png');
     }
 
-    .item_menu_icon.paper_records {
-        background-image: url('../../content/img/toggle.png');
-    }
+.item_menu_icon.paper_records {
+    background-image: url('../../content/icon/paper_records.png');
+}
 
     .item_menu_icon.track_spending {
-        background-image: url('../../content/img/toggle.png');
+        background-image: url('../../content/img/track_spending.png');
     }
 
     .item_menu_icon.track_packing {
-        background-image: url('../../content/img/toggle.png');
+        background-image: url('../../content/img/track_packing.png');
     }
 
     .item_menu_icon.labor_management {
-        background-image: url('../../content/img/toggle.png');
+        background-image: url('../../content/img/labor_management.png');
     }
 
     .item_menu_icon.setting {
-        background-image: url('../../content/img/toggle.png');
+        background-image: url('../../content/img/setting.png');
     }
 
 .toggle_menu_left {
