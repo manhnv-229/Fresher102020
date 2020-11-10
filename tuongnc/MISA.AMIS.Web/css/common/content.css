@@ -319,6 +319,11 @@ td, th {
     padding: 16px 24px;
     text-align: left;
 }
+th {
+    position:sticky;
+    top: 0;
+    background-color:#ffffff;
+}
 
 table .td-luong {
     text-align: right;
