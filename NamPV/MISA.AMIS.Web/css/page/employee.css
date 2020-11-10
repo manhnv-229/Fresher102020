@@ -4,211 +4,118 @@
 }
 
 .employee-content {
-    padding: 0px 24px;
+    padding: 24px;
 }
-/*content title*/
-    .employee-content .content-title {
+    /*content title*/
+    .employee-content .header-content {
         display: flex;
     }
 
-        .employee-content .content-title .title-text {
+        .employee-content .header-content h1 {
             font-family: GoogleSans-Bold;
             font-size: 24px;
-            color: #000;
             flex: auto;
         }
 
-        .employee-content .content-title .content-add-sync {
+        .employee-content .header-content .content-feature {
             display: flex;
         }
 
-            .employee-content .content-title .content-add-sync .sync-btn {
-                height: 40px;
-                border-radius: 4px;
-                padding: 0px 16px;
-                border: 1px solid #bbbbbb;
-                margin: auto;
-                display: flex;
+            .employee-content .header-content .content-feature .btn-sync {
+                background-image: url('../../content/icon/refresh.png');
             }
 
-                .employee-content .content-title .content-add-sync .sync-btn:hover {
-                    background-color: #e5e5e5;
-                    border: none;
-                    cursor: pointer;
-                }
-
-                .employee-content .content-title .content-add-sync .sync-btn .sync-icon {
-                    height: 16px;
-                    width: 16px;
-                    margin: auto 8px auto 0px;
-                    background-image: url('/content/icon/sync-solid.png');
-                    background-repeat: no-repeat;
-                    background-size: contain;
-                }
-
-                .employee-content .content-title .content-add-sync .sync-btn span {
+                .employee-content .header-content .content-feature .btn-sync span {
                     margin: auto;
                 }
 
-            .employee-content .content-title .content-add-sync .content-add-box {
+            .employee-content .header-content .content-feature .content-add-box {
                 display: flex;
-                height: 40px;
                 margin: auto 0px auto 16px;
                 background-color: #019160;
                 border-radius: 4px;
                 color: #ffffff;
             }
 
-                .employee-content .content-title .content-add-sync .content-add-box .btn-add {
-                    display: flex;
-                    padding: 12px 16px;
-                    border-right: 1px solid;
+                .employee-content .header-content .content-feature .content-add-box .btn-add {
+                    background-image: url('../../content/icon/add.png');
+                    border: none;
+                    border-right: 1px solid #2fbe8e;
                 }
 
-                    .employee-content .content-title .content-add-sync .content-add-box .btn-add:hover {
-                        cursor: pointer;
-                    }
 
-                .employee-content .content-title .content-add-sync .content-add-box .icon {
-                    width: 16px;
-                    height: 16px;
-                    margin: auto 8px auto 0px;
-                    background-image: url('/content/icon/add-member.png');
-                    background-repeat: no-repeat;
-                    background-size: contain;
-                }
-
-                .employee-content .content-title .content-add-sync .content-add-box .selector-box {
-                    margin: auto;
-                }
-
-                    .employee-content .content-title .content-add-sync .content-add-box .selector-box .selector {
-                        width: 16px;
-                        height: 16px;
-                        margin: auto 12px;
-                        background-image: url('/content/icon/down.png');
-                        background-repeat: no-repeat;
-                        background-size: contain;
-                    }
-
-    .employee-content .content-taskbar {
+    .employee-content .filter-bar {
         display: flex;
         height: 40px;
         margin: 24px auto;
     }
 
-        .employee-content .content-taskbar .filter-box {
+        .employee-content .filter-bar .filter-left {
             display: flex;
             flex: auto;
         }
 
-            .employee-content .content-taskbar .filter-box .taskbar-search-box {
-                width: 250px;
-                background-color: white;
-                font-size: 12px;
-                color: #bbbbbb;
-                background-image: url('/content/icon/search-icon.png');
-                background-position: 16px 12px;
-                background-repeat: no-repeat;
-                background-size: 16px 16px;
+            .employee-content .filter-bar .filter-left .search {
+                background-image: url('../../content/icon/search.png');
                 padding-left: 40px;
-                border-radius: 4px;
-                border: none;
             }
 
-                .employee-content .content-taskbar .filter-box .taskbar-search-box:focus {
-                    border: 1px solid #019160;
-                }
-
-            .employee-content .content-taskbar .filter-box .taskbar-selector-box {
+            .employee-content .filter-bar .filter-left select {
                 height: 40px;
                 width: 200px;
                 border: 1px solid #bbbbbb;
                 border-radius: 4px;
                 background-color: #ffffff;
                 margin: auto 16px;
-                display:flex;
+                display: flex;
+                color: #bbbbbb;
+                padding-left: 16px;
             }
 
-                .employee-content .content-taskbar .filter-box .taskbar-selector-box .selector-text {
-                    color: #bbbbbb;
-                    margin: auto 0px auto 16px;
-                    position: relative;
-                    border-radius: 4px;
-                    flex:auto;
-                }
-
-                .employee-content .content-taskbar .filter-box .taskbar-selector-box .selector-icon {
-                    height: 40px;
-                    width: 40px;
-                    float: right;
-                    background-image: url('/content/icon/down-arrow-icon-png-24.jpg');
-                    background-size: 16px 16px;
-                    background-repeat: no-repeat;
-                    background-position: center;
-                }
-                    .employee-content .content-taskbar .filter-box .taskbar-selector-box .selector-icon:hover{
-                        cursor:pointer;
-                    }
-
-                    .employee-content .content-taskbar .filter-box .taskbar-combobox {
-                        background-color: #ffffff;
-                        border: 1px solid #bbbbbb;
-                        border-radius: 4px;
-                        display: flex;
-                    }
-
-                .employee-content .content-taskbar .filter-box .taskbar-combobox input {
-                    border: none;
-                    border-right: 1px solid #bbbbbb;
-                    padding: 0px;
-                    border-radius:4px 0px 0px 4px;
-                    margin-left: 16px;
-                }
-
-                .employee-content .content-taskbar .filter-box .taskbar-combobox .icon-box {
-                    height: 40px;
-                    width: 40px;
-                }
-
-                        .employee-content .content-taskbar .filter-box .taskbar-combobox .icon {
-                            width: 16px;
-                            height: 16px;
-                            background-image: url('/content/icon/down.png');
-                            background-repeat: no-repeat;
-                            background-size: contain;
-                            margin: 12px;
-                        }
-                            .employee-content .content-taskbar .filter-box .taskbar-combobox .icon:hover{
-                                cursor: pointer;
-                            }
-
-                            .employee-content .content-taskbar .taskbar-btn {
-                                width: 96px;
-                                height: 40px;
-                                display: flex;
-                            }
-
-            .employee-content .content-taskbar .taskbar-btn input {
-                height: 40px;
-                width: 40px;
-                border: 1px solid #bbbbbb;
-                border-radius: 4px;
-                background-color: #ffffff;
-                background-size: 16px 16px;
-                background-repeat: no-repeat;
-                background-position: center;
-            }
-
-                .employee-content .content-taskbar .taskbar-btn input:hover {
+                .employee-content .filter-bar .filter-left select:hover {
                     cursor: pointer;
                 }
 
-            .employee-content .content-taskbar .taskbar-btn .download-btn {
-                background-image: url('/content/icon/download.png');
+            .employee-content .filter-bar .filter-left .combobox {
+                background-color: #ffffff;
+                border: 1px solid #bbbbbb;
+                border-radius: 4px;
+                display: flex;
+            }
+
+                .employee-content .filter-bar .filter-left .combobox input {
+                    border: none;
+                    border-right: 1px solid #bbbbbb;
+                    border-radius: 4px 0px 0px 4px;
+                }
+
+                .employee-content .filter-bar .filter-left .combobox .icon-down {
+                    background-image: url("/content/icon/down.png");
+                    border: none;
+                    width: 38px;
+                    height: 38px;
+                }
+
+                .employee-content .filter-bar .filter-left .combobox .icon:hover {
+                    cursor: pointer;
+                }
+
+        .employee-content .filter-bar .filter-right {
+            width: 96px;
+            height: 40px;
+            display: flex;
+        }
+
+            .employee-content .filter-bar .filter-right .download-btn {
+                background-image: url("/content/icon/download.png");
                 margin-right: 16px;
             }
 
-            .employee-content .content-taskbar .taskbar-btn .sync-btn {
-                background-image: url('/content/icon/sync-solid.png');
+            .employee-content .filter-bar .filter-right .btn-sync {
+                background-image: url('../../content/icon/refresh.png');
             }
+
+    .employee-content .pagination {
+        height: 56px;
+        background-color: blueviolet;
+    }
