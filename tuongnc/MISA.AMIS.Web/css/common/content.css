@@ -291,7 +291,7 @@
 
 .grid {
     /*background: #808080;*/
-    height: calc(100vh - 32px - 48px - 80px - 89px);
+    height: calc(100vh - 249px);
     width: 100%;
     padding-top: 16px;
 }
@@ -303,8 +303,11 @@
 }*/
 
 table {
-    width: 100%;
     border-collapse: collapse;
+    display: block;
+    overflow: auto;
+    height: 100%;
+    width: 100%;
 }
 
 td, th {
@@ -313,7 +316,7 @@ td, th {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    padding: 16px;
+    padding: 16px 24px;
     text-align: left;
 }
 
