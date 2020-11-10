@@ -1,5 +1,4 @@
 .content {
-  background-color: #e9ebee;
   position: absolute;
   top: 61px;
   left: 221px;
@@ -27,10 +26,11 @@ input {
   font-size: 20px;
 }
 .content-title-up .right {
+  display: flex;
   position: absolute;
   right: 16px;
 }
-.content-title-up .right button {
+.m-btn {
   outline: none;
   border: 0.5px solid #e5e5e5;
   height: 40px;
@@ -39,17 +39,47 @@ input {
   padding-left: 16px;
   padding-right: 16px;
   border-radius: 4px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
 }
-.content-title-up .right .sync {
+.m-btn:hover{
+  background-color: #2FBE8E;
+}
+.m-btn:focus{
+  background-color:#01B075;
+}
+.sync-m-btn {
   background-color: #ffffff;
-  cursor: pointer;
-  color: #019160;
+  margin-right: 5px;
 }
-.content-title-up .right .add-user {
-  background-color: #019160;
-  cursor: pointer;
+.sync-m-btn:hover {
+  background-color: #E9EBEE;
+}
+.sync-m-btn .m-btn-img {
+  background-image: url("/assets/img/sync-color.png");
+  background-repeat: no-repeat;
+  background-size:contain;  
+  width: 20px;
+  height: 20px;
+  padding-right: 8px;
+}
+.sync-m-btn .m-btn-content {
+  color: #000000;
 }
 
+.add-user-m-btn .m-btn-img{
+  background-image: url("/assets/img/add-user.png");
+  background-repeat: no-repeat;
+  background-size:contain;  
+  width: 20px;
+  height: 20px;
+  padding-right: 8px;
+}
+
+.add-user-m-btn {
+  background-color: #019160;
+}
 .content-title-down {
   margin-top: 30px;
   display: flex;
@@ -162,15 +192,20 @@ input {
   font-size: 13px;
 }
 .content-main-content tr {
-  height: 50px;
+  height: 48px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.content-main-content tr:hover {
+  background-color:  #bbbbbb;
 }
 .content-main-footer {
   position: absolute;
-  bottom: 10px;
+  bottom: 0px;
   display: flex;
   width: calc(100% - 32px);
   font-size: 12px;
-  height: 50px;
+  height: 56px;
 }
 .content-main-footer .center {
   margin-left: auto;

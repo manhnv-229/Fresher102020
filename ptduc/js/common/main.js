@@ -115,3 +115,4 @@ var previousPageTable = () => {
 //var row = document.createElement("tr");
 //row.innerHTML = newHTMLTag;
 //document.getElementsByTagName("table")[0].appendChild(row);
+
