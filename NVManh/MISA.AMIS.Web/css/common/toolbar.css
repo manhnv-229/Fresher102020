@@ -13,3 +13,16 @@
         position:absolute;
         right: 16px;
     }
+
+.paging-bar {
+    border-top: 2px solid #bbbbbb;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+}
+
+        .paging-bar .paging-record-option{
+            position: absolute;
+            right: 16px;
+        }
