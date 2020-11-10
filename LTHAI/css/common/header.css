@@ -5,6 +5,7 @@
     display: flex;
     justify-content: space-between;
 }
+
     .right-content .header .caret-icon, .profile-icon {
         width: 16px;
         height: 16px;
@@ -12,6 +13,7 @@
         background-repeat: no-repeat;
         align-self: center;
     }
+
     .right-content .header .name-company {
         height: 60px;
         line-height: 60px;
@@ -37,7 +39,7 @@
         width: 200px;
         height: 60px;
         display: flex;
-        margin-right: 30px;
+        margin-right: 23px;
     }
 
         .right-content .header .profile .avatar {
@@ -45,7 +47,10 @@
             height: 40px;
             align-self: center;
             border-radius: 20px;
-            background-color: antiquewhite;
+            background-image: url('/content/img/logo-user1.png');
+            background-size: contain;
+            background-position-y: 4px;
+            background-repeat: no-repeat;
         }
 
         .right-content .header .profile .name-profile {

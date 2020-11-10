@@ -55,5 +55,8 @@
                 background-size: contain;
             }
 
-            .navbar .nav-content .nav-item .nav-item-content {
+            .navbar .nav-content .nav-item .nav-item-content a {
+                text-decoration: none;
+                color: black;
+                font-family: 'GoogleSans-Regular';
             }

@@ -6,7 +6,7 @@
     .right-content .content .header-content {
         display: flex;
         justify-content: space-between;
-        height: 80px;
+        height: 60px;
     }
 
         .right-content .content .header-content .header-content {
@@ -14,7 +14,7 @@
         }
 
         .right-content .content .header-content .name-page {
-            font-size: 30px;
+            font-size: 24px;
             padding: 16px;
         }
 
@@ -35,32 +35,47 @@
                 line-height: 40px;
             }
 
-                .right-content .content .header-content .header-features .synchronized:hover {
+                .right-content .content .header-content .header-features .synchronized button {
+                    border: none;
+                    background-color: #ffffff;
+                    font-family: 'GoogleSans-Regular';
+                }
+
+            .right-content .content .header-content .header-features .add-employee button {
+                border: none;
+                background-color: #ffffff;
+                font-family: 'GoogleSans-Regular';
+                width: 101px;
+                background-color: #019160;
+            }
+
+            .right-content .content .header-content .header-features .synchronized:hover {
+                background-color: #019160;
+            }
+
+                .right-content .content .header-content .header-features .synchronized:hover button {
                     background-color: #019160;
+                    color: white;
                 }
 
+            .right-content .content .header-content .header-features .synchronized .synchronized-icon {
+                font-size: 16px;
+                color: aquamarine;
+                margin-left: 16px;
+                margin-right: 8px;
+            }
 
-                .right-content .content .header-content .header-features .synchronized .synchronized-icon {
-                    background-image: url('/content/img/sync.png');
-                    width: 16px;
-                    height: 16px;
-                    align-self: center;
-                    background-size: contain;
-                    background-repeat: no-repeat;
-                    margin-left: 16px;
-                    margin-right: 8px;
-                }
+            .right-content .content .header-content .header-features .synchronized .synchronized-name {
+                color: #01b075;
+            }
 
-                .right-content .content .header-content .header-features .synchronized .synchronized-name {
-                    color: #01b075;
-                }
-
-                .right-content .content .header-content .header-features .synchronized:hover .synchronized-name {
-                    color: #ffffff;
-                }
+            .right-content .content .header-content .header-features .synchronized:hover .synchronized-name {
+                color: #ffffff;
+            }
 
             .right-content .content .header-content .header-features .add-employee {
                 background-color: #019160;
+                width: 190px;
                 margin-right: 10px;
             }
 
@@ -70,29 +85,30 @@
                     border-right: 1px solid #674e4e;
                 }
 
+                    .right-content .content .header-content .header-features .add-employee .title-add-employee:hover {
+                        background-color: #2FBE8E;
+                    }
+
+                        .right-content .content .header-content .header-features .add-employee .title-add-employee:hover button {
+                            background-color: #2FBE8E;
+                        }
+
                     .right-content .content .header-content .header-features .add-employee .title-add-employee .icon-title-add-employee {
-                        width: 19px;
-                        height: 23px;
-                        background-image: url('/content/img/add-user.png');
-                        background-size: contain;
-                        background-repeat: no-repeat;
-                        align-self: center;
-                        margin-left: 11px;
+                        font-size: 16px;
+                        margin-left: 16px;
                         margin-right: 8px;
+                        color: white;
                     }
 
                     .right-content .content .header-content .header-features .add-employee .title-add-employee .text-title-add-employee {
                         color: #ffffff;
+                        display: flex;
                     }
 
                 .right-content .content .header-content .header-features .add-employee .icon-add-employee {
-                    width: 16px;
-                    height: 16px;
-                    background-image: url('/content/img/caret.png');
-                    background-size: contain;
-                    background-repeat: no-repeat;
-                    align-self: center;
-                    margin-left: 8px;
+                    margin-left: 12px;
+                    margin-right: 12px;
+                    font-size: 16px;
                 }
 
     .right-content .content .filter-form {
@@ -109,78 +125,75 @@
                 display: flex;
             }
 
-            .right-content .content .filter-form .left-filter-form .icon-search, .icon-select-office, .icon-select-state {
-                width: 16px;
-                height: 16px;
-                background-size: contain;
-                align-self: center;
-                background-repeat: no-repeat;
-            }
-
-            .right-content .content .filter-form .left-filter-form .search-name .icon-search {
-                background-image: url('/content/img/icons8-search-50.png');
-                position: relative;
-                left: 25px;
-            }
-
-            .right-content .content .filter-form .left-filter-form .search-name .form-search {
-            }
-
-                .right-content .content .filter-form .left-filter-form .search-name .form-search input {
-                    height: 30px;
-                    width: 280px;
-                    text-indent: 30px;
-                    background-color: #ffffff;
-                    border: 1px solid #e5e5e5;
-                    border-radius: 5px;
+                .right-content .content .filter-form .left-filter-form .search-name .icon-search {
+                    font-size: 16px;
+                    position: relative;
+                    left: 38px;
+                    top: 12px;
                 }
 
-                    .right-content .content .filter-form .left-filter-form .search-name .form-search input:focus {
-                        outline: none;
-                        border: 1px solid #01b075;
+                .right-content .content .filter-form .left-filter-form .search-name .form-search {
+                }
+
+                    .right-content .content .filter-form .left-filter-form .search-name .form-search input {
+                        height: 38px;
+                        width: 400px;
+                        text-indent: 50px;
+                        background-color: #ffffff;
+                        border: 1px solid #e5e5e5;
                         border-radius: 5px;
                     }
 
+                        .right-content .content .filter-form .left-filter-form .search-name .form-search input:focus {
+                            outline: none;
+                            border: 1px solid #01b075;
+                            border-radius: 5px;
+                        }
+
             .right-content .content .filter-form .left-filter-form .select-office {
-                height: 32px;
-                width: 220px;
+                height: 40px;
+                width: 260px;
                 text-align: center;
-                line-height: 32px;
+                line-height: 40px;
                 border: 1px solid #e5e5e5;
                 border-radius: 5px;
                 margin-left: 15px;
+                justify-content: space-between;
                 display: flex;
             }
 
                 .right-content .content .filter-form .left-filter-form .select-office .text-select {
-                    padding-left: 10px;
+                    padding-left: 12px;
                 }
 
-                .right-content .content .filter-form .left-filter-form .select-office .icon-select-office {
-                    background-image: url('/content/img/icons8-sort-down-26.png');
-                    width: 12px;
-                    height: 12px;
-                    margin-left: 40px;
+                .right-content .content .filter-form .left-filter-form .select-office .icon-select-office button {
+                    border: none;
+                    background-color: #ffffff;
+                    font-size: 16px;
+                    margin-right: 12px;
                 }
 
             .right-content .content .filter-form .left-filter-form .select-state {
-                height: 32px;
-                width: 260px;
+                height: 40px;
+                width: 278px;
                 border: 1px solid #e5e5e5;
                 border-radius: 5px;
-                line-height: 32px;
-                margin-left: 15px;
+                line-height: 40px;
+                margin-left: 12px;
                 display: flex;
             }
 
                 .right-content .content .filter-form .left-filter-form .select-state .text-select {
                     border-right: 1px solid #e5e5e5;
-                    padding: 0 10px 0 10px;
+                    padding: 0 12px 0 12px;
                 }
 
-                .right-content .content .filter-form .left-filter-form .select-state .icon-select-state {
-                    background-image: url('/content/img/caret.png');
-                    margin-left: 8px;
+                .right-content .content .filter-form .left-filter-form .select-state .icon-select-state button {
+                    margin-left: 12px;
+                    border: none;
+                    background-color: #ffffff;
+                    font-size: 16px;
+                    margin-right: 12px;
                 }
 
         .right-content .content .filter-form .icon-right-filter-form {
@@ -223,11 +236,13 @@
 
     .right-content .content .data-table {
         height: 400px;
-        overflow: auto;
+        overflow: scroll;
+        margin-right: 16px;
+        margin-left: 16px;
+        margin-top: 16px;
     }
 
         .right-content .content .data-table .table {
-            margin-top: 20px;
             border-collapse: collapse;
         }
 
@@ -270,7 +285,7 @@
                 }
 
                 .right-content .content .data-table .table tr .employee-id-bhxh {
-                    width: 80px;
+                    width: 100px;
                 }
 
                 .right-content .content .data-table .table tr .employee-gender {
@@ -278,7 +293,7 @@
                 }
 
                 .right-content .content .data-table .table tr .employee-pos {
-                    width: 100px;
+                    width: 120px;
                 }
 
                 .right-content .content .data-table .table tr .employee-department {
@@ -307,32 +322,102 @@
     }
 
         .right-content .content .footer .left-footer {
-            line-height: 60px;
-            margin-left: 25px;
+            line-height: 56px;
+            margin-left: 24px;
         }
 
-        .right-content .content .footer .panagition ul {
-            display: flex;
-            height: 50px;
+        .right-content .content .footer .panagition {
+            align-self: center;
+            height: 56px;
         }
 
-            .right-content .content .footer .panagition ul li {
-                list-style: none;
-                width: 30px;
-                height: 30px;
-                border: 1px solid #e5e5e5;
-                text-align: center;
-                border-radius: 10px;
-                line-height: 30px;
-                margin: 0px 21px 0 0;
+            .right-content .content .footer .panagition ul {
+                display: flex;
             }
 
-                .right-content .content .footer .panagition ul li a {
-                    text-decoration: none;
-                    color: #000000;
+                .right-content .content .footer .panagition ul li {
+                    list-style: none;
+                    width: 30px;
+                    height: 30px;
+                    border: 1px solid #e5e5e5;
+                    text-align: center;
+                    border-radius: 15px;
+                    line-height: 30px;
+                    margin: 0px 21px 0 0;
                 }
 
+                    .right-content .content .footer .panagition ul li a {
+                        text-decoration: none;
+                        color: #000000;
+                    }
+
         .right-content .content .footer .choose-quantity-employee {
-            line-height: 60px;
-            margin-right: 80px;
+            line-height: 56px;
+            margin-right: 16px;
+            display: flex;
+            width: 100px;
+            height: 30px;
+            border: 1px solid #e5e5e5;
+            border-radius: 4px;
+            position: relative;
+            align-self: center;
         }
+
+            .right-content .content .footer .choose-quantity-employee .quantity-employee-text {
+                align-self: center;
+                margin-left: 12px;
+            }
+
+            .right-content .content .footer .choose-quantity-employee .quantity-employee-icon {
+                align-self: center;
+                margin-right: 12px;
+                margin-left: 8px;
+            }
+
+                .right-content .content .footer .choose-quantity-employee .quantity-employee-icon button {
+                    border: none;
+                    background-color: #ffffff;
+                    margin-left: 12px;
+                }
+
+            .right-content .content .footer .choose-quantity-employee .select-quantity-employee {
+                position: absolute;
+                height: 93px;
+                top: 20px;
+                border: 1px solid #e5e5e5;
+                border-bottom: none;
+                border-radius: 4px;
+                width: 100px;
+                padding: 0;
+                display: none;
+            }
+
+                .right-content .content .footer .choose-quantity-employee .select-quantity-employee .quantity-employee-item {
+                    list-style: none;
+                    width: 100px;
+                    text-align: center;
+                    height: 30px;
+                    border-bottom: 1px solid #e5e5e5;
+                    line-height: 30px;
+                }
+
+                    .right-content .content .footer .choose-quantity-employee .select-quantity-employee .quantity-employee-item a {
+                        text-decoration: none;
+                        color: #000000;
+                    }
+
+button:focus {
+    outline: none;
+}
+
+.pagination-item-active {
+    background-color: #019160;
+}
+
+.employee-state span {
+    display: inline-block;
+    width: 130px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
