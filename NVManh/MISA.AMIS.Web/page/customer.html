@@ -2,9 +2,701 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>MISA CukCuk - Phần mềm quản lý nhà hàng</title>
+    <link href="/css/common/main.css" rel="stylesheet" />
+    <link href="/css/common/common.css" rel="stylesheet" />
+    <link href="/css/common/icon.css" rel="stylesheet" />
+    <link href="/css/common/button.css" rel="stylesheet" />
+    <link href="/css/common/input.css" rel="stylesheet" />
+    <link href="/css/common/toolbar.css" rel="stylesheet" />
+    <link href="/css/common/grid.css" rel="stylesheet" />
+    <link href="/css/common/header.css" rel="stylesheet" />
+    <link href="/css/common/navbar.css" rel="stylesheet" />
+    <link href="/css/common/content.css" rel="stylesheet" />
+    <link href="/css/page/employee.css" rel="stylesheet" />
 </head>
 <body>
+    <div class="navbar">
+        <div class="logo-site">
+            <div class="logo-box">
+                <div class="toggle-icon"></div>
+                <div class="amis-logo"></div>
+            </div>
+        </div>
+        <div class="navbar-content">
+            <a class="nav-item">
+                <div class="nav-item-icon nav-item-dashboard"></div>
+                <div class="nav-item-text">Tổng quan</div>
+            </a>
+            <a class="nav-item">
+                <div class="nav-item-icon nav-item-report"></div>
+                <div class="nav-item-text">Báo cáo</div>
+            </a>
+            <a class="nav-item">
+                <div class="nav-item-icon nav-item-dashboard"></div>
+                <div class="nav-item-text">Mua hàng</div>
+            </a>
+            <a class="nav-item" href="employee.html">
+                <div class="nav-item-icon nav-item-dic"></div>
+                <div class="nav-item-text">Danh mục nhân viên</div>
+            </a>
+            <a class="nav-item" href="customer.html">
+                <div class="nav-item-icon nav-item-dic"></div>
+                <div class="nav-item-text">Danh mục Khách hàng</div>
+            </a>
+            <a class="nav-item">
+                <div class="nav-item-icon nav-item-setting"></div>
+                <div class="nav-item-text">Thiết lập hệ thống</div>
+            </a>
 
+        </div>
+    </div>
+    <div class="header">
+        <div class="department-info">
+            <select>
+                <option>Nhà hàng Biển Đông</option>
+                <option>Nhà hàng Hải Dương</option>
+                <option>Nhà hàng Đội Cấn</option>
+                <option>Nhà hàng Cầu Giấy</option>
+            </select>
+
+        </div>
+        <div class="account-info">
+            <div class="account-avatar"></div>
+            <div class="account-name">Nguyễn Văn Mạnh</div>
+            <div class="account-option icon-option-default-16"></div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="header-content">
+            <div class="title">Danh sách Khách hàng</div>
+            <div class="content-feature">
+                <button class="m-btn m-btn-default">
+                    <div class="m-btn-icon icon-add"></div>
+                    <div class="btn-text">Thêm Khách hàng</div>
+                </button>
+            </div>
+        </div>
+        <div class="filter-bar">
+            <div class="filter-left">
+                <input class="icon-search input-search" type="text" style="width: 200px" placeholder="Tìm kiếm theo Mã, Tên Khách hàng" />
+            </div>
+            <div class="filter-right">
+                <button class="m-second-button m-btn-refresh">
+                </button>
+            </div>
+        </div>
+        <div class="grid grid-employee">
+            <table class="scrollTable" style="width:100%" border="0" width="100%" cellspacing="0">
+                <colgroup>
+                    <col style="width:150px; background-color:aqua" />
+                    <col style="width:200px" />
+                    <col style="width:100px" />
+                    <col style="width:100px" />
+                    <col style="width:150px" />
+                    <col style="width:50px" />
+                </colgroup>
+                <thead class="fixedHeader">
+                    <tr>
+                        <th>Mã Khách hàng</th>
+                        <th>Họ và tên</th>
+                        <th>Giới tính</th>
+                        <th>Ngày sinh</th>
+                        <th>Số điện thoại</th>
+                        <th>Email</th>
+                        <th>Địa chỉ</th>
+                    </tr>
+                </thead>
+                <tbody class="scrollContent">
+                    <!--<tr>
+                        <td><div><span>NV00001</span></div></td>
+                        <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                        <td><div><span>Nam</span></div></td>
+                        <td><div><span>22/09/1989</span></div></td>
+                        <td><div><span>0977340334</span></div></td>
+                        <td><div><span>manhnv229@gmail.com</span></div></td>
+                        <td><div><span>Khách hàng bán hàng</span></div></td>
+                        <td><div><span>Phòng ban</span></div></td>
+                        <td><div><span>14.000.000</span></div></td>
+                        <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                        <td><div><span>Đang làm việc</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div><span>NV00001</span></div></td>
+                        <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                        <td><div><span>Nam</span></div></td>
+                        <td><div><span>22/09/1989</span></div></td>
+                        <td><div><span>0977340334</span></div></td>
+                        <td><div><span>manhnv229@gmail.com</span></div></td>
+                        <td><div><span>Khách hàng bán hàng</span></div></td>
+                        <td><div><span>Phòng ban</span></div></td>
+                        <td><div><span>14.000.000</span></div></td>
+                        <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                        <td><div><span>Đang làm việc</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div><span>NV00001</span></div></td>
+                        <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                        <td><div><span>Nam</span></div></td>
+                        <td><div><span>22/09/1989</span></div></td>
+                        <td><div><span>0977340334</span></div></td>
+                        <td><div><span>manhnv229@gmail.com</span></div></td>
+                        <td><div><span>Khách hàng bán hàng</span></div></td>
+                        <td><div><span>Phòng ban</span></div></td>
+                        <td><div><span>14.000.000</span></div></td>
+                        <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                        <td><div><span>Đang làm việc</span></div></td>
+                    <tr>
+                        <td><div><span>NV00001</span></div></td>
+                        <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                        <td><div><span>Nam</span></div></td>
+                        <td><div><span>22/09/1989</span></div></td>
+                        <td><div><span>0977340334</span></div></td>
+                        <td><div><span>manhnv229@gmail.com</span></div></td>
+                        <td><div><span>Khách hàng bán hàng</span></div></td>
+                        <td><div><span>Phòng ban</span></div></td>
+                        <td><div><span>14.000.000</span></div></td>
+                        <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                        <td><div><span>Đang làm việc</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div><span>NV00001</span></div></td>
+                        <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                        <td><div><span>Nam</span></div></td>
+                        <td><div><span>22/09/1989</span></div></td>
+                        <td><div><span>0977340334</span></div></td>
+                        <td><div><span>manhnv229@gmail.com</span></div></td>
+                        <td><div><span>Khách hàng bán hàng</span></div></td>
+                        <td><div><span>Phòng ban</span></div></td>
+                        <td><div><span>14.000.000</span></div></td>
+                        <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                        <td><div><span>Đang làm việc</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div><span>NV00001</span></div></td>
+                        <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                        <td><div><span>Nam</span></div></td>
+                        <td><div><span>22/09/1989</span></div></td>
+                        <td><div><span>0977340334</span></div></td>
+                        <td><div><span>manhnv229@gmail.com</span></div></td>
+                        <td><div><span>Khách hàng bán hàng</span></div></td>
+                        <td><div><span>Phòng ban</span></div></td>
+                        <td><div><span>14.000.000</span></div></td>
+                        <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                        <td><div><span>Đang làm việc</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div><span>NV00001</span></div></td>
+                        <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                        <td><div><span>Nam</span></div></td>
+                        <td><div><span>22/09/1989</span></div></td>
+                        <td><div><span>0977340334</span></div></td>
+                        <td><div><span>manhnv229@gmail.com</span></div></td>
+                        <td><div><span>Khách hàng bán hàng</span></div></td>
+                        <td><div><span>Phòng ban</span></div></td>
+                        <td><div><span>14.000.000</span></div></td>
+                        <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                        <td><div><span>Đang làm việc</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div><span>NV00001</span></div></td>
+                        <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                        <td><div><span>Nam</span></div></td>
+                        <td><div><span>22/09/1989</span></div></td>
+                        <td><div><span>0977340334</span></div></td>
+                        <td><div><span>manhnv229@gmail.com</span></div></td>
+                        <td><div><span>Khách hàng bán hàng</span></div></td>
+                        <td><div><span>Phòng ban</span></div></td>
+                        <td><div><span>14.000.000</span></div></td>
+                        <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                        <td><div><span>Đang làm việc</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div><span>NV00001</span></div></td>
+                        <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                        <td><div><span>Nam</span></div></td>
+                        <td><div><span>22/09/1989</span></div></td>
+                        <td><div><span>0977340334</span></div></td>
+                        <td><div><span>manhnv229@gmail.com</span></div></td>
+                        <td><div><span>Khách hàng bán hàng</span></div></td>
+                        <td><div><span>Phòng ban</span></div></td>
+                        <td><div><span>14.000.000</span></div></td>
+                        <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                        <td><div><span>Đang làm việc</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div><span>NV00001</span></div></td>
+                        <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                        <td><div><span>Nam</span></div></td>
+                        <td><div><span>22/09/1989</span></div></td>
+                        <td><div><span>0977340334</span></div></td>
+                        <td><div><span>manhnv229@gmail.com</span></div></td>
+                        <td><div><span>Khách hàng bán hàng</span></div></td>
+                        <td><div><span>Phòng ban</span></div></td>
+                        <td><div><span>14.000.000</span></div></td>
+                        <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                        <td><div><span>Đang làm việc</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div><span>NV00001</span></div></td>
+                        <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                        <td><div><span>Nam</span></div></td>
+                        <td><div><span>22/09/1989</span></div></td>
+                        <td><div><span>0977340334</span></div></td>
+                        <td><div><span>manhnv229@gmail.com</span></div></td>
+                        <td><div><span>Khách hàng bán hàng</span></div></td>
+                        <td><div><span>Phòng ban</span></div></td>
+                        <td><div><span>14.000.000</span></div></td>
+                        <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                        <td><div><span>Đang làm việc</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div><span>NV00001</span></div></td>
+                        <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                        <td><div><span>Nam</span></div></td>
+                        <td><div><span>22/09/1989</span></div></td>
+                        <td><div><span>0977340334</span></div></td>
+                        <td><div><span>manhnv229@gmail.com</span></div></td>
+                        <td><div><span>Khách hàng bán hàng</span></div></td>
+                        <td><div><span>Phòng ban</span></div></td>
+                        <td><div><span>14.000.000</span></div></td>
+                        <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                        <td><div><span>Đang làm việc</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div><span>NV00001</span></div></td>
+                        <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                        <td><div><span>Nam</span></div></td>
+                        <td><div><span>22/09/1989</span></div></td>
+                        <td><div><span>0977340334</span></div></td>
+                        <td><div><span>manhnv229@gmail.com</span></div></td>
+                        <td><div><span>Khách hàng bán hàng</span></div></td>
+                        <td><div><span>Phòng ban</span></div></td>
+                        <td><div><span>14.000.000</span></div></td>
+                        <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                        <td><div><span>Đang làm việc</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div><span>NV00001</span></div></td>
+                        <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                        <td><div><span>Nam</span></div></td>
+                        <td><div><span>22/09/1989</span></div></td>
+                        <td><div><span>0977340334</span></div></td>
+                        <td><div><span>manhnv229@gmail.com</span></div></td>
+                        <td><div><span>Khách hàng bán hàng</span></div></td>
+                        <td><div><span>Phòng ban</span></div></td>
+                        <td><div><span>14.000.000</span></div></td>
+                        <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                        <td><div><span>Đang làm việc</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div><span>NV00001</span></div></td>
+                        <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                        <td><div><span>Nam</span></div></td>
+                        <td><div><span>22/09/1989</span></div></td>
+                        <td><div><span>0977340334</span></div></td>
+                        <td><div><span>manhnv229@gmail.com</span></div></td>
+                        <td><div><span>Khách hàng bán hàng</span></div></td>
+                        <td><div><span>Phòng ban</span></div></td>
+                        <td><div><span>14.000.000</span></div></td>
+                        <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                        <td><div><span>Đang làm việc</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div><span>NV00001</span></div></td>
+                        <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                        <td><div><span>Nam</span></div></td>
+                        <td><div><span>22/09/1989</span></div></td>
+                        <td><div><span>0977340334</span></div></td>
+                        <td><div><span>manhnv229@gmail.com</span></div></td>
+                        <td><div><span>Khách hàng bán hàng</span></div></td>
+                        <td><div><span>Phòng ban</span></div></td>
+                        <td><div><span>14.000.000</span></div></td>
+                        <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                        <td><div><span>Đang làm việc</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div><span>NV00001</span></div></td>
+                        <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                        <td><div><span>Nam</span></div></td>
+                        <td><div><span>22/09/1989</span></div></td>
+                        <td><div><span>0977340334</span></div></td>
+                        <td><div><span>manhnv229@gmail.com</span></div></td>
+                        <td><div><span>Khách hàng bán hàng</span></div></td>
+                        <td><div><span>Phòng ban</span></div></td>
+                        <td><div><span>14.000.000</span></div></td>
+                        <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                        <td><div><span>Đang làm việc</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div><span>NV00001</span></div></td>
+                        <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                        <td><div><span>Nam</span></div></td>
+                        <td><div><span>22/09/1989</span></div></td>
+                        <td><div><span>0977340334</span></div></td>
+                        <td><div><span>manhnv229@gmail.com</span></div></td>
+                        <td><div><span>Khách hàng bán hàng</span></div></td>
+                        <td><div><span>Phòng ban</span></div></td>
+                        <td><div><span>14.000.000</span></div></td>
+                        <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                        <td><div><span>Đang làm việc</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div><span>NV00001</span></div></td>
+                        <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                        <td><div><span>Nam</span></div></td>
+                        <td><div><span>22/09/1989</span></div></td>
+                        <td><div><span>0977340334</span></div></td>
+                        <td><div><span>manhnv229@gmail.com</span></div></td>
+                        <td><div><span>Khách hàng bán hàng</span></div></td>
+                        <td><div><span>Phòng ban</span></div></td>
+                        <td><div><span>14.000.000</span></div></td>
+                        <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                        <td><div><span>Đang làm việc</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div><span>NV00001</span></div></td>
+                        <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                        <td><div><span>Nam</span></div></td>
+                        <td><div><span>22/09/1989</span></div></td>
+                        <td><div><span>0977340334</span></div></td>
+                        <td><div><span>manhnv229@gmail.com</span></div></td>
+                        <td><div><span>Khách hàng bán hàng</span></div></td>
+                        <td><div><span>Phòng ban</span></div></td>
+                        <td><div><span>14.000.000</span></div></td>
+                        <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                        <td><div><span>Đang làm việc</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div><span>NV00001</span></div></td>
+                        <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                        <td><div><span>Nam</span></div></td>
+                        <td><div><span>22/09/1989</span></div></td>
+                        <td><div><span>0977340334</span></div></td>
+                        <td><div><span>manhnv229@gmail.com</span></div></td>
+                        <td><div><span>Khách hàng bán hàng</span></div></td>
+                        <td><div><span>Phòng ban</span></div></td>
+                        <td><div><span>14.000.000</span></div></td>
+                        <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                        <td><div><span>Đang làm việc</span></div></td>
+                    </tr>-->
+                </tbody>
+            </table>
+            <!--<div class="grid-header">
+                <table class="scrollTable" border="0" width="100%" cellspacing="0">
+                    <colgroup>
+                        <col style="width:150px; background-color:aqua" />
+                        <col style="width:200px" />
+                        <col style="width:100px" />
+                        <col style="width:100px" />
+                        <col style="width:150px" />
+                        <col style="width:50px" />
+                        <col />
+                    </colgroup>
+                    <thead class="fixedHeader">
+                        <tr>
+                            <th>Mã Khách hàng</th>
+                            <th>Họ và tên</th>
+                            <th>Giới tính</th>
+                            <th>Ngày sinh</th>
+                            <th>Số điện thoại</th>
+                            <th>Email</th>
+                            <th>Chức vụ</th>
+                            <th>Phòng ban</th>
+                            <th>Mức lương hiện tại</th>
+                            <th>Địa chỉ</th>
+                            <th>Tình trạng công việc</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>-->
+            <!--<div class="grid-content">
+                <table class="scrollTable" border="0" width="100%" cellspacing="0">
+                    <colgroup>
+                        <col style="width:150px; background-color:aqua" />
+                        <col style="width:200px" />
+                        <col style="width:100px" />
+                        <col style="width:100px" />
+                        <col style="width:150px" />
+                        <col style="width:50px" />
+                        <col />
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td><div><span>NV00001</span></div></td>
+                            <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                            <td><div><span>Nam</span></div></td>
+                            <td><div><span>22/09/1989</span></div></td>
+                            <td><div><span>0977340334</span></div></td>
+                            <td><div><span><span>manhnv229@gmail.com</span></span></div></td>
+                            <td><div><span>Khách hàng bán hàng</span></div></td>
+                            <td><div><span>Phòng ban</span></div></td>
+                            <td><div><span>14.000.000</span></div></td>
+                            <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                            <td><div><span>Đang làm việc</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div><span>NV00001</span></div></td>
+                            <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                            <td><div><span>Nam</span></div></td>
+                            <td><div><span>22/09/1989</span></div></td>
+                            <td><div><span>0977340334</span></div></td>
+                            <td><div><span><span>manhnv229@gmail.com</span></span></div></td>
+                            <td><div><span>Khách hàng bán hàng</span></div></td>
+                            <td><div><span>Phòng ban</span></div></td>
+                            <td><div><span>14.000.000</span></div></td>
+                            <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                            <td><div><span>Đang làm việc</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div><span>NV00001</span></div></td>
+                            <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                            <td><div><span>Nam</span></div></td>
+                            <td><div><span>22/09/1989</span></div></td>
+                            <td><div><span>0977340334</span></div></td>
+                            <td><div><span><span>manhnv229@gmail.com</span></span></div></td>
+                            <td><div><span>Khách hàng bán hàng</span></div></td>
+                            <td><div><span>Phòng ban</span></div></td>
+                            <td><div><span>14.000.000</span></div></td>
+                            <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                            <td><div><span>Đang làm việc</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div><span>NV00001</span></div></td>
+                            <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                            <td><div><span>Nam</span></div></td>
+                            <td><div><span>22/09/1989</span></div></td>
+                            <td><div><span>0977340334</span></div></td>
+                            <td><div><span><span>manhnv229@gmail.com</span></span></div></td>
+                            <td><div><span>Khách hàng bán hàng</span></div></td>
+                            <td><div><span>Phòng ban</span></div></td>
+                            <td><div><span>14.000.000</span></div></td>
+                            <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                            <td><div><span>Đang làm việc</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div><span>NV00001</span></div></td>
+                            <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                            <td><div><span>Nam</span></div></td>
+                            <td><div><span>22/09/1989</span></div></td>
+                            <td><div><span>0977340334</span></div></td>
+                            <td><div><span><span>manhnv229@gmail.com</span></span></div></td>
+                            <td><div><span>Khách hàng bán hàng</span></div></td>
+                            <td><div><span>Phòng ban</span></div></td>
+                            <td><div><span>14.000.000</span></div></td>
+                            <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                            <td><div><span>Đang làm việc</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div><span>NV00001</span></div></td>
+                            <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                            <td><div><span>Nam</span></div></td>
+                            <td><div><span>22/09/1989</span></div></td>
+                            <td><div><span>0977340334</span></div></td>
+                            <td><div><span><span>manhnv229@gmail.com</span></span></div></td>
+                            <td><div><span>Khách hàng bán hàng</span></div></td>
+                            <td><div><span>Phòng ban</span></div></td>
+                            <td><div><span>14.000.000</span></div></td>
+                            <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                            <td><div><span>Đang làm việc</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div><span>NV00001</span></div></td>
+                            <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                            <td><div><span>Nam</span></div></td>
+                            <td><div><span>22/09/1989</span></div></td>
+                            <td><div><span>0977340334</span></div></td>
+                            <td><div><span><span>manhnv229@gmail.com</span></span></div></td>
+                            <td><div><span>Khách hàng bán hàng</span></div></td>
+                            <td><div><span>Phòng ban</span></div></td>
+                            <td><div><span>14.000.000</span></div></td>
+                            <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                            <td><div><span>Đang làm việc</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div><span>NV00001</span></div></td>
+                            <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                            <td><div><span>Nam</span></div></td>
+                            <td><div><span>22/09/1989</span></div></td>
+                            <td><div><span>0977340334</span></div></td>
+                            <td><div><span><span>manhnv229@gmail.com</span></span></div></td>
+                            <td><div><span>Khách hàng bán hàng</span></div></td>
+                            <td><div><span>Phòng ban</span></div></td>
+                            <td><div><span>14.000.000</span></div></td>
+                            <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                            <td><div><span>Đang làm việc</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div><span>NV00001</span></div></td>
+                            <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                            <td><div><span>Nam</span></div></td>
+                            <td><div><span>22/09/1989</span></div></td>
+                            <td><div><span>0977340334</span></div></td>
+                            <td><div><span><span>manhnv229@gmail.com</span></span></div></td>
+                            <td><div><span>Khách hàng bán hàng</span></div></td>
+                            <td><div><span>Phòng ban</span></div></td>
+                            <td><div><span>14.000.000</span></div></td>
+                            <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                            <td><div><span>Đang làm việc</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div><span>NV00001</span></div></td>
+                            <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                            <td><div><span>Nam</span></div></td>
+                            <td><div><span>22/09/1989</span></div></td>
+                            <td><div><span>0977340334</span></div></td>
+                            <td><div><span><span>manhnv229@gmail.com</span></span></div></td>
+                            <td><div><span>Khách hàng bán hàng</span></div></td>
+                            <td><div><span>Phòng ban</span></div></td>
+                            <td><div><span>14.000.000</span></div></td>
+                            <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                            <td><div><span>Đang làm việc</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div><span>NV00001</span></div></td>
+                            <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                            <td><div><span>Nam</span></div></td>
+                            <td><div><span>22/09/1989</span></div></td>
+                            <td><div><span>0977340334</span></div></td>
+                            <td><div><span><span>manhnv229@gmail.com</span></span></div></td>
+                            <td><div><span>Khách hàng bán hàng</span></div></td>
+                            <td><div><span>Phòng ban</span></div></td>
+                            <td><div><span>14.000.000</span></div></td>
+                            <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                            <td><div><span>Đang làm việc</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div><span>NV00001</span></div></td>
+                            <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                            <td><div><span>Nam</span></div></td>
+                            <td><div><span>22/09/1989</span></div></td>
+                            <td><div><span>0977340334</span></div></td>
+                            <td><div><span><span>manhnv229@gmail.com</span></span></div></td>
+                            <td><div><span>Khách hàng bán hàng</span></div></td>
+                            <td><div><span>Phòng ban</span></div></td>
+                            <td><div><span>14.000.000</span></div></td>
+                            <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                            <td><div><span>Đang làm việc</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div><span>NV00001</span></div></td>
+                            <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                            <td><div><span>Nam</span></div></td>
+                            <td><div><span>22/09/1989</span></div></td>
+                            <td><div><span>0977340334</span></div></td>
+                            <td><div><span><span>manhnv229@gmail.com</span></span></div></td>
+                            <td><div><span>Khách hàng bán hàng</span></div></td>
+                            <td><div><span>Phòng ban</span></div></td>
+                            <td><div><span>14.000.000</span></div></td>
+                            <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                            <td><div><span>Đang làm việc</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div><span>NV00001</span></div></td>
+                            <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                            <td><div><span>Nam</span></div></td>
+                            <td><div><span>22/09/1989</span></div></td>
+                            <td><div><span>0977340334</span></div></td>
+                            <td><div><span><span>manhnv229@gmail.com</span></span></div></td>
+                            <td><div><span>Khách hàng bán hàng</span></div></td>
+                            <td><div><span>Phòng ban</span></div></td>
+                            <td><div><span>14.000.000</span></div></td>
+                            <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                            <td><div><span>Đang làm việc</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div><span>NV00001</span></div></td>
+                            <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                            <td><div><span>Nam</span></div></td>
+                            <td><div><span>22/09/1989</span></div></td>
+                            <td><div><span>0977340334</span></div></td>
+                            <td><div><span><span>manhnv229@gmail.com</span></span></div></td>
+                            <td><div><span>Khách hàng bán hàng</span></div></td>
+                            <td><div><span>Phòng ban</span></div></td>
+                            <td><div><span>14.000.000</span></div></td>
+                            <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                            <td><div><span>Đang làm việc</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div><span>NV00001</span></div></td>
+                            <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                            <td><div><span>Nam</span></div></td>
+                            <td><div><span>22/09/1989</span></div></td>
+                            <td><div><span>0977340334</span></div></td>
+                            <td><div><span><span>manhnv229@gmail.com</span></span></div></td>
+                            <td><div><span>Khách hàng bán hàng</span></div></td>
+                            <td><div><span>Phòng ban</span></div></td>
+                            <td><div><span>14.000.000</span></div></td>
+                            <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                            <td><div><span>Đang làm việc</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div><span>NV00001</span></div></td>
+                            <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                            <td><div><span>Nam</span></div></td>
+                            <td><div><span>22/09/1989</span></div></td>
+                            <td><div><span>0977340334</span></div></td>
+                            <td><div><span><span>manhnv229@gmail.com</span></span></div></td>
+                            <td><div><span>Khách hàng bán hàng</span></div></td>
+                            <td><div><span>Phòng ban</span></div></td>
+                            <td><div><span>14.000.000</span></div></td>
+                            <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                            <td><div><span>Đang làm việc</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div><span>NV00001</span></div></td>
+                            <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                            <td><div><span>Nam</span></div></td>
+                            <td><div><span>22/09/1989</span></div></td>
+                            <td><div><span>0977340334</span></div></td>
+                            <td><div><span><span>manhnv229@gmail.com</span></span></div></td>
+                            <td><div><span>Khách hàng bán hàng</span></div></td>
+                            <td><div><span>Phòng ban</span></div></td>
+                            <td><div><span>14.000.000</span></div></td>
+                            <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                            <td><div><span>Đang làm việc</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div><span>NV00001</span></div></td>
+                            <td><div><span>Nguyễn Văn Mạnh</span></div></td>
+                            <td><div><span>Nam</span></div></td>
+                            <td><div><span>22/09/1989</span></div></td>
+                            <td><div><span>0977340334</span></div></td>
+                            <td><div><span><span>manhnv229@gmail.com</span></span></div></td>
+                            <td><div><span>Khách hàng bán hàng</span></div></td>
+                            <td><div><span>Phòng ban</span></div></td>
+                            <td><div><span>14.000.000</span></div></td>
+                            <td><div style="max-width:250px"><span>Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang Lê Lợi, TP Bắc Giang</span></div></td>
+                            <td><div><span>Đang làm việc</span></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>-->
+
+        </div>
+        <div class="paging-bar">
+            <div class="paging-record-info">
+                Hiển thị <b>1-10/1000</b> Khách hàng
+            </div>
+            <div class="paging-option">
+                <div class="btn-select-page m-btn-firstpage"></div>
+                <div class="btn-select-page m-btn-prev-page"></div>
+                <div class="m-btn-list-page">
+                    <button class="btn-pagenumber btn-pagenumber-selected">1</button>
+                    <button class="btn-pagenumber">2</button>
+                    <button class="btn-pagenumber">3</button>
+                    <button class="btn-pagenumber">4</button>
+                </div>
+                <div class="btn-select-page m-btn-next-page"></div>
+                <div class="btn-select-page m-btn-lastpage"></div>
+            </div>
+            <div class="paging-record-option">
+                <b>10</b> Khách hàng/trang
+            </div>
+        </div>
+    </div>
+    <script src="/lib/jquery-3.5.1.min.js"></script>
+    <script src="/js/common/common.js"></script>
+    <script src="/js/page/customer.js"></script>
 </body>
 </html>

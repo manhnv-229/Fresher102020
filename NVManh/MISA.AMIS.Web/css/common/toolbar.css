@@ -19,10 +19,23 @@
     position: relative;
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: 0 16px;
 }
+    .paging-bar .paging-record-info {
+        position: absolute;
+        left: 16px;
+    }
 
-        .paging-bar .paging-record-option{
-            position: absolute;
-            right: 16px;
-        }
+    .paging-bar .paging-record-option {
+        position: absolute;
+        right: 16px;
+    }
+
+    .paging-bar .paging-option button{
+        outline: none;
+        cursor: pointer;
+    }
+    .paging-bar .paging-option{
+        display: flex;
+    }
