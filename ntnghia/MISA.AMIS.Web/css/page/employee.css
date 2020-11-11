@@ -173,20 +173,17 @@ p, h2 {
     border-collapse: collapse;
 }
 
-        .content-table .th-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .content-table .th-icon {
-            margin-left: 5px;
-            width: 10px;
-            height: 10px;
-        }
-
     .content-table .table-item {
         border-top: 1px solid #e5e5e5;
+        height: 35px;
     }
+
+        .content-table .table-header th, .content-table .table-item td {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 0 10px;
+        }
 
         .content-table .table-item .item-number{
             width: 30px;
@@ -195,7 +192,14 @@ p, h2 {
 
         .content-table .table-item .table-item-salary {
             text-align: right;
-            padding-right: 20px;
+            padding-right: 10px;
+        }
+
+        .content-table .table-item .table-item-address {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            max-width: 250px;
         }
 
         .content .content-footer {

@@ -64,7 +64,7 @@ function loadData() {
             <td>`+ item["PositionName"] + `</td>
             <td>`+ item["DepartmentName"] + `</td>
             <td class="table-item-salary">`+ item["Salary"].toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.") + `</td>
-            <td>`+ item["Address"] + `</td>
+            <td class="table-item-address">`+ item["Address"] + `</td>
             <td>`+ item["WorkStatusName"] + `</td>
                 </tr >`);
 
