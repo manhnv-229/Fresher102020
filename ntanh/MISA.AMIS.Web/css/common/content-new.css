@@ -1,0 +1,35 @@
+﻿.content {
+    position: absolute;
+    top: 49px;
+    left: 221px;
+    width: calc(100% - 221px);
+    height: calc(100vh - 49px);
+}
+
+/*Page title*/
+.content .page-title {
+    display: flex;
+    justify-content:space-between;
+    margin-top: 24px;
+}
+
+    .content .page-title .title {
+        font-size: 20px;
+        color: #000000;
+        font-weight: bold;
+        margin-left: 24px;
+    }
+/*Filter bar*/
+.content .filter-bar {
+}
+
+/*Grid*/
+.content .grid {
+
+}
+
+/*Paging bar*/
+.content .paging-bar {
+    height: 56px;
+    background-color: #dedede;
+}
