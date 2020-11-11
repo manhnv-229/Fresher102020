@@ -48,6 +48,7 @@
             height: 44px;
             cursor: pointer;
             line-height: 44px;
+            text-decoration: none;
         }
 
             .navbar .navbar-content .nav-item:hover {

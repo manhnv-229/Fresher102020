@@ -1,1 +1,127 @@
-﻿
+﻿.dialog-model {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    background-color: #b6ff00;
+    opacity: 30%;
+}
+.dialog {
+    position: absolute;
+    top: calc(50% - 300px);
+    left: calc(50% - 400px);
+    background: #ffffff;
+    height: 600px;
+    width: 800px;
+    border: 3px solid #002cff;
+}
+    .dialog .dialog-title {
+        display: flex;
+        background-color: #002cff;
+        width: 100%;
+    }
+        .dialog .dialog-title .dialog-title-header {
+           // height: 24px;
+            width: calc(100% - 24px - 10px);
+           // background-color: #000000;
+            padding: 10px 0 10px 10px;
+            color: #000000;
+            font-size: 15px;
+            
+        }
+        .dialog .dialog-title .icon-exit {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin-left: 24px;
+            width: 24px;
+            height: 24px;
+            border-radius: px;
+            padding: 0;
+        }
+    .dialog .dialog-body {
+        height: calc(100% - 66px - 20px);
+        padding: 10px;
+        //background-color: #000000;
+    }
+        .dialog .dialog-body .title-info-general {
+            width: 100%;
+            padding-left: 16px;
+          //  background: #b6ff00;
+            border-bottom: 1px solid #bbbbbb;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        .dialog .dialog-body .info-general {
+          //  height: 50%;
+            width: 100%;
+            display: flex;
+           // padding: 24px 24px 0 24px;
+        }
+            .dialog .dialog-body .info-general .content-info-general {
+                // height: 100%;
+                width: 80%;
+          //      background-color: #002cff;
+            }
+.content-info-general .info-id{
+    margin-top: 10px;
+}
+.input-right {
+    display: flex;
+    align-items: center;
+}
+.input-right .input-birth {
+    width: 40%;
+}
+.input-right .gender {
+    width: 60%;
+    display: flex;
+    align-items: center;
+}
+    .input-right .gender .title-gender {
+        margin-left: 10px;
+        width: 30%;
+    }
+
+    .input-right .gender .select-gender {
+        width: 70%;
+    }
+
+    .input-right .input-id-card {
+        width: 40%;
+    }
+    .input-right .issued-by {
+        width: 60%;
+        display: flex;
+        align-items: center;
+    }
+        .input-right .issued-by .title-issued-by {
+            margin-left: 10px;
+            width: 30%;
+        }
+        .input-right .issued-by .day-issued-by {
+            width: 70%;
+        }
+
+.dialog .dialog-body .info-general .img-employee {
+    // height: 100%;
+    width: 20%;
+    background-color: #b6ff00;
+}
+.info-work .info-position {
+    margin-top: 24px;
+}
+.dialog .dialog-body .button-dialog-body {
+    position: absolute;
+    bottom: 24px;
+  //  background: #ff0000;
+    height: 24px;
+    width: calc(100% - 20px);
+    display: flex;
+    align-items:center;
+}
+    .dialog .dialog-body .button-dialog-body .button-right {
+        position: absolute;
+        right: 0;
+        display: flex;
+        align-items: center;
+    }
