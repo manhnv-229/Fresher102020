@@ -1,0 +1,27 @@
+﻿.grid {
+    height: calc(100% - 105px);
+    position: absolute;
+    width: 100%;
+}
+table th, td {
+    padding: 10px 16px;
+    border-bottom: 1px solid #bbbbbb;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    max-width:50px;
+    text-align:left;
+    background-color:#ffffff;
+}
+#ewan tbody tr:hover {
+    background-color: #ff6a00;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: #ffffff;
+}
+table th{
+    position:sticky;
+    top:0;
+}
