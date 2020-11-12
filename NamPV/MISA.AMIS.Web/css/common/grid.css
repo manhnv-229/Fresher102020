@@ -1,6 +1,8 @@
+﻿/*Định dạng table*/
 .grid{
     width: 100%;
-    height: 200px;
+    height: calc(100vh - 279px);
+    overflow: scroll;
 }
 table th, td{
     border-bottom: 1px solid #bbbbbb;
@@ -10,4 +12,29 @@ table th, td{
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+/*Chia kích thước màn hình theo cột*/
+.col-1{
+    width: 8.33%;
+}
+.col-2{
+    width:16.66%;
+}
+.col-3{
+    width: 25%;
+}
+.col-4{
+    width: 33.33%;
+}
+.col-5{
+    width: 41.66%;
+}
+.col-6{
+    width: 50%;
+}
+.col-9{
+    width: 75%;
+}
+.col-12{
+    width: 100%;
 }

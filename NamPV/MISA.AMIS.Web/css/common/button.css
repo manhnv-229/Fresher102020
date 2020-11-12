@@ -1,4 +1,4 @@
-.m-btn {
+﻿.m-btn {
   background-color: #019160;
   align-items: center;
   font-size: 13px;
@@ -11,15 +11,13 @@
 .m-btn:hover{
     cursor:pointer;
 }
+/*button chỉ chứa text*/
 .m-btn-content {
   padding: 0px 24px;
 }
-
+/*button chứa icon và text*/
 .m-btn-icon {
-  height: 40px;
-  border-radius: 4px;
   padding: 0px 16px;
-  border: 1px solid #bbbbbb;
   margin: auto;
   display: flex;
   background-repeat: no-repeat;
@@ -27,7 +25,7 @@
   background-position: 16px 12px;
   padding-left: 40px;
 }
-
+/*button chỉ chứa icon*/
 .btn-single-icon {
   height: 40px;
   width: 40px;
@@ -37,7 +35,6 @@
   background-size: 16px 16px;
   background-repeat: no-repeat;
   background-position: center;
-  outline: none;
 }
 .btn-single-icon:hover{
     cursor: pointer;

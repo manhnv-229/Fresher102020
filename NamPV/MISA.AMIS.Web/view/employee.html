@@ -4,13 +4,15 @@
 <head>
     <meta charset="utf-8" />
     <title>Demo AMIS BHXH</title>
-    <link href="/common/button.css" rel="stylesheet" />
-    <link href="/common/content.css" rel="stylesheet" />
-    <link href="/common/grid.css" rel="stylesheet" />
-    <link href="/common/header.css" rel="stylesheet" />
-    <link href="/common/input.css" rel="stylesheet" />
-    <link href="/common/main.css" rel="stylesheet" />
-    <link href="/common/navbar.css" rel="stylesheet" />
+    <link href="/css/common/main.css" rel="stylesheet" />
+    <link href="/css/common/navbar.css" rel="stylesheet" />
+    <link href="/css/common/input.css" rel="stylesheet" />
+    <link href="/css/common/header.css" rel="stylesheet" />
+    <link href="/css/common/grid.css" rel="stylesheet" />
+    <link href="/css/common/content.css" rel="stylesheet" />
+    <link href="/css/common/button.css" rel="stylesheet" />
+    <link href="/css/page/employee.css" rel="stylesheet" />
+    <link href="/css/common/select.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -55,7 +57,6 @@
             </div>
         </div>
         <div class="header-account">
-            <div class="header-icon-notify"></div>
             <div class="header-icon-avatar"></div>
             <div class="header-account-name">Nguyễn Thị Ngọc Huyền</div>
             <div class="header-icon-more"></div>
@@ -76,10 +77,6 @@
                 <div class="filter-left">
                     <input class="search" type="text" name="search" placeholder="Tìm kiếm theo mã nhân viên, họ tên"></input>
                     <select></select>
-                    <div class="combobox">
-                        <input type="text" name="search" placeholder="Trạng thái tham gia BHXH">
-                        <button class="btn-single-icon icon-down"></button>
-                    </div>
                 </div>
                 <div class="filter-right">
                     <button class="btn-single-icon download-btn" type="button"></button>
@@ -90,75 +87,117 @@
                 <table border="0" width="100%" style="border-collapse: unset;">
                     <thead>
                         <tr>
-                            <th></th>
                             <th>Mã nhân viên</th>
                             <th>Họ tên</th>
-                            <th>Mã số BHXH</th>
                             <th>Giới tính</th>
-                            <th>Vị trí/chức vụ</th>
-                            <th>Bộ phận/phòng ban</th>
-                            <th>Hệ sô/Mức lương đóng BHXH</th>
-                            <th>Trạng thái tham gia BHXH</th>
-                            <th>Bệnh viện</th>
+                            <th>Ngày sinh</th>
+                            <th>Số điện thoại</th>
+                            <th>Email</th>
+                            <th>Địa chỉ</th>
+                            <th>Mức lương</th>
+                            <th>Phòng ban</th>
+                            <th>Tình trạng</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>NV003</td>
-                            <td>Nguyễn Văn A</td>
-                            <td>2746352957</td>
-                            <td>Nam</td>
-                            <td>Nhân viên</td>
-                            <td>Văn phòng công ty</td>
-                            <td>5500000</td>
-                            <td>Đang tham gia</td>
-                            <td>Bệnh viện đa khoa ABC</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>NV003</td>
-                            <td>Nguyễn Văn A</td>
-                            <td>2746352957</td>
-                            <td>Nam</td>
-                            <td>Nhân viên</td>
-                            <td>Văn phòng công ty</td>
-                            <td>5500000</td>
-                            <td>Đang tham gia</td>
-                            <td>Bệnh viện đa khoa ABC</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>NV003</td>
-                            <td>Nguyễn Văn A</td>
-                            <td>2746352957</td>
-                            <td>Nam</td>
-                            <td>Nhân viên</td>
-                            <td>Văn phòng công ty</td>
-                            <td>5500000</td>
-                            <td>Đang tham gia</td>
-                            <td>Bệnh viện đa khoa ABC</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>NV003</td>
-                            <td>Nguyễn Văn A</td>
-                            <td>2746352957</td>
-                            <td>Nam</td>
-                            <td>Nhân viên</td>
-                            <td>Văn phòng công ty</td>
-                            <td>5500000</td>
-                            <td>Đang tham gia</td>
-                            <td>Bệnh viện đa khoa ABC</td>
-                        </tr>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
-            <div class="content-pagination">
-
+            <div class="pagination">
+                <div class="pagi-left">
+                    <p><span>Hiển thị </span><strong>0-21/1xx</strong><span> lao động</span></p>
+                </div>
+                <div class="pagi-center">
+                    <button class=".m-btn btn-single-icon">&laquo;</button>
+                    <button class=".m-btn btn-single-icon">&lt;</button>
+                    <a href="#">1</a>
+                    <a href="#" class="active">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#">5</a>
+                    <a href="#">6</a>
+                    <button class=".m-btn btn-single-icon">&gt;</button>
+                    <button class=".m-btn btn-single-icon">&raquo;</button>
+                </div>
+                <div class="pagi-right">
+                    <p>20 lao động/trang &diams;</p>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <div class="background-modal"></div>
+    <div class="dialog-modal" style="display: none;">
+        <div class="dialog">
+            <div class="dialog-header">
+                <div class="header-text"><p>THÊM MỚI LAO ĐỘNG</p></div>
+                <div class="btn-single-icon dialog-close-button"></div>
+            </div>
+            <div class="dialog-body">
+                <div class="col-9">
+                    <div class="body-text">A. THÔNG TIN CHUNG</div>
+                    <div class="col-12">
+                        <div class="col-6">
+                            <label>Mã nhân viên *</label>
+                            <input type="text" />
+                            <label>Tên nhân viên *</label>
+                            <input type="text" />
+                            <label>Ngày sinh</label>
+                            <input type="date" />
+                            <label>Giới tính</label>
+                            <select>
+                                <option>Nam</option>
+                                <option>Nữ</option>
+                                <option>Không xác định</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label>Email *</label>
+                            <input type="text" />
+                            <label>Điện thoại di động *</label>
+                            <input type="text" />
+                            <label>Số CMT</label>
+                            <input type="number" />
+                            <label>Ngày cấp</label>
+                            <input type="date" />
+                            <label>Nơi cấp CMND</label>
+                            <input type="text" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="body-text">B. THÔNG TIN CÔNG VIỆC</div>
+                    <label>Vị trí</label>
+                    <select>
+                        <option>Thu ngân</option>
+                        <option>Giám đốc</option>
+                        <option>Nhân viên</option>
+                    </select><label>Phòng ban</label>
+                    <select>
+                        <option>Phòng Marketing</option>
+                        <option>Phòng nhân sự</option>
+                        <option>Phòng công nghệ</option>
+                    </select>
+                    <label>Mã số thuế các nhân</label>
+                    <input type="text" />
+                    <label>Mức lương</label>
+                    <input type="text" />
+                    <label>Ngày gia nhập</label>
+                    <input type="date" />
+                    <label>Tình trạng trạng</label>
+                    <select>
+                        <option>Đang làm việc</option>
+                        <option>Đã nghỉ việc</option>
+                        <option>Đang thử việc</option>
+                    </select>
+                </div>
+            </div>
+            <div class="dialog-footer">
+                <button class="m-btn m-btn-content">Huỷ</button>
+                <button class="m-btn m-btn-icon btn-save">Lưu và thêm mới</button>
             </div>
         </div>
     </div>
+    <script src="../../lib/jquery-3.5.1.min.js"></script>
+    <script src="../js/page/employee.js"></script>
 </body>
 
 </html>

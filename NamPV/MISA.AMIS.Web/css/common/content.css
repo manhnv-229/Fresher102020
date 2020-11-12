@@ -1,8 +1,42 @@
 ﻿.content {
-    width: calc(100% - 221px);
-    height: calc(100vh - 49px);
+    width: calc(100% - 269px);
+    height: calc(100vh - 97px);
+    padding: 24px;
     position: absolute;
-    background-color: #E9EBEE;
+    background-color: #e9ebee;
     margin-top: 49px;
     margin-left: 221px;
+}
+/*Phân trang*/
+.pagination {
+    height: 56px;
+    display: flex;
+    justify-content: space-between;
+}
+
+    .pagination .pagi-center a, button {
+        border-radius: 50%;
+        color: black;
+        float: left;
+        padding: 10.85px 16px;
+        text-decoration: none;
+        border: 1px solid #ddd;
+        margin: 0 4px;
+        background-color: none;
+    }
+
+        .pagination .pagi-center a.active {
+            background-color: #109160;
+        }
+
+        .pagination .pagi-center a:hover {
+            background-color: #ffffff;
+        }
+
+    .pagination .pagi-left span {
+        color: #bbbbbb;
+    }
+
+.pagi-center, .pagi-left, .pagi-right {
+    align-self: center;
 }

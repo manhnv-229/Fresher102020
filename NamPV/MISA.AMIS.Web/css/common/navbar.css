@@ -1,13 +1,4 @@
-﻿@font-face {
-    font-family: 'GoogleSans-Medium';
-    src: url('/content/font/Google Sans/GoogleSans-Medium.otf') format('opentype');
-}
-
-@font-face {
-    font-family: 'GoogleSans-Regular';
-    src: url('/content/font/Google Sans/GoogleSans-Regular.otf') format('opentype');
-}
-
+﻿/*Thanh left sidebar*/
 .navbar {
     width: 220px;
     background-color: #ffffff;
@@ -80,7 +71,7 @@
 }
 
 .navbar-item .document-default {
-    background-image: url('/content/icon/record-2.jpg');
+    background-image: url('../../content/icon/document-online.png');
 }
 
 .navbar-item .report {
@@ -95,6 +86,6 @@
     background-image: url('../../content/icon/dic-employee.png');
 }
 
-.navbar-item .item-icon-6 {
+.navbar-item .setting {
     background-image: url('../../content/icon/setting.png');
 }

@@ -1,5 +1,5 @@
 input {
-  width: 250px;
+  width: 200px;
   background-color: white;
   font-size: 12px;
   color: #bbbbbb;
@@ -10,6 +10,7 @@ input {
   border-radius: 4px;
   border: 1px solid #bbbbbb;
   outline: none;
+  height: 35.5px;
 }
 input:focus {
     border: 1px solid #019160;
