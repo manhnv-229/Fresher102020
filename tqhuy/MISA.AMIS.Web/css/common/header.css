@@ -1,0 +1,51 @@
+﻿.header {
+    float: left;
+    width: calc(100% - 221px);
+    height: 60px;
+    border-bottom: 1px solid #e5e5e5;
+    cursor: pointer;
+    line-height: 60px;
+}
+
+    .header .header-title {
+        float: left;
+        display: flex;
+        margin-left: 16px;
+    }
+
+.header-title-text {
+    margin-right: 10px;
+}
+
+.header-account {
+    margin-right: 16px;
+    display: flex;
+}
+
+.header .header-account {
+    float: right;
+}
+
+.fa-angle-down {
+    font-size: 36px;
+    align-self: center;
+}
+
+.header-account-photo {
+    width: 24px;
+    height: 24px;
+    background-image: url('/content/img/account-photo.jpg');
+    margin-right: 16px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    align-self: center;
+}
+
+.header-account-text{
+    margin-right: 16px;
+}
+
+.material-icons {
+    font-size: 36px;
+    align-self: center;
+}
