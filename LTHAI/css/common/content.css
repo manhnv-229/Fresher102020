@@ -175,7 +175,7 @@
 
             .right-content .content .filter-form .left-filter-form .select-state {
                 height: 40px;
-                width: 278px;
+                width: 270px;
                 border: 1px solid #e5e5e5;
                 border-radius: 5px;
                 line-height: 40px;
@@ -189,7 +189,7 @@
                 }
 
                 .right-content .content .filter-form .left-filter-form .select-state .icon-select-state button {
-                    margin-left: 12px;
+                    margin-left: 14px;
                     border: none;
                     background-color: #ffffff;
                     font-size: 16px;
@@ -237,13 +237,17 @@
     .right-content .content .data-table {
         height: 400px;
         overflow: scroll;
-        margin-right: 16px;
+        margin-right: 30px;
         margin-left: 16px;
         margin-top: 16px;
+        overflow-x: auto;
     }
 
         .right-content .content .data-table .table {
-            border-collapse: collapse;
+            width: 1300px;
+            border-spacing: 0px;
+            table-layout: fixed;
+            border-collapse: separate;
         }
 
             .right-content .content .data-table .table tr {
@@ -266,52 +270,11 @@
                     cursor: pointer;
                 }
 
-                .right-content .content .data-table .table tr .checkbox-row {
-                    opacity: 0;
-                    border: none;
-                }
-
-                .right-content .content .data-table .table tr .index {
-                    width: 30px;
-                    text-align: center;
-                }
-
-                .right-content .content .data-table .table tr .employee-id {
-                    width: 90px;
-                }
-
-                .right-content .content .data-table .table tr .employee-name {
-                    width: 130px;
-                }
-
-                .right-content .content .data-table .table tr .employee-id-bhxh {
-                    width: 100px;
-                }
-
-                .right-content .content .data-table .table tr .employee-gender {
-                    width: 60px;
-                }
-
-                .right-content .content .data-table .table tr .employee-pos {
-                    width: 120px;
-                }
-
-                .right-content .content .data-table .table tr .employee-department {
-                    width: 120px;
-                }
 
                 .right-content .content .data-table .table tr .employee-coefficient {
                     width: 140px;
                     text-align: right;
                     padding-right: 10px;
-                }
-
-                .right-content .content .data-table .table tr .employee-state {
-                    width: 130px;
-                }
-
-                .right-content .content .data-table .table tr .employee-hospital {
-                    width: 120px;
                 }
 
     .right-content .content .footer {

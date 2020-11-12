@@ -1,11 +1,12 @@
 ﻿body {
     font-family: GoogleSans-Regular;
     font-size: 13px;
-    margin: 0;
-    padding: 0;
     display: flex;
 }
-
+* {
+    margin: 0;
+    padding: 0;
+}
 .right-content {
     display: flex;
     flex-direction: column;
@@ -30,4 +31,14 @@
 @font-face {
     font-family: 'GoogleSans-Thin';
     src: url('/content/font/GoogleSans-Thin.otf') format('opentype');
+}
+
+.d-same-row {
+    display: flex;
+}
+.text-align-center{
+    text-align: center!important;
+}
+.text-align-right {
+    text-align: right !important;
 }

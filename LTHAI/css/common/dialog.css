@@ -1,0 +1,85 @@
+﻿.d-background {
+    height: 100vh;
+    width: 100%;
+    background-color: #BBBBBB;
+}
+
+.d-dialog {
+    height: calc(100vh - 24px);
+    margin: 24px 24px 0 24px;
+    background-color: #ffffff;
+}
+
+.d-header-content {
+    border-bottom: 1px solid #bbbbbb;
+}
+
+    .d-header-content h2 {
+        font-size: 20px;
+        padding-top: 24px;
+        padding-left: 24px;
+        padding-bottom: 24px;
+    }
+
+.d-content {
+    display: flex;
+}
+
+    .d-content .d-inf-content {
+        width: 440px;
+        margin-left: 24px;
+    }
+
+        .d-content .d-inf-content h2 {
+            padding: 24px 0;
+        }
+
+.d-inf-content label {
+    font-size: 13px;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.d-general-content .d-insurrance-id {
+}
+
+.d-general-content .d-declare {
+    margin-top: 24px;
+}
+
+.d-general-content .d-same-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+}
+
+    .d-general-content .d-same-row .d-start {
+    }
+
+    .d-general-content .d-same-row .d-end {
+    }
+
+.d-closing-rate {
+    display: flex;
+    margin-bottom: 24px;
+}
+
+.d-range-min-salary {
+    display: flex;
+    margin-bottom: 24px;
+}
+
+.d-receiver {
+    display: flex;
+}
+
+.d-icon-angle-down button {
+    border: none;
+    background-color: #ffffff;
+    font-size: 19px;
+    align-items: center;
+    position: relative;
+    top: 32px;
+    right: 26px;
+}
+

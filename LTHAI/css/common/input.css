@@ -1,0 +1,52 @@
+﻿*:focus {
+    outline: none;
+}
+
+input {
+    border: 1px solid #bbbbbb;
+}
+
+    input:focus {
+        border: 1px solid #01b075;
+    }
+
+.d-general-content input {
+    height: 40px;
+    width: 100%;
+    border-radius: 5px;
+    text-indent: 8px;
+    font-size: 16px;
+}
+
+.d-general-content .d-declare input {
+}
+
+.d-general-content .d-insurrance-id input {
+    text-indent: 10px;
+    font-size: 16px;
+}
+
+.d-closing-rate input {
+    width: 440px;
+    height: 40px;
+    background-color: #ffffff;
+    border-radius: 5px;
+}
+.d-range-min-salary input {
+    width: 440px;
+    height: 40px;
+    background-color: #ffffff;
+    border-radius: 5px;
+}
+.d-receiver input {
+    width: 440px;
+    height: 40px;
+    background-color: #ffffff;
+    border-radius: 5px;
+}
+
+.d-range-min-salary input {
+}
+
+.d-receiver input {
+}
