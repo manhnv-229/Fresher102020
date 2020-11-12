@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Nhân viên</title>
+    <link href="/css/dialog/detailEmployee.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+<body>
+    <div id="dialog">
+        <div class="dialog-header">
+            <div id="title">Nhân viên</div>
+            <i class="material-icons">cancel</i>
+        </div>
+        
+        <div id="info-employee">
+            <div id="info-employee-header">Thông tin chung</div>
+            <div id="info-employee-content">
+                <div id="info-employee-content-row1">
+                    <div class="lable-info">Mã nhân viên (*)</div>
+                    <input type="text" />
+                </div>
+                <div id="info-employee-content-row2">
+                    <div class="lable-info">Tên nhân viên (*)</div>
+                    <input type="text" />
+                </div>
+                <div id="info-employee-content-row3">
+                    <div class="lable-info">Ngày sinh</div>
+                    <input class="input-date" type="date" />
+                    <div>Giới tính</div>
+                    <select id="select-gender">
+                        <option>Nam</option>
+                        <option>Nữ</option>
+                    </select>
+                </div>
+                <div id="info-employee-content-row4">
+                    <div class="lable-info">Email (*)</div>
+                    <input type="text" />
+                </div>
+                <div id="info-employee-content-row5">
+                    <div class="lable-info">ĐT di động (*)</div>
+                    <input type="text" />
+                </div>
+                <div id="info-employee-content-row6">
+                    <div class="lable-info">Số CMT/HC</div>
+                    <input type="text" />
+                    <div>Ngày cấp</div>
+                    <input class="input-date" type="date" />
+                </div>
+
+
+            </div>
+            <div id="info-employee-img">
+
+            </div>
+
+            <div id="info-employee-content-row7">
+                <div class="lable-info">Nơi cấp CMND</div>
+                <input type="text" />
+            </div>
+
+        </div>
+        <div id="info-job">
+            <div id="info-job-header" >Thông tin công việc</div>
+            <div id="info-job-row1">
+                <div class="lable-info">Vị trí</div>
+                <select>
+                    <option>Nhân viên</option>
+                    <option>Trưởng phòng</option>
+                </select>
+            </div>
+            <div id="info-job-row2">
+                <div class="lable-info">Phòng ban</div>
+                <select>
+                    <option>Nhân sự</option>
+                    <option></option>
+                </select>
+            </div>
+            <div id="info-job-row3">
+                <div class="lable-info">Mã số thuế cá nhân</div>
+                <input type="text" />
+                <div>Mức lương</div>
+                <input id="salary" type="text" />
+            </div>
+            <div id="info-job-row4">
+                <div class="lable-info">Ngày gia nhận</div>
+                <input class="input-date" type="date" />
+                <div>Tình trạng</div>
+                <select>
+                    <option>Đang làm</option>
+                    <option>Đã nghỉ</option>
+                </select>
+            </div>
+
+
+        </div>
+
+        <div class="toolbar-dialog">
+            <button class="toolbar-dialog-left">
+                <i class="material-icons">help_outline</i>
+                Giúp
+            </button>
+            <div class="toolbar-dialog-right">
+                <button class="btn-save">
+                    <i class="fa fa-save"></i>
+                    Cất
+                </button>
+                <button class="btn-save-insert">
+                    <i class="fa fa-save"></i>
+                    Cất & Thêm
+                </button>
+                <button class="btn-cancel">
+                    <i class="material-icons">cancel</i>
+                     Hủy bỏ
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

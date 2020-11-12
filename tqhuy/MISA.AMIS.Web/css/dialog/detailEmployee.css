@@ -1,0 +1,204 @@
+﻿#dialog {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    width: 716px;
+    height: 560px;
+    padding: 6px 8px;
+    background-color: #1a1ef2;
+}
+
+    #dialog input {
+        height: 25px;
+        border: 1px solid #bbbbbb;
+        color: #000000;
+        border-radius: 4px;
+        font-size: 13px;
+    }
+    #dialog select {
+        border: 1px solid #bbbbbb;
+        border-radius: 4px;
+        color: #000000;
+        font-size: 13px;
+        height: 25px;
+    }
+.dialog-header{
+    display: flex;
+    justify-content:space-between;
+    color: #ffffff;
+}
+
+
+#dialog select > option:hover {
+    background-color: #E9EBEE;
+}
+
+#info-employee {
+    width: 700px;
+    height: 290px;
+    background-color: #ffffff;
+    padding: 8px;
+}
+
+#info-employee-header, #info-job-header {
+    font-size: 20px;
+    color: #000000;
+    font-weight: bold;
+    /*padding-top: 8px;*/
+}
+
+#info-employee-content {
+    float: left;
+    width: 550px;
+    height: 208px;   
+}
+
+    #info-employee-content div {
+        display: flex;
+        align-items: center;
+        margin-bottom:8px;
+    }
+
+.lable-info {
+    width: 145px;
+    padding-left: 12px;
+}
+
+
+#info-employee-content-row1 input {
+    width: 370px;
+}
+
+#info-employee-content-row2 input {
+    width: 370px;
+}
+#info-employee-content-row3 input {
+    margin-right: 10px;
+    width: 215px;
+}
+#info-employee-content-row3 select{
+    margin-left:10px;
+    width: 80px;
+}
+#info-employee-content-row4 input {
+    width: 370px;
+}
+#info-employee-content-row5 input {
+    width: 370px;
+}
+#info-employee-content-row6 input {
+    margin-right: 10px;
+    width: 155px;
+}
+#info-employee-content-row6 .input-date {
+    margin-left: 10px;
+}
+#info-employee-content-row6 .input-date{
+    width: 130px; 
+}
+#info-employee-content-row7 {
+    float: left;
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+}
+
+#info-employee-content-row7 input {
+    width: 540px;
+}
+
+#info-employee-img {
+    float: right;
+    width: 130px;
+    height: 160px;
+    background-color: red;
+}
+
+#info-job {
+    width: 700px;
+    height: 190px;
+    background-color: #ffffff;
+    padding: 8px;
+}
+
+    #info-job div {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+
+
+
+#info-job-row1 select {
+    width: 555px;
+}
+
+#info-job-row2 select {
+    width: 555px;
+}
+
+#info-job-row3 #salary {
+    margin-left: 10px;
+    width: 293px;
+}
+
+#info-job-row3 .lable-info + input {
+    margin-right: 10px;
+    width: 156px;
+}
+#info-job-row4 .input-date {
+    margin-right: 10px;
+    width: 156px;
+}
+
+#info-job-row4 select{
+    width: 293px;
+    margin-left: 14px;
+}
+
+.toolbar-dialog{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 40px;
+    width: 700px;
+    background-color: #ffffff;
+    padding: 8px;
+}
+
+    .toolbar-dialog button {
+        display: flex;
+        height: 30px;
+        align-items: center;
+        margin-left: 8px;
+        border-radius: 4px;
+        border: 1px solid #bbbbbb;
+        background-color: #019160;
+        padding: 0 16px;
+    }
+
+        .toolbar-dialog button:hover {
+            background-color: #2FBE8E;
+        }
+
+        .toolbar-dialog button i {
+           
+            margin-right: 8px;
+        }
+
+
+.toolbar-dialog-right{
+    display: flex;
+    align-items: center;
+}
+
+.toolbar-dialog-right button{
+    display: flex;
+    align-items: center;
+}
+
+.btn-cancel:hover {
+    cursor: pointer;
+}
