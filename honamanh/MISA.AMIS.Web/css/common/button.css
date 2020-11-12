@@ -1,4 +1,5 @@
-﻿.button-default {
+﻿/*Dùng chung cho các nút button*/
+.button-default {
     background-color: #019160;
     border-radius: 4px;
     height: 40px;
@@ -21,6 +22,7 @@
         color: #000000;
         cursor: pointer;
     }
+/*Các nút dùng chung trong dialog*/
 .button-dialog-default{
     display: flex;
     align-content: center;

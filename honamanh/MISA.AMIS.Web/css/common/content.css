@@ -95,7 +95,7 @@
     width: 16px;
     height: 16px;
 }
-
+/*button thả xuống khi thêm nhân viên*/
 .button-toolbar .button-dropdown {
     height: 36px;
     width: 40px;
@@ -138,7 +138,7 @@
         display: flex;
         overflow: auto;
     }
-
+        /*Tìm kiếm theo mã, tên*/
         .content .search-table .type-search .search-by-id {
             margin-left: 16px;
             height: calc(100% - 2px);
@@ -162,10 +162,13 @@
 .search-by-id #input-search:focus {
     border: 1px solid #019160;
 }*/
+
+
+/*1 số trình duyệt không hỗ trợ*/
 #input-search::placeholder {
     color: #bbbbbb;
 }
-
+/*Lọc theo phòng ban*/
 .type-search .choose-department .select-department {
     height: calc(100% - 2px);
     margin-left: 16px;
@@ -187,6 +190,8 @@
     color: #000000;
     background-color: #ffffff;
 }*/
+
+/*Lọc theo trạng thái*/
 .btn-choose-state {
     display: flex;
     margin-left: 16px;
@@ -198,20 +203,6 @@
     outline: none;
 }
 
-    /*cách 1*/
-    /* .choose-state .btn-choose-state {
-        padding: 0 0 0 16px;
-        background-color: #ffffff;
-        border: 1px solid #bbbbbb;
-        color: #bbbbbb;
-    }
-
-        .choose-state .btn-choose-state .icon-dropdown-choose-state {
-            border-left: 1px solid #e5e5e5;
-            padding: 0 12px;
-            margin-left: 16px
-        }*/
-    /*cách 2*/
     .btn-choose-state .title-btn-choose-state {
         margin-right: 16px;
         width: 150px;
@@ -225,7 +216,7 @@
 
     .btn-choose-state .icon-btn-choose-state {
     }
-
+/*nút trên thanh toolbar: download và đồng bộ*/
 .search-table .download-and-syncing {
     height: 100%;
     width: 20%;
@@ -271,7 +262,7 @@
     border: 1px solid #019160;
     cursor: pointer;
 }
-/*content of table*/
+/*table*/
 .content-main {
     height: calc(100% - 60px - 35px);
 }
@@ -285,8 +276,11 @@
 table {
     border-collapse: collapse;
     margin-left: 16px;
+    width: 100%;
 }
-
+tr{
+    display: flex:
+}
 th, td {
     text-align: left;
     padding: 6px;
@@ -304,19 +298,13 @@ th, td {
 .align-salary {
     text-align: right;
 }
-/*Cố định chiều dài cột, khi dữ liệu dài quá max-width thì hiện ...*/
+/*Cố định chiều dài cột, khi dữ liệu dài quá max-width thì hiện...*/
 .fix-width-table {
     max-width: 150px;
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
 }
-/*td{
-        max-width: 100px;
-        white-space: nowrap;
-        overflow: hidden !important;
-        text-overflow: ellipsis;
-    }*/
 
 table tbody tr:hover {
     background: #e5e5e5;
@@ -347,7 +335,7 @@ table tbody tr:hover {
     width: 30px;
 }
 
-.button-nav-page .button-page-one, .button-page-two, .button-page-three, .button-page-four {
+.button-change-page-number {
     border-radius: 50%;
 }
 

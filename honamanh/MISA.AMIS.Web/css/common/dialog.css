@@ -1,36 +1,43 @@
-﻿.input-dialog-default{
+﻿/*phần dùng chung cho input-default*/
+.input-dialog-default {
     display: flex;
     align-items: center;
     margin-bottom: 5px;
     width: 100%;
 }
+/*tiêu đề trong input dialog*/
 .title-input {
     width: 100%;
     padding-bottom: 5px;
-    // background: #b6ff00;
+    /*background: #b6ff00;*/
     border-bottom: 1px solid #bbbbbb;
     font-size: 15px;
     font-weight: bold;
 }
-.label-input{
+
+.label-input {
     width: 150px;
 }
-.content-input{
+
+.content-input {
     width: calc(100% - 150px);
 }
-
+/*thành phần dùng riêng khi có nhiều input trên 1 hàng*/
 .input-right {
     display: flex;
     align-items: center;
 }
+
 .input-specal {
     width: 40%;
 }
+
 .info-specal {
     width: 60%;
     display: flex;
     align-items: center;
 }
-.label-specal{
+
+.label-specal {
     margin-left: 10px;
 }

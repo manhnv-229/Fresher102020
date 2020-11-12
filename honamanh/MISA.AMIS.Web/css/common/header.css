@@ -1,4 +1,5 @@
-﻿.header {
+﻿/*css cho top-header của trang*/
+.header {
     float: left;
     display: flex;
     position: relative;

@@ -23,6 +23,11 @@ function formatDate(date) {
  * CreateBy: HNANH <12/11/2020>
  */
 function formatMoney(money) {
-    var salary = money.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
-    return salary;
+    if (money) {
+        var salary = money.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
+        return salary;
+    }
+    else {
+        return "";
+    }
 }
