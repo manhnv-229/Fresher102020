@@ -7,6 +7,8 @@
     <link href="/css/common/navbar.css" rel="stylesheet" />
     <link href="/css/common/header.css" rel="stylesheet" />
     <link href="/css/common/content.css" rel="stylesheet" />
+    <link href="../css/common/button.css" rel="stylesheet" />
+    <link href="../css/common/input-field.css" rel="stylesheet" />
 </head>
 <body>
     <div class="navbar">
@@ -65,8 +67,8 @@
         </div>
     </div>
     <div class="content">
-        <div class="content-header">
-            <div class="content-header-1">
+        <!--<div class="content-header">-->
+            <!--<div class="content-header-1">
                 <div class="content-header-1-left">
                     <div class="content-header-1-text">
                         Quản lý lao động
@@ -93,8 +95,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="content-header-2">
+            </div>-->
+            <!--<div class="content-header-2">
                 <div class="textbox-box">
                     <div class="textbox text-box-1">
                         <div class="nav-item-icon icon-search"></div>
@@ -125,14 +127,336 @@
 
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="content-table">
+            </div>-->
+        <!--</div>-->
+        <!--<div class="content-table">
             table
         </div>
         <hr />
         <div class="content-footer">
             content-footer
+        </div>-->
+        <div class="content-header">
+            <div class="title">
+                Quản lý lao động
+            </div>
+            <div class="content-feature">
+                <button class="misa-btn-second">
+                    <i class="misa-icon-button icon-sync-HRM"></i>
+                    <div class="lable-text">
+                        Đồng bộ từ HRM
+                    </div>
+                </button>
+                <button class="misa-btn-icon">
+                    <i class="misa-icon-button icon-add-user"></i>
+                    <div class="lable-text">
+                        Thêm lao động
+                    </div>
+                </button>
+            </div>
+        </div>
+        <div class="tool-bar">
+            <div class="left-tool">
+                <div class="search-tool">
+                    <i class="misa-icon-button icon-search"></i>
+                    <input class="input-field" type="text" placeholder="Tìm kiếm theo mã nhân viên, họ tên" />
+                </div>
+                <div >
+                    <select class="input-field">
+                        <option>Chọn bộ phận phòng ban</option>
+                        <option>Chọn bộ phận phòng ban</option>
+                        <option>Chọn bộ phận phòng ban</option>
+                    </select>
+                </div>
+                <div>
+                    <select class="input-field">
+                        <option>Trạng thái tham gia BHXH</option>
+                        <option>Trạng thái tham gia BHXH</option>
+                        <option>Trạng thái tham gia BHXH</option>
+                    </select>
+                </div>
+            </div>
+            <div class="right-tool">
+                <button class="misa-btn-second dowload-tool" style="width:40px">
+
+                </button>
+                <button class="misa-btn-second sync-tool" style="width:40px">
+
+                </button>
+            </div>
+        </div>
+        <div class="grid">
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Mã nhân viên</th>
+                        <th>Họ và tên</th>
+                        <th>Mã số BHXH</th>
+                        <th>Giới tính</th>
+                        <th>Vị trí/chức vụ</th>
+                        <th>Bộ phận/phòng ban</th>
+                        <th>Hệ số.mức lương đóng Hệ số.mức lương đóng</th>
+                        <th>Trạng thái tham gia Hệ số.mức lương đóng</th>
+                        <th>Bệnh viện</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>MS55568</td>
+                        <td>Nguyen Khai</td>
+                        <td>1515223321</td>
+                        <td>Nam</td>
+                        <td>Nhân viên</td>
+                        <td>Văn phòng tổng công ty</td>
+                        <td class="td-luong">100000000</td>
+                        <td>Đã tham gia</td>
+                        <td>Tram y tế quảng ngãi Tram y tế quảng ngãi Tram y tế quảng ngãi</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>MS55568</td>
+                        <td>Nguyen Khai</td>
+                        <td>1515223321</td>
+                        <td>Nam</td>
+                        <td>Nhân viên</td>
+                        <td>Văn phòng tổng công ty</td>
+                        <td class="td-luong">100000000</td>
+                        <td>Đã tham gia</td>
+                        <td>Tram y tế quảng ngãi Tram y tế quảng ngãi Tram y tế quảng ngãi</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>MS55568</td>
+                        <td>Nguyen Khai</td>
+                        <td>1515223321</td>
+                        <td>Nam</td>
+                        <td>Nhân viên</td>
+                        <td>Văn phòng tổng công ty</td>
+                        <td class="td-luong">100000000</td>
+                        <td>Đã tham gia</td>
+                        <td>Tram y tế quảng ngãi Tram y tế quảng ngãi Tram y tế quảng ngãi</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>MS55568</td>
+                        <td>Nguyen Khai</td>
+                        <td>1515223321</td>
+                        <td>Nam</td>
+                        <td>Nhân viên</td>
+                        <td>Văn phòng tổng công ty</td>
+                        <td class="td-luong">100000000</td>
+                        <td>Đã tham gia</td>
+                        <td>Tram y tế quảng ngãi Tram y tế quảng ngãi Tram y tế quảng ngãi</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>MS55568</td>
+                        <td>Nguyen Khai</td>
+                        <td>1515223321</td>
+                        <td>Nam</td>
+                        <td>Nhân viên</td>
+                        <td>Văn phòng tổng công ty</td>
+                        <td class="td-luong">100000000</td>
+                        <td>Đã tham gia</td>
+                        <td>Tram y tế quảng ngãi Tram y tế quảng ngãi Tram y tế quảng ngãi</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>MS55568</td>
+                        <td>Nguyen Khai</td>
+                        <td>1515223321</td>
+                        <td>Nam</td>
+                        <td>Nhân viên</td>
+                        <td>Văn phòng tổng công ty</td>
+                        <td class="td-luong">100000000</td>
+                        <td>Đã tham gia</td>
+                        <td>Tram y tế quảng ngãi Tram y tế quảng ngãi Tram y tế quảng ngãi</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>MS55568</td>
+                        <td>Nguyen Khai</td>
+                        <td>1515223321</td>
+                        <td>Nam</td>
+                        <td>Nhân viên</td>
+                        <td>Văn phòng tổng công ty</td>
+                        <td class="td-luong">100000000</td>
+                        <td>Đã tham gia</td>
+                        <td>Tram y tế quảng ngãi Tram y tế quảng ngãi Tram y tế quảng ngãi</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>MS55568</td>
+                        <td>Nguyen Khai</td>
+                        <td>1515223321</td>
+                        <td>Nam</td>
+                        <td>Nhân viên</td>
+                        <td>Văn phòng tổng công ty</td>
+                        <td class="td-luong">100000000</td>
+                        <td>Đã tham gia</td>
+                        <td>Tram y tế quảng ngãi Tram y tế quảng ngãi Tram y tế quảng ngãi</td>
+                    <tr>
+                        <td>4</td>
+                        <td>MS55568</td>
+                        <td>Nguyen Khai</td>
+                        <td>1515223321</td>
+                        <td>Nam</td>
+                        <td>Nhân viên</td>
+                        <td>Văn phòng tổng công ty</td>
+                        <td class="td-luong">100000000</td>
+                        <td>Đã tham gia</td>
+                        <td>Tram y tế quảng ngãi Tram y tế quảng ngãi Tram y tế quảng ngãi</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>MS55568</td>
+                        <td>Nguyen Khai</td>
+                        <td>1515223321</td>
+                        <td>Nam</td>
+                        <td>Nhân viên</td>
+                        <td>Văn phòng tổng công ty</td>
+                        <td class="td-luong">100000000</td>
+                        <td>Đã tham gia</td>
+                        <td>Tram y tế quảng ngãi Tram y tế quảng ngãi Tram y tế quảng ngãi</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>MS55568</td>
+                        <td>Nguyen Khai</td>
+                        <td>1515223321</td>
+                        <td>Nam</td>
+                        <td>Nhân viên</td>
+                        <td>Văn phòng tổng công ty</td>
+                        <td class="td-luong">100000000</td>
+                        <td>Đã tham gia</td>
+                        <td>Tram y tế quảng ngãi Tram y tế quảng ngãi Tram y tế quảng ngãi</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>MS55568</td>
+                        <td>Nguyen Khai</td>
+                        <td>1515223321</td>
+                        <td>Nam</td>
+                        <td>Nhân viên</td>
+                        <td>Văn phòng tổng công ty</td>
+                        <td class="td-luong">100000000</td>
+                        <td>Đã tham gia</td>
+                        <td>Tram y tế quảng ngãi Tram y tế quảng ngãi Tram y tế quảng ngãi</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>MS55568</td>
+                        <td>Nguyen Khai</td>
+                        <td>1515223321</td>
+                        <td>Nam</td>
+                        <td>Nhân viên</td>
+                        <td>Văn phòng tổng công ty</td>
+                        <td class="td-luong">100000000</td>
+                        <td>Đã tham gia</td>
+                        <td>Tram y tế quảng ngãi Tram y tế quảng ngãi Tram y tế quảng ngãi</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>MS55568</td>
+                        <td>Nguyen Khai</td>
+                        <td>1515223321</td>
+                        <td>Nam</td>
+                        <td>Nhân viên</td>
+                        <td>Văn phòng tổng công ty</td>
+                        <td class="td-luong">100000000</td>
+                        <td>Đã tham gia</td>
+                        <td>Tram y tế quảng ngãi Tram y tế quảng ngãi Tram y tế quảng ngãi</td>
+                    <tr>
+                        <td>4</td>
+                        <td>MS55568</td>
+                        <td>Nguyen Khai</td>
+                        <td>1515223321</td>
+                        <td>Nam</td>
+                        <td>Nhân viên</td>
+                        <td>Văn phòng tổng công ty</td>
+                        <td class="td-luong">100000000</td>
+                        <td>Đã tham gia</td>
+                        <td>Tram y tế quảng ngãi Tram y tế quảng ngãi Tram y tế quảng ngãi</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>MS55568</td>
+                        <td>Nguyen Khai</td>
+                        <td>1515223321</td>
+                        <td>Nam</td>
+                        <td>Nhân viên</td>
+                        <td>Văn phòng tổng công ty</td>
+                        <td class="td-luong">100000000</td>
+                        <td>Đã tham gia</td>
+                        <td>Tram y tế quảng ngãi Tram y tế quảng ngãi Tram y tế quảng ngãi</td>
+                    <tr>
+                        <td>4</td>
+                        <td>MS55568</td>
+                        <td>Nguyen Khai</td>
+                        <td>1515223321</td>
+                        <td>Nam</td>
+                        <td>Nhân viên</td>
+                        <td>Văn phòng tổng công ty</td>
+                        <td class="td-luong">100000000</td>
+                        <td>Đã tham gia</td>
+                        <td>Tram y tế quảng ngãi Tram y tế quảng ngãi Tram y tế quảng ngãi</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>MS55568</td>
+                        <td>Nguyen Khai</td>
+                        <td>1515223321</td>
+                        <td>Nam</td>
+                        <td>Nhân viên</td>
+                        <td>Văn phòng tổng công ty</td>
+                        <td class="td-luong">100000000</td>
+                        <td>Đã tham gia</td>
+                        <td>Tram y tế quảng ngãi Tram y tế quảng ngãi Tram y tế quảng ngãi</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>MS55568</td>
+                        <td>Nguyen Khai</td>
+                        <td>1515223321</td>
+                        <td>Nam</td>
+                        <td>Nhân viên</td>
+                        <td>Văn phòng tổng công ty</td>
+                        <td class="td-luong">100000000</td>
+                        <td>Đã tham gia</td>
+                        <td>Tram y tế quảng ngãi Tram y tế quảng ngãi Tram y tế quảng ngãi</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footer">
+            <div class="display-footer-text">
+                Hiển thị 1 - 15/59 lao động
+            </div>
+            <div class="page-number">
+                <button class="misa-btn-second back-left">
+                </button>
+                <button class="misa-btn-second page-1" style="border-radius:50%">
+                    1
+                </button>
+                <button class="misa-btn-second page-2" style="border-radius:50%">
+                    2
+                </button>
+                <button class="misa-btn-second page-3" style="border-radius:50%">
+                    3
+                </button>
+                <button class="misa-btn-second page-4" style="border-radius:50%">
+                    4
+                </button>
+                <button class="misa-btn-second back-right">
+
+                </button>
+            </div>
+            <div class="pages">
+                15/trang
+                <i></i>
+            </div>
         </div>
     </div>
 </body>
