@@ -4,7 +4,7 @@
     left: 221px;
     width: calc(100% - 221px);
     height: calc(100vh - 51px);
-    background: #e9ebee;
+    background: #ffffff;
 }
 
 .border-common {
@@ -45,45 +45,85 @@
         border: 1px solid #bbbbbb;
         border-radius: 4px;
         align-self: center;
+        color: #000000;
+        outline: none;
     }
 
-        .button-toolbar .btn-syncing-from-hrm .icon-syncing {
-            margin-right: 8px;
-        }
+.btn-syncing-from-hrm:hover {
+    background-color: #E9EBEE;
+    cursor: pointer;
+}
 
-    .button-toolbar .btn-add-labor {
-        height: 36px;
-        background-color: #019160;
-        background-color: #019160;
+.btn-syncing-from-hrm:focus {
+    background-color: #01B075;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.button-toolbar .btn-syncing-from-hrm .icon-syncing {
+    margin-right: 8px;
+}
+
+.button-toolbar .btn-add-labor {
+    height: 36px;
+    background-color: #019160;
+    background-color: #019160;
+    color: #ffffff;
+    margin-left: 16px;
+    padding: 10px 16px;
+    border: 1px solid #bbbbbb;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    align-self: center;
+    outline: none;
+}
+
+.btn-add-labor:hover {
+    background-color: #2FBE8E;
+    border: 1px solid #019160;
+    cursor: pointer;
+}
+
+.btn-add-labor:focus {
+    background-color: #01B075;
+    border: 1px solid #019160;
+    cursor: pointer;
+}
+
+.button-toolbar .btn-add-labor .icon-add-labor {
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+}
+
+.button-toolbar .button-dropdown {
+    height: 36px;
+    width: 40px;
+    align-self: center;
+    background: #019160;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+    border: none;
+    line-height: 36px;
+    text-align: center;
+    outline: none;
+}
+
+    .button-toolbar .button-dropdown .icon-dropdown {
         color: #ffffff;
-        margin-left: 16px;
-        padding-right: 16px;
-        border: 1px solid #bbbbbb;
-        border-bottom-left-radius: 4px;
-        border-top-left-radius: 4px;
-        align-self: center;
     }
 
-        .button-toolbar .btn-add-labor .icon-add-labor {
-            margin-right: 8px;
-            padding-left: 16px;
-        }
+.button-dropdown:hover {
+    background-color: #2FBE8E;
+    border: 1px solid #019160;
+    cursor: pointer;
+}
 
-    .button-toolbar .button-dropdown {
-        height: 36px;
-        width: 40px;
-        align-self: center;
-        background: #019160;
-        border-bottom-right-radius: 4px;
-        border-top-right-radius: 4px;
-        border: none;
-        line-height: 36px;
-        text-align: center;
-    }
-
-        .button-toolbar .button-dropdown .icon-dropdown {
-            color: #ffffff;
-        }
+.button-dropdown:focus {
+    background-color: #01B075;
+    border: 1px solid #019160;
+    cursor: pointer;
+}
 /*lọc tìm kiếm trong bảng*/
 .content .search-table {
     display: flex;
@@ -96,6 +136,7 @@
         width: 80%;
         height: 100%;
         display: flex;
+        overflow: auto;
     }
 
         .content .search-table .type-search .search-by-id {
@@ -111,27 +152,54 @@
                 background-repeat: no-repeat;
                 border: 1px solid #bbbbbb;
                 height: calc(100% - 2px);
+                outline: none;
             }
 
+/*Không ăn*/
+/*.search-by-id #input-search:hover {
+    border: 1px solid #019160;
+}
+.search-by-id #input-search:focus {
+    border: 1px solid #019160;
+}*/
 #input-search::placeholder {
     color: #bbbbbb;
 }
 
-.content .search-table .type-search .choose-department .select-department {
+.type-search .choose-department .select-department {
     height: calc(100% - 2px);
     margin-left: 16px;
     border: 1px solid #bbbbbb;
     padding-left: 16px;
     color: #bbbbbb;
+    outline: none;
 }
+/*dùng select sẽ không tạo được border khi hover hay focus,.. nên phải custom lại nút này*/
 
-.choose-state {
+/*.select-department:hover {
+    border: 1px solid #019160;
+    background: #e5e5e5;
+
+}*/
+/*.select-department:focus {*/
+/*background: #ff0000;*/
+/*border: 1px solid #ff0000;
+    color: #000000;
+    background-color: #ffffff;
+}*/
+.btn-choose-state {
     display: flex;
     margin-left: 16px;
+    margin-right: 12px;
     height: calc(100% - 2px);
+    background-color: #ffffff;
+    color: #bbbbbb;
+    align-items: center;
+    outline: none;
 }
 
-    .choose-state .btn-choose-state {
+    /*cách 1*/
+    /* .choose-state .btn-choose-state {
         padding: 0 0 0 16px;
         background-color: #ffffff;
         border: 1px solid #bbbbbb;
@@ -142,7 +210,21 @@
             border-left: 1px solid #e5e5e5;
             padding: 0 12px;
             margin-left: 16px
-        }
+        }*/
+    /*cách 2*/
+    .btn-choose-state .title-btn-choose-state {
+        margin-right: 16px;
+        width: 150px;
+    }
+
+    .btn-choose-state .division {
+        height: 100%;
+        border-right: 1px solid #bbbbbb;
+        margin-right: 12px;
+    }
+
+    .btn-choose-state .icon-btn-choose-state {
+    }
 
 .search-table .download-and-syncing {
     height: 100%;
@@ -157,13 +239,38 @@
         right: 0;
     }
 
-        .search-table .download-and-syncing .btn-download-and-syncing .btn-download, .btn-syncing {
-            height: 100%;
-            width: 35px;
-            background: #ffffff;
-            margin-right: 16px;
-            border: 1px solid #e5e5e5;
-        }
+.btn-download-and-syncing .btn-download, .btn-syncing {
+    height: 100%;
+    width: 35px;
+    background: #ffffff;
+    margin-right: 16px;
+    border: 1px solid #e5e5e5;
+    outline: none;
+}
+
+.btn-download:hover {
+    background-color: #E9EBEE;
+    cursor: pointer;
+}
+
+.btn-download:focus {
+    outline: none;
+    background-color: #01B075;
+    border: 1px solid #019160;
+    cursor: pointer;
+}
+
+.btn-syncing:hover {
+    background-color: #E9EBEE;
+    cursor: pointer;
+}
+
+.btn-syncing:focus {
+    outline: none;
+    background-color: #01B075;
+    border: 1px solid #019160;
+    cursor: pointer;
+}
 /*content of table*/
 .content-main {
     height: calc(100% - 60px - 35px);
@@ -194,8 +301,25 @@ th, td {
         margin-left: 8px;
     }
 
+.align-salary {
+    text-align: right;
+}
+/*Cố định chiều dài cột, khi dữ liệu dài quá max-width thì hiện ...*/
+.fix-width-table {
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+/*td{
+        max-width: 100px;
+        white-space: nowrap;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+    }*/
+
 table tbody tr:hover {
-    background: #ffffff;
+    background: #e5e5e5;
 }
 /*thanh điều hướng bảng*/
 .content-main .nav-page {
@@ -236,12 +360,14 @@ table tbody tr:hover {
 
     .button-nav-page .button-bottom-bar:hover {
         background: #ffffff;
+        cursor: pointer;
     }
 
     .button-nav-page .button-bottom-bar:focus {
         background: #019160;
         border: none;
         outline: none;
+        cursor: pointer;
     }
 
 .nav-page .button-control-show {
