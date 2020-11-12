@@ -15,8 +15,10 @@
     .company_logo {
         width: 30px;
         height: 30px;
-        border: 1px solid;
         margin-right: 10px;
+        background-image: url('../../content/icon/logo_misaMB.png');
+        background-size: contain;
+        background-repeat: no-repeat;
     }
     .company_name {
         align-self: center;
@@ -28,8 +30,10 @@
     .company_more {
         align-self: center;
         width: 10px;
-        height: 10px;
-        border: 1px solid;
+        height: 5px;
+        background-image: url('../../content/icon/icon_more.png');
+        background-size: contain;
+        background-repeat: no-repeat;
     }
 
 .profile {
@@ -41,15 +45,17 @@
     .profile .icon_bell {
         width: 16px;
         height: 16px;
-        border: 1px solid;
         margin-right: 16px;
+        background-image: url('../../content/icon/icon_bell.png');
+        background-size: contain;
+        background-repeat: no-repeat;
     }
 
     .profile .profile_avt {
         width: 24px;
         height: 24px;
-        border: 1px solid;
         margin-right: 16px;
+        background-image: url('../../content/icon/profile_avt.png');
     }
 
     .profile .profile_name {
@@ -57,6 +63,6 @@
     }
     .profil_more {
         width: 10px;
-        height: 10px;
-        border: 1px solid;
+        height: 2px;
+        background-image: url('../../content/icon/profile_more.png');
     }

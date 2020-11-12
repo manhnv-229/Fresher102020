@@ -8,3 +8,12 @@
     font-family: 'GoogleSans-Regular';
     src: url('../../content/font/GoogleSans-Regular.otf') format('opentype');
 }
+
+.cur_poiter {
+    cursor: pointer;
+}
+
+.back_def {
+    background-size: contain;
+    background-repeat: no-repeat;
+}

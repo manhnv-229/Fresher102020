@@ -1,0 +1,22 @@
+﻿.grid {
+    width: 100%;
+}
+
+table tr, th,td {
+    border-bottom: 1px solid #bbbbbb;
+    padding: 10px 16px;
+    text-align: left;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+    table td span {
+        display: inline-block;
+        width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
