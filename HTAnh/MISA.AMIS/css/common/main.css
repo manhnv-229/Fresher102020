@@ -41,6 +41,7 @@ option[value=""][disabled] {
 	display: none;
 }
 
+/*font google-sans*/
 @font-face {
 	font-family: 'GoogleSans-Regular';
 	src: url('../../content/font/GoogleSans-Regular.otf') format('opentype');

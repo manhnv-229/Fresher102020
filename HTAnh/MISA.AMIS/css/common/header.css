@@ -23,13 +23,13 @@
 		display:flex;
 		padding-right: 24px;
 	}
-
+		/*avatar*/
 		.header .control .username, .header .control .control-btn, .header .control .avatar {
 			display: flex;
 			align-items: center;
 			margin-right: 16px;
 		}
-
+		
 		.header .control .avatar {
 			display: flex;
 			background-color: #FFBF00;
@@ -44,7 +44,9 @@
 			height: 24px;
 			border-radius: 50%;
 		}
+		/*end avatar*/
 
+		/*buttons*/
 		.header .control .control-btn {
 			background-image: url('../../content/icon/more.png');
 			background-size: contain;
@@ -53,4 +55,4 @@
 			margin:auto 0 auto 0;
 			opacity:0.3;
 		}
-	
+		/*End buttons*/

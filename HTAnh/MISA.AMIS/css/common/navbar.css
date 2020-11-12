@@ -5,7 +5,7 @@
 	background-color: #ffffff;
 	border-right: 1px solid #e5e5e5;
 }
-
+	/*Phần chứa logo*/
 	.navbar .logo-site {
 		display: flex;
 		width: 100%;
@@ -20,7 +20,7 @@
 		top: 12px;
 		left: 16px;
 	}
-
+		
 		.navbar .logo-site .logo-box .toggle-icon {
 			width: 24px;
 			height: 24px;
@@ -40,6 +40,9 @@
 			background-repeat: no-repeat;
 			background-position:0px -2.5px;
 		}
+	/*end phần chứa logo*/
+
+	/*Nội dung của navbar*/
 	.navbar .navbar-content {
 		width: 100%;
 	}
@@ -86,6 +89,6 @@
 				.navbar .navbar-content .nav-item .item-sixth {
 					background-image: url('../../content/icon/settings.png');
 				}
-
+	/*End Nội dung của navbar*/
 
 
