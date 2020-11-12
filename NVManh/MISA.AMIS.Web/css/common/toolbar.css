@@ -1,0 +1,28 @@
+﻿.filter-bar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 40px;
+}
+
+    .filter-bar .filter-left {
+        
+    }
+
+    .filter-bar .filter-right {
+        position:absolute;
+        right: 16px;
+    }
+
+.paging-bar {
+    border-top: 2px solid #bbbbbb;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+}
+
+        .paging-bar .paging-record-option{
+            position: absolute;
+            right: 16px;
+        }
