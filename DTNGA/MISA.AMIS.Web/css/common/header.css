@@ -1,0 +1,91 @@
+﻿.header {
+    float: left;
+    width: calc(100% - 221px);
+    height: 48px;
+    border-bottom: 1px solid #e5e5e5;
+    display: flex;
+}
+
+    .header .header-left {
+        width: 50%;
+        display: flex;
+    }
+
+    .header .header-right {
+        width: 50%;
+        display: flex;
+    }
+
+    .header .header-left select, .header .header-left select option {
+        height: 40px;
+        margin-left: 16px;
+        align-self: center;
+        -webkit-appearance: none;
+        border: none;
+        font-family: GoogleSans-Bold;
+        font-size: 15px;
+        outline: none;
+    }
+
+        .header .header-left select option {
+            border: none;
+            background-color: #ffffff;
+        }
+
+            .header .header-left select option:hover {
+                background-color: #E9EBEE;
+            }
+
+            .header .header-left select option:hover {
+                background-color: #e5e5e5;
+            }
+
+    .header .header-left .drop-icon {
+        width: 15px;
+        height: 15px;
+        background-image: url('/content/icon/header/single-down.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin-left: 10px;
+        align-self: center;
+    }
+
+        .header .header-right .header-right-box {
+            display: flex;
+            width: auto;
+            margin-right: 0px;
+            margin-left: auto;
+            /*float: right;*/
+        }
+
+.header-right .header-right-box .profile-image {
+    width: 35px;
+    height: 35px;
+    background-image: url('/content/icon/header/female-profile.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    align-self: center;
+    margin-left: 16px;
+}
+
+.header-right .header-right-box .profile-name {
+    width: auto;
+    margin-left: 16px;
+    margin-right: 16px;
+    align-self: center;
+}
+
+.header-right .header-right-box .setting-more-icon {
+    width: 15px;
+    height: 15px;
+    margin-right: 16px;
+    background-image: url('/content/icon/header/gray-more.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    align-self: center;
+}
+
+@font-face {
+    font-family: 'GoogleSans-Bold';
+    src: url('../../content/font/GoogleSans-Bold.otf') format('opentype');
+}

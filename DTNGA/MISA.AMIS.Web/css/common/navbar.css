@@ -1,0 +1,106 @@
+﻿.navbar {
+    float: left;
+    width: 220px;
+    background-color: #FFFFFF;
+    border-right: 1px solid #E5E5E5;
+    height: 100vh;
+}
+
+    .navbar .logo-site {
+        width: 100%;
+        height: 48px;
+    }
+
+    .navbar .logo-box {
+        display: flex;
+        width: calc( 100% - 16px );
+        height: 36px;
+    }
+
+    .navbar .logo-box {
+        padding: 12px 0px 0px 16px;
+        display: flex;
+    }
+
+    .navbar .logo-site .toggle-icon {
+        width: 24px;
+        height: 24px;
+        background-image: url('/content/icon/toggle.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin-right: 10px;
+    }
+
+    .navbar .logo-site .amis-logo {
+        width: calc( 100% - 34px);
+        height: 24px;
+        background-image: url('/content/icon/amis-logo.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    .navbar .nav-content {
+        width: 100%;
+    }
+
+        .navbar .nav-content .nav-item {
+            display: flex;
+            padding-left: 16px;
+            height: 44px;
+            cursor: pointer;
+            line-height: 44px;
+        }
+
+            .navbar .nav-content .nav-item:focus {
+                background-color: #019160;
+                color: #ffffff;
+            }
+
+            .navbar .nav-content .nav-item:hover {
+                background-color: #e5e5e5;
+                color: #000000;
+            }
+
+
+                .nav-content .nav-item .nav-item-icon {
+                    width: 20px;
+                    height: 20px;
+                    margin: auto 0; /* hoac align-sefl: center; */
+                    margin-right: 16px;
+                }
+
+                .nav-content .nav-item .cloud-profile-icon {
+                    background-image: url('/content/icon/navbar/cloud-document.png');
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                }
+
+                .nav-content .nav-item .paper-profile-icon {
+                    background-image: url('/content/icon/navbar/text-profile.png');
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                }
+
+                .nav-content .nav-item .expense-report-icon {
+                    background-image: url('/content/icon/navbar/bar-chart.png');
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                }
+
+.nav-content .nav-item .income-report-icon {
+    background-image: url('/content/icon/navbar/pie-chart.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.nav-content .nav-item .employee-managerment-icon {
+    background-image: url('/content/icon/navbar/people.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.nav-content .nav-item .setting-icon {
+    background-image: url('/content/icon/navbar/setting.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
