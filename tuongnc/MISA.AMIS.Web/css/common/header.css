@@ -9,20 +9,21 @@
     left: 221px;
     top: 0px;
 }
- /*company*/
+/*company*/
 .company {
     height: 100%;
     width: calc(100% - 300px);
     display: flex;
 }
+
     .company .company-icon {
         width: 20px;
         height: 20px;
         /*border: 1px solid #808080;*/
         margin-left: 10px;
         background-image: url('/content/img/down.png');
-        background-size:contain;
-        background-repeat:no-repeat;
+        background-size: contain;
+        background-repeat: no-repeat;
         margin: auto 0px;
         margin-left: 10px;
     }
@@ -31,7 +32,7 @@
         margin: auto 0px;
         margin-left: 16px;
     }
-    /*user*/
+/*user*/
 
 .user {
     width: 300px;
@@ -43,25 +44,23 @@
     .user .user-avatar {
         width: 40px;
         height: 40px;
-        /*border: 1px solid black;*/
         margin: auto 0px;
         margin-right: 16px;
         border-radius: 50%;
         background-image: url('/content/img/avatar2.png');
-        background-size:contain;
+        background-size: contain;
         background-repeat: no-repeat;
     }
 
-.user .user-name {
-    margin: auto;
-    margin-left: 0px;
-    margin-right: 0px;
-}
+    .user .user-name {
+        margin: auto;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
 
     .user .user-optimize {
         width: 30px;
         height: 30px;
-        /*border:1px solid black;*/
         margin: auto 0px;
         margin-left: 16px;
         margin-right: 16px;

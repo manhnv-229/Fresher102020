@@ -1,0 +1,62 @@
+﻿
+/*create-modal-css*/
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    border: 1px solid #000000;
+    border-radius: 4px;
+    z-index: 10;
+    background-color: #ffffff;
+    width: 1366px;
+    max-width: 80%;
+}
+
+    .modal .active {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    .modal .modal-header {
+        border-bottom: 1px solid #e5e5e5;
+    }
+
+        .modal .modal-header .information-user {
+            padding: 4px 48px 4px 48px;
+        }
+
+        .modal .modal-header .title-header {
+            padding: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            /*border-bottom: 1px solid #e5e5e5;*/
+        }
+
+.modal-header .title-header .close-button {
+    background-color: #ffffff;
+    color: #808080;
+    cursor: pointer;
+    border: none;
+    font-size: 24px;
+}
+
+.modal .modal-body {
+    padding: 24px;
+}
+
+#overlay {
+    position: fixed;
+    top: 0px;
+    right: 0px; 
+    bottom: 0px;
+    left: 0px;
+    background-color: rgba(0,0,0,.5);
+    pointer-events: all;
+}
+
+#overlay .active{
+    opacity: 1;
+    pointer-events: all;
+}

@@ -1,4 +1,7 @@
-﻿.input-field {
+﻿
+/*input-field*/
+
+.input-field {
     border: 1px solid #bbbbbb;
     border-radius: 4px;
     height: 40px;
@@ -12,7 +15,13 @@
         outline: none;
         border: 1px solid #019160;
     }
+/*------------------------------------------*/
 
-.icon-input-field {
+/*label-field-input*/
 
+.label-field-input {
+    font-family: GoogleSans-Medium;
+    font-size: 13px;
+    color: #000000;
 }
+/*------------------------------------------*/
