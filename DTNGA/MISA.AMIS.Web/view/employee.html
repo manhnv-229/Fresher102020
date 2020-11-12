@@ -9,6 +9,8 @@
     <link href="/css/common/navbar.css" rel="stylesheet" />
     <link href="/css/page/employee.css" rel="stylesheet" />
     <link href="/css/common/content.css" rel="stylesheet" />
+    <link href="/css/common/button.css" rel="stylesheet" />
+    <link href="/css/common/grid.css" rel="stylesheet" />
 </head>
 <body>
     <div class="navbar">
@@ -17,7 +19,7 @@
                 <div class="toggle-icon"></div>
                 <div class="amis-logo"></div>
             </div>
-            
+
         </div>
         <div class="nav-content">
             <div class="nav-item">
@@ -36,10 +38,18 @@
                 <div class="nav-item-icon income-report-icon"></div>
                 <div class="nav-item-text">Theo dõi đóng</div>
             </div>
-            <div class="nav-item">
-                <div class="nav-item-icon employee-managerment-icon"></div>
-                <div class="nav-item-text">Quản lý lao động</div>
-            </div>
+            <a href="employee.html">
+                <div class="nav-item">
+                    <div class="nav-item-icon employee-managerment-icon"></div>
+                    <div class="nav-item-text">Quản lý nhân viên</div>
+                </div>
+            </a>
+            <a href="customer.html">
+                <div class="nav-item">
+                    <div class="nav-item-icon employee-managerment-icon"></div>
+                    <div class="nav-item-text">Quản lý khách hàng </div>
+                </div>
+            </a>
             <div class="nav-item">
                 <div class="nav-item-icon setting-icon"></div>
                 <div class="nav-item-text">Thiết lập</div>
@@ -59,30 +69,28 @@
                 <div class="profile-image"></div>
                 <div class="profile-name">Demo AMIS BHXH</div>
                 <div class="setting-more-icon"></div>
-            </div>            
+            </div>
         </div>
     </div>
     <div class="content">
         <div class="content-header">
-            <div class="content-header-title">Quản lý lao động</div>
+            <div class="content-header-title">Quản lý nhân viên</div>
             <div class="content-header-right">
                 <div class="header-right-box">
-                    <button>
-                        <div class="button-sync">
-                            <div class="btn-sync-icon"></div>
-                            <div class="btn-sync-text">Đồng bộ từ HRM</div>
-                        </div>
+                    <button class="m-btn sync-btn">
+                        <div class="m-btn-icon btn-sync-icon"></div>
+                        <div class="btn-text btn-sync-text">Đồng bộ từ HRM</div>
                     </button>
-                    <div class="header-select">
-                        <div class="select-box">
-                            <div class="before-select-icon"></div>
-                            <select>
-                                <option>Thêm lao động</option>
-                            </select>
-                        </div>                       
-                        <div class="header-select-icon"></div>
+                    <div class="btn-add-box">
+                        <button class="m-btn">
+                            <div class="m-btn-icon btn-add-icon"></div>
+                            <div class="btn-text btn-add-text">Thêm lao động</div>
+                        </button>
+                        <button class="m-btn m-btn-dropdown">
+                            <div class="btn-drop-icon"></div>
+                        </button>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
         <div class="content-body">
@@ -93,8 +101,8 @@
                         <input class="search-field" id="search-field" name="seacrh" type="text" placeholder="Tìm kiếm theo mã nhân viên, họ tên" />
                     </div>
                     <div class="input-box">
-                        <input class="department-field" id="department-field" name="department" type="text" placeholder="Chọn bộ phận phòng ban"/>
-                        <div class="select-department-icon"></div>
+                        <input class="department-field" id="department-field" name="department" type="text" placeholder="Chọn bộ phận phòng ban" />
+                        <div class="btn-drop-icon select-department-icon"></div>
                     </div>
                     <div class="input-box">
                         <input class="state-field" id="state-field" name="state" type="text" placeholder="Trạng thái them gia BHXH" />
@@ -102,76 +110,38 @@
                     </div>
                 </div>
                 <div class="content-filter-right">
-                    <button>
-                        <div class="btn-save"></div>
-                    </button>
-                    <button>
-                        <div class="btn-refresh"></div>
-                    </button>
+                    <div class="filter-right-box">
+                        <button class="m-btn">
+                            <div class="btn-save"></div>
+                        </button>
+                        <button class="m-btn">
+                            <div class="btn-refresh"></div>
+                        </button>
+                    </div>
+
                 </div>
             </div>
-            <div class="content-table">
+            <div class="grid">
                 <table class="table-customer" id="tbListEmployee">
                     <thead>
                         <tr>
-                            <td width="71px"></td>
-                            <td>
-                                <div class="thead-box">
-                                    <div class="thead-text">Mã nhân viên</div>
-                                    <div class="thead-sort-icon"></div>
-                                </div>
-                                
-                            </td>
-                            <td>
-                                <div class="thead-box">
-                                    <div class="thead-text">Họ và tên</div>
-                                    <div class="thead-sort-icon"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="thead-box">
-                                    <div class="thead-text">Mã số BHXH</div>
-                                    <div class="thead-sort-icon"></div>
-                                </div>                             
-                            </td>
-                            <td>
-                                <div class="thead-box">
-                                    <div class="thead-text">Giới tính</div>
-                                    <div class="thead-sort-icon"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="thead-box">
-                                    <div class="thead-text">Vị trí/chức vụ</div>
-                                    <div class="thead-sort-icon"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="thead-box">
-                                    <div class="thead-text">Bộ phận/phòng ban</div>
-                                    <div class="thead-sort-icon"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div style="width: 150px; padding-left: 10px;" class="thead-text">Hệ số/Mức lương đóng BHXH</div>
-                            </td>
-                            <td>
-                                <div style="width: 150px; padding-left: 10px;" class="thead-text" >Trạng thái tham gia BHXH</div>
-                            </td>
-                            <td>
-                                <div class="thead-box">
-                                    <div class="thead-text">Bệnh viện</div>
-                                    <div class="thead-sort-icon"></div>
-                                </div>                                
-                            </td>
+                            <th fieldName="EmployeeCode">Mã nhân viên</th>
+                            <th fieldName="FullName">Tên nhân viên</th>
+                            <th fieldName="GenderName">Giới tính</th>
+                            <th fieldName="DateOfBirth" formatType="ddmmyy">Ngày sinh</th>
+                            <th fieldName="Email">Email</th>
+                            <th fieldName="PositionName">Vị trí</th>
+                            <th fieldName="DepartmentName">Phòng ban</th>
+                            <th fieldName="Salary" formatType="Money"> Mức lương</th>
+                            <th title="Tình trạng công việc" fieldName="WorkStatusName"><span>Tình trạng công việc</span></th>
+                            <th fieldName="Address">Địa chỉ</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        
                     </tbody>
                 </table>
-                
+
             </div>
             <div class="content-footer">
                 <div class="paging-left" id="paging-left"></div>
@@ -182,14 +152,15 @@
                 </div>
                 <div class="paging-right" id="paging-right">
                     <select>
-                        
                     </select>
                 </div>
             </div>
         </div>
 
-        </div>
-    <script src="/js/lib/jquery-3.4.1.min.js"></script>
+    </div>
+    <script src="/js/lib/jquery-3.5.1.min.js"></script>
+    <script src="/js/common/common.js"></script>
+    <script src="/js/common/Base.js"></script>
     <script src="/js/page/employee.js"></script>
 </body>
 </html>

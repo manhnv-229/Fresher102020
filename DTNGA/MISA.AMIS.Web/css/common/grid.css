@@ -1,0 +1,21 @@
+﻿.grid {
+    width: 100%;
+    height: calc(100% - 108px);
+    overflow-x: scroll;
+    overflow-y: scroll;
+
+}
+.grid::-webkit-scrollbar{
+    width : 8px;
+    height: 8px;
+}
+    .grid::-webkit-scrollbar-track {
+        background: #E9EBEE;
+    }
+.grid::-webkit-scrollbar-thumb{
+    background: #bbbbbb;
+    border-radius: 10px;
+}
+    .grid::-webkit-scrollbar-corner {
+        background: #E9EBEE;
+    }

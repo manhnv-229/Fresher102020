@@ -1,2 +1,78 @@
-﻿body {
+﻿
+/* data table */
+.grid table {
+    height: calc( 100% - 42px);
+    border-collapse: collapse;
 }
+
+.table-customer thead th {
+    width: 100px;
+    height: 48px;
+    position: sticky;
+    background-color: #ffffff;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.grid thead td .thead-box {
+    width: auto;
+    min-width: 71px;
+    display: flex;
+    align-self: center;
+    padding-left: 10px;
+}
+
+td .thead-box .thead-text {
+    word-wrap: unset;
+    font-family: GoogleSans-Bold;
+}
+
+td .thead-box .thead-sort-icon {
+    width: 16px;
+    height: 16px;
+    background-image: url('/content/icon/content/sort.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    align-self: center;
+}
+
+/*start tbody data*/
+
+.grid .table-customer tbody tr {
+    height: 48px;
+    border-top: 1px solid #e5e5e5;
+}
+
+tbody tr td {
+    padding: 10px;
+}
+.table-customer th{
+    position: sticky;
+    top: 0;
+}
+.table-customer th, .table-customer td div {
+    max-width: 120px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+} 
+
+/*dialog thêm nhân viên*/
+.dialog-detail .dialog-body .general-info-detail{
+    width: 100%;
+    display: flex;
+}
+
+.dialog-detail .work-info {
+
+    margin-top: 24px;
+}
+.dialog-body .general-info-detail .profile-image{
+    width : 200px;
+    height: 200px;
+    background-color: azure;
+    margin-top: 24px;
+    margin-left: 24px;
+}
+
+
