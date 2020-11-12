@@ -5,6 +5,7 @@
     <title>MISA CukCuk - Phần mềm quản lý nhà hàng</title>
     <link href="/css/common/main.css" rel="stylesheet" />
     <link href="/css/common/common.css" rel="stylesheet" />
+    <link href="/css/common/dialog.css" rel="stylesheet" />
     <link href="/css/common/icon.css" rel="stylesheet" />
     <link href="/css/common/button.css" rel="stylesheet" />
     <link href="/css/common/input.css" rel="stylesheet" />
@@ -98,13 +99,15 @@
                 </colgroup>
                 <thead class="fixedHeader">
                     <tr>
-                        <th>Mã Khách hàng</th>
-                        <th>Họ và tên</th>
-                        <th>Giới tính</th>
-                        <th>Ngày sinh</th>
-                        <th>Số điện thoại</th>
-                        <th>Email</th>
-                        <th>Địa chỉ</th>
+                        <th fieldName="CustomerCode">Mã Khách hàng</th>
+                        <th fieldName="FullName">Họ và tên</th>
+                        <th fieldName="Gender">Giới tính</th>
+                        <th fieldName="DateOfBirth" formatType="ddmmyyyy">Ngày sinh</th>
+                        <th fieldName="PhoneNumber">Số điện thoại</th>
+                        <th fieldName="Email">Email</th>
+                        <th fieldName="Address">Địa chỉ</th>
+                        <th fieldName="DebitAmount">Số tiền nợ</th>
+                        <th fieldName="MemberCardCode">Mã thẻ thành viên</th>
                     </tr>
                 </thead>
                 <tbody class="scrollContent">
@@ -695,8 +698,64 @@
             </div>
         </div>
     </div>
+    <div class="m-dialog dialog-detail">
+        <div class="dialog-modal"></div>
+        <div class="dialog-content">
+            <div class="dialog-header">
+                <div class="dialog-header-title">Thông tin nhân viên</div>
+                <div class="dialog-header-close">
+                    <button></button>
+                </div>
+            </div>
+            <div class="dialog-body">
+                Thông tin chung
+                <div class="m-row">
+                    <div class="m-label">Mã nhân viên</div>
+                    <div class="m-control"><input type="text" /></div>
+                </div>
+                <div class="m-row">
+                    <div class="m-label">Tên nhân viên</div>
+                    <div class="m-control"><input type="text" /></div>
+                </div>
+                <div class="m-row">
+                    <div class="m-label">Ngày sinh</div>
+                    <div class="m-control"><input type="text" /></div>
+                </div>
+                <div class="m-row">
+                    <div class="m-label">Số điện thoại di động</div>
+                    <div class="m-control"><input type="text" /></div>
+                </div>
+                Thông tin công việc
+                <div class="m-row">
+                    <div class="m-label">Mã nhân viên</div>
+                    <div class="m-control"><input type="text" /></div>
+                </div>
+                <div class="m-row">
+                    <div class="m-label">Tên nhân viên</div>
+                    <div class="m-control"><input type="text" /></div>
+                </div>
+                <div class="m-row">
+                    <div class="m-label">Ngày sinh</div>
+                    <div class="m-control"><input type="text" /></div>
+                </div>
+                <div class="m-row">
+                    <div class="m-label">Số điện thoại di động</div>
+                    <div class="m-control"><input type="text" /></div>
+                </div>
+                <div class="m-row">
+                    <div class="m-label">Ngày sinh</div>
+                    <div class="m-control"><input type="text" /></div>
+                </div>
+                <div class="m-row">
+                    <div class="m-label">Số điện thoại di động</div>
+                    <div class="m-control"><input type="text" /></div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="/lib/jquery-3.5.1.min.js"></script>
     <script src="/js/common/common.js"></script>
+    <script src="/js/common/base.js"></script>
     <script src="/js/page/customer.js"></script>
 </body>
 </html>

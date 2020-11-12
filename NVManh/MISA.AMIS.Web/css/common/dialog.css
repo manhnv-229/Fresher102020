@@ -1,0 +1,66 @@
+﻿.m-dialog {
+}
+
+    .m-dialog .dialog-modal {
+        opacity:.5;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: black;
+        z-index: 999;
+    }
+
+    .m-dialog .dialog-content {
+        padding:24px;
+        position: absolute;
+        width: 800px;
+        height: 400px;
+        background-color: #ffffff;
+        z-index: 1000;
+        top: calc(50% - 200px);
+        left: calc(50% - 400px);
+        border-radius: 5px;
+    }
+
+    .m-dialog .dialog-header {
+        display: flex;
+    }
+
+        .m-dialog .dialog-header .dialog-header-close{
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+            .m-dialog .dialog-header .dialog-header-close:hover {
+                border-radius: 5px;
+            }
+
+            .m-dialog .dialog-header .dialog-header-close button {
+                width: 40px;
+                height: 40px;
+                border-radius: 0 5px 0 0;
+                border: none;
+                outline: none;
+                cursor: pointer;
+                background-color: #ffffff;
+                background-image: url('/content/icon/x.svg');
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: 20px;
+                opacity:.7;
+            }
+
+                .m-dialog .dialog-header .dialog-header-close button:hover {
+                    background-color: #ccc;
+                }
+
+/*Tiêu đề của dialog*/
+
+        .m-dialog .dialog-header .dialog-header-title{
+            font-size: 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }

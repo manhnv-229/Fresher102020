@@ -1,13 +1,4 @@
 ﻿
-$('.btn-pagenumber').click(function () {
-    // load dữ liệu:
-    loadData();
-    // Set style cho button:
-    $(this).siblings().removeClass('btn-pagenumber-selected');
-    $(this).addClass('btn-pagenumber-selected');
-    
-})
-
 /** ----------------------------------------------
  * Format dữ liệu ngày tháng sang ngày/tháng/năm
  * @param {any} date tham số có kiểu dữ liệu bất kỳ
@@ -34,6 +25,8 @@ function formatDate(date) {
  * CreatedBy: NVMANH (11/11/2020)
  */
 function formatMoney(money) {
-    var num = money.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
-    return num;
+    if (money) {
+        return money.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+    }
+    return "";
 }

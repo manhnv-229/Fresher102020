@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <title>MISA CukCuk - Phần mềm quản lý nhà hàng</title>
-    <link href="/css/common/main.css" rel="stylesheet" />
+    <link href="/css/common/main.css?v=1.2" rel="stylesheet" />
     <link href="/css/common/common.css" rel="stylesheet" />
     <link href="/css/common/icon.css" rel="stylesheet" />
     <link href="/css/common/button.css" rel="stylesheet" />
@@ -103,17 +103,17 @@
                 </colgroup>
                 <thead class="fixedHeader">
                     <tr>
-                        <th>Mã nhân viên</th>
-                        <th>Họ và tên</th>
-                        <th>Giới tính</th>
-                        <th>Ngày sinh</th>
-                        <th>Số điện thoại</th>
-                        <th>Email</th>
-                        <th>Chức vụ</th>
-                        <th>Phòng ban</th>
-                        <th>Mức lương hiện tại</th>
-                        <th>Địa chỉ</th>
-                        <th>Tình trạng công việc</th>
+                        <th fieldName="EmployeeCode">Mã nhân viên</th>
+                        <th fieldName="FullName">Họ và tên</th>
+                        <th fieldName="GenderName">Giới tính</th>
+                        <th fieldName="DateOfBirth" formatType="ddmmyyyy">Ngày sinh</th>
+                        <th fieldName="Salary" formatType="Money">Mức lương hiện tại</th>
+                        <th fieldName="PhoneNumber">Số điện thoại</th>
+                        <th fieldName="Email">Email</th>
+                        <th fieldName="PositionName">Chức vụ</th>
+                        <th fieldName="DepartmentName">Phòng ban</th>
+                        <th fieldName="Address">Địa chỉ</th>
+                        <th fieldName="WorkStatusName">Tình trạng công việc</th>
                     </tr>
                 </thead>
                 <tbody class="scrollContent">
@@ -706,6 +706,7 @@
     </div>
     <script src="/lib/jquery-3.5.1.min.js"></script>
     <script src="/js/common/common.js"></script>
+    <script src="/js/common/base.js"></script>
     <script src="/js/page/employee.js"></script>
 </body>
 </html>
