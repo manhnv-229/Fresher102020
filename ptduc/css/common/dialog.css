@@ -1,0 +1,122 @@
+.window {
+    width: 1000px;
+    margin: auto;
+    border: 10px solid #019160 ;
+    background-color: white;
+}
+.body {
+    padding: 5px;
+    width: 100%;
+}
+.short-infor,.general-up {
+    display: flex;
+}
+.general-infor,.job-infor {
+    width: 100%;
+}
+.general-up .infor >*,.job-infor .infor >*{
+    padding-top: 10px;
+}
+.general-up .infor {
+    width: calc(100% - 270px);
+}
+.general-up label,.job-infor label {
+    display: inline-block;
+    width: 150px;
+}
+.general-up input {
+    width: calc(100% - 200px);
+}
+.general-up .images {
+    background-image: url("/assets/img/avatar.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 250px;
+    height: 250px;
+}
+
+.general-down {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.general-down label{
+    display: inline-block;
+    width: 150px;   
+}
+.general-down input{
+    width: calc(100% - 200px );   
+} 
+
+
+.job-infor select {
+    width: calc(100% - 180px);
+}
+
+
+.short-infor>:nth-child(1) {
+    width: 400px;
+    float: left;
+    margin-right: 28px;
+}
+.diaglog-title {
+    font-size: 35px;
+    color: white;
+    align-items: center;
+    height: 40px;
+    margin-left: -3px;
+    margin-top: -2px;
+    width: calc(100% + 5px);
+    display: inline-block;
+    background-color: #019160;
+    border: 0;
+    padding: 0;
+    outline: none;
+}
+
+.diaglog-title .icon {
+    
+    background-image: url("/assets/img/exit.png");
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+}
+
+.infor .title {
+    font-family: GoogleSans-Bold;
+    border-bottom: 1px solid #bbbbbb;
+}
+
+
+.m-btn {
+    background-color: #019160;
+}
+.m-btn>:nth-child(1){
+    padding-right: 8px;
+}
+
+.bottom-bar {
+    padding-top: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+.bottom-bar .right {
+    padding-right: 25px;
+    display: flex;
+}
+.bottom-bar .right>*{
+    margin-left: 10px;
+}
+
+
+.sex select {
+    width: 119px;
+}
+.get-date input {
+    width: 103px;
+}
+.salary input {
+    width: 374px;
+}
+.status-joined select{
+    width: 391px;
+}

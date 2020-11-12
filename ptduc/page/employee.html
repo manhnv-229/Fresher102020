@@ -6,192 +6,329 @@
     <title>Employee</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
     <link rel="stylesheet" href="/css/common/main.css">
+    <link href="/css/common/button.css" rel="stylesheet" />
+    <link href="../css/common/selectcss.css" rel="stylesheet" />
+    <link href="../css/common/input.css" rel="stylesheet" />
     <link rel="stylesheet" href="/css/common/header.css">
     <link rel="stylesheet" href="/css/common/sidebar.css">
     <link rel="stylesheet" href="/css/common/content.css">
     <link rel="stylesheet" href="/css/page/employee.css">
-
+    <link rel="stylesheet" href="/css/common/dialog.css">
     <script src="/js/common/jquery.js"></script>
 </head>
 
 <body>
-    <div class="sidebar">
-        <div class="logo-site">
-            <div class="logo-box">
-                <div class="toggle">
-                    <!-- <img src="/assets/img/toggle.png" alt="toggle"> -->
+    <div class="down-content">
+        <div class="sidebar">
+            <div class="logo-site">
+                <div class="logo-box">
+                    <div class="toggle">
+                    </div>
+                    <div class="amis-logo">
+                    </div>
                 </div>
-                <div class="amis-logo">
-                    <!-- <img src="/assets/img/amis-logo.png" alt="amis-logo"> -->
+
+            </div>
+            <div class="sidebar-content">
+                <div class="sidebar-item">
+                    <div class="sidebar-item-icon">
+                        <img src="/assets/img/file.png" alt="">
+                    </div>
+                    <div class="sidebar-item-title">Lập hồ sơ điện tử</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="sidebar-item-icon">
+                        <img src="/assets/img/filepaper.png" alt="">
+                    </div>
+                    <div class="sidebar-item-title">Lập hồ sơ chi</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="sidebar-item-icon">
+                        <img src="/assets/img/bar-chart.png" alt="">
+                    </div>
+                    <div class="sidebar-item-title">Theo dõi chi</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="sidebar-item-icon">
+                        <img src="/assets/img/analytics.png" alt="">
+                    </div>
+                    <div class="sidebar-item-title">Theo dõi đóng</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="sidebar-item-icon">
+                        <img src="/assets/img/group.png" alt="">
+                    </div>
+                    <div class="sidebar-item-title">Quản lý lao động</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="sidebar-item-icon">
+                        <img src="/assets/img/settings.png" alt="">
+                    </div>
+                    <div class="sidebar-item-title">Thiết lập</div>
+                </div>
+            </div>
+        </div>
+        <div class="header">
+            <div class="header-left">
+                <div class="tilte-header-left">
+                    <p>Công ty cổ phần MISA TEST BHXH</p>
+                </div>
+                <div class="icon-header-left">
+                    <img src="/assets/img/down-arrow.png" alt="">
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="header-right-avatar">
+                    <img src="/assets/img/putin.jpeg" alt="">
+                </div>
+                <div class="header-right-name">
+                    <span>Vladimir Putin</span>
+                </div>
+                <div class="header-right-icon">
+                    <img src="/assets/img/more.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="content-title">
+                <div class="content-title-up">
+                    <div class="left">
+                        Quản lý lao động
+                    </div>
+                    <div class="right">
+                        <button class="sync sync-m-btn m-btn m-btn-icon">
+                            <div class="m-btn-img"></div>
+                            <div class="m-btn-content">Đồng bộ từ HRM</div>
+                        </button>
+                        <button class="add-user-m-btn m-btn second-btn">
+                            <span class="m-btn-img"></span>
+                            <span class="m-btn-content">Thêm lao động</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="content-title-down">
+                    <div class="left">
+                        <div class="input-icon">
+                            <div class="icon-input-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <div class="input-input-icon">
+                                <input type="text" placeholder="Tìm kiếm theo mã nhân viên, họ tên"
+                                    class="text-input-icon" style="width: 250px;">
+                            </div>
+                        </div>
+                        <select name="Abc" id="">
+                            <option value="" selected style="width: 200px;">Chọn bộ phận phòng ban</option>
+                        </select>
+                        <div class="input-group">
+                            <input type="text" placeholder="Trạng thái tham gia bảo hiểm xã hội" style="width: 200px;">
+                            <img src="/assets/img/down-arrow.png" alt="" class="input-group-icon">
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="download">
+                            <i class="fas fa-download"></i>
+                        </div>
+                        <div class="sync">
+                            <i class="fas fa-sync"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-        </div>
-        <div class="sidebar-content">
-            <div class="sidebar-item">
-                <div class="sidebar-item-icon">
-                    <img src="/assets/img/file.png" alt="">
+
+
+            <div class="content-main">
+                <div class="content-main-content">
+                    <div class="table">
+                        <table>
+                            <thead class="head">
+                                <th></th>
+                                <th class="employeeId">Mã nhân viên</th>
+                                <th class="FullName">Họ và tên</th>
+                                <th class="JoinDate">Ngày tham gia</th>
+                                <th class="Gender">Giới tính</th>
+                                <th class="PositionName">Vị trí/chức vụ</th>
+                                <th class="DepartmentName">Bộ phận/phòng ban</th>
+                                <th class="Email">Email</th>
+                                <th class="PhoneNumber">Số điện thoại</th>
+                                <th class="WorkStatusName">Trạng thái tham gia</th>
+                            </thead>
+                            <tbody class="table-content">
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="sidebar-item-title">Lập hồ sơ điện tử</div>
-            </div>
-            <div class="sidebar-item">
-                <div class="sidebar-item-icon">
-                    <img src="/assets/img/filepaper.png" alt="">
+                <div class="content-main-footer">
+                    <div class="left">
+                        Hiển thị
+                        <span class="bold">
+                            1-15/59
+                        </span>
+                        lao động
+                    </div>
+                    <div class="center">
+                        <span class="icon icon-previous-page">
+                            <i class="fas fa-angle-double-left"></i>
+                        </span>
+                        <span class="icon-left icon-previoustable-page">
+                            <i class="fas fa-angle-left"></i>
+                        </span>
+                        <span class="number-bar">
+                            <span class="number 1">1</span>
+                            <span class="number 2">2</span>
+                            <span class="number 3">3</span>
+                            <span class="number 4">4</span>
+                        </span>
+                        <span class="icon-right icon-nexttable-page">
+                            <i class="fas fa-angle-right"></i>
+                        </span>
+                        <span class="icon icon-next-page">
+                            <i class="fas fa-angle-double-right"></i>
+                        </span>
+                    </div>
+                    <div class="right">
+                        <div class="number-employee">
+                            <div class="number-employee-text">
+                                <span class="bold">20</span>
+                                <span> lao động/trang</span>
+                            </div>
+                            <div class="number-employee-icon">
+                                <img src="/assets/img/up-and-down.png" alt="">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="sidebar-item-title">Lập hồ sơ chi</div>
-            </div>
-            <div class="sidebar-item">
-                <div class="sidebar-item-icon">
-                    <img src="/assets/img/bar-chart.png" alt="">
-                </div>
-                <div class="sidebar-item-title">Theo dõi chi</div>
-            </div>
-            <div class="sidebar-item">
-                <div class="sidebar-item-icon">
-                    <img src="/assets/img/analytics.png" alt="">
-                </div>
-                <div class="sidebar-item-title">Theo dõi đóng</div>
-            </div>
-            <div class="sidebar-item">
-                <div class="sidebar-item-icon">
-                    <img src="/assets/img/group.png" alt="">
-                </div>
-                <div class="sidebar-item-title">Quản lý lao động</div>
-            </div>
-            <div class="sidebar-item">
-                <div class="sidebar-item-icon">
-                    <img src="/assets/img/settings.png" alt="">
-                </div>
-                <div class="sidebar-item-title">Thiết lập</div>
             </div>
         </div>
     </div>
-    <div class="header">
-        <div class="header-left">
-            <div class="tilte-header-left">
-                <p>Công ty cổ phần MISA TEST BHXH</p>
-            </div>
-            <div class="icon-header-left">
-                <img src="/assets/img/down-arrow.png" alt="">
-            </div>
-        </div>
-        <div class="header-right">
-            <div class="header-right-avatar">
-                <img src="/assets/img/putin.jpeg" alt="">
-            </div>
-            <div class="header-right-name">
-                <span>Vladimir Putin</span>
-            </div>
-            <div class="header-right-icon">
-                <img src="/assets/img/more.png" alt="">
-            </div>
-        </div>
-    </div>
-    <div class="content">
-        <div class="content-title">
-            <div class="content-title-up">
-                <div class="left">
-                    Quản lý lao động
-                </div>
-                <div class="right">
-                    <button class="sync sync-m-btn m-btn m-btn-icon">
-                        <div class="m-btn-img"></div>
-                        <div class="m-btn-content">Đồng bộ từ HRM</div>
-                    </button>
-                    <button class="add-user-m-btn m-btn second-btn">
-                        <span class="m-btn-img"></span>
-                        <span class="m-btn-content">Thêm lao động</span>
-                    </button>
+    <div class="include-content">
+        <div class="window">
+            <div class="diaglog-title">
+                <div class="title" style="float: left;">Nhân viên</div>
+                <div class="icon" style="float: right;">
+    
                 </div>
             </div>
-            <div class="content-title-down">
-                <div class="left">
-                    <div class="input-icon">
-                        <div class="icon-input-icon">
-                            <i class="fas fa-search"></i>
+            <div class="body">
+                <div class="general-infor">
+                    <div class="general-up">
+                        <div class="infor">
+                            <div class="title">
+                                Thông tin chung
+                            </div>
+                            <div class="code">
+                                <label for="code">Mã nhân viên</label>
+                                <input type="text" id="code">
+                            </div>
+                            <div class="name">
+                                <label for="name">Tên nhân viên</label>
+                                <input type="text" id="name">
+                            </div>
+                            <div class="short-infor">
+                                <div class="date-of-birth">
+                                    <label for="date">Ngày sinh</label>
+                                    <input type="date" id="date">
+                                </div>
+                                <div class="sex">
+                                    <label for="sex">Giới tính</label>
+                                    <select name="sex" id="sex"></select>
+                                </div>
+                            </div>
+                            <div class="email">
+                                <label for="email">Email</label>
+                                <input type="email" id="email">
+                            </div>
+                            <div class="phone-number">
+                                <label for="phone-number">ĐT di động</label>
+                                <input type="email" id="phone-number">
+                            </div>
+                            <div class="short-infor">
+                                <div class="id-personal">
+                                    <label for="id-personal">Số CMT/HC</label>
+                                    <input type="date" id="id-personal">
+                                </div>
+                                <div class="get-date">
+                                    <label for="get-date">Ngày cấp</label>
+                                    <input type="date" id="get-date">
+                                </div>
+                            </div>
                         </div>
-                        <div class="input-input-icon">
-                            <input type="text" placeholder="Tìm kiếm theo mã nhân viên, họ tên" class="text-input-icon"
-                                style="width: 250px;">
+                        <div class="avatar">
+                            <div class="images">
+                            </div>
+                            <div class="open-file">
+                                <input type="file" style="height: 20px;outline: none;border: 0;">
+                                <p>Chỉ được upload tệp
+                                    <b>.jpg</b>
+                                    <b>.jpeg</b>
+                                    <b>.png</b></p>
+                            </div>
                         </div>
                     </div>
-                    <select name="Abc" id="">
-                        <option value="" selected style="width: 200px;">Chọn bộ phận phòng ban</option>
-                    </select>
-                    <div class="input-group">
-                        <input type="text" placeholder="Trạng thái tham gia bảo hiểm xã hội" style="width: 200px;">
-                        <img src="/assets/img/down-arrow.png" alt="" class="input-group-icon">
+                    <div class="general-down">
+                        <label for="place-getID">Nơi cấp CMND</label>
+                        <input type="text">
                     </div>
                 </div>
-                <div class="right">
-                    <div class="download">
-                        <i class="fas fa-download"></i>
-                    </div>
-                    <div class="sync">
-                        <i class="fas fa-sync"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-        <div class="content-main">
-            <div class="content-main-content">
-                <div class="table">
-                    <table>
-                        <tr class="head">
-                            <th></th>
-                            <th>Mã nhân viên</th>
-                            <th>Họ và tên</th>
-                            <th>Mã số BHXH</th>
-                            <th>Giới tính</th>
-                            <th>Vị trí/chức vụ</th>
-                            <th>Bộ phận/phòng ban</th>
-                            <th>Hệ số/Mức lương đóng</th>
-                            <th>Trạng thái tham gia</th>
-                            <th>Bệnh viện</th>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="content-main-footer">
-                <div class="left">
-                    Hiển thị
-                    <span class="bold">
-                        1-15/59
-                    </span>
-                    lao động
-                </div>
-                <div class="center">
-                    <span class="icon" onclick="previousPage()">
-                        <i class="fas fa-angle-double-left"></i>
-                    </span>
-                    <span class="icon-left" onclick="previousPageTable()">
-                        <i class="fas fa-angle-left"></i>
-                    </span>
-                    <span class="number-bar">
-                        <span class="number">1</span>
-                        <span class="number">2</span>
-                        <span class="number">3</span>
-                        <span class="number">4</span>
-                    </span>
-                    <span class="icon-right" onclick="nextPageTable()">
-                        <i class="fas fa-angle-right"></i>
-                    </span>
-                    <span class="icon" onclick="nextPage()">
-                        <i class="fas fa-angle-double-right"></i>
-                    </span>
-                </div>
-                <div class="right">
-                    <div class="number-employee">
-                        <div class="number-employee-text">
-                            <span class="bold">20</span>
-                            <span> lao động/trang</span>
+    
+    
+                <div class="job-infor">
+                    <div class="infor">
+                        <div class="title">
+                            Thông tin công việc
                         </div>
-                        <div class="number-employee-icon">
-                            <img src="/assets/img/up-and-down.png" alt="">
+                        <div class="position">
+                            <label for="position">Vị trí</label>
+                            <select name="position" id="position"></select>
                         </div>
+                        <div class="room">
+                            <label for="room">Phòng ban</label>
+                            <select name="room" id="room"></select>
+                        </div>
+                        <div class="short-infor">
+                            <div class="tax-code">
+                                <label for="tax-code">Mã số thuế cá nhân</label>
+                                <input type="text" id="tax-code">
+                            </div>
+                            <div class="salary">
+                                <label for="salary">Mức lương</label>
+                                <input type="text" id="salary">
+                            </div>
+                        </div>
+                        <div class="short-infor">
+                            <div class="date-joined">
+                                <label for="date-joined">Ngày gia nhập</label>
+                                <input type="date" id="date-joined">
+                            </div>
+                            <div class="status-joined">
+                                <label for="status-joined">Ngày cấp</label>
+                                <select name="status-joined" id="status-joined"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom-bar">
+                    <div class="left">
+                        <button class="m-btn help-btn">
+                            <img src="/assets/img/info.png" alt="">
+                            <span>Giúp</span>
+                        </button>
+                    </div>
+                    <div class="right">
+                        <button class="m-btn help-btn">
+                            <img src="/assets/img/save.png" alt="">
+                            <span>Cất</span>
+                        </button>
+                        <button class="m-btn help-btn">
+                            <img src="/assets/img/saveandadd.png" alt="">
+                            <span>Cất và thêm</span>
+                        </button>
+                        <button class="m-btn help-btn">
+                            <img src="/assets/img/remove.png" alt="">
+                            <span>Hủy bỏ</span>
+                        </button>
                     </div>
                 </div>
             </div>

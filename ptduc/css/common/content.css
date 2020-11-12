@@ -1,3 +1,6 @@
+.down-content{
+  z-index: 0;
+}
 .content {
   position: absolute;
   top: 61px;
@@ -6,15 +9,7 @@
   width: calc(100% - 221px);
   height: calc(100vh - 61px);
 }
-input {
-  padding: 0;
-  height: 40px;
-  font-size: 11px;
-  border: 1px solid #bbbbbb;
-  color: #bbbbbb;
-  padding-left: 16px;
-  border-radius: 4px;
-}
+
 .content-title-up {
   display: flex;
   margin-left: 16px;
@@ -164,13 +159,24 @@ input {
   margin-top: 20px;
   margin-left: 16px;
 }
-
+.content-main-content .table td,th {
+  padding-right: 10px;
+  padding-left: 10px;
+}
 .content-main-content .table {
   height: calc(100vh - 260px);
-
   overflow: scroll;
 }
-
+.content-main-content .table .employeeId {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;  
+  text-align: center;
+}
+.content-main-content .table .JoinDate{
+  text-align: right;
+}
 .content-main-content .table::-webkit-scrollbar {
   width: 0.5em;
   height: 0.5em;
@@ -250,4 +256,12 @@ input {
 }
 .content-main-footer .center .icon-right {
   margin-right: 20px;
+}
+.include-content{
+  display: none;
+  background-color: rgb(0, 0, 0,0.4);
+  position: absolute;
+  z-index: 10;
+  width: 100vw;
+  height: 100vh;  
 }
