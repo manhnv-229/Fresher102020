@@ -13,19 +13,15 @@
     }
 
     .m-dialog .dialog-content {
-        padding:24px;
-        position: absolute;
-        width: 800px;
-        height: 400px;
         background-color: #ffffff;
         z-index: 1000;
-        top: calc(50% - 200px);
-        left: calc(50% - 400px);
         border-radius: 5px;
     }
 
     .m-dialog .dialog-header {
         display: flex;
+        padding: 24px 24px 0px 24px;
+        cursor: move;
     }
 
         .m-dialog .dialog-header .dialog-header-close{
@@ -64,3 +60,24 @@
             text-transform: uppercase;
             font-weight: bold;
         }
+
+.dialog-content .dialog-body {
+    padding: 0 24px 24px;
+}
+
+
+.dialog-footer {
+    display: flex;
+    width: 100%;
+    height: 60px;
+    background-color: #e9ebee;
+    border-radius: 0 0 5px 5px;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 12px 24px;
+    box-sizing: border-box;
+}
+
+.dialog-footer button{
+    margin-left:16px;
+}

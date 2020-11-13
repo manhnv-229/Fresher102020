@@ -12,9 +12,11 @@
     outline: none;
     border: none;
     cursor: pointer;
+    min-width: 100px;
+    justify-content: center;
 }
 
-    .m-btn:hover {
+    .m-btn:hover,.m-btn:focus {
         background-color: #2FBE8E;
     }
 
@@ -26,6 +28,8 @@
         margin-left: 8px;
     }
 
+    .m-btn .m-btn-text{
+    }
 .m-second-button {
     border: 1px solid #bbbbbb;
     background-color: #ffffff;
@@ -50,6 +54,14 @@
     background-position: center;
 }
 
+.m-btn-cancel{
+    color: #000000;
+    background-color:transparent;
+}
+
+.m-btn-cancel:hover,.m-btn-cancel:focus {
+    background-color: #BBBBBB;
+}
 .btn-pagenumber {
     width: 30px;
     height: 30px;

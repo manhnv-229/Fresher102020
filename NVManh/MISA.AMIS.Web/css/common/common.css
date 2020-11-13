@@ -15,6 +15,85 @@ a {
 .m-row{
     margin-top: 16px;
 }
+
+.m-flex-1{
+    flex:1;
+}
+
+.m-flex-2 {
+    flex: 2;
+}
+
+.m-flex-3 {
+    flex: 3;
+}
+
+.m-flex-4 {
+    flex: 4;
+}
+
+.m-flex-5 {
+    flex: 5;
+}
+
+.m-flex-6 {
+    flex: 6;
+}
+
 .m-label{
     margin-bottom: 4px;
+}
+
+.m-flex{
+    display: flex;
+}
+
+.mg-left-10px{
+    margin-left: 10px;
+}
+.mg-left-20px {
+    margin-left: 20px;
+}
+
+    .mg-top-0 {
+        margin-top: 0px;
+    }
+
+    .label-required{
+        color: #ff0000;
+    }
+
+.notice-required {
+    display: none;
+    position: absolute;
+    background-color: #FF4747;
+    color: #ffffff;
+    top: 0;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.notice-required-abow {
+    display: block;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    background-color: #FF4747;
+    transform: rotate(45deg);
+    left: 50%;
+}
+
+input[required]::after {
+    display: block;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    background-color: #FF4747;
+    transform: rotate(45deg);
+    left: 50%;
+    content: "Thông tin";
+}
+
+input.border-red{
+    border: 1px solid #FF4747;
 }
