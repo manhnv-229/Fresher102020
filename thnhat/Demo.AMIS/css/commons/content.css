@@ -6,7 +6,9 @@
     left:245px;
     right:16px;
 }
-
+/**
+* Css title phần content
+*/
 .title {
     width: 100%;
     height: 65px;
@@ -106,6 +108,9 @@
     color: #f4f4f4;
     margin-left: 8px;
 }
+/**
+* Css filter phần content
+*/
 
 .filter {
     width: 100%;
@@ -225,6 +230,9 @@ input:focus {
         background-size: 16px 16px;
         background-position: center;
     }
+/**
+* Css bảng phần content
+*/
 .grid-content {
     width: 100%;
     margin-top: 10px;
@@ -262,6 +270,10 @@ input:focus {
     }
         .paging .pages button:focus {
             outline: none;
+        }
+        .paging .pages .square{
+            border:none;   
+            background-color:transparent;
         }
         .paging .pages .circle {
             border-radius: 30px;
