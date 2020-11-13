@@ -106,65 +106,20 @@
             </div>
         </div>
     </div>
-    <!--<div class="content">
-            <div class="footer">
-                <div class="footer_left">
-                    Hiển thị 1 - 15/59 lao động
-                </div>
-                <div class="footer_center">
-                    <div class="btn btn_previous cur_poiter">
-                        <<
-                    </div>
-                    <div class="btn btn_previous cur_poiter">
-                        <
-                    </div>
-                    <div class="number_page">
-                        <div class="number_page_item btn cur_poiter active">
-                            1
-                        </div>
-                        <div class="number_page_item btn cur_poiter">
-                            2
-                        </div>
-                        <div class="number_page_item btn cur_poiter">
-                            3
-                        </div>
-                        <div class="number_page_item btn cur_poiter">
-                            4
-                        </div>
-                        <div class="number_page_item btn cur_poiter">
-                            5
-                        </div>
-                    </div>
-                    <div class="btn btn_next cur_poiter">
-                        >
-                    </div>
-                    <div class="btn btn_next cur_poiter">
-                        >>
-                    </div>
-                </div>
-                <div class="footer_right">
-                    <select class="select_number">
-                        <option selected">15/trang</option>
-                        <option value="20">20/trang</option>
-                        <option value="25">25/trang</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-    </div>-->
+    <!-- Content -->
     <div class="content">
         <div class="page-title">
-            <div class="title">Danh sách Nhân viên</div>
+            <div class="title">Danh sách khách hàng</div>
             <div class="content-feature">
                 <button class="m-btn m-btn-default">
                     <div class="m-icon-add"></div>
-                    <div class="btn-text">Thêm nhân viên</div>
+                    <div class="btn-text">Thêm khách hàng</div>
                 </button>
             </div>
         </div>
         <div class="filter-bar">
             <div class="filter-left">
-                <input class="icon-search input-search" type="text" style="width:200px;" placeholder="Tìm kiếm theo Mã, Tên nhân viên" />
+                <input class="icon-search input-search" type="text" style="width:200px;" placeholder="Tìm kiếm theo Mã, Tên khách hàng" />
                 <select>
                     <option>Phòng đào tạo</option>
                     <option>Phòng đào tạo</option>
@@ -175,21 +130,20 @@
 
             </div>
         </div>
+        <!-- Grid -->
         <div class="grid grid-employee">
             <table>
                 <thead>
                     <tr>
-                        <th fieldName="EmployeeCode">Mã nhân viên</th>
+                        <th fieldName="CustomerCode">Mã khách hàng</th>
                         <th fieldName="FullName">Họ và tên</th>
-                        <th fieldName="GenderName">Giới tính</th>
-                        <th fieldName="DateOfBirth" formatType="ddmmyyyy">Ngày sinh</th>
+                        <th fieldName="Gender">Giới tính</th>
+                        <th fieldName="DateOfBirth">Ngày sinh</th>
                         <th fieldName="PhoneNumber">Số điện thoại</th>
                         <th fieldName="Email">Email</th>
                         <th fieldName="Address">Địa chỉ</th>
-                        <th fieldName="PositionName">Chức vụ</th>
-                        <th fieldName="DepartmentName">Bộ phận/phòng ban</th>
-                        <th fieldName="Salary" formatType="money">Hệ số/Mức lương đóng</th>
-                        <th fieldName="WorkStatusName">Trạng thái tham gia</th>
+                        <th fieldName="DebitAmount">Số tiền nợ</th>
+                        <th fieldName="MemberCardCode">Mã thẻ thành viên</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -204,18 +158,18 @@
     <!-- dialog -->
     <!--<div class="dialog">
         <div class="dialog-header">
-            <div class="dialog-title">Nhân viên</div>
+            <div class="dialog-title">khách hàng</div>
             <div class="dialog-close">x</div>
         </div>
         <div class="dialog-content">
             <div class="tt-chung">
                 <div class="title-header">Thông tin chung</div>
                 <div class="item">
-                    <span class="item-title">Mã nhân viên (*)</span>
+                    <span class="item-title">Mã khách hàng (*)</span>
                     <input class="d-input" type="text" />
                 </div>
                 <div class="item">
-                    <span class="item-title">Tên nhân viên (*)</span>
+                    <span class="item-title">Tên khách hàng (*)</span>
                     <input class="d-input" type="text" />
                 </div>
                 <div class="box">
@@ -263,7 +217,7 @@
                 <div class="item-long">
                     <span class="item-title">Vị trí</span>
                     <select class="select-room">
-                        <option value="value">Nhân viên</option>
+                        <option value="value">khách hàng</option>
                     </select>
                 </div>
                 <div class="item-long">
@@ -305,10 +259,10 @@
             </div>
         </div>
     </div>-->
-    <script src="/lib/jquery-3.5.1.min.js"></script>
-    <script src="/js/common/base.js"></script>
-    <script src="/js/common/common.js"></script>
-    <script src="/js/page/employee.js"></script>
 
+    <script src="/lib/jquery-3.5.1.min.js"></script>
+    <script src="/js/common/common.js"></script>
+    <script src="/js/common/base.js"></script>
+    <script src="/js/page/customer.js"></script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 ﻿.grid {
     width: 100%;
+    overflow: scroll;
 }
 
 table tr, th,td {
@@ -13,9 +14,14 @@ table {
     width: 100%;
 }
 
+table th {
+    min-width: 135px;
+    text-align: left;
+}
+
     table td span {
+        max-width: 200px;
         display: inline-block;
-        width: 100px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

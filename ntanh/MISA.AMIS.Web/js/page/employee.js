@@ -1,17 +1,21 @@
 ﻿$(document).ready(function () {
-    loadData();
+    new EmployeeJS();
 })
-
-function loadData() {
-    //lay du lieu ve
-    $.ajax({
-        url: "http://api.manhnv.net/api/employees",
-        method: "GET"
-    }).done(function (res) {
-        var data = res;
-        debugger;
-    }).fail(function (res) {
-
-    })
-    //binding du lieu
+/**
+ * Class quản lý các sự kiện cho trang Employee
+ * CreatedBy: NTANH (12/11/2020)
+ * */
+class EmployeeJS extends BaseJS {
+    constructor() {
+        super();
+        this.setDataUrl();
+    }
+    /**
+     * Lấy url api
+     * CreatedBy: NTANH (13/11/2020)
+     * */
+    setDataUrl() {
+        this.getDataUrl = "http://api.manhnv.net/api/employees";
+    }
+    
 }
