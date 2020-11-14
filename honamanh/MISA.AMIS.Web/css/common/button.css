@@ -13,7 +13,6 @@
     .button-default:hover {
         background: #E9EBEE;
         cursor: pointer;
-        /*color: #000000;*/
     }
 
     .button-default:focus {
@@ -22,10 +21,114 @@
         color: #000000;
         cursor: pointer;
     }
-/*Các nút dùng chung trong dialog*/
-.button-dialog-default{
-    display: flex;
-    align-content: center;
-    margin-right: 10px;
-    height:20px;
+/*Button có từ 1 đến 2 từ*/
+.m-button-default-2 {
+    background-color: #019160;
+    border-radius: 4px;
+    height: 40px;
+    font-size: 13px;
+    color: #ffffff;
+    font-family: GoogleSans-Regular;
+    padding: 0 24px;
+    outline: none;
+    cursor: pointer;
 }
+/*Button có nhiều hơn 3 từ*/
+.m-button-default-3 {
+    background-color: #019160;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #ffffff;
+    font-family: GoogleSans-Regular;
+    padding: 0 24px;
+    outline: none;
+    cursor: pointer;
+}
+/*Button có icon*/
+.m-button-icon {
+    background-color: #019160;
+    border-radius: 4px;
+    height: 40px;
+    font-size: 13px;
+    color: #ffffff;
+    font-family: GoogleSans-Regular;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    outline: none;
+    cursor: pointer;
+    border: none;
+}
+
+    .m-button-icon .title-button-icon {
+        margin-left: 8px;
+    }
+
+    .m-button-icon .icon-button {
+        width: 16px;
+        height: 16px;
+    }
+
+    .m-button-default-2:hover, .m-button-icon:hover, .m-button-default-3:hover {
+        background-color: #2FBE8E;
+    }
+
+    .m-button-default-2, .m-button-icon:focus, .m-button-default-3:focus {
+        background-color: #01B075;
+    }
+/*Second button có 1-2 từ*/
+.m-seconds-button-2 {
+    // background-color: #019160;
+    border-radius: 4px;
+    height: 40px;
+    width: 100px;
+    font-size: 13px;
+    color: #000000;
+    font-family: GoogleSans-Regular;
+    padding: 0 24px;
+    border: 1px solid #bbbbbb;
+    outline: none;
+    cursor: pointer;
+}
+/*Second button có nhiều hơn 3 từ*/
+.m-seconds-button-3 {
+    border-radius: 4px;
+    height: 40px;
+    font-size: 13px;
+    color: #000000;
+    font-family: GoogleSans-Regular;
+    padding: 0 24px;
+    border: 1px solid #bbbbbb;
+    outline: none;
+    cursor: pointer;
+}
+
+    .m-seconds-button-2:hover, .m-seconds-button-3:hover {
+        background-color: #E9EBEE
+    }
+
+    .m-seconds-button-2:focus, .m-seconds-button-3:focus {
+        background-color: #01B075;
+    }
+/*Button chỉ có icon*/
+.m-button-only-icon {
+    height: 40px;
+    width: 40px;
+    background: #ffffff;
+    margin-right: 16px;
+    outline: none;
+    border-radius: 4px;
+    border: 1px solid #bbbbbb;
+}
+
+    .m-button-only-icon:hover {
+        background-color: #E9EBEE;
+        cursor: pointer;
+    }
+
+    .m-button-only-icon:focus {
+        outline: none;
+        background-color: #01B075;
+        border: 1px solid #019160;
+        cursor: pointer;
+    }

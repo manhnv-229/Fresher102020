@@ -10,6 +10,7 @@
     <link href="/css/common/button.css" rel="stylesheet" />
     <link href="/css/common/dialog.css" rel="stylesheet" />
     <link href="/css/common/align-content.css" rel="stylesheet" />
+    <link href="/css/common/input.css" rel="stylesheet" />
     <link href="/css/common/navbar.css" rel="stylesheet" />
     <link href="/css/common/header.css" rel="stylesheet" />
     <link href="/css/common/content.css" rel="stylesheet" />
@@ -71,13 +72,15 @@
         <div class="toolbar-of-table">
             <div class="title-toolbar"><h1>Quản lý lao động</h1></div>
             <div class="button-toolbar">
-                <button type="button" class="btn-syncing-from-hrm">
-                    <i class="fas fa-sync-alt icon-syncing"></i>Đồng bộ từ HRM
+                <button type="button" class="m-button-icon margin-button">
+                    <i class="fas fa-sync-alt icon-syncing"></i>
+                    <div class="title-button-icon">Đồng bộ từ HRM</div>
                 </button>
-                <button type="button" class="btn-add-labor">
-                    <i class="fas fa-user-plus icon-add-labor"></i>Thêm lao động
+                <button type="button" class="btn-add m-button-icon margin-button" style="border-radius: 4px 0 0 4px;">
+                    <i class="fas fa-user-plus icon-add-labor"></i>
+                    <div class="title-button-icon">Thêm lao động</div>
                 </button>
-                <button type="button" class="button-dropdown">
+                <button type="button" class="m-button-only-icon button-dropdown">
                     <i class="fas fa-caret-down fa-lg icon-dropdown"></i>
                 </button>
             </div>
@@ -85,7 +88,7 @@
         <div class="search-table">
             <div class="type-search">
                 <div class="search-by-id">
-                    <input class="border-common" id="input-search" placeholder="Tìm kiếm theo mã nhân viên, họ tên" />
+                    <input class="field-input-icon" style="width: 200px;" placeholder="Tìm kiếm theo mã nhân viên, họ tên" />
                 </div>
                 <div class="choose-department">
                     <select class="border-common select-department">
@@ -112,8 +115,8 @@
             </div>
             <div class="download-and-syncing">
                 <div class="btn-download-and-syncing">
-                    <button type="button" class="border-common btn-download"><i class="fas fa-download icon-download"></i></button>
-                    <button type="button" class="border-common btn-syncing"><i class="fas fa-sync icon-syncing"></i></button>
+                    <button type="button" class="m-button-only-icon"><i class="fas fa-download icon-download"></i></button>
+                    <button type="button" class="m-button-only-icon"><i class="fas fa-sync icon-syncing"></i></button>
                 </div>
             </div>
         </div>
@@ -121,19 +124,6 @@
             <div class="content-table">
                 <table>
                     <thead>
-                        <!--<tr>
-                            <th></th>
-                            <th>Mã nhân viên<i class="fas fa-sort icon-sort"></i></th>
-                            <th>Họ và tên<i class="fas fa-sort icon-sort"></i></th>
-                            <th>Mã số BHXH<i class="fas fa-sort icon-sort"></i></th>
-                            <th>Giới tính<i class="fas fa-sort icon-sort"></i></th>
-                            <th>Vị trí chức vụ<i class="fas fa-sort icon-sort"></i></th>
-                            <th>Bộ phân phòng ban<i class="fas fa-sort icon-sort"></i></th>
-                            <th class="fix-width-table align-salary">Hệ số Mức lương tham gia BHXH<i class="fas fa-sort icon-sort"></i></th>
-                            <th>Trạng thái tham gia<i class="fas fa-sort icon-sort"></i></th>
-                            <th>Bệnh viện<i class="fas fa-sort icon-sort"></i></th>
-
-                        </tr>-->
                         <tr>
                             <th fieldName="EmployeeCode">Mã nhân viên<i class="fas fa-sort icon-sort"></i></th>
                             <th fieldName="FullName">Họ và tên<i class="fas fa-sort icon-sort"></i></th>
@@ -172,10 +162,10 @@
                     <button class="button-bottom-bar button-back-page">
                         <i class="fas fa-chevron-left"></i>
                     </button>
-                    <button class="button-bottom-bar button-page-one">1</button>
-                    <button class="button-bottom-bar button-page-two">2</button>
-                    <button class="button-bottom-bar button-page-three">3</button>
-                    <button class="button-bottom-bar button-page-four">4</button>
+                    <button class="button-bottom-bar button-change-page-number">1</button>
+                    <button class="button-bottom-bar button-change-page-number">2</button>
+                    <button class="button-bottom-bar button-change-page-number">3</button>
+                    <button class="button-bottom-bar button-change-page-number">4</button>
                     <button class="button-bottom-bar button-next-page">
                         <i class="fas fa-chevron-right"></i>
                     </button>
@@ -186,133 +176,6 @@
                         <i class="fas fa-chevron-down icon-change-show-table"></i>
                     </button>
 
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--dialog add nhân viên-->
-    <div class="dialog-model"></div>
-    <div class="dialog">
-        <div class="dialog-title">
-            <div class="dialog-title-header">Thông tin nhân viên</div>
-            <button type="button" class="icon-exit">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="dialog-body">
-            <div class="title-input">Thông tin chung</div>
-            <div class="info-general">
-                <div class="content-info-general">
-                    <div class="input-dialog-default info-id">
-                        <label class="label-input">Mã nhân viên(*)</label>
-                        <input type="text" class="content-input">
-                    </div>
-                    <div class="input-dialog-default">
-                        <label class="label-input">Tên nhân viên(*)</label>
-                        <input type="text" class="content-input" />
-                    </div>
-                    <div class="input-dialog-default">
-                        <label class="label-input">Ngày sinh</label>
-                        <div class="content-input input-right">
-                            <input type="text" class="input-birth" />
-                            <div class="gender">
-                                <label class="title-gender">Giới tính</label>
-                                <select class="select-gender">
-                                    <option>Nam</option>
-                                    <option>Nữ</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="input-dialog-default mail">
-                        <label class="label-input">Email(*)</label>
-                        <input type="text" class="content-input" />
-                    </div>
-                    <div class="input-dialog-default phone">
-                        <label class="label-input">ĐT di động(*)</label>
-                        <input type="text" class="content-input" />
-                    </div>
-                    <div class="input-dialog-default id-card">
-                        <label class="label-input number-id-card">Số CMT/HC</label>
-                        <div class="content-input input-right">
-                            <input type="text" class="input-id-card" />
-                            <div class="issued-by">
-                                <label class="title-issued-by">Ngày cấp</label>
-                                <input type="date" class="day-issued-by" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-employee">
-                    <div class="img"></div>
-                    <div class="caption-img"></div>
-                </div>
-            </div>
-            <div class="input-dialog-default">
-                <label class="label-input">Nơi cấp CMND</label>
-                <input type="text" class="content-input" />
-            </div>
-            <div class="info-work">
-                <div class="title-input">Thông tin công việc</div>
-                <div class="input-dialog-default info-position">
-                    <label class="label-input">Vị trí</label>
-                    <select class="content-input">
-                        <option>Nhân viên</option>
-                        <option>Thực tập sinh</option>
-                        <option>Fresher</option>
-                    </select>
-                </div>
-                <div class="input-dialog-default">
-                    <label class="label-input">Phòng ban</label>
-                    <select class="content-input">
-                        <option>Phòng nghiên cứu</option>
-                        <option>Phòng đào tạo</option>
-                        <option>Phòng nhân sự</option>
-                    </select>
-                </div>
-                <div class="input-dialog-default">
-                    <label class="label-input">Mã số thuế</label>
-                    <div class="content-input input-right">
-                        <input type="text" class="input-specal" />
-                        <div class="info-specal">
-                            <label class="label-input label-specal">Mức lương</label>
-                            <input type="text" class="content-input" />
-                        </div>
-                    </div>
-                </div>
-                <div class="input-dialog-default">
-                    <label class="label-input">Ngày gia nhập</label>
-                    <div class="content-input input-right">
-                        <input type="date" class="input-specal" />
-                        <div class="info-specal">
-                            <label class="label-input label-specal">Tình trạng</label>
-                            <select class="content-input">
-                                <option></option>
-                                <option></option>
-                                <option></option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="button-dialog-body">
-                <button type="button" class="button-dialog-default">
-                    <i class="far fa-question-circle"></i>
-                    <div class="title-button">Help</div>
-                </button>
-                <div class="button-right">
-                    <button type="button" class="button-dialog-default">
-                        <i class="far fa-save"></i>
-                        <div class="title-button">Cất</div>
-                    </button>
-                    <button type="button" class="button-dialog-default">
-                        <i class="fas fa-plus-circle"></i>
-                        <div class="title-button">Cất&Thêm</div>
-                    </button>
-                    <button type="button" class="button-dialog-default">
-                        <i class="fas fa-ban"></i>
-                        <div class="title-button">Hủy bỏ</div>
-                    </button>
                 </div>
             </div>
         </div>

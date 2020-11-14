@@ -5,10 +5,14 @@
     <meta charset="utf-8" />
     <title></title>
     <!--Nhúng bootrap, phần dùng chung trước-->
+    <link href="/lib/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" />
     <link href="/css/common/main.css" rel="stylesheet" />
     <link href="/css/common/icon.css" rel="stylesheet" />
     <link href="/css/common/button.css" rel="stylesheet" />
     <link href="/css/common/align-content.css" rel="stylesheet" />
+    <link href="/css/common/input.css" rel="stylesheet" />
+    <link href="/css/common/dialog.css" rel="stylesheet" />
+    <link href="/css/common/custom-jquery-ui.css" rel="stylesheet" />
     <link href="/css/common/navbar.css" rel="stylesheet" />
     <link href="/css/common/header.css" rel="stylesheet" />
     <link href="/css/common/content.css?v=1.2" rel="stylesheet" />
@@ -69,13 +73,15 @@
         <div class="toolbar-of-table">
             <div class="title-toolbar"><h1>Quản lý lao động</h1></div>
             <div class="button-toolbar">
-                <button type="button" class="btn-syncing-from-hrm">
-                    <i class="fas fa-sync-alt icon-syncing"></i>Đồng bộ từ HRM
+                <button type="button" class="m-button-icon margin-button">
+                    <i class="fas fa-sync-alt icon-syncing"></i>
+                    <div class="title-button-icon">Đồng bộ từ HRM</div>
                 </button>
-                <button type="button" class="btn-add-labor">
-                    <i class="fas fa-user-plus icon-add-labor"></i>Thêm lao động
+                <button type="button" id="btn-add-customer" class="btn-add m-button-icon margin-button" style="border-radius: 4px 0 0 4px;">
+                    <i class="fas fa-user-plus icon-add-labor"></i>
+                    <div class="title-button-icon">Thêm lao động</div>
                 </button>
-                <button type="button" class="button-dropdown">
+                <button type="button" class="m-button-only-icon button-dropdown">
                     <i class="fas fa-caret-down fa-lg icon-dropdown"></i>
                 </button>
             </div>
@@ -83,7 +89,7 @@
         <div class="search-table">
             <div class="type-search">
                 <div class="search-by-id">
-                    <input class="border-common" id="input-search" placeholder="Tìm kiếm theo mã nhân viên, họ tên" />
+                    <input class="field-input-icon" style="width: 200px;" placeholder="Tìm kiếm theo mã nhân viên, họ tên" />
                 </div>
                 <div class="choose-department">
                     <select class="border-common select-department">
@@ -110,8 +116,8 @@
             </div>
             <div class="download-and-syncing">
                 <div class="btn-download-and-syncing">
-                    <button type="button" class="border-common btn-download"><i class="fas fa-download icon-download"></i></button>
-                    <button type="button" class="border-common btn-syncing"><i class="fas fa-sync icon-syncing"></i></button>
+                    <button type="button" class="m-button-only-icon"><i class="fas fa-download icon-download"></i></button>
+                    <button type="button" id="btnRefresh" class="m-button-only-icon"><i class="fas fa-sync icon-syncing"></i></button>
                 </div>
             </div>
         </div>
@@ -119,19 +125,6 @@
             <div class="content-table">
                 <table>
                     <thead>
-                        <!--<tr>
-                            <th></th>
-                            <th>Mã nhân viên<i class="fas fa-sort icon-sort"></i></th>
-                            <th>Họ và tên<i class="fas fa-sort icon-sort"></i></th>
-                            <th>Mã số BHXH<i class="fas fa-sort icon-sort"></i></th>
-                            <th>Giới tính<i class="fas fa-sort icon-sort"></i></th>
-                            <th>Vị trí chức vụ<i class="fas fa-sort icon-sort"></i></th>
-                            <th>Bộ phân phòng ban<i class="fas fa-sort icon-sort"></i></th>
-                            <th class="fix-width-table align-salary">Hệ số Mức lương tham gia BHXH<i class="fas fa-sort icon-sort"></i></th>
-                            <th>Trạng thái tham gia<i class="fas fa-sort icon-sort"></i></th>
-                            <th>Bệnh viện<i class="fas fa-sort icon-sort"></i></th>
-
-                        </tr>-->
                         <tr>
                             <th fieldName="CustomerCode">Mã khách hàng<i class="fas fa-sort icon-sort"></i></th>
                             <th fieldName="FullName">Họ và tên<i class="fas fa-sort icon-sort"></i></th>
@@ -183,7 +176,103 @@
             </div>
         </div>
     </div>
+    <!--<div class="dialog-modal"></div>-->
+    <div class="m-dialog" title="Thông tin khách hàng">
+        <!--<div class="m-dialog-header">
+        <div class="m-dialog-header-title">Thông tin khách hàng</div>
+        <button type="button" class="button-dialog-close">
+            <i class="fas fa-times fa-lg"></i>
+        </button>
+    </div>-->
+        <!--<div class="dialog-modal"></div>-->
+        <div class="m-dialog-content">
+            <div class="m-dialog-content-top">
+                <div class="m-flex-1 m-row m-img-left">
+                    <div class="avatar-dialog"></div>
+                    <div class="text-note-avatar">
+                        Vui lòng chọn ảnh có định dạng<br>
+                        <b>.jpg .jpeg .png .git</b>
+                    </div>
+                </div>
+                <div class="m-flex-1">
+                    <div class="m-row">
+                        <div class="m-label">Mã khách hàng (*)</div>
+                        <input type="text" fieldName="CustomerCode" id="txtCustomerCode" class="field-input input-required" required/>
+                    </div>
+                    <div class="m-row">
+                        <div class="m-label">Mã thẻ thành viên</div>
+                        <input type="text" fieldName="MemberCardCode" id="txtMemberCardCode" class="field-input" />
+                    </div>
+                    <div class="m-row">
+                        <div class="m-label">Ngày sinh</div>
+                        <input type="date" fieldName="DateOfBirth" id="dtDateOfBirth" class="field-input" />
+                    </div>
+                </div>
+                <div class="m-flex-1 m-dialog-left">
+                    <div class="m-row">
+                        <div class="m-label">Họ và tên (*)</div>
+                        <input type="text" fieldName="FullName" id="txtFullName" class="field-input input-require" required/>
+                    </div>
+                    <div class="m-row">
+                        <div class="m-label">Nhóm khách hàng</div>
+                        <select id="cbxCustomerGroup" class="m-select-dialog">
+                            <option>Khách VIP</option>
+                            <option>Khách Thường</option>
+                            <option>Khách Vãng Lai</option>
+                        </select>
+                    </div>
+                    <div class="m-row">
+                        <div class="m-label">Giới tính</div>
+                        <div class="m-input-radio-dialog">
+                            <div class="m-input-gender">
+                                <input class="m-input-radio" type="radio" id="nam" checked value="Nam" name="gender" />
+                                <label class="m-label-dialog">Nam</label>
+                            </div>
+                            <div class="m-input-gender">
+                                <input class="m-input-radio" type="radio" id="nữ" value="Nữ" name="gender" />
+                                <label class="m-label-dialog">Nữ</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-row-2-input">
+                <div class="m-flex-2">
+                    <div class="m-label">Email</div>
+                    <input type="email" fieldName="Email" id="txtEmail" class="field-input" />
+                </div>
+                <div class="m-flex-1 m-dialog-left">
+                    <div class="m-label">Số điện thoại (*)</div>
+                    <input type="text" fieldName="PhoneNumber" id="txtPhoneNumber" class="field-input input-require" required/>
+                </div>
+            </div>
+            <div class="m-row-2-input">
+                <div class="m-flex-2">
+                    <div class="m-label">Tên công ty</div>
+                    <input type="text" class="field-input" />
+                </div>
+                <div class="m-flex-1 m-dialog-left">
+                    <div class="m-label">Mã số thuế</div>
+                    <input type="text" class="field-input" />
+                </div>
+            </div>
+            <div class="m-row">
+                <div class="m-label">Địa chỉ</div>
+                <input type="text" fieldName="Address" id="txtAddress" class="field-input" />
+            </div>
+        </div>
+        <div class="m-button-dialog">
+            <div class="m-block-button-dialog">
+                <button type="button" id="btnCancel" class="m-seconds-button-2 m-button-default">Hủy</button>
+                <button type="button" id="btnSave" class="m-button-icon m-button-default">
+                    <i class="fas fa-save"></i>
+                    <div class="m-title-button-dialog">Lưu</div>
+                </button>
+            </div>
+        </div>
+    </div>
     <script src="/js/common/jquery-3.5.1.min.js"></script>
+    <script src="/lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
     <script src="/js/common/common.js"></script>
     <script src="/js/common/base.js"></script>
     <script src="/js/page/customer.js"></script>
