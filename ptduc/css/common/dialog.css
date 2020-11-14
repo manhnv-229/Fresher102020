@@ -120,3 +120,7 @@
 .status-joined select{
     width: 391px;
 }
+
+.red-border {
+    border-color: red;
+}

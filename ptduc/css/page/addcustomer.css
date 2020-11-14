@@ -1,0 +1,79 @@
+.m-dialog{
+  left: calc((100vw - 700px)/2);
+  top: 90px;
+  position: absolute;
+  width: 700px;
+  margin: auto; 
+  border-radius: 5px;
+  background-color: white;
+}
+.btn-cancle-dialog{
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-image: url("/assets/img/cancel.png");
+}
+.m-avatar{
+  background-image: url(/assets/img/user.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 150px;
+  height: 150px;
+}
+.dialog-content{
+  padding: 10px;
+  padding-left: 20px;
+}
+.text-align-right {
+  text-align: right;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+  color: #000000;
+}
+.dialog-header{
+  justify-content: space-between;
+}
+.dialog-footer{
+  background-color: #bbbbbb;
+  height: 50px;
+  width: 100%;
+}
+.btn-footer{
+  padding-right: 10px;
+  float: right;
+  height: 100%;
+}
+.btn-footer button {
+  display: block;
+  margin: auto;
+  
+  margin-right: 10px;
+}
+.m-control input {
+  width: calc(100% - 32px);
+}
+select.m-control{
+  width: calc(100% - 16px)
+}
+#btnSave{
+  display: flex;
+}
+#btnSave .m-btn-icon{
+  width: 20px;
+  height: 20px;
+  background-image: url(/assets/img/save.png);
+  background-repeat: no-repeat;
+}
+.border-red {
+  border-color: red;
+}
+input {
+  color: black;
+}

@@ -116,12 +116,3 @@
 // //document.getElementsByTagName("table")[0].appendChild(row);
 
 
-$(document).ready(function () {
-    $(".add-user-m-btn").click(()=>{
-        $(".include-content").css("display","block");
-    });
-    $(".diaglog-title").children().eq(1).click(()=>{
-        console.log("zo");
-        $(".include-content").css("display","none");
-    })
-});

@@ -154,7 +154,9 @@
   font-size: 13px;
   color: #000000;
 }
-
+.content-title-down .right>*{
+  cursor: pointer;
+}
 .content-main {
   margin-top: 20px;
   margin-left: 16px;
@@ -163,19 +165,15 @@
   padding-right: 10px;
   padding-left: 10px;
 }
-.content-main-content .table {
-  height: calc(100vh - 260px);
+.content-main-content .table  {
+  height: calc(100vh - 280px);
   overflow: scroll;
 }
-.content-main-content .table .employeeId {
-  max-width: 100px;
+.content-main-content .table tr,.content-main-content .table td{
+  max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;  
-  text-align: center;
-}
-.content-main-content .table .JoinDate{
-  text-align: right;
 }
 .content-main-content .table::-webkit-scrollbar {
   width: 0.5em;
@@ -188,7 +186,6 @@
 }
 
 .content-main-content table {
-  text-align: left;
   width: 100%;
   border-collapse: collapse;
   border: 0;
@@ -264,4 +261,15 @@
   z-index: 10;
   width: 100vw;
   height: 100vh;  
+}
+
+
+.alight-center-table{
+  text-align: center;
+}
+.alight-left-table{
+  text-align: left;
+}
+.alight-right-table{
+  text-align: right;
 }

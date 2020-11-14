@@ -1,5 +1,5 @@
 var abc = {
-    name:"Duc",
-    age:"20"
 };
-console.log(abc[0]);
+abc.name = "Duc";
+abc.age="20";
+console.log(abc);
