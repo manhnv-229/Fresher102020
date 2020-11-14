@@ -13,6 +13,6 @@ class Customer extends BaseJS {
     }
 
     setDataUrl() {
-        this.getDataUrl = "http://api.manhnv.net/api/employees";
+        this.getDataUrl = "http://api.manhnv.net/api/customers";
     }
 }

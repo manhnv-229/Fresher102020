@@ -72,7 +72,7 @@
     <div class="content">
         <div class="content-header">
             <div class="title">
-                Quản lý lao động
+                Quản lý nhân viên
             </div>
             <div class="content-feature">
                 <button class="misa-btn-second">
@@ -84,7 +84,7 @@
                 <button class="misa-btn-icon" data-modal-target="#modal">
                     <i class="misa-icon-button icon-add-user"></i>
                     <div class="lable-text">
-                        Thêm lao động
+                        Thêm nhân viên
                     </div>
                 </button>
 
@@ -92,69 +92,88 @@
                 <div class="modal" id="modal">
                     <div class="modal-header">
                         <div class="title-header">
-                            <div class="title">Thêm nhân viên</div>
+                            <div class="title">Thông tin nhân viên</div>
                             <button data-close-button class="close-button">&times;</button>
                         </div>
-                        <div class="page-information">
-                            <div class="information-user">
-                                1. Thông tin cá nhân
-                            </div>
-                        </div>
                     </div>
-                    <!--modal-->
                     <div class="modal-body">
                         <form>
-                            <div class="misa-form-column">
-                                <div class="misa-form-group">
-                                    <label class="label-field-input">Mã nhân viên</label>
-                                    <input class="input-field" />
+                            <div class="misa-form-row">
+                                <div class="misa-col-1">
+                                    <div class="avatar"></div>
+                                    <div class="label-field-input text-center">Vui lòng chọn ảnh có định dạng .jpg, .jpeg, .png, .gif</div>
                                 </div>
-                                <div class="misa-form-group">
-                                    <label class="label-field-input">Họ và tên</label>
-                                    <input class="input-field" />
+                                <div class="misa-col-2">
+                                    <div class="misa-form-group">
+                                        <label class="label-field-input">Mã khách hàng</label>
+                                        <input class="input-field" />
+                                    </div>
+                                    <div class="misa-form-group">
+                                        <label class="label-field-input">Mã thẻ thành viên</label>
+                                        <input class="input-field" />
+                                    </div>
+                                    <div class="misa-form-group">
+                                        <label class="label-field-input">Ngày sinh</label>
+                                        <input class="input-field" />
+                                    </div>
                                 </div>
-                                <div class="misa-form-group">
-                                    <label class="label-field-input">Giới tính</label>
-                                    <input class="input-field" />
-                                </div>
-                                <div class="misa-form-group">
-                                    <label class="label-field-input">Ngày sinh</label>
-                                    <input class="input-field" />
+                                <div class="misa-col-3">
+                                    <div class="misa-form-group">
+                                        <label class="label-field-input">Họ và tên</label>
+                                        <input class="input-field" />
+                                    </div>
+                                    <div class="misa-form-group">
+                                        <label class="label-field-input">Nhóm khách hàng</label>
+                                        <input class="input-field" />
+                                    </div>
+                                    <div class="misa-form-group">
+                                        <label class="label-field-input">Giới tính</label>
+                                        <div>
+                                            <input name="gender" type="radio" /> <label>Nam</label>
+                                            <input name="gender" type="radio" /> <label>Nữ</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="misa-form-column">
-                                <div class="misa-form-group">
-                                    <label class="label-field-input">Số điện thoại</label>
-                                    <input class="input-field" />
+                            <div class="misa-form-row">
+                                <div class="misa-col-1-2">
+                                    <div class="misa-form-group">
+                                        <label class="label-field-input">Email</label>
+                                        <input class="input-field" />
+                                    </div>
                                 </div>
-                                <div class="misa-form-group">
-                                    <label class="label-field-input">Email</label>
-                                    <input class="input-field" />
-                                </div>
-                                <div class="misa-form-group">
-                                    <label class="label-field-input">Chức vụ</label>
-                                    <input class="input-field" />
-                                </div>
-                                <div class="misa-form-group">
-                                    <label class="label-field-input">Tên phòng ban</label>
-                                    <input class="input-field" />
+                                <div class="misa-col-3">
+                                    <div class="misa-form-group">
+                                        <label class="label-field-input">Số điện thoại</label>
+                                        <input class="input-field" />
+                                    </div>
                                 </div>
                             </div>
-                            <div class="misa-form-column">
-                                <div class="misa-form-group">
-                                    <label class="label-field-input">Tiền lương</label>
-                                    <input class="input-field" />
+                            <div class="misa-form-row">
+                                <div class="misa-col-1-2">
+                                    <div class="misa-form-group">
+                                        <label class="label-field-input">Tên công ty</label>
+                                        <input class="input-field" />
+                                    </div>
                                 </div>
+                                <div class="misa-col-3">
+                                    <div class="misa-form-group">
+                                        <label class="label-field-input">Mã số thuế</label>
+                                        <input class="input-field" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="misa-form-row">
                                 <div class="misa-form-group">
                                     <label class="label-field-input">Địa chỉ</label>
                                     <input class="input-field" />
                                 </div>
-                                <div class="misa-form-group">
-                                    <label class="label-field-input">Tình trạng làm việc</label>
-                                    <input class="input-field" />
-                                </div>
                             </div>
                         </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button data-close-button class="misa-btn-second">Hủy</button>
+                        <button class="misa-btn-icon">Thêm mới</button>
                     </div>
                 </div>
 
@@ -185,7 +204,7 @@
             <div class="right-tool">
                 <button class="misa-btn-second dowload-tool" style="width:40px">
                 </button>
-                <button class="misa-btn-second sync-tool" style="width:40px">
+                <button id="btnRefresh" class="misa-btn-second sync-tool" style="width:40px">
                 </button>
             </div>
         </div>
@@ -197,13 +216,13 @@
                         <th fieldName="EmployeeCode">Mã nhân viên</th>
                         <th fieldName="FullName">Họ và tên</th>
                         <th fieldName="GenderName">Giới tính</th>
-                        <th fieldName="DateOfBirth">Ngày sinh</th>
+                        <th fieldName="DateOfBirth" formatType="ddmmyyyy">Ngày sinh</th>
                         <th fieldName="PhoneNumber">Số điện thoại</th>
                         <th fieldName="Email">Email</th>
                         <th fieldName="PositionName">Chức vụ</th>
                         <th fieldName="DepartmentName">Tên phòng ban</th>
-                        <th fieldName="Salary">Tiền lương</th>
-                        <th fieldName="Address">Địa chỉ</th>
+                        <th fieldName="Salary" formatType="money">Tiền lương</th>
+                        <th fieldName="Address" formatType="hoverTitle">Địa chỉ</th>
                         <th fieldName="WorkStatusName">Tình trạng làm việc</th>
                     </tr>
                 </thead>

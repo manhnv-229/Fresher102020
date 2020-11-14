@@ -6,11 +6,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50% , -50%);
-    border: 1px solid #000000;
     border-radius: 4px;
     z-index: 10;
     background-color: #ffffff;
-    width: 1366px;
     max-width: 80%;
 }
 
@@ -19,7 +17,7 @@
     }
 
     .modal .modal-header {
-        border-bottom: 1px solid #e5e5e5;
+        
     }
 
         .modal .modal-header .information-user {
@@ -31,30 +29,67 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            /*border-bottom: 1px solid #e5e5e5;*/
+            padding: 24px 24px 0px 24px;
         }
 
 .modal-header .title-header .close-button {
     background-color: #ffffff;
-    color: #808080;
+    color: rgba(0,0,0,.5);
     cursor: pointer;
     border: none;
     font-size: 24px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 0px 4px 0px 4px;
 }
 
-.modal .modal-body {
-    padding: 24px;
+/*hover-button-close*/
+    .modal-header .title-header .close-button:hover {
+        background-color: #bbbbbb;
+    }
+
+    /*focus-button-close*/
+    .modal-header .title-header .close-button:focus {
+        outline: none;
+        border: none;
+    }
+
+    .modal .modal-body {
+        padding: 24px;
+    }
+    /*modal-footer*/
+.modal .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 24px;
+    height: 60px;
+    align-items: center;
+    background-color:#bbbbbb;
 }
 
-#overlay {
-    position: fixed;
-    top: 0px;
-    right: 0px; 
-    bottom: 0px;
-    left: 0px;
-    background-color: rgba(0,0,0,.5);
-    pointer-events: all;
-}
+    .modal .modal-footer .misa-btn-second {
+        background-color: #bbbbbb;
+        width: 100px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+        .modal .modal-footer .misa-btn-second:hover {
+            background-color: #a9a5a5;
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+            background-color: rgba(0,0,0,.5);
+            pointer-events: all;
+        }
 
 #overlay .active{
     opacity: 1;

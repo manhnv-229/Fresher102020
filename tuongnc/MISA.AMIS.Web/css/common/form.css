@@ -1,18 +1,59 @@
 ﻿/*Xử lý css form*/
-form .misa-form-column {
+form .misa-form-row {
     display: flex;
+    width: 100%;
 }
 
 form .misa-form-group {
     display: flex;
     flex-direction: column;
     margin-bottom: 16px;
-    margin-left: 40px;
+    margin-left: 10px;
 }
 
 form .input-field {
     margin-left: 0px;
     margin-top: 4px;
+}
+
+form .avatar {
+    width: 174px;
+    height: 174px;
+    border-radius: 50%;
+    border: 1px solid #bbbbbb;
+    margin: auto;
+    background-image: url('/content/img/avatar.png');
+    background-repeat:no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+form .misa-col-1-2 {
+    width: calc(100% - 234px);
+}
+
+.misa-col-1-2 .misa-form-group {
+    margin-left: 0px;
+    margin-right: 0px;
+    /*width: 100%;*/
+}
+
+.misa-form-row > .misa-form-group {
+    margin-left: 0px;
+    margin-right: 10px;
+    width: 100%;
+}
+
+.misa-col-1-2 .misa-form-group .input-field {
+    width:calc(100% - 16px - 16px);
+}
+
+.misa-form-row>.misa-form-group .input-field {
+    width: calc(100% - 24px);
+}
+
+.misa-form-group .validate-require {
+    border-color: #ff0000;
 }
 
 /*---------------------------------------------------*/

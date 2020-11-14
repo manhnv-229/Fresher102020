@@ -13,13 +13,13 @@
 .content-header {
     width: 100%;
     display: flex;
+    justify-content: space-between;
 }
 
     .content-header .title {
         font-weight: bold;
         color: #000000;
         font-size: 20px;
-        width: calc(100% - 600px);
     }
 
     .content-header .content-feature {

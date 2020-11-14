@@ -6,6 +6,13 @@
     color: #505252;
 }
 
+.text-center {
+    text-align: center;
+}
+.text-align-right {
+    text-align: right;
+}
+
 @font-face {
     font-family: 'GoogleSans-Black';
     src: url('../../content/font/GoogleSans-Black.otf') format('opentype');
