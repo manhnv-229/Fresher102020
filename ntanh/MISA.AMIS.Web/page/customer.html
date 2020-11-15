@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <title>Customer Page</title>
+    <link href="/lib/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" />
     <link href="/css/common/main.css" rel="stylesheet" />
     <link href="/css/common/common.css" rel="stylesheet" />
     <link href="/css/common/icon.css" rel="stylesheet" />
@@ -116,7 +117,7 @@
         <div class="page-title">
             <div class="title">Danh sách khách hàng</div>
             <div class="content-feature">
-                <button class="m-btn m-btn-default">
+                <button id="btnAdd" class="m-btn m-btn-default">
                     <div class="m-icon-add"></div>
                     <div class="btn-text">Thêm khách hàng</div>
                 </button>
@@ -131,7 +132,7 @@
                 </select>
             </div>
             <div class="filter-right">
-                <button class="m-second-button m-btn-refresh"></button>
+                <button id="btnRefresh" class="m-second-button m-btn-refresh"></button>
 
             </div>
         </div>
@@ -157,14 +158,14 @@
         </div>
         <div class="paging-bar"></div>
     </div>
-    <div class="back_def">
+    <div class="back_def btnClose">
 
     </div>
     <!-- dialog -->
-    <div class="dialog">
+    <div class="m-dialog">
         <div class="dialog-header">
             <div class="title-header">Thông tin khác hàng</div>
-            <button class="m-btn-close"><i class="fas fa-times" style="font-size: 16px;"></i></button>
+            <button class="m-btn-close btnClose"><i class="fas fa-times" style="font-size: 16px;"></i></button>
         </div>
         <div class="dialog-content">
             <div class="dialog-content_top">
@@ -179,25 +180,25 @@
                 <div class="content-center">
                     <div class="item-short">
                         <span class="title-input">Mã khách hàng (<span style="color: red;">*</span>)</span>
-                        <input class="" type="text" name="customercode" value="" />
+                        <input id="txtCustomerCode" type="text" name="customercode" value="" required />
                     </div>
                     <div class="item-short">
                         <span class="title-input">Mã thẻ thành viên</span>
-                        <input class="" type="text" name="membercardcode" value="" />
+                        <input id="txtMemberCardCode" type="text" name="membercardcode" value="" />
                     </div>
                     <div class="item-short">
                         <span class="title-input">Ngày sinh</span>
-                        <input class="" type="date" name="dateofbirth" value="" />
+                        <input id="dtDateOfBirth" type="date" name="dateofbirth" value="" />
                     </div>
                 </div>
                 <div class="content-right">
                     <div class="item-short">
                         <span class="title-input">Họ tên (<span style="color: red;">*</span>)</span>
-                        <input class="" type="text" name="fullname" value="" />
+                        <input id="txtFullName" type="text" name="fullname" value="" required />
                     </div>
                     <div class="item-short">
                         <span class="title-input">Nhóm khách hàng</span>
-                        <select class="m-select">
+                        <select id="cbxCustomerGroup" class="m-select">
                             <option>
                                 Khách VIP
                             </option>
@@ -220,7 +221,7 @@
                 <div class="content-left multiply-2">
                     <div class="item-short multiply-2">
                         <span class="title-input">Email</span>
-                        <input class="" type="text" name="email" value="" />
+                        <input id="txtEmail" type="email" name="email" placeholder="example@domain.com" value=""/>
                     </div>
                     <div class="item-short multiply-2">
                         <span class="title-input">Tên công ty</span>
@@ -230,7 +231,7 @@
                 <div class="content-right">
                     <div class="item-short">
                         <span class="title-input">Số điện thoại (<span style="color: red;">*</span>)</span>
-                        <input class="" type="text" name="customerphone" value="" />
+                        <input id="txtPhoneNumber" type="text" name="customerphone" value="" required />
                     </div>
                     <div class="item-short">
                         <span class="title-input">Mã số thuế</span>
@@ -242,19 +243,20 @@
                 <div class="content-left multiply-3">
                     <div class="item-short multiply-3">
                         <span class="title-input">Địa chỉ</span>
-                        <input class="" type="text" name="address" value="" />
+                        <input id="txtAddress" type="text" name="address" value="" />
                     </div>
                 </div>
             </div>
         </div>
         <div class="dialog-footer">
-            <button class="m-btn m-btn-cannel"><span class="content-m-btn">Hủy</span></button>
-            <button class="m-btn m-btn-save"><i class="far fa-save" style="padding-right: 10px"></i><span class="content-m-btn">Lưu</span></button>
+            <button class="m-btn m-btn-cannel btnClose"><span class="content-m-btn">Hủy</span></button>
+            <button id="btnSave" class="m-btn m-btn-save"><i class="far fa-save" style="padding-right: 10px"></i><span class="content-m-btn">Lưu</span></button>
             <button class="m-btn m-btn-savenew"><span class="content-m-btn">Lưu và thêm mới</span></button>
         </div>
     </div>
 
     <script src="/lib/jquery-3.5.1.min.js"></script>
+    <script src="/lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
     <script src="/js/common/common.js"></script>
     <script src="/js/common/base.js"></script>
     <script src="/js/page/customer.js"></script>

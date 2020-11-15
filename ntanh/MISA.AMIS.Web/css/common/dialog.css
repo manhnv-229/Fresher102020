@@ -1,4 +1,4 @@
-﻿.dialog {
+﻿.m-dialog {
     width: 628px;
     height: 600px;
     background-color: #ffffff;
@@ -116,3 +116,23 @@ span.title-input {
     align-items: center;
     padding-right: 24px;
 }
+
+/*css định nghĩa lại thư viện jqueryUI*/
+
+.ui-draggable-handle {
+    background-color: #ffffff;
+    border: 0;
+    display: none;
+}
+
+div#ui-id-1 {
+    padding: 0;
+}
+
+.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-draggable.ui-resizable {
+    padding: 0;
+}
+
+
+
+

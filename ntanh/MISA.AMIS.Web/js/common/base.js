@@ -8,6 +8,7 @@ class BaseJS {
         this.getDataUrl = null;
         this.setDataUrl();
         this.loadData();
+        this.initEvents();
     }
     /**
      *  Lấy url api 
@@ -15,6 +16,111 @@ class BaseJS {
      * */
     setDataUrl() {
 
+    }
+    /**
+     *  Khởi tạo Event
+     *  CreatedBy: NTANH (15/11/2020)
+     * */
+    initEvents() {
+        var me = this;
+        // Sự kiện click khi nhấn thêm mới
+        $('#btnAdd').click(function () {
+            // Hiển thị dialog thông tin chi tiết
+            dialogDetail.dialog('open');
+        })
+
+        // Load lại dữ liệu khi nhấn button nạp
+        $('#btnRefresh').click(function () {
+            me.loadData();
+        })
+
+        // Ẩn form chi tiết khi nhấn hủy, back_def, button close
+        $('.btnClose').click(function () {
+            dialogDetail.dialog('close');
+        })
+
+        // Thực hiện lưu dữ liệu khi nhấn button Lưu trên form chi tết
+        $('#btnSave').click(function () {
+            //Validate dữ liệu
+            var inputValidates = $('input[required], input[type="email"]');
+            $.each(inputValidates, function (index, input) {
+                $(input).trigger('blur');
+            })
+  
+            var inputNotValids = $('input[validate="false"]');
+            if (inputNotValids && inputNotValids.length > 0) {
+                alert("Dữ liệu không hợp lệ vui lòng kiểm tra lại");
+                inputNotValids[0].focus;
+                return;
+            }
+            // Thu thập thông tin dữ liệu
+            var customer = {
+                "CustomerCode": $('#txtCustomerCode').val(),
+                "FullName": $('#txtFullName').val(),
+                "Address": $('#txtAddress').val(),
+                "DateOfBirth": $('#dtDateOfBirth').val(),
+                "Email": $('#txtEmail').val(),
+                "PhoneNumber": $('#txtPhoneNumber').val(),
+                "CustomerGroupId": "3631011e-4559-4ad8-b0ad-cb989f2177da",
+                "MemberCardCode": $('#txtMemberCardCode').val() 
+            }
+            console.log(customer);
+            // Gọi service thực hiện lưu dữ liệu
+            $.ajax({
+                url: 'http://api.manhnv.net/api/customers',
+                method: 'POST',
+                data: JSON.stringify(customer),
+                contentType: 'application/json'
+            }).done(function (res) {
+            // Đưa ra thông báo và ẩn form chi tiết và load lại dữ liệu
+                alert('Thêm thành công');
+                dialogDetail.dialog('close');
+                me.loadData();
+            }).fail(function (res) {
+                debugger;
+            })
+            
+        })
+
+        // Hiển thị thông tin chi tiết cho 1 bản ghi khi ấn đúp chuột
+        $('table tbody').on('dblclick', 'tr', function () {
+            dialogDetail.dialog('open');
+        })
+        /*
+         * Validate bắt buộc nhập
+         * CreatedBy: NTANH 15/11/2020
+         */
+        $('input[required]').blur(function () {
+            // Kiểm tra dữ liệu đã nhập, nếu để trống thì cảnh báo
+            var value = $(this).val();
+            if (!value) {
+                $(this).addClass('border-red');
+                $(this).attr('title', 'Trường này không được phép để trống');
+                $(this).attr('validate', false);
+            }
+            else {
+                $(this).removeClass('border-red');
+                $(this).attr('validate', true);
+            }
+        })
+
+        /*
+         *  Valide email đúng định dạng
+         *  CreatedBy: NTANH 15/11/2020
+         */
+        $('input[type="email"]').blur(function () {
+            var value = $(this).val();
+            var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+            if (!testEmail.test(value)) {
+                $(this).addClass('border-red');
+                $(this).attr('title', 'Email không đúng định dạng');
+                $(this).attr('validate', false);
+            }
+            else {
+                $(this).removeClass('border-red');
+                $(this).attr('validate', true);
+            }
+        })
     }
     /**
      * Load dữ liệu 

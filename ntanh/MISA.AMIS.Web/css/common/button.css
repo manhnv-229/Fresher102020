@@ -65,7 +65,13 @@
 
 .m-btn.m-btn-cannel {
     margin: 0 10px;
+    background: none;
+    color: #000000;
 }
+
+    .m-btn.m-btn-cannel:hover{
+        background-color: #bbbbbb;
+    }
 
 .m-btn.m-btn-save {
     background-image: url('content/icon/add.png');
