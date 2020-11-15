@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Quản lý khách hàng</title>
+    <link href="/css/common/common.css" rel="stylesheet" />
+    <link href="/css/common/main.css" rel="stylesheet" />
+    <link href="/css/common/header.css" rel="stylesheet" />
+    <link href="/css/common/navbar.css" rel="stylesheet" />
+    <link href="/css/page/employee.css" rel="stylesheet" />
+    <link href="/css/common/grid.css" rel="stylesheet" />
+    <link href="/css/common/content.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+        <div class="logo-box">
+            <div class="toggle-icon"></div>
+            <div class="amis-logo"></div>
+        </div>
+        <div class="header-content">
+            <div class="company">Công ty cổ phần MISA TEST BHXH</div>
+            <div class="user-box">
+                <div class="user-icon icon-notification"></div>
+                <div class="user-avatar"></div>
+                <div class="user-name">Demo AMIS BHXH</div>
+                <div class="user-icon icon-user-setting"></div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar">
+        <div class="navbar-conent">
+            <div class="nav-item">
+                <div class="nav-item-icon icon-internetrecord"></div>
+                <div class="nav-item-text">Lập hồ sơ điện tử</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-item-icon icon-paperrecord"></div>
+                <div class="nav-item-text">Lập hồ sơ giấy</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-item-icon icon-keeptack1"></div>
+                <div class="nav-item-text">Theo dõi chi</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-item-icon icon-keeptack2"></div>
+                <div class="nav-item-text"><a href="customer.html">Quản lý khách hàng</a></div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-item-icon icon-manager"></div>
+                <div class="nav-item-text"><a href="employee.html">Quản lý lao động</a></div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-item-icon icon-setting"></div>
+                <div class="nav-item-text">Thiết lập</div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="taskbar">
+            <div class="taskbar-content"><a>Quản lý Khách hàng</a></div>
+            <div class="content-feature">
+                <button class="m-btn" id="btnAdd">
+                    <div class="icon-add"></div>
+                    <div class="icon-text">Thêm khách hàng</div>
+                </button>
+            </div>
+        </div>
+        <div class="filter">
+            <div id="search-icon"></div>
+            <div class="search">
+                <input type="text" id="searchstring" placeholder="Tìm kiếm theo mã khách hàng, họ tên" oninput="filterSearch()" />
+            </div>
+            <div class="select-department">
+                <input list="department" id="ip-department" placeholder="Chọn bộ phận phòng ban" />
+                <datalist id="department">
+                    <option>Phòng kế toán</option>
+                    <option>Phòng sản xuất</option>
+                    <option>Phòng gia công</option>
+                </datalist>
+            </div>
+            <div class="status-box">
+                <input list="status" id="ip-status" placeholder="Trang thái tham gia BHXH" />
+                <datalist id="status">
+                    <option>Đã tham gia</option>
+                    <option>Chưa tham gia</option>
+                </datalist>
+            </div>
+            <div class="filter-icon">
+                <button class="filter-button">
+                    <div class="filter-icon-content icon-download "></div>
+                </button>
+                <button class="filter-button" id="btnReload">
+                    <div class="filter-icon-content filter-icon-reload"></div>
+                </button>
+            </div>
+        </div>
+        <div class="grid">
+            <table class="grid-table">
+                <thead>
+                    <tr>
+                        <th fieldName="index">STT</th>
+                        <th fieldName="CustomerCode">Mã khách hàng</th>
+                        <th fieldName="FullName">Họ và tên</th>
+                        <th fieldName="Gender">Giới tính</th>
+                        <th fieldName="DateOfBirth">Ngày sinh</th>
+                        <th fieldName="Email">Email</th>
+                        <th fieldName="PhoneNumber">ĐT di động</th>
+                        <th fieldName="Address">Địa chỉ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div class="paging-bar">
+            <div class="seeing">Hiển thị <span>01-20/123</span> lao động</div>
+            <div class="page-number">
+                <div class="m-angle"><i class="fas fa-angle-double-left"></i></div>
+                <div class="m-angle"><i class="fas fa-angle-left"></i></div>
+                <div class="number-next" id="pagination">1</div>
+                <div class="number-next">2</div>
+                <div class="number-next">3</div>
+                <div class="m-angle"><i class="fas fa-angle-right"></i></div>
+                <div class="m-angle"><i class="fas fa-angle-double-right"></i></div>
+            </div>
+            <div class="number-employee"><span>20</span> lao động/trang</div>
+        </div>
+    </div>
+    <!--Dialog chi tiết thông tin nhân viên-->
+    <div class="dialog-model"></div>
+    <div class="dialog">
+        <div class="dialog-title">
+            <div class="title-text">Thông tin khách hàng</div>
+            <div class="title-close-button"><i class="material-icons">&#xe5cd;</i></div>
+        </div>
+        <div class="dialog-body">
+            <div class="information-content">
+                <div class="information-content-top">
+                    <div class="colum-right">
+                        <div class="img-avatar"></div>
+                        <div class="text-avatar">Vui lòng chọn ảnh có định dạng<br /><span>.jpg,.jpeg,.png,.gif</span></div>
+                    </div>
+                    <div class="colum-left">
+                        <div class="colum-left-input">
+                            <div>
+                                <label>Mã khách hàng(*)<br /></label>
+                                <input type="text" id="txtCustomerCode" required/>
+                            </div>
+                            <div>
+                                <label>Họ và tên(*)<br /></label>
+                                <input type="text" id="txtFullName" required/>
+                            </div>
+                        </div>
+                        <div class="colum-left-input">
+                            <div>
+                                <label>Mã thẻ thành viên<br /></label>
+                                <input type="text" id="txtMemberCardCode" />
+                            </div>
+                            <div>
+                                <label>Nhóm khách hàng<br /></label>
+                                <select id="cbbCustomerGroupName" class="ddlGroupCustomer">
+                                    <option value=1>Khách VIP</option>
+                                    <option value=2>Khách vãng lai</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="colum-left-input">
+                            <div>
+                                <label>Ngày sinh<br /></label>
+                                <input type="date" id="dtDateOfBirth"/>
+                            </div>
+                            <div>
+                                <label>Giới tính<br /></label>
+                                <div class="chkGender">
+                                    <input type="radio" id="ckbGender" value=1/>
+                                    <label>Nam</label>
+                                    <input type="radio" id="ckbGender" value=1 />
+                                    <label>Nữ</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="information-content-mid">
+                    <div class="email-phone">
+                        <div class="content-mid-email">
+                            <label>Email<br /></label>
+                            <input type="email" placeholder="example@gmail.com" id="txtEmail"/>
+                        </div>
+                        <div class="content-mid-phone">
+                            <label>Số điện thoại(*)<br /></label>
+                            <input type="text" id="txtPhoneNumber" required />
+                        </div>
+                    </div>
+                    <div class="company-TaxCode">
+                        <div class="email-phone">
+                            <div class="content-mid-email">
+                                <label>Công ty<br /></label>
+                                <input type="text" id="CompanyName" />
+                            </div>
+                            <div class="content-mid-phone">
+                                <label>Mã số thuế<br /></label>
+                                <input type="text" id="txtTaxCode" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="information-content-bottom">
+                    <label>Địa chỉ<br /></label>
+                    <input type="text" id="txtAddress"/>
+                </div>
+            </div>
+
+        </div>
+        <div class="dialog-footer">
+            <button id="btnCanel" >Hủy</button>
+            <button id="btnSave">
+                <div><i class="material-icons">&#xe161;</i></div>
+                <div style="line-height: 30px;">Lưu</div>
+            </button>
+        </div>
+    </div>
+
+    <script src="/js/lib/jquery-3.5.1.min.js"></script>
+    <script src="/js/common/base.js?v=1.1"></script>
+    <script src="/js/common/common.js"></script>
+    <script src="../js/page/customer.js"></script>
+    
+    <!--nhúng xong c+shift+b buid lại thư viện-->
+    <!--alt+mũi tên để thay đổi thử tự thẻ-->
+
+</body>
+</html>
