@@ -23,3 +23,7 @@
     font-family: 'GoogleSans-Black';
     src: url('../../contents/fonts/Google Sans/GoogleSans-Black.otf') format('opentype');
 }
+@font-face {
+    font-family: 'GoogleSans-Medium';
+    src: url('../../contents/fonts/Google Sans/GoogleSans-Medium.otf') format('opentype');
+}

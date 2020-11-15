@@ -1,0 +1,198 @@
+﻿.dialog {
+    font-family: GoogleSans-Medium;
+}
+
+.upper-dialog {
+    display: flex;
+}
+
+    .upper-dialog .avatar {
+        width: 260px;
+        height: 100%;
+        background-image: url('../../contents/images/avatar-default.png');
+        background-repeat: no-repeat;
+        background-size: 185px 185px;
+        padding-top: 194px;
+        text-align: center;
+        background-position: center 0px;
+        font-size: 13px;
+    }
+
+input{
+    display: block;
+    border: 1px solid #d2d2d2;
+}
+select {
+    display: block;
+    margin-top: 4px;
+    height: 40px;
+    width: 250px;
+    padding-left: 16px;
+    border: 1px solid #d2d2d2;
+    border-radius: 4px;
+}
+.input-text {
+    margin-top: 4px;
+    height: 38px;
+    width: 230px;
+    padding-left: 16px;
+    border-radius: 4px;
+}
+
+
+.inline {
+    display: flex;
+    margin-top: 16px;
+}
+/**
+* form radio input giới tính
+*/
+form {
+    display: flex;
+}
+
+    form label {
+        display: flex;
+        height: 40px;
+        line-height: 45px;
+    }
+
+#nu {
+    margin-left: 20px;
+}
+
+.input-radio {
+    width: 20px;
+    height: 20px;
+    align-self: center;
+}
+
+.right {
+    margin-left: 10px;
+}
+
+.under-dialog .width490 {
+    margin-top: 4px;
+    height: 38px;
+    padding-left: 16px;
+    border-radius: 4px;
+    width: 490px;
+}
+
+.under-dialog .width750 {
+    margin-top: 4px;
+    height: 38px;
+    padding-left: 16px;
+    border-radius: 4px;
+    width: 750px;
+}
+
+.dialog-footer button {
+    height: 40px;
+    width: 100px;
+    align-self: center;
+    position: absolute;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+}
+
+#btnSave {
+    right: 16px;
+    background-color: #019160;
+    color: #ffffff;
+    background-image: url('/contents/images/save-icon.png');
+    padding-left: 25px;
+    background-position: 24px 12px;
+    background-size: 13px 13px;
+    background-repeat: no-repeat;
+}
+
+#btnSave:hover {
+    background-color: #2FBE8E;
+}
+
+#btnCancel {
+    right: 132px;
+    background-color: transparent;
+}
+
+    #btnCancel:hover {
+        background-color: #D2D2D2;
+    }
+/*css định nghĩa lại thư viện jqueryUI*/
+.ui-corner-all,
+.ui-corner-bottom,
+.ui-corner-right,
+.ui-corner-br {
+    border-radius: 5px;
+}
+
+.ui-dialog .dialog-content {
+    padding: 16px;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    background-color: #FFFFFF;
+    border: none;
+}
+
+.ui-dialog .ui-dialog-titlebar-close {
+    margin: unset;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 0 5px 0 0;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    opacity: .7;
+    background-color: #FFFFFF;
+    background-image: url('/contents/icons/x.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px;
+}
+
+    .ui-dialog .ui-dialog-titlebar-close:hover {
+        background-color: #ccc;
+    }
+
+.ui-button .ui-icon, .ui-button .ui-icon:hover {
+    background-image: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px;
+}
+
+.ui-dialog .ui-dialog-content {
+    padding: 0;
+}
+
+.ui-widget.ui-widget-content {
+    border: unset;
+}
+
+.ui-button:hover .ui-icon {
+    background-image: none;
+}
+
+.ui-widget-overlay {
+    background-color: #000;
+    opacity: .5;
+}
+
+.ui-dialog .dialog-footer {
+    height: 56px;
+    background-color: #E5E5E5;
+    display: flex;
+    position: relative;
+}
+.border-red{
+    border-color:red;
+}

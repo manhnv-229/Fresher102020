@@ -3,8 +3,8 @@
     left: 221px;
     top: 49px;
     height: calc(100vh - 49px);
-    left:245px;
-    right:16px;
+    left: 245px;
+    right: 16px;
 }
 /**
 * Css title phần content
@@ -66,7 +66,7 @@
         display: flex;
         border: none;
         outline: none;
-        padding:0;
+        padding: 0;
     }
 
         .title .title-popup .title-popup-text {
@@ -78,6 +78,8 @@
 
             .title .title-popup .title-popup-text:hover {
                 background-color: #2FBE8E;
+                border-top-left-radius: 4px;
+                border-bottom-left-radius: 4px;
             }
 
         .title .title-popup .arrow-icon {
@@ -91,6 +93,8 @@
 
             .title .title-popup .arrow-icon:hover {
                 background-color: #2FBE8E;
+                border-top-right-radius: 4px;
+                border-bottom-right-radius: 4px;
             }
 
 .title-popup-text .adduser-icon {
@@ -230,6 +234,10 @@ input:focus {
         background-size: 16px 16px;
         background-position: center;
     }
+
+        .filter .filter-right .refresh-icon:hover {
+            background-color: #D2D2D2;
+        }
 /**
 * Css bảng phần content
 */
@@ -237,73 +245,83 @@ input:focus {
     width: 100%;
     margin-top: 10px;
     height: calc(100% - 64px);
-    overflow:auto;
+    overflow: auto;
 }
-    .paging {
-        width: 100%;
-        height: 56px;
-        display: flex;
-        position:absolute;
-        bottom:0;
-    }
+
+.paging {
+    width: 100%;
+    height: 56px;
+    display: flex;
+    position: absolute;
+    bottom: 0;
+}
 
     .paging .page-info {
-        float:left;
-        line-height:56px;
+        float: left;
+        line-height: 56px;
     }
+
     .paging .pages {
         align-items: center;
         justify-content: center;
         width: calc(100% - 350px);
         height: 100%;
-        display:flex;
+        display: flex;
         justify-content: center;
-        align-items:center;
+        align-items: center;
     }
-    .paging .pages button{
-        width:40px;
-        height:40px;
-        border:1px solid #bbbbbb;
-        margin-left:10px;
-        align-self:center;
 
-    }
-        .paging .pages button:focus {
-            outline: none;
+        .paging .pages button {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #bbbbbb;
+            margin-left: 10px;
+            align-self: center;
         }
-        .paging .pages .square{
-            border:none;   
-            background-color:transparent;
+
+            .paging .pages button:focus {
+                outline: none;
+            }
+
+        .paging .pages .square {
+            border: none;
+            background-color: transparent;
         }
+
         .paging .pages .circle {
             border-radius: 30px;
         }
-        .paging .pages .circle:focus {
-            background-color: #019160;
+
+            .paging .pages .circle:focus {
+                background-color: #019160;
+            }
+
+        .paging .pages .square {
+            border-radius: 4px;
         }
-        .paging .pages .square{
-            border-radius:4px;
-        }
+
         .paging .pages .previous-page {
             background-image: url('../../contents/images/left-arrow.png');
-            background-size:16px 16px;
-            background-repeat:no-repeat;
-            background-position:center;
+            background-size: 16px 16px;
+            background-repeat: no-repeat;
+            background-position: center;
         }
+
         .paging .pages .next-page {
             background-image: url('../../contents/images/right-arrow.png');
             background-size: 16px 16px;
             background-repeat: no-repeat;
             background-position: center;
         }
-            .paging .total-page {
-                position: absolute;
-                right: 0;
-                height: 30px;
-                width: 100px;
-                background-color: #ffffff;
-                align-self: center;
-                font: 13px GoogleSans-Regular;
-                border: 1px solid #bbbbbb;
-                border-radius: 4px;
-            }
+
+    .paging .total-page {
+        position: absolute;
+        right: 0;
+        height: 30px;
+        width: 100px;
+        background-color: #ffffff;
+        align-self: center;
+        font: 13px GoogleSans-Regular;
+        border: 1px solid #bbbbbb;
+        border-radius: 4px;
+    }

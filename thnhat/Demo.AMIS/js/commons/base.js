@@ -14,6 +14,7 @@
     * */
     dataLoad() {
         // Lấy thông tin các cột dữ liệu:
+        $('table tbody').empty();
         var columns = $('table thead th');
         $.ajax({
             url: this.getUrl,
