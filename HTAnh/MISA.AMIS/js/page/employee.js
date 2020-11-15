@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    new EmployeeJS();
+    new EmployeeJS();//khởi tạo
 });
 
 class EmployeeJS extends BaseJS {

@@ -8,6 +8,8 @@
     <link href="../css/common/navbar.css" rel="stylesheet" />
     <link href="../css/page/employee.css" rel="stylesheet" />
     <link href="../css/common/content.css" rel="stylesheet" />
+    <link href="../css/common/dialog.css" rel="stylesheet" />
+
 </head>
 <body>
     <div class="navbar">
@@ -31,13 +33,13 @@
                 <div class="nav-item-text">Theo dõi chi</div>
             </div>
             <a href="customers.html">
-                <div class="nav-item">
+                <div class="nav-item selected">
                     <div class="nav-item-icon item-fourth"></div>
                     <div class="nav-item-text">Quản lý khách hàng</div>
                 </div>
             </a>
             <a href="employee.html">
-                <div class="nav-item selected">
+                <div class="nav-item ">
                     <div class="nav-item-icon item-fifth"></div>
                     <div class="nav-item-text">Quản lý lao động</div>
                 </div>
@@ -67,15 +69,15 @@
     </div>
     <div class="content">
         <div class="content-title">
-            <div class="content-name">Quản lý lao động</div>
+            <div class="content-name">Quản lý khách hàng</div>
             <div class="content-control">
                 <div class="control-sync">
                     <img src="../content/img/amis-hrm.png" id="amis-hrm-logo" />
                     <span>Đồng bộ từ HRM</span>
                 </div>
-                <div class="control-mix">
+                <div class="control-mix" id="btnAdd">
                     <img src="../content/icon/add-worker.png" id="add-logo" />
-                    <span id="add-title">Thêm lao động</span><span id="control-arrow"></span>
+                    <span id="add-title">Thêm khách hàng</span><span id="control-arrow"></span>
                 </div>
             </div>
         </div>
@@ -95,7 +97,7 @@
                 </div>
                 <div class="content-filter-btn">
                     <div class="content-filter-btn-first"></div>
-                    <div class="content-filter-btn-second"></div>
+                    <div class="content-filter-btn-second" id="btnRefresh"></div>
                 </div>
             </form>
         </div>
@@ -107,7 +109,7 @@
                             <th fieldName="CustomerCode">Mã khách</th>
                             <th fieldName="FullName">Họ và tên</th>
                             <th fieldName="DateOfBirth" formatType="ddmmyyyy">Ngày sinh</th>
-                            <th fieldName="PhoneNumber" >Số điện thoại</th>
+                            <th fieldName="PhoneNumber">Số điện thoại</th>
                             <th fieldName="Email">Email</th>
                             <th fieldName="Address">Địa chỉ</th>
                             <th fieldName="IsStopFollow">Dừng sử dụng</th>
@@ -126,11 +128,106 @@
                     <div class="page-number">3</div>
                     <div class="next-btn"></div>
                 </div>
-                    <div class="display-tab">15/trang</div>
+                <div class="display-tab">15/trang</div>
             </div>
         </div>
     </div>
+    <div class="m-dialog dialog-detail hide">
+        <div class="dialog-modal"></div>
+        <div class="dialog-content">
+            <div class="dialog-nav">
+                <div class="dialog-nav-title">THÔNG TIN KHÁCH HÀNG</div>
+                <div class="dialog-nav-button" id="btnX"></div>
+            </div>
+            <div class="dialog-data">
+                <div class="dialog-data-first">
+                    <div class="dialog-data-avatar">
+                        <div class="dialog-data-avatar-img"></div>
+                        <div>Vui lòng chọn ảnh có định dạng .jpg .jpeg .png .gif</div>
+                    </div>
+                    <div class="dialog-data-first-detial">
+                        <div class="line-first">
+                            <div class="line-first-content">
+                                <label>Mã khách hàng(*)</label>
+                                <input type="text" class="ip-content value-take" required field="CustomerCode" />
+                            </div>
+                            <div class="line-first-content">
+                                <label>Họ và tên(*)</label>
+                                <input type="text" class="ip-content value-take" required field="FullName"/>
+                            </div>
+                        </div>
+                        <div class="line-first">
+                            <div class="line-first-content">
+                                <label>Mã thẻ thành viên</label>
+                                <input type="text" class="ip-content value-take" field="MemberCardCode" />
+                            </div>
+                            <div class="line-first-content">
+                                <label>Nhóm khách hàng</label>
+                                <select class="dialog-group-customer" field="MemberCardCode">
+                                    <option value="" disabled selected>Chọn nhóm khách</option>
+                                    <option value="vip">Khách vip</option>
+                                    <option value="normal">Khách thường</option>
+                                    <option value="guest">Khách vãng lai</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="line-first">
+                            <div class="line-first-content">
+                                <label>Ngày sinh</label>
+                                <input type="date" class="ip-content value-take" field="DateOfBirth" />
+                            </div>
+                            <div class="line-first-content">
+                                <label>Giới tính</label>
+                                <div class="radio-group">
+                                    <div class="radio-content">
+                                        <input type="radio" id="rdMale" value="Nam" name="gender" checked field="gender" />
+                                        <label for="rdMale">Nam</label>
+                                    </div>
+                                    <div class="radio-content">
+                                        <input type="radio" id="rdFemale" value="Nữ" name="gender" field="gender" />
+                                        <label for="rdMale">Nữ</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dialog-data-second">
+                    <div class="line-second">
+                        <div class="line-second-content">
+                            <label>Email</label>
+                            <input type="email" required class="ip-content-second value-take" field="Email" />
+                        </div>
+                        <div class="line-third-content">
+                            <label>Số điện thoại (*)</label>
+                            <input type="text" class="ip-content value-take" required field="PhoneNumber"/>
+                        </div>
+                    </div>
+                    <div class="line-second">
+                        <div class="line-second-content">
+                            <label>Tên công ty</label>
+                            <input type="text" class="ip-content-second " />
+                        </div>
+                        <div class="line-third-content">
+                            <label>Mã số thuế</label>
+                            <input type="text" class="ip-content" />
+                        </div>
+                    </div>
+                    <div class="line-second">
+                        <div class="line-last-content">
+                            <label>Địa chỉ</label>
+                            <input type="text" class="ip-content-last value-take" field="Address" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dialog-footer">
+                <div class="dialog-btn" id="btnCancel">Hủy</div>
+                <div class="dialog-btn" id="btnSave">Lưu</div>
+            </div>
+        </div>
 
+    </div>
     <script src="../lib/jquery-3.5.1.min.js"></script>
     <script src="../js/common/common.js"></script>
     <script src="../js/common/base.js"></script>

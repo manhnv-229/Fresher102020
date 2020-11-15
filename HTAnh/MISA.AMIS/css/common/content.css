@@ -38,9 +38,16 @@
 			}
 
 			.content .content-title .content-control .control-mix {
-				background-color: #01B075;
+				background-color: #019160;
 				color: white;
+				cursor: pointer;
 			}
+				.content .content-title .content-control .control-mix:active {
+					background-color: #01B075;
+				}
+				.content .content-title .content-control .control-mix:hover {
+					background-color: #2FBE8E;
+				}
 
 				.content .content-title .content-control .control-mix #add-title {
 					padding: 0 16px 0 8px;
@@ -150,7 +157,7 @@
 			background-position: center;
 		}
 
-/*bảng*/
+/*Bảng chứa dữ liệu chính*/
 .content .content-tbl {
 	width: calc( 100% - 32px);
 	padding: 16px 16px 0px 16px;
