@@ -1,20 +1,19 @@
 ﻿$(document).ready(function () {
-    new EmployeeJS();
+    new CustomerJS();
 });
 
 /**
  * Class quản lí các sự kiện cho trang Employee
  * CreatedBy: NTNghia (12/11/2020)
  * */
-class EmployeeJS extends BaseJS {
+class CustomerJS extends BaseJS {
     constructor() {
         super();
     }
 
     setDataUrl() {
-        this.getDataUrl = "http://api.manhnv.net/api/employees";
+        this.getDataUrl = "http://api.manhnv.net/api/customers";
     }
-
 
 }
 
