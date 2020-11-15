@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Amis</title>
+    <link href="/css/commons/navbar.css" rel="stylesheet" />
+    <link href="/css/commons/main.css" rel="stylesheet" />
+    <link href="/css/commons/header.css" rel="stylesheet" />
+    <link href="/css/commons/content.css" rel="stylesheet" />
+    <link href="/css/commons/common.css" rel="stylesheet" />
+    <link href="/css/commons/grid.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <div class="logo-box">
+                <div class="toggle-icon"></div>
+                <div class="amis-logo"></div>
+            </div>
+        </div>
+        <div class="menu">
+            <a href="electronic_document.html" class="menu-item">
+                <div class="menu-item-icon edoc-icon"></div>
+                <div class="menu-item-text">Lập hồ sơ điện tử</div>
+            </a>
+            <a href="paper_document.html" class="menu-item">
+                <div class="menu-item-icon doc-icon"></div>
+                <div class="menu-item-text">Lập hồ sơ giấy</div>
+            </a>
+            <a href="pay_chart.html" class="menu-item">
+                <div class="menu-item-icon chart-icon"></div>
+                <div class="menu-item-text">Theo dõi chi</div>
+            </a>
+            <a href="employee.html" class="menu-item">
+                <div class="menu-item-icon cone-icon"></div>
+                <div class="menu-item-text">Quản lý nhân viên</div>
+            </a>
+            <a href="customer.html" class="menu-item">
+                <div class="menu-item-icon group-icon"></div>
+                <div class="menu-item-text">Quản lý khách hàng</div>
+            </a>
+            <a href="setting.html" class="menu-item">
+                <div class="menu-item-icon setting-icon"></div>
+                <div class="menu-item-text">Thiết lập</div>
+            </a>
+        </div>
+    </div>
+    <div class="header">
+        <div class="misa-popup">
+            <div class="misa-popup-text">Công ty cổ phần MISA TEST BHXH</div>
+            <div class="arrow-icon"></div>
+        </div>
+        <div class="profile">
+            <div class="avatar"></div>
+            <div class="name">Demo AMIS BHXH</div>
+            <div class="extra-icon"></div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="title">
+            <div class="title-text">Quản lý nhân viên</div>
+            <div class="title-right">
+                <div class="title-sync">
+                    <div class="hrm-icon"></div>
+                    <div class="hrm-text">Đồng bộ từ HRM</div>
+                </div>
+                <button class="title-popup">
+                    <div class="title-popup-text">
+                        <div class="adduser-icon"></div>
+                        <div class="text">Thêm lao động</div>
+                    </div>
+                    <div class="arrow-icon"></div>
+                </button>
+            </div>
+        </div>
+        <div class="filter">
+            <div class="filter-left">
+                <input type="text" class="search-type" placeholder="Tìm kiếm theo mã nhân viên, họ tên" />
+                <div class="department-popup">
+                    <div class="text">Chọn bộ phận phòng ban</div>
+                    <div class="down-arrow"></div>
+                </div>
+                <div class="state-popup">
+                    <div class="text">Trạng thái tham gia BHXH</div>
+                    <div class="arrow-icon"></div>
+                </div>
+            </div>
+            <div class="filter-right">
+                <div class="download-icon"></div>
+                <div class="refresh-icon"></div>
+            </div>
+        </div>
+        <div class="grid">
+            <div class="grid-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th fieldname="EmployeeCode">Mã nhân viên</th>
+                            <th fieldname="FullName">Họ và tên</th>
+                            <th fieldname="PersonalTaxCode">Mã số BHXH</th>
+                            <th fieldname="Gender" formatType="checkbox">Giới tính</th>
+                            <th fieldname="DateOfBirth" formatType="ddmmyyyy">Ngày sinh</th>
+                            <th fieldname="PositionName">Vị trí chức vụ</th>
+                            <th fieldname="DepartmentName">Bộ phận/phòng ban</th>
+                            <th fieldname="Salary" formatType="money">Hệ số/Mức lương</th>
+                            <th fieldname="Address">Địa chỉ</th>
+                            <th fieldname="WorkStatusName">Trạng thái tham gia</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="paging">
+                <div class="page-info">Hiển thị 1- 15/99 lao động</div>
+                <div class="pages">
+                    <button class="previous-page square"></button>
+                    <button class="page-1 circle">1</button>
+                    <button class="page-2 circle">2</button>
+                    <button class="page-3 circle">3</button>
+                    <button class="page-4 circle">4</button>
+                    <button class="next-page square"></button>
+                </div>
+                <button class="total-page">15 trang</button>
+            </div>
+        </div>
+    </div>
+    <script src="/lib/jquery-3.5.1.min.js"></script>
+    <script src="/js/commons/base.js"></script>
+    <script src="/js/commons/common.js"></script>
+    <script src="/js/pages/employee.js"></script>
+</body>
+</html>

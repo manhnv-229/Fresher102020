@@ -5,7 +5,9 @@
     height: 48px;
     border-bottom: 1px solid #e5e5e5;
 }
-
+/**
+* Css phần bên trái của header
+*/
 .misa-popup {
     position:absolute;
     display:flex ;
@@ -27,7 +29,9 @@
         background-repeat: no-repeat;
         background-size: contain;
     }
-
+/**
+* Css phần bên phải của header
+*/
 .profile {
     position:absolute;
     display: flex;

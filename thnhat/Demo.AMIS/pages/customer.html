@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Amis</title>
+    <link href="/contents/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" />
+    <link href="/css/commons/navbar.css" rel="stylesheet" />
+    <link href="/css/commons/main.css" rel="stylesheet" />
+    <link href="/css/commons/header.css" rel="stylesheet" />
+    <link href="/css/commons/content.css" rel="stylesheet" />
+    <link href="/css/commons/grid.css" rel="stylesheet" />
+    <link href="/css/commons/common.css" rel="stylesheet" />
+    <link href="/css/commons/dialog.css" rel="stylesheet" />
+    <link href="/css/pages/customer.css" rel="stylesheet" />
+</head>
+<body>
+    <!--left navbar-->
+    <div class="navbar">
+        <div class="logo">
+            <div class="logo-box">
+                <div class="toggle-icon"></div>
+                <div class="amis-logo"></div>
+            </div>
+        </div>
+        <div class="menu">
+            <a href="electronic_document.html" class="menu-item">
+                <div class="menu-item-icon edoc-icon"></div>
+                <div class="menu-item-text">Lập hồ sơ điện tử</div>
+            </a>
+            <a href="paper_document.html" class="menu-item">
+                <div class="menu-item-icon doc-icon"></div>
+                <div class="menu-item-text">Lập hồ sơ giấy</div>
+            </a>
+            <a href="pay_chart.html" class="menu-item">
+                <div class="menu-item-icon chart-icon"></div>
+                <div class="menu-item-text">Theo dõi chi</div>
+            </a>
+            <a href="employee.html" class="menu-item">
+                <div class="menu-item-icon cone-icon"></div>
+                <div class="menu-item-text">Quản lý nhân viên</div>
+            </a>
+            <a href="customer.html" class="menu-item">
+                <div class="menu-item-icon group-icon"></div>
+                <div class="menu-item-text">Quản lý khách hàng</div>
+            </a>
+            <a href="setting.html" class="menu-item">
+                <div class="menu-item-icon setting-icon"></div>
+                <div class="menu-item-text">Thiết lập</div>
+            </a>
+        </div>
+    </div>
+    <!--header page-->
+    <div class="header">
+        <div class="misa-popup">
+            <div class="misa-popup-text">Công ty cổ phần MISA TEST BHXH</div>
+            <div class="arrow-icon"></div>
+        </div>
+        <div class="profile">
+            <div class="avatar"></div>
+            <div class="name">Demo AMIS BHXH</div>
+            <div class="extra-icon"></div>
+        </div>
+    </div>
+    <!--dialog-->
+    <div class="dialog">
+        <div class="dialog-content">
+            <div class="upper-dialog">
+                <div class="avatar">Vui lòng chọn ảnh có định dạng<b> .jpg, .jpeg, .png, .gif</b></div>
+                <div class="detail">
+                    <div class="inline">
+                        <div>
+                            <label for="customer-code">Mã khách hàng (<span style="color:red">*</span>)</label>
+                            <input class="input-text" type="text" name="customer-code" id="txtCustomerCode" fieldname="CustomerCode" required>
+                        </div>
+                        <div class="right">
+                            <label for="txtFullName">Họ và tên (<span style="color:red">*</span>)</label>
+                            <input class="input-text" type="text" name="idcard-code" id="txtFullName" fieldname="FullName" required>
+                        </div>
+                    </div>
+                    <div class="inline">
+                        <div>
+                            <label for="txtMemberCode">Mã thẻ thành viên</label>
+                            <input class="input-text" type="text" name="txtMemberCode" id="txtMemberCode" fieldname="MemberCardCode" >
+                        </div>
+                        <div class="right">
+                            <label for="CustomerGroupId">Nhóm khách hàng</label>
+                            <select name="CustomerGroupId" id="CustomerGroupId">
+                                <option value="saab">Khách vip</option>
+                                <option value="volvo">Khách vãng lai</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="inline">
+                        <div>
+                            <label for="dtDateOfBirth">Ngày sinh</label>
+                            <input class="input-text" type="text" name="dtDateOfBirth" id="dtDateOfBirth" fieldname="DateOfBirth" placeholder="mm/dd/yyyy">
+                        </div>
+                        <div class="right">
+                            Giới tính
+                            <form>
+                                <label class="radio-inline">
+                                    <input class="input-radio" type="radio" name="optradio" checked>Nam
+                                </label>
+                                <label class="radio-inline">
+                                    <input class="input-radio" type="radio" name="optradio" id="nu">Nữ
+                                </label>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="under-dialog">
+                <div class="inline">
+                    <div>
+                        <label for="txtEmail">Email</label>
+                        <input class="width490" type="email" name="txtEmail" id="txtEmail" fieldname="Email">
+                    </div>
+                    <div class="right">
+                        <label for="txtPhoneNumber">Số điện thoại (<span style="color:red">*</span>)</label>
+                        <input class="input-text" type="text" name="txtPhoneNumber" id="txtPhoneNumber" required fieldname="PhoneNumber">
+                    </div>
+                </div>
+                <div class="inline">
+                    <div>
+                        <label for="customer-code">Tên công ty</label>
+                        <input class="width490" type="text" name="customer-code">
+                    </div>
+                    <div class="right">
+                        <label for="idcard-code">Mã số thuế</label>
+                        <input class="input-text" type="text" name="idcard-code">
+                    </div>
+                </div>
+                <div class="inline">
+                    <div>
+                        <label for="txtAddress">Địa chỉ</label>
+                        <input class="width750" type="text" name="txtAddress" id="txtAddress" fieldname="Address">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dialog-footer">
+            <button id="btnCancel">Hủy</button>
+            <button id="btnSave">Lưu</button>
+        </div>
+    </div>
+        <!--content-->
+        <div class="content">
+            <div class="title">
+                <div class="title-text">Quản lý khách hàng</div>
+                <div class="title-right">
+                    <div class="title-sync">
+                        <div class="hrm-icon"></div>
+                        <div class="hrm-text">Đồng bộ từ HRM</div>
+                    </div>
+                    <button class="title-popup">
+                        <div class="title-popup-text">
+                            <div class="adduser-icon"></div>
+                            <div class="text">Thêm lao động</div>
+                        </div>
+                        <div class="arrow-icon"></div>
+                    </button>
+                </div>
+            </div>
+            <div class="filter">
+                <div class="filter-left">
+                    <input type="text" class="search-type" placeholder="Tìm kiếm theo mã nhân viên, họ tên" />
+                    <div class="department-popup">
+                        <div class="text">Chọn bộ phận phòng ban</div>
+                        <div class="down-arrow"></div>
+                    </div>
+                    <div class="state-popup">
+                        <div class="text">Trạng thái tham gia BHXH</div>
+                        <div class="arrow-icon"></div>
+                    </div>
+                </div>
+                <div class="filter-right">
+                    <div class="download-icon"></div>
+                    <div id="btnRefresh" class="refresh-icon"></div>
+                </div>
+            </div>
+            <div class="grid">
+                <div class="grid-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th fieldname="CustomerCode">Mã nhân viên</th>
+                                <th fieldname="FullName">Họ và tên</th>
+                                <th fieldname="MemberCardCode">Mã số thẻ khách hàng</th>
+                                <th fieldname="DateOfBirth" formatType="ddmmyyyy">Ngày sinh</th>
+                                <th fieldname="PhoneNumber">Số điện thoại</th>
+                                <th fieldname="Email">Email</th>
+                                <th fieldname="Address">Địa chỉ</th>
+                                <th fieldname="CustomerGroupName">Trạng thái tham gia</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="paging">
+                    <div class="page-info">Hiển thị 1- 15/99 lao động</div>
+                    <div class="pages">
+                        <button class="previous-page square"></button>
+                        <button class="page-1 circle">1</button>
+                        <button class="page-2 circle">2</button>
+                        <button class="page-3 circle">3</button>
+                        <button class="page-4 circle">4</button>
+                        <button class="next-page square"></button>
+                    </div>
+                    <button class="total-page">15 trang</button>
+                </div>
+            </div>
+        </div>
+        <script src="/lib/jquery-3.5.1.min.js"></script>
+        <script src="/contents/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+        <script src="/js/commons/base.js"></script>
+        <script src="/js/commons/common.js"></script>
+        <script src="/js/pages/customer.js"></script>
+</body>
+</html>

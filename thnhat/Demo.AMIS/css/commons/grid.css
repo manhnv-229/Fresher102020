@@ -9,12 +9,12 @@ table th, td {
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
-    max-width:50px;
     text-align:left;
     background-color:#ffffff;
+    max-width:150px;
 }
-#ewan tbody tr:hover {
-    background-color: #ff6a00;
+tbody tr:hover td {
+    background-color: #019160;
 }
 table {
     border-collapse: collapse;
