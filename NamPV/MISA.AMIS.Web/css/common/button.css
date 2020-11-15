@@ -1,42 +1,49 @@
-﻿.m-btn {
-  background-color: #019160;
-  align-items: center;
-  font-size: 13px;
-  border-radius: 4px;
-  height: 40px;
-  color: #ffffff;
-  border: 1px solid #bbbbbb;
+﻿
+
+button {
+    padding: 0px;
+    margin: 0px;
+    border: none;
 }
 
-.m-btn:hover{
-    cursor:pointer;
+/*Định dạng lại button chung*/
+.m-btn {
+    background-color: #019160;
+    align-items: center;
+    font-size: 13px;
+    border-radius: 4px;
+    height: 40px;
+    color: #ffffff;
+    border: 1px solid #bbbbbb;
+    outline: none;
 }
+
+    .m-btn:hover {
+        cursor: pointer;
+        background-color: #bbb;
+    }
+
 /*button chỉ chứa text*/
 .m-btn-content {
-  padding: 0px 24px;
-}
-/*button chứa icon và text*/
-.m-btn-icon {
-  padding: 0px 16px;
-  margin: auto;
-  display: flex;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-  background-position: 16px 12px;
-  padding-left: 40px;
-}
-/*button chỉ chứa icon*/
-.btn-single-icon {
-  height: 40px;
-  width: 40px;
-  border: 1px solid #bbbbbb;
-  border-radius: 4px;
-  background-color: #ffffff;
-  background-size: 16px 16px;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-.btn-single-icon:hover{
-    cursor: pointer;
+    padding: 0px 24px;
 }
 
+/*button chứa icon và text*/
+.m-btn-icon {
+    padding: 0px 16px;
+    margin: auto;
+    display: flex;
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    background-position: 16px 12px;
+    padding-left: 40px;
+}
+
+/*button chỉ chứa icon*/
+.btn-single-icon {
+    width: 40px;
+    background-color: #ffffff;
+    background-size: 16px 16px;
+    background-repeat: no-repeat;
+    background-position: center;
+}

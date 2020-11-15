@@ -1,17 +1,27 @@
+﻿
+
+/* Định dạng chung các input*/
 input {
-  width: 200px;
-  background-color: white;
-  font-size: 12px;
-  color: #bbbbbb;
-  background-position: 16px 12px;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-  padding-left: 16px;
-  border-radius: 4px;
-  border: 1px solid #bbbbbb;
-  outline: none;
-  height: 35.5px;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    width: 200px;
+    background-color: white;
+    font-size: 12px;
+    background-position: 16px 12px;
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    padding-left: 16px;
+    border-radius: 4px;
+    border: 1px solid #bbbbbb;
+    outline: none;
+    height: 40px;
 }
-input:focus {
-    border: 1px solid #019160;
-}
+
+    input:focus {
+        border: 1px solid #019160;
+    }
+
+    input.border-red {
+        border: 1px solid #ff0000;
+    }
