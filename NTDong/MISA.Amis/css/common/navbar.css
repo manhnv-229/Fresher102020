@@ -48,4 +48,9 @@
     height: 20px;    
     margin-right: 10px;
 }
+.nav-item .nav-item-text{
+    text-decoration: none;
+    color: black;
+}
+
 

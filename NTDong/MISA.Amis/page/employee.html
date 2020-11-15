@@ -6,12 +6,17 @@
     <title>Document</title>
     <link href="../css/common/main.css" rel="stylesheet" />
     <link href="../css/common/header.css" rel="stylesheet" />
+    <link href="../css/common/common.css" rel="stylesheet" />
     <link href="../css/common/navbar.css" rel="stylesheet" />
+    <link href="../css/common/icon.css" rel="stylesheet" />
+    <link href="../css/common/button.css" rel="stylesheet" />
+    <link href="../css/common/toolbar.css" rel="stylesheet" />
+    <link href="../css/common/grid.css" rel="stylesheet" />
+    <link href="../css/common/input.css" rel="stylesheet" />
     <link href="../css/common/content.css" rel="stylesheet" />
     <link href="../css/page/employee.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    
     <script src="https://kit.fontawesome.com/c6dec92bc6.js" crossorigin="anonymous"></script>
     
 </head>
@@ -52,13 +57,19 @@
                 <div class="nav-item-icon">
                     <i class="fa fa-users fa-lg"></i>
                 </div>
-                <div class="nav-item-text"><b>Quản lý lao động</b></div>
+                <a class="nav-item-text" href="employee.html"><b>Danh mục nhân viên</b></a>
+            </div>
+            <div class="nav-item">
+                <div class="nav-item-icon">
+                    <i class="fa fa-users fa-lg"></i>
+                </div>
+                <a class="nav-item-text" href="customer.html"><b>Danh mục khách hàng</b></a>
             </div>
             <div class="nav-item">
                 <div class="nav-item-icon">
                     <i class="fa fa-cog fa-lg"></i>
                 </div>
-                
+
                 <div class="nav-item-text"><b>Thiết lập</b></div>
             </div>
         </div>
@@ -75,65 +86,129 @@
         </div>
     </div>
     <div class="content">
-        <div class="content-header">
-            <div class="content-header-title"><b>Quản lý lao động</b></div>
-            <div class="content-box">
-                <div class="box-synch">
-                    <div class="icon-synch"></div>
-                    <div class="box-synch-text">Đồng bộ từ HRM</div>
-                </div>
-                <div class="box-add">
-                    <div class="box-add-icon"></div>
-                    <div class="box-add-text">Thêm lao động</div>
-                </div>
-                <div class="box-icon">
-                    <div class="icon-down"></div>
-                </div>
+        <div class="header-content">
+            <div class="title">Danh sách nhân viên </div>
+            <div class="content-feature">
+                <button class="m-btn m-btn-default">
+                    <div class="m-btn-icon icon-add"></div>
+                    <div class="btn-text">Thêm nhân viên</div>
+                </button>
             </div>
-            
         </div>
-        <div class="content-menu">
-            <div class="menu-select">
-                <div class="menu-search">
-                    <div class="menu-search-icon"></div>
-                    <input class="menu-search-text" type="text" placeholder="Tìm kiếm theo mã nhân viên,họ tên" name=""></input>
-                </div>
-                <div class="dropdown">
-                <div class="dropbtn">
-                  <div class="dropdown-text">Chọn bộ phận phòng ban</div>
-                  <div class="icon-caret-down"><i  class="fa fa-caret-down"></i></div>
-                  
-                </div>
-                <div class="dropdown-content">
-                <a href="#">
-                  <div class="dropdown-content-text">Phòng Nhân Sự</div>
-                </a>
-                <a href="#">
-                  <div class="dropdown-content-text">Phòng Đào Tạo</div>
-                </a>
-                <a href="#">
-                  <div class="dropdown-content-text">Phòng Nghiên Cứu</div>
-                </a>
-                </div>
-              </div>
-                <div class="menu-state">
-                    <div class="menu-state-box">
-                        <div class="state-text">Trạng thái tham gia BHXH</div>
-                    </div>
-                </div>
-                <div class="state-box-icon">
-                        <div class="state-icon-down"></div>
-                </div>
+        <div class="filter-bar">
+            <div class="filter-left">
+                <input class="icon-search input-search" style="width: 200px" type="text" placeholder="Tìm kiếm theo mã , tên nhân viên" />
+                <!-- <select>
+                    <option>Phòng đào tạo</option>
+                    <option>Phòng Nhân sự</option>
+                    <option>Phòng Nghiên Cứu</option>
+                </select> -->
             </div>
-            <div class="download-refresh">
-                <div class="download-refresh-box">
-                    <div class="icon-download"></div>
-                </div>
-                <div class="download-refresh-box">
-                    <div class="icon-refresh"></div>
-                </div>
+            <div class="filter-right">
+                <button class="m-btn-refresh m-second-button">
+                </button>
             </div>
-        </div>  
+        </div>
+        <div class="grid">
+            <div class="grid-employee">
+                <table>
+                    <thead>
+                        <tr>
+                            <th fieldName="EmployeeCode">Mã nhân viên</th>
+                            <th fieldName="FullName">Họ và Tên</th>
+                            <th fieldName="GenderName">Giới tính</th>
+                            <th fieldName="DateOfBirth" formatType="ddmmyyyy">Ngày sinh</th>
+                            <th fieldName="PhoneNumber">Số điện thoại</th>
+                            <th fieldName="Email">Email</th>
+                            <th fieldName="PositionName">Chức vụ</th>
+                            <th fieldName="DepartmentName">Phòng ban</th>
+                            <th fieldName="Salary" formatType="Money">Mức lương hiện tại</th>
+                            <th fieldName="Address">Địa chỉ</th>
+                            <th fieldName="WorkStatusName">Tình trạng công việc</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="paging-bar">nguyen tien dong  </div>
     </div>
+     <div class="dialog-model">
+    </div>
+    <div class="dialog">
+        <div class="dialog-title">
+            <div class="title-text">Nhân viên</div>
+            <div class="title-button-close"></div>
+        </div>
+        <div class="dialog-body">
+            <div class="body-title"><b>Thông tin chung</b></div>
+            <div class="body-content">
+                <div class="body-content-info">
+                    <label>Mã nhân viên(*)</label>
+                    <input class="input-medium" type="text" name="">
+                    <br>
+                    <label>Tên nhân viên(*)</label>
+                    <input class="input-medium" style="margin-left: 8px;" type="text" name="">
+                    <br>
+                    <label>Ngày sinh</label>
+                    <input class="input-low" placeholder="dd/mm/yyyy" style="margin-left: 38px;" type="text"></input>
+                    <label style="margin-left: 5px; margin-right: 5px">Giới tính</label>
+                    <input class="input-low" placeholder="Nam/Nữ" type="text" name="">
+                    <br>
+                    <label>Email (*) </label>
+                    <input style="margin-left: 47px" class="input-medium" type="text" name="">
+                    <br>
+                    <label>ĐT di động (*)</label>
+                    <input type="text" class="input-medium" style="margin-left: 20px" name="">
+                    <br>
+                    <label>Số CMT/HC</label>
+                    <input type="text" class="input-low" style="margin-left: 30px" name="">
+                    <label style="margin-left: 3px; margin-right: 5px">Ngày cấp</label>
+                    <input type="text" placeholder="dd/mm/yyyy" class="input-low" style="width: 85px" name="">
+                    <br>
+                    <label>Nơi cấp CMND</label>
+                    <input class="input-long" style="margin-left: 13px" type="text" name="">
+                    <div class="info-work"><b>Thông tin công việc</b></div>
+                    <label>Vị trí</label>
+                    <input class="input-long" style="margin-left: 65px" type="text" name="">
+                    <br>
+                    <label>Phòng ban</label>
+                    <input class="input-long" style="margin-left: 35px" type="text" name="">
+                    <br>
+                    <label>Mã số thuế </label>
+                    <input type="text" style="margin-left: 33px" class="input-low" name="">
+                    <label style="margin-left: 5px; margin-right: 3px">Mức lương</label>
+                    <input type="text" style="width: 250px;" class="input-low" name="">
+                    <br>
+                    <label>Ngày gia nhập</label>
+                    <input style="margin-left: 16px" placeholder="dd/mm/yyyy" type="text" class="input-low" name="">
+                    <label style="margin-left: 5px; margin-right: 6px">Tình trạng</label>
+                    <input style="width: 251px" type="text" class="input-low" name="">
+                    <br>
+
+                </div>
+                <div class="image-employee">
+                    <div class="image"></div>
+                    <div class="more-infomation">Chỉ được upload tệp<br> <b>.jpg .jpeg .png .gif</b></div>
+                </div>
+            </div>
+            <div class="body-button">
+                <div class="body-button-left">
+                    <button>Giúp</button>
+                </div>
+                <div class="body-button-right">
+                    <button>Cất</button>
+                    <button>Cắt và thêm</button>
+                    <button>Hủy bỏ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="../lib/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="../js/common/common.js"></script>
+    <script type="text/javascript" src="../js/common/base.js"></script>
+    <script type="text/javascript" src="../js/page/employee.js"></script>
 </body>
 </html>
