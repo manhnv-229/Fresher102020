@@ -1,0 +1,18 @@
+﻿/**
+    css dùng chung cho tất cả các trang
+*/
+input.border-red {
+    border: 1px solid #ff0000;
+}
+
+.text-align-center{
+    text-align: center;
+}
+.text-align-right{
+    text-align: right;
+}
+
+table tbody tr td.max-with{
+    max-width: 130px;
+}
+

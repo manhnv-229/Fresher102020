@@ -1,4 +1,4 @@
-﻿/*css cho trang employee*/
+﻿/*css cho trang customer*/
 .header-content {
     display: flex;
     align-self: center;
@@ -64,7 +64,7 @@
 }
 
     .button-insert:hover {
-       background-color: #2FBE8E;
+        background-color: #2FBE8E;
     }
 
 .icon-down {
@@ -92,7 +92,7 @@
     height: 60px;
 }
 
-.content .toolbar-content{
+.content .toolbar-content {
     display: flex;
     margin: 24px 0;
     align-items: center;
@@ -100,26 +100,26 @@
 }
 
 
-.content .toolbar-content .toolbar-content-right {
-    position: absolute;
-    right: 0px;
-    margin-right: 8px;
-    float: left;
-    display: flex;
+    .content .toolbar-content .toolbar-content-right {
+        position: absolute;
+        right: 0px;
+        margin-right: 8px;
+        float: left;
+        display: flex;
+    }
+
+.toolbar-content-right button {
+    height: 40px;
+    width: 40px;
+    margin-right: 16px;
 }
 
-    .toolbar-content-right button{
-        height: 40px;
-        width: 40px;
-        margin-right: 16px;
-    }
-
-    .content .toolbar-content i {
-        position: absolute;
-        height: 16px;
-        width: 16px;
-        margin: 0 8px 0 16px;
-    }
+.content .toolbar-content i {
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    margin: 0 8px 0 16px;
+}
 
 #search-employee {
     border: 0;
@@ -129,7 +129,7 @@
     margin-right: 16px;
     padding-left: 40px;
     font-size: 12px;
-    color : #bbbbbb;
+    color: #bbbbbb;
 }
 
 #department {
@@ -165,6 +165,7 @@
     .gird .gird-header {
         height: 60px;
     }
+
     .gird .gird-content {
         height: 300px;
         overflow: auto;
@@ -172,21 +173,22 @@
 
 
 table th, td {
-        height: 48px;
-        border-bottom: 1px solid #bbbbbb;
-        text-align: left;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+    height: 48px;
+    border-bottom: 1px solid #bbbbbb;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 
-    .gird td{
+    .gird td {
         padding-right: 16px;
     }
-.gird .salary{
-    text-align: right;
-}
+
+    .gird .salary {
+        text-align: right;
+    }
 
     .gird table tr:hover {
         background-color: #E9EBEE;
@@ -203,8 +205,7 @@ table th, td {
     justify-content: space-between;
 }
 
-    .tfoot .count-emplyee{
-        
+    .tfoot .count-emplyee {
     }
 
     .tfoot .count-page {
@@ -213,8 +214,8 @@ table th, td {
         padding-right: 12px;
     }
 
-    .tfoot .page-navigations{
-        align-items:center;
+    .tfoot .page-navigations {
+        align-items: center;
     }
 
         .tfoot .page-navigations button {
@@ -245,9 +246,9 @@ table th, td {
 
 
 
-    .tfoot .page-navigations .page-table {
+        .tfoot .page-navigations .page-table {
             border-radius: 50%;
-    }
+        }
 
         .tfoot .page-navigations .fa-angle-double-left:hover {
             padding: 10px;
@@ -258,6 +259,8 @@ table th, td {
             padding: 10px;
             background-color: #2FBE8E;
         }
+
         .tfoot .page-navigations .page-selected {
             background-color: #019160;
         }
+
