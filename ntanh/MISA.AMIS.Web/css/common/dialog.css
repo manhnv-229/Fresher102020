@@ -1,60 +1,118 @@
 ﻿.dialog {
-    width: 500px;
-    height: 500px;
-    border: 1px solid #bbbbbb;
-    border-radius: 4px;
-    background-color: #dddddd;
+    width: 628px;
+    height: 600px;
+    background-color: #ffffff;
     position: absolute;
-    top: 50%;
-    margin-top: -250px;
-    left: 50%;
-    margin-left: -250px;
+    top: calc(50% - 300px);
+    left: calc(50% - 314px);
+    overflow: hidden;
+    border-radius: 4px;
 }
-
+/*
+    CSS Dialog header
+*/
 .dialog-header {
     display: flex;
     justify-content: space-between;
-    height: 30px;
-    background-color: #0075FF;
+    height: 40px;
     align-items: center;
-    color: #ffffff;
 }
 
-.dialog-title {
-    margin-left: 10px;
-}
+    .dialog-header .title-header {
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-left: 24px;
+    }
 
-.dialog-close {
-    align-self: flex-start;
-    border: 1px solid;
-    width: 16px;
-    height: 16px;
-}
-
-.infor-employee {
-    border-bottom: 1px solid #dddddd;
-    height: 20px;
-}
-
+/*
+    CSS Dialog content
+*/
 .dialog-content {
+    padding: 24px;
+    height: 452px;
+}
+
+    .dialog-content .dialog-content_top {
+        display: flex;
+    }
+
+    .dialog-content .dialog-content_center {
+        display: flex;
+    }
+
+    .dialog-content .dialog-footer {
+        display: flex;
+        justify-content: flex-end;
+        height: 60px;
+        background-color: #b4b43d;
+        align-items: center;
+        padding-right: 24px;
+    }
+
+/* 
+    CSS Content top left
+*/
+.change_avatar {
+    width: 150px;
+    height: 150px;
+    background-color: antiquewhite;
+}
+
+/*
+    CSS Item
+*/
+span.title-input {
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.item-short {
+    margin-bottom: 16px;
     display: flex;
     flex-direction: column;
 }
+
+/* 
+    CSS Content left
+*/
+.content-left {
+    width: 190px;
+}
+
+.item-short.multiply-2 {
+    width: calc(190px + 190px);
+}
+
+.multiply-2 {
+    width: 380px;
+}
+
+.multiply-3 {
+    width: calc(190px + 190px + 190px + 10px);
+}
+
+
+.m-input-checkbox {
+    height: 38px;
+    display: flex;
+    align-items: center;
+}
+/* 
+    CSS Contentright
+*/
+.content-right {
+    margin-left: 10px;
+}
+
+/*
+    CSS Dialog footer
+*/
 .dialog-footer {
-    height: 30px;
-    background-color: aliceblue;
-}
-
-.title-infor-employee {
-    border-bottom: 1px solid;
-    height: 20px;
-}
-
-span.span-title {
-    display: inline-block;
-    width: 120px;
-}
-
-.item-dialog {
-    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    background-color: #E5E5E5;
+    height: 60px;
+    align-items: center;
+    padding-right: 24px;
 }

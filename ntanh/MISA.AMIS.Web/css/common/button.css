@@ -54,4 +54,22 @@
     width: 40px;
     padding: 0;
 }
-     
+
+.m-btn-close {
+    margin-right: 16px;
+    background-color: #ffffff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.m-btn.m-btn-cannel {
+    margin: 0 10px;
+}
+
+.m-btn.m-btn-save {
+    background-image: url('content/icon/add.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 10px;
+}
