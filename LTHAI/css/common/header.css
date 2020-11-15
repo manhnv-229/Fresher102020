@@ -1,4 +1,7 @@
-﻿.right-content .header {
+﻿/**
+    Hàm dùng chung cho header
+*/
+.right-content .header {
     width: 100%;
     height: 60px;
     border-bottom: 1px solid #E5E5E5;
@@ -24,16 +27,10 @@
             display: flex;
         }
 
-            .right-content .header .name-company .dropdown-btn .drop-content {
-            }
-
             .right-content .header .name-company .dropdown-btn .caret-icon {
-                background-image: url('/content/img/caret.png');
+                background-image: url('/content/icon/caret.png');
                 margin-left: 10px;
             }
-
-        .right-content .header .name-company .dropdown-conent {
-        }
 
     .right-content .header .profile {
         width: 200px;
@@ -59,6 +56,6 @@
         }
 
         .right-content .header .profile .profile-icon {
-            background-image: url('/content/img/three-dot.png');
+            background-image: url('/content/icon/three-dot.png');
             margin-left: 16px;
         }

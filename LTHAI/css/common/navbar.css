@@ -19,7 +19,7 @@
                 height: 30px;
                 background-size: contain;
                 background-repeat: no-repeat;
-                background-image: url('/content/img/toggle.png');
+                background-image: url('/content/icon/toggle.png');
             }
 
             .navbar .logo-site .logo-box .amis-logo {
@@ -51,7 +51,7 @@
                 height: 20px;
                 align-self: center;
                 margin-right: 10px;
-                background-image: url('/content/img/icons8-store-setting-50.png');
+                background-image: url('/content/icon/icons8-store-setting-50.png');
                 background-size: contain;
             }
 

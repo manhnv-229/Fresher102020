@@ -1,85 +1,131 @@
-﻿.d-background {
+﻿/**
+    Css cho phần khung dialog
+*/
+.d-dialog-detail{
+    display: none;
+}
+.d-dialog-detail .d-dialog-modal {
+    position: fixed;
+    background-color: black;
+    opacity: 0.4;
+    z-index: 10;
     height: 100vh;
     width: 100%;
-    background-color: #BBBBBB;
+    top: 0;
+    left: 0;
 }
 
-.d-dialog {
-    height: calc(100vh - 24px);
-    margin: 24px 24px 0 24px;
+.d-dialog-detail .d-dialog-content {
+    position: absolute;
+    width: 800px;
+    height: 580px;
+    z-index: 50;
+    top: calc(50% - 290px);
+    left: calc(50% - 400px);
     background-color: #ffffff;
+    border-radius: 5px;
 }
 
-.d-header-content {
-    border-bottom: 1px solid #bbbbbb;
+.d-dialog-content .d-dialog-name {
+    font-size: 24px;
+    margin: 24px;
+    text-transform: uppercase;
 }
 
-    .d-header-content h2 {
-        font-size: 20px;
-        padding-top: 24px;
-        padding-left: 24px;
-        padding-bottom: 24px;
-    }
-
-.d-content {
-    display: flex;
-}
-
-    .d-content .d-inf-content {
-        width: 440px;
-        margin-left: 24px;
-    }
-
-        .d-content .d-inf-content h2 {
-            padding: 24px 0;
-        }
-
-.d-inf-content label {
-    font-size: 13px;
-    margin-bottom: 4px;
-    display: block;
-}
-
-.d-general-content .d-insurrance-id {
-}
-
-.d-general-content .d-declare {
-    margin-top: 24px;
-}
-
-.d-general-content .d-same-row {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 24px;
-}
-
-    .d-general-content .d-same-row .d-start {
-    }
-
-    .d-general-content .d-same-row .d-end {
-    }
-
-.d-closing-rate {
-    display: flex;
-    margin-bottom: 24px;
-}
-
-.d-range-min-salary {
-    display: flex;
-    margin-bottom: 24px;
-}
-
-.d-receiver {
-    display: flex;
-}
-
-.d-icon-angle-down button {
+.d-dialog-content .d-dialog-x {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-image: url('/content/icon/x.svg');
+    width: 40px;
+    height: 40px;
+    border-radius: 0 5px 0 0;
     border: none;
+    outline: none;
+    cursor: pointer;
+    opacity: .7;
     background-color: #ffffff;
-    font-size: 19px;
-    align-items: center;
-    position: relative;
-    top: 32px;
-    right: 26px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px;
 }
 
+    .d-dialog-content .d-dialog-x:hover {
+        background-color: #ccc;
+    }
+/*
+    Css cho phần hình đại diện
+*/
+.d-img .d-show-img {
+    width: 180px;
+    height: 180px;
+    background-image: url('/content/img/default-avatar.jpg');
+    border-radius: 50%;
+    background-size: contain;
+    border: 1px solid #bbbbbb;
+    background-repeat: no-repeat;
+}
+
+.d-img .d-note-img {
+    text-align: center;
+    width: 200px;
+}
+/*
+    Css cho phần từ input email trở lên
+*/
+.d-dialog-content .top-dialog {
+    display: flex;
+    margin: 0 24px 0 16px;
+}
+
+    .d-dialog-content .top-dialog .d-col {
+        width: calc(736px - 200px);
+        margin-left: 8px;
+    }
+
+.d-left-row {
+    margin-right: 10px;
+}
+
+.d-group-gender .d-gender-name {
+    line-height: 40px;
+}
+
+.d-gender-female, .d-gender-male {
+    width: 85px;
+    height: 42px;
+}
+
+    .d-gender-male.d-same-row .form-input {
+        align-self: center;
+        margin-right: 10px;
+        width: 20px;
+    }
+
+    .d-gender-female.d-same-row .form-input {
+        align-self: center;
+        margin-right: 10px;
+    }
+/*
+Css cho từ email đổ xuống
+*/
+.d-bottom-dialog {
+    margin: 0 24px 0 16px;
+}
+
+    .d-bottom-dialog .d-left-row {
+        width: 530px;
+    }
+
+.d-address {
+    width: 780px;
+}
+/*
+Css cho phần button
+*/
+.d-group-button {
+    height: 60px;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 24px;
+}
