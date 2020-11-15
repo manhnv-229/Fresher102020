@@ -1,205 +1,37 @@
-﻿.content{
-    position:absolute;
-    top:61px;
+﻿.content {
+    position: absolute;
+    top: 61px;
     left: 221px;
     width: calc(100% - 221px);
     height: calc(100vh - 61px);
     
+
 }
-    .content .title-content {
-        display: flex;
+
+/*page-title*/
+.content .header-content {
+    padding: 16px;
+    background-color: #ffff;
+    display: flex;
+    align-items: center;
+}
+    .content .header-content .title {
+        font-size: 20px;
+        font-weight: bold;
     }
-        .content .title-content .title {
-            margin-left: 16px;
-            position: relative;
-            align-self: center;
-        }
-        .content .title-content .box {
-            position: absolute;
-            right: 16px;
-            display: flex;
-            align-self: center;
-            
-        }
-            .content .title-content .box .frame-hr {
-                line-height: 40px;
-                height: 40px;
-                border: 1px solid #D2D2D2;
-                display: flex;
-                border-radius: 5px;
-            }
-                .content .title-content .box .frame-hr .hr-icon {
-                    height: 16px;
-                    width: 16px;
-                    margin-left: 12px;
-                    margin-right: 12px;
-                    background-image: url('/content/img/toggle.png');
-                    background-size: contain;
-                    align-self: center;
-                }
-                .content .title-content .box .frame-hr .hr {
-                    margin-right: 12px;
-                    color: #01B075;
-                }
-            .content .title-content .box .frame-add-empl {
-                line-height: 40px;
-                height: 40px;
-                border: 1px solid #BBBBBB;
-                margin-left: 16px;
-                display: flex;
-                background-color: #01B075;
-                border-top-left-radius: 5px;
-                border-bottom-left-radius: 5px;
-            }
-                .content .title-content .box .frame-add-empl .add-icon {
-                    background-image: url('/content/img/toggle.png');
-                    height: 16px;
-                    width: 16px;
-                    margin-left: 12px;
-                    margin-right: 12px;
-                    background-size: contain;
-                    align-self: center;
-
-                }
-                    .content .title-content .box .frame-add-empl .add-employee {
-                        margin-right: 12px;
-                        color: #f4f4f4;
-
-                    }
-            .content .title-content .box .add-employee-dropdown {
-                background-image: url('/content/img/dropdown.PNG');
-                height: 40px;
-                width: 36px;
-                border-top-right-radius: 5px;
-                border-bottom-right-radius: 5px;
-                background-repeat: no-repeat;
-                border: 1px solid #BBBBBB;
-                background-position: center;
-                background-color: #01B075;
-            }
-
-    .content .search {
-        display: flex;
-    }
-        .content .search .frame-search {
-            display: flex;
-        }
-            .content .search .frame-search .search-1 {
-                display: flex;
-                border: 1px solid #BBBBBB;
-                height: 40px;
-                line-height: 40px;
-                background-size: contain;
-                margin-right: 12px;
-                border-radius: 5px;
-                margin-left: 16px;
-            }
-                .content .search .frame-search .search-1 .input-search-1 {
-                    color: #E5E5E5;
-                    margin-right: 40px;
-                }
-                .content .search .frame-search .search-1 .icon-search-1 {
-                    background-image: url('/content/img/toggle.png');
-                    align-self: center;
-                    height: 16px;
-                    width: 16px;
-                    margin-left: 12px;
-                    margin-right: 12px;
-                    background-size: contain;
-                    background-repeat: no-repeat;
-                }
-            .content .search .frame-search .search-2 {
-                display: flex;
-                border: 1px solid #BBBBBB;
-                border-radius: 5px;
-                height: 40px;
-                margin-right: 12px;
-                padding-left: 12px;
-                line-height: 40px;
-            }
-                .content .search .frame-search .search-2 .icon-drop-department {
-                    background-image: url('/content/img/toggle.png');
-                    height: 16px;
-                    width: 16px;
-                    margin-left: 16px;
-                    margin-right: 16px;
-                    background-size: contain;
-                    align-self: center;
-                    background-repeat: no-repeat;
-                }
-                .content .search .frame-search .search-2 .select-department {
-                    color: #E5E5E5;
-                }
-
-            .content .search .frame-search .search-3 {
-                display: flex;
-                line-height: 40px;
-            }
-                .content .search .frame-search .search-3 .status {
-                    color: #E5E5E5;
-                    padding: 0 16px 0 16px;
-                    border: 1px solid #BBBBBB;
-                    border-top-left-radius: 5px;
-                    border-bottom-left-radius: 5px;
-                }
-            .content .search .frame-search .dropdown-status {
-                background-image: url('../../content/img/dropdown.PNG');
-                height: 40px;
-                width: 36px;
-                border-top-right-radius: 5px;
-                border-bottom-right-radius: 5px;
-                background-repeat: no-repeat;
-                border: 1px solid #BBBBBB;
-                background-position: center;
-            
-            }
-
-        .content .search .buttom {
-            display: flex;
-            position: absolute;
-            right: 16px;
-        }
-            .content .search .buttom .download {
-                background-image: url('/content/img/toggle.png');
-                height: 40px;
-                width: 36px;
-                border: 1px solid #BBBBBB;
-                border-radius: 5px;
-                background-size: contain;
-                background-position: center;
-            }
-            .content .search .buttom .loading {
-                background-image: url('/content/img/toggle.png');
-                height: 40px;
-                width: 36px;
-                border: 1px solid #BBBBBB;
-                border-radius: 5px;
-                background-size: contain;
-                margin-left: 12px;
-                background-position: center;
-            }
-    .content .number-page {
-        height: 56px;
+    .content .header-content .content-feature{
         position: absolute;
-        top: calc(100% - 56px);
-        right: 40%;
-     }
-        .content .number-page a {
-            display: block;
-            color: black;
-            float: left;
-            padding: 8px 14px;
-            text-decoration: none;
-            transition: background-color .3s;
-            border: 1px solid #D2D2D2;
-            margin-right: 5px;
-            border-radius: 50%;
-        }
+        right: 16px;
+    }
 
-            .content .number-page a.active {
-                background-color: #EBF9F4;
-                color: #01b075;
-            }
-            .content .number-page a:hover:not(active) {
-                background-color: #BBBBBB;
-            }
+
+/*filter-bar*/
+.content .filter-bar {
+
+}
+    .content .paging-bar {
+        height: 56px;
+        margin-left: 16px;
+        margin-right: 16px;
+        border-top: 1px solid #bbbbbb;
+    }

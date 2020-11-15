@@ -1,0 +1,50 @@
+﻿/*dialog form thêm dữ liệu khách hàng, nhân viên    */
+.m-dialog {
+    position: absolute;
+   border: 1px solid #bbbbbb;
+
+}
+.dialog-content .dialog-body {
+    padding: 0 24px 24px;
+}
+    .m-dialog .dialog-content {
+        background-color: #ffffff;
+        z-index: 1000;
+        border-radius: 5px;
+    }
+
+
+    .m-dialog .dialog-content .dialog-body .m-body-top {
+        display: flex;
+        
+    }
+.input1, .input2, .input3, .m-body-bottom1, .m-body-bottom2, .m-body-bottom3 {
+    display: flex;
+    margin-top: 16px;
+}
+
+    .input1 .input1-line1, .input2 .input2-line1, .input3 .input3-line1, .m-input4-left, .m-input5-left {
+        margin-right: 12px;
+    }
+.input3-line2-radio {
+    display: flex;
+}
+.m-body-bottom1, .m-body-bottom2 {
+    display: flex;
+}
+.dialog-footer {
+    display: flex;
+    width: 100%;
+    height: 60px;
+    border-radius: 0 0 5px 5px;
+    background-color: #e9ebee;
+    align-items: center;
+    box-sizing: border-box;
+    justify-content: flex-end;
+    padding: 12px 24px;
+}
+
+    .dialog-footer button {
+        margin-left: 16px;
+    }
+

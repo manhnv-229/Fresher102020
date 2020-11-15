@@ -1,4 +1,5 @@
-﻿.header{
+﻿/*css cho header*/
+.header{
     float:left;
     width: calc(100% - 221px);
     height:60px;
