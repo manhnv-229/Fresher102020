@@ -52,6 +52,10 @@ option[value=""][disabled] {
 	display: none;
 }
 
+/*Ký hiệu giúp người dùng không bỏ sót*/
+.notice{
+	color:red;
+}
 /*font google-sans*/
 @font-face {
 	font-family: 'GoogleSans-Regular';
