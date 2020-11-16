@@ -12,6 +12,7 @@
     <link href="/css/common/modal.css" rel="stylesheet" />
     <link href="/css/common/form.css" rel="stylesheet" />
     <link href="/css/common/grid.css" rel="stylesheet" />
+    <link href="/css/common/radio-button.css" rel="stylesheet" />
 </head>
 <body>
     <div class="navbar">
@@ -114,7 +115,7 @@
                                     </div>
                                     <div class="misa-form-group">
                                         <div class="label-field-input">Ngày sinh</div>
-                                        <input fieldNamePost="DateOfBirth" class="input-field" />
+                                        <input style="font-family: GoogleSans-Medium" type="date" fieldNamePost="DateOfBirth" class="input-field" />
                                     </div>
                                 </div>
                                 <div class="misa-col-3">
@@ -128,9 +129,17 @@
                                     </div>
                                     <div class="misa-form-group">
                                         <div class="label-field-input">Giới tính</div>
-                                        <div>
-                                            <input name="gender" type="radio" /> <label>Nam</label>
-                                            <input name="gender" type="radio" /> <label>Nữ</label>
+                                        <div class="radio-form-group">
+                                            <label class="container-radio label-field-input">
+                                                Nam
+                                                <input type="radio" checked="checked" name="GenderName">
+                                                <span class="checkmark-radio"></span>
+                                            </label>
+                                            <label class="container-radio label-field-input">
+                                                Nữ
+                                                <input type="radio" name="GenderName">
+                                                <span class="checkmark-radio"></span>
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
