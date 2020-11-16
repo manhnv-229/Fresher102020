@@ -50,7 +50,7 @@ class BaseJS {
             var inputNotValids = $('input[validate="false"]');
             if (inputNotValids && inputNotValids.length > 0) {
                 alert("Dữ liệu không hợp lệ vui lòng kiểm tra lại");
-                inputNotValids[0].focus;
+                inputNotValids[0].focus();
                 return;
             }
             // Thu thập thông tin dữ liệu

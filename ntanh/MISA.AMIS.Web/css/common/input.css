@@ -12,3 +12,7 @@
     .input-search {
         padding-left: 40px;
     }
+
+input#dtDateOfBirth {
+    width: 156px;
+}

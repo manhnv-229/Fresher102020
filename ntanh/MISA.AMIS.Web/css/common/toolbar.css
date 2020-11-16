@@ -3,6 +3,7 @@
     display: flex;
     align-items: center;
     height: 40px;
+    margin-bottom: 5px;
 }
 
     .filter-bar .filter-left {
@@ -12,4 +13,5 @@
     .filter-bar .filter-right {
         position: absolute;
         right: 16px;
+        height: 38px;
     }

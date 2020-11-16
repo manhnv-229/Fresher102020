@@ -144,11 +144,11 @@
                         <th fieldName="CustomerCode">Mã khách hàng</th>
                         <th fieldName="FullName">Họ và tên</th>
                         <th fieldName="Gender">Giới tính</th>
-                        <th fieldName="DateOfBirth">Ngày sinh</th>
+                        <th fieldName="DateOfBirth" formatType="ddmmyyyy">Ngày sinh</th>
                         <th fieldName="PhoneNumber">Số điện thoại</th>
                         <th fieldName="Email">Email</th>
                         <th fieldName="Address">Địa chỉ</th>
-                        <th fieldName="DebitAmount">Số tiền nợ</th>
+                        <th fieldName="DebitAmount" formatType="money">Số tiền nợ</th>
                         <th fieldName="MemberCardCode">Mã thẻ thành viên</th>
                     </tr>
                 </thead>
@@ -162,11 +162,7 @@
 
     </div>
     <!-- dialog -->
-    <div class="m-dialog">
-        <div class="dialog-header">
-            <div class="title-header">Thông tin khác hàng</div>
-            <button class="m-btn-close btnClose"><i class="fas fa-times" style="font-size: 16px;"></i></button>
-        </div>
+    <div class="m-dialog" id="dialog-form" title="Thông tin khách hàng">
         <div class="dialog-content">
             <div class="dialog-content_top">
                 <div class="content-left">
@@ -177,76 +173,79 @@
                         Vui lòng chọn ảnh có định dạng <b>.jpg, .jpeg, .png, .gif.</b>
                     </div>
                 </div>
-                <div class="content-center">
-                    <div class="item-short">
-                        <span class="title-input">Mã khách hàng (<span style="color: red;">*</span>)</span>
-                        <input id="txtCustomerCode" type="text" name="customercode" value="" required />
-                    </div>
-                    <div class="item-short">
-                        <span class="title-input">Mã thẻ thành viên</span>
-                        <input id="txtMemberCardCode" type="text" name="membercardcode" value="" />
-                    </div>
-                    <div class="item-short">
-                        <span class="title-input">Ngày sinh</span>
-                        <input id="dtDateOfBirth" type="date" name="dateofbirth" value="" />
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="item-short">
-                        <span class="title-input">Họ tên (<span style="color: red;">*</span>)</span>
-                        <input id="txtFullName" type="text" name="fullname" value="" required />
-                    </div>
-                    <div class="item-short">
-                        <span class="title-input">Nhóm khách hàng</span>
-                        <select id="cbxCustomerGroup" class="m-select">
-                            <option>
-                                Khách VIP
-                            </option>
-                            <option>
-                                Khách thường
-                            </option>
-                        </select>
-                    </div>
-                    <div class="item-short">
-                        <span class="title-input">Giới tính</span>
-                        <div class="m-input-checkbox">
-                            <input type="radio" class="m-radio" name="gendername" value="male" checked /> Nam
-                            <input type="radio" class="m-radio" name="gendername" value="female" /> Nữ
+                <div class="content-right multiply-2">
+                    <div class="item-line">
+                        <div class="item-short margin-right">
+                            <span class="title-input">Mã khách hàng (<span style="color: red;">*</span>)</span>
+                            <input id="txtCustomerCode" type="text" name="customercode" value="" required />
+                        </div>
+                        <div class="item-short">
+                            <span class="title-input">Họ tên (<span style="color: red;">*</span>)</span>
+                            <input id="txtFullName" type="text" name="fullname" value="" required />
                         </div>
                     </div>
+                    <div class="item-line">
+                        <div class="item-short margin-right">
+                            <span class="title-input">Mã thẻ thành viên</span>
+                            <input id="txtMemberCardCode" type="text" name="membercardcode" value="" />
+                        </div>
+                        <div class="item-short">
+                            <span class="title-input">Nhóm khách hàng</span>
+                            <select id="cbxCustomerGroup" class="m-select">
+                                <option>
+                                    Khách VIP
+                                </option>
+                                <option>
+                                    Khách thường
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item-line">
+                        <div class="item-short margin-right">
+                            <span class="title-input">Ngày sinh</span>
+                            <input id="dtDateOfBirth" type="date" name="dateofbirth" value="" />
+                        </div>
+                        <div class="item-short">
+                            <span class="title-input">Giới tính</span>
+                            <div class="m-input-checkbox">
+                                <input type="radio" class="m-radio" name="gendername" value="male" checked /> Nam
+                                <input type="radio" class="m-radio" name="gendername" value="female" /> Nữ
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
-
             </div>
             <div class="dialog-content_center">
-                <div class="content-left multiply-2">
-                    <div class="item-short multiply-2">
+                <div class="item-line multiply-3">
+                    <div class="item-short multiply-2 margin-right">
                         <span class="title-input">Email</span>
-                        <input id="txtEmail" type="email" name="email" placeholder="example@domain.com" value=""/>
+                        <input id="txtEmail" type="email" name="email" placeholder="example@domain.com" value="" />
                     </div>
-                    <div class="item-short multiply-2">
-                        <span class="title-input">Tên công ty</span>
-                        <input class="" type="text" name="companyname" value="" />
-                    </div>
-                </div>
-                <div class="content-right">
                     <div class="item-short">
                         <span class="title-input">Số điện thoại (<span style="color: red;">*</span>)</span>
                         <input id="txtPhoneNumber" type="text" name="customerphone" value="" required />
+                    </div>
+                </div>
+                <div class="item-line multiply-3">
+                    <div class="item-short multiply-2 margin-right">
+                        <span class="title-input">Tên công ty</span>
+                        <input class="" type="text" name="companyname" value="" />
                     </div>
                     <div class="item-short">
                         <span class="title-input">Mã số thuế</span>
                         <input class="" type="text" name="taxcode" value="" />
                     </div>
                 </div>
-            </div>
-            <div class="dialog-content_bottom">
-                <div class="content-left multiply-3">
+                <div class="item-line multiply-3">
                     <div class="item-short multiply-3">
                         <span class="title-input">Địa chỉ</span>
                         <input id="txtAddress" type="text" name="address" value="" />
                     </div>
                 </div>
             </div>
+            
         </div>
         <div class="dialog-footer">
             <button class="m-btn m-btn-cannel btnClose"><span class="content-m-btn">Hủy</span></button>
