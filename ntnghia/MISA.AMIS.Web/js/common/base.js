@@ -68,27 +68,27 @@
             //    "CustomerGroupName": $('#customerGroup').val()
             //}
 
-            var customer = {}
-            var elements = $('.dialog-content input');
+            var customer = {
+                "CustomerGroupId": "3631011e-4559-4ad8-b0ad-cb989f2177da"}
+            var elements = $('.dialog-content input[id]');
             $.each(elements, function (index, input) {
                 var attr = $(input).attr('id');
                 customer[attr] = $(input).val();
             })
-            //console.log(customer);
-
+            console.log(customer);
 
             //gọi service tương ứng thực hiện lưu trữ dữ liệu
             $.ajax({
-                url: 'http://api.manhnv.net/api/customers',
+                url: me.getDataUrl,
                 method: 'POST',
                 data: JSON.stringify(customer),
-                contentType:'application/json'
+                contentType: 'application/json'
             }).done(function (res) {
                 alert('Thêm thành công!');
                 $('.dialog-modal').css("display", "none");
                 me.loadData();             
             }).fail(function (res) {
-
+                console.log(res);
             })
 
             //Sau khi lưu thành công:
