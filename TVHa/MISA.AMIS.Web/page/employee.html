@@ -2,11 +2,14 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>Nhân viên</title>
     <link href="/css/common/main.css" rel="stylesheet" />
     <link href="/css/common/header.css" rel="stylesheet" />
     <link href="/css/common/navbar.css" rel="stylesheet" />
     <link href="/css/common/content.css" rel="stylesheet" />
+    <link href="/css/common/grid.css" rel="stylesheet" />
+    <link href="/css/common/toolbar.css" rel="stylesheet" />
+    <link href="/css/common/button.css" rel="stylesheet" />
     <link href="/css/page/employee.css" rel="stylesheet" />
 </head>
 <body>
@@ -34,10 +37,10 @@
                 <div class="nav-item-icon roundchart-icon"></div>
                 <div class="nav-item-text">Theo dõi đóng</div>
             </div>
-            <div class="navbar-item">
+            <a class="navbar-item" href="employee.html">
                 <div class="nav-item-icon people-icon"></div>
                 <div class="nav-item-text">Quản lý lao động</div>
-            </div>
+            </a>
             <div class="navbar-item">
                 <div class="nav-item-icon gear-icon"></div>
                 <div class="nav-item-text">Thiết lập</div>
@@ -47,34 +50,100 @@
     <div class="header">
         <div class="header-title">Công ty cổ phần MISA TEST BHXH</div>
         <div class="header-icon"></div>
-        <div class="extra" ></div>
+        <div class="extra"></div>
         <div class="name">Trần Văn Hà</div>
         <div class="avatar"></div>
     </div>
     <div class="content">
         <div class="content-box">
             <div class="head-content">
-                <div class="head-content-left">
-                    <b>Quản lý lao động</b>
-                </div>
+                <div class="head-content-left">Quản lý lao động</div>
                 <div class="head-content-right">
-                    <div class="btn-sync">
+                    <button class="btn-sync">
                         <div class="btn-sync-icon"></div>
                         <div class="btn-sync-text">Đồng bộ từ HRM</div>
-                    </div>
-                    <div class="btn-add">
-                        <div class="btn-add-left">
-                            <div class="btn-add-icon"></div>
-                            <div class="btn-add-text">Thêm lao động</div>
-                        </div>
-                        <div class="btn-add-select">
-                            <div class="btn-add-select-icon"></div>
-                        </div>
+                    </button>
+                    <a class="logup-window btn-add" href="#logup-box">
+                        <div class="btn-add-icon"></div>
+                        <div class="btn-add-text">Thêm lao động</div>
+                    </a>
+                    <div class="logup" id="logup-box">
+                        <form class="logup-content" action="#" method="post">
+                            <div class="content-title">THÔNG TIN NHÂN VIÊN</div>
+                            <div class="info">
+                                <label class="employee-code">
+                                    <span>Mã nhân viên (*)</span>
+                                    <input id="txtEmployeeCode" type="text" autocomplete="on" name="txtEmployeeCode" required placeholder="" value="" />
+                                </label>
+                                <label class="full-name">
+                                    <span>Tên nhân viên (*)</span>
+                                    <input id="txtFullName" type="text" name="fullName" required placeholder="" value="" />
+                                </label>
+                                <div class="birth-sex">
+                                    <div class="birthday">
+                                        <p>Ngày sinh</p>
+                                        <input id="dateOfBirth" class="birth" type="date" name="birthday" style="width:116px; height:28px;" placeholder="mm/dd/yyyy" value="" />
+                                    </div>
+                                    <div class="sex">
+                                        <p>Giới tính</p>
+                                        <select id="genderName" class="sex-box">
+                                            <option>Nam</option>
+                                            <option>Nữ</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <label class="email">
+                                    <span>Email (*)</span>
+                                    <input id="email" type="email" name="email" placeholder="example@domain.com" value="" />
+                                </label>
+                                <label class="phone">
+                                    <span>ĐT di động(*)</span>
+                                    <input id="phoneNumber" type="text" name="phone" required placeholder="" value="" />
+                                </label>
+                                <div class="birth-sex">
+                                    <label class="identity" style="width:308px;">
+                                        <span>Số CMT/HC</span>
+                                        <input id="identity" type="text" style="width:135px;" required name="identity" value="" />
+                                    </label>
+                                    <div class="sex">
+                                        <p>Ngày cấp</p>
+                                        <input class="birthday" type="date" name="dateApply" style="height:28px;" placeholder="mm/dd/yyyy" value="" />
+                                    </div>
+                                </div>
+                                <div class="birth-sex">
+                                    <label class="position" style="width:273px;">
+                                        <span>Chức vụ</span>
+                                        <input id="position" type="text" name="position" style="width:100px;" required value="" />
+                                    </label>
+                                    <div class="department" style="width:160px; justify-content:space-between; display:flex;">
+                                        <span>Phòng ban</span>
+                                        <input id="departmentName" type="text" name="position" style="height:28px; width:60px;" value="" />
+                                    </div>
+                                </div>
+                                <div class="birth-sex">
+                                    <label class="salary" style="width:237px;">
+                                        <span>Mức lương</span>
+                                        <input id="salary" type="text" name="salary" style="width:64px;" value="" />
+                                    </label>
+                                    <div class="work-status" style="width:200px; justify-content:space-between; display:flex;">
+                                        <span>Trạng thái làm việc</span>
+                                        <input id="workStatusName" type="text" name="work-status" style="height:28px; width:40px;" value="" />
+                                    </div>
+                                </div>
+                                <label class="address">
+                                    <span>Địa chỉ</span>
+                                    <input id="address" type="text" name="address" placeholder="" value="" />
+                                </label>
+                            </div>
+                            <button id="btnSave" class="button btn-save" type="button">Lưu</button>
+                            <button class="button btn-save-and-add" type="button">Lưu và thêm mới</button>
+                            <a id="btnCancel" class="forgot" href="#">Huỷ</a>
+                        </form>
                     </div>
                 </div>
             </div>
             <div class="content-toolbox">
-                <div class="toolbox-left" >
+                <div class="toolbox-left">
                     <div class="searchbox">
                         <div class="searchbox-icon"></div>
                         <input type="search" id="search" placeholder="Tìm kiếm theo mã nhân viên, họ tên" />
@@ -97,15 +166,73 @@
                     </div>
                 </div>
                 <div class="toolbox-right">
-                    <button class="btn-download">
+                    <button id="btnSave" class="btn-download">
                         <div class="download-icon"></div>
                     </button>
-                    <button class="btn-refresh">
+                    <button id="btnRefresh" class="btn-refresh">
                         <div class="refresh-icon"></div>
                     </button>
                 </div>
             </div>
+            <div class="grid grid-employee">
+                <table class="scrollTable" style="width:100%" border="0" width="100%" cellspacing="0">
+                    <colgroup>
+                        <col style="width:150px; background-color:aqua" />
+                        <col style="width:200px" />
+                        <col style="width:100px" />
+                        <col style="width:100px" />
+                        <col style="width:150px" />
+                        <col style="width:50px" />
+                        <col style="width:150px" />
+                        <col style="width:150px" />
+                        <col style="width:150px; text-align:right !important" />
+                        <col style="text-align:right !important" />
+                        <col style="width:350px" />
+                    </colgroup>
+                    <thead class="fixedHeader">
+                        <tr>
+                            <th fieldName="EmployeeCode">Mã nhân viên</th>
+                            <th fieldName="FullName">Họ và tên</th>
+                            <th fieldName="GenderName">Giới tính</th>
+                            <th fieldName="DateOfBirth" formatType="ddmmyyyy">Ngày sinh</th>
+                            <th fieldName="Salary" formatType="Money">Mức lương hiện tại</th>
+                            <th fieldName="PhoneNumber">Số điện thoại</th>
+                            <th fieldName="Email">Email</th>
+                            <th fieldName="PositionName">Chức vụ</th>
+                            <th fieldName="DepartmentName">Phòng ban</th>
+                            <th fieldName="Address">Địa chỉ</th>
+                            <th fieldName="WorkStatusName">Tình trạng công việc</th>
+                        </tr>
+                    </thead>
+                    <tbody class="scrollContent">
+                    </tbody>
+                </table>
+            </div>
+            <div class="paging-bar">
+                <div class="paging-record-info">
+                    Hiển thị <b>1-10/1000</b> nhân viên
+                </div>
+                <div class="paging-option">
+                    <div class="btn-select-page m-btn-firstpage"></div>
+                    <div class="btn-select-page m-btn-prev-page"></div>
+                    <div class="m-btn-list-page">
+                        <button class="btn-pagenumber btn-pagenumber-selected">1</button>
+                        <button class="btn-pagenumber">2</button>
+                        <button class="btn-pagenumber">3</button>
+                        <button class="btn-pagenumber">4</button>
+                    </div>
+                    <div class="btn-select-page m-btn-next-page"></div>
+                    <div class="btn-select-page m-btn-lastpage"></div>
+                </div>
+                <div class="paging-record-option">
+                    <b>10</b> nhân viên/trang
+                </div>
+            </div>
         </div>
     </div>
+    <script src="/js/library/jquery-3.5.1.min.js"></script>
+    <script src="/js/common/common.js"></script>
+    <script src="/js/common/base.js"></script>
+    <script src="/js/page/employee.js"></script>
 </body>
 </html>
