@@ -6,3 +6,11 @@
     border: 1px solid #bbbbbb;
     width: 190px;
 }
+
+    .m-select.m-select-footer {
+        width: 110px;
+    }
+
+    .m-select.m-select-department {
+        margin-left: 10px;
+    }

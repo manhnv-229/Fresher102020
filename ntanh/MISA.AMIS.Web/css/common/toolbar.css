@@ -8,6 +8,7 @@
 
     .filter-bar .filter-left {
         margin-left: 24px;
+        display: flex;
     }
 
     .filter-bar .filter-right {

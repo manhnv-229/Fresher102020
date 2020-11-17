@@ -79,3 +79,25 @@
     background-position: center;
     margin-right: 10px;
 }
+
+.m-btn.m-btn-footer {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    margin: 5px;
+    background-color: #E9EBEE;
+    color: #000000;
+}
+
+
+    .m-btn.m-btn-footer:hover {
+        background-color: #2FBE8E;
+    }
+
+    .m-btn.m-btn-footer.active {
+        background-color: #01B075;
+        color: #454545;
+    }
