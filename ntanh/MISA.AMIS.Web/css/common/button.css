@@ -101,3 +101,22 @@
         background-color: #01B075;
         color: #454545;
     }
+
+button#btnDelete {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    padding: 0;
+    margin-right: 10px;
+    background-color: #F65454;
+}
+
+button.m-btn.m-btn-delete {
+    width: 80px;
+    background-color: #F65454;
+}
+
+button.m-btn.m-btn-close-popup:hover {
+    background-color: #E9EBEE;
+    cursor: pointer;
+}

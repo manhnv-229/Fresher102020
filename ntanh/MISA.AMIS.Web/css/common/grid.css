@@ -26,3 +26,11 @@ table th {
         text-overflow: ellipsis;
         white-space: nowrap;
     }
+
+    table tbody tr:hover{
+        background-color: #2FBE8E;
+    }
+
+    table tbody tr.row-selected {
+        background-color: #ff0000;
+    }

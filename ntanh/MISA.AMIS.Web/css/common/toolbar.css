@@ -15,4 +15,5 @@
         position: absolute;
         right: 16px;
         height: 38px;
+        display: flex;
     }

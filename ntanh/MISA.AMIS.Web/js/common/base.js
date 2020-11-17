@@ -9,6 +9,8 @@ class BaseJS {
         this.setDataUrl();
         this.loadData();
         this.initEvents();
+        this.activeItem();
+        this.trOnSelected();
     }
     /**
      *  Lấy url api 
@@ -61,7 +63,7 @@ class BaseJS {
                 "DateOfBirth": $('#dtDateOfBirth').val(),
                 "Email": $('#txtEmail').val(),
                 "PhoneNumber": $('#txtPhoneNumber').val(),
-                "CustomerGroupId": "3631011e-4559-4ad8-b0ad-cb989f2177da",
+                "CustomerGroupId": "19165ed7-212e-21c4-0428-030d4265475f",
                 "MemberCardCode": $('#txtMemberCardCode').val() 
             }
             console.log(customer);
@@ -201,5 +203,44 @@ class BaseJS {
      * */
     delete() {
 
+    }
+
+    /*
+     * Active item menu
+     * CreatedBy: NTANH(17/11/2020)
+     */
+    activeItem() {
+        //var listItems = $('.item_menu');
+        $.each($('.item_menu'), function (index, item) {
+            if ($(item).attr('statuss') == "active") {
+                $(item).addClass('bacbackground-primary');
+            }
+        })
+
+        $.each($('.m-btn-footer'), function (index, item) {
+            $(item).click(function () {
+                $.each($('.m-btn-footer'), function (index, subIitem) {
+                    $(subItem).removeAttr('statuss');
+                })
+                $(item).attr('statuss', 'active');
+                $(item).addClass('active');
+            })
+        })
+        
+        console.log("a")
+    }
+
+    trOnSelected() {
+        //var listRows = $('table tbody tr');
+        //$.each(listRows, function (index, row) {
+        //    row.click(function () {
+        //        console.log("alo");
+        //        debugger;
+        //    })
+
+        //})
+        $('table tbody').on('click', 'tr', function () {
+            $(this).addClass('row-selected');
+        })
     }
 }
