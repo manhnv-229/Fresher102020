@@ -88,7 +88,12 @@
                 $.each(inputs, function (index, input) {
                     if (input[`id`].indexOf(id) >= 0) {
                         var html = `#` + input[`id`];
-                        $(html).val(value);
+                        if (input.type == `date`) {
+                            value = stringToDate(value);
+                            $(html).val(value);
+                        } else {
+                            $(html).val(value);
+                        }
                     }
                 })
 

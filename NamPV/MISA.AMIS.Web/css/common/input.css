@@ -16,6 +16,7 @@ input {
     border: 1px solid #bbbbbb;
     outline: none;
     height: 40px;
+    text-overflow: ellipsis;
 }
 
     input:focus {

@@ -36,4 +36,15 @@ dialogDetail = $(".dialog-modal").dialog({
     resizable: true,
     position: ({ my: "center", at: "center", of: window }),
     modal: true,
+    title: `Thông tin khách hàng`
 });
+
+/**
+ * Chuyển đổi string về ngày tháng
+ * @param {string} string
+ * CreatedBy: NamPV (16/11/2020)
+ */
+function stringToDate(string) {
+    var arr = string.split(`/`);
+    return arr[2] + '-' + arr[1] + '-' + arr[0];
+}

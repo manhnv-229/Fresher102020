@@ -96,7 +96,7 @@
 
         #dialog .dialog-body .customer-avatar {
             height: 200px;
-            background-image: url('../../content/icon/avatar.png');
+            background-image: url('/content/icon/avatar.png');
             background-repeat: no-repeat;
             background-size: contain;
         }
@@ -119,7 +119,7 @@
 
         #dialog .dialog-footer .btn-save {
             margin-left: 16px;
-            background-image: url('.content/content/icon/add.png');
+            background-image: url('/content/icon/save.png');
         }
 
     #dialog .m-radio {

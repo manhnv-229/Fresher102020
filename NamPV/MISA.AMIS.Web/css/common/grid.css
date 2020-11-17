@@ -3,12 +3,18 @@
 .grid {
     height: calc(100vh - 271px);
     padding: 16px;
-    overflow:hidden;
+    overflow-y: hidden;
+    overflow-x: scroll;
 }
 
 table {
     width: 100%;
 }
+
+/*th,
+td {
+    width: 100px;
+}*/
 
 thead > tr {
     position: relative;
@@ -25,7 +31,8 @@ table th, table td {
     border-bottom: 1px solid #bbbbbb;
     padding: 10px 16px;
     text-align: left;
-    max-width: 100px;
+    min-width: 150px;
+    max-width: 150px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
