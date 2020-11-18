@@ -8,14 +8,13 @@
 class EmployeeJS extends BaseJS {
     constructor() {
         super();
-        this.setDataUrl();
     }
     /**
-     * Lấy url api
-     * CreatedBy: NTANH (13/11/2020)
+     *  Lấy url api
+     *  CreatedBy: NTANH (18/11/2020)
      * */
-    setDataUrl() {
-        this.getDataUrl = "http://api.manhnv.net/api/employees";
+    setApiRouter() {
+        this.apiRouter = "api/employees";
     }
     
 }

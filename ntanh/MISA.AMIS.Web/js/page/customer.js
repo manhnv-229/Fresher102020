@@ -32,15 +32,15 @@ class CustomerJS extends BaseJS {
     constructor() {
         super();
     }
+
     /**
-     *  Lấy địa chỉ api
-     *  CreatedBy: NTANH (13/11/2020)
+     *  Lấy url api
+     *  CreatedBy: NTANH (18/11/2020)
      * */
-    setDataUrl() {
-        this.getDataUrl = "http://api.manhnv.net/api/customers";
+    setApiRouter() {
+        this.apiRouter = 'api/customers';
     }
     
-
     removeAnimation() {
     }
 }

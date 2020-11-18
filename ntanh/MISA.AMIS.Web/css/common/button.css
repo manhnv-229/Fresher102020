@@ -68,6 +68,7 @@ button#btnDelete {
     padding: 0;
     margin-right: 10px;
     background-color: #F65454;
+    display: none;
 }
 /*
     Button khu vực footer
