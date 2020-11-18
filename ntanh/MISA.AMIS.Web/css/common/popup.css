@@ -51,6 +51,7 @@ button.m-btn.m-btn-close-popup {
     font-size: 13px;
     color: #000000;
     font-weight: normal;
+    width: 350px;
 }
 
 
@@ -88,4 +89,24 @@ i.fas.fa-exclamation-triangle {
 
 i.fas.fa-trash-alt {
     color: #ffffff;
+}
+
+/*
+    Chỉnh CSS JQuery UI
+*/
+span.ui-button-icon.ui-icon.ui-icon-closethick {
+    display: none;
+}
+
+span#ui-id-2 {
+    padding: 24px;
+    font-size: 16px;
+    font-weight: bold;
+    width: 80%;
+    border: 0;
+    margin: 0;
+}
+
+div#dialog-confirm {
+    padding: 0;
 }

@@ -152,11 +152,21 @@ button.ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-
     border: none;
     background-color: #ffffff;
     outline: none;
+    position: absolute;
+    top: 10px;
+    background-image: url(../../content/icon/x.svg);
+    background-position: center;
+    right: -10px;
 }
 
-.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle {
-    padding: 0;
-}
+    button.ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-close:hover {
+        background-color: #E9EBEE;
+        cursor: pointer;
+    }
+
+    .ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle {
+        padding: 0;
+    }
 
 div#dialog-form {
     padding: 0;

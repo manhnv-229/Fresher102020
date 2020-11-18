@@ -32,5 +32,6 @@ table th {
     }
 
     table tbody tr.row-selected {
-        background-color: #ff0000;
+        background-color: #019160;
+        color: #ffffff;
     }

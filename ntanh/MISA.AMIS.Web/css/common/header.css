@@ -6,7 +6,9 @@
     display: flex;
     justify-content: space-between;
 }
-
+/*
+    CSS khu vực company
+*/
 .company {
     display: flex;
     margin-left: 24px;
@@ -35,6 +37,10 @@
         background-size: contain;
         background-repeat: no-repeat;
     }
+
+/*
+    CSS Khu vực profile
+*/
 
 .profile {
     display: flex;

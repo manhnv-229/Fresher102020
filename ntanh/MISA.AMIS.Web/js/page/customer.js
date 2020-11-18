@@ -11,25 +11,19 @@
         modal: true,
     });
 
-    //dialogWarning = $("#dialog-confirm").dialog({
-    //    autoOpen: true,
-    //    fluid: true,
-    //    //height: 400,
-    //    //width: '700px',
-    //    minWidth: 430,
-    //    minHeight: 190,
-    //    resizable: true,
-    //    position: ({ my: "center", at: "center", of: window }),
-    //    modal: true,
-    //    buttons: {
-    //        "Delete all items": function () {
-    //            $(this).dialog("close");
-    //        },
-    //        Cancel: function () {
-    //            $(this).dialog("close");
-    //        }
-    //    }
-    //});
+    dialogWarning = $("#dialog-confirm").dialog({
+        autoOpen: false,
+        fluid: true,
+        //height: 400,
+        //width: '700px',
+        minWidth: 430,
+        minHeight: 205,
+        resizable: true,
+        position: ({ my: "center", at: "center", of: window }),
+        modal: true
+    });
+
+    
 })
 /**
  * Class Quản lý Customer
@@ -37,7 +31,6 @@
 class CustomerJS extends BaseJS {
     constructor() {
         super();
-        this.name = "sss";
     }
     /**
      *  Lấy địa chỉ api
@@ -45,5 +38,9 @@ class CustomerJS extends BaseJS {
      * */
     setDataUrl() {
         this.getDataUrl = "http://api.manhnv.net/api/customers";
+    }
+    
+
+    removeAnimation() {
     }
 }
