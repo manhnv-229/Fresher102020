@@ -1,6 +1,7 @@
 ﻿
 /* data table */
 .grid table {
+    width: 100%;
     height: calc( 100% - 42px);
     border-collapse: collapse;
 }
@@ -43,36 +44,46 @@ td .thead-box .thead-sort-icon {
     border-top: 1px solid #e5e5e5;
 }
 
+    .grid .table-customer tbody tr:hover {
+        background-color: #01916012 !important;
+    }
+
+.selected {
+    background-color: #01916054;
+}
+
+
 tbody tr td {
+    background-color: none;
     padding: 10px;
 }
-.table-customer th{
+
+.table-customer th {
     position: sticky;
     top: 0;
 }
+
 .table-customer th, .table-customer td div {
     max-width: 120px;
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
-} 
+}
 
 /*dialog thêm nhân viên*/
-.dialog-detail .dialog-body .general-info-detail{
+.dialog-detail .dialog-body .general-info-detail {
     width: 100%;
     display: flex;
 }
 
 .dialog-detail .work-info {
-
     margin-top: 24px;
 }
-.dialog-body .general-info-detail .profile-image{
-    width : 200px;
+
+.dialog-body .general-info-detail .profile-image {
+    width: 200px;
     height: 200px;
     background-color: azure;
     margin-top: 24px;
     margin-left: 24px;
 }
-
-

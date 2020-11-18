@@ -7,7 +7,18 @@ class CustomerJS extends BaseJS {
         super();
     }
 
-    getUrl() {
-        return "http://api.manhnv.net/api/customers";
+    /** Override lại base method
+    * set aip router
+    * CreatedBy dtnga (17/11/2020)
+    */
+    getApiRouter() {
+        this.apiRouter= "/api/customers";
+    }
+    /** Override lại base method
+     * set objectnam
+     * CreatedBy dtnga (18/11/2020)
+     * */
+    getObjectName() {
+        this.ObjectName = "Customer";
     }
 }

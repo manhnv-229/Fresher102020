@@ -1,0 +1,8 @@
+﻿/** Style các loại icon*/
+.m-icon{
+    width : 40px;
+    height: 40px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}

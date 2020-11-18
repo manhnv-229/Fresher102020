@@ -3,12 +3,12 @@
     height: calc(100% - 108px);
     overflow-x: scroll;
     overflow-y: scroll;
-
 }
 .grid::-webkit-scrollbar{
-    width : 8px;
-    height: 8px;
+    width : 5px;
+    height: 5px;
 }
+
     .grid::-webkit-scrollbar-track {
         background: #E9EBEE;
     }

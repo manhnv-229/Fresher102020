@@ -9,8 +9,8 @@ class EmployeeJS extends BaseJS {
         super();
     }
 
-    getUrl() {
-        return "http://api.manhnv.net/api/employees";
+    getApiRouter() {
+        this.apiRouter = "/api/customers";
     }
 
 

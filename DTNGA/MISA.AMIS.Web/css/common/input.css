@@ -1,0 +1,81 @@
+﻿/*-----------------*/
+/*input*/
+
+.input-line {
+    width: 100%;
+    display: flex;
+    margin-bottom: 16px;
+}
+
+.input-box .input-title span {
+    color: #FF4747;
+}
+
+.m-input {
+    height: 40px;
+    width: 100%;
+    border: 1px solid #bbbbbb;
+    border-radius: 5px;
+    outline: none;
+    margin-top: 4px;
+    padding-left: 16px;
+}
+
+    .m-input:focus {
+        border: 1px solid #019160;
+    }
+
+.m-input-warning {
+    border: 1px solid #FF4747;
+}
+/*-----------------*/
+/*input type "radio"*/
+/**/
+.m-radio {
+    display: flex;
+    padding-left: 24px;
+    margin-right: 16px;
+    position: relative;
+}
+    /*ẩn radio button mặc định đi */
+    .m-radio .radio {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+    /* Tạo radio button mới*/
+    .m-radio .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 20px;
+        width: 20px;
+        background-color: #ffffff;
+        border: 1px solid #bbbbbb;
+        border-radius: 50%;
+    }
+
+    .m-radio:hover .radio ~ .checkmark {
+        background-color: #e5e5e5;
+    }
+
+    /* khi radio ở trạng thái checked */
+    .m-radio input:checked ~ .checkmark {
+        border: 1px solid #019160;
+    }
+
+        .m-radio input:checked ~ .checkmark:after {
+            display: block;
+        }
+    /* hình tròn tại tâm radio button mới */
+    .m-radio .checkmark:after {
+        content: "";
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        top: 16%;
+        left: 16%;
+        background: #019160;
+        border-radius: 50%;
+        display: none;
+    }

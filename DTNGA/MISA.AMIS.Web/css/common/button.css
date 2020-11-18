@@ -1,14 +1,17 @@
-﻿.m-btn {
+﻿* {
+    box-sizing: border-box;
+}
+.m-btn {
     background-color: #019160;
-    border-radius: 4px;
+    border-radius: 5px;
     height: 40px;
     color: #ffffff;
     font-size: 13px;
     font-family: GoogleSans-Regular;
     padding-left: 16px;
     padding-right: 16px;
-    text-align: left;
     align-items: center;
+    justify-content: center;
     border: none;
     outline: none;
     display: flex;
@@ -44,3 +47,14 @@
         background-position: center;
         align-self: center;
     }
+
+/* button với content có 1-2 từ*/
+.m-btn-short{
+    width: 100px;
+    text-align: center;
+}
+/*button với content có trên 2 từ*/
+.m-btn-long {
+    padding: 0 24px;
+    text-align: center;
+}
