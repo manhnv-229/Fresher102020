@@ -9,10 +9,9 @@ select {
     border-radius: 4px;
     background-color: #fff;
     padding-left: 16px;
-    color: #bbbbbb;
     outline: none;
 }
 
-select:focus{
-    border: 1px solid #019160;
-}
+    select:focus {
+        border: 1px solid #019160;
+    }

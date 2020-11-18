@@ -44,7 +44,66 @@ dialogDetail = $(".dialog-modal").dialog({
  * @param {string} string
  * CreatedBy: NamPV (16/11/2020)
  */
-function stringToDate(string) {
-    var arr = string.split(`/`);
+function formatDateReg(date) {
+    var arr = formatDate(date).split(`/`);
     return arr[2] + '-' + arr[1] + '-' + arr[0];
 }
+
+// Khai báo dialog xác nhận xoá bản ghi
+dialogConfirm = $(`.confirm-delete-dialog`).dialog({
+    title: `Xác nhận xoá`,
+    autoOpen: false,
+    modal: true
+})
+
+// Khái báo popup thông báo thành công
+popupSuccess = $(`#popup-success`).dialog({
+    title: `Thành công`,
+    position: {
+        my: "left top", at: "left bottom"
+    },
+    autoOpen: false,
+    beforeClose: function () {
+        return closeable;
+    },
+    open: function () {
+        var counter = 5;
+        var intID = setInterval(function () {
+            counter--;
+            $('.delayTime').text(counter);
+            if (counter == 0) {
+                clearInterval(intID)
+                closeable = true;
+                $('#popup-success').dialog("close")
+            }
+        }, 1000)
+    },
+    show: { effect: "blind", duration: 800 },
+    hide: { effect: "blind", duration: 800 },
+})
+
+// Khái báo popup thoogn báo thất bại
+popupFail = $(`#popup-fail`).dialog({
+    title: `Thất bại`,
+    position: {
+        my: "left top", at: "left bottom"
+    },
+    autoOpen: false,
+    beforeClose: function () {
+        return closeable;
+    },
+    open: function () {
+        var counter = 5;
+        var intID = setInterval(function () {
+            counter--;
+            $('.delayTime').text(counter);
+            if (counter == 0) {
+                clearInterval(intID)
+                closeable = true;
+                $('#popup-fail').dialog("close")
+            }
+        }, 1000)
+    },
+    show: { effect: "blind", duration: 800 },
+    hide: { effect: "blind", duration: 800 },
+})

@@ -76,3 +76,59 @@
 .text-align-right {
     text-align: right;
 }
+
+.disable {
+    display: none;
+}
+
+/* Popup thông báo*/
+#popup-success, #popup-fail {
+    margin: auto 24px;
+    background-color: #019160;
+}
+
+/* Loading icon*/
+
+.loading-data {
+    background-color: #bbb;
+    opacity: 0.5;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+}
+
+.loading-icon {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #019160;
+    width: 40px;
+    height: 40px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    position: fixed;
+    top: calc(50% - 20px);
+    left: calc(50% - 20px);
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

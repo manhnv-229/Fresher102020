@@ -117,8 +117,15 @@
             right: 24px;
         }
 
+        #dialog .dialog-footer .btn-cancel {
+            margin: auto 16px;
+        }
+
+        #dialog .dialog-footer .btn-delete {
+            background-color: #f00;
+        }
+
         #dialog .dialog-footer .btn-save {
-            margin-left: 16px;
             background-image: url('/content/icon/save.png');
         }
 
@@ -144,3 +151,10 @@
     #dialog label {
         margin-bottom: 4px;
     }
+
+/* Dialog xác nhận xoá*/
+.confirm-delete-dialog {
+    display: flex;
+    justify-content: space-between;
+    margin: auto 24px;
+}
