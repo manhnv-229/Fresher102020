@@ -26,6 +26,21 @@
         })
         //có thể dùng .bind(this) 
 
+        //Xóa khách hàng được chọn khi nhấn nút Delete:
+        $('.btn-delete').click(function () {
+            //Gọi service lấy thông tin chi tiết qua id
+            $.ajax({
+                url: me.host + me.apiRouter + `/` + me.recordId,
+                method: "DELETE"
+            }).done(function (res) {
+                alert('Xóa thành công!');
+                me.loadData();
+            }).fail(function (res) {
+
+            })
+
+        });
+
         //Sự kiện khi nhấn đóng dialog:
         $('.fa-times').click(function () {
             $('.dialog-modal').css("display", "none");
@@ -38,9 +53,17 @@
         //Lưu dữ liệu khi nhấn nút lưu
         $('.save-button').click(me.btnSaveOnClick.bind(me))
 
+        //nhấn 1 lần vào hàng trong bảng sẽ tô màu hàng
+        $('table tbody').on('click', 'tr', function () {
+            $('table tbody tr').find('td').removeClass('row-selected');
+            $(this).find('td').addClass('row-selected');
+            var recordId = $(this).data('recordId');
+            me.recordId = recordId;
+            $('.btn-delete').show();
+        });
+
         //hiển thị thông tin chi tiết khi nhấn đúp chọn 1 bản ghi trên ds dữ liệu
         $('table tbody').on('dblclick', 'tr', function () {
-            $(this).find('td').addClass('row-selected');
             me.FormMode = 'Edit';
             //load dữ liệu cho các combo box
             var select = $('select#CustomerGroupId');
@@ -52,7 +75,6 @@
                 method: 'GET'
             }).done(function (res) {
                 if (res) {
-                    console.log(res);
                     $.each(res, function (index, obj) {
                         var option = `<option value="${obj.CustomerGroupId}">${obj.CustomerGroupName}</option>`;
                         select.append(option);
@@ -71,22 +93,16 @@
                 url: me.host + me.apiRouter + `/${recordId}`,
                 method: "GET"
             }).done(function (res) {
-                console.log(res);
                 //Binding lên form chi tiết:
                 var elements = $('.dialog-content input[id], select[id]');
                 $.each(elements, function (index, input) {
                     var attr = $(this).attr('id');
                     var value = res[attr];
                     $(this).val(value);
-                    //Check trường hợp input là radio button, lấy ra giới tính
-                    //if ($(this).attr('type') == "radio") {
-                    //    if (this.checked) {
-                    //        customer[attr] = value;
-                    //    }
-                    //} else {
-                    //    customer[attr] = value;
-                    //}
                 })
+
+                console.log(res['Gender']);
+
             }).fail(function (res) {
 
             })
@@ -193,6 +209,7 @@
             console.log(e);
         }
     }
+
 
     /**
     * Hàm xử lí khi nhấn button lưu

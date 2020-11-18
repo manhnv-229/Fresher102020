@@ -87,6 +87,9 @@
             </div>
 
             <div class="btn-icon">
+                <button class="btn-delete">
+                    <img class="right-icon" src="../content/icon/trash.svg" />
+                </button>
                 <button class="btn-download">
                     <img class="right-icon" src="../content/icon/download.svg" />
                 </button>
@@ -190,12 +193,16 @@
                         <p>Giới tính</p>
                         <div class="select-gender">
                             <label class="input-label" for="Male">
-                                <input type="radio" class="customer-gender" name="gender" id="Gender" value="1" checked/>
+                                <input type="radio" class="customer-gender" name="gender" id="Gender" value="1" />
                                 Nam
                             </label>
                             <label class="input-label" for="Female">
-                                <input type="radio" class="customer-gender" name="gender" id="Gender" value="Nữ"/>
+                                <input type="radio" class="customer-gender" name="gender" id="Gender" value="0" />
                                 Nữ
+                            </label>
+                            <label class="input-label" for="Other">
+                                <input type="radio" class="customer-gender" name="gender" id="Gender" value="2" />
+                                Khác
                             </label>
                         </div>
                     </div>

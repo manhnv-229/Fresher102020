@@ -94,38 +94,6 @@ p, h2 {
             margin-right: 10px;
         }
 
-        .content .content-search .input-container .fa-caret-down {
-            position: absolute;
-            top: 10px;
-            right: 17px;
-            color: #888;
-            cursor: pointer;
-        }
-
-        .content .content-search .search-department, .search-status {
-            cursor: pointer;
-            outline: none;
-            border: 1px solid #bbb;
-            border-radius: 5px;
-            padding: 8px 50px 8px 10px;
-            margin-right: 10px;
-        }
-
-        .content .content-search .search-department:hover, .search-status:hover {
-            background: #e5e5e5;
-        }
-
-        .content .content-search .input-container .i-fa-angle-down {
-            position: absolute;
-            padding-top: 10px;
-            padding-left: 8px;
-            height:calc(100% - 10px);
-            border-left: 1px solid #e5e5e5;
-            right: 23px;
-            top: 0;
-            color: #888;
-            cursor: pointer;
-        }
 
         .content .content-search .search-employee:focus {
             border: 1px solid #019160;
@@ -139,7 +107,7 @@ p, h2 {
         right: 20px;
     }
 
-        .content .content-search .btn-download, .btn-refresh {
+        .content .content-search .btn-download, .btn-refresh, .btn-delete {
             background-color: #fff;
             display: flex;
             justify-content: center;
@@ -153,9 +121,13 @@ p, h2 {
             outline: none;
         }
 
-    .content .content-search .btn-download:hover, .btn-refresh:hover {
-       background: #e5e5e5;
-    }
+        .content .content-search .btn-delete {
+            display: none;
+        }
+
+            .content .content-search .btn-download:hover, .btn-refresh:hover, .btn-delete:hover {
+                background: #e5e5e5;
+            }
 
         .content .content-search .right-icon {
             color: #e5e5e5;
