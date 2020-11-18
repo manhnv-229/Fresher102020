@@ -37,6 +37,11 @@ table th {
 tbody tr:nth-child(2n+1){
     background-color: #fafafa;
 }
+
+tbody tr:hover {
+    background-color: #d9d9d9;
+    cursor: pointer;
+}
 /*table td span {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -96,7 +101,7 @@ html > body tbody.scrollContent {
 }
     /* make TD elements pretty. Provide alternating classes for striping the table */
     tbody.scrollContent td, tbody.scrollContent tr.normalRow td {
-        background: #fff;
+        /*background: #fff;*/
         /*border-bottom: none;
         border-left: none;*/
         /*border-right: 1px solid #ccc;

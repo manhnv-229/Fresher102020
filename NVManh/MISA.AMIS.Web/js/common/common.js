@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-   
+
 })
 /** ----------------------------------------------
  * Format dữ liệu ngày tháng sang ngày/tháng/năm
@@ -31,4 +31,17 @@ function formatMoney(money) {
         return money.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
     }
     return "";
+}
+
+
+function showSuccessMessenger() {
+    var html = `<div class="box-toast-msg">Thành công</div>`;
+    if ($('body').find('.box-toast-msg').length == 0) {
+        $('body').append(html);
+    }
+    $('.box-toast-msg').toggle();
+    setTimeout(function () {
+        $('.box-toast-msg').toggle();
+    },2000)
+
 }

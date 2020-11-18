@@ -97,3 +97,55 @@ input[required]::after {
 input.border-red{
     border: 1px solid #FF4747;
 }
+.loading{
+    display: none;
+}
+.loading-modal{
+    position: fixed;
+    top: 0;
+    left:0;
+    bottom:0;
+    right: 0;
+    background-color: #000;
+    opacity: .5;
+    z-index:999;
+}
+.loading-icon {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    top: calc(50% - 15px);
+    left: calc(50% - 15px);
+    border: 2px solid #4cff00;
+    border-bottom: none;
+    animation: spin 2s linear infinite;
+}
+
+
+.row-selected {
+    background-color: #01916026 !important;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.box-toast-msg {
+    display: none;
+    position: fixed;
+    background-color: #ffffff;
+    padding: 24px;
+    color: #019160;
+    font-size: 20px;
+    bottom: 24px;
+    text-align: center;
+    right: 24px;
+    border: 1px solid #ccc;
+}
