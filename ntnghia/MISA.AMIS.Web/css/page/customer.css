@@ -188,10 +188,14 @@ p, h2 {
             padding: 0 10px;
         }
 
-        .content-table .table-item .item-number{
-            width: 30px;
-            padding-left: 5px;
-        }
+.row-selected {
+    background-color: #2fbe8e61;
+}
+
+.content-table .table-item .item-number {
+    width: 30px;
+    padding-left: 5px;
+}
 
         .content-table .table-item .table-item-salary {
             text-align: right;

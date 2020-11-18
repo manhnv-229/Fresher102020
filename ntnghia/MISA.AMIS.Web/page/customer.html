@@ -178,26 +178,23 @@
 
                 <div class="input-right">
                     <div class="input-form">
-                        <label class="input-label" for="Fullname">Họ và tên(*)</label>
-                        <input class="input-required" id="Fullname" />
+                        <label class="input-label" for="FullName">Họ và tên(*)</label>
+                        <input class="input-required" id="FullName" />
                     </div>
                     <div class="input-form">
                         <label class="input-label" for="CustomerGroupName">Nhóm khách hàng</label>
-                        <select class="customer-group" id="CustomerGroupName">
-                            <option>Khách VIP</option>
-                            <option>Khách thường</option>
-                            <option>Khách vãng lai</option>
+                        <select class="cbx-customer-group" id="CustomerGroupId">
                         </select>
                     </div>
                     <div class="input-form">
                         <p>Giới tính</p>
                         <div class="select-gender">
                             <label class="input-label" for="Male">
-                                <input type="radio" class="customer-gender" name="gender"/>
+                                <input type="radio" class="customer-gender" name="gender" id="Gender" value="1" checked/>
                                 Nam
                             </label>
                             <label class="input-label" for="Female">
-                                <input type="radio" class="customer-gender" name="gender"/>
+                                <input type="radio" class="customer-gender" name="gender" id="Gender" value="Nữ"/>
                                 Nữ
                             </label>
                         </div>

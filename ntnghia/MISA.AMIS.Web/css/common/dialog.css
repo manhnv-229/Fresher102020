@@ -78,7 +78,7 @@
         margin: 10px 0;
     }
 
-.dialog-modal .dialog-content input, .customer-group {
+.dialog-modal .dialog-content input, .cbx-customer-group {
     border-radius: 5px;
     border: 1px solid #e5e5e5;
     margin-top: 5px;
@@ -88,11 +88,11 @@
     padding: 10px;
 }
 
-.dialog-modal .dialog-content .customer-group {
+.dialog-modal .dialog-content .cbx-customer-group {
     width: 222px;
 }
 
-.dialog-modal .dialog-content input:focus {
+.dialog-modal .dialog-content input:focus .cbx-customer-group:hover{
     border: 1px solid #019160;
 }
 
