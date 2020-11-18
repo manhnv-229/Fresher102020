@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <title></title>
     <link href="/lib/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" />
+    <link href="/css/common/common.css" rel="stylesheet" />
     <link href="/css/common/header.css" rel="stylesheet" />
     <link href="/css/common/main.css" rel="stylesheet" />
     <link href="/css/common/navbar.css" rel="stylesheet" />
@@ -84,7 +85,7 @@
 
             </div>
             <div class="filter-right">
-                <button class="m-second-button m-btn-refresh">
+                <button id="btnRefresh" class="m-second-button m-btn-refresh">
                 </button>
             </div>
         </div>
@@ -94,7 +95,7 @@
                     <tr>
                         <th fieldName="CustomerCode">Mã khách hàng</th>
                         <th fieldName="FullName">Họ và tên</th>
-                        <th fieldName="">Giới tính</th>
+                        <th fieldName="GenderName">Giới tính</th>
                         <th fieldName="DateOfBirth" formatType="ddmmyy">Ngày sinh</th>
                         <th fieldName="PhoneNumber">Số điện thoại</th>
                         <th fieldName="Email">Email</th>
@@ -132,7 +133,7 @@
                         <div class="input2">
                             <div class="input2-line1">
                                 <div clas="m-label">Mã thẻ thành viên</div>
-                                <div class="m-control"><input id="txtCustomerCardCode" required class="input-required" type="text" /></div>
+                                <div class="m-control"><input id="txtMemberCardCode" required class="input-required" type="text" /></div>
                             </div>
                             <div class="input2-line2">
                                 <div clas="m-label">Nhóm khách hàng</div>
@@ -184,12 +185,12 @@
                 <div class="m-body-bottom3">
                     <div class="input6" style="width:100%">
                         <div class="m-label">Địa chỉ</div>
-                        <div class="m-control"><input style="width:92%" id="txtAddress" type="tel" /></div>
+                        <div class="m-control"><input style="width:95%" id="txtAddress" type="tel" /></div>
                     </div>
                 </div>
             </div>
             <div class="dialog-footer">
-                <button id="btnCancel" class="m-btn m-btn-default m-btn-cancel">Hủy</button>
+                <button id="btnClose" class="m-btn m-btn-default m-btn-cancel">Hủy</button>
                 <button id="btnSave" class="m-btn m-btn-default"><i class="far fa-save"></i><span class="btn-text">Lưu</span></button>
             </div>
         </div>

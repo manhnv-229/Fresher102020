@@ -18,12 +18,14 @@
         display: flex;
         
     }
-.input1, .input2, .input3, .m-body-bottom1, .m-body-bottom2, .m-body-bottom3 {
+.input1, .input2, .input3, .m-body-bottom1, 
+.m-body-bottom2, .m-body-bottom3 {
     display: flex;
     margin-top: 16px;
 }
 
-    .input1 .input1-line1, .input2 .input2-line1, .input3 .input3-line1, .m-input4-left, .m-input5-left {
+    .input1 .input1-line1, .input2 .input2-line1, 
+    .input3 .input3-line1, .m-input4-left, .m-input5-left {
         margin-right: 12px;
     }
 .input3-line2-radio {

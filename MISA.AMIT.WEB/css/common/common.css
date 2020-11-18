@@ -1,0 +1,14 @@
+﻿input[required]::after {
+    display: block;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    background-color: #FF4747;
+    transform: rotate(45deg);
+    left: 50%;
+    content: "Thông tin";
+}
+
+input.border-red {
+    border: 1px solid #FF4747;
+}

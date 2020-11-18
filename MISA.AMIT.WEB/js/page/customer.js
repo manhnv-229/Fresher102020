@@ -6,7 +6,7 @@
         resizale: true,
         modal: true,
         position: ({ my: "center", at: "center", of: "window" }),
-        minWidth: 700,
+        minWidth: 650,
 
     });
 })
