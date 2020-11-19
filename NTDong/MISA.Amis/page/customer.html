@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <title>MISA AMIS</title>    
@@ -98,7 +98,7 @@
         </div>
         <div class="filter-bar">
             <div class="filter-left">
-                <input class="icon-search input-search" style="width: 200px" type="text" placeholder="Tìm kiếm theo mã , tên Khách hàng" />
+                <input class="icon-search input-search" style="width: 200px" type="text" placeholder="Tìm kiếm theo mã , tên khách hàng" />
                 <!-- <select>
                     <option>Phòng đào tạo</option>
                     <option>Phòng Nhân sự</option>
@@ -182,17 +182,20 @@
                 <div class="row-col-2">
                     <div>Họ và tên </div>
                     <input fieldName="FullName" class="input-required" id="txtFullName" type="text" required name="">
-                    <div>Nhóm khách hàng</div>
-                    <input id="cbxCustomerGroup" type="text" name="">
-                    <!-- <select id="cbxCustomerGroup">
-                        <option value="19165ed7-212e-21c4-0428-030d4265475f">Khách VIP</option>
-                        <option value="7a0b757e-41eb-4df6-c6f8-494a84b910f4">khách thường</option>
-                        <option value="3631011e-4559-4ad8-b0ad-cb989f2177da">Khách vãn lai</option>
-                    </select> -->
+                    <div class="m-flex-1 mg-left-10px">
+                        <div class="m-label">Nhóm khách hàng</div>
+                        <select id="cbxCustomerGroup" fieldName="CustomerGroupName" fieldValue="CustomerGroupId" api="/api/customergroups" class="select-group-Customer">
+                        <!--<option value="19165ed7-212e-21c4-0428-030d4265475f">Khách VIP</option>
+                        <option value="7a0b757e-41eb-4df6-c6f8-494a84b910f4">Khách thường</option>
+                        <option value="3631011e-4559-4ad8-b0ad-cb989f2177da">Khách vãng lai</option>-->
+                        </select>
+                        <combobox id="cbxCustomerGroup" fieldName ="" valueName="" api=""></combobox>
+                    </div>
                     <div>Giới tính</div>
                     <div id="rdGender" class="user-checkbox">
-                            <input fieldName="Gender" type="radio" value="1" id="male" checked><label style="padding-top: 7px; margin-right: 5px;">Nam</label>
-                            <input fieldName="Gender" type="radio" value="0" id="female"><label style="padding-top: 7px;">Nữ</label>
+                            <input id="rdMale" fieldName="Gender" type="radio" value="1" name="gender" checked><label for="rdMale" style="padding-top: 7px; margin-right: 5px;">Nam</label>
+                            <input id="rdFemale" fieldName="Gender" type="radio" value="0" name="gender"><label for="rdFemale" style="padding-top: 7px;">Nữ</label>
+                            <input id="rdOther" fieldName="Gender" type="radio" value="2" name="gender"><label for="rdOther" style="padding-top: 7px;">Khác</label>
                     </div>
                 </div>
             </div>
@@ -224,7 +227,7 @@
        <div class="d-dialog dialog-title" title="Xóa">
             <div class="d-content">
                 <div class="d-content-image"></div> 
-                <div class="d-content-text">Bạn có chắc muốn xóa khách hàng không ?</div>
+                <div class="d-content-text">Bạn có chắc chắn muốn xóa khách hàng này không ?</div>
             </div>
             <div class="d-button">
                 <button id="d-delete" class="d-button-delete">Xóa</button>

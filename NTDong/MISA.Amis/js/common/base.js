@@ -22,10 +22,6 @@
             me.loadData();
         })
 
-        // $('#btnRefresh').click(function () {
-        //     me.loadData();
-        // })
-
         // Ẩn form chi tiết khi nhấn hủy:
         $('#btnCancel').click(function () {
             // Hiển thị dialog thông tin chi tiết:
@@ -35,11 +31,9 @@
         // Xử lý dữ liệu button [Lưu] trên form chi tiết:
         $('#btnSave').click(me.btnSaveOnClick.bind(me));
 
-        // $('table tbody').click(function(){
-        //     $(this).find('td').addClass('row-selected');
-        // })
         // Hiển thị thông tin chi tiết khi nhấn đúp chuột chọn 1 bản ghi trên danh sách dữ liệu:
         $('table tbody').on('dblclick', 'tr', function () {
+            //load form
             // load dữ liệu cho các combobox:
             var selects = $('select[fieldName]');
             selects.empty();
@@ -74,7 +68,6 @@
             // Lấy khóa chính của bản ghi:
             var recordId = $(this).data('recordId');
             me.recordId = recordId;
-            console.log(recordId);
             // Gọi service lấy thông tin chi tiết qua Id:
             $.ajax({
                 url: me.host + me.apiRouter + `/${recordId}`,
@@ -90,12 +83,11 @@
                 $.each(inputs, function (index, input) {
                     var propertyName = $(this).attr('fieldName');
                     var value = res[propertyName];
-
-                    // // Đối với dropdowlist (select option):
-                    // if (this.tagName == "SELECT") {
-                    //     var propValueName = $(this).attr('fieldValue');
-                    //     value = res[propValueName];
-                    // }
+                    // Đối với dropdowlist (select option):
+                    if (this.tagName == "SELECT") {
+                        var propValueName = $(this).attr('fieldValue');
+                        value = res[propValueName];
+                    }
                     // Đối với các input là radio:
                     if ($(this).attr('type') == "radio") {
                         var inputValue = this.value;
@@ -108,10 +100,15 @@
                     } else {
                         $(this).val(value);
                     }
+                    // binding dữ liệu kiểu date 
+                    if ($(this).attr('type') == "date") {
+                            var date = formatDateForm(value);
+                            $(this).val(date);
+                    }
                 })
             }).fail(function (res) {
-
-            })
+                console.log(res);
+            })  
 
 
             dialogDetail.dialog('open');
@@ -179,7 +176,6 @@
         // Lấy thông tin bản ghi đang chọn
         var recordId = me.recordId;
         console.log(recordId);
-        debugger;
         $.ajax({
             url: me.host + me.apiRouter + `/${recordId}`,
             method: "DELETE",
@@ -187,7 +183,7 @@
         }).done(function(res){
             //Thông báo xóa thành công
             alert('Đã xóa thành công !');
-            //Đóng form dialog
+            //Đóng form dialogDelete
             dialogDelete.dialog('close');
             //đóng form dialogdetail
             dialogDetail.dialog('close');
@@ -251,12 +247,6 @@
         }
     }
 
-    // if (me.FormMode == 'Add') {
-    //     $('#btnDelete-dialog').hide()
-    // }
-    // else{
-    //     $('#btnDelete-dialog').show();
-    // }
     /** ------------------------
      * Hàm xử lý khi nhấn button thêm mới
      * CreatedBy: NTDong(18/11/2020)
@@ -271,7 +261,7 @@
             dialogDetail.dialog('open');
             $('input').val(null);
             // load dữ liệu cho các combobox:
-            var select = $('select#cbxCustomerGroup');
+            var select = $('#cbxCustomerGroup');
             select.empty();
             // lấy dữ liệu nhóm khách hàng:
             $('.loading').show();
@@ -329,13 +319,12 @@
             } else {
                 entity[propertyName] = value;
             }
-
             if (this.tagName == "SELECT") {
                 var propertyName = $(this).attr('fieldValue');
                 entity[propertyName] = value;
             }
         })
-        entity["CustomerGroupId"] = "19165ed7-212e-21c4-0428-030d4265475f";
+        
         var method = "POST";
         if (me.FormMode == 'Edit') {
             method = "PUT";
@@ -353,9 +342,7 @@
             alert('Đã thêm thành công !!! ');
             dialogDetail.dialog('close');
             me.loadData();
-            // debugger
         }).fail(function (res) {
-            // debugger
         })
     }
 }

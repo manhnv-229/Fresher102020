@@ -117,7 +117,7 @@
         display: flex;
         width: 100%;
         height: 60px;
-        background-color:lightgrey;
+        background-color:#E5E5E5;
     }
     .button-add{
         border: none;
@@ -143,7 +143,7 @@
         height: 40px;
         width: 100px;
         margin-top: 10px;
-        background-color: lightgrey;
+        background-color:#E5E5E5;
         cursor: pointer;
         margin-left: 16px;
 
@@ -176,7 +176,7 @@
         width: 100px;
     }
     .button-cancel:hover{
-        background-color: grey;
+        background-color: #BBBBBB;
     }
     .button-add:hover{
         background-color: #2FBE8E;
@@ -207,13 +207,12 @@ input.border-red{
         margin: 24px 
     }
     .d-content-image{
-        width: 50px;
-        height: 30px;
+        width: 20px;
+        height: 21px;
         background-image: url('../../content/img/warnning.svg'); ;
-        background-size: 20px;
+        background-size: 18px;
         background-repeat: no-repeat;
         border-radius: 50%;
-        background-position: center;
         background-color: lightgrey;
     }
     .d-content-text{
@@ -262,3 +261,39 @@ input.border-red{
     .d-button-cancle:hover{
         background-color: #BBBBBB;
     }
+.select-group-Customer{
+    height: 40px;
+    width: 218px;
+    margin-top: 5px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    border: 1px solid #bbbbbb;
+
+}
+
+.user-checkbox input[type='radio']:after {
+    width: 18px;
+    height: 18px;
+    border-radius: 18px;
+    position: relative;
+    /*background-color: white;*/
+    background-size: contain;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    /*border: 1px solid #BBBBBB;*/
+}
+
+.user-checkbox input[type='radio']:checked:after {
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    position: relative;
+    background-image: url('/content/icon/radio.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+}
