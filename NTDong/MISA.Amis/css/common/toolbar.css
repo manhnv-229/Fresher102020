@@ -1,0 +1,20 @@
+.filter-bar{
+	width: 100%;
+	display: flex;
+	align-items: center;
+	height: 40px;
+	margin-bottom: 10px;
+}
+.filter-bar .filter-left{
+	padding-left: 16px;
+	padding-right: 16px;
+	outline: none;
+}
+.filter-bar .filter-right{
+	position: absolute;
+	right: 16px;
+}
+.input-search{
+	outline: none;
+	border: none;
+}

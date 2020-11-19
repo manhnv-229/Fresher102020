@@ -1,0 +1,17 @@
+.icon-add{
+	outline: none;
+	width: 16px;
+	height: 16px;
+	background-image: url('../../content/img/adduser.svg');
+	background-size: contain;
+}
+.icon-hrm{
+	width: 16px;
+	height: 16px;
+	background-image: url('../../content/img/hrm-icon.jpg');
+}
+.icon-search{
+	background-image: url('../../content/img/loupe.png');
+	background-repeat: no-repeat;
+	background-position: 16px center;
+}

@@ -1,0 +1,9 @@
+.text-align-right{
+	text-align: right;
+}
+.text-align-center{
+	text-align: center;
+}
+.row-selected{
+	background-color: #00ff99 !important;
+}
