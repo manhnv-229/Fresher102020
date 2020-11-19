@@ -9,16 +9,15 @@ class EmployeeJs extends Base {
         //  this.initEvent();
     }
 
-
+    setApiRouter() {
+        this.apiRouter = '/api/employees';
+    }
     /**
      * set url lấy dữ liệu
      * CreateBy: HNANH (12/11/2020)
      * */
 
-    setDataUrl() {
-        this.getDataUrl = "http://api.manhnv.net/api/employees";
-    }
-
+    
 
     //initEvent() {
     //    //debugger;
