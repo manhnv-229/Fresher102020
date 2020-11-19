@@ -18,6 +18,19 @@ function formatDateOfBirth(date) {
         return `${day}/${month}/${year}`;
     }
 }
+function formatDateOfBirthyyyyMMdd(date) {
+    date = new Date(date);
+    if (Number.isNaN(date.getTime())) {
+        return "";
+    } else {
+        let day = date.getDate()
+        day = day < 10 ? ("0" + day) : day;
+        let month = date.getMonth() + 1;
+        month = month < 10 ? ("0" + month) : month;
+        let year = date.getFullYear();
+        return `${year}-${month}-${day}`;
+    }
+}
 /**
  * Định dạng tiền (dạng 2500 => 2.500)
  * @param {any} money dữ liệu số tiền

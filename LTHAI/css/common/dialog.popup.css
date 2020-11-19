@@ -1,10 +1,9 @@
-﻿/**
-    Css cho phần khung dialog
-*/
-.d-dialog-detail{
+﻿/*Css cho phần khung dialog*/
+.d-dialog-detail {
     display: none;
 }
-.d-dialog-detail .d-dialog-modal {
+/* css chung cho css pop-up và dialog*/
+.d-dialog-modal, .pop-up-modal {
     position: fixed;
     background-color: black;
     opacity: 0.4;
@@ -15,47 +14,45 @@
     left: 0;
 }
 
-.d-dialog-detail .d-dialog-content {
+.d-dialog-content, .pop-up-content {
     position: absolute;
     width: 800px;
-    height: 580px;
+    height: 600px;
     z-index: 50;
-    top: calc(50% - 290px);
+    top: calc(50% - 300px);
     left: calc(50% - 400px);
     background-color: #ffffff;
     border-radius: 5px;
 }
 
-.d-dialog-content .d-dialog-name {
-    font-size: 24px;
-    margin: 24px;
-    text-transform: uppercase;
-}
-
-.d-dialog-content .d-dialog-x {
-    position: absolute;
-    right: 0;
-    top: 0;
-    background-image: url('/content/icon/x.svg');
-    width: 40px;
-    height: 40px;
-    border-radius: 0 5px 0 0;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    opacity: .7;
-    background-color: #ffffff;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 20px;
-}
-
-    .d-dialog-content .d-dialog-x:hover {
-        background-color: #ccc;
+    .d-dialog-content .d-dialog-name {
+        font-size: 24px;
+        margin: 24px;
+        text-transform: uppercase;
     }
-/*
-    Css cho phần hình đại diện
-*/
+
+    .d-dialog-content .d-dialog-x {
+        position: absolute;
+        right: 0;
+        top: 0;
+        background-image: url('/content/icon/x.svg');
+        width: 40px;
+        height: 40px;
+        border-radius: 0 5px 0 0;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        opacity: .7;
+        background-color: #ffffff;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 20px;
+    }
+
+        .d-dialog-content .d-dialog-x:hover {
+            background-color: #ccc;
+        }
+/*Css cho phần hình đại diện*/
 .d-img .d-show-img {
     width: 180px;
     height: 180px;
@@ -70,9 +67,7 @@
     text-align: center;
     width: 200px;
 }
-/*
-    Css cho phần từ input email trở lên
-*/
+/*Css cho phần từ input email trở lên*/
 .d-dialog-content .top-dialog {
     display: flex;
     margin: 0 24px 0 16px;
@@ -106,9 +101,7 @@
         align-self: center;
         margin-right: 10px;
     }
-/*
-Css cho từ email đổ xuống
-*/
+/*Css cho từ email đổ xuống*/
 .d-bottom-dialog {
     margin: 0 24px 0 16px;
 }
@@ -120,12 +113,34 @@ Css cho từ email đổ xuống
 .d-address {
     width: 780px;
 }
-/*
-Css cho phần button
-*/
+/*Css cho phần button*/
 .d-group-button {
     height: 60px;
     display: flex;
     justify-content: flex-end;
     padding-right: 24px;
+}
+/*css cho riêng pop-up*/
+.pop-up-content {
+    width: 400px;
+    height: 200px;
+    top: calc(50% - 200px);
+    left: calc(50% - 200px);
+}
+
+.pop-up-title {
+    font-size: 15px;
+    margin: 24px;
+    font-weight: bold;
+}
+
+.pop-up-body.d-same-row {
+    margin-left: 24px;
+    font-size: 13px;
+    margin-bottom: 24px;
+    margin-right: 24px;
+}
+
+.pop-up-button.d-same-row {
+    justify-content: flex-end;
 }
