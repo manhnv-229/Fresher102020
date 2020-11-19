@@ -145,7 +145,7 @@
                     <tr>
                         <th fieldName="CustomerCode">Mã khách hàng</th>
                         <th fieldName="FullName">Họ và tên</th>
-                        <th fieldName="Gender">Giới tính</th>
+                        <th fieldName="Gender" formatType="gender">Giới tính</th>
                         <th fieldName="DateOfBirth" formatType="ddmmyyyy">Ngày sinh</th>
                         <th fieldName="PhoneNumber">Số điện thoại</th>
                         <th fieldName="Email">Email</th>
@@ -235,7 +235,7 @@
                         </div>
                         <div class="item-short">
                             <span class="title-input">Nhóm khách hàng</span>
-                            <select id="cbxCustomerGroup" fieldName="CustomerGroupName" fieldValue="CustomerGroupId" api="api/customergroups" class="m-select">
+                            <select id="cbxCustomerGroup" fieldName="CustomerGroupId" fieldValue="CustomerGroupId" api="api/customergroups" class="m-select">
                                 <!--<option value="19165ed7-212e-21c4-0428-030d4265475f">
                                     Khách VIP
                                 </option>
@@ -256,8 +256,8 @@
                         <div class="item-short">
                             <span class="title-input">Giới tính</span>
                             <div class="m-input-checkbox">
-                                <input type="radio" class="m-radio" fieldName="Gender" name="gendername" value="1" checked /> Nam
-                                <input type="radio" class="m-radio" fieldName="Gender" name="gendername" value="0" /> Nữ
+                                <input type="radio" class="m-radio" fieldName="Gender" name="gender" value="10" genderId="1" checked /> Nam
+                                <input type="radio" class="m-radio" fieldName="Gender" name="gender" value="11"genderId="0" /> Nữ
                             </div>
                         </div>
                     </div>
@@ -320,7 +320,7 @@
         <div class="icon-messenger">
             <i class="fas fa-check-circle"></i>
         </div>
-        <div class="content-messenger">
+        <div class="content-messenger" id="contentMessenger">
             Đã thêm khách hàng thành công
         </div>
         <button class="m-btn m-btn-close-messenger">
