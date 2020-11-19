@@ -1,0 +1,29 @@
+﻿/*
+* Css cho button của dialog
+*/
+#d-btn-cancel, #d-btn-save {
+    width: 100px;
+    height: 40px;
+    margin-left: 16px;
+    margin-top: 10px;
+    background-color: #01B075;
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid #bbbbbb;
+    font-size: 13px;
+    color: #ffffff;
+}
+
+.d-same-row #d-btn-cancel {
+    color: #000000;
+    background-color: #ffffff;
+    border: none;
+}
+
+.d-same-row #d-btn-cancel:hover {
+    background-color: #E9EBEE;
+}
+
+#d-btn-save:hover {
+    background-color: #2FBE8E;
+}
