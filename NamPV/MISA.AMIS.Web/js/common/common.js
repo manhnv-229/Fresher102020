@@ -50,60 +50,21 @@ function formatDateReg(date) {
 }
 
 // Khai báo dialog xác nhận xoá bản ghi
-dialogConfirm = $(`.confirm-delete-dialog`).dialog({
+dialogConfirm = $(`.popup-alert`).dialog({
     title: `Xác nhận xoá`,
     autoOpen: false,
-    modal: true
+    modal: true,
+    open: function () {
+        $('.FullName').text($(`.row-selected td[id="FullName"]`).html());
+        $(`.CustomerCode`).text($(`.row-selected td[id="CustomerCode"]`).html());
+    }
 })
 
-// Khái báo popup thông báo thành công
-popupSuccess = $(`#popup-success`).dialog({
-    title: `Thành công`,
-    position: {
-        my: "left top", at: "left bottom"
-    },
-    autoOpen: false,
-    beforeClose: function () {
-        return closeable;
-    },
-    open: function () {
-        var counter = 5;
-        var intID = setInterval(function () {
-            counter--;
-            $('.delayTime').text(counter);
-            if (counter == 0) {
-                clearInterval(intID)
-                closeable = true;
-                $('#popup-success').dialog("close")
-            }
-        }, 1000)
-    },
-    show: { effect: "blind", duration: 800 },
-    hide: { effect: "blind", duration: 800 },
-})
-
-// Khái báo popup thoogn báo thất bại
-popupFail = $(`#popup-fail`).dialog({
-    title: `Thất bại`,
-    position: {
-        my: "left top", at: "left bottom"
-    },
-    autoOpen: false,
-    beforeClose: function () {
-        return closeable;
-    },
-    open: function () {
-        var counter = 5;
-        var intID = setInterval(function () {
-            counter--;
-            $('.delayTime').text(counter);
-            if (counter == 0) {
-                clearInterval(intID)
-                closeable = true;
-                $('#popup-fail').dialog("close")
-            }
-        }, 1000)
-    },
-    show: { effect: "blind", duration: 800 },
-    hide: { effect: "blind", duration: 800 },
-})
+/**
+ * Hiển thị popup thông báo
+ * @param {any} msg
+ * CreatedBy: NamPV (19/11/2020)
+ */
+function showPopupNotification(msg) {
+    $(`#popup-notification`).text(msg).show(1000).delay(2000).hide(1000);
+}

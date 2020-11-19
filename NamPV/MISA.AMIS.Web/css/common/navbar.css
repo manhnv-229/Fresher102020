@@ -71,7 +71,7 @@
         background-size: contain;
     }
 
-    /* Danh sách các icon*/
+/* Danh sách các icon*/
 .navbar-item .document-online-icon {
     background-image: url('/content/icon/document-online.png');
 }

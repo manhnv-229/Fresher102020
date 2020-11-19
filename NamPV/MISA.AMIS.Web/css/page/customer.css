@@ -1,25 +1,25 @@
 /*Tiêu đề nội dung page*/
 
-.employee-content .header-content {
+.page-content .header-content {
     display: flex;
     padding: 16px 16px;
 }
 
-    .employee-content .header-content h1 {
+    .page-content .header-content h1 {
         font-family: GoogleSans-Bold;
         font-size: 24px;
         flex: auto;
     }
 
-    .employee-content .header-content .content-feature {
+    .page-content .header-content .content-feature {
         display: flex;
     }
 
-        .employee-content .header-content .content-feature .btn-sync {
+        .page-content .header-content .content-feature .btn-sync {
             background-image: url('/content/icon/refresh.png');
         }
 
-        .employee-content .header-content .content-feature .content-add-box {
+        .page-content .header-content .content-feature .content-add-box {
             display: flex;
             margin: auto 0px auto 16px;
             background-color: #019160;
@@ -27,7 +27,7 @@
             color: #ffffff;
         }
 
-            .employee-content .header-content .content-feature .content-add-box .btn-add {
+            .page-content .header-content .content-feature .content-add-box .btn-add {
                 background-image: url('/content/icon/add.png');
                 border: none;
             }
@@ -35,126 +35,49 @@
 
 /*Thanh công cụ tìm kiếm/lọc*/
 
-.employee-content .filter-bar {
+.page-content .filter-bar {
     display: flex;
     padding: 0px 16px;
 }
 
-    .employee-content .filter-bar .filter-left {
+    .page-content .filter-bar .filter-left {
         display: flex;
         flex: auto;
     }
 
-        .employee-content .filter-bar .filter-left .search {
+        .page-content .filter-bar .filter-left .search {
             background-image: url('/content/icon/search.png');
             padding-left: 40px;
         }
 
-        .employee-content .filter-bar .filter-left select {
+        .page-content .filter-bar .filter-left select {
             width: 200px;
             margin: auto 16px;
         }
 
-            .employee-content .filter-bar .filter-left select:hover {
+            .page-content .filter-bar .filter-left select:hover {
                 cursor: pointer;
             }
 
-    .employee-content .filter-bar .filter-right {
+    .page-content .filter-bar .filter-right {
         display: flex;
     }
 
-        .employee-content .filter-bar .filter-right .download-btn {
+        .page-content .filter-bar .filter-right .download-btn {
             background-image: url("/content/icon/download.png");
             margin-right: 16px;
         }
 
-        .employee-content .filter-bar .filter-right .btn-sync {
+        .page-content .filter-bar .filter-right .btn-sync {
             background-image: url('/content/icon/refresh.png');
         }
 
 
 /*dialog thêm lao động*/
 
-#dialog {
+.customer-add {
     width: 700px;
     background-color: #fff;
     border-radius: 10px;
     margin: auto;
-}
-
-    #dialog .dialog-body {
-        padding: 0px 24px;
-    }
-
-        #dialog .dialog-body .m-radio-group {
-            height: 40px;
-        }
-
-            #dialog .dialog-body .m-radio-group input, #dialog .dialog-body .m-radio-group label {
-                margin: auto 4px;
-            }
-
-        #dialog .dialog-body .customer-avatar {
-            height: 200px;
-            background-image: url('/content/icon/avatar.png');
-            background-repeat: no-repeat;
-            background-size: contain;
-        }
-
-    #dialog .dialog-footer {
-        height: 60px;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        float: right;
-        background-color: #bbb;
-        border-radius: 0px 0px 4px 4px;
-    }
-
-        #dialog .dialog-footer .group-footer-button {
-            display: flex;
-            position: absolute;
-            right: 24px;
-        }
-
-        #dialog .dialog-footer .btn-cancel {
-            margin: auto 16px;
-        }
-
-        #dialog .dialog-footer .btn-delete {
-            background-color: #f00;
-        }
-
-        #dialog .dialog-footer .btn-save {
-            background-image: url('/content/icon/save.png');
-        }
-
-    #dialog .m-radio {
-        height: 20px;
-        width: 20px;
-    }
-
-    #dialog .col {
-        padding-right: 16px;
-    }
-
-    #dialog input {
-        margin-bottom: 16px;
-        width: calc(100% - 19px);
-    }
-
-    #dialog select {
-        margin-bottom: 16px;
-        width: 100%;
-    }
-
-    #dialog label {
-        margin-bottom: 4px;
-    }
-
-/* Dialog xác nhận xoá*/
-.confirm-delete-dialog {
-    display: flex;
-    justify-content: space-between;
-    margin: auto 24px;
 }
