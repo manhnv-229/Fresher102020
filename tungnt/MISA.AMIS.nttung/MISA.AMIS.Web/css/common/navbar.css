@@ -3,7 +3,6 @@
     width: 220px;
     height: calc(100hv - 60px);
     background-color: #ffffff;
-    border-right: 1px solid #e5e5e5;
 }
     .navbar .navbar-content{
         width:100%;
@@ -19,11 +18,20 @@
         background-position:left;
         cursor:pointer;
     }
-    .navbar .navbar-content .nav-item:hover{
-        background-color:#e5e5e5;
-        color:#000000;
-        cursor:pointer;
+    .nav-item a{
+        text-decoration:none;
+        color: #000;
     }
+        .nav-item:focus {
+            background-color: #01B075;
+            color: #000000;
+            cursor: pointer;
+        }
+        .nav-item:hover {
+            background-color: #e5e5e5;
+            cursor: pointer;
+            color: #000000;
+        }
 .nav-item .nav-item-icon {
     width: 20px;
     height: 20px;
@@ -50,5 +58,5 @@
     background-image: url('../../content/image/navbar-item/woman-man-7.png');
 }
 .icon-setting {
-    background-image: url('../../content/image/navbar-item/plus-simple-7.png');
+    background-image: url('../../content/image/navbar-item/gear-7.png');
 }
