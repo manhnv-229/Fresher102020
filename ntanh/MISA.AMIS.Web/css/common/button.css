@@ -1,4 +1,7 @@
-﻿.m-btn {
+﻿/*
+    Button default
+*/
+.m-btn {
     display: flex;
     align-items: center;
     background-color: #019160;
@@ -13,11 +16,14 @@
     border: none;
     cursor: pointer;
 }
-    
-    .m-btn:hover{
+
+    .m-btn:hover {
         background-color: #2FBE8E;
     }
 
+/* 
+    Button khu vực content
+*/
     .m-btn .m-icon-add {
         background-position: center;
     }
@@ -43,7 +49,7 @@
     cursor: pointer;
 }
 
-    .m-second-button:hover{
+    .m-second-button:hover {
         background-color: #e9ebee;
     }
 
@@ -54,4 +60,81 @@
     width: 40px;
     padding: 0;
 }
-     
+
+button#btnDelete {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    padding: 0;
+    margin-right: 10px;
+    background-color: #F65454;
+    display: none;
+}
+/*
+    Button khu vực footer
+*/
+
+.m-btn.m-btn-footer {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    margin: 5px;
+    background-color: #E9EBEE;
+    color: #000000;
+}
+
+
+    .m-btn.m-btn-footer:hover {
+        background-color: #2FBE8E;
+    }
+
+    .m-btn.m-btn-footer.active {
+        background-color: #01B075;
+        color: #454545;
+    }
+
+/*
+    Button khu vực dialog, popup
+*/
+
+.m-btn.m-btn-cannel {
+    margin: 0 10px;
+    background: none;
+    color: #000000;
+}
+
+    .m-btn.m-btn-cannel:hover {
+        background-color: #bbbbbb;
+    }
+
+.m-btn.m-btn-save {
+    background-image: url('content/icon/add.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 10px;
+}
+
+button.m-btn.m-btn-delete {
+    width: 80px;
+    background-color: #F65454;
+}
+
+/*.m-btn-close {
+    margin-right: 16px;
+    background-color: #ffffff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+*/
+
+
+
+
+
+
+
+

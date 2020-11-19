@@ -1,60 +1,191 @@
-﻿.dialog {
-    width: 500px;
-    height: 500px;
-    border: 1px solid #bbbbbb;
-    border-radius: 4px;
-    background-color: #dddddd;
+﻿.m-dialog {
+    width: 628px;
+    height: 600px;
+    background-color: #ffffff;
     position: absolute;
-    top: 50%;
-    margin-top: -250px;
-    left: 50%;
-    margin-left: -250px;
+    top: calc(50% - 300px);
+    left: calc(50% - 314px);
+    overflow: hidden;
+    border-radius: 4px;
 }
-
+/*
+    CSS Dialog header
+*/
 .dialog-header {
     display: flex;
     justify-content: space-between;
-    height: 30px;
-    background-color: #0075FF;
+    height: 40px;
     align-items: center;
-    color: #ffffff;
 }
 
-.dialog-title {
-    margin-left: 10px;
-}
+    .dialog-header .title-header {
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-left: 24px;
+    }
 
-.dialog-close {
-    align-self: flex-start;
-    border: 1px solid;
-    width: 16px;
-    height: 16px;
-}
-
-.infor-employee {
-    border-bottom: 1px solid #dddddd;
-    height: 20px;
-}
-
+/*
+    CSS Dialog content
+*/
 .dialog-content {
+    padding: 24px;
+    height: 452px;
+}
+
+    .dialog-content .dialog-content_top {
+        display: flex;
+    }
+
+    .dialog-content .dialog-content_center {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .dialog-content .dialog-footer {
+        display: flex;
+        justify-content: flex-end;
+        height: 60px;
+        background-color: #b4b43d;
+        align-items: center;
+        padding-right: 24px;
+    }
+
+/* 
+    CSS Content top left
+*/
+.change_avatar {
+    width: 150px;
+    height: 150px;
+    background-color: antiquewhite;
+}
+
+/*
+    CSS Item
+*/
+.item-line {
+    display: flex;
+}
+
+span.title-input {
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.item-short {
+    margin-bottom: 16px;
     display: flex;
     flex-direction: column;
+    width: 190px;
 }
+    .item-short.margin-right {
+        margin-right: 10px;
+    }
+/* 
+    CSS Content left
+*/
+.content-left {
+    width: 190px;
+}
+
+.item-short.multiply-2 {
+    width: calc(190px + 190px + 10px);
+}
+
+.multiply-2 {
+    width: 380px;
+}
+
+.multiply-3 {
+    width: calc(190px + 190px + 190px + 10px);
+}
+
+
+.m-input-checkbox {
+    height: 38px;
+    display: flex;
+    align-items: center;
+    width: 190px;
+}
+/* 
+    CSS Contentright
+*/
+
+.item-line.multiply-2 {
+    display: flex;
+}
+/*
+    CSS Dialog footer
+*/
 .dialog-footer {
-    height: 30px;
-    background-color: aliceblue;
+    display: flex;
+    justify-content: flex-end;
+    background-color: #E5E5E5;
+    height: 60px;
+    align-items: center;
+    padding-right: 24px;
 }
 
-.title-infor-employee {
-    border-bottom: 1px solid;
-    height: 20px;
+/*css định nghĩa lại thư viện jqueryUI*/
+
+.ui-draggable-handle {
+    background-color: #ffffff;
+    border: 0;
 }
 
-span.span-title {
-    display: inline-block;
-    width: 120px;
+div#ui-id-1 {
+    padding: 0;
 }
 
-.item-dialog {
-    margin-top: 10px;
+.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-draggable.ui-resizable {
+    padding: 0;
 }
+
+span#ui-id-1 {
+    font-size: 16px;
+    text-transform: uppercase;
+    padding: 24px 0 0 24px;
+}
+
+button.ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-close {
+    margin-right: 10px;
+    border: none;
+    background-color: #ffffff;
+    outline: none;
+    position: absolute;
+    top: 10px;
+    background-image: url(../../content/icon/x.svg);
+    background-position: center;
+    right: -10px;
+}
+
+    button.ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-close:hover {
+        background-color: #E9EBEE;
+        cursor: pointer;
+    }
+
+    .ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle {
+        padding: 0;
+    }
+
+div#dialog-form {
+    padding: 0;
+}
+
+.ui-resizable-handle.ui-resizable-n {
+    height: 0;
+}
+
+.ui-resizable-handle.ui-resizable-e {
+    width: 0;
+}
+
+.ui-resizable-handle.ui-resizable-s {
+    height: 0;
+}
+
+.ui-resizable-handle.ui-resizable-w {
+    width: 0;
+}
+
+

@@ -1,0 +1,52 @@
+﻿.messenger-complete {
+    height: 48px;
+    width: 255px;
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+    display: flex;
+    background-color: #ffffff;
+    -webkit-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
+    -moz-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
+    box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
+    border-radius: 4px;
+    overflow: hidden;
+    align-items: center;
+    padding: 0 16px 0 24px;
+    margin-bottom: -100px;
+}
+
+    .messenger-complete.animationHide {
+        animation-name: hideMessenger;
+        animation-duration: 3s;
+    }
+
+@keyframes hideMessenger {
+    from {margin-bottom: -100px}
+    to {margin-bottom: 0px}
+}
+
+.icon-messenger {
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+    color: #01B075;
+    margin-right: 10px;
+    line-height: 24px;
+}
+
+.content-messenger {
+    height: 24px;
+    line-height: 24px;
+    font-size: 13px;
+    width: 200px;
+}
+
+button.m-btn.m-btn-close-messenger {
+    background-color: #ffffff;
+    color: #01B075;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+}

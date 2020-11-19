@@ -1,0 +1,112 @@
+﻿.popup-warning {
+    width: 430px;
+    height: 205px;
+    background-color: #ffffff;
+    position: absolute;
+    top: calc(50% - 95px);
+    left: calc(50% - 215px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid #bbbbbb;
+}
+/*
+    CSS Header Popup
+*/
+.header-popup {
+    display: flex;
+    justify-content: space-between;
+    /* padding: 24px; */
+}
+
+.title-popup {
+    font-size: 15px;
+    color: #000000;
+    font-weight: bold;
+    padding: 24px;
+}
+
+
+button.m-btn.m-btn-close-popup {
+    width: 35px;
+    height: 35px;
+    background-color: #ffffff;
+    background-image: url('../../content/icon/x.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/*
+    CSS Content Popup
+*/
+
+.contet-popup {
+    padding: 24px;
+    display: flex;
+}
+
+.content-warning {
+    font-size: 13px;
+    color: #000000;
+    font-weight: normal;
+    width: 350px;
+}
+
+
+.icon-waring {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    background-color: #E9EBEE;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*
+    CSS Footer Popup
+*/
+.footer-popup {
+    display: flex;
+    justify-content: flex-end;
+    height: 60px;
+    align-items: center;
+    padding-right: 14px;
+    background-color: #E9EBEE;
+}
+
+/*
+    CSS Fontawesome
+*/
+
+i.fas.fa-exclamation-triangle {
+    font-size: 16px;
+    color: #F65454;
+}
+
+i.fas.fa-trash-alt {
+    color: #ffffff;
+}
+
+/*
+    Chỉnh CSS JQuery UI
+*/
+span.ui-button-icon.ui-icon.ui-icon-closethick {
+    display: none;
+}
+
+span#ui-id-2 {
+    padding: 24px;
+    font-size: 16px;
+    font-weight: bold;
+    width: 80%;
+    border: 0;
+    margin: 0;
+}
+
+div#dialog-confirm {
+    padding: 0;
+}

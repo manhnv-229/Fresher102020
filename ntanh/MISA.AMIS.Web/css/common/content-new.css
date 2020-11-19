@@ -29,7 +29,20 @@
 }
 
 /*Paging bar*/
-.content .paging-bar {
-    height: 56px;
-    background-color: #dedede;
+    .content .paging-bar {
+        height: 50px;
+        background-color: #ffffff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 16px 0 24px;
+    }
+
+
+.footer-center {
+    display: flex;
+}
+
+.number-page {
+    display: flex;
 }
