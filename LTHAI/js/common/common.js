@@ -18,6 +18,11 @@ function formatDateOfBirth(date) {
         return `${day}/${month}/${year}`;
     }
 }
+/**
+ * Định dạng năm-tháng-ngày
+ * @param {any} date Dữ liệu có dạng datetime
+ * CreatedBy: LTHAI (19/11/2020)
+ */
 function formatDateOfBirthyyyyMMdd(date) {
     date = new Date(date);
     if (Number.isNaN(date.getTime())) {
@@ -57,3 +62,24 @@ function RefreshDialog() {
     })
     $('#d-dialog').css("display", "none");
 }
+/**
+ * Hàm lấy dữ liệu để truyền vào combobox nhóm người dùng
+ * @param {any} url đường dẫn được truyền 
+ * CreatedBy: LTHAI(19/11/2020)
+ */
+function GetDataOfCustomerGroup(url) {
+    let select = $("select#CustomerGroup");
+    select.empty();
+    $.ajax({
+        url: url,
+        method: "GET",
+        async: false
+    }).done(function (res) {
+        $.each(res, function (index, obj) {
+            select.append(`<option value ='${obj.CustomerGroupId}'>${obj.CustomerGroupName}</option>`)
+        })
+    }).fail(function (res) {
+        debugger
+    })
+}
+

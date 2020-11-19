@@ -35,7 +35,11 @@
 #d-btn-save:hover {
     background-color: #2FBE8E;
 }
+/*Css cho button xóa*/
 button#btn-delete {
     text-align: center;
     background-color: red;
 }
+    button#btn-delete:hover {
+        background-color: #ff00007a;
+    }

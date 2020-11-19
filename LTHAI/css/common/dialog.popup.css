@@ -1,5 +1,5 @@
 ﻿/*Css cho phần khung dialog*/
-.d-dialog-detail {
+.d-dialog-detail, .p-pop-up {
     display: none;
 }
 /* css chung cho css pop-up và dialog*/

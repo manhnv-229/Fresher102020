@@ -56,7 +56,10 @@ class BaseJS {
 
         //Thêm mới dữ liệu khi ấn nút lưu trong dialog
         $('#d-btn-save').click(this.SaveDataWhenClickButtonSave.bind(me))
-
+        // Xóa bản ghi khi click nút xóa 
+        $('.icon-remove button').click(function () {
+            me.DeleteCustomer(this);
+        })
     }
 
     /**
@@ -143,9 +146,10 @@ class BaseJS {
     }
    
     /**
-    * Hiển thị dialog khi nhấn 2 lần vào từng dòng trong bảng
-    * CreatedBy: LTHAI(15/11/2020)
-    * */
+     * Hiển thị dialog khi nhấn 2 lần vào từng dòng trong bảng
+     * @param {any} self đại diện cho đối tượng tr
+     * CreatedBy: LTHAI(15/11/2020)
+     */
     EventsWhenDoubleClickTr(self) {
         this.FormMode = "Edit";
         let thisHere = this;
@@ -157,19 +161,8 @@ class BaseJS {
             method: "GET",
             async: false
         }).done(function (res) {
-            let select = $("select#CustomerGroup");
-            select.empty();
-            $.ajax({
-                url: thisHere.host + "/api/customergroups",
-                method: "GET",
-                async: false
-            }).done(function (res) {
-                $.each(res, function (index, obj) {
-                    select.append(`<option value ='${obj.CustomerGroupId}'>${obj.CustomerGroupName}</option>`)
-                })
-            }).fail(function (res) {
-                debugger
-            })
+            let urlGetDataForCustomerGroup = thisHere.host + "/api/customergroups";
+            GetDataOfCustomerGroup(urlGetDataForCustomerGroup);
             // Xây dựng form dựa trên thông tin sẵn có
             let inputs = $('input[bind-data], select[bind-data]');
             $.each(inputs, function (index, input) {
@@ -220,16 +213,19 @@ class BaseJS {
     }
     /**
     * Hiển thị dialog khi nhấn 1 lần vào từng dòng trong bảng
-    * CreatedBy: LTHAI(15/11/2020)
+    * @param {any} self đại diện cho đối tượng tr
+    *  CreatedBy: LTHAI(15/11/2020)
     * */
     EventsWhenClickTr(self){
         $('tr').css("background-color", "#ffffff");
         $(self).css("background-color", "#019160");
         $('.icon-remove').find('button').css('display', 'block');
+        $('.icon-remove').find('button').data('recordId', $(self).data('recordId'));
     }
    /**
    * Kiểm tra định dạng email
-   * CreatedBy: LTHAI(15/11/2020)
+   * @param {any} self đại diện cho đối tượng input
+   *  CreatedBy: LTHAI(15/11/2020)
    * */
     EventsValidateEmailWhenInputBlur(self) {
         var value = $(self).val();
@@ -245,6 +241,7 @@ class BaseJS {
     }
     /**
     * Kiểm tra các trường bắt buộc
+    * @param {any} self đại diện cho đối tượng input
     * CreatedBy: LTHAI(15/11/2020)
     * */
     EventsValidateRequiredWhenInputBlur(self) {
@@ -258,6 +255,10 @@ class BaseJS {
             $(self).attr("validated", true);
         }
     }
+    /**
+     * Lưu dữ liệu 
+     * CreatedBy: LTHAI(18/11/2020)
+     * */
     SaveDataWhenClickButtonSave() {
         let thisHere = this;
         // Validate dữ liệu
@@ -277,7 +278,9 @@ class BaseJS {
         let inputs = $('input[bind-data], select[bind-data]');
         let entity = {};
         $.each(inputs, function (index, input) {
+            // Lấy nội dung của thộc tính bind-data của từng thẻ input
             let property = $(input).attr("bind-data");
+            // Nếu loại là radio và được checked thì set giá trị cho nó là 0 <Nữ> hoặc 1<Nam>
             if ($(this).attr('type') == "radio") {
                 if (this.checked) {
                     if ($(input).attr('id') == "Male") {
@@ -291,6 +294,7 @@ class BaseJS {
             }
 
         })
+        // Kiểm tra xem nút lưu dùng để thêm hay cập nhật và tùy chỉnh phương thức của Resful 
         let method = "POST";
         if (this.FormMode == "Edit") {
             method = "PUT";
@@ -327,4 +331,42 @@ class BaseJS {
             console.log(e);
         }
     }
+    /**
+     * Sự kiện khi click vào nút xóa thông tin của khách hàng 
+     * CreatedBy: LTHAI(19/11/2020)
+     * */
+    DeleteCustomer(self) {
+        let thisHere = this;
+        // Đưa ra cảnh báo xác nhận 
+       
+        // Lấy recordId từ data của button
+        let recordId = $(self).data('recordId');
+        // Gọi tới service để xóa bản ghi
+        $.ajax({
+            url: thisHere.host + thisHere.apiRouter + `/${recordId}`,
+            method: "DELETE"
+        }).done(function () {
+            //Thông báo thành công
+            $('.modal-body').text("Bạn đã xóa thành công !");
+            $('#myModal').trigger('click');
+            // + Load lại dữ liệu 
+            thisHere.loadData();
+        }).fail(function () {
+           //Thông báo không thành công
+            $('.modal-body').text("Bạn đã xóa thất bại !");
+            $('#myModal').trigger('click');
+        })
+    }
+    /**
+     * Đưa ra cảnh báo cho những sự kiện cần xác nhận
+     * @param {any} title Thông tin tiêu đề
+     * @param {any} body Nội dung của cảnh báo
+     * CreatedBy: LTHAI(19/11/2020)
+     */
+    ShowPopUp(title, body) {
+        $('.pop-up-title').text(title);
+        $('.pop-up-inf').text(body);
+        $('.p-pop-up').css('display', 'block');
+    }
+
 }
