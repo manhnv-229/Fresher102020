@@ -1,4 +1,5 @@
-﻿.navbar {
+﻿/*Css cho menu nav-bar của trang*/
+.navbar {
     width: 220px;
     background-color: #ffffff;
     border-right: 1px solid #e5e5e5;

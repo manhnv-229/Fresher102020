@@ -1,139 +1,114 @@
 ﻿
 $(document).ready(function () {
-   // loadData();
     var customerJs = new CustomerJs();
-    customerJs.loadData();
+    dialogDetail = $(".m-dialog").dialog({
+        autoOpen: false,
+        fluid: true,
+        //height: 400,
+        //width: '700px',
+        minWidth: 800,
+        resizable: true,
+        modal: true,
+        position: ({ my: "center", at: "center", of: window }),
+    });
+    $('.menu-show').click(function () {
+        $('.menu-show').hide();
+    });
+    $(document).click(function () {
+        $('.menu-show').hide();
+    });
+
 });
 
-class CustomerJs {
+class CustomerJs extends Base {
     constructor() {
-
+        super();
     }
-    loadData() {
-        $.ajax({
-            url: "http://api.manhnv.net/api/employees",
-            method: "GET"
-        }).done(function (res) {
-            debugger;
-            var data = res;
-            $.each(data, function (index, item) {
-              // var address = item['Address'];
-                var trHtml = $(`<tr>
-                                    <td>`+ item.EmployeeCode + `</td>
-                                    <td>`+ item.FullName + `</td>
-                                    <td>`+ item['GenderName'] + `</td>
-                                    <td>`+ item['DateOfBirth'] + `</td>
-                                    <td>`+ item['PhoneNumber'] + `</td>
-                                    <td>`+ item['Email'] + `</td>
-                                    <td>`+ item['Salary'] + `</td>
-                                    <td><div class="fix-width-table align-salary" title= "`+ item['Address']+`">` + item['Address'] + `</div></td>
-                                </tr>`);
-                $(".content-table tbody").append(trHtml);
-            });
-        }).fail(function (reject) {
+    setApiRouter() {
+        this.apiRouter = '/api/customers';
+    }
+    initEvent() {
+        super.initEvent(); //các sự kiện của cha vẫn được thực hiện, tránh bị ghi đè hoàn toàn
 
-        })
-        
-        //$.each(customers, function (index, item) {
-        //    var trHtml = $(`<tr>
-        //                        <td>`+ item.Index + `</td>
-        //                        <td>`+ item.Id + `</td>
-        //                        <td>`+ item.Name + `</td>
-        //                        <td>`+ item.IdBhxh +`</td>
-        //                        <td>`+ item.Gioitinh + `</td>
-        //                        <td>`+ item.Position + `</td>
-        //                        <td>`+ item.Department +`</td>
-        //                        <td>`+ item.Salary + `</td>
-        //                        <td>`+ item.State + `</td>
-        //                        <td>`+ item.Hospital +`</td>
-        //                        <td>`+ item.Address +`</td>
-        //                    </tr>`);
-        //    $('.content-table tbody').append(trHtml);
+        /*thêm tiếp sự kiện cho riêng thằng con ở đây
+         * code here
+         */
+        // alert("initEvent con");
+        //$('input[required]').blur(this.validateRequired.bind(this));
+        //$('#btnSave').click(this.validateBtnOnClick.bind(this));
+        //$('.btn-edit-customer').click(this.btnEditOnClick);
+        //$('.btn-delete-customer').click(this.btnDeleteOnClick);
+
+        //$("table tbody").on('contextmenu', 'tr', function (e) {
+        //      //alert("mouse right on click")
+
+        //    //hiện thị menu
+        //    $(this).siblings().removeClass('rowSelected');
+        //    $(this).addClass('rowSelected');
+        //    $('.menu-show').css({
+        //        top: e.pageY + 'px',
+        //        left: e.pageX + 'px'
+        //    }).show();
+            
+        //    debugger
+        //    return false;
         //});
+       
     }
-    addData() {
+    validateRequired(target) {
+        // debugger;
+        //var value = $(this).val().trim();
+        //if (!value) {
+        //    $(this).addClass("border-red");
+        //    $(this).attr("title", "Không được bỏ trống");
+        //}
+        //else {
+        //    $(this).removeClass("border-red");
+        //    $(this).removeAttr("title");
+        //}
+        //   debugger;
+        var curentTarget = target.currentTarget;
+        //  debugger
 
+        // this.validateData(target.currentTarget);
+        validateData.validateRequired(curentTarget);
     }
-    delete() {
+    //validateData(sender) {
+    //    debugger
+    //    var value = $(sender).val().trim();
+    //    if (!value) {
+    //        $(sender).addClass("border-red");
+    //        $(sender).attr("title", "Không được bỏ trống");
+    //    }
+    //    else {
+    //        $(sender).removeClass("border-red");
+    //        $(sender).removeAttr("title");
+    //    }
+    //}
+    validateBtnOnClick() {
+        var inputs = $('input[required');
+        var isValid = true;
+        $.each(inputs, function (index, input) {
+            //    debugger
+            //var value = $(input).val().trim();
+            //if (!value) {
+            //    $(input).addClass("border-red");
+            //    $(input).attr("title", "Không được bỏ trống");
+            //}
+            //else {
+            //    $(input).removeClass("border-red");
+            //    $(input).removeAttr("title");
+            //}
+            //  self.validateData(input);
+            //   $(input).trigger('blur');
 
+            if (!validateData.validateRequired(input)) {
+                isValid = false;
+            }
+        })
+        if (!isValid) {
+            alert("Vui lòng nhập đầy đủ thông tin");
+        }
     }
+    
 }
-//hàm có tham số hay không tham số đều phải comment
-/**
- * format dữ liệu ngày tháng sang ngày/tháng/năm
- * @param {any} date tham số có dữ liệu bất kỳ
- * CreatedBy: HNANH (11/11/2020)
- */
-function formatDate(date) {
-
-}
-/**
- * hàm định dạng hiển thị tiền tệ
- * @param {Number} money số tiền, tham số truyền vào làm number
- * CreatedBy: HNANH (11/11/2020)
- */
-function formatMoney(money) {
-
-}
-//function loadData() {
-//    $.each(customers, function (index, item) {
-//        var trHtml = $(`<tr>
-//                        <td>` + item.Index + `</td>
-//                        <td>` + item.Id + `</td>
-//                        <td>` + item.Name + `</td>
-//                        <td>` + item.IdBhxh + `</td>
-//                        <td>` + item.Gioitinh + `</td>
-//                        <td>` + item.Position + `</td>
-//                        <td>` + item.Department + `</td>
-//                        <td>` + item.Salary + `</td>
-//                        <td>` + item.State + `</td>
-//                        <td>` + item.Hospital + `</td>
-//                        <td>` + item.Address + `</td>
-//                    </tr>`);
-
-//        $('.content-table tbody').append(trHtml);
-//    });
-//    alert('loadDataCustomer');
-//}
-
-var customers = [
-    {
-        Index: 1,
-        Id: "MF633",
-        Name: "Nguyên Văn A",
-        IdBhxh: "9876543210",
-        Gioitinh: "Nam",
-        Position: "Fresher",
-        Department: "Văn phòng Hà Nội",
-        Salary: 3200000,
-        State: "Đang tham gia",
-        Hospital: "Bệnh viện Bạch mai",
-        Address: "Hà nội"
-    },
-    {
-        Index: 2,
-        Id: "MF633",
-        Name: "Nguyên Văn B",
-        IdBhxh: "9876543210",
-        Gioitinh: "Nam",
-        Position: "Fresher",
-        Department: "Văn phòng Hà Nội",
-        Salary: 3200000,
-        State: "Đang tham gia",
-        Hospital: "Bệnh viện Bạch mai",
-        Address: "Hà nội"
-    },
-    {
-        Index: 3,
-        Id: "MF633",
-        Name: "Nguyên Văn C",
-        IdBhxh: "9876543210",
-        Gioitinh: "Nam",
-        Position: "Fresher",
-        Department: "Văn phòng Hà Nội",
-        Salary: 3200000,
-        State: "Đang tham gia",
-        Hospital: "Bệnh viện Bạch mai",
-        Address: "Hà nội"
-    },
-];

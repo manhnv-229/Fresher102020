@@ -1,8 +1,10 @@
-﻿body {
+﻿/*Css dùng chung cho cả trang web*/
+body {
     margin: 0;
     font-family: GoogleSans-Regular;
     font-size: 13px;
 }
+/*thiết lập các kiểu chữ*/
 @font-face {
     font-family: 'GoogleSans-Regular';
     src: url('/content/font/GoogleSans-Regular.otf') format('opentype');
