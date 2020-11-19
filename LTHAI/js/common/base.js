@@ -23,6 +23,7 @@ class BaseJS {
      * */
     initEvents() {
         let me = this;
+
         //Hiển thị dialog khi nhấn nút thêm khách hàng
         $('#btn-add-customer').click(this.EventsWhenClickAddCustomer.bind(me))
 
@@ -56,10 +57,14 @@ class BaseJS {
 
         //Thêm mới dữ liệu khi ấn nút lưu trong dialog
         $('#d-btn-save').click(this.SaveDataWhenClickButtonSave.bind(me))
+
         // Xóa bản ghi khi click nút xóa 
-        $('.icon-remove button').click(function () {
-            me.DeleteCustomer(this);
-        })
+        $('.icon-remove button').click(me.ShowConfirmDeleteCustomer.bind(me))
+
+        // Đóng popup 
+        $('.pop-up-cancel').click(me.ClosePopUp)
+        //Xác nhận xóa bản ghi
+        $('#btn-delete').click(me.DeleteCustomerRecord.bind(me))
     }
 
     /**
@@ -67,12 +72,15 @@ class BaseJS {
      * CreatedBy: LTHAI(12/11/2020)
      **/
     loadData() {
+
         // Xóa thông tin trong table khi load lại nội dung
         $("#render-data").empty();
         try {
             $('table tbody').empty();
+
             // Loader 
             $(".loader").css('display', "block");
+
             // Lấy thông tin các cột dữ liệu
             let columns = $('table thead tr th');
             $.ajax({
@@ -83,13 +91,16 @@ class BaseJS {
                     $(".loader").css('display', "none");
                     var tr = $(`<tr></tr>`);
                     $(tr).data("recordId", obj.CustomerId);
+
                     // Lấy thông tin dữ liệu sẽ map tương ứng với các cột
                     $.each(columns, function (index, item) {
                         let td = $(`<td><span></span></td>`);
                         let fieldName = $(item).attr("fieldName");
                         let value = obj[fieldName];
+
                         //Lấy thông tin các cột có thuộc tính formatType để format dữ liệu theo chuẩn
                         let formatType = $(item).attr("formatType");
+
                         // Duyệt qua từng trường hợp 
                         switch (formatType) {
                             case "ddmmyyyy": {
@@ -106,6 +117,7 @@ class BaseJS {
                                 break;
                             }
                         }
+
                         // Thêm nội dung vào thẻ tr trong tbody
                         td.find('span').append(value);
                         $(tr).append(td);
@@ -127,20 +139,11 @@ class BaseJS {
     EventsWhenClickAddCustomer() {
         this.FormMode = "Add";
         $('#d-dialog').css("display", "block");
-        // Lấy dữ liệu của CustomerGroup
-       
-        let select = $("select#CustomerGroup");
-        select.empty();
-        $.ajax({
-            url: this.host + "/api/customergroups",
-            method: "GET"
-        }).done(function (res) {
-            $.each(res, function (index, obj) {
-                select.append(`<option value ='${obj.CustomerGroupId}'>${obj.CustomerGroupName}</option>`)
-            })
-        }).fail(function (res) {
-            debugger
-        })
+
+        // Lấy dữ liệu của CustomerGroup và xây dựng combobox
+        let urlGetData = this.host + "/api/customergroups";
+        GetDataOfCustomerGroup(urlGetData)
+
         // focus vào mã khách hàng khi mở dialog
         $('#txtCustomerCode').focus();
     }
@@ -152,45 +155,44 @@ class BaseJS {
      */
     EventsWhenDoubleClickTr(self) {
         this.FormMode = "Edit";
-        let thisHere = this;
-        // Lấy khóa chính của bản ghi
-        thisHere.recordId = $(self).data('recordId');
-        // Gọi service lấy đối tượng khách hàng theo CustomerId
-        $.ajax({
-            url: thisHere.host + thisHere.apiRouter + `/${thisHere.recordId}`,
-            method: "GET",
-            async: false
-        }).done(function (res) {
-            let urlGetDataForCustomerGroup = thisHere.host + "/api/customergroups";
-            GetDataOfCustomerGroup(urlGetDataForCustomerGroup);
-            // Xây dựng form dựa trên thông tin sẵn có
-            let inputs = $('input[bind-data], select[bind-data]');
-            $.each(inputs, function (index, input) {
-                let property = $(input).attr("bind-data");
-                
-                if ($(input).attr('type') == "radio") {
-                    if (res[property] == $(input).val()) {
-                        $(input).prop("checked", true);
-                    }
-                } else if ($(input).attr('type') == "date") {
-                    let yyyyMMdd = formatDateOfBirthyyyyMMdd(res[property]);
-                    $(input).val(yyyyMMdd);
-                } 
-                else
-                {
-                    $(input).val(res[property]);
-                }
 
-            })
-        }).fail(function (res) {
-            debugger
+        // Lấy khóa chính của bản ghi
+         this.recordId = $(self).data('recordId');
+
+        // Xây dựng nội dung của customerGroups
+        let urlGetDataForCustomerGroup = this.host + "/api/customergroups";
+        GetDataOfCustomerGroup(urlGetDataForCustomerGroup);
+
+        // Gọi service lấy đối tượng khách hàng theo CustomerId
+        let url = this.host + this.apiRouter + `/${this.recordId}`;
+        let res = GetDataOfACustomer(url);
+
+        // Xây dựng form dựa trên thông tin sẵn có
+        let inputs = $('input[bind-data], select[bind-data]');
+        $.each(inputs, function (index, input) {
+            let property = $(input).attr("bind-data");
+
+            if ($(input).attr('type') == "radio") {
+                if (res[property] == $(input).val()) {
+                    $(input).prop("checked", true);
+                }
+            } else if ($(input).attr('type') == "date") {
+                let yyyyMMdd = formatDateOfBirthyyyyMMdd(res[property]);
+                $(input).val(yyyyMMdd);
+            }
+            else {
+                $(input).val(res[property]);
+            }
+
         })
-        
+
         // Hiển thị dialog
         $('#d-dialog').css("display", "block");
+
         // focus vào mã khách hàng khi mở dialog
         $('#txtCustomerCode').focus();
     }
+
     /**
     * Load lại dữ liệu
     * CreatedBy: LTHAI(15/11/2020)
@@ -202,15 +204,16 @@ class BaseJS {
     }
 
     /**
-   * Hiển thị thông báo
-   * CreatedBy: LTHAI(18/11/2020)
-   * */
+    * Hiển thị thông báo
+    * CreatedBy: LTHAI(18/11/2020)
+    * */
     ShowModal() {
         $("#staticBackdrop").modal({ backdrop: false });
         setTimeout(function () {
             $('#staticBackdrop').modal('hide');
         }, 1500);
     }
+
     /**
     * Hiển thị dialog khi nhấn 1 lần vào từng dòng trong bảng
     * @param {any} self đại diện cho đối tượng tr
@@ -222,11 +225,12 @@ class BaseJS {
         $('.icon-remove').find('button').css('display', 'block');
         $('.icon-remove').find('button').data('recordId', $(self).data('recordId'));
     }
-   /**
-   * Kiểm tra định dạng email
-   * @param {any} self đại diện cho đối tượng input
-   *  CreatedBy: LTHAI(15/11/2020)
-   * */
+
+    /**
+    * Kiểm tra định dạng email
+    * @param {any} self đại diện cho đối tượng input
+    *  CreatedBy: LTHAI(15/11/2020)
+    * */
     EventsValidateEmailWhenInputBlur(self) {
         var value = $(self).val();
         var regexEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
@@ -239,6 +243,7 @@ class BaseJS {
             $(self).attr("validated", true);
         }
     }
+
     /**
     * Kiểm tra các trường bắt buộc
     * @param {any} self đại diện cho đối tượng input
@@ -255,6 +260,7 @@ class BaseJS {
             $(self).attr("validated", true);
         }
     }
+
     /**
      * Lưu dữ liệu 
      * CreatedBy: LTHAI(18/11/2020)
@@ -296,22 +302,22 @@ class BaseJS {
         })
         // Kiểm tra xem nút lưu dùng để thêm hay cập nhật và tùy chỉnh phương thức của Resful 
         let method = "POST";
-        if (this.FormMode == "Edit") {
+        if (thisHere.FormMode == "Edit") {
             method = "PUT";
-            entity.CustomerId = this.recordId;
+            entity.CustomerId = thisHere.recordId;
         }
       
         // Gọi service thực hiện lưu dữ liệu
         try {
             $.ajax({
-                url: this.host + this.apiRouter,
+                url: thisHere.host + thisHere.apiRouter,
                 method: method,
                 data: JSON.stringify(entity),
                 contentType: 'application/json'
             }).done(function (res) {
                 // Sau khi load dữ liệu thành công
                 // + Hiện thị thông báo thêm thành công
-                if (self.FormMode == "Edit") {
+                if (thisHere.FormMode == "Edit") {
                     $('.modal-body').text("Bạn đã cập nhật thành công !");
                 } else {
                     $('.modal-body').text("Bạn đã thêm khách hàng thành công !");
@@ -331,32 +337,28 @@ class BaseJS {
             console.log(e);
         }
     }
+
     /**
-     * Sự kiện khi click vào nút xóa thông tin của khách hàng 
+     * Sự kiện khi click vào nút xóa thông tin của khách hàng
      * CreatedBy: LTHAI(19/11/2020)
-     * */
-    DeleteCustomer(self) {
-        let thisHere = this;
-        // Đưa ra cảnh báo xác nhận 
-       
+     */
+    ShowConfirmDeleteCustomer() {
         // Lấy recordId từ data của button
-        let recordId = $(self).data('recordId');
-        // Gọi tới service để xóa bản ghi
-        $.ajax({
-            url: thisHere.host + thisHere.apiRouter + `/${recordId}`,
-            method: "DELETE"
-        }).done(function () {
-            //Thông báo thành công
-            $('.modal-body').text("Bạn đã xóa thành công !");
-            $('#myModal').trigger('click');
-            // + Load lại dữ liệu 
-            thisHere.loadData();
-        }).fail(function () {
-           //Thông báo không thành công
-            $('.modal-body').text("Bạn đã xóa thất bại !");
-            $('#myModal').trigger('click');
-        })
+        let recordId = $('.icon-remove button').data('recordId');
+
+        // Đưa ra cảnh báo xác nhận 
+        //+ Lấy thông tin của bản ghi được xóa
+        let url = this.host + this.apiRouter + `/${recordId}`;
+        let res = GetDataOfACustomer(url);
+        let title = "Xóa bản ghi";
+        let body = `Bạn có chắc chắn muốn xóa khách hàng ${res.FullName} (Mã khách hàng ${res.CustomerCode}) không?`;
+        // Gán id bản ghi cho nút xác nhận xóa
+        $('#btn-delete').data('recordId', recordId);
+        //Hiển thị thông báo xác nhận xóa
+        this.ShowPopUp(title, body);
     }
+    
+    
     /**
      * Đưa ra cảnh báo cho những sự kiện cần xác nhận
      * @param {any} title Thông tin tiêu đề
@@ -367,6 +369,46 @@ class BaseJS {
         $('.pop-up-title').text(title);
         $('.pop-up-inf').text(body);
         $('.p-pop-up').css('display', 'block');
+    }
+    /**
+     * Tắt pop-up
+     * CreatedBy: LTHAI(19/11/2020)
+     * */
+    ClosePopUp() {
+        $('.p-pop-up').css('display', 'none');
+    }
+    /**
+     * Sau khi xác nhận xóa bản ghi thực hiện gọi service xóa
+     * CreatedBy: LTHAI(19/11/2020)
+     * */
+    DeleteCustomerRecord() {
+        let thisHere = this;
+        let recordId = $('.icon-remove button').data('recordId');
+        // Gọi tới service để xóa bản ghi
+        try {
+            $.ajax({
+                url: thisHere.host + thisHere.apiRouter + `/${recordId}`,
+                method: "DELETE"
+            }).done(function () {
+
+                //Thông báo thành công
+                $('.modal-body').text("Bạn đã xóa thành công !");
+                $('#myModal').trigger('click');
+
+                // Đóng pop-up
+                $('.pop-up-cancel').trigger('click');
+
+                // + Load lại dữ liệu 
+                thisHere.loadData();
+            }).fail(function () {
+
+                //Thông báo không thành công
+                $('.modal-body').text("Bạn đã xóa thất bại !");
+                $('#myModal').trigger('click');
+            })
+        } catch (e) {
+
+        }
     }
 
 }

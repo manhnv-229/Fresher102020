@@ -70,16 +70,45 @@ function RefreshDialog() {
 function GetDataOfCustomerGroup(url) {
     let select = $("select#CustomerGroup");
     select.empty();
-    $.ajax({
-        url: url,
-        method: "GET",
-        async: false
-    }).done(function (res) {
-        $.each(res, function (index, obj) {
-            select.append(`<option value ='${obj.CustomerGroupId}'>${obj.CustomerGroupName}</option>`)
+    try {
+        $.ajax({
+            url: url,
+            method: "GET",
+            async: false
+        }).done(function (res) {
+            $.each(res, function (index, obj) {
+                select.append(`<option value ='${obj.CustomerGroupId}'>${obj.CustomerGroupName}</option>`)
+            })
+        }).fail(function (res) {
+            debugger
         })
-    }).fail(function (res) {
-        debugger
-    })
+    } catch (e) {
+
+    }
+}
+/**
+ * Hàm lấy ra nội dung của một khách hàng thông qua id
+ * @param {any} url đường dẫn để lấy data từ service
+ * CreatedBy: LTHAI(19/11/2020)
+ */
+function GetDataOfACustomer(url) {
+    let result;
+    try {
+        $.ajax({
+            url: url,
+            method: "GET",
+            async: false
+        }).done(function (res) {
+            result = res;
+        }).fail(function (res) {
+            debugger;
+            // Lấy dữ liệu không thành công
+            $('.modal-body').text("Lấy dữ liệu không thành công !");
+            $('#myModal').trigger('click');
+        })
+    } catch (e) {
+
+    }
+    return result;
 }
 

@@ -112,15 +112,19 @@
                 </div>
                 <div class="data-table">
                     <div class="loader"></div>
-                    <table class="table" width="950">
+                    <table class="table" width="1600">
                         <thead>
                             <tr>
-                                <th width="100" fieldName="CustomerCode">Mã khách hàng</th>
+                                <th width="150" fieldName="CustomerCode">Mã khách hàng</th>
                                 <th width="150" fieldName="FullName">Họ và tên</th>
                                 <th width="150" fieldName="DateOfBirth" formatType="ddmmyyyy" class="text-align-center">Ngày sinh</th>
                                 <th width="150" fieldName="PhoneNumber">Số điện thoại</th>
                                 <th width="200" fieldName="MemberCardCode">Số thẻ cá nhân</th>
+                                <th width="150" fieldName="GenderName">Giới tính</th>
                                 <th width="200" fieldName="Address">Địa chỉ</th>
+                                <th width="200" fieldName="CompanyName">Tên công ty</th>
+                                <th width="150" fieldName="CustomerGroupName">Nhóm khách hàng</th>
+                                <th width="150" fieldName="CompanyTaxCode">Mã số thuế</th>
                             </tr>
                         </thead>
                         <tbody id="render-data">
@@ -301,7 +305,7 @@
                 </div>
             </div>
             <div class="d-group-button d-same-row">
-                <button id="d-btn-cancel" title="Hủy">Hủy</button>
+                <button id="d-btn-cancel" class="pop-up-cancel" title="Hủy">Hủy</button>
                 <button id="btn-delete" title="Xóa">Xóa</button>
             </div>
         </div>
