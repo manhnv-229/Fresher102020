@@ -1,4 +1,5 @@
-﻿class BaseJS {
+﻿
+class BaseJS {
     constructor() {
         this.host = "http://api.manhnv.net";
         this.apiRouter = null;
@@ -36,7 +37,7 @@
 
 
         // Hiển thị thông tin chi tiết khi nhấn đúp chuột chọn 1 bản ghi trên danh sách dữ liệu:
-        $('table tbody').on('dblclick', 'tr', function () {
+        $('table tbody').on('dblclick', 'tr', function (e) {
             $(this).find('td').addClass('row-selected');
             // load form:
             // load dữ liệu cho các combobox:
@@ -177,17 +178,20 @@
                 async: true,
             }).done(function (res) {
                 $.each(res, function (index, obj) {
-                    var tr = $(`<tr></tr>`);
+                    var tr = $(`<tr class="el-table__row"></tr>`);
+                    if (index == 0) {
+                        tr.addClass('first');
+                    }
                     $(tr).data('recordId', obj.CustomerId);
                     // Lấy thông tin dữ liệu sẽ map tương ứng với các cột:
                     $.each(columns, function (index, th) {
-                        var td = $(`<td><div><span></span></div></td>`);
+                        var td = $(`<td rowspan="1" colspan="1"><div class="cell"></div></td>`);
                         var fieldName = $(th).attr('fieldname');
                         var value = obj[fieldName];
                         var formatType = $(th).attr('formatType');
                         switch (formatType) {
                             case "ddmmyyyy":
-                                td.addClass("text-align-center");
+                                td.find('div').addClass("text-align-center");
                                 value = formatDate(value);
                                 break;
                             case "Money":
@@ -198,12 +202,24 @@
                                 break;
                         }
 
-                        td.append(value);
+                        td.find('div').append(value);
                         $(tr).append(td);
                     })
                     $('table tbody').append(tr);
-                    $('.loading').hide();
                 })
+               
+                $('.loading').hide();
+                $('#tbListData').tableScroll({ height: 150 });
+
+                $('#thetable2').tableScroll();
+                // Thực hiện thay đổi lại with của tiêu đề các cột:
+                //var thorigins = $('#tbListData thead th');
+                //var thResets = $('table.el-table__header thead th');
+                //$.each(thorigins, function (index, th) {
+                //    var withChange = th.offsetWidth;
+                //    thResets[index].width = withChange;
+                //    debugger;
+                //})
             }).fail(function (res) {
                 $('.loading').hide();
             })
