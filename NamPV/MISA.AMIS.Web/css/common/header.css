@@ -1,10 +1,13 @@
-﻿.header {
+﻿
+/* Định dạng header toàn trang*/
+.header {
     width: calc(100% - 221px);
     height: 48px;
     border-bottom: 1px solid #e5e5e5;
     float: left;
 }
 
+    /* Định dạng left-header, logo chi nhánh MISA*/
     .header .header-selector-box {
         float: left;
         height: 48px;
@@ -12,11 +15,11 @@
         width: 50%;
     }
 
+    /* Icon logo*/
         .header .header-selector-box .header-icon {
             height: 30px;
             width: 30px;
-            margin: auto 0px;
-            margin-left: 24px;
+            margin: auto 0px auto 16px;;
             background-image: url('/content/icon/toggle.png');
             background-repeat: no-repeat;
             background-position: center;
@@ -24,6 +27,7 @@
             float: left;
         }
 
+        /* Box chọn chi nhánh*/
         .header .header-selector-box .selector-box {
             height: 20px;
             display: inline-flex;
@@ -47,25 +51,15 @@
                     cursor: pointer;
                 }
 
+    /* Định dạng right-header, thông báo/ avatar/ option*/
     .header .header-account {
         display: inline-flex;
         float: right;
         height: 48px;
-        margin-right: 16px;
+        /*padding-right: 16px;*/
     }
 
-        .header .header-account .header-icon-notify {
-            background-image: url('/content/icon/icons8-notification-100.png');
-            background-size: 20px 20px;
-            width: 20px;
-            height: 20px;
-            margin: auto 0px;
-        }
-
-            .header .header-account .header-icon-notify:hover {
-                cursor: pointer;
-            }
-
+        /* Avatar*/
         .header .header-account .header-icon-avatar {
             background-image: url('/content/icon/avatar-default.png');
             background-size: 28px 28px;
@@ -79,6 +73,7 @@
             margin: auto;
         }
 
+        /* Option*/
         .header .header-account .header-icon-more {
             background-image: url('/content/icon/option.png');
             background-size: 16px;

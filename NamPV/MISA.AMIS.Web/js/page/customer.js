@@ -1,12 +1,12 @@
 ﻿$(document).ready(function () {
-    new EmployeeJS();
+    new CustomerJS();
 })
 
-class EmployeeJS extends BaseJS {
+class CustomerJS extends BaseJS {
     constructor() {
         super();
     }
     setApi() {
-        this.api = `/api/employees`
+        this.api = `/api/customers`
     }
 }
