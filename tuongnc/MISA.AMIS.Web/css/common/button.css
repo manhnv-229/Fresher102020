@@ -1,4 +1,7 @@
-﻿.misa-btn-second {
+﻿
+/*button-second*/
+
+.misa-btn-second {
     border-radius: 4px;
     height: 40px;
     /*width: 100px;*/
@@ -14,19 +17,23 @@
         background-color: #E9EBEE;
         cursor: pointer;
     }
+
     .misa-btn-second:focus {
         background-color: #01B075;
         outline: none;
         color: #ffffff;
     }
+/*---------------------------------------------*/
 
+
+/*button-default-icon*/
 .misa-btn-icon {
     background-color: #019160;
     height: 40px;
     border-radius: 4px;
     color: #ffffff;
     padding: 0px 16px 0px 16px;
-    border:none;
+    border: none;
     margin-left: 10px;
     display: flex;
     align-items: center;
@@ -42,12 +49,13 @@
         outline: none;
     }
 
-    .misa-icon-button {
-        width: 16px;
-        height: 16px;
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position: center;
-        margin-right: 10px;
-    }
+.misa-icon-button {
+    width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    margin-right: 10px;
+}
+/*---------------------------------------------*/
 

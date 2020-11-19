@@ -12,6 +12,7 @@
     <link href="/css/common/modal.css" rel="stylesheet" />
     <link href="/css/common/form.css" rel="stylesheet" />
     <link href="/css/common/grid.css" rel="stylesheet" />
+    <link href="/css/common/radio-button.css" rel="stylesheet" />
 </head>
 <body>
     <div class="navbar">
@@ -34,7 +35,7 @@
                 <div class="nav-item-icon nav-item-icon-track-money"></div>
                 <div class="nav-item-text">Mua hàng</div>
             </a>
-            <a id="employeePage" href="employee.html" class="nav-item">
+            <a href="employee.html" class="nav-item">
                 <div class="nav-item-icon nav-item-icon-track-dong"></div>
                 <div class="nav-item-text">Danh mục nhân viên</div>
             </a>
@@ -72,7 +73,7 @@
     <div class="content">
         <div class="content-header">
             <div class="title">
-                Quản lý nhân viên
+                Quản lý lao động
             </div>
             <div class="content-feature">
                 <button class="misa-btn-second">
@@ -84,15 +85,15 @@
                 <button class="misa-btn-icon" data-modal-target="#modal">
                     <i class="misa-icon-button icon-add-user"></i>
                     <div class="lable-text">
-                        Thêm nhân viên
+                        Thêm khách hàng
                     </div>
                 </button>
 
-                <!-- Modal Thêm lao động -->
+                <!-- Modal Thêm Khách hàng -->
                 <div class="modal" id="modal">
                     <div class="modal-header">
                         <div class="title-header">
-                            <div class="title">Thông tin nhân viên</div>
+                            <div class="title">Thông tin khách hàng</div>
                             <button data-close-button class="close-button">&times;</button>
                         </div>
                     </div>
@@ -105,32 +106,40 @@
                                 </div>
                                 <div class="misa-col-2">
                                     <div class="misa-form-group">
-                                        <label class="label-field-input">Mã khách hàng</label>
-                                        <input class="input-field" />
+                                        <div class="label-field-input">Mã khách hàng(<label style="color: red;">*</label>)</div>
+                                        <input fieldNamePost="CustomerCode" required class="input-field" />
                                     </div>
                                     <div class="misa-form-group">
-                                        <label class="label-field-input">Mã thẻ thành viên</label>
-                                        <input class="input-field" />
+                                        <div class="label-field-input">Mã thẻ thành viên</div>
+                                        <input fieldNamePost="MemberCardCode" class="input-field" />
                                     </div>
                                     <div class="misa-form-group">
-                                        <label class="label-field-input">Ngày sinh</label>
-                                        <input class="input-field" />
+                                        <div class="label-field-input">Ngày sinh</div>
+                                        <input style="font-family: GoogleSans-Medium" type="date" fieldNamePost="DateOfBirth" class="input-field" />
                                     </div>
                                 </div>
                                 <div class="misa-col-3">
                                     <div class="misa-form-group">
-                                        <label class="label-field-input">Họ và tên</label>
+                                        <div class="label-field-input">Họ và tên(<label style="color: red;">*</label>)</div>
+                                        <input fieldNamePost="FullName" required class="input-field" />
+                                    </div>
+                                    <div class="misa-form-group">
+                                        <div class="label-field-input">Nhóm khách hàng</div>
                                         <input class="input-field" />
                                     </div>
                                     <div class="misa-form-group">
-                                        <label class="label-field-input">Nhóm khách hàng</label>
-                                        <input class="input-field" />
-                                    </div>
-                                    <div class="misa-form-group">
-                                        <label class="label-field-input">Giới tính</label>
-                                        <div>
-                                            <input name="gender" type="radio" /> <label>Nam</label>
-                                            <input name="gender" type="radio" /> <label>Nữ</label>
+                                        <div class="label-field-input">Giới tính</div>
+                                        <div class="radio-form-group">
+                                            <label class="container-radio label-field-input">
+                                                Nam
+                                                <input type="radio" checked="checked" name="GenderName">
+                                                <span class="checkmark-radio"></span>
+                                            </label>
+                                            <label class="container-radio label-field-input">
+                                                Nữ
+                                                <input type="radio" name="GenderName">
+                                                <span class="checkmark-radio"></span>
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -138,42 +147,42 @@
                             <div class="misa-form-row">
                                 <div class="misa-col-1-2">
                                     <div class="misa-form-group">
-                                        <label class="label-field-input">Email</label>
-                                        <input class="input-field" />
+                                        <div class="label-field-input">Email</div>
+                                        <input fieldNamePost="Email" type="email" class="input-field" />
                                     </div>
                                 </div>
                                 <div class="misa-col-3">
                                     <div class="misa-form-group">
-                                        <label class="label-field-input">Số điện thoại</label>
-                                        <input class="input-field" />
+                                        <div class="label-field-input">Số điện thoại(<label style="color: red;">*</label>)</div>
+                                        <input fieldNamePost="PhoneNumber" required class="input-field" />
                                     </div>
                                 </div>
                             </div>
                             <div class="misa-form-row">
                                 <div class="misa-col-1-2">
                                     <div class="misa-form-group">
-                                        <label class="label-field-input">Tên công ty</label>
+                                        <div class="label-field-input">Tên công ty</div>
                                         <input class="input-field" />
                                     </div>
                                 </div>
                                 <div class="misa-col-3">
                                     <div class="misa-form-group">
-                                        <label class="label-field-input">Mã số thuế</label>
+                                        <div class="label-field-input">Mã số thuế</div>
                                         <input class="input-field" />
                                     </div>
                                 </div>
                             </div>
                             <div class="misa-form-row">
                                 <div class="misa-form-group">
-                                    <label class="label-field-input">Địa chỉ</label>
-                                    <input class="input-field" />
+                                    <div class="label-field-input">Địa chỉ</div>
+                                    <input fieldNamePost="Address" class="input-field" />
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button data-close-button class="misa-btn-second">Hủy</button>
-                        <button class="misa-btn-icon">Thêm mới</button>
+                        <button id="btnSave" class="misa-btn-icon">Thêm mới</button>
                     </div>
                 </div>
 
@@ -213,17 +222,14 @@
             <table>
                 <thead>
                     <tr>
-                        <th fieldName="EmployeeCode">Mã nhân viên</th>
+                        <th fieldName="CustomerCode">Mã Khách hàng</th>
                         <th fieldName="FullName">Họ và tên</th>
                         <th fieldName="GenderName">Giới tính</th>
                         <th fieldName="DateOfBirth" formatType="ddmmyyyy">Ngày sinh</th>
                         <th fieldName="PhoneNumber">Số điện thoại</th>
                         <th fieldName="Email">Email</th>
-                        <th fieldName="PositionName">Chức vụ</th>
-                        <th fieldName="DepartmentName">Tên phòng ban</th>
-                        <th fieldName="Salary" formatType="money">Tiền lương</th>
                         <th fieldName="Address" formatType="hoverTitle">Địa chỉ</th>
-                        <th fieldName="WorkStatusName">Tình trạng làm việc</th>
+                        <th fieldName="CompanyName">Tên công ty</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -266,6 +272,6 @@
     <script src="/js/common/modal.js"></script>
     <script src="/js/common/common.js"></script>
     <script src="/js/common/base.js"></script>
-    <script src="/js/page/employee.js"></script>
+    <script src="/js/page/customer.js"></script>
 </body>
 </html>

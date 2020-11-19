@@ -1,0 +1,99 @@
+﻿
+/*create-modal-css*/
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 4px;
+    z-index: 10;
+    background-color: #ffffff;
+    max-width: 80%;
+}
+
+    .modal .active {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    .modal .modal-header {
+    }
+
+        .modal .modal-header .information-user {
+            padding: 4px 48px 4px 48px;
+        }
+
+        .modal .modal-header .title-header {
+            padding: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 24px 0px 24px;
+        }
+
+.modal-header .title-header .close-button {
+    background-color: #ffffff;
+    color: rgba(0,0,0,.5);
+    cursor: pointer;
+    border: none;
+    font-size: 24px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 0px 4px 0px 4px;
+}
+
+    /*hover-button-close*/
+    .modal-header .title-header .close-button:hover {
+        background-color: #bbbbbb;
+    }
+
+    /*focus-button-close*/
+    .modal-header .title-header .close-button:focus {
+        outline: none;
+        border: none;
+    }
+
+.modal .modal-body {
+    padding: 24px;
+}
+/*modal-footer*/
+.modal .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 24px;
+    height: 60px;
+    align-items: center;
+    background-color: #bbbbbb;
+}
+
+    .modal .modal-footer .misa-btn-second {
+        background-color: #bbbbbb;
+        width: 100px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+
+        .modal .modal-footer .misa-btn-second:hover {
+            background-color: #a9a5a5;
+        }
+
+#overlay {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: rgba(0,0,0,.5);
+    pointer-events: all;
+}
+
+
+
+#overlay .active {
+    opacity: 1;
+    pointer-events: all;
+}

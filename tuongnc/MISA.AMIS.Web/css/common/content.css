@@ -6,228 +6,26 @@
     left: 221px;
     padding: 16px;
 }
-/*header-1*/
-/*.content-header-1 {
-    height: 80px;
-    display: flex;
-}*/
-/*header-1-left*/
-/*.content-header-1-left {
-    width: calc(100% - 500px);
-    display: flex;
-}
-
-.content-header-1-text {
-    font-size: 24px;
-    font-weight: bold;
-    color: #000000;
-    margin: auto;
-    margin-left: 16px;
-    margin: auto 0px;
-    margin-left: 24px;
-}*/
-
-/*header-1-right*/
-/*.content-header-1-right {
-    width: 500px;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.content-header-1-right-button-1 {
-    display: flex;
-    margin: auto 0px;
-    height: 40px;
-    border: 1px solid #e5e5e5;
-    border-radius: 5px;
-}
-
-.content-header-1-button-text {
-    margin: auto 0px;
-    margin-left: 10px;
-    margin-right: 16px;
-    color: #01B075;
-}
 
 
-
-.header-1-right-button-1-icon {
-    background-image: url('/content/img/icon-sync.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-    margin: auto 0;
-    margin-left: 16px;
-    background-position: center;
-    width: 30px;
-    height: 30px;
-}
-
-.header-1-right-button-2-icon-download {
-    width: 42px;*/
-    /* border: 1px solid black; */
-    /*height: 42px;
-    border-left: 1px solid #505252;
-    background-image: url('/content/img/down.png');
-    background-repeat: no-repeat;
-    background-size: 20px 20px;
-    background-position: center;
-}*/
-
-/*header-button-2*/
-/*.content-header-1-right-button-2 {
-    height: 42px;
-    margin: auto 0px;
-    display: flex;
-    margin-left: 10px;
-    border-radius: 5px;
-    background-color: #01B075;
-    margin-right: 16px;
-}
-
-.header-1-right-button-2-icon {
-    background-image: url(../../content/img/icon-addUser.png);
-    background-repeat: no-repeat;
-    background-size: contain;
-    margin: auto 0px;
-    margin-left: 16px;
-    margin-right: 10px;
-}
-
-.header-1-right-button-2-text {
-    color: #ffffff;
-}*/
-
-/*header-2*/
-/*.content-header-2 {
-    width: 100%;
-    display: flex;
-    height: 60px;
-}*/
-
-
-/*text-box*/
-/*.textbox-box {
-    width: calc(100% - 200px);
-    display: flex;
-}
-
-.textbox {
-    display: flex;
-}
-
-.text-box-1 {
-    position: relative;
-    width: 300px;
-}
-
-.icon-search {
-    background-image: url('../../content/img/icon-search.png');
-    position: absolute;
-    top: 20px;
-    left: 34px;
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-
-.input-search {
-    margin-left: 24px;
-    padding-left: 40px;
-    width: 350px;
-    height: 40px;
-    border-radius: 5px;
-    margin-top: 8px;
-    border: 1px solid #e5e5e5;
-    width: 240px;
-}
-
-    .input-search:focus {
-        outline: none;
-        border: 1px solid #01B075;
-        border-radius: 5px;*/
-        /*box-shadow: 0 0 5px #01B075;*/
-    /*}
-
-.text-box-2 {
-}
-
-.text-box-2-select {
-    height: 44px;
-    margin: auto 0px;
-    margin-left: 10px;
-    border: 1px solid #e5e5e5;
-    border-radius: 5px;
-    color: #827c75;
-    padding-left: 5px;
-    padding-right: 50px;
-}
-
-    .text-box-2-select:focus {
-        outline: none;
-        border: 1px solid #01B075;
-        border-radius: 5px;
-    }*/
-
-
-/*header-2-button-icon*/
-/*.content-header-2-button {
-    display: flex;
-    width: 200px;
-    justify-content: flex-end;
-}
-
-.content-header-2-button-icon {
-    height: 44px;
-    width: 44px;
-    border: 1px solid #e5e5e5;
-    margin: auto 0px;
-    border-radius: 5px;
-    background-position: center;
-}
-
-.icon-download {
-    background-image: url('/content/img/header-2-icon-download.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-
-.icon-sync {
-    margin-left: 10px;
-    margin-right: 16px;
-    background-image: url('/content/img/header-2-icon-sync.png');
-    background-repeat: no-repeat;
-    background-size: 22px 31px;
-}*/
-
-/*content-table*/
-/*.content-table {
-    background-color: #e5e5e5;
-    height: calc(100% - 80px - 60px - 63px);
-    width: 100%;
-}*/
-
-/*content-footer*/
-/*.content-footer {
-    height: 48px;
-    background-color:#e5e5e5;
-}*/
+/*content-header*/
 
 .content-header {
     width: 100%;
     display: flex;
+    justify-content: space-between;
 }
 
-.content-header .title {
-    font-weight: bold;
-    color: #000000;
-    font-size: 20px;
-    width: calc(100% - 600px);
-
-}
+    .content-header .title {
+        font-weight: bold;
+        color: #000000;
+        font-size: 20px;
+    }
 
     .content-header .content-feature {
         width: 600px;
         display: flex;
-        justify-content:flex-end;
+        justify-content: flex-end;
     }
 
         .content-header .content-feature .icon-sync-HRM {
@@ -238,11 +36,16 @@
         .content-header .content-feature .icon-add-user {
             background-image: url('/content/img/icon-addUser.png');
         }
-        .tool-bar {
-            width: 100%;
-            display: flex;
-            margin-top: 16px;
-        }
+/*---------------------------------------------*/
+
+/*tool-bar*/
+
+.tool-bar {
+    width: 100%;
+    display: flex;
+    margin-top: 16px;
+}
+
     .tool-bar .left-tool {
         display: flex;
         width: 800px;
@@ -253,32 +56,34 @@
             align-items: center;
             position: relative;
         }
-        .tool-bar .left-tool .search-tool .input-field {
-            height: 38px;
-            margin-left: 0px;
-            padding-left: 40px;
 
-        }
+            .tool-bar .left-tool .search-tool .input-field {
+                height: 38px;
+                margin-left: 0px;
+                padding-left: 40px;
+            }
+
             .tool-bar .left-tool .search-tool .misa-icon-button {
                 position: absolute;
                 left: 16px;
             }
+
             .tool-bar .left-tool .search-tool .icon-search {
                 background-image: url('/content/img/icon-search.png');
             }
 
-        .tool-bar .right-tool {
-            width: calc(100% - 800px);
-            height: 100%;
-            display: flex;
-            justify-content:flex-end;
-        }
+    .tool-bar .right-tool {
+        width: calc(100% - 800px);
+        height: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
 
 .dowload-tool {
     background-image: url('/content/img/header-2-icon-download.png');
     background-repeat: no-repeat;
-    background-size:contain;
-    background-position:center;
+    background-size: contain;
+    background-position: center;
 }
 
 .sync-tool {
@@ -288,53 +93,9 @@
     background-position: center;
 }
 
+/*---------------------------------------------*/
 
-.grid {
-    /*background: #808080;*/
-    height: calc(100vh - 249px);
-    width: 100%;
-    padding-top: 16px;
-}
-
-/*table, th, td {
-    border-bottom: 1px solid #bbbbbb;
-    padding: 4px;
-    width: 20px;
-}*/
-
-table {
-    border-collapse: collapse;
-    display: block;
-    overflow: auto;
-    height: 100%;
-    width: 100%;
-}
-
-td, th {
-    border-bottom: 1px solid #bbbbbb;
-    max-width: 100px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    padding: 16px 24px;
-    text-align: left;
-}
-th {
-    position:sticky;
-    top: 0;
-    background-color:#ffffff;
-}
-
-table .td-luong {
-    text-align: right;
-}
-
-tr:hover {
-    background-color: #E9EBEE;
-    cursor: pointer;
-}
-
-
+/*footer*/
 
 .footer {
     height: 56px;
@@ -342,23 +103,22 @@ tr:hover {
     display: flex;
     align-items: center;
 }
-
     .footer .page-number {
         display: flex;
         width: calc(100% - 400px);
-        justify-content:center;
+        justify-content: center;
     }
 
-.footer .pages {
-    width: 200px;
-    justify-content:flex-end;
-    display: flex;
-}
+    .footer .pages {
+        width: 200px;
+        justify-content: flex-end;
+        display: flex;
+    }
 
     .footer .display-footer-text {
         width: 200px;
         justify-content: flex-start;
-        display:flex;
+        display: flex;
     }
 
 .back-right {
@@ -376,3 +136,5 @@ tr:hover {
     background-size: contain;
     background-position: center;
 }
+
+/*---------------------------------------------*/
