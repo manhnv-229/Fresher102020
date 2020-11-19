@@ -3,20 +3,28 @@
 /**
  * Hàm xử lý định dạng ngày
  * @param {any} date Bất kì kiểu dữ liệu nào
+ * @param {string} format định dạng ngày muốn format, vd "dd/mm/yyyy"
  * Creared by dtnga (11/11/2020)
+ * ModifiedBy dtnga (19/11/2020)
  */
-function formatDate(date) {
+function formatDate(date, format) {
     if (Date.isNaN)
         return ""
     else {
+
         var date = new Date(date);
-        var day = date.getDate();
-        var month = date.getMonth() + 1;
+        var day = ("0" + date.getDate()).slice(-2);
+        var month = ("0" + (date.getMonth() + 1)).slice(-2);
         var year = date.getFullYear();
-        day = day < 0 ? '0' + day : day;
-        return day + "/" + month + "/" + year;
+
+        if (format.trim() == "dd/mm/yyyy")
+            return day + "/" + month + "/" + year;
+        else if (format.trim() == "yyyy-mm-dd")
+            return  year + "-" + month + "-" + day;
     }
 }
+
+
 /**
  * Hàm xử lý dữ liệu tiền tệ, có chứa đơn vị tiền tệ
  * @param {int} money Số tiền

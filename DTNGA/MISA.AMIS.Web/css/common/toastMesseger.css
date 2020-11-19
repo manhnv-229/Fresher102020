@@ -1,9 +1,11 @@
-﻿*{
+﻿* {
     box-sizing: border-box;
 }
-.m-Toast-Messeger{
+
+.m-toast-messeger {
     display: none;
 }
+
 .toast-messeger {
     height: 48px;
     bottom: 50px;
@@ -26,14 +28,30 @@
         background-size: contain;
         margin: 16px;
     }
-.toast-messeger .messeger-icon-success {
+    /* Messeger thông báo thành công*/
+#success-messeger .toast-messeger .messeger-icon {
     border-radius: 50%;
     background-image: url('/content/icon/common/complete.png');
 }
-    .toast-messeger .btn-exit-messeger {
-        background-image: url('/content/icon/common/exitgreen.png');
-        background-size: 16px;
-        background-color: #ffffff;
-        border: none;   
-        outline: none;
-    }
+ 
+/* Messeger thông báo thất bại*/
+#success-messeger .toast-messeger .btn-exit-messeger {
+    background-image: url('/content/icon/common/exitgreen.png');
+    background-size: 16px;
+    background-color: #ffffff;
+    border: none;
+    outline: none;
+}
+
+#fail-messeger .toast-messeger .messeger-icon {
+    border-radius: 50%;
+    background-image: url('/content/icon/common/red-warning.png');
+}
+
+#fail-messeger .toast-messeger .btn-exit-messeger {
+    background-image: url('/content/icon/common/exit-red.png');
+    background-size: 16px;
+    background-color: #ffffff;
+    border: none;
+    outline: none;
+}
