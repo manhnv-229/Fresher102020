@@ -1,0 +1,62 @@
+﻿.navbar {
+    float:left;
+    width: 220px;
+    height: calc(100hv - 60px);
+    background-color: #ffffff;
+}
+    .navbar .navbar-content{
+        width:100%;
+    }
+.navbar .navbar-content{
+    width:100%;
+}
+    .nav-item{
+        display:flex;
+        padding-left:24px;
+        height:44px;
+        line-height:44px;
+        background-position:left;
+        cursor:pointer;
+    }
+    .nav-item a{
+        text-decoration:none;
+        color: #000;
+    }
+        .nav-item:focus {
+            background-color: #01B075;
+            color: #000000;
+            cursor: pointer;
+        }
+        .nav-item:hover {
+            background-color: #e5e5e5;
+            cursor: pointer;
+            color: #000000;
+        }
+.nav-item .nav-item-icon {
+    width: 20px;
+    height: 20px;
+    align-self: center;
+    margin-right: 10px;
+    background-size:20px 20px;
+}
+.nav-item .nav-item-text{
+    line-height:44px;
+}
+.icon-internetrecord {
+    background-image: url('/content/image/navbar-item/earth-america-7.png');
+}
+.icon-paperrecord {
+    background-image: url('/content/image/navbar-item/book-cover-7.png');
+}
+.icon-keeptack1 {
+    background-image: url('../../content/image/navbar-item/connectivity-bar-7.png');
+}
+.icon-keeptack2 {
+    background-image: url('../../content/image/navbar-item/filing-7.png');
+}
+.icon-manager {
+    background-image: url('../../content/image/navbar-item/woman-man-7.png');
+}
+.icon-setting {
+    background-image: url('../../content/image/navbar-item/gear-7.png');
+}
