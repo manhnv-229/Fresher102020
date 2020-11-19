@@ -1,4 +1,5 @@
-﻿.header-content {
+﻿/*css cho trang employee*/
+.header-content {
     display: flex;
     align-self: center;
     height: 60px;
@@ -153,31 +154,41 @@
     color: #000000;
 }
 
-.table {
-    height: calc(100% - 210px);
+.gird {
+    width: 100%;
+    height: calc(100vh - 210px);
     background-color: #ffffff;
     padding-left: 16px;
     padding-right: 16px;
 }
 
-    .table table th, td {
+    .gird .gird-header {
+        height: 60px;
+    }
+    .gird .gird-content {
+        height: 300px;
+        overflow: auto;
+    }
+
+
+/*table th, td {
         height: 48px;
         border-bottom: 1px solid #bbbbbb;
         text-align: left;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-    }
+}*/
 
 
-    .table td{
+    .gird td{
         padding-right: 16px;
     }
-.table .salary{
+.gird .salary{
     text-align: right;
 }
 
-    .table table tr:hover {
+    .gird table tr:hover {
         background-color: #E9EBEE;
     }
 
@@ -214,9 +225,9 @@
             background-color: #E9EBEE;
         }
 
-        .tfoot .page-navigations button:hover{
-            background-color: #ffffff;
-        }
+            .tfoot .page-navigations button:hover {
+                background-color: #2FBE8E;
+            }
 
         .tfoot .page-navigations i {
             color: #000000;
@@ -238,12 +249,15 @@
             border-radius: 50%;
     }
 
-        .tfoot .page-navigations .fa-angle-double-left:hover{
+        .tfoot .page-navigations .fa-angle-double-left:hover {
             padding: 10px;
-            background-color: #ffffff;
+            background-color: #2FBE8E;
         }
 
         .tfoot .page-navigations .fa-angle-double-right:hover {
             padding: 10px;
-            background-color: #ffffff;
+            background-color: #2FBE8E;
+        }
+        .tfoot .page-navigations .page-selected {
+            background-color: #019160;
         }

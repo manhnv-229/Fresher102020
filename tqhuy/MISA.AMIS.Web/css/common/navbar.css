@@ -1,4 +1,7 @@
-﻿.navbar{
+﻿/*
+    css cho navbar - phần menu bên tay trái của trang
+*/
+.navbar{
     float: left;
     width:220px;
     height: 100vh;
@@ -68,6 +71,10 @@
         .navbar .navbar-content .nav-item-text{
             font-size: 13px;
         }
+
+.navbar-content .nav-item-text a{
+    color: #000000;
+}
 
 .icon-document-online {
     background-size: 20px;
