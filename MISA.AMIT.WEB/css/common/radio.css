@@ -1,0 +1,17 @@
+﻿/*input radio form add*/
+
+.input3-line2-radio {
+    margin-left: 30px;
+}
+
+.input3-line2-radio .input3-radio-group {
+    display: flex;
+    height: 40px;
+    border: 1px solid #bbbbbb;
+    align-items: center;
+    border-radius: 4px;
+    background-size: contain;
+    padding-left:20px;
+}
+
+

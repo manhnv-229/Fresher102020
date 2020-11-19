@@ -50,3 +50,12 @@
     background-position: center;
     height: 40px;
 }
+/*button delete*/
+.m-btn-delete {
+    background-image: url('/content/icon/trash-2.svg');
+    background-repeat: no-repeat;
+    width: 40px;
+    background-position: center;
+    height: 40px;
+    margin-right: 12px;
+}

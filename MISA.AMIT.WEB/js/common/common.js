@@ -27,3 +27,21 @@ function formatMoney(money) {
     }
     return "";
 }
+/**
+ * hàm đưa format dữ liệu ngày tháng năm từ db lên form chi tiết
+ * createdby: dvquang(19/11/2020)
+ * @param {any} date
+ */
+function formatDateDoubleClick(date) {
+    var d = new Date(date);
+    if (Number.isNaN(d.getTime())) {
+        return "";
+    } else {
+        var day = d.getDate(),
+            month = d.getMonth() + 1,
+            year = d.getFullYear();
+        day = day < 10 ? '0' + day : day;
+        month = month < 10 ? '0' + month : month;
+        return year + '-' + month + '-' + day;
+    }
+}

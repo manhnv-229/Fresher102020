@@ -28,9 +28,7 @@
     .input3 .input3-line1, .m-input4-left, .m-input5-left {
         margin-right: 12px;
     }
-.input3-line2-radio {
-    display: flex;
-}
+
 .m-body-bottom1, .m-body-bottom2 {
     display: flex;
 }
