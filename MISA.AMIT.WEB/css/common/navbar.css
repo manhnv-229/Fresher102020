@@ -1,4 +1,5 @@
-﻿.navbar {
+﻿/*css giao diện menu navbar*/
+.navbar {
     float:left;
     width: 220px;
     background-color: #ffffff;
@@ -45,10 +46,14 @@
                 line-height:44px;
                 cursor:pointer;
         }
-        .navbar .navbar-content .nav-item:hover {
-            background-color: #e5e5e5;
-            color:#000000;
-        }
+            a{
+                text-decoration: none;
+                color: #000000;
+            }
+            .navbar .navbar-content .nav-item:hover {
+                background-color: #e5e5e5;
+                color: #000000;
+            }
             .navbar .navbar-content .nav-item .nav-item-icon {
                 width: 20px;
                 height: 20px;
@@ -56,21 +61,27 @@
                 background-size: contain;
                 margin-right: 10px;
             }
+/*lập hồ sơ điện tử*/
 .nav-item .nav-item-document-online {
     background-image: url(/content/img/toggle.png)
 }
+/*lập hồ sơ điện giấy*/
 .nav-item-2 {
     background-image: url(/content/img/toggle.png)
 }
+/*Theo dõi chi*/
 .nav-item-3 {
     background-image: url(/content/img/toggle.png)
 }
+/*quản lí khách hàng*/
 .nav-item-4 {
-    background-image: url(/content/img/toggle.png)
+    background-image: url('/content/icon/dic-employee.png');
 }
+/*quản lí nhân viên*/
 .nav-item-5 {
-    background-image: url(/content/img/toggle.png)
+    background-image: url('/content/icon/dic-employee.png');
 }
+/*Thiết lập*/
 .nav-item-6 {
-    background-image: url(/content/img/toggle.png)
+    background-image: url('/content/icon/setting.png');
 }

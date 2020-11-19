@@ -1,2 +1,4 @@
-﻿body {
+﻿/* gird-employee trong employee.html*/
+.grid-employee {
+    height: calc(100vh - 220px);
 }
