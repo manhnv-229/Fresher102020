@@ -1,13 +1,16 @@
 ﻿class BaseJS {
     /**
      * Hàm khởi tạo
-     * 
      * */
     constructor() {
-        this.getDataUrl = null;
-        this.setDataUrl();
-        this.loadData();
+        this.host = "http://api.manhnv.net";
+        this.apiRouter = null;
+        this.setApiRouter();
+        //this.getDataUrl = null;
+        //this.setDataUrl();
         this.initEvents();
+        this.loadData();
+        
     }
     
     /**
@@ -17,7 +20,16 @@
     setDataUrl() {
     }
 
+    /**
+     * hàm tạo url
+     * */
+
+    setApiRouter() {
+    }
+
+
     initEvents() {
+        var arrow = this;
         /* ------------------------------------
          * Tắt/ẩn dialog
          */
@@ -27,7 +39,7 @@
         /* ------------------------------------
          * Hiển thị dialog
          */
-        $('#btnAdd').click(addDialog);
+        $('#btnAdd').click(addDialog.bind(this));
 
         /* ------------------------------------
          * Làm mới dữ liệu trong bảng
@@ -37,7 +49,10 @@
         /* ------------------------------------
          * Hiển thị dialog khi doubleclicks vào từng dòng trên bảng
          */
-        $('table tbody').on('dblclick', 'tr', addDialog);
+        $('table tbody').on('dblclick', 'tr', function () {
+            var lala = this; // gán this của tr vào lala
+            arrow.editData(lala);
+        });
 
 
         /* ------------------------------------
@@ -54,7 +69,7 @@
          * Thực hiện kiểm tra và lưu dữ liệu vào database
          */
         $('#btnSave').click(function () {
-            var arrow = this;
+            
             var inputVaidates = $('input[required], input[type="email"]');
             $.each(inputVaidates, function (index,input) {
                 $(input).trigger('blur');
@@ -65,8 +80,7 @@
                 inputNotValids[0].focus();
                 return;
             }
-            /*var a = $('.value-take, .m-dialog input[name="gender"]:checked'); khong dung vi khong co gender */
-            var a = $('.value-take');
+            var a = $('.value-take, .m-dialog input[name="gender"]:checked,.m-dialog option[name="CustomerGroup"]:checked');
             var customer = {};
             //Thực hiện truyền data vào object
             $.each(a, function (index, data) {
@@ -74,10 +88,11 @@
                 var value = $(data).val();
                 customer[test] = value;
             })
-            customer['CustomerGroupId'] = '3631011e-4559-4ad8-b0ad-cb989f2177da';
+            
             console.log(customer);
+           
             $.ajax({
-                url: 'http://api.manhnv.net/api/customers',
+                url: arrow.host + arrow.apiRouter,
                 method: 'POST',
                 data: JSON.stringify(customer),
                 contentType: 'application/json'
@@ -93,6 +108,62 @@
 
 
 
+    /**
+     * Hiển thị dialog sửa thông tin khách hàng
+     * */
+    editData(lala) {
+        var host = this.host;
+        $('.m-dialog').removeClass('hide');
+        var api = $('select').attr('api');
+        var fieldId = $('select').attr('fieldId');
+        var fieldName = $('select').attr('fieldName');
+        var url2 = host + "/api/" + api;
+        console.log(url2);
+        var select = $('select#cbxCustomerGroup');
+        select.empty();
+        $.ajax({
+            url: host + "/api/"+api,
+            method: "GET"
+        }).done(function (res) {
+            if (res) {
+                $.each(res, function (index, object) {
+                    var option = $(`<option field="CustomerGroupId" name="CustomerGroup" value="${object[fieldId]}">${object[fieldName]}</option>`);
+                    select.append(option);
+                })
+            }
+            
+        }).fail(function (res) {
+          
+        })
+        
+        var apiRouter = this.apiRouter;
+        var recordId = $(lala).data('recordId');
+        var url = host + apiRouter + `/${recordId}`;
+        console.log(url);
+        // Goị service lấy thông tin chi tiết qua id
+        $.ajax({
+            url: url,
+            method: "GET"
+        }).done(function (res) {
+            console.log(res);
+            var a = $('input[field]');
+            var customer = {};
+       
+            //Thực hiện truyền data vào object
+            $.each(a, function (index, data) {
+                var test = $(data).attr('field');
+                var value = res[test];
+                if (test == 'DateOfBirth') {
+                    value = formatDateHigh(value);
+                }
+                $(this).val(value);
+                //customer[test] = value;
+            })
+            
+        }).fail(function (res) {
+
+        })
+    }
 
 
     /**
@@ -100,21 +171,23 @@
      *  create by: HTANH (12/11/2020)
      * */
     loadData() {
+        var arrow = this;
         $('table tbody').empty();
         // lấy thông tin các cột dữ liệu
         console.log("test load");
         var ths = $('table thead th');
         var getDataUrl = this.getDataUrl;
-        $.each(ths, function (index, item) {
-            var fieldName = $(item).attr('fieldname')
-        })
+
+        $('.loading').show();
 
         $.ajax({
-            url: getDataUrl,
+            url: arrow.host + arrow.apiRouter,
             method: "GET",
+            async:true ,
         }).done(function (res) {
             $.each(res, function (index, obj) {
-                var tr = $('<tr></tr>');
+                var tr = $(`<tr></tr>`);
+                $(tr).data('recordId', obj.CustomerId);
                 $.each(ths, function (index, th) {
                     var td = $(`<td></td>`);
                     var fieldName = $(th).attr('fieldname');
@@ -143,9 +216,11 @@
                     $(tr).append(td);
                 })
                 $('table tbody').append(tr);
+                $('.loading').hide();
+
             })
         }).fail(function (res) {
-
+            $('.loading').show();
         })
     }
 }
