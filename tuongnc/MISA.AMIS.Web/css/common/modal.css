@@ -10,6 +10,7 @@
     z-index: 10;
     background-color: #ffffff;
     max-width: 80%;
+    display: none;
 }
 
     .modal .active {
@@ -89,6 +90,7 @@
     left: 0px;
     background-color: rgba(0,0,0,.5);
     pointer-events: all;
+    display: none;
 }
 
 
