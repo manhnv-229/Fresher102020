@@ -1,2 +1,281 @@
-﻿body {
+﻿.content {
+	position: absolute;
+	top: 61px;
+	left: 221px;
+	width: calc( 100% - 221px);
+	height: calc( 100% - 61px);
+}
+	/*định dạng các chức năng strong content*/
+	.content .content-title {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+	}
+
+		.content .content-title .content-name {
+			margin-left: 16px;
+			font-weight: bold;
+			font-size: 24px;
+		}
+
+		.content .content-title .content-control {
+			display: flex;
+		}
+
+			.content .content-title .content-control .control-sync, .content .content-title .content-control .control-mix {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin-right: 16px;
+				height: 38px;
+				border-radius: 5px;
+				padding-left: 16px;
+			}
+
+			.content .content-title .content-control .control-sync {
+				border: 1px solid #E5E5E5;
+				padding-right: 16px;
+			}
+
+			.content .content-title .content-control .control-mix {
+				background-color: #019160;
+				color: white;
+				cursor: pointer;
+			}
+				.content .content-title .content-control .control-mix:active {
+					background-color: #01B075;
+				}
+				.content .content-title .content-control .control-mix:hover {
+					background-color: #2FBE8E;
+				}
+
+				.content .content-title .content-control .control-mix #add-title {
+					padding: 0 16px 0 8px;
+				}
+
+				.content .content-title .content-control .control-mix #control-arrow {
+					margin: 0;
+					width: 38px;
+					height: 100%;
+					border-left: 1px solid #E5E5E5;
+					background-image: url('../../content/icon/down-arrow.png');
+					background-position: center;
+					background-repeat: no-repeat;
+				}
+/*logo hrm, icon thêm*/
+#amis-hrm-logo, #add-logo {
+	width: 16px;
+	height: 16px;
+	margin-right: 10px;
+}
+/*Các chức năng lọc*/
+.content .content-filter {
+	display: flex;
+	margin-left: 16px;
+	margin-top: 16px;
+	justify-content: space-between;
+}
+
+	.content .content-filter .content-filter-group {
+		display: flex;
+	}
+
+		.content .content-filter .content-filter-group .search-content {
+			margin-right: 16px;
+			border: 1px solid #E5E5E5;
+			padding: 0 0 0 40px;
+			border-radius: 4px;
+			height: 38px;
+			font-size: 13px;
+			background-image: url('../../content/icon/search-icon.png');
+			background-repeat: no-repeat;
+			background-position: 16px 12px;
+			width: 250px;
+		}
+
+			.content .content-filter .content-filter-group .search-content:focus {
+				margin-right: 16px;
+				border: 1px solid;
+				border-color: #2FBE8E;
+				border-radius: 5px;
+				outline: none !important;
+			}
+
+		.content .content-filter .content-filter-group .department,
+		.content .content-filter .content-filter-group .state {
+			margin-right: 16px;
+			border: 1px solid #E5E5E5;
+			padding: 0 0 0 8px;
+			border-radius: 4px;
+			height: 38px;
+			font-size: 13px;
+		}
+
+		.content .content-filter .content-filter-group .state {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+			.content .content-filter .content-filter-group .state .state-content {
+				width: 170px;
+				color: #bbbbbb;
+			}
+
+			.content .content-filter .content-filter-group .state .state-btn {
+				width: 38px;
+				height: 100%;
+				border-left: 1px solid #E5E5E5;
+				background-image: url('../../content/icon/down-arrow-black.png');
+				background-repeat: no-repeat;
+				background-position: 11px 11px;
+			}
+
+	.content .content-filter .content-filter-btn {
+		margin-right: 16px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+		.content .content-filter .content-filter-btn .content-filter-btn-first {
+			border: 1px solid #E5E5E5;
+			height: 38px;
+			width: 38px;
+			background-image: url('../../content/icon/download.png');
+			background-repeat: no-repeat;
+			background-position: center;
+			margin-right: 16px;
+		}
+
+		.content .content-filter .content-filter-btn .content-filter-btn-second {
+			border: 1px solid #E5E5E5;
+			height: 38px;
+			width: 38px;
+			background-image: url('../../content/icon/refresh.png');
+			background-repeat: no-repeat;
+			background-position: center;
+		}
+
+/*Bảng chứa dữ liệu chính*/
+.content .content-tbl {
+	width: calc( 100% - 32px);
+	padding: 16px 16px 0px 16px;
+	height: calc( 100% - 140px);
+}
+
+	.content .content-tbl .main-tbl {
+		overflow: auto;
+		height: calc(100% - 29px);
+		width: 100%;
+	}
+
+	.content .content-tbl .page-tbl {
+		height: 56px;
+		width: 100%;
+	}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	color: #454545;
+}
+
+tr {
+	border-bottom: 1px solid #DDDDDD;
+}
+
+th {
+	border-top: 1px solid white;
+	position: sticky;
+	top: 0;
+	background-color: white;
+}
+
+td {
+	width: auto;
+}
+th, td {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-align: left;
+	padding: 10px 16px;
+}
+/*Phân trang cho bảng*/
+.content-tbl .page-tbl {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+	.content-tbl .page-tbl .page-tab {
+		display: flex;
+		justify-content: center;
+		width: auto;
+	}
+
+		.content-tbl .page-tbl .page-tab .back-btn, .content-tbl .page-tbl .page-tab .next-btn {
+			border: 1px solid #BBBBBB;
+			border-radius: 5px;
+			background-repeat: no-repeat;
+			background-size: 12px;
+			background-position: center;
+			width: 38px;
+			height: 38px;
+			margin-left: 5px;
+		}
+
+		.content-tbl .page-tbl .page-tab .next-btn {
+			background-image: url('../../content/icon/right-arrow.png');
+		}
+
+		.content-tbl .page-tbl .page-tab .back-btn {
+			background-image: url('../../content/icon/left-arrow.png');
+		}
+
+		.content-tbl .page-tbl .page-tab .page-number {
+			margin-left: 5px;
+			border: 1px solid #BBBBBB;
+			border-radius: 50%;
+			width: 38px;
+			height: 38px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+			.content-tbl .page-tbl .page-tab .next-btn:hover,
+			.content-tbl .page-tbl .page-tab .back-btn:hover,
+			.content-tbl .page-tbl .page-tab .page-number:hover {
+				background-color: #E5E5E5;
+			}
+
+	.content-tbl .page-tbl .display-tab {
+		border: 1px solid #E5E5E5;
+		border-radius: 4px;
+		width: 80px;
+		text-align: left;
+		padding: 5px 0 5px 10px;
+		background-image: url('../../content/icon/down-arrow-black.png');
+		background-size: 10px;
+		background-position: 73px 9px;
+		background-repeat: no-repeat;
+	}
+/*End Phân trang*/
+/*End bảng*/
+
+
+
+
+.first-column {
+	width: 50px;
+	height: auto;
+	text-align: center;
+}
+
+@media screen and (max-width: 1100px) {
+	.content .content-filter .content-filter-group .search-content {
+		width: 30%;
+	}
 }

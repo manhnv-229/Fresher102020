@@ -1,9 +1,17 @@
-﻿body {
+﻿/*Style chung cho cả trang*/
+body {
 	margin:0;
 	font-family: GoogleSans-Regular;
 	font-size:13px;
 }
-
+a {
+	text-decoration: none;
+	color: #000000;
+}
+	a:visited {
+		color: #000000;
+	}
+	
 select {
 	color: #bbbbbb;
 	width: 200px;
@@ -18,7 +26,9 @@ select {
 
 input {
 	font-family: GoogleSans-Regular;
+	outline-color: black;
 }
+	
 	
 option{
 	color: #000000;
@@ -30,7 +40,8 @@ option{
 	color: #ffffff;
 	pointer-events: none;
 }
-	
+
+
 ::-webkit-input-placeholder { 
 	color: #bbbbbb;
 	font-size: 12px;
@@ -41,6 +52,11 @@ option[value=""][disabled] {
 	display: none;
 }
 
+/*Ký hiệu giúp người dùng không bỏ sót*/
+.notice{
+	color:red;
+}
+/*font google-sans*/
 @font-face {
 	font-family: 'GoogleSans-Regular';
 	src: url('../../content/font/GoogleSans-Regular.otf') format('opentype');
