@@ -7,6 +7,7 @@
     <link href="/css/common/content.css" rel="stylesheet" />
     <link href="/css/common/header.css" rel="stylesheet" />
     <link href="/css/common/dialog.css" rel="stylesheet" />
+    <link href="/css/common/deleteAlert.css" rel="stylesheet" />
     <link href="/css/common/navbar.css" rel="stylesheet" />
     <link href="/css/common/main.css" rel="stylesheet" />
     <link href="/css/page/customer.css" rel="stylesheet" />
@@ -175,7 +176,7 @@
                     </div>
                     <div class="input-form input-company">
                         <label class="input-label" for="CompanyName">Tên công ty</label>
-                        <input class="company-name" />
+                        <input class="company-name" id="CompanyName"/>
                     </div>
                 </div>
 
@@ -193,15 +194,15 @@
                         <p>Giới tính</p>
                         <div class="select-gender">
                             <label class="input-label" for="Male">
-                                <input type="radio" class="customer-gender" name="gender" id="Gender" value="1" />
+                                <input type="radio" class="customer-gender" name="gender" id="Gender" gender=1 />
                                 Nam
                             </label>
                             <label class="input-label" for="Female">
-                                <input type="radio" class="customer-gender" name="gender" id="Gender" value="0" />
+                                <input type="radio" class="customer-gender" name="gender" id="Gender" gender=0 />
                                 Nữ
                             </label>
                             <label class="input-label" for="Other">
-                                <input type="radio" class="customer-gender" name="gender" id="Gender" value="2" />
+                                <input type="radio" class="customer-gender" name="gender" id="Gender" gender=2 />
                                 Khác
                             </label>
                         </div>
@@ -211,8 +212,8 @@
                         <input class="input-required" id="PhoneNumber" />
                     </div>
                     <div class="input-form">
-                        <label class="input-label" for="CustomerTax">Mã số thuế</label>
-                        <input class="customer-tax"/>
+                        <label class="input-label" for="CompanyTaxCode">Mã số thuế</label>
+                        <input class="customer-tax" id="CompanyTaxCode"/>
                     </div>
                 </div>
             </div>
@@ -228,6 +229,22 @@
                     <i class="far fa-save"></i>
                     <p style="margin-left: 8px;">Lưu</p>
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-delete">
+        <div class="delete-alert">
+            <div class="delete-header">
+                <h2>Cảnh báo</h2>
+                <i class="fas fa-times" style="cursor:pointer;"></i>
+            </div>
+
+            <p style="margin:0 15px 15px; font-size:18px;">Bạn có chắc chắn muốn xóa khách hàng này?</p>
+
+            <div class="dialog-footer">
+                <button class="footer-button cancel-button" id="cancel">Hủy</button>
+                <button class="footer-button delete-button" id="delete">Đồng ý</button>
             </div>
         </div>
     </div>

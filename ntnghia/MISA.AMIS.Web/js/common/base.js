@@ -28,26 +28,32 @@
 
         //Xóa khách hàng được chọn khi nhấn nút Delete:
         $('.btn-delete').click(function () {
+            $('.modal-delete').css("display", "flex");
+        });
+
+        $('#delete').click(function () {
             //Gọi service lấy thông tin chi tiết qua id
             $.ajax({
                 url: me.host + me.apiRouter + `/` + me.recordId,
                 method: "DELETE"
             }).done(function (res) {
                 alert('Xóa thành công!');
+                $('.modal-delete').css("display", "none");
                 me.loadData();
             }).fail(function (res) {
-
+                console.log(res);
             })
-
         });
 
         //Sự kiện khi nhấn đóng dialog:
         $('.fa-times').click(function () {
             $('.dialog-modal').css("display", "none");
+            $('.modal-delete').css("display", "none");
         })
 
-        $('#cancel').click(function () {
+        $('.cancel-button').click(function () {
             $('.dialog-modal').css("display", "none");
+            $('.modal-delete').css("display", "none");
         })
 
         //Lưu dữ liệu khi nhấn nút lưu
@@ -98,10 +104,36 @@
                 $.each(elements, function (index, input) {
                     var attr = $(this).attr('id');
                     var value = res[attr];
-                    $(this).val(value);
-                })
+                    if (value != null) {
+                        if ($(this).attr('type') == 'date') {
+                            var dateConvert = new Date(value);
+                            var day = dateConvert.getDay();
+                            var month = dateConvert.getMonth();
+                            var year = dateConvert.getFullYear();
+                            if (day < 10) {
+                                day = "0" + day;
+                            }
+                            if (month < 10) {
+                                month = "0" + month;
+                            }
 
-                console.log(res['Gender']);
+                            $(this).val(year + "-" + month + "-" + day);
+                        } else if ($(this).attr('type') == 'radio') {
+                            console.log(res['FullName']);
+                            console.log($(this));
+                            console.log($(this).attr('gender'));
+                            console.log(res['Gender']);
+                            console.log($(this).attr('gender') == res['Gender']);
+                            if ($(this).attr('gender') == res['Gender']) {
+                                $(this).attr('checked', true);
+                            } else {
+                                $(this).attr('checked', false);
+                            }
+                        } else {
+                            $(this).val(value);
+                        }
+                    }
+                })
 
             }).fail(function (res) {
 
@@ -179,6 +211,11 @@
      * CreatedBy: NTNghia (18/11/2020)
      * */
     btnAddOnClick() {
+        var elements = $('.dialog-content input[id], select[id]');
+        $.each(elements, function (index, input) {
+            $(this).val(null);
+        })
+
         try {
             var me = this;
             me.FormMode = 'Add';
@@ -188,7 +225,6 @@
             //load dữ liệu cho các combo box
             var select = $('select#CustomerGroupId');
             select.empty();
-            console.log(select);
 
             //lấy dữ liệu nhóm khách hàng
             $.ajax({
