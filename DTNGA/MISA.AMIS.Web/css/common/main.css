@@ -1,64 +1,104 @@
-﻿body{
-    font-family : GoogleSans-Regular;
-    font-size : 13px;
-    margin:0px;
-    overflow:hidden;
+﻿body {
+    font-family: GoogleSans-Regular;
+    font-size: 13px;
+    margin: 0px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
 }
- 
-.text-align-left{
+
+    body::-webkit-scrollbar {
+        height: 5px;
+
+    }
+
+    body::-webkit-scrollbar-track {
+        background: #E9EBEE;
+    }
+
+    body::-webkit-scrollbar-thumb {
+        background: #bbbbbb;
+        border-radius: 10px;
+    }
+
+    body::-webkit-scrollbar-corner {
+        background: #E9EBEE;
+    }
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.text-align-left {
     text-align: left;
 }
+
 .text-align-right {
     text-align: right;
-
 }
+
 .text-align-center {
     text-align: center;
 }
+
 @font-face {
     font-family: 'GoogleSans-Black';
     src: url('/content/font/GoogleSans-Black.otf') format('opentype');
 }
+
 @font-face {
     font-family: 'GoogleSans-BlackItalic';
     src: url('/content/font/GoogleSans-BlackItalic.otf') format('opentype');
 }
+
 @font-face {
     font-family: 'GoogleSans-Bold';
     src: url('/content/font/GoogleSans-Bold.otf') format('opentype');
 }
+
 @font-face {
     font-family: 'GoogleSans-BoldItalic';
     src: url('/content/font/GoogleSans-BoldItalic.otf') format('opentype');
 }
+
 @font-face {
     font-family: 'GoogleSans-Italic';
     src: url('/content/font/GoogleSans-Italic.otf') format('opentype');
 }
+
 @font-face {
     font-family: 'GoogleSans-Light';
     src: url('/content/font/GoogleSans-Light.otf') format('opentype');
 }
+
 @font-face {
     font-family: 'GoogleSans-LightItalic';
     src: url('/content/font/GoogleSans-LightItalic.otf') format('opentype');
 }
+
 @font-face {
     font-family: 'GoogleSans-Medium';
     src: url('/content/font/GoogleSans-Medium.otf') format('opentype');
 }
+
 @font-face {
     font-family: 'GoogleSans-MediumItalic';
     src: url('/content/font/GoogleSans-MediumItalic.otf') format('opentype');
 }
+
 @font-face {
     font-family: 'GoogleSans-Regular';
     src: url('/content/font/GoogleSans-Regular.otf') format('opentype');
 }
+
 @font-face {
     font-family: 'GoogleSans-Thin';
     src: url('/content/font/GoogleSans-Thin.otf') format('opentype');
 }
+
 @font-face {
     font-family: 'GoogleSans-ThinItalic';
     src: url('/content/font/GoogleSans-ThinItalic.otf') format('opentype');

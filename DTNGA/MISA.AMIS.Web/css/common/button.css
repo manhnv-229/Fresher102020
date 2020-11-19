@@ -1,0 +1,60 @@
+﻿* {
+    box-sizing: border-box;
+}
+.m-btn {
+    background-color: #019160;
+    border-radius: 5px;
+    height: 40px;
+    color: #ffffff;
+    font-size: 13px;
+    font-family: GoogleSans-Regular;
+    padding-left: 16px;
+    padding-right: 16px;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    outline: none;
+    display: flex;
+}
+    .m-btn:hover {
+        background-color: #2FBE8E;
+    }
+    .m-btn:after {
+        background-color: #01B075;
+    }
+    .m-btn .m-btn-icon {
+        background-position: center;
+        width: 16px;
+        height: 16px;
+
+    }
+.m-btn .btn-text{
+    margin-left: 8px;
+    background-color: none;
+}
+
+/* dropdown button*/
+.m-btn-dropdown {
+    width: 40px;
+    height: 40px;
+    padding: 12px;
+    background-color: #019160;
+
+}
+    .m-btn-dropdown div {
+        width: 16px;
+        height: 16px;
+        background-position: center;
+        align-self: center;
+    }
+
+/* button với content có 1-2 từ*/
+.m-btn-short{
+    width: 100px;
+    text-align: center;
+}
+/*button với content có trên 2 từ*/
+.m-btn-long {
+    padding: 0 24px;
+    text-align: center;
+}

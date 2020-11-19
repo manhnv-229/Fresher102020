@@ -1,0 +1,39 @@
+﻿*{
+    box-sizing: border-box;
+}
+.m-Toast-Messeger{
+    display: none;
+}
+.toast-messeger {
+    height: 48px;
+    bottom: 50px;
+    top: auto;
+    left: calc( 50% - 150px);
+    display: flex !important;
+    background-color: #ffffff;
+    z-index: 1;
+    position: absolute;
+    align-items: center;
+    box-shadow: 1px 1px 6px #BBBBBB;
+    border-radius: 4px;
+}
+
+    .toast-messeger .messeger-icon {
+        width: 24px;
+        height: 24px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        margin: 16px;
+    }
+.toast-messeger .messeger-icon-success {
+    border-radius: 50%;
+    background-image: url('/content/icon/common/complete.png');
+}
+    .toast-messeger .btn-exit-messeger {
+        background-image: url('/content/icon/common/exitgreen.png');
+        background-size: 16px;
+        background-color: #ffffff;
+        border: none;   
+        outline: none;
+    }
