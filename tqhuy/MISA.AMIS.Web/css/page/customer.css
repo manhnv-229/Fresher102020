@@ -3,7 +3,6 @@
     display: flex;
     align-self: center;
     height: 60px;
-    /*margin: 12px 0;*/
     padding-left: 24px;
     background-color: #ffffff;
     align-items: center;
@@ -26,10 +25,6 @@
 }
 
 
-.fas {
-    color: #ffffff;
-    margin-right: 8px;
-}
 
 .content .header-content .hearder-content-right .button-text {
     color: #ffffff;
@@ -37,35 +32,13 @@
 }
 
 .button-sync {
-    display: flex;
-    margin-right: 12px;
-    background-color: #019160;
-    padding: 0 16px;
-    border-radius: 4px;
-    border: 0;
-    height: 40px;
-    align-items: center;
+    margin-right: 16px;
 }
-
-    .button-sync:hover {
-        background-color: #2FBE8E;
-    }
-
 
 .button-insert {
-    display: flex;
-    background-color: #019160;
     border-bottom-left-radius: 4px;
     border-top-left-radius: 4px;
-    border: 0;
-    padding: 0 16px;
-    height: 40px;
-    align-items: center;
 }
-
-    .button-insert:hover {
-        background-color: #2FBE8E;
-    }
 
 .icon-down {
     height: 40px;
@@ -109,12 +82,10 @@
     }
 
 .toolbar-content-right button {
-    height: 40px;
-    width: 40px;
     margin-right: 16px;
 }
 
-.content .toolbar-content i {
+.content .toolbar-content> i {
     position: absolute;
     height: 16px;
     width: 16px;
@@ -160,31 +131,30 @@
     background-color: #ffffff;
     padding-left: 16px;
     padding-right: 16px;
+    height: 360px;
+    overflow: auto;
 }
 
-    .gird .gird-header {
-        height: 60px;
-    }
 
-    .gird .gird-content {
-        height: 300px;
+    .gird .gird-header {
+        width: 100%;
+        height: 48px;
         overflow: auto;
     }
 
-
-table th, td {
-    height: 48px;
-    border-bottom: 1px solid #bbbbbb;
-    text-align: left;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-
-    .gird td {
-        padding-right: 16px;
+    the.gird-header tr{
+        position: relative;
     }
+
+    .gird .gird-content {
+        width: 100%;
+        height: 340px;
+        overflow: auto;
+    }
+
+.gird td {
+    padding-right: 16px;
+}
 
     .gird .salary {
         text-align: right;
@@ -204,9 +174,6 @@ table th, td {
     align-items: center;
     justify-content: space-between;
 }
-
-    .tfoot .count-emplyee {
-    }
 
     .tfoot .count-page {
         background-color: #ffffff;
@@ -244,9 +211,8 @@ table th, td {
             margin-right: 18px;
         }
 
-
-
         .tfoot .page-navigations .page-table {
+            width: 40px;
             border-radius: 50%;
         }
 

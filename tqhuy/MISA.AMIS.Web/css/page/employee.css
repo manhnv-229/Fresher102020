@@ -171,14 +171,14 @@
     }
 
 
-table th, td {
+/*table th, td {
         height: 48px;
         border-bottom: 1px solid #bbbbbb;
         text-align: left;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-}
+}*/
 
 
     .gird td{

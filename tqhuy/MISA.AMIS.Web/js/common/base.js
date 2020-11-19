@@ -1,4 +1,5 @@
-﻿/**
+﻿
+/**
  * class các chức năng sử dụng chung
  * createdby: tqhuy (12-11-2020)
  * */
@@ -22,8 +23,7 @@ class Base {
      * hàm gọi api trả về dữ liệu rồi đẩy lên table
      * tqhuy 12/11/2020 
      */
-    getData() {
-      
+    getData() {     
         $.ajax({
             url: this.getUrl,
             method: "GET",
@@ -33,8 +33,10 @@ class Base {
                 $('table tbody').empty();
                 // lấy tất cả các cột của table
                 var columns = $('table thead th');
+                var primaryKey = $('table thead tr').attr("fieldPK");
                 $.each(reponse, function (index, item) {
                     var rowtable = $("<tr></tr>");
+                    rowtable.data(primaryKey, item[primaryKey]);
                     $.each(columns, function (i, column) {
                         var td = $("<td></td>");
                         var fieldName = $(column).attr("fieldName");
@@ -53,10 +55,8 @@ class Base {
                             else {
                                 td.append(item[fieldName]);
                             }
-                            //if (fieldName == "Address") {
-                            //    td.addClass("max-with");                                
-                            //}
                             td.addClass("max-with");
+                            td.attr("title", item[fieldName]);
                             rowtable = rowtable.append(td);
                             
                         }
@@ -69,7 +69,7 @@ class Base {
                 });
             },
             error: function (err) {
-                alert("Có lỗi! Không thể load được dữ liệu!");
+                me.snackError("Có lỗi khi load dữ liệu!");
             }
         });
     }
@@ -82,14 +82,55 @@ class Base {
     initEvents() {
 
         var me = this;
-        // envent load lại dữ liệu table
+        // event load lại dữ liệu table
         $('.btn-refresh').click(function () {
             me.getData();
         });
 
+        // event click vào buttom xóa để xóa dữ liệu được chọn
+        $('.btn-delete').click(function () {
+            $.ajax({
+                url: me.getUrl + `/${me.valuePrimaryKey}`,
+                method: "GET",
+                success: function (reponse) {
+                    var infos = me.setInfoForPopup(reponse);
+                    var mesenger = `Bạn có chắc chắn muốn xóa khách hàng ${infos[0]} (Mã khách hàng ${infos[1]}) không?`
+                    me.showPopUp(mesenger);
+                },
+                error: function (err) {
+                    me.snackError("Phải chọn bản ghi cần xóa!");
+                }
+            });
+
+            $(".btn-confirm").click(function () {
+                if (me.valuePrimaryKey) {
+                    $.ajax({
+                        url: me.getUrl + `/${me.valuePrimaryKey}`,
+                        method: "DELETE",
+                        success: function () {
+                            me.getData();
+                            me.snackbarSuccess("Xóa dữ liệu thành công.");
+                        },
+                        error: function () {
+                            me.snackError("Có lỗi xảy ra! Vui lòng thực hiện lại!");
+                        }
+                    });
+                }
+                else {
+                    me.snackError("Chọn dữ liệu cần xóa!");
+                }
+                me.hidePopup();
+                me.hideDialog();
+            });           
+        });
+
         // envent click vào buttom thêm mới
         $('.button-insert').click(function () {
-            $("#dialog").show();
+            me.method = "POST";
+            me.message = "Thêm dữ liệu thành công."
+            $("input[type=text], input[type=date], input[type=email]").val(null);
+            me.showDialog();
+            me.buildSelects();
         })
 
         // envent click vào buttom lưu của dialog
@@ -102,49 +143,117 @@ class Base {
             })
             var inputNotValids = $('input[validate="false"]');
             if (inputNotValids && inputNotValids.length > 0) {
-                alert("Dữ liệu không hợp lệ vui lòng kiểm tra lại.");
+                me.snackError("Dữ liệu không hợp lệ vui lòng kiểm tra lại!");
                 inputNotValids[0].focus();
                 return;
             }
 
-            var infos = $(".input-insert");
-            var data = "{";
+            var infos = $(".input-info");
+            var item = {};
             $.each(infos, function (index, info) {
-                var key = $(info).attr("fieldname");
+                var key = $(info).attr("fieldName");
                 var value = $(info).val();
-                var item = `"${key}":"${value}",`;
-                data = data + item   
+                if (this.type == "radio") {
+                    if (this.checked) {
+                        item[key] = value;
+                    }
+                }
+                else if (this.type == "select-one") {
+                    var fieldValue = $(info).attr("fieldValue");
+                    item[fieldValue] = $(info).val();
+                }
+                else {
+                    item[key] = value; 
+                }               
             });
-            var dataPost = data.substring(0, data.length - 1) + "}";
 
-            debugger;
+            if (me.method == "PUT") {
+                item[me.fieldPrimaryKey] = me.valuePrimaryKey;
+            }
+
+            // gọi api
             $.ajax({
                 url: this.getUrl,
-                method: 'POST',
-                data: dataPost,
+                method: me.method,
+                data: JSON.stringify(item),
                 contentType: 'application/json',
                 success: function () {
-                    debugger;
-                    alert("Thêm mới thành công!");
-                    $("#dialog").hide();
+                    me.hideDialog();         
                     me.getData();
+                    me.snackbarSuccess("Thao tác thành công.");
                 },
                 error: function (err) {
-                    debugger;
-                    alert("Có lỗi! Không thể thêm dữ liệu!")
+                    me.hideDialog();    
+                    me.snackError("Có lỗi xảy ra! Vui lòng thực hiện lại!");
                 }
-            })
+            });
+
         }.bind(this));
 
         // event ẩn dialog
-        $(".btn-cancel").click(function () {
-            $("#dialog").hide();
+        $(".dialog .btn-cancel").click(function () {
+            me.hideDialog();
+        });
+
+        // event ẩn pop-up
+        $(".pop-up .btn-cancel").click(function () {
+            me.hidePopup();
+        })
+
+        // envet click chọn dòng trên table
+        $('table tbody').on('click', 'tr', function () {
+            $('table tbody tr').removeClass('row-selected');
+            $(this).addClass("row-selected");
+            var primaryKey = $('table thead tr').attr("fieldPK");
+            var id = $(this).data(primaryKey);
+            me.fieldPrimaryKey = primaryKey;
+            me.valuePrimaryKey = id;
         });
 
         // event dblclick vào row table hiển thị dialog thông tin chi tiết
         $('table tbody').on('dblclick', 'tr', function () {
-            $("#dialog").show();
-        })
+            // gán cho method là PUT
+            me.method = "PUT";           
+            me.buildSelects();
+            var primaryKey = $('table thead tr').attr("fieldPK");
+            var id = $(this).data(primaryKey);
+            me.fieldPrimaryKey = primaryKey;
+            me.valuePrimaryKey = id;
+            // đẩy dữ liệu lên dialog hiển thị thông tin chi tiết
+            $.ajax({
+                url: me.getUrl + `/${id}`,
+                method: "GET",
+                success: function (reponse) {
+                    var inputs = $(".input-info");
+                    $.each(inputs, function (index, input) {
+                        var fieldName = $(input).attr("fieldName");
+                        var value = reponse[fieldName];
+                        if (input.type == "date") {
+                            var date = new Date(value);
+                            var year = date.getFullYear();
+                            var month = date.getMonth() + 1;
+                            month = month < 10 ? "0" + month : month;
+                            var day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+                            value = year + '-' + month + '-' + day;
+                            $(input).val(value);
+                        }
+                        else if (input.type == "select-one") {
+                            var fieldValue = $(input).attr("fieldValue");
+                            value = reponse[fieldValue];
+                            $(input).val(value);
+                        }
+                        else {
+                            $(input).val(value);
+                        }
+                    });
+                },
+                error: function (err) {
+                    me.snackError("Có lỗi khi load dữ liệu!");
+                }
+            });
+
+            me.showDialog();
+        });
 
         // event chọn trang dữ liệu của table
         $('.page-table').click(function () {
@@ -155,13 +264,107 @@ class Base {
     }
 
     /**
+     * hàm show dialog hiển thị thông tin chi tiết, form thêm mới
+     * createdBy: tqhuy(19/11/2020)
+     * */
+    showDialog() {
+        $(".dialog-modal").addClass("dialog-modal-opacity");
+        $(".dialog").show();
+    }
+
+    hideDialog() {
+        $(".dialog-modal").removeClass("dialog-modal-opacity");
+        $(".dialog").hide();
+    }
+
+    /**
+     * hàm set thông tin cho pop-up, hàm trả về một mảng gồm các thông tin cần lấy được sắp xếp theo thứ tự ưu tiên tăng dần
+     * @param {any} reponse: thông tin api trả về để lấy thông tin cần set cho pop-up
+     * createdBy: tqhuy(19/22/2020)
+     */
+    setInfoForPopup(reponse) {
+        var infos =[]
+        var getInfos = $(".pop-up-info");
+        $.each(getInfos, function (index, getInfo) {
+            var fieldName = $(`.pop-up-info-${index}`).attr("fieldName");
+            var info = reponse[fieldName];
+            infos.push(info);
+        })
+        return infos;
+    }
+
+    /**
+     * hàm show pop-up
+     * @param {any} mesenger: thông báo sẽ được hiển thị trên pop-up
+     * createdBy: tqhuy(19/11/2020)
+     */
+    showPopUp(mesenger) {
+        $(".pop-up-modal").addClass("pop-up-modal-opacity");
+        $(".pop-up .pop-up-mesenger").html(mesenger);
+        $(".pop-up").show();
+    }
+
+    hidePopup() {
+        $(".pop-up-modal").removeClass("pop-up-modal-opacity");
+        $(".pop-up").hide();
+    }
+
+    /**
+     * hàm thông báo thành công
+     * @param {any} mesenger : nội dung thông báo
+     * createdby: tqhuy (18/11/2020)
+     */
+    snackbarSuccess(mesenger) {
+        var mes = $(".snackbar-success")
+        $(".snackbar-success .snackbar-mesenger").html(mesenger);
+        mes.addClass("show-snackbar");
+        setTimeout(function () {
+            mes.removeClass("show-snackbar");
+        }, 3000);
+    }
+    /**
+     * hàm thông báo lỗi
+     * @param {any} mesenger :nội dung thông báo
+     * createdby: tqhuy(18/11/2020)
+     */
+    snackError(mesenger) {
+        var mes = $(".snackbar-err")
+        $(".snackbar-err .snackbar-mesenger").html(mesenger);
+        mes.addClass("show-snackbar");
+        setTimeout(function () {
+            mes.removeClass("show-snackbar");
+        }, 3000);
+    }
+
+    /**
+     * hàm build options cho các select
+     * createdBy: tqhuy(17/11/2020)
+     * */
+    buildSelects() {
+        $(".build-select").empty();
+        var selects = $(".build-select")
+        $.each(selects, function (index, select) {
+            var api = $(select).attr("api");
+            var fieldName = $(select).attr("fieldName");
+            var fieldValue = $(select).attr("fieldValue");
+            $.ajax({
+                url: "http://api.manhnv.net/api/" + api,
+                method: "GET",
+                success: function (reponse) {
+                    $.each(reponse, function (index, rep) {
+                        var option = $(`<option value="${rep[fieldValue]}">${rep[fieldName]}</option>`);
+                        $(select).append(option);
+                    })
+                }
+            })
+        });
+    }
+
+    /**
      *hàm gồm chức năng validate các yêu cầu bắt buộc khi tương tác với các chức năng của người dùng
      * createdby: tqhuy (15/11/2020)
      * */
     functionsValidate() {
-
-
-
         // validate bắt buộc nhập, kiểm tra chống thì sẽ cảnh báo
         $('input[required]').blur(function () {
             var value = $(this).val();
@@ -190,16 +393,17 @@ class Base {
         })
 
         // validate số điện thoại phải là chữ số
-        $('.txtPhoneNumber').blur(function () {
+        $('#PhoneNumber').blur(function () {
             var value = $(this).val();
-            var testEmail = /[^a-zA-Z]+/g;
+            var testEmail = /[a-zA-Z]+/g;
             if (!testEmail.test(value)) {
+                $(this).removeClass('border-red');
+                $(this).attr("validate", true);
+                
+            } else {
                 $(this).addClass('border-red');
                 $(this).attr('title', 'Số điện thoại phải là chữ số.');
                 $(this).attr("validate", false);
-            } else {
-                $(this).removeClass('border-red');
-                $(this).attr("validate", true);
             }
         })
     }
