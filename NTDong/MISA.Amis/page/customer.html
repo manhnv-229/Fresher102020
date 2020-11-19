@@ -106,13 +106,15 @@
                 </select> -->
             </div>
             <div class="filter-right">
+                <button id="btnDelete" class="m-btn-delete m-second-button">
+                </button>
                 <button id="btnRefresh" class="m-btn-refresh m-second-button">
                 </button>
             </div>
         </div>
         <div class="grid">
             <div class="grid-employee">
-                <table class="scrollTable" style="width:100%" border="0" width="100%" cellspacing="0">
+                <table style="text-overflow: ellipsis;" class="scrollTable" style="width:100%" border="0" width="100%" cellspacing="0">
                     <colgroup>
                     <col style="width:150px; " />
                     <col style="width:200px" />
@@ -130,12 +132,11 @@
                         <tr>
                             <th fieldName="CustomerCode">Mã Khách hàng</th>
                             <th fieldName="FullName">Họ và Tên</th>
-                            <th fieldName="Gender">Giới tính</th>
+                            <th fieldName="GenderName">Giới tính</th>
                             <th fieldName="DateOfBirth" formatType="ddmmyyyy">Ngày sinh</th>
                             <th fieldName="PhoneNumber">Số điện thoại</th>
                             <th fieldName="Email">Email</th>
                             <th fieldName="Address">Địa chỉ</th>
-                            <th fieldName = "DebitAmount" formatType="Money" >Số tiền nợ</th>
                             <th fieldName="MemberCardCode">Mã thẻ thành viên</th>
                         </tr>
                     </thead>
@@ -144,7 +145,22 @@
                 </table>
             </div>
         </div>
-        <div class="paging-bar">Cái này em xin vẽ sau ạ . Em đang dính lịch kiểm tra hơi nhiều </div>
+        <div class="paging-bar">
+            <div class="paging-bar-left">
+                Hiển thị <b>01-20/123 </b> lao động 
+            </div>
+            <div class="paging-bar-center">
+                <button class="button-selected-left"></button>
+                <button class="button-circle"><div class="button-text">1</div></button>
+                <button class="button-circle"><div class="button-text">2</div></button>
+                <button class="button-circle"><div class="button-text">3</div></button>
+                <button class="button-circle"><div class="button-text">4</div></button>
+                <button class="button-selected-right"></button>
+            </div>
+            <div class="paging-bar-right">
+                <b>20</b> lao động/trang
+            </div>
+        </div>
     </div>
         <div class="m-dialog dialog-detail" title="Thông tin khách hàng">
         <div class="dialog-content">
@@ -157,46 +173,62 @@
                 </div>
                 <div class="row-col-1">
                     <div class="txt-input">Mã khách hàng</div>
-                    <input fieldNameSave="Codemembers" class="input-required" id="txtCustomerCode" required type="text" name="">
+                    <input fieldName="CustomerCode" class="input-required" id="txtCustomerCode" required type="text" name="">
                     <div class="txt-input">Mã thẻ thành viên</div>
-                    <input fieldNameSave="Membercard" id="txtMemberCardCode" type="text" name="">
+                    <input fieldName="MemberCardCode" id="txtMemberCardCode" type="text" name="">
                     <div class="txt-input">Ngày sinh</div>
-                    <input fieldNameSave="DateOfBirth" id="dtDateOfBirth" type="date" name="">
+                    <input fieldName="DateOfBirth" id="dtDateOfBirth" type="date" name="">
                 </div>
                 <div class="row-col-2">
                     <div>Họ và tên </div>
-                    <input fieldNameSave="Name" class="input-required" id="txtFullName" type="text" required name="">
+                    <input fieldName="FullName" class="input-required" id="txtFullName" type="text" required name="">
                     <div>Nhóm khách hàng</div>
                     <input id="cbxCustomerGroup" type="text" name="">
+                    <!-- <select id="cbxCustomerGroup">
+                        <option value="19165ed7-212e-21c4-0428-030d4265475f">Khách VIP</option>
+                        <option value="7a0b757e-41eb-4df6-c6f8-494a84b910f4">khách thường</option>
+                        <option value="3631011e-4559-4ad8-b0ad-cb989f2177da">Khách vãn lai</option>
+                    </select> -->
                     <div>Giới tính</div>
-                    <div  id="rdGender" class="user-checkbox">
-                            <input type="radio" name="gender" value="male" id="male"><label style="padding-top: 7px; margin-right: 5px;">Nam</label>
-                            <input type="radio" name="gender" value="female" id="female"><label style="padding-top: 7px;">Nữ</label>
+                    <div id="rdGender" class="user-checkbox">
+                            <input fieldName="Gender" type="radio" value="1" id="male" checked><label style="padding-top: 7px; margin-right: 5px;">Nam</label>
+                            <input fieldName="Gender" type="radio" value="0" id="female"><label style="padding-top: 7px;">Nữ</label>
                     </div>
                 </div>
             </div>
                 <div class="col-3">
                     <div class="col-3-row-1">
                         <div>Email</div>
-                        <input fieldNameSave="Email" class="input-required" id="txtEmail" required type="email" name="">
+                        <input fieldName="Email" class="input-required" id="txtEmail" required type="email" name="">
                         <div>Tên công ty</div>
-                        <input fieldNameSave="Company" type="text" name="">
+                        <input fieldName="CompanyName" type="text" name="">
                     </div>
                     <div class="col-3-row-2">
                         <div>Số điện thoại </div>
-                        <input fieldNameSave="PhoneNumber" id="txtPhoneNumber" class="input-required" type="tel" required name="">
+                        <input fieldName="PhoneNumber" id="txtPhoneNumber" class="input-required" type="tel" required name="">
                         <div>Mã số thuế</div>
-                        <input fieldNameSave="Tax" type="text" name="">
+                        <input fieldName="Tax" type="text" name="">
                     </div>
                     <div class="col-3-row-3">
                         <div>Địa chỉ</div>
-                        <input fieldNameSave="Address" id="txtAddress" type="text" name="">
+                        <input fieldName="Address"  id="txtAddress" type="tel" name="">
                     </div>
                 </div>               
             </div>
             <div class="footter-dialog">
                 <button id="btnSave" class="button-add">Lưu</button>  
+                <button id="btnDelete-dialog" class="button-delete">Xóa</button>
                 <button id="btnCancel" class="button-cancel">Hủy</button>  
+            </div>
+       </div>
+       <div class="d-dialog dialog-title" title="Xóa">
+            <div class="d-content">
+                <div class="d-content-image"></div> 
+                <div class="d-content-text">Bạn có chắc muốn xóa khách hàng không ?</div>
+            </div>
+            <div class="d-button">
+                <button id="d-delete" class="d-button-delete">Xóa</button>
+                <button id="d-cancle" class="d-button-cancle">Hủy</button>
             </div>
        </div>
     </div>

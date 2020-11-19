@@ -39,4 +39,13 @@
 	background-image: url('../../content/img/refresh.png');
 	background-repeat: no-repeat;
 	background-position: center;
+	background-size: 20px;
 }
+.m-btn-delete{
+	background-image: url('../../content/img/trash-2.svg');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 20px;
+	margin-right: 16px;
+}
+.
