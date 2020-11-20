@@ -2,21 +2,36 @@
 /* Grid */
 .grid {
     width: 100%;
-    /*overflow:auto;*/
+    overflow-x:auto;
+    overflow-y:hidden;
 }
 
 
-.grid .grid-header{
-    height: 50px;
-}
-
-    .grid .grid-content, .tablescroll_wrapper, .tablescroll {
-        height: calc(100% - 50px);
-        overflow: auto;
+    .grid .grid-header {
+        height: 50px;
     }
 
-table th, td {
+    .grid .grid-content, .tablescroll_wrapper, .tablescroll {
+        height: calc(100% - 25px);
+    }
+
+.tablescroll {
+}
+
+table th {
     border-bottom: 1px solid #bbbbbb;
+    /*border-left: 1px solid #bbbbbb;*/
+    /*padding: 10px 16px !important;*/
+    text-align: left;
+}
+
+    table th .cell {
+        padding: 10px 16px !important;
+    }
+
+table td {
+    border-bottom: 1px solid #bbbbbb;
+    /*border-left: 1px solid #bbbbbb;*/
     padding: 10px 16px !important;
     text-align: left;
     white-space: nowrap;
@@ -28,15 +43,16 @@ table th, td {
 
 
 table th {
-    z-index:1;
+    /*z-index:1;
     position:sticky;
     background-color: #ffffff;
     top:0px;
     left:0;
-    padding-top: 22px !important;
-    font-weight:bold !important;
+    padding-top: 22px !important;*/
+    font-weight: bold !important;
 }
-tbody tr:nth-child(2n+1){
+
+tbody tr:nth-child(2n+1) {
     background-color: #fafafa;
 }
 
@@ -44,13 +60,14 @@ tbody tr:hover {
     background-color: #d9d9d9;
     cursor: pointer;
 }
+
 table td span {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
- /*define height and width of scrollable area. Add 16px to width for scrollbar*/          
+/*define height and width of scrollable area. Add 16px to width for scrollbar*/
 div.tableContainer {
     clear: both;
     border: 1px solid #963;
@@ -58,12 +75,12 @@ div.tableContainer {
     overflow: auto;
     width: 900px;
 }
- /*Reset overflow value to hidden for all non-IE browsers.*/ 
+/*Reset overflow value to hidden for all non-IE browsers.*/
 html > body div.tableContainer {
     overflow: hidden;
     width: 900px;
 }
-     /*define width of table. IE browsers only*/                 
+    /*define width of table. IE browsers only*/
     div.tableContainer table {
         float: left;
         border-spacing: 0;
@@ -101,7 +118,7 @@ html > body tbody.scrollContent {
     overflow: auto;
     width: 100%;
 }
-     /*make TD elements pretty. Provide alternating classes for striping the table*/ 
+    /*make TD elements pretty. Provide alternating classes for striping the table*/
     tbody.scrollContent td, tbody.scrollContent tr.normalRow td {
         background: #fff;
         border-bottom: none;
@@ -111,7 +128,7 @@ html > body tbody.scrollContent {
     }
 
 td div {
-    max-width:200px;
+    max-width: 200px;
     white-space: nowrap;
     box-sizing: border-box;
     overflow: hidden;
