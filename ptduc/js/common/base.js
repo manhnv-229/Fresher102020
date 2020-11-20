@@ -6,7 +6,7 @@ class BaseJS {
   }
 
   /**
-   * Thêm sự kiện click các nút trên màn hình
+   * Thêm các sự kiện xử lí 
    *Created by: PTDuc(xx/11/2020)
    *Edited by: PTDuc(20/11/2020)
    */
