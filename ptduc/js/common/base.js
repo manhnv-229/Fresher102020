@@ -12,9 +12,9 @@ class BaseJS {
    */
   initEvents() {
     var self = this;
+    //Load lại dữ liệu khi ấn nút sync
     $(".sync-m-btn").click(function () {
-      console.log("ấn");
-      self.showNotification("con cặc", "fail");
+      self.loadData;
     });
     //Ấn nút hủy trên thông báo xóa entity
     this.cancleDelete();
