@@ -52,6 +52,8 @@ function formatMoney(money) {
 /**
  * Làm mới lại trang dialog
  * CreatedBy: LTHAI (15/11/2020)
+ * EditedBy: LTHAI(20/11/2020)
+ * Làm mới thêm trường hợp radio button
  * */
 function RefreshDialog() {
     let inputs = $('#d-dialog input,#d-dialog select');
@@ -59,6 +61,9 @@ function RefreshDialog() {
         $(input).val('');
         $(input).removeAttr('validated');
         $(input).removeClass("border-red");
+        if ($(input).attr('type') == "radio") {
+             $(input).prop("checked", false);
+        }
     })
     $('#d-dialog').css("display", "none");
 }
