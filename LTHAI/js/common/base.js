@@ -220,11 +220,12 @@ class BaseJS {
     *  CreatedBy: LTHAI(15/11/2020)
     * */
     EventsWhenClickTr(self){
-        $('tr').css("background-color", "#ffffff");
+        
         if ($(self).hasClass('active')) {
             $(self).removeClass('active');
             $('.icon-remove').find('button').css('display', 'none');
         } else {
+            $('tr').removeClass('active');
             $(self).addClass('active');
             $('.icon-remove').find('button').css('display', 'block');
             $('.icon-remove').find('button').data('recordId', $(self).data('recordId'));
