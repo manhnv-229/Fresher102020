@@ -221,9 +221,14 @@ class BaseJS {
     * */
     EventsWhenClickTr(self){
         $('tr').css("background-color", "#ffffff");
-        $(self).css("background-color", "#019160");
-        $('.icon-remove').find('button').css('display', 'block');
-        $('.icon-remove').find('button').data('recordId', $(self).data('recordId'));
+        if ($(self).hasClass('active')) {
+            $(self).removeClass('active');
+            $('.icon-remove').find('button').css('display', 'none');
+        } else {
+            $(self).addClass('active');
+            $('.icon-remove').find('button').css('display', 'block');
+            $('.icon-remove').find('button').data('recordId', $(self).data('recordId'));
+        }
     }
 
     /**
