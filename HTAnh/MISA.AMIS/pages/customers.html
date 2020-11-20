@@ -86,7 +86,7 @@
             <form class="content-filter">
                 <div class="content-filter-group">
                     <input type="text" class="search-content" placeholder="Tìm kiếm theo mã nhân viên, họ tên" />
-                    <select class="department" api="customergroups" fieldId="CustomerGroupId" fieldName="CustomerGroupName">
+                    <select class="department">
                         <option value="" disabled selected>Chọn bộ phận phòng ban</option>
                         <option value="product">product</option>
                         <option value="hr">hr</option>
@@ -168,7 +168,7 @@
                             </div>
                             <div class="line-first-content">
                                 <label>Nhóm khách hàng</label>
-                                <select id="cbxCustomerGroup" class="dialog-group-customer" field="MemberCardCode">
+                                <select id="cbxCustomerGroup" class="dialog-group-customer" field="CustomerGroupName"  api="customergroups" fieldId="CustomerGroupId" fieldName="CustomerGroupName">
   
                                 </select>
                             </div>
@@ -182,11 +182,11 @@
                                 <label>Giới tính</label>
                                 <div class="radio-group">
                                     <div class="radio-content">
-                                        <input type="radio" id="rdMale" value="1" name="gender" checked field="gender" />
+                                        <input type="radio" id="rdMale" value="1" name="gender"  field="Gender" />
                                         <label for="rdMale">Nam</label>
                                     </div>
                                     <div class="radio-content">
-                                        <input type="radio" id="rdFemale" value="0" name="gender" field="gender" />
+                                        <input type="radio" id="rdFemale" value="0" name="gender" field="Gender" />
                                         <label for="rdMale">Nữ</label>
                                     </div>
                                 </div>
@@ -225,8 +225,20 @@
             </div>
             <div class="dialog-footer">
                 <div class="dialog-btn" id="btnCancel">Hủy</div>
+                <div class="dialog-btn" id="btnDelete">Xóa</div>
                 <div class="dialog-btn" id="btnSave">Lưu</div>
             </div>
+        </div>
+    </div>
+    <div class="confirm-dialog hide" >
+        <div class="dialog-modal"></div>
+        <div class="dialog-confirm-content">
+            <div class="dialog-message">Bạn có chắc chắn muốn xóa không?</div>
+            <div class="dialog-confirm-btn">
+                <div class="dialog-btn" id="btnConfirmDelete">Xác nhận</div>
+                <div class="dialog-btn" id="btnCancelDelete">hủy</div>
+            </div>
+
         </div>
     </div>
     <div class="loading">

@@ -201,3 +201,75 @@
 				.m-dialog .dialog-content .dialog-footer #btnCancel:active {
 					background-color: #E5E5E5;
 				}
+
+			.m-dialog .dialog-content .dialog-footer #btnDelete {
+				background-color: red;
+				color: white
+			}
+
+				.m-dialog .dialog-content .dialog-footer #btnDelete:hover {
+					background-color: #F65454;
+				}
+
+				.m-dialog .dialog-content .dialog-footer #btnDelete:active {
+				}
+
+.confirm-dialog {
+	position: relative;
+}
+.confirm-dialog.hide {
+	display: none;
+}
+
+	.confirm-dialog .dialog-modal {
+		position: fixed;
+		opacity: 0.5;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: black;
+		z-index: 999;
+	}
+	.confirm-dialog .dialog-confirm-content {
+		position: absolute;
+		background: #FFFFFF;
+		z-index: 1000;
+		top: 30vh;
+		left: 40%;
+		border-radius: 4px;
+		width:300px;
+		height:200px;
+	}
+	.confirm-dialog .dialog-confirm-content .dialog-message {
+		height: calc(100% - 60px);
+		width: 100%;
+		display:flex;
+		align-items: center;
+		justify-content:center;
+	}
+		.confirm-dialog .dialog-confirm-content .dialog-confirm-btn {
+			background-color: #BBBBBB;
+			height:60px;
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+		}
+			.confirm-dialog .dialog-confirm-content .dialog-confirm-btn .dialog-btn {
+				height: 40px;
+				display: flex;
+				display: flex;
+				align-items: center;
+				margin-right: 16px;
+				background-color: #019160;
+				width: auto;
+				border-radius: 5px;
+				padding: 0 24px 0 24px;
+			}
+			.confirm-dialog .dialog-confirm-content .dialog-confirm-btn #btnConfirmDelete {
+				background-color: #F65454;
+				color: white;
+			}
+			.confirm-dialog .dialog-confirm-content .dialog-confirm-btn #btnCancelDelete {
+				background-color: #E9EBEE;
+			}

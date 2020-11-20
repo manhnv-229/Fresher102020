@@ -8,6 +8,8 @@ function formatDate(date) {
     var day = date.getDate();
     var month = date.getMonth() + 1;
     var year = date.getFullYear();
+    day = day < 10 ? '0' + day : day;
+    month = month < 10 ? '0' + month : month;
     return day + '/' + month + '/' + year;
 }
 function formatDateHigh(date) {
@@ -15,6 +17,8 @@ function formatDateHigh(date) {
     var day = date.getDate();
     var month = date.getMonth() + 1;
     var year = date.getFullYear();
+    day = day < 10 ? '0' + day : day;
+    month = month < 10 ? '0' + month : month;
     return year + '-' + month + '-' + day;
 }
 
@@ -33,6 +37,7 @@ function formatMoney(money) {
  * */
 function hideDialog() {
     $('.m-dialog').addClass('hide');
+    $('.confirm-dialog').addClass('hide');
     $('input[required],input[type="email"]').removeClass('warning');
     $('input[required],input[type="email"]').attr("validate", true);
 }
@@ -41,28 +46,28 @@ function hideDialog() {
  * Hàm hiện dialog thêm dữ liệu
  * Created by: HTANH
  * */
-function addDialog() {
-    var host = this.host;
-    $('.m-dialog').removeClass('hide');
-    $('input').val(null);
-    var select = $('select#cbxCustomerGroup');
-    select.empty();
-    $('.loading').show();
-    $.ajax({
-        url: host+"/api/customergroups",
-        method: "GET"
-    }).done(function (res) {
-        if (res) {
-            $.each(res, function (index, object) {
-                var option = $(`<option field="CustomerGroupId" name="CustomerGroup" value="${object.CustomerGroupId}">${object.CustomerGroupName}</option>`);
-                select.append(option);
-            })
-        }  
-        $('.loading').hide();
-    }).fail(function (res) {
-        $('.loading').hide();
-    })
-}
+//function addDialog() {
+//    var host = this.host;
+//    $('.m-dialog').removeClass('hide');
+//    $('input').val(null);
+//    var select = $('select#cbxCustomerGroup');
+//    select.empty();
+//    $('.loading').show();
+//    $.ajax({
+//        url: host+"/api/customergroups",
+//        method: "GET"
+//    }).done(function (res) {
+//        if (res) {
+//            $.each(res, function (index, object) {
+//                var option = $(`<option field="CustomerGroupId" name="CustomerGroup" value="${object.CustomerGroupId}">${object.CustomerGroupName}</option>`);
+//                select.append(option);
+//            })
+//        }  
+//        $('.loading').hide();
+//    }).fail(function (res) {
+//        $('.loading').hide();
+//    })
+//}
 
 
 
