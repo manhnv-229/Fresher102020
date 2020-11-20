@@ -5,13 +5,17 @@
  * CreatedBy: NamPV (12/11/2020)
  */
 function formatDate(date) {
-    var date = new Date(date);
-    var day = date.getDate(),
-        month = date.getMonth() + 1,
-        year = date.getFullYear();
-    day = day < 10 ? `0` + day : day;
-    month = month < 10 ? `0` + month : month;
-    return day + `/` + month + `/` + year;
+    try {
+        var date = new Date(date);
+        var day = date.getDate(),
+            month = date.getMonth() + 1,
+            year = date.getFullYear();
+        day = day < 10 ? `0` + day : day;
+        month = month < 10 ? `0` + month : month;
+        return day + `/` + month + `/` + year;
+    } catch (e) {
+
+    }
 }
 
 /**
@@ -20,8 +24,12 @@ function formatDate(date) {
  * CreatedBy: NamPV (12/11/2020)
  */
 function formatMoney(money) {
-    if (money) {
-        return money.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    try {
+        if (money) {
+            return money.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+        }
+    } catch (e) {
+
     }
 }
 

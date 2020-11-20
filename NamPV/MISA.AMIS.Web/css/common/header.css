@@ -17,7 +17,6 @@
         width: 50%;
     }
 
-
         /* Icon logo*/
 
         .header .header-selector-box .header-icon {
@@ -31,7 +30,6 @@
             border-radius: 5px;
             float: left;
         }
-
 
         /* Box chọn chi nhánh*/
 
@@ -54,47 +52,46 @@
                 margin: auto;
             }
 
-d .header .header-selector-box .selector-box .header-selector:hover {
-    cursor: pointer;
-}
+                .header .header-selector-box .selector-box .header-selector:hover {
+                    cursor: pointer;
+                }
 
+    /* Định dạng right-header, thông báo/ avatar/ option*/
 
-/* Định dạng right-header, thông báo/ avatar/ option*/
-
-.header .header-account {
-    display: inline-flex;
-    float: right;
-    height: 48px;
-    /*padding-right: 16px;*/
-}
-
-
-    /* Avatar*/
-
-    .header .header-account .header-icon-avatar {
-        background-image: url('/content/icon/avatar-default.png');
-        background-size: 28px 28px;
-        width: 28px;
-        height: 28px;
-        border-radius: initial;
-        margin: auto 16px;
-    }
-
-    .header .header-account .header-account-name {
-        margin: auto;
+    .header .header-account {
+        display: inline-flex;
+        float: right;
+        height: 48px;
+        /*padding-right: 16px;*/
     }
 
 
-    /* Option*/
+        /* Avatar*/
 
-    .header .header-account .header-icon-more {
-        background-image: url('/content/icon/option.png');
-        background-size: 16px;
-        width: 16px;
-        height: 16px;
-        margin: auto 16px;
-    }
-
-        .header .header-account .header-icon-more:hover {
-            cursor: pointer;
+        .header .header-account .header-icon-avatar {
+            background-image: url('/content/icon/avatar-default.png');
+            background-size: 28px 28px;
+            width: 28px;
+            height: 28px;
+            border-radius: initial;
+            margin: auto 16px;
         }
+
+        .header .header-account .header-account-name {
+            margin: auto;
+        }
+
+
+        /* Option*/
+
+        .header .header-account .header-icon-more {
+            background-image: url('/content/icon/option.png');
+            background-size: 16px;
+            width: 16px;
+            height: 16px;
+            margin: auto 16px;
+        }
+
+            .header .header-account .header-icon-more:hover {
+                cursor: pointer;
+            }

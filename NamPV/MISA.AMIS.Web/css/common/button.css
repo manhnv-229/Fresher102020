@@ -20,19 +20,30 @@ button {
 
     .m-btn:hover {
         cursor: pointer;
-        background-color: #bbb;
+        background-color: #2FBE8E;
     }
+
+.btn-delete:hover {
+    background-color: #f00;
+}
 
 /*button chỉ chứa text*/
 .m-btn-content {
     padding: 0px 24px;
 }
 
+    .m-btn-content:hover {
+        background-color: #E9EBEE;
+    }
+
+.confirm-delete:hover {
+    background-color: #ff0000;
+}
+
 /*button chứa icon và text*/
 .m-btn-icon {
     padding: 0px 16px;
     margin: auto;
-    display: flex;
     background-repeat: no-repeat;
     background-size: 16px 16px;
     background-position: 16px 12px;
@@ -47,3 +58,7 @@ button {
     background-repeat: no-repeat;
     background-position: center;
 }
+
+    .btn-single-icon:hover {
+        background-color: #E9EBEE;
+    }

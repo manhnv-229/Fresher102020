@@ -93,14 +93,14 @@
                 <table border="0" width="100%" style="border-collapse: unset;" cellspacing="0">
                     <thead>
                         <tr>
-                            <th fieldname="CustomerCode" style="min-width: 90px; max-width: 90px;">Mã khách hàng</th>
-                            <th fieldname="FullName" style="min-width: 150px; max-width: 150px;">Họ tên</th>
-                            <th fieldname="GenderName" style="min-width: 50px; max-width: 50px;">Giới tính</th>
+                            <th fieldname="CustomerCode">Mã khách hàng</th>
+                            <th fieldname="FullName">Họ tên</th>
+                            <th fieldname="GenderName">Giới tính</th>
                             <th fieldname="DateOfBirth" formatType="ddmmyyyy">Ngày sinh</th>
                             <th fieldname="PhoneNumber">Số điện thoại</th>
-                            <th fieldname="Email" style="min-width: 150px; max-width: 150px;">Email</th>
-                            <th fieldname="CompanyName" style="min-width: 150px; max-width: 150px;">Công ty</th>
-                            <th fieldname="Address" style="min-width: 300px; max-width: 300px;">Địa chỉ</th>
+                            <th fieldname="Email">Email</th>
+                            <th fieldname="CompanyName">Công ty</th>
+                            <th fieldname="Address">Địa chỉ</th>
                             <th fieldname="CustomerGroupName">Nhóm khách hàng</th>
                             <th fieldname="MemberCardCode">Mã thẻ thành viên</th>
                             <th fieldname="DebitAmount" formatType="Number">Tiền ghi nợ</th>
@@ -111,7 +111,7 @@
             </div>
             <div class="pagination">
                 <div class="pagi-left">
-                    <p><span>Hiển thị </span><strong>0-21/1xx</strong><span> khách hàng</span></p>
+                    <p>Hiển thị <strong class="total"></strong> khách hàng</p>
                 </div>
                 <div class="pagi-center">
                     <button class="m-btn btn-single-icon first-page"></button>
@@ -126,7 +126,7 @@
                     <button class="m-btn btn-single-icon last-page"></button>
                 </div>
                 <div class="pagi-right">
-                    <p>20 khách hàng/trang &diams;</p>
+                    <p>20 khách hàng/trang</p>
                 </div>
             </div>
         </div>
@@ -208,7 +208,7 @@
             <div class="dialog-footer ">
                 <div class="group-footer-button">
                     <button class="m-btn m-btn-content btn-cancel">Huỷ</button>
-                    <button class="m-btn m-btn-content btn-delete disable">Xoá</button>
+                    <button class="m-btn m-btn-icon btn-delete disable">Xoá</button>
                     <button class="m-btn m-btn-icon btn-save">Lưu</button>
                 </div>
             </div>
@@ -225,8 +225,7 @@
             </div>
         </div>
     </div>
-    <div id="popup-notification">
-    </div>
+    <div id="popup-notification"></div>
     <div class="loading-data">
         <div class="loading-icon"></div>
     </div>

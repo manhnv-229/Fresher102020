@@ -11,34 +11,36 @@ table {
     width: 100%;
 }
 
-/*th,
-td {
-    width: 100px;
-}*/
+    table tbody tr:hover {
+        cursor: pointer;
+        background-color: #2FBE8E;
+    }
 
-thead > tr {
-    position: relative;
-    display: block;
-}
+    table thead > tr {
+        position: relative;
+        display: block;
+    }
 
-tbody {
-    display: block;
-    height: calc(100vh - 291px);
-    overflow: scroll;
-}
+    table tbody {
+        display: block;
+        height: calc(100vh - 291px);
+        overflow: scroll;
+    }
 
-table th, table td {
-    border-bottom: 1px solid #bbbbbb;
-    padding: 10px 16px;
-    text-align: left;
-    min-width: 100px;
-    max-width: 100px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
+        table thead tr th, table tbody tr td {
+            border-bottom: 1px solid #bbbbbb;
+            padding: 10px 16px;
+            text-align: left;
+            min-width: 100px;
+            max-width: 100px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
 
-
+    table thead tr th {
+        text-align: center;
+    }
 /*Chia đều kích thước màn hình theo 12 cột*/
 .col {
     display: block;
@@ -96,4 +98,8 @@ table th, table td {
 .row {
     width: 100%;
     display: flex;
+}
+
+.row-selected {
+    background-color: #EBF9F4;
 }
