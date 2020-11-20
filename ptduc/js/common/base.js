@@ -14,7 +14,7 @@ class BaseJS {
     var self = this;
     $(".sync-m-btn").click(function () {
       console.log("ấn");
-      self.showNotification("con cặc", "fail");
+      self.showNotification("check", "fail");
     });
     //Ấn nút hủy trên thông báo xóa entity
     this.cancleDelete();
