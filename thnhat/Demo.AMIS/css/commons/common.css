@@ -5,3 +5,35 @@
 .text-align-center {
     text-align: center;
 }
+.loading {
+    display: none;
+}
+.loading-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #000;
+    opacity: .5;
+    z-index: 50;
+}
+
+.loading-icon {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    top: calc(50% - 15px);
+    left: calc(50% - 15px);
+    background-color: #0CB1C4;
+    animation: spin 5s linear infinite;
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

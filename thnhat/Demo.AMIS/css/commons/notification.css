@@ -1,0 +1,135 @@
+﻿.notification {
+    position: fixed;
+    line-height: 48px;
+    padding-left: 48px;
+    height: 48px;
+    top: 0px;
+    border-radius: 4px;
+    z-index: 105;
+    font-size: 13px;
+    color: #000000;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    background-position: 12px 12px;
+    background-color: #ffffff;
+    -webkit-box-shadow: 0px 1px 5px 2px rgba(0,0,0,0.4);
+    -moz-box-shadow: 0px 1px 5px 2px rgba(0,0,0,0.4);
+    box-shadow: 0px 1px 5px 2px rgba(0,0,0,0.4);
+}
+
+#notiSuccess {
+    background-image: url('/contents/images/success.png');
+    width: 150px;
+    left: calc(50% - 75px);
+}
+
+#notiFail {
+    background-image: url('/contents/images/warning.png');
+    width: 250px;
+    left: calc(50% - 125px);
+}
+
+#confirmForm {
+    position: fixed;
+    height: 180px;
+    width: 400px;
+    top: calc(50% - 90px);
+    left: calc(50% - 200px);
+    border-radius: 4px;
+    z-index: 105;
+    font-size: 13px;
+    background-color: #ffffff;
+    -webkit-box-shadow: 0px 1px 5px 2px rgba(0,0,0,0.4);
+    -moz-box-shadow: 0px 1px 5px 2px rgba(0,0,0,0.4);
+    box-shadow: 0px 1px 5px 2px rgba(0,0,0,0.4);
+}
+
+.confirmForm-title {
+    height: 66px;
+    width: 100%;
+    display: flex;
+}
+
+    .confirmForm-title .confirmForm-title-text {
+        width: calc(100% - 72px);
+        height: 18px;
+        margin: 24px;
+        font-size: 15px;
+        font-family: GoogleSans-Bold;
+    }
+
+.confirmForm-iconClose {
+    width: 24px;
+    height: 24px;
+    background-image: url('/contents/icons/x.svg');
+    background-repeat: no-repeat;
+    background-size: 12px 12px;
+    background-position: 6px 6px;
+}
+
+    .confirmForm-iconClose:hover {
+        cursor: pointer;
+        background-color: #D2D2D2;
+    }
+
+.confirmForm-content {
+    height: 54px;
+    width: 100%;
+    display: flex;
+}
+
+    .confirmForm-content .iconWarn {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-self: center;
+        margin: 0px 10px 24px 24px;
+        background-image: url('/contents/images/warning.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    .confirmForm-content .confirmForm-content-text {
+        width: calc(100% - 82px);
+        height: calc(100% - 24px);
+    }
+
+.confirmForm-button {
+    height: 60px;
+    width: 100%;
+}
+
+    .confirmForm-button button {
+        height: 40px;
+        width: 100px;
+        align-self: center;
+        text-align: center;
+        position: absolute;
+        border: none;
+        outline: none;
+        border-radius: 4px;
+        background-position: 24px 12px;
+        background-size: 13px 13px;
+        background-repeat: no-repeat;
+    }
+
+.btnDelete {
+    right: 24px;
+    background-color: #F65454;
+    color: #ffffff;
+}
+
+    .btnDelete:hover {
+        background-color: #f36e6e;
+        cursor: pointer;
+    }
+
+.btnCancel {
+    right: 140px;
+    background-color: transparent;
+}
+
+    .btnCancel:hover {
+        background-color: #D2D2D2;
+        cursor: pointer;
+    }
