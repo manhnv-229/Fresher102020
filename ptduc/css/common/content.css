@@ -1,4 +1,4 @@
-.down-content{
+.down-content {
   z-index: 0;
 }
 .content {
@@ -34,27 +34,27 @@
   padding-left: 16px;
   padding-right: 16px;
   border-radius: 4px;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 }
-.m-btn:hover{
-  background-color: #2FBE8E;
+.m-btn:hover {
+  background-color: #2fbe8e;
 }
-.m-btn:focus{
-  background-color:#01B075;
+.m-btn:focus {
+  background-color: #01b075;
 }
 .sync-m-btn {
   background-color: #ffffff;
   margin-right: 5px;
 }
 .sync-m-btn:hover {
-  background-color: #E9EBEE;
+  background-color: #e9ebee;
 }
 .sync-m-btn .m-btn-img {
   background-image: url("/assets/img/sync-color.png");
   background-repeat: no-repeat;
-  background-size:contain;  
+  background-size: contain;
   width: 20px;
   height: 20px;
   padding-right: 8px;
@@ -63,10 +63,10 @@
   color: #000000;
 }
 
-.add-user-m-btn .m-btn-img{
+.add-user-m-btn .m-btn-img {
   background-image: url("/assets/img/add-user.png");
   background-repeat: no-repeat;
-  background-size:contain;  
+  background-size: contain;
   width: 20px;
   height: 20px;
   padding-right: 8px;
@@ -154,26 +154,27 @@
   font-size: 13px;
   color: #000000;
 }
-.content-title-down .right>*{
+.content-title-down .right > * {
   cursor: pointer;
 }
 .content-main {
   margin-top: 20px;
-  margin-left: 16px;
 }
-.content-main-content .table td,th {
+.content-main-content .table td,
+th {
   padding-right: 10px;
   padding-left: 10px;
 }
-.content-main-content .table  {
+.content-main-content .table {
   height: calc(100vh - 280px);
   overflow: scroll;
 }
-.content-main-content .table tr,.content-main-content .table td{
+.content-main-content .table tr,
+.content-main-content .table td {
   max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;  
+  white-space: nowrap;
 }
 .content-main-content .table::-webkit-scrollbar {
   width: 0.5em;
@@ -199,8 +200,8 @@
   cursor: pointer;
   transition: 0.2s;
 }
-.content-main-content tr:hover {
-  background-color:  #bbbbbb;
+.content-main-content tr:not(.head):hover {
+  background-color: #bbbbbb;
 }
 .content-main-footer {
   position: absolute;
@@ -209,6 +210,7 @@
   width: calc(100% - 32px);
   font-size: 12px;
   height: 56px;
+  margin-left: 16px;
 }
 .content-main-footer .center {
   margin-left: auto;
@@ -254,22 +256,23 @@
 .content-main-footer .center .icon-right {
   margin-right: 20px;
 }
-.include-content{
+
+.alight-center-table {
+  text-align: center;
+}
+.alight-left-table {
+  text-align: left;
+}
+.alight-right-table {
+  text-align: right;
+}
+
+
+.include-content {
   display: none;
-  background-color: rgb(0, 0, 0,0.4);
+  background-color: rgb(0, 0, 0, 0.4);
   position: absolute;
   z-index: 10;
   width: 100vw;
-  height: 100vh;  
-}
-
-
-.alight-center-table{
-  text-align: center;
-}
-.alight-left-table{
-  text-align: left;
-}
-.alight-right-table{
-  text-align: right;
+  height: 100vh;
 }

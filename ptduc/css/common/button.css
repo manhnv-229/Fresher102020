@@ -10,15 +10,14 @@
   display: flex;
   align-items: center;
 }
-.m-btn-default{
-    background-color: #019160;
-    color: #ffffff;
-    display: flex;
+.m-btn-default {
+  background-color: #019160;
+  color: #ffffff;
+  display: flex;
   align-items: center;
 }
-.m-btn-icon {
-    padding-left: 16px;
-    padding-right: 8px;
+.m-btn-icon { 
+  padding-right: 8px;
 }
 .m-btn:hover {
   background-color: #2fbe8e;
@@ -26,4 +25,10 @@
 
 .m-btn:focus {
   background-color: #01b075;
+}
+.m-btn-cancel{
+  color: black!important;
+}
+.m-btn-delete{
+  background-color: red;
 }

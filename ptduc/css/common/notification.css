@@ -1,0 +1,47 @@
+.notification-group {
+  position: fixed;
+  left: 220px;
+  top: 135px;
+  z-index: 10;
+  display: flex;
+}
+.notification {
+  align-items: center;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #000000;
+  padding: 17px;
+  display: flex;
+  margin-left: 5px;
+  animation-name: notification;/*Xử lí animation cho các thông báo chỉ xuất hiện rồi dần tự mờ đi, người dùng không cần kick*/
+  animation-duration: 8s;
+  opacity: 0;
+}
+@keyframes notification {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.notification-danger {
+  background-color: #ffcece;
+}
+.notification-success {
+  background-color: #baffe7;
+}
+.notification-icon {
+  width: 24px;
+  height: 24px;
+  padding-right: 8px;
+
+  background-repeat: no-repeat;
+}
+.notification-icon-danger {
+  background-image: url(/assets/img/danger.png);
+}
+.notification-icon-success {
+  background-image: url(/assets/img/success.png);
+}
+
