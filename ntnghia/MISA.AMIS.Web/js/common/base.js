@@ -31,19 +31,7 @@
             $('.modal-delete').css("display", "flex");
         });
 
-        $('#delete').click(function () {
-            //Gọi service lấy thông tin chi tiết qua id
-            $.ajax({
-                url: me.host + me.apiRouter + `/` + me.recordId,
-                method: "DELETE"
-            }).done(function (res) {
-                alert('Xóa thành công!');
-                $('.modal-delete').css("display", "none");
-                me.loadData();
-            }).fail(function (res) {
-                console.log(res);
-            })
-        });
+        $('#delete').click(me.btnDeleteOnClick.bind(me));
 
         //Sự kiện khi nhấn đóng dialog:
         $('.fa-times').click(function () {
@@ -60,86 +48,13 @@
         $('.save-button').click(me.btnSaveOnClick.bind(me))
 
         //nhấn 1 lần vào hàng trong bảng sẽ tô màu hàng
-        $('table tbody').on('click', 'tr', function () {
-            $('table tbody tr').find('td').removeClass('row-selected');
-            $(this).find('td').addClass('row-selected');
-            var recordId = $(this).data('recordId');
-            me.recordId = recordId;
-            $('.btn-delete').show();
+        $('table tbody').on('click', 'tr', function (e) {
+            me.onTableRowClick(e);
         });
 
         //hiển thị thông tin chi tiết khi nhấn đúp chọn 1 bản ghi trên ds dữ liệu
-        $('table tbody').on('dblclick', 'tr', function () {
-            me.FormMode = 'Edit';
-            //load dữ liệu cho các combo box
-            var select = $('select#CustomerGroupId');
-            select.empty();
-
-            //lấy dữ liệu nhóm khách hàng
-            $.ajax({
-                url: me.host + "/api/customergroups",
-                method: 'GET'
-            }).done(function (res) {
-                if (res) {
-                    $.each(res, function (index, obj) {
-                        var option = `<option value="${obj.CustomerGroupId}">${obj.CustomerGroupName}</option>`;
-                        select.append(option);
-                    })
-                }
-            }).fail(function (res) {
-
-            })
-
-            //Lấy khóa chính của bản ghi
-            var recordId = $(this).data('recordId');
-            me.recordId = recordId;
-
-            //Gọi service lấy thông tin chi tiết qua id
-            $.ajax({
-                url: me.host + me.apiRouter + `/${recordId}`,
-                method: "GET"
-            }).done(function (res) {
-                //Binding lên form chi tiết:
-                var elements = $('.dialog-content input[id], select[id]');
-                $.each(elements, function (index, input) {
-                    var attr = $(this).attr('id');
-                    var value = res[attr];
-                    if (value != null) {
-                        if ($(this).attr('type') == 'date') {
-                            var dateConvert = new Date(value);
-                            var day = dateConvert.getDay();
-                            var month = dateConvert.getMonth();
-                            var year = dateConvert.getFullYear();
-                            if (day < 10) {
-                                day = "0" + day;
-                            }
-                            if (month < 10) {
-                                month = "0" + month;
-                            }
-
-                            $(this).val(year + "-" + month + "-" + day);
-                        } else if ($(this).attr('type') == 'radio') {
-                            console.log(res['FullName']);
-                            console.log($(this));
-                            console.log($(this).attr('gender'));
-                            console.log(res['Gender']);
-                            console.log($(this).attr('gender') == res['Gender']);
-                            if ($(this).attr('gender') == res['Gender']) {
-                                $(this).attr('checked', true);
-                            } else {
-                                $(this).attr('checked', false);
-                            }
-                        } else {
-                            $(this).val(value);
-                        }
-                    }
-                })
-
-            }).fail(function (res) {
-
-            })
-
-            $('.dialog-modal').css("display", "flex");
+        $('table tbody').on('dblclick', 'tr', function (e) {
+            me.trDbClick(e);
         })
 
         //validate bắt buộc nhập
@@ -288,8 +203,10 @@
         console.log(customer);
 
         var method = "POST";
+        var txt_alert = "Thêm thành công!";
         if (me.FormMode == 'Edit') {
             method = "PUT";
+            txt_alert = "Sửa thành công!";
             customer.CustomerId = me.recordId;
         }
 
@@ -304,8 +221,41 @@
             // + đưa ra thông báo
             // + ẩn form nhập
             // + load lại dữ liệu
-            alert('Thêm thành công!');
+            alert(txt_alert);
             $('.dialog-modal').css("display", "none");
+            me.loadData();
+        }).fail(function (res) {
+            alert(res);
+        })
+    }
+
+    /**
+    * Hàm xử lí khi nhấn vào 1 hàng trong bảng
+    * CreatedBy: NTNghia (19/11/2020)
+    * */
+    onTableRowClick(e) {
+        var me = this;
+        $('table tbody tr').find('td').removeClass('row-selected');
+        $(e.currentTarget).find('td').addClass('row-selected');
+        var recordId = $(e.currentTarget).data('recordId');
+        me.recordId = recordId;
+        $('.btn-delete').show();
+    }
+
+
+    /**
+    * Hàm xử lí khi nhấn button xóa
+    * CreatedBy: NTNghia (19/11/2020)
+    * */
+    btnDeleteOnClick() {
+        var me = this;
+        //Gọi service lấy thông tin chi tiết qua id
+        $.ajax({
+            url: me.host + me.apiRouter + `/` + me.recordId,
+            method: "DELETE"
+        }).done(function (res) {
+            alert('Xóa thành công!');
+            $('.modal-delete').css("display", "none");
             me.loadData();
         }).fail(function (res) {
             console.log(res);
@@ -316,61 +266,79 @@
     * Hàm xử lí khi nhấn 2 lần vào 1 hàng trong bảng
     * CreatedBy: NTNghia (18/11/2020)
     * */
-    trDbClick(me) {
-        $(this).find('td').addClass('row-selected');
-        me.FormMode = 'Edit';
-        //load dữ liệu cho các combo box
-        var select = $('select#CustomerGroupId');
-        select.empty();
+    trDbClick(e) {
+        var me = this;
+            me.FormMode = 'Edit';
+            //load dữ liệu cho các combo box
+            var select = $('select#CustomerGroupId');
+            select.empty();
 
-        //lấy dữ liệu nhóm khách hàng
-        $.ajax({
-            url: me.host + "/api/customergroups",
-            method: 'GET'
-        }).done(function (res) {
-            if (res) {
-                console.log(res);
-                $.each(res, function (index, obj) {
-                    var option = `<option value="${obj.CustomerGroupId}">${obj.CustomerGroupName}</option>`;
-                    select.append(option);
-                })
-            }
-        }).fail(function (res) {
+            //lấy dữ liệu nhóm khách hàng
+            $.ajax({
+                url: me.host + "/api/customergroups",
+                method: 'GET'
+            }).done(function (res) {
+                if (res) {
+                    $.each(res, function (index, obj) {
+                        var option = `<option value="${obj.CustomerGroupId}">${obj.CustomerGroupName}</option>`;
+                        select.append(option);
+                    })
+                }
+            }).fail(function (res) {
 
-        })
-
-        //Lấy khóa chính của bản ghi
-        var recordId = $(this).data('recordId');
-        me.recordId = recordId;
-        console.log(recordId);
-
-        console.log(me.host + me.apiRouter + `/${recordId}`);
-        //Gọi service lấy thông tin chi tiết qua id
-        $.ajax({
-            url: me.host + me.apiRouter + `/${recordId}`,
-            method: "GET"
-        }).done(function (res) {
-            console.log(res);
-            //Binding lên form chi tiết:
-            var elements = $('.dialog-content input[id], select[id]');
-            $.each(elements, function (index, input) {
-                var attr = $(this).attr('id');
-                var value = res[attr];
-                $(this).val(value);
-                //Check trường hợp input là radio button, lấy ra giới tính
-                //if ($(this).attr('type') == "radio") {
-                //    if (this.checked) {
-                //        customer[attr] = value;
-                //    }
-                //} else {
-                //    customer[attr] = value;
-                //}
             })
-        }).fail(function (res) {
 
-        })
+            //Lấy khóa chính của bản ghi
+        var recordId = $(e.currentTarget).data('recordId');
+        
+            me.recordId = recordId;
 
-        $('.dialog-modal').css("display", "flex");
+            //Gọi service lấy thông tin chi tiết qua id
+            $.ajax({
+                url: me.host + me.apiRouter + `/${recordId}`,
+                method: "GET"
+            }).done(function (res) {
+                //Binding lên form chi tiết:
+                var elements = $('.dialog-content input[id], select[id]');
+                $.each(elements, function (index, input) {
+                    var attr = $(this).attr('id');
+                    var value = res[attr];
+                    if (value != null) {
+                        if ($(this).attr('type') == 'date') {
+                            var dateConvert = new Date(value);
+                            var day = dateConvert.getDay();
+                            var month = dateConvert.getMonth();
+                            var year = dateConvert.getFullYear();
+                            if (day < 10) {
+                                day = "0" + day;
+                            }
+                            if (month < 10) {
+                                month = "0" + month;
+                            }
+
+                            $(this).val(year + "-" + month + "-" + day);
+                        } else if ($(this).attr('type') == 'radio') {
+                            console.log(res['FullName']);
+                            console.log($(this));
+                            console.log($(this).attr('gender'));
+                            console.log(res['Gender']);
+                            console.log($(this).attr('gender') == res['Gender']);
+                            if ($(this).attr('gender') == res['Gender']) {
+                                $(this).attr('checked', true);
+                            } else {
+                                $(this).attr('checked', false);
+                            }
+                        } else {
+                            $(this).val(value);
+                        }
+                    }
+                })
+
+            }).fail(function (res) {
+
+            })
+
+            $('.dialog-modal').css("display", "flex");
     }
 
     /**
