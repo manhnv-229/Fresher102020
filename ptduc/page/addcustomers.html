@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="/css/common/main.css" rel="stylesheet" />
+    <link href="/css/common/button.css" rel="stylesheet" />
+    <link href="/css/common/selectcss.css" rel="stylesheet" />
+    <link href="/css/common/input.css" rel="stylesheet" />
+    <link href="/css/common/flex.css" rel="stylesheet" />
+    <link href="/css/common/radio.css" rel="stylesheet" />
+    <link href="/css/page/addcustomer.css" rel="stylesheet" />
+    <script src="/js/common/jquery.js"></script>
+</head>
+
+<body>
+    <div class="m-dialog dialog-detail" title="Thông tin khách hàng">
+        <!--<div class="dialog-modal"></div>-->
+        <div class="dialog-content">
+            <div class="dialog-header m-flex">
+                <div class="dialog-header-title">Thông tin khách hàng</div>
+                <div class="dialog-header-close btn-cancle-dialog">
+                </div>
+            </div>
+            <div class="dialog-body">
+                <div class="m-row m-flex">
+                    <div class="m-flex-1">
+                        <div class="m-avatar"></div>
+                        <div class="">
+                            Vui lòng chọn ảnh có định dạng <b>.jpg, .jpeg, .png, .gif. </b>
+                        </div>
+                    </div>
+                    <div class="m-flex-2">
+                        <div class="m-row m-flex">
+                            <div class="m-col m-flex-1">
+                                <div class="m-label">Mã khách hàng (*)</div>
+                                <div class="m-control"><input id="txtCustomerCode" required class="input-required"
+                                        type="text" inputField/></div>
+                            </div>
+                            <div class="m-flex-1 mg-left-10px">
+                                <div class="m-label">Họ và tên (*)</div>
+                                <div class="m-control">
+                                    <input id="txtFullName" class="input-required" type="text" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-row m-flex">
+                            <div class="m-col m-flex-1">
+                                <div class="m-label">Mã thẻ thành viên</div>
+                                <div class="m-control"><input id="txtMemberCardCode" type="text" /></div>
+                            </div>
+                            <div class="m-flex-1">
+                                <div class="m-label">Nhóm khách hàng</div>
+                                <select id="cbxCustomerGroup" class="m-control">
+                                    <option>Khách VIP</option>
+                                    <option>Khách thường</option>
+                                    <option>Khách vãng lai</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="m-row m-flex">
+                            <div class="m-flex-1">
+                                <div class="m-label">Ngày sinh</div>
+                                <div class="m-control"><input id="dtDateOfBirth" type="date" /></div>
+                            </div>
+                            <div class="m-flex-1">
+                                <div class="m-label">Giới tính</div>
+                                <div class="m-radio-group" id="rdGender">
+                                    <div class="m-radio-item">
+                                        <input type="radio" id="rdMale" value="Nam" name="gender" checked />
+                                        <label for="rdMale">Nam</label>
+                                    </div>
+                                    <div class="m-radio-item mg-left-10px">
+                                        <input type="radio" id="rdFemale" value="Nữ" name="gender" />
+                                        <label for="rdMale">Nữ</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="m-row m-flex">
+                    <div class="m-flex-2">
+                        <div class="m-label">Email</div>
+                        <div class="m-control"><input id="txtEmail" type="email" placeholder="example@domain.com" />
+                        </div>
+                    </div>
+                    <div class="m-flex-1">
+                        <div class="m-label">Số điện thoại (*)</div>
+                        <div class="m-control"><input id="txtPhoneNumber" class="input-required" type="tel" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="m-row m-flex">
+                    <div class="m-flex-2">
+                        <div class="m-label">Tên công ty</div>
+                        <div class="m-control"><input type="tel" /></div>
+                    </div>
+                    <div class="m-flex-1">
+                        <div class="m-label">Mã số thuế</div>
+                        <div class="m-control"><input type="text" placeholder="Mã số thuế của công ty" /></div>
+                    </div>
+                </div>
+                <div class="m-row m-flex">
+                    <div class="m-flex-3">
+                        <div class="m-label">Địa chỉ</div>
+                        <div class="m-control"><input id="txtAddress" type="tel" /></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="dialog-footer">
+            <div class="btn-footer m-flex">
+                <button id="btnCancel" class="m-btn m-btn-cancel">
+                    Hủy
+                </button>
+                <button id="btnSave" class="m-btn m-btn-default">
+                    <div class="m-btn-icon">
+
+                    </div>
+                    <div class="m-btn-content">
+                        Lưu
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="/js/common/base.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+.m-btn {
+  outline: none;
+  border: 0.5px solid #e5e5e5;
+  height: 40px;
+  font-size: 13px;
+  padding-left: 16px;
+  padding-right: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.m-btn-default{
+    background-color: #019160;
+    color: #ffffff;
+    display: flex;
+  align-items: center;
+}
+.m-btn-icon {
+    padding-left: 16px;
+    padding-right: 8px;
+}
+.m-btn:hover {
+  background-color: #2fbe8e;
+}
+
+.m-btn:focus {
+  background-color: #01b075;
+}

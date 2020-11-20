@@ -1,0 +1,9 @@
+﻿select {
+    padding-left: 16px;
+    padding-right: 32px;
+    height: 42px;
+    border: 1px solid #bbbbbb;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #000000;
+}
