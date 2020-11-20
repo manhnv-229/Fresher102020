@@ -114,11 +114,14 @@
                     customer[test] = value;
                 }
             })
-            
+            //arrow.FormMode = "";
             var method = "POST";
             if (arrow.FormMode == 'Edit') {
                 method = "PUT";
                 customer.CustomerId = arrow.recordId;
+            }
+            if (method == "POST") {
+                if (customer.CustomerId) delete customer.CustomerId;
             }
             console.log(customer);
             console.log("Phuong thuc: " + method);
@@ -227,6 +230,7 @@
 
     addDialog() {
         var host = this.host;
+        this.FormMode = 'Add';
         $('.m-dialog').removeClass('hide');
         
         var select = $('select#cbxCustomerGroup');
