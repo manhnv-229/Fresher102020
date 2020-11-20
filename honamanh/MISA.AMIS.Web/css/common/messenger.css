@@ -1,0 +1,175 @@
+﻿
+/**
+    Css để thông báo đã thực hiện thành công
+*/
+.show-toast-messenger {
+    position: absolute;
+    bottom: 51px;
+    visibility: hidden;
+}
+
+.toast-messenger {
+    position: absolute;
+    top: 0;
+    height: 48px;
+    width: 200px;
+    border-radius: 4px;
+    box-shadow: 0 3px 6px rgba(255, 255, 255, 0.16);
+    display: flex;
+    align-items: center;
+    border: 1px solid #bbbbbb;
+}
+
+.icon-messenger {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 16px;
+}
+
+/*.icon-messenger-success {
+    background-image: url('/content/icon/success.svg');
+}
+
+.icon-messenger-danger {
+    background-image: url('/content/icon/alert-danger.svg');
+}
+
+.icon-messenger-info {
+    background-image: url('/content/icon/info.svg');
+}*/
+
+.title-messenger {
+    color: #000000;
+    font-size: 13px;
+    margin-right: 16px;
+}
+
+.btn-close-messenger {
+    /* width: 24px;
+    height: 24px;
+   background-image: url('/content/icon/x.svg');
+    background-position: center;
+    background-repeat: no-repeat;*/
+    height: 100%;
+    width: 24px;
+    margin-right: 16px;
+    border: none;
+    outline: none;
+    background-color: #ffffff;
+    position: absolute;
+    right: 0;
+}
+
+    .btn-close-messenger .icon-close-messenger {
+        /*color: #019160;*/
+        /* width: 24px;
+        height: 24px;
+        background-image: url('/content/icon/x.svg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 24px 24px;*/
+        /*filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);*/
+        /*background-color: #ff0000;
+        border: 1px solid #000000;*/
+    }
+
+.icon-close-messenger-success {
+    color: #ff0000;
+}
+
+.icon-close-messenger-danger {
+    color: #ffd800;
+}
+
+.icon-close-messenger-info {
+    color: #0053ff;
+}
+
+.btn-change-messenger {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 50px;
+    left: 50px;
+}
+
+/**
+Css đưa ra cảnh báo khi thực hiện các sự kiện sửa xóa dữ liệu
+*/
+.show-pop-up-warning {
+    /*position: absolute;
+    top: 0;*/
+    display: none;
+    width: 200px;
+    height: 200px;
+    border-radius: 4px;
+    border: 1px solid #bbbbbb;
+}
+
+.pop-up-warning {
+}
+
+.header-pop-up {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+    .header-pop-up .title-pop-up {
+        padding: 24px 24px 0 24px;
+        color: #000000;
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    .header-pop-up .btn-close-pop-up {
+        width: 24px;
+        height: 24px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        background-color: #ffffff;
+        border: none;
+        outline: none;
+        border-radius: 0 4px 0 4px;
+    }
+
+.body-pop-up {
+    padding: 24px;
+    display: flex;
+    align-items: center;
+}
+
+    .body-pop-up .icon-pop-up-warning {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin-right: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #e5e5e5;
+        flex: 1;
+    }
+
+        .body-pop-up .icon-pop-up-warning .icon-warning {
+            color: #ff0000;
+        }
+
+    .body-pop-up .content-pop-up-warning {
+        font-size: 13px;
+        color: #000000;
+        flex: 10;
+    }
+
+.control-pop-up {
+    height: 60px;
+    background-color: #e5e5e5;
+    padding-right: 24px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}

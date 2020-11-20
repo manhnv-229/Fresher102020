@@ -12,7 +12,7 @@ class Base {
 
     }
     initEvent() {
-
+        var me = this;
         //#region "Sự kiện với các nút" // dùng region để gộp các đoạn code giúp dễ quản lý và sửa đổi  
         //sự kiện click khi nhấn vào thêm mới
         $("#btn-add-customer").click(this.btnAddOnClick.bind(this));
@@ -33,8 +33,47 @@ class Base {
         //Thực hiện lưu dữ liệu khi ấn button lưu
         $("#btnSave").click(this.btnSaveOnClick.bind(this));
 
-
+        //Thực hiện xóa dữ liệu khi ấn button xóa
         $('.btn-delete-customer').click(this.btnDeleteOnClick.bind(this));
+
+        // sự kiện click vào button hủy để tắt cảnh báo
+        $(".btn-cancel-warning").click(function () {
+            dialogWarning.dialog("close");
+        })
+
+        // Sự kiện khi click vào button xóa để xác nhận thực hiện xóa
+        $(".btn-accept-warning").click(function () {
+            //me.accept_warning = true;
+            //dialogWarning.dialog("close");
+            var tr = $('table tbody tr.rowSelected');
+            var recordId = tr.data("recordid");
+            $.ajax({
+                url: me.host + me.apiRouter + `/${recordId}`,
+                method: "Delete",
+            }).done(function (res) {
+                //hiện thị thông báo xóa thành công
+                //$.notify(
+                //    "Xóa thành công", { className: "success", position: 'bottom left' }
+                //);
+                //  debugger
+
+                // đóng form xác nhận xóa
+                dialogWarning.dialog("close");
+
+                //load lại dữ liệu
+                me.loadData();
+
+                 //hiện thị thông báo xóa thành công
+                $(".show-toast-messenger").css("visibility", "visible");
+                setTimeout(function () {
+                    $(".show-toast-messenger").css("visibility", "hidden");
+                }, 3000);
+            }).fail(function (res) {
+
+            })
+
+        })
+
         //#endregion Dialog
 
         //#region "Sự kiện với chuột" // dùng region để gộp các đoạn code giúp dễ quản lý và sửa đổi  
@@ -150,6 +189,7 @@ class Base {
                 $.each(res, function (index, obj) {
                     var tr = $(`<tr></tr>`);
                     tr.data("recordid", obj["CustomerId"]);
+                    tr.data("customer", obj);
                     $.each(ths, function (index, th) {
                         var td = $(`<td></td>`);
 
@@ -198,7 +238,23 @@ class Base {
         try {
             me.FormMode = "Add";
             dialogDetail.dialog('open');
-            $('input').val("");
+
+            /*TODO: cần xử lý thêm, nếu để type="input" thì các giá trị trong input type= radio sẽ mất value, 
+             * còn để type != "radio" thì sẽ giữ giá trị của form trước đó
+            */
+            var inputs = $("input");
+            $.each(inputs, function (index, input) {
+                debugger
+                if ($(this).attr("type") == "radio") {
+                    if ($(this).attr("checked")) {
+                        $(this).prop("checked", true);
+                    }
+                }
+                else {
+                    $(this).val("");
+                }
+            })
+
             //load dữ liệu cho các combobox 
             var selects = $('select[fieldName]');
             var api = selects.attr("api");
@@ -272,20 +328,20 @@ class Base {
             if ($(this).attr("type") == 'radio') {
                 if ($(this).is(":checked")) {
                     emtity[propertyName] = value;
+                    // debugger
                 }
             }
             else {
                 emtity[propertyName] = value;
             }
         });
-
+        //debugger;
         //Gọi sevice tương ứng thực hiện lưu dữ liệu
         var method = "POST";
         if (me.FormMode == "Edit") {
             method = "PUT";
             emtity["CustomerId"] = me.recordId;
         }
-
         $.ajax({
             url: me.host + me.apiRouter,
             method: method,
@@ -296,16 +352,21 @@ class Base {
             //Sau khi lưu thành công:
 
             //+ đưa ra thông báo
-            if (me.FormMode == "Add") {
-                $.notify(
-                    "Thêm thành công", { className: "success", position: 'bottom left' }
-                );
-            }
-            else {
-                $.notify(
-                    "Sửa thành công", { className: "success", position: 'bottom left' }
-                );
-            }
+            //if (me.FormMode == "Add") {
+            //    $.notify(
+            //        "Thêm thành công", { className: "success", position: 'bottom left' }
+            //    );
+            //}
+            //else {
+            //    $.notify(
+            //        "Sửa thành công", { className: "success", position: 'bottom left' }
+            //    );
+            //}
+
+            $(".show-toast-messenger").css("visibility", "visible");
+            setTimeout(function () {
+                $(".show-toast-messenger").css("visibility", "hidden");
+            }, 3000);
 
             //+ ẩn form
             dialogDetail.dialog('close');
@@ -370,6 +431,9 @@ class Base {
             url: me.host + me.apiRouter + `/${recordId}`,
             method: "GET",
         }).done(function (res) {
+
+            //console.log(res);
+            //return
             //Build thành obj vào đẩy tương ứng vào form
             var datas = res;
             var inputs = $('input[fieldName], select[fieldName]');
@@ -410,28 +474,35 @@ class Base {
 
         //lấy thông tin chi tiết của bản ghi đã chọn
         var recordId = tr.data("recordid");
-        //hiện cảnh báo xác nhận xóa
-        var result = confirm("Bạn có chắc muốn xóa?");
 
+        //mở dialog cảnh báo khi thực hiện xóa
+        me.openDialogWarning(recordId);
 
-        //TODO: cần thêm code để xóa dữ liệu
-        if (result) {
-            //thực hiện xóa khi người dùng xác nhận ok
-            $.ajax({
-                url: me.host + me.apiRouter + `/${recordId}`,
-                method: "Delete",
-            }).done(function (res) {
-                //hiện thị thông báo xóa thành công
-                $.notify(
-                    "Xóa thành công", { className: "success", position: 'bottom left' }
-                );
+    }
 
-                //load lại dữ liệu
-                me.loadData();
-            }).fail(function (res) {
+    /**
+     * Hàm mở dialog xác nhận
+     * @param {any} recordId tham số là recordId: mã khách hàng muốn xóa
+     * CreatedBy: HNANH (20/11/2020)
+     */
+    openDialogWarning(recordId) {
+        var me = this;
+        var recordId = recordId;
+        $.ajax({
+            url: me.host + me.apiRouter + `/${recordId}`,
+            method: "GET",
+        }).done(function (res) {
+            var customerName = res["FullName"];
+            var customerCode = res["CustomerCode"];
 
-            })
-        }
+            $(".body-pop-up .content-pop-up-warning").text("Bạn có chắc chắn muốn xóa khách hàng "
+                + customerName + " (Mã khách hàng " + customerCode + ") không ? ");
+            $("span.ui-dialog-title").text('Xác nhận xóa bản ghi');
+            dialogWarning.dialog("open");
+        }).fail(function () {
+
+        })
+
     }
 
     /**

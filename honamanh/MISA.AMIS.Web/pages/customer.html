@@ -13,6 +13,7 @@
     <link href="/css/common/align-content.css" rel="stylesheet" />
     <link href="/css/common/input.css" rel="stylesheet" />
     <link href="/css/common/dialog.css" rel="stylesheet" />
+    <link href="/css/common/messenger.css" rel="stylesheet" />
     <link href="/css/common/custom-jquery-ui.css" rel="stylesheet" />
     <link href="/css/common/navbar.css" rel="stylesheet" />
     <link href="/css/common/header.css" rel="stylesheet" />
@@ -74,17 +75,17 @@
         <div class="toolbar-of-table">
             <div class="title-toolbar"><h1>Quản lý lao động</h1></div>
             <div class="button-toolbar">
-                <button type="button" class="m-button-icon margin-button">
-                    <i class="fas fa-sync-alt icon-syncing"></i>
-                    <div class="title-button-icon">Đồng bộ từ HRM</div>
-                </button>
-                <button type="button" id="btn-add-customer" class="btn-add m-button-icon margin-button" style="border-radius: 4px 0 0 4px;">
-                    <i class="fas fa-user-plus icon-add-labor"></i>
-                    <div class="title-button-icon">Thêm lao động</div>
-                </button>
-                <button type="button" class="m-button-only-icon button-dropdown">
-                    <i class="fas fa-caret-down fa-lg icon-dropdown"></i>
-                </button>
+                    <button type="button" class="m-button-icon margin-button">
+                        <i class="fas fa-sync-alt icon-syncing"></i>
+                        <div class="title-button-icon">Đồng bộ từ HRM</div>
+                    </button>
+                    <button type="button" id="btn-add-customer" class="btn-add m-button-icon margin-button" style="border-radius: 4px 0 0 4px;">
+                        <i class="fas fa-user-plus icon-add-labor"></i>
+                        <div class="title-button-icon">Thêm lao động</div>
+                    </button>
+                    <button type="button" class="m-button-only-icon button-dropdown">
+                        <i class="fas fa-caret-down fa-lg icon-dropdown"></i>
+                    </button>
             </div>
         </div>
         <div class="search-table">
@@ -117,14 +118,14 @@
             </div>
             <div class="download-and-syncing">
                 <div class="btn-download-and-syncing">
-                    <!--<button type="button" class="btn-edit-customer m-button-icon" style="margin-right: 16px;">
+                    <button type="button" class="btn-edit-customer m-button-icon" style="margin-right: 16px;">
                         <i class="far fa-edit icon-add-labor"></i>
                         <div class="title-button-icon">Sửa</div>
                     </button>
                     <button type="button" class="btn-delete-customer m-button-icon" style="margin-right: 16px;">
                         <i class="fas fa-trash-alt icon-add-labor"></i>
                         <div class="title-button-icon">Xóa</div>
-                    </button>-->
+                    </button>
                     <button type="button" class="m-button-only-icon"><i class="fas fa-download icon-download"></i></button>
                     <button type="button" id="btnRefresh" class="m-button-only-icon"><i class="fas fa-sync icon-syncing"></i></button>
                 </div>
@@ -294,6 +295,43 @@
                     <i class="fas fa-save"></i>
                     <div class="m-title-button-dialog">Lưu</div>
                 </button>
+            </div>
+        </div>
+    </div>
+    <div class="show-toast-messenger">
+        <div class="toast-messenger">
+            <div class="icon-messenger">
+                <i class="far fa-check-circle fa-lg" style="color: #019160;"></i>
+            </div>
+            <div class="title-messenger">Thành công</div>
+            <button type="button" class="btn-close-messenger">
+                <!--  <div class="icon-close-messenger"></div>-->
+                <!--<i class="fas fa-times"></i>-->
+                <i class="fas fa-times icon-close-messenger fa-lg icon-close-messenger" style="color: #019160;"></i>
+            </button>
+        </div>
+        <!--<div>
+            <button type="button" class="btn-change-messenger">Change</button>
+        </div>-->
+
+    </div>
+    <div class="show-pop-up-warning" title="Xóa bản ghi">
+        <div class="pop-up-warning">
+            <!--<div class="header-pop-up">
+                <div class="title-pop-up">Thông báo nè</div>
+                <button type="button" class="btn-close-pop-up">
+                    <i class="fas fa-times icon-close-pop-up"></i>
+                </button>
+            </div>-->
+            <div class="body-pop-up">
+                <div class="icon-pop-up-warning">
+                    <i class="fas fa-exclamation-triangle fa-lg icon-warning"></i>
+                </div>
+                <div class="content-pop-up-warning">Nội dung thông báo</div>
+            </div>
+            <div class="control-pop-up">
+                <button type="button" class="btn-cancel-warning m-seconds-button-2 m-button-close-warning" style="margin-right:16px;">Hủy</button>
+                <button type="button" class="btn-accept-warning m-button-default-2 m-button-accept-warning">Xóa</button>
             </div>
         </div>
     </div>

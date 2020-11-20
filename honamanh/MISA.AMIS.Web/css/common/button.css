@@ -31,6 +31,7 @@
     font-family: GoogleSans-Regular;
     padding: 0 24px;
     outline: none;
+    border: none;
     cursor: pointer;
 }
 /*Button có nhiều hơn 3 từ*/
@@ -78,7 +79,6 @@
     }
 /*Second button có 1-2 từ*/
 .m-seconds-button-2 {
-    // background-color: #019160;
     border-radius: 4px;
     height: 40px;
     width: 100px;
@@ -131,4 +131,23 @@
         background-color: #01B075;
         border: 1px solid #019160;
         cursor: pointer;
+    }
+/*
+    Css cho các nút cảnh báo
+*/
+
+.m-button-accept-warning{
+    background-color: #ff0000;
+}
+.m-button-accept-warning:hover{
+    background-color: rgba(255, 0, 0, 0.71);
+}
+.m-button-close-warning {
+    background-color: #e5e5e5;
+    border: none;
+  //  border: 1px solid #e5e5e5;
+}
+    .m-button-close-warning:hover {
+        background-color: #bbbbbb;
+     //   border: 1px solid #bbbbbb;
     }

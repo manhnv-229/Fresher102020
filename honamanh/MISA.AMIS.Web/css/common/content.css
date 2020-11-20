@@ -129,7 +129,7 @@
 
 /*table*/
 .content-main {
-    height: calc(100% - 60px - 35px);
+    height: calc(100% - 60px - 40px);
 }
 
     .content-main .content-table {
