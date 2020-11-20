@@ -173,8 +173,10 @@ class BaseJS {
             let property = $(input).attr("bind-data");
 
             if ($(input).attr('type') == "radio") {
-                if (res[property] == $(input).val()) {
-                    $(input).prop("checked", true);
+                if (res[property] == 1) {
+                    $('#Male').prop("checked", true);
+                } else if (res[property] == 0){
+                    $('#feMale').prop("checked", true);
                 }
             } else if ($(input).attr('type') == "date") {
                 let yyyyMMdd = formatDateOfBirthyyyyMMdd(res[property]);
@@ -364,7 +366,6 @@ class BaseJS {
         this.ShowPopUp(title, body);
     }
     
-    
     /**
      * Đưa ra cảnh báo cho những sự kiện cần xác nhận
      * @param {any} title Thông tin tiêu đề
@@ -376,6 +377,7 @@ class BaseJS {
         $('.pop-up-inf').text(body);
         $('.p-pop-up').css('display', 'block');
     }
+
     /**
      * Tắt pop-up
      * CreatedBy: LTHAI(19/11/2020)
@@ -383,6 +385,7 @@ class BaseJS {
     ClosePopUp() {
         $('.p-pop-up').css('display', 'none');
     }
+
     /**
      * Sau khi xác nhận xóa bản ghi thực hiện gọi service xóa
      * CreatedBy: LTHAI(19/11/2020)
