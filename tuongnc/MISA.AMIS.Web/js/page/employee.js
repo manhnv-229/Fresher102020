@@ -7,8 +7,9 @@ class Employee extends BaseJS {
         super();
     }
 
-    setDataUrl() {
+    setData() {
         this.apiRouter = "/api/employees";
+        this.page = 'Employee';
     }
 
     setActiveNavBar() {

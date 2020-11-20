@@ -1,9 +1,10 @@
 ﻿
 class BaseJS {
     constructor() {
+        this.page = null;
         this.host = "http://api.manhnv.net";
         this.apiRouter = null
-        this.setDataUrl();
+        this.setData();
         this.setActiveNavBar();
         this.loadData();
         this.loadDataSelect()
@@ -11,7 +12,7 @@ class BaseJS {
 
     }
     //abtract function setDataUrl() được overide để set Url cho hàm ajax
-    setDataUrl() {
+    setData() {
 
     };
     /**
@@ -37,14 +38,17 @@ class BaseJS {
         $("#btnSave").click(me.eventClickBtnSave.bind(me));
         // sự kiện click khi nhấn đồng bộ - sync table
         $("#btnRefresh").click(me.eventSyncTable.bind(me));
-        // Hiển thị thông tin chi tiết khi nhấn đúp chuột vào 1 hàng ở table
-        $("table tbody").on("dblclick", "tr", function (e) {
+        // Xét actice row khi click
+        $("table tbody").on("click", "tr", function (e) {
             //xét active row
             $(this).addClass('active');
-            if (me.trActive) {
+            if (me.trActive && me.trActive.data() !== $(e.currentTarget).data()) {
                 me.trActive.removeClass('active');
             }
             me.trActive = $(this);
+        });
+        // Hiển thị thông tin chi tiết khi nhấn đúp chuột vào 1 hàng ở table
+        $("table tbody").on("dblclick", "tr", function (e) {
             // xử lý bind dữ liệu ra dialog
             var data = $(e.currentTarget).data();
             me.eventRowDetail(data);
@@ -110,7 +114,8 @@ class BaseJS {
             //vòng lặp trong để map dữ liệu thead vs tbody
             $.each(res, function (index, obj) {
                 var tr = $(`<tr></tr>`);
-                tr.data('recordId', obj['CustomerId']);
+                var entityId = me.page + 'Id';
+                tr.data('recordId', obj[entityId]);
                 $.each(thead, function (index, item) {
                     var td = $(`<td><div><span></span></div></td>`);
                     // lấy các tên trường
@@ -246,7 +251,7 @@ class BaseJS {
                 break;
             case 'edit':
                 method = "PUT";
-                entity.CustomerId = me.recordId;
+                entity[this.page+'Id'] = me.recordId;
                 break;
             default:
         }

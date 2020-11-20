@@ -13,6 +13,7 @@
     <link href="/css/common/form.css" rel="stylesheet" />
     <link href="/css/common/grid.css" rel="stylesheet" />
     <link href="/css/common/loader.css" rel="stylesheet" />
+    <link href="/css/common/radio-button.css" rel="stylesheet" />
 </head>
 <body>
     <div class="navbar">
@@ -82,7 +83,7 @@
                         Đồng bộ từ HRM
                     </div>
                 </button>
-                <button class="misa-btn-icon" data-modal-target="#modal">
+                <button id="btnAdd" class="misa-btn-icon" data-modal-target="#modal">
                     <i class="misa-icon-button icon-add-user"></i>
                     <div class="lable-text">
                         Thêm nhân viên
@@ -93,7 +94,7 @@
                 <div class="modal" id="modal">
                     <div class="modal-header">
                         <div class="title-header">
-                            <div class="title">Thông tin nhân viên</div>
+                            <div class="title">Thông tin Nhân viên</div>
                             <button data-close-button class="close-button">&times;</button>
                         </div>
                     </div>
@@ -106,32 +107,48 @@
                                 </div>
                                 <div class="misa-col-2">
                                     <div class="misa-form-group">
-                                        <label class="label-field-input">Mã khách hàng</label>
-                                        <input class="input-field" />
+                                        <div class="label-field-input">Mã nhân viên(<label style="color: red;">*</label>)</div>
+                                        <input type="text" fieldName="EmployeeCode" required class="input-field" />
                                     </div>
                                     <div class="misa-form-group">
-                                        <label class="label-field-input">Mã thẻ thành viên</label>
-                                        <input class="input-field" />
+                                        <div class="label-field-input">Mã CMT</div>
+                                        <input type="text" fieldName="IdentityNumber" class="input-field" />
                                     </div>
                                     <div class="misa-form-group">
-                                        <label class="label-field-input">Ngày sinh</label>
-                                        <input class="input-field" />
+                                        <div class="label-field-input">Ngày sinh</div>
+                                        <input style="font-family: GoogleSans-Medium" type="date" fieldName="DateOfBirth" class="input-field" />
                                     </div>
                                 </div>
                                 <div class="misa-col-3">
                                     <div class="misa-form-group">
-                                        <label class="label-field-input">Họ và tên</label>
-                                        <input class="input-field" />
+                                        <div class="label-field-input">Họ và tên(<label style="color: red;">*</label>)</div>
+                                        <input type="text" fieldName="FullName" required class="input-field" />
                                     </div>
                                     <div class="misa-form-group">
-                                        <label class="label-field-input">Nhóm khách hàng</label>
-                                        <input class="input-field" />
+                                        <div class="label-field-input">Nơi cấp</div>
+                                        <input type="text" fieldName="IdentityPlace" required class="input-field" />
                                     </div>
+                                    <!--<div class="misa-form-group">
+                                        <div class="label-field-input">Nhóm khách hàng</div>
+                                        <select fieldName="CustomerGroupName" fieldValue="CustomerGroupId" api="/api/customergroups" class="input-field" style="width: 100%">
+                                            <option>
+                                                1
+                                            </option>
+                                        </select>
+                                    </div>-->
                                     <div class="misa-form-group">
-                                        <label class="label-field-input">Giới tính</label>
-                                        <div>
-                                            <input name="gender" type="radio" /> <label>Nam</label>
-                                            <input name="gender" type="radio" /> <label>Nữ</label>
+                                        <div class="label-field-input">Giới tính</div>
+                                        <div class="radio-form-group">
+                                            <label class="container-radio label-field-input">
+                                                Nam
+                                                <input type="radio" checked="checked" fieldName="Gender" name="Gender" value="1">
+                                                <span class="checkmark-radio"></span>
+                                            </label>
+                                            <label class="container-radio label-field-input">
+                                                Nữ
+                                                <input type="radio" fieldName="Gender" name="Gender" value="0">
+                                                <span class="checkmark-radio"></span>
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -139,42 +156,43 @@
                             <div class="misa-form-row">
                                 <div class="misa-col-1-2">
                                     <div class="misa-form-group">
-                                        <label class="label-field-input">Email</label>
-                                        <input class="input-field" />
+                                        <div class="label-field-input">Email</div>
+                                        <input fieldName="Email" type="email" class="input-field" />
                                     </div>
                                 </div>
                                 <div class="misa-col-3">
                                     <div class="misa-form-group">
-                                        <label class="label-field-input">Số điện thoại</label>
-                                        <input class="input-field" />
+                                        <div class="label-field-input">Số điện thoại(<label style="color: red;">*</label>)</div>
+                                        <input type="text" fieldName="PhoneNumber" required class="input-field" />
                                     </div>
                                 </div>
                             </div>
                             <div class="misa-form-row">
                                 <div class="misa-col-1-2">
                                     <div class="misa-form-group">
-                                        <label class="label-field-input">Tên công ty</label>
-                                        <input class="input-field" />
+                                        <div class="label-field-input">Tình trạng làm việc</div>
+                                        <input fieldName="WorkStatusName" type="text" class="input-field" />
                                     </div>
                                 </div>
                                 <div class="misa-col-3">
                                     <div class="misa-form-group">
-                                        <label class="label-field-input">Mã số thuế</label>
-                                        <input class="input-field" />
+                                        <div class="label-field-input">Lương</div>
+                                        <input fieldName="Salary" type="text" class="input-field" />
                                     </div>
                                 </div>
                             </div>
                             <div class="misa-form-row">
                                 <div class="misa-form-group">
-                                    <label class="label-field-input">Địa chỉ</label>
-                                    <input class="input-field" />
+                                    <div class="label-field-input">Địa chỉ</div>
+                                    <input type="text" fieldName="Address" class="input-field" />
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button data-close-button class="misa-btn-second">Hủy</button>
-                        <button class="misa-btn-icon">Thêm mới</button>
+                        <button id="btnDelete" class="misa-btn-red" style="display:none">Xóa</button>
+                        <button id="btnSave" class="misa-btn-icon">Thêm mới</button>
                     </div>
                 </div>
 
@@ -260,6 +278,21 @@
                 15/trang
                 <i></i>
             </div>
+        </div>
+    </div>
+    <div class="modal" id="popup-notice">
+        <div class="modal-header">
+            <div class="title-header">
+                <div class="title">Xóa Bản ghi</div>
+                <button class="close-button btnClose">&times;</button>
+            </div>
+        </div>
+        <div class="modal-body">
+            <label class="label-field-input">Bạn có chắc muốn xóa bản ghi này không ?</label>
+        </div>
+        <div class="modal-footer">
+            <button id="btnSubDelete" class="misa-btn-red">Đồng ý</button>
+            <button class="misa-btn-second btnClose">Hủy</button>
         </div>
     </div>
     <div id="overlay"></div>

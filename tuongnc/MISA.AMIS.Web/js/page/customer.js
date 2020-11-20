@@ -12,7 +12,8 @@ class Customer extends BaseJS {
         $('.navbar-content').find("#customerPage").addClass("active");
     }
 
-    setDataUrl() {
+    setData() {
         this.apiRouter = "/api/customers";
+        this.page = 'Customer';
     }
 }
