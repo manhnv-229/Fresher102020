@@ -40,11 +40,11 @@ class BaseJS {
         })
         // sự kiện thêm mới khách hàng khi nhấn buttton [Lưu]
         $('#btnSave').click(me.btnSaveOnClick.bind(me));
-
-
+        $('table tbody').on('click', 'tr', this.btnClickSelectRow);
+        $('#btnDelete').on('click', me.DeleteRowTable.bind(me));
         // hiển thị thông tin chi tiết khi nhấn đúp chuột chọn 1 bản ghi
         $('table tbody').on('dblclick', 'tr', function () {
-            $(this).find('td').addClass('row-selected');
+            //$(this).find('td').addClass('row-selected');
             //var api = selects.attr("api");
             // load form:
             // load dữ liệu cho các combobox:
@@ -93,7 +93,7 @@ class BaseJS {
 
                 // Lấy tất cả các control nhập liệu:
                 var inputs = $('input[fieldName], select[fieldName]');
-                var entity = {};
+
                 $.each(inputs, function (index, input) {
                     var propertyName = $(this).attr('fieldName');
                     var value = res[propertyName];
@@ -108,28 +108,21 @@ class BaseJS {
                         var date = formatDateDoubleClick(value);
 
                         $(this).val(date);
-                        
+
                     }
                     // Đối với các input là radio:
                     else if ($(this).attr('type') == "radio") {
-                         var inputValue = this.value;
+                        var inputValue = this.value;
 
-                            if (value == inputValue) {
-                                this.checked = true;
-                            }   else {
-                                this.checked = false;
-                                }
+                        if (value == inputValue) {
+                            this.checked = true;
+                        } else {
+                            this.checked = false;
+                        }
                     } else {
                         $(this).val(value);
                     }
-                    // Check với trường hợp input là radio, thì chỉ lấy value của input có attribute là checked:
-                    //if ($(this).attr('type') == "radio") {
-                    //    if (this.checked) {
-                    //        entity[propertyName] = value;
-                    //    }
-                    //} else {
-                    //    entity[propertyName] = value;
-                    //}
+
                 })
             }).fail(function (res) {
 
@@ -138,7 +131,8 @@ class BaseJS {
 
             dialogDetail.dialog('open');
         })
-
+        //chọn click vào tr của bảng
+        $('tr').click(me.btnClickSelectRow);
         /*
          *validate bắt buộc nhập
          * createdby: dvquang(14/11/2020)
@@ -172,8 +166,40 @@ class BaseJS {
             }
         })
     }
+    /**
+     * Hàm chọn 1 row trong table
+     * createdby: dvquang (20/11/2020)
+     * */
+    btnClickSelectRow() {
+        $(this).siblings().removeClass('row-select');
+        $(this).addClass('row-select');
+        var select = $('table .row-select');
+        var id = select.data('recordId');
 
-
+    }
+    /**
+     * Hàm xóa 1 row đã được select trong table
+     * createdby: dvquang (20/11/2020)
+     * */
+    DeleteRowTable() {
+        var me = this;
+        var select = $('table .row-select');
+        var id = select.data('recordId');
+        //var link = me.host + me.apiRouter + `/${id}`;
+        //console.log(me.apiRouter);
+        //console.log(this.apiRouter);
+        //console.log(link);
+        $.ajax({
+            url: me.host + me.apiRouter + `/${id}`,
+            method: 'DELETE',
+            contentType: "application/json",
+        }).done(function (res) {
+            alert('xoa thanh cong!');
+            me.loadData();
+        }).fail(function (res) {
+            alert('xoa khong thanh cong');
+        })
+    }
     /**
      * load dữ liệu
      * createdby: dvquang(12/11/2020)
@@ -331,7 +357,7 @@ class BaseJS {
         }).fail(function (res) {
             debugger
         })
-        // sau khi lưu thành công: đưa ra thông báo, ẩn form, load loại dữ liệu
+
     }
 }
 

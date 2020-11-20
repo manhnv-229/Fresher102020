@@ -39,10 +39,14 @@
     cursor: pointer;
 }
 
-    .m-second-button:hover {
-        background-color: #E9EBEE;
-    }
-    /*button refresh*/
+.btn-default:focus {
+    outline: none;
+}
+
+.m-second-button:hover {
+    background-color: #E9EBEE;
+}
+/*button refresh*/
 .m-btn-refresh {
     background-image: url('/content/icon/refresh.png');
     background-repeat: no-repeat;

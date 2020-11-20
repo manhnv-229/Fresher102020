@@ -22,13 +22,22 @@ table th {
 table td {
     max-width: 200px;
 }
-
+tbody tr {
+    cursor: pointer;
+    
+    
+}
 tbody tr:nth-child(2n+1) {
     background-color: #fafafa;
+    
 }
 .text-align-right {
     text-align: right;
 }
 .text-align-center {
     text-align: center;
+}
+.row-select {
+    background-color: #88d87c !important;
+    
 }
