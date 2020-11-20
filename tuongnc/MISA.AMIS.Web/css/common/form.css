@@ -56,4 +56,9 @@ form .misa-col-1-2 {
     border-color: #ff0000;
 }
 
+table tbody .active {
+    background-color: #019160;
+    color: white;
+}
+
 /*---------------------------------------------------*/

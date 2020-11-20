@@ -38,49 +38,23 @@ class BaseJS {
         // sự kiện click khi nhấn đồng bộ - sync table
         $("#btnRefresh").click(me.eventSyncTable.bind(me));
         // Hiển thị thông tin chi tiết khi nhấn đúp chuột vào 1 hàng ở table
-        $("table tbody").on("dblclick", "tr", function () {
-            // lấy dữ liệu của hàng được trỏ vào, và bind dữ liệu đó lên dialog
-            me.formMode = 'edit';
-            var recordId = $(this).data('recordId');
-            me.recordId = recordId;
-            try {
-                $.ajax({
-                    url: me.host + me.apiRouter + `/${recordId}`,
-                    method: 'GET',
-                }).done(function (res) {
-                    var fieldNames = $('input[fieldName], select[fieldName]');
-                    $.each(fieldNames, function (index, item) {
-                        var fieldName = $(this).attr('fieldName');
-                        var value = res[fieldName];
-                        if ($(this).is('input[type="radio"]')) {
-                            if (value == null) {
-                                $(this).prop('checked', false);
-                            } else {
-                                $(`input[value="${value}"`).prop('checked', true);
-                            }
-                        } else {
-                            if ($(this).is('input[type=date]')) {
-                                var value = formatDateInput(res[fieldName]);
-                            } else if ($(this).is('select[fieldName]')) {
-                                var fieldValue = $(this).attr('fieldValue');
-                                value = res[fieldValue];
-                            }
-                            $(this).val(value);
-                        }
-                    });
-                }).fail(function (res) {
-
-                });
-            } catch (e) {
-                console.log(e);
-            };
-            // thêm button delete vào form
-            //var btnDelete = $(`<button id="btnDelete" class="misa-btn-icon">Xóa</button>`);
-            //btnDelete.css('background-color', 'red');
-            //$('#modal').find('.modal-footer').append(btnDelete);
-            $('#btnDelete').show();
-            $('#overlay').show();
-            $('#modal').show();
+        $("table tbody").on("dblclick", "tr", function (e) {
+            //xét active row
+            $(this).addClass('active');
+            if (me.trActive) {
+                me.trActive.removeClass('active');
+            }
+            me.trActive = $(this);
+            // xử lý bind dữ liệu ra dialog
+            var data = $(e.currentTarget).data();
+            me.eventRowDetail(data);
+            // thêm button delete vào form và button chỉnh sửa 
+                //chỉnh sửa
+                $('#btnSave').html('Chỉnh sửa');
+                // delete
+                $('#btnDelete').show();
+                $('#overlay').show();
+                $('#modal').show();
         });
         // xử lý sự kiện click delete entity
         $('#modal').on('click', '#btnDelete', me.eventClickDeleteEntity.bind(me));
@@ -180,46 +154,45 @@ class BaseJS {
     * Hàm được dùng để hiển thị dư liệu 1 entity vào dialog
     * CreatedBy TuongNC (12/11/2020)
     * */
-    //eventRowDetail() {
-    //    var me = this;
-    //    me.formMode = 'edit';
-    //    var recordId = $(this).data('recordId');
-    //    me.recordId = recordId;
-    //    debugger;
-    //    try {
-    //        $.ajax({
-    //            url: me.host + me.apiRouter + `/${recordId}`,
-    //            method: 'GET',
-    //        }).done(function (res) {
-    //            var fieldNames = $('input[fieldName], select[fieldName]');
-    //            $.each(fieldNames, function (index, item) {
-    //                var fieldName = $(this).attr('fieldName');
-    //                var value = res[fieldName];
-    //                if ($(this).is('input[type="radio"]')) {
-    //                    if (value == null) {
-    //                        $(this).prop('checked', false);
-    //                    } else {
-    //                        $(`input[value="${value}"`).prop('checked', true);
-    //                    }
-    //                } else {
-    //                    if ($(this).is('input[type=date]')) {
-    //                        var value = formatDateInput(res[fieldName]);
-    //                    } else if ($(this).is('select[fieldName]')) {
-    //                        var fieldValue = $(this).attr('fieldValue');
-    //                        value = res[fieldValue];
-    //                    }
-    //                    $(this).val(value);
-    //                }
-    //            });
-    //        }).fail(function (res) {
+    eventRowDetail(data) {
+        var me = this;
+        me.formMode = 'edit';
+        var recordId = data.recordId
+        me.recordId = recordId;
+        try {
+            $.ajax({
+                url: me.host + me.apiRouter + `/${recordId}`,
+                method: 'GET',
+            }).done(function (res) {
+                var fieldNames = $('input[fieldName], select[fieldName]');
+                $.each(fieldNames, function (index, item) {
+                    var fieldName = $(this).attr('fieldName');
+                    var value = res[fieldName];
+                    if ($(this).is('input[type="radio"]')) {
+                        if (value == null) {
+                            $(this).prop('checked', false);
+                        } else {
+                            $(`input[value="${value}"`).prop('checked', true);
+                        }
+                    } else {
+                        if ($(this).is('input[type=date]')) {
+                            var value = formatDateInput(res[fieldName]);
+                        } else if ($(this).is('select[fieldName]')) {
+                            var fieldValue = $(this).attr('fieldValue');
+                            value = res[fieldValue];
+                        }
+                        $(this).val(value);
+                    }
+                });
+            }).fail(function (res) {
 
-    //        });
-    //    } catch (e) {
-    //        console.log(e);
-    //    };
-    //    $('#overlay').show();
-    //    $('#modal').show();
-    //}
+            });
+        } catch (e) {
+            console.log(e);
+        };
+        $('#overlay').show();
+        $('#modal').show();
+    }
 
     /**************************************************
     * Hàm được dùng để đồng bộ dữ liệu vào table
@@ -298,6 +271,7 @@ class BaseJS {
     * CreatedBy TuongNC (12/11/2020)
     * */
     eventClickBtnAdd() {
+        $('#btnSave').html('Thêm mới');
         $('#btnDelete').hide();
         var me = this;
         me.formMode = 'add';
