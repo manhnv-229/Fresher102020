@@ -39,14 +39,27 @@
     cursor: pointer;
 }
 
-    .m-second-button:hover {
-        background-color: #E9EBEE;
-    }
-    /*button refresh*/
+.btn-default:focus {
+    outline: none;
+}
+
+.m-second-button:hover {
+    background-color: #E9EBEE;
+}
+/*button refresh*/
 .m-btn-refresh {
     background-image: url('/content/icon/refresh.png');
     background-repeat: no-repeat;
     width: 40px;
     background-position: center;
     height: 40px;
+}
+/*button delete*/
+.m-btn-delete {
+    background-image: url('/content/icon/trash-2.svg');
+    background-repeat: no-repeat;
+    width: 40px;
+    background-position: center;
+    height: 40px;
+    margin-right: 12px;
 }

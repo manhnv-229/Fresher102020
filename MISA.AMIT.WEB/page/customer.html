@@ -4,14 +4,15 @@
     <meta charset="utf-8" />
     <title></title>
     <link href="/lib/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" />
+    <link href="/css/common/main.css" rel="stylesheet" />
     <link href="/css/common/common.css" rel="stylesheet" />
     <link href="/css/common/header.css" rel="stylesheet" />
-    <link href="/css/common/main.css" rel="stylesheet" />
     <link href="/css/common/navbar.css" rel="stylesheet" />
     <link href="/css/common/content.css" rel="stylesheet" />
     <link href="/css/common/gird.css" rel="stylesheet" />
     <link href="/css/common/icon.css" rel="stylesheet" />
     <link href="/css/common/buttom.css" rel="stylesheet" />
+    <link href="/css/common/radio.css" rel="stylesheet" />
     <link href="/css/common/toolbar.css" rel="stylesheet" />
     <link href="/css/common/dialog.css" rel="stylesheet" />
     <link href="/css/common/input.css" rel="stylesheet" />
@@ -81,12 +82,15 @@
         </div>
         <div class="filter-bar">
             <div class="filter-left">
-                <input class="icon-search input-search" style="width:200px" type="text" placeholder="Tim kiem theo ma, ten nhan vien" />
+                <input class="icon-search input-search" style="width:300px" type="text" placeholder="Tim kiem theo ma, ten nhan vien" />
 
             </div>
             <div class="filter-right">
+                <button id ="btnDelete" class="m-second-button m-btn-delete">
+                </button>
                 <button id="btnRefresh" class="m-second-button m-btn-refresh">
                 </button>
+
             </div>
         </div>
         <div class="gird grid-customer">
@@ -123,69 +127,79 @@
                         <div class="input1">
                             <div class="input1-line1">
                                 <div clas="m-label">Mã khách hàng (<span class="label-required">*</span>)</div>
-                                <div class="m-control"><input id="txtCustomerCode" required class="input-required" type="text" /></div>
+                                <div class="m-control"><input id="txtCustomerCode" fieldName="CustomerCode" required class="input-required" type="text" /></div>
                             </div>
                             <div class="input1-line2">
                                 <div clas="m-label">Họ và tên (<span class="label-required">*</span>)</div>
-                                <div class="m-control"><input id="txtFullName" required class="input-required" type="text" /></div>
+                                <div class="m-control"><input id="txtFullName" fieldName="FullName" required class="input-required" type="text" /></div>
                             </div>
                         </div>
                         <div class="input2">
                             <div class="input2-line1">
                                 <div clas="m-label">Mã thẻ thành viên</div>
-                                <div class="m-control"><input id="txtMemberCardCode" required class="input-required" type="text" /></div>
+                                <div class="m-control"><input id="txtMemberCardCode" fieldName="MemberCardCode" required class="input-required" type="text" /></div>
                             </div>
                             <div class="input2-line2">
                                 <div clas="m-label">Nhóm khách hàng</div>
-                                <select id="cbxCustomerGroup" class="m-control">
-                                    <option>Khách VIP</option>
-                                    <option>Khách thường</option>
-                                    <option>Khách vãng lai</option>
+                                <select id="cbxCustomerGroup" style="width: 141%" fieldName="CustomerGroupName" fieldValue="CustomerGroupId" api="/api/customergroups" class="m-control">
+                         
                                 </select>
+                                <combobox id="cbxCustomerGroup"
+                                          fieldName=""
+                                          valueName=""
+                                          api=""></combobox>
                             </div>
                         </div>
                         <div class="input3">
                             <div class="input3-line1">
                                 <div clas="m-label">Ngày sinh</div>
-                                <div class="m-control"><input id="dtDateOfBirth" type="date" /></div>
+                                <div class="m-control"><input id="dtDateOfBirth" style="width: 117%" fieldName="DateOfBirth" type="date" /></div>
                             </div>
-                            <div class="input3-line2-radio" id="rdGender">
-                                <div class="m-radio-item">
-                                    <input type="radio" id="rdMale" value="Nam" name="gender" checked />
-                                    <label for="rdMale">Nam</label>
+                            <div class="input3-line2-radio" style="width:100%" >
+                                <div class="m-label" >Giới tính</div>
+                                <div class="input3-radio-group" style="width: 88%" id="rdGender">
+                                    <div class="m-radio-item">
+                                        <input type="radio" id="rdMale" fieldName="Gender" value="1" name="gender" checked />
+                                        <label for="rdMale">Nam</label>
+                                    </div>
+                                    <div class="m-radio-item mg-left-10px">
+                                        <input type="radio" id="rdMale" fieldName="Gender" value="0" name="gender" />
+                                        <label for="rdMale">Nữ</label>
+                                    </div>
+                                    <div class="m-radio-item mg-left-10px">
+                                        <input type="radio" id="rdMale" fieldName="Gender" value="2" name="gender" />
+                                        <label for="rdOther">Khác</label>
+                                    </div>
                                 </div>
-                                <div class="m-radio-item mg-left-10px">
-                                    <input type="radio" id="rdFemale" value="Nữ" name="gender" />
-                                    <label for="rdMale">Nữ</label>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="m-body-bottom1">
-                    <div class="m-input4-left" >
+                    <div class="m-input4-left">
                         <div class="m-label">Email</div>
-                        <div class="m-control"><input style="width:360px" id="txtEmail" type="email" placeholder="example@domain.com" /></div>
+                        <div class="m-control"><input style="width:395px" id="txtEmail" fieldName="Email" type="email" placeholder="example@domain.com" /></div>
                     </div>
                     <div class="input4-right">
                         <div class="m-label">Số điện thoại (<span class="label-required">*</span>)</div>
-                        <div class="m-control"><input id="txtPhoneNumber" class="input-required" type="tel" required /></div>
+                        <div class="m-control"><input id="txtPhoneNumber" fieldName="PhoneNumber" class="input-required" type="tel" required /></div>
                     </div>
                 </div>
                 <div class="m-body-bottom2">
                     <div class="m-input5-left">
                         <div class="m-label">Tên công ty</div>
-                        <div class="m-control"><input type="tel" style="width:360px" /></div>
+                        <div class="m-control"><input type="text" fieldName="CompanyName" style="width:395px" /></div>
                     </div>
                     <div class="input5-right">
                         <div class="m-label">Mã số thuế</div>
-                        <div class="m-control"><input type="text" placeholder="Mã số thuế của công ty" /></div>
+                        <div class="m-control"><input type="text"  fieldName="CompanyTaxCode" placeholder="Mã số thuế của công ty" /></div>
                     </div>
                 </div>
                 <div class="m-body-bottom3">
                     <div class="input6" style="width:100%">
                         <div class="m-label">Địa chỉ</div>
-                        <div class="m-control"><input style="width:95%" id="txtAddress" type="tel" /></div>
+                        <div class="m-control"><input style="width:101%" id="txtAddress" fieldName="Address" type="tel" /></div>
                     </div>
                 </div>
             </div>
@@ -194,6 +208,7 @@
                 <button id="btnSave" class="m-btn m-btn-default"><i class="far fa-save"></i><span class="btn-text">Lưu</span></button>
             </div>
         </div>
+  
     </div>
 
 
