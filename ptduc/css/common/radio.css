@@ -7,30 +7,3 @@
   display: flex;
   align-items: center;
 }
-
-/* input[type="radio"]:after {
-  width: 18px;
-  height: 18px;
-  border-radius: 18px;
-  position: relative;
-  background-color: white;
-  background-size: contain;
-  content: "";
-  display: inline-block;
-  visibility: visible;
-  border: 1px solid #bbbbbb;
-}
-
-input[type="radio"]:checked:after {
-  width: 20px;
-  height: 20px;
-  border-radius: 20px;
-  position: relative;
-  background-image: url("/assets/img/circle.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: auto;
-  content: "";
-  display: inline-block;
-  visibility: visible;
-} */
