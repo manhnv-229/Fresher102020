@@ -34,15 +34,9 @@
         $('#delete').click(me.btnDeleteOnClick.bind(me));
 
         //Sự kiện khi nhấn đóng dialog:
-        $('.fa-times').click(function () {
-            $('.dialog-modal').css("display", "none");
-            $('.modal-delete').css("display", "none");
-        })
+        $('.fa-times').click(me.hideDialog);
 
-        $('.cancel-button').click(function () {
-            $('.dialog-modal').css("display", "none");
-            $('.modal-delete').css("display", "none");
-        })
+        $('.cancel-button').click(me.hideDialog);
 
         //Lưu dữ liệu khi nhấn nút lưu
         $('.save-button').click(me.btnSaveOnClick.bind(me))
@@ -62,6 +56,15 @@
 
         //validate email đúng định dạng
         $('input[type="email"]').blur(me.validateEmail)
+    }
+
+    /**
+    * Ẩn form nhập dữ liệu
+    * CreatedBy:Nguyễn Trung Nghĩa (20/11/2020)
+    */
+    hideDialog() {
+        $('.dialog-modal').css("display", "none");
+        $('.modal-delete').css("display", "none");
     }
 
     /**
@@ -168,65 +171,69 @@
     * */
     btnSaveOnClick() {
         var me = this;
-        //validate dữ liệu:
-        var inputValidates = $('.input-required, input[type="email"]');
-        $.each(inputValidates, function (index, input) {
-            var value = $(input).val();
-            $(input).trigger('blur');
-        })
+        try {
+            //validate dữ liệu:
+            var inputValidates = $('.input-required, input[type="email"]');
+            $.each(inputValidates, function (index, input) {
+                var value = $(input).val();
+                $(input).trigger('blur');
+            })
 
-        var inputNotValids = $('input[validate="false"]');
-        if (inputNotValids && inputNotValids.length > 0) {
-            alert('Dữ liệu ko hợp lệ, vui lòng kiểm tra lại!');
-            inputNotValids[0].focus();
-            return;
-        }
+            var inputNotValids = $('input[validate="false"]');
+            if (inputNotValids && inputNotValids.length > 0) {
+                alert('Dữ liệu ko hợp lệ, vui lòng kiểm tra lại!');
+                inputNotValids[0].focus();
+                return;
+            }
 
-        //thu thập dữ liệu được nhập -> build thành object
+            //thu thập dữ liệu được nhập -> build thành object
 
-        var customer = {}
-        //lấy tất cả control nhập liệu:
-        var elements = $('.dialog-content input[id], select[id]');
-        $.each(elements, function (index, input) {
-            var attr = $(this).attr('id');
-            var value = $(this).val();
+            var customer = {}
+            //lấy tất cả control nhập liệu:
+            var elements = $('.dialog-content input[id], select[id]');
+            $.each(elements, function (index, input) {
+                var attr = $(this).attr('id');
+                var value = $(this).val();
 
-            //Check trường hợp input là radio button, lấy ra giới tính
-            if ($(this).attr('type') == "radio") {
-                if (this.checked) {
+                //Check trường hợp input là radio button, lấy ra giới tính
+                if ($(this).attr('type') == "radio") {
+                    if (this.checked) {
+                        customer[attr] = value;
+                    }
+                } else {
                     customer[attr] = value;
                 }
-            } else {
-                customer[attr] = value;
+            })
+            console.log(customer);
+
+            var method = "POST";
+            var txt_alert = "Thêm thành công!";
+            if (me.FormMode == 'Edit') {
+                method = "PUT";
+                txt_alert = "Sửa thành công!";
+                customer.CustomerId = me.recordId;
             }
-        })
-        console.log(customer);
 
-        var method = "POST";
-        var txt_alert = "Thêm thành công!";
-        if (me.FormMode == 'Edit') {
-            method = "PUT";
-            txt_alert = "Sửa thành công!";
-            customer.CustomerId = me.recordId;
+            //gọi service tương ứng thực hiện lưu trữ dữ liệu
+            $.ajax({
+                url: me.host + me.apiRouter,
+                method: method,
+                data: JSON.stringify(customer),
+                contentType: 'application/json'
+            }).done(function (res) {
+                //Sau khi lưu thành công:
+                // + đưa ra thông báo
+                // + ẩn form nhập
+                // + load lại dữ liệu
+                alert(txt_alert);
+                $('.dialog-modal').css("display", "none");
+                me.loadData();
+            }).fail(function (res) {
+                alert(res);
+            })
+        } catch (e) {
+            console.log(e);
         }
-
-        //gọi service tương ứng thực hiện lưu trữ dữ liệu
-        $.ajax({
-            url: me.host + me.apiRouter,
-            method: method,
-            data: JSON.stringify(customer),
-            contentType: 'application/json'
-        }).done(function (res) {
-            //Sau khi lưu thành công:
-            // + đưa ra thông báo
-            // + ẩn form nhập
-            // + load lại dữ liệu
-            alert(txt_alert);
-            $('.dialog-modal').css("display", "none");
-            me.loadData();
-        }).fail(function (res) {
-            alert(res);
-        })
     }
 
     /**
@@ -242,24 +249,27 @@
         $('.btn-delete').show();
     }
 
-
     /**
     * Hàm xử lí khi nhấn button xóa
     * CreatedBy: NTNghia (19/11/2020)
     * */
     btnDeleteOnClick() {
         var me = this;
-        //Gọi service lấy thông tin chi tiết qua id
-        $.ajax({
-            url: me.host + me.apiRouter + `/` + me.recordId,
-            method: "DELETE"
-        }).done(function (res) {
-            alert('Xóa thành công!');
-            $('.modal-delete').css("display", "none");
-            me.loadData();
-        }).fail(function (res) {
-            console.log(res);
-        })
+        try {
+            //Gọi service lấy thông tin chi tiết qua id
+            $.ajax({
+                url: me.host + me.apiRouter + `/` + me.recordId,
+                method: "DELETE"
+            }).done(function (res) {
+                alert('Xóa thành công!');
+                $('.modal-delete').css("display", "none");
+                me.loadData();
+            }).fail(function (res) {
+                console.log(res);
+            })
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     /**
@@ -268,7 +278,8 @@
     * */
     trDbClick(e) {
         var me = this;
-            me.FormMode = 'Edit';
+        me.FormMode = 'Edit';
+        try {
             //load dữ liệu cho các combo box
             var select = $('select#CustomerGroupId');
             select.empty();
@@ -289,8 +300,8 @@
             })
 
             //Lấy khóa chính của bản ghi
-        var recordId = $(e.currentTarget).data('recordId');
-        
+            var recordId = $(e.currentTarget).data('recordId');
+
             me.recordId = recordId;
 
             //Gọi service lấy thông tin chi tiết qua id
@@ -339,6 +350,9 @@
             })
 
             $('.dialog-modal').css("display", "flex");
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     /**
