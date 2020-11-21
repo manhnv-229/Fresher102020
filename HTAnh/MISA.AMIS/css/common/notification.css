@@ -1,0 +1,56 @@
+﻿/*Style giaoo diện cho ô thông báo*/
+.notification{
+	position:relative;
+}
+
+	.notification .notification-content {
+		height: 48px;
+		border-radius: 4px;
+		position: absolute;
+		z-index: 1000;
+		box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+		width: 221px;
+		background-color: white;
+		top: 90vh;
+		left: 2vh;
+		text-align: center;
+		line-height: 48px;
+		/*background-image: url('../../content/icon/green-tick.png');
+		background-repeat: no-repeat;
+		background-position: 20px 13px;*/
+		-webkit-animation: moveOpen 4s;
+		-webkit-animation-iteration-count: infinite;
+		-webkit-animation-fill-mode: forwards;
+	}
+		.notification .notification-content.error-icon {
+			background-image: url('../../content/icon/alert-triangle.svg');
+			background-repeat: no-repeat;
+			background-position: 20px 13px;
+		}
+		.notification .notification-content.success-icon {
+			background-image: url('../../content/icon/green-tick.png');
+			background-repeat: no-repeat;
+			background-position: 20px 13px;
+		}
+		.notification .notification-content.hide {
+			display: none;
+		}
+
+		@-webkit-keyframes moveOpen {
+			from {
+			-webkit-transform: translate(0,100px);
+			}
+
+			10% {
+				-webkit-transform: translate(0,20px);
+			}
+
+			12% {
+				-webkit-transform: translate(0,22px);
+			}
+
+			16% {
+				-webkit-transform: translate(0,20px);
+			}
+
+		}
