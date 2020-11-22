@@ -1,7 +1,7 @@
 ﻿
 /*Định dạng table*/
 .grid {
-    height: calc(100vh - 271px);
+    height: calc(100vh - 263px);
     padding: 16px;
     overflow-y: hidden;
     overflow-x: scroll;
@@ -9,6 +9,7 @@
 
 table {
     width: 100%;
+    background-color: #fff;
 }
 
     table tbody tr:hover {
@@ -37,10 +38,6 @@ table {
             text-overflow: ellipsis;
             overflow: hidden;
         }
-
-    table thead tr th {
-        text-align: center;
-    }
 /*Chia đều kích thước màn hình theo 12 cột*/
 .col {
     display: block;

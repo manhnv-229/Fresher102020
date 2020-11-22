@@ -81,7 +81,10 @@
             </div>
             <div class="filter-bar">
                 <div class="filter-left">
-                    <input class="search" type="text" name="search" placeholder="Tìm kiếm theo mã khách hàng, họ tên">
+                    <div class="input-box">
+                        <input class="search" type="text" name="search" placeholder="Tìm kiếm theo mã khách hàng, họ tên">
+                        <div class="clear-input-icon" style="top: 13px;">&times;</div>
+                    </div>
                     <select></select>
                 </div>
                 <div class="filter-right">
@@ -103,7 +106,7 @@
                             <th fieldname="Address">Địa chỉ</th>
                             <th fieldname="CustomerGroupName">Nhóm khách hàng</th>
                             <th fieldname="MemberCardCode">Mã thẻ thành viên</th>
-                            <th fieldname="DebitAmount" formatType="Number">Tiền ghi nợ</th>
+                            <th fieldname="DebitAmount" formatType="money">Tiền ghi nợ</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -140,12 +143,18 @@
                         <div class="row">
                             <div class="col col-6">
                                 <div class="col-12">
-                                    <label>Mã khách hàng *</label>
-                                    <input id="txtCustomerCode" fieldname="CustomerCode" type="text" required />
+                                    <label>Mã khách hàng <span style="color:red;">*</span></label>
+                                    <div class="input-box">
+                                        <input id="txtCustomerCode" fieldname="CustomerCode" type="text" required />
+                                        <div class="clear-input-icon">&times;</div>
+                                    </div>
                                 </div>
                                 <div class="col-12">
-                                    <label>Mã thẻ thành viên *</label>
-                                    <input id="txtMemberCardCode" fieldname="MemberCardCode" type="text" required />
+                                    <label>Mã thẻ thành viên</label>
+                                    <div class="input-box">
+                                        <input id="txtMemberCardCode" fieldname="MemberCardCode" type="text" />
+                                        <div class="clear-input-icon">&times;</div>
+                                    </div>
                                 </div>
                                 <div class="col-12">
                                     <label>Ngày sinh</label>
@@ -154,8 +163,11 @@
                             </div>
                             <div class="col-6">
                                 <div class="col-12">
-                                    <label>Họ và tên</label>
-                                    <input id="txtFullName" fieldname="FullName" type="text">
+                                    <label>Họ và tên <span style="color: #ff0000;">*</span></label>
+                                    <div class="input-box">
+                                        <input id="txtFullName" fieldname="FullName" type="text" required>
+                                        <div class="clear-input-icon">&times;</div>
+                                    </div>
                                 </div>
                                 <div class="col-12">
                                     <label>Nhóm khách hàng</label>
@@ -180,28 +192,43 @@
                 </div>
                 <div class="row">
                     <div class="col col-8">
-                        <label>Email</label>
-                        <input id="txtEmail" fieldname="Email" type="email" required>
+                        <label>Email <span style="color:red;">*</span></label>
+                        <div class="input-box">
+                            <input id="txtEmail" fieldname="Email" type="email" required>
+                            <div class="clear-input-icon">&times;</div>
+                        </div>
                     </div>
                     <div class="col-4">
-                        <label>Số điện thoại</label>
-                        <input id="txtPhoneNumber" fieldname="PhoneNumber" type="text" required>
+                        <label>Số điện thoại <span style="color:red;">*</span></label>
+                        <div class="input-box">
+                            <input id="txtPhoneNumber" fieldname="PhoneNumber" type="text" required>
+                            <div class="clear-input-icon">&times;</div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col col-8">
                         <label>Tên công ty</label>
-                        <input fieldname="CompanyName" type="text">
+                        <div class="input-box">
+                            <input fieldname="CompanyName" type="text">
+                            <div class="clear-input-icon">&times;</div>
+                        </div>
                     </div>
                     <div class="col-4">
                         <label>Mã số thuế</label>
-                        <input fieldname="CompanyTaxCode" type="text">
+                        <div class="input-box">
+                            <input fieldname="CompanyTaxCode" type="text">
+                            <div class="clear-input-icon">&times;</div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <label>Địa chỉ</label>
-                        <input id="txtAddress" fieldname="Address" type="text">
+                        <div class="input-box">
+                            <input id="txtAddress" fieldname="Address" type="text" style="margin-bottom: 0px;">
+                            <div class="clear-input-icon">&times;</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -222,6 +249,16 @@
             <div class="group-footer-button">
                 <button class="m-btn m-btn-content btn-cancel">Huỷ</button>
                 <button class="m-btn m-btn-content confirm-delete">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+    <div class="popup-alert data-invalid">
+        <div class="dialog-body">
+            Dữ liệu không hợp lệ. Vui lòng kiểm tra lại.
+        </div>
+        <div class="dialog-footer">
+            <div class="group-footer-button">
+                <button class="m-btn m-btn-content btn-cancel">Đóng</button>
             </div>
         </div>
     </div>

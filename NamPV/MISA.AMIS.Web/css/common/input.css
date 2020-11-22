@@ -1,13 +1,42 @@
 ﻿
 
 /* Định dạng chung các input*/
+.input-box {
+    position: relative;
+}
+
+    .input-box input,
+    .input-box .clear-input-icon {
+        display: inline-block;
+    }
+
+        .input-box .clear-input-icon:hover {
+            cursor: pointer;
+        }
+
+        .input-box input:focus ~ .clear-input-icon {
+            opacity: 1;
+        }
+
+    .input-box .clear-input-icon {
+        position: absolute;
+        right: 8px;
+        top: 17px;
+        height: 16px;
+        width: 16px;
+        opacity: 0;
+        line-height: 16px;
+        transition: all 0.8s;
+        border-radius: 50%;
+        text-align: center;
+        background-color: #E9EBEE;
+    }
+
 input {
     padding: 0px;
     margin: 0px;
     border: none;
-    width: 200px;
     background-color: white;
-    font-size: 12px;
     background-position: 16px 12px;
     background-repeat: no-repeat;
     background-size: 16px 16px;
@@ -18,6 +47,10 @@ input {
     height: 40px;
     text-overflow: ellipsis;
 }
+
+    input::-webkit-input-placeholder {
+        font-size: 11px;
+    }
 
     input:focus {
         border: 1px solid #019160;

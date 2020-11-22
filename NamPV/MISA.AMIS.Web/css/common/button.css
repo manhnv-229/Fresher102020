@@ -30,6 +30,7 @@ button {
 /*button chỉ chứa text*/
 .m-btn-content {
     padding: 0px 24px;
+    min-width: 100px;
 }
 
     .m-btn-content:hover {
@@ -48,6 +49,7 @@ button {
     background-size: 16px 16px;
     background-position: 16px 12px;
     padding-left: 40px;
+    min-width: 100px;
 }
 
 /*button chỉ chứa icon*/
@@ -61,4 +63,14 @@ button {
 
     .btn-single-icon:hover {
         background-color: #E9EBEE;
+    }
+
+.data-invalid .btn-cancel {
+    background-color: #019160;
+    margin: 0px;
+}
+
+    .data-invalid .btn-cancel:hover {
+        cursor: pointer;
+        background-color: #2FBE8E;
     }

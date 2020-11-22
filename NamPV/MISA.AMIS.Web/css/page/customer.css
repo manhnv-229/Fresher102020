@@ -1,5 +1,9 @@
-/*Tiêu đề nội dung page*/
 
+@font-face {
+    font-family: 'GoogleSans-Bold';
+    src: url('/content/font/Google Sans/GoogleSans-Bold.otf') format('opentype');
+}
+/*Tiêu đề nội dung page*/
 .page-content .header-content {
     display: flex;
     padding: 16px 16px;
@@ -7,7 +11,7 @@
 
     .page-content .header-content h1 {
         font-family: GoogleSans-Bold;
-        font-size: 24px;
+        font-size: 20px;
         flex: auto;
     }
 

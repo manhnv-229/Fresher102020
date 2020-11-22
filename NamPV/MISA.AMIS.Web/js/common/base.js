@@ -46,10 +46,11 @@
         $(`input[type="email"]`).blur(this.validateInputEmailData);
 
         // Ẩn dialog xác nhận xoá
-        $(`.customer-delete .btn-cancel`).click(this.btnCancelDeleteOnClick.bind(this));
+        $(`.customer-delete .btn-cancel, .data-invalid .btn-cancel`).click(this.btnCancelDeleteOnClick.bind(this));
 
         // Xoá bản ghi khi nhấn đồng ý
         $(`.customer-delete .confirm-delete`).click(this.btnConfirmDeleteOnClick.bind(this));
+
     }
 
     /**
@@ -80,12 +81,6 @@
                                 $(`th[fieldname=${fieldname}]`).css(`min-width`, `90px`);
                                 $(`th[fieldname=${fieldname}]`).css(`max-width`, `90px`);
                                 break;
-                            case fieldname.includes(`Gender`):
-                                td.css(`min-width`, `50px`);
-                                td.css(`max-width`, `50px`);
-                                $(`th[fieldname=${fieldname}]`).css(`min-width`, `50px`);
-                                $(`th[fieldname=${fieldname}]`).css(`max-width`, `50px`);
-                                break;
                             case fieldname.includes(`Email`)
                                 || fieldname.includes(`FullName`)
                                 || fieldname.includes(`CompanyName`):
@@ -112,11 +107,10 @@
                                 $(td).addClass(`text-align-center`);
                                 $(th).addClass(`text-align-center`);
                                 break;
-                            case `Number`:
+                            case `money`:
                                 value = formatMoney(value);
                                 $(td).addClass(`text-align-right`);
-                                td.css(`min-width`, `100px`);
-                                td.css(`max-width`, `100px`);
+                                $(`th[formatType=${formatType}]`).addClass(`text-align-right`);
                                 break;
                             default:
                         }
@@ -183,7 +177,7 @@
             })
             var inputNotValids = $(`input[validate="false"]`);
             if (inputNotValids && inputNotValids.length > 0) {
-                alert("Dữ liệu không hợp lệ. Vui lòng kiểm tra lại");
+                dialogNotify.dialog(`open`);
                 inputNotValids[0].focus();
             }
             else {
@@ -272,6 +266,7 @@
      * */
     btnCancelDeleteOnClick() {
         dialogConfirm.dialog(`close`);
+        dialogNotify.dialog(`close`);
     }
 
     /**
@@ -286,6 +281,7 @@
             var selectedRecord = $(`tr.row-selected`);
             dialogDetail.dialog(`open`);
             var inputs = $(`input[fieldname], select[fieldname]`);
+            inputs.removeClass("border-red");
             $(`.loading-data`).show();
             me.getDataForSelectTag();
             $(`.loading-data`).hide();
@@ -396,6 +392,6 @@
     rowOnClick() {
         $(this).siblings().removeClass(`row-selected`);
         $(this).click().addClass(`row-selected`);
-
     }
+
 }
