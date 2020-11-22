@@ -3,7 +3,7 @@
 
     const openModalButtons = $('[data-modal-target]');
     const closeModalButtons = $('[data-close-button]');
-
+    // xét mở modal
     openModalButtons.each(function () {
         const modal = $(this).attr('data-modal-target');
         $(this).click(function () {
@@ -11,7 +11,7 @@
         });
     });
 
-
+    // xét đóng modal
     closeModalButtons.each(function () {
         $(this).click(function () {
             closeModal();
