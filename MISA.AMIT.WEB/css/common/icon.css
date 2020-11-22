@@ -11,3 +11,11 @@
     background-repeat: no-repeat;
     background-position: 16px center;
 }
+/*icon button Lưu trong form thêm*/
+.fa-save {
+    background-image: url('/content/icon/save.svg');
+    background-size: contain;
+    height: 24px;
+    width: 24px;
+    align-items: center;
+}

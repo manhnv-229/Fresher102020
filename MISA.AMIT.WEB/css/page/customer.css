@@ -6,6 +6,9 @@
 .avatar-customer {
     margin-right: 12px;
 }
+/*.el-left {
+    width: calc(100% - 180px);
+}*/
 .avatar-customer .avatar {
     border: 1px solid #ccc;
     width: 180px;
@@ -17,4 +20,7 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+}
+.note-avatar {
+    text-align: center;
 }

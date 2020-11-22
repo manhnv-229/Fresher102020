@@ -5,18 +5,6 @@
     <title></title>
     <link href="/lib/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" />
     <link href="/css/common/main.css" rel="stylesheet" />
-    <link href="/css/common/common.css" rel="stylesheet" />
-    <link href="/css/common/header.css" rel="stylesheet" />
-    <link href="/css/common/navbar.css" rel="stylesheet" />
-    <link href="/css/common/content.css" rel="stylesheet" />
-    <link href="/css/common/gird.css" rel="stylesheet" />
-    <link href="/css/common/icon.css" rel="stylesheet" />
-    <link href="/css/common/buttom.css" rel="stylesheet" />
-    <link href="/css/common/radio.css" rel="stylesheet" />
-    <link href="/css/common/toolbar.css" rel="stylesheet" />
-    <link href="/css/common/dialog.css" rel="stylesheet" />
-    <link href="/css/common/input.css" rel="stylesheet" />
-    <link href="/css/common/ui-custom.css" rel="stylesheet" />
     <link href="/css/page/customer.css" rel="stylesheet" />
 
 </head>
@@ -100,10 +88,11 @@
                         <th fieldName="CustomerCode">Mã khách hàng</th>
                         <th fieldName="FullName">Họ và tên</th>
                         <th fieldName="GenderName">Giới tính</th>
+                        <th fieldName="CustomerGroupName">Nhóm khách hàng</th>
                         <th fieldName="DateOfBirth" formatType="ddmmyy">Ngày sinh</th>
                         <th fieldName="PhoneNumber">Số điện thoại</th>
                         <th fieldName="Email">Email</th>
-                        <th fieldName="Address" width:"100px">Địa chỉ</th>
+                        <th fieldName="Address" formatType="locate" class="text-address" width:"100px">Địa chỉ</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -116,32 +105,32 @@
     <div class="m-dialog dialog-detail" title="Thông tin khách hàng">
         <div class="dialog-content">
             <div class="dialog-body">
-                <div class="m-body-top">
-                    <div class="avatar-customer">
+                <div class="m-body-top m-flex">
+                    <div class="avatar-customer m-flex-1">
                         <div class="avatar"></div>
                         <div class="note-avatar">
                             Vui lòng chọn ảnh có định dạng <br> <b>.png, .jpeg, .jpg, .gif</b>
                         </div>
                     </div>
-                    <div class="info-detail">
-                        <div class="input1">
-                            <div class="input1-line1">
+                    <div class="info-detail el-left m-flex-2">
+                        <div class="m-row mg-top-0 m-flex">
+                            <div class="m-flex-1">
                                 <div clas="m-label">Mã khách hàng (<span class="label-required">*</span>)</div>
                                 <div class="m-control"><input id="txtCustomerCode" fieldName="CustomerCode" required class="input-required" type="text" /></div>
                             </div>
-                            <div class="input1-line2">
+                            <div class="mg-left-10px m-flex-1">
                                 <div clas="m-label">Họ và tên (<span class="label-required">*</span>)</div>
                                 <div class="m-control"><input id="txtFullName" fieldName="FullName" required class="input-required" type="text" /></div>
                             </div>
                         </div>
-                        <div class="input2">
-                            <div class="input2-line1">
+                        <div class="m-row m-flex">
+                            <div class="input2-line1 m-flex-1">
                                 <div clas="m-label">Mã thẻ thành viên</div>
                                 <div class="m-control"><input id="txtMemberCardCode" fieldName="MemberCardCode" required class="input-required" type="text" /></div>
                             </div>
-                            <div class="input2-line2">
+                            <div class="mg-left-10px m-flex-1">
                                 <div clas="m-label">Nhóm khách hàng</div>
-                                <select id="cbxCustomerGroup" style="width: 141%" fieldName="CustomerGroupName" fieldValue="CustomerGroupId" api="/api/customergroups" class="m-control">
+                                <select id="cbxCustomerGroup" fieldName="CustomerGroupName" fieldValue="CustomerGroupId" api="/api/customergroups" class="m-control">
                          
                                 </select>
                                 <combobox id="cbxCustomerGroup"
@@ -150,14 +139,14 @@
                                           api=""></combobox>
                             </div>
                         </div>
-                        <div class="input3">
-                            <div class="input3-line1">
+                        <div class="m-row m-flex">
+                            <div class="input3-line1 m-flex-1">
                                 <div clas="m-label">Ngày sinh</div>
-                                <div class="m-control"><input id="dtDateOfBirth" style="width: 117%" fieldName="DateOfBirth" type="date" /></div>
+                                <div class="m-control"><input id="dtDateOfBirth" fieldName="DateOfBirth" type="date" /></div>
                             </div>
-                            <div class="input3-line2-radio" style="width:100%" >
+                            <div class="mg-left-10px m-flex-1"  >
                                 <div class="m-label" >Giới tính</div>
-                                <div class="input3-radio-group" style="width: 88%" id="rdGender">
+                                <div class="m-radio-group"  id="rdGender">
                                     <div class="m-radio-item">
                                         <input type="radio" id="rdMale" fieldName="Gender" value="1" name="gender" checked />
                                         <label for="rdMale">Nam</label>
@@ -176,30 +165,30 @@
                         </div>
                     </div>
                 </div>
-                <div class="m-body-bottom1">
-                    <div class="m-input4-left">
+                <div class="m-row m-flex" >
+                    <div class="m-input4-left m-flex-2" >
                         <div class="m-label">Email</div>
-                        <div class="m-control"><input style="width:395px" id="txtEmail" fieldName="Email" type="email" placeholder="example@domain.com" /></div>
+                        <div class="m-control"><input  id="txtEmail" fieldName="Email" type="email" placeholder="example@domain.com" /></div>
                     </div>
-                    <div class="input4-right">
+                    <div class="mg-left-10px m-flex-1">
                         <div class="m-label">Số điện thoại (<span class="label-required">*</span>)</div>
                         <div class="m-control"><input id="txtPhoneNumber" fieldName="PhoneNumber" class="input-required" type="tel" required /></div>
                     </div>
                 </div>
-                <div class="m-body-bottom2">
-                    <div class="m-input5-left">
+                <div class="m-row m-flex" >
+                    <div class="m-input5-left m-flex-2" >
                         <div class="m-label">Tên công ty</div>
-                        <div class="m-control"><input type="text" fieldName="CompanyName" style="width:395px" /></div>
+                        <div class="m-control"><input type="text" fieldName="CompanyName"  /></div>
                     </div>
-                    <div class="input5-right">
+                    <div class="mg-left-10px m-flex-1">
                         <div class="m-label">Mã số thuế</div>
                         <div class="m-control"><input type="text"  fieldName="CompanyTaxCode" placeholder="Mã số thuế của công ty" /></div>
                     </div>
                 </div>
-                <div class="m-body-bottom3">
-                    <div class="input6" style="width:100%">
+                <div class="m-row m-flex">
+                    <div class="input6 m-flex-3" >
                         <div class="m-label">Địa chỉ</div>
-                        <div class="m-control"><input style="width:101%" id="txtAddress" fieldName="Address" type="tel" /></div>
+                        <div class="m-control"><input  id="txtAddress" fieldName="Address" type="tel" /></div>
                     </div>
                 </div>
             </div>

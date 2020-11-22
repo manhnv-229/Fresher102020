@@ -18,19 +18,22 @@ table th, td {
 }
 table th {
     padding-top: 22px !important;
+    
 }
 table td {
     max-width: 200px;
 }
 tbody tr {
-    cursor: pointer;
-    
-    
+    cursor: pointer; 
 }
+
 tbody tr:nth-child(2n+1) {
     background-color: #fafafa;
     
 }
+    tbody tr:hover {
+        background-color: #e5e5e5;
+    }
 .text-align-right {
     text-align: right;
 }
@@ -38,6 +41,6 @@ tbody tr:nth-child(2n+1) {
     text-align: center;
 }
 .row-select {
-    background-color: #88d87c !important;
+    background-color: #019160 !important;
     
 }

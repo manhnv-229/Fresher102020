@@ -45,6 +45,10 @@
 
 .m-second-button:hover {
     background-color: #E9EBEE;
+
+}
+.m-btn-default {
+    display: flex;
 }
 /*button refresh*/
 .m-btn-refresh {

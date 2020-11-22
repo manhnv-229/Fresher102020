@@ -1,6 +1,6 @@
 ﻿/*css giao diện menu navbar*/
 .navbar {
-    float:left;
+    float: left;
     width: 220px;
     background-color: #ffffff;
     border-right-color: #E5E5E5;
@@ -8,22 +8,25 @@
     border-right-style: solid;
     height: 100vh;
 }
+
     .navbar .logo-site, .navbar-logo-box {
-        width:100%;
-        height:61px;
-        display:flex;
+        width: 100%;
+        height: 61px;
+        display: flex;
     }
+
     .navbar .logo-box {
-        display:flex;
-        width:100%;
+        display: flex;
+        width: 100%;
         padding: 24px 0 0 24px;
     }
+
         .navbar .logo-box .toggle-icon {
-            width:24px;
-            height:24px;
+            width: 24px;
+            height: 24px;
             background-image: url('../../content/img/toggle.png');
-            background-repeat:no-repeat;
-            background-size:contain;
+            background-repeat: no-repeat;
+            background-size: contain;
             margin-right: 10px;
         }
 
@@ -32,35 +35,42 @@
             background-image: url('../../content/img/amis-logo.png');
             background-repeat: no-repeat;
             height: 24px;
-            background-size:contain;
-
+            background-size: contain;
         }
-    .navbar.navber-content{
-        width:100%;
+
+    .navbar.navber-content {
+        width: 100%;
     }
 
-        .navbar .navbar-content .nav-item {
-                display:flex;
-                padding-left:24px;
-                height:44px;
-                line-height:44px;
-                cursor:pointer;
-        }
-            a{
-                text-decoration: none;
-                color: #000000;
-            }
-            .navbar .navbar-content .nav-item:hover {
-                background-color: #e5e5e5;
-                color: #000000;
-            }
-            .navbar .navbar-content .nav-item .nav-item-icon {
-                width: 20px;
-                height: 20px;
-                align-self: center;
-                background-size: contain;
-                margin-right: 10px;
-            }
+    .navbar .navbar-content .nav-item {
+        display: flex;
+        padding-left: 24px;
+        height: 44px;
+        line-height: 44px;
+        cursor: pointer;
+    }
+
+a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.navbar .navbar-content .nav-item:hover {
+    background-color: #e5e5e5;
+    color: #000000;
+}
+
+.navbar .navbar-content .nav-item:focus {
+    background-color: #019160;
+}
+
+.navbar .navbar-content .nav-item .nav-item-icon {
+    width: 20px;
+    height: 20px;
+    align-self: center;
+    background-size: contain;
+    margin-right: 10px;
+}
 /*lập hồ sơ điện tử*/
 .nav-item .nav-item-document-online {
     background-image: url(/content/img/toggle.png)
