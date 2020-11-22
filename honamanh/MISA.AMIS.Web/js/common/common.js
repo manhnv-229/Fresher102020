@@ -21,7 +21,7 @@ function formatDate(date) {
  */
 function formatMoney(money) {
     if (money) {
-        var salary = money.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
+        var salary = money.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
         return salary;
     }
     else {

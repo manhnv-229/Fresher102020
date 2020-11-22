@@ -1,4 +1,18 @@
 ﻿/*Css dùng chung cho cả trang web*/
+@import url('/css/common/common.css');
+@import url('/css/common/button.css');
+@import url('/css/common/align-content.css');
+@import url('/css/common/icon.css');
+@import url('/css/common/input.css');
+@import url('/css/common/dialog.css');
+@import url('/css/common/messenger.css');
+@import url('/css/common/navbar.css');
+@import url('/css/common/header.css');
+@import url('/css/common/content.css');
+@import url('/css/common/custom-jquery-ui.css');
+
+/*Css cho  font-face chữ*/
+
 body {
     margin: 0;
     font-family: GoogleSans-Regular;
