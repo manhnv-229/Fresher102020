@@ -11,11 +11,17 @@
     setApiRouter() {
 
     }
-
+    /**-------------------
+     * quản lý các sự kiện 
+     * createdBy : NTDong(12/11/2020)
+     */
     initEvents() {
         var me = this;
         // Sự kiện click khi nhấn thêm mới:
         $('#btnAdd').click(me.btnAddOnClick.bind(me));
+
+        // Sự kiện focus khi click đổi trang
+        $(".button-footer").focus(this.btnChangePageOnFocus);
 
         // Load lại dữ liệu khi nhấn button nạp:
         $('#btnRefresh').click(function () {
@@ -31,87 +37,97 @@
         // Xử lý dữ liệu button [Lưu] trên form chi tiết:
         $('#btnSave').click(me.btnSaveOnClick.bind(me));
 
+        // click để đổi màu của hàng trong bảng ghi
+        $('table tbody').on('click', 'tr', function (){
+            $(this).siblings().removeClass("click-change-column");
+            $(this).addClass("click-change-column");
+        })
+
+
+
         // Hiển thị thông tin chi tiết khi nhấn đúp chuột chọn 1 bản ghi trên danh sách dữ liệu:
         $('table tbody').on('dblclick', 'tr', function () {
-            //load form
-            // load dữ liệu cho các combobox:
-            var selects = $('select[fieldName]');
-            selects.empty();
-            $.each(selects, function (index, select) {
-                // lấy dữ liệu nhóm khách hàng:
-                var api = $(select).attr('api');
-                var fieldName = $(select).attr('fieldName');
-                var fieldValue = $(select).attr('fieldValue');
-                $('.loading').show();
+            try{
+                 //load form
+                // load dữ liệu cho các combobox:
+                var selects = $('select[fieldName]');
+                selects.empty();
+                $.each(selects, function (index, select) {
+                    // lấy dữ liệu nhóm khách hàng:
+                    var api = $(select).attr('api');
+                    var fieldName = $(select).attr('fieldName');
+                    var fieldValue = $(select).attr('fieldValue');
+                    $('.loading').show();
+                    $.ajax({
+                        url: me.host + api,
+                        method: "GET",
+                        async: true
+                    }).done(function (res) {
+                        if (res) {
+                            console.log(res);
+                            $.each(res, function (index, obj) {
+                                var option = $(`<option value="${obj[fieldValue]}">${obj[fieldName]}</option>`);
+                                console.log(select);
+                                $(select).append(option);
+                                console.log(option);
+                            })
+                        }
+                        $('.loading').hide();
+                    }).fail(function (res) {
+                        $('.loading').hide();
+                    })
+                })
+                
+                me.FormMode = 'Edit';
+                // Lấy khóa chính của bản ghi:
+                var recordId = $(this).data('recordId');
+                me.recordId = recordId;
+                // Gọi service lấy thông tin chi tiết qua Id:
                 $.ajax({
-                    url: me.host + api,
+                    url: me.host + me.apiRouter + `/${recordId}`,
                     method: "GET",
                     async: true
                 }).done(function (res) {
-                    if (res) {
-                        console.log(res);
-                        $.each(res, function (index, obj) {
-                            var option = $(`<option value="${obj[fieldValue]}">${obj[fieldName]}</option>`);
-                            console.log(select);
-                            $(select).append(option);
-                            console.log(option);
-                        })
-                    }
-                    $('.loading').hide();
-                }).fail(function (res) {
-                    $('.loading').hide();
-                })
-            })
-            
-            me.FormMode = 'Edit';
-            $('#btnDelete-dialog').show();
-            // Lấy khóa chính của bản ghi:
-            var recordId = $(this).data('recordId');
-            me.recordId = recordId;
-            // Gọi service lấy thông tin chi tiết qua Id:
-            $.ajax({
-                url: me.host + me.apiRouter + `/${recordId}`,
-                method: "GET",
-                async: true
-            }).done(function (res) {
-                // Binding dữ liệu lên form chi tiết:
-                console.log(res);
+                    // Binding dữ liệu lên form chi tiết:
+                    console.log(res);
 
-                // Lấy tất cả các control nhập liệu:
-                var inputs = $('input[fieldName], select[fieldName]');
-                var entity = {};
-                $.each(inputs, function (index, input) {
-                    var propertyName = $(this).attr('fieldName');
-                    var value = res[propertyName];
-                    // Đối với dropdowlist (select option):
-                    if (this.tagName == "SELECT") {
-                        var propValueName = $(this).attr('fieldValue');
-                        value = res[propValueName];
-                    }
-                    // Đối với các input là radio:
-                    if ($(this).attr('type') == "radio") {
-                        var inputValue = this.value;
-
-                        if (value == inputValue) {
-                            this.checked = true;
-                        } else {
-                            this.checked = false;
+                    // Lấy tất cả các control nhập liệu:
+                    var inputs = $('input[fieldName], select[fieldName]');
+                    var entity = {};
+                    $.each(inputs, function (index, input) {
+                        var propertyName = $(this).attr('fieldName');
+                        var value = res[propertyName];
+                        // Đối với dropdowlist (select option):
+                        if (this.tagName == "SELECT") {
+                            var propValueName = $(this).attr('fieldValue');
+                            value = res[propValueName];
                         }
-                    } else {
-                        $(this).val(value);
-                    }
-                    // binding dữ liệu kiểu date 
-                    if ($(this).attr('type') == "date") {
-                            var date = formatDateForm(value);
-                            $(this).val(date);
-                    }
-                })
-            }).fail(function (res) {
-                console.log(res);
-            })  
+                        // Đối với các input là radio:
+                        if ($(this).attr('type') == "radio") {
+                            var inputValue = $(input).attr("genderValue");
+                            if (value == inputValue) {
+                                this.checked = true;
+                            } else {
+                                this.checked = false;
+                            }
+                        } else {
+                            $(this).val(value);
+                        }
+                        // binding dữ liệu kiểu date 
+                        if ($(this).attr('type') == "date") {
+                                var date = formatDateForm(value);
+                                $(this).val(date);
+                        }
+                    })
+                }).fail(function (res) {
+                    console.log(res);
+                })  
 
-
-            dialogDetail.dialog('open');
+                // Mở form chi tiết khách hàng
+                dialogDetail.dialog('open');
+            }catch(e){
+                console.log(e);
+            }
         })
 
         /* --------------------
@@ -152,6 +168,7 @@
 
     /**
      * Xử lý form xóa khách hàng
+     * createdBy : NTDong(18/11/2020)
      */
     initEventDelete(){
         var me = this;
@@ -159,41 +176,32 @@
         $('#d-cancle').click(function(){
             dialogDelete.dialog('close');
         })
-        // Ấn button btnDelete để hiện form delete
-        $('#btnDelete-dialog').click(function(){
+        // Mở form xóa chi tiết 
+        $('#btnDelete').click(function(){
             dialogDelete.dialog('open');
         })        
-        // Xử lý dữ liệu button [Xóa] trên form chi tiết:
-        $('#d-delete').click(me.btnDeleteOnClick.bind(me));
-    }
-
-    /**
-     * hàm xử lý khi xóa 1 khách hàng 
-     * createdBy:NTDong(19/11/2020)
-    */
-    btnDeleteOnClick(){
-        var me = this;
-        // Lấy thông tin bản ghi đang chọn
-        var recordId = me.recordId;
-        console.log(recordId);
-        $.ajax({
+        // click xóa để thực hiện xóa 1 bản ghi trong bảng khách hàng
+        $('#d-delete').click(function(){
+            var tr = $('tr.click-change-column');
+            var recordId = $(tr).data('recordId');
+            $.ajax({
             url: me.host + me.apiRouter + `/${recordId}`,
             method: "DELETE",
             async:true
-        }).done(function(res){
-            //Thông báo xóa thành công
-            alert('Đã xóa thành công !');
-            //Đóng form dialogDelete
-            dialogDelete.dialog('close');
-            //đóng form dialogdetail
-            dialogDetail.dialog('close');
-            //Load lại dữ liệu bảng ghi 
-            me.loadData();
-        }).fail(function(res){
-            console.log(res);
-        })
+            }).done(function(res){
+                //hiển thị thông báo thành công 
+                showAlertBox()
+                //Đóng form dialogDelete
+                dialogDelete.dialog('close');
+                //đóng form dialogdetail
+                dialogDetail.dialog('close');
+                //Load lại dữ liệu bảng ghi 
+                me.loadData();
+            }).fail(function(res){
+                console.log(res);
+            })
+        });
     }
-
     /** ------------
      * Load dữ liệu
      * CreatedBy: NTDong(12/11/2020)
@@ -237,10 +245,10 @@
                         $(tr).append(td);
                     })
                     $('table tbody').append(tr);
-                    $('.loading').hide();
+                    // $('.loading').hide();
                 })
             }).fail(function (res) {
-                $('.loading').hide();
+                // $('.loading').hide();
             })
         } catch (e) {
             console.log(e);
@@ -270,79 +278,90 @@
                 method: "GET"
             }).done(function (res) {
                 if (res) {
-                    console.log(res);
                     $.each(res, function (index, obj) {
                         var option = $(`<option value="${obj.CustomerGroupId}">${obj.CustomerGroupName}</option>`);
                         select.append(option);
-                        console.log(option);
                     })
                 }
-                $('.loading').hide();
+                // $('.loading').hide();
             }).fail(function (res) {
-                $('.loading').hide();
+                // $('.loading').hide();
             })
         } catch (e) {
             console.log(e);
         }
     }
-
     /** ---------------------------
      * Xử lý button Save
      * Author: NTDong (18/11/2020)
      * */
     btnSaveOnClick() {
-        var me = this;
-        // validate dữ liệu:
-        var inputVaidates = $('input[required], input[type="email"]');
-        $.each(inputVaidates, function (index, input) {
-            $(input).trigger('blur');
-        })
-        var inputNotValids = $('input[validate="false"]');
-        if (inputNotValids && inputNotValids.length > 0) {
-            alert("Dữ liệu không hợp lệ vui lòng kiểm tra lại.");
-            inputNotValids[0].focus();
-            return;
-        }
-        // thu thập thông tin dữ liệu được nhập -> build thành object:
-        // Lấy tất cả các control nhập liệu:
-        var inputs = $('input[fieldName], select[fieldName]');
-        var entity = {};
-        $.each(inputs, function (index, input) {
-            var propertyName = $(this).attr('fieldName');
-            var value = $(this).val();
-
-            // Check với trường hợp input là radio, thì chỉ lấy value của input có attribute là checked:
-            if ($(this).attr('type') == "radio") {
-                if (this.checked) {
+        try{
+            var me = this;
+            // validate dữ liệu:
+            var inputVaidates = $('input[required], input[type="email"]');
+            $.each(inputVaidates, function (index, input) {
+                $(input).trigger('blur');
+            })
+            var inputNotValids = $('input[validate="false"]');
+            if (inputNotValids && inputNotValids.length > 0) {
+                alert("Dữ liệu không hợp lệ vui lòng kiểm tra lại.");
+                inputNotValids[0].focus();
+                return;
+            }
+            // thu thập thông tin dữ liệu được nhập -> build thành object:
+            // Lấy tất cả các control nhập liệu:
+            var inputs = $('input[fieldName], select[fieldName]');
+            var entity = {};
+            $.each(inputs, function (index, input) {
+                var propertyName = $(this).attr('fieldName');
+                var value = $(input).val();
+                if (this.tagName == "SELECT") {
+                    var propertyName = $(this).attr('fieldValue');
                     entity[propertyName] = value;
                 }
-            } else {
-                entity[propertyName] = value;
+                // Check với trường hợp input là radio, thì chỉ lấy value của input có attribute là checked:
+                if ($(this).attr('type') == "radio") {
+                    if ($(input).is(":checked")) {
+                        var valueInput = $(input).attr("genderValue");
+                        entity[propertyName] = valueInput;
+                    }
+                } else {
+                    entity[propertyName] = value;
+                }
+
+            })
+            var method = "POST";
+            if (me.FormMode == 'Edit') {
+                method = "PUT";
+                entity.CustomerId = me.recordId;
             }
-            if (this.tagName == "SELECT") {
-                var propertyName = $(this).attr('fieldValue');
-                entity[propertyName] = value;
-            }
-        })
-        
-        var method = "POST";
-        if (me.FormMode == 'Edit') {
-            method = "PUT";
-            entity.CustomerId = me.recordId;
+            // Gọi service tương ứng thực hiện lưu dữ liệu:
+            $.ajax({
+                url: me.host + me.apiRouter,
+                method: method,
+                data: JSON.stringify(entity),
+                contentType: 'application/json'
+            }).done(function (res) {
+                // Sau khi lưu thành công thì:
+                //hiển thị thông báo thành công  
+                showAlertBox()
+                // đóng dialogDetail
+                dialogDetail.dialog('close');
+                me.loadData();
+            }).fail(function (res) {
+            })
+        }catch(e){
+            console.log(e);
         }
-        // Gọi service tương ứng thực hiện lưu dữ liệu:
-        $.ajax({
-            url: me.host + me.apiRouter,
-            method: method,
-            data: JSON.stringify(entity),
-            contentType: 'application/json'
-        }).done(function (res) {
-            // Sau khi lưu thành công thì:
-            // Thông báo Thành công , đóng dialog và load lại dữ liệu bảng
-            alert('Đã thêm thành công !!! ');
-            dialogDetail.dialog('close');
-            me.loadData();
-        }).fail(function (res) {
-        })
+    }
+    /**
+     * -------------------------
+     * Xử lý khi ấn chuyển page
+     * createdBy: NTDong(19/11/2020)
+     */
+    btnChangePageOnFocus() {
+        $(this).siblings().removeClass("button-change-page");
+        $(this).addClass("button-change-page");
     }
 }

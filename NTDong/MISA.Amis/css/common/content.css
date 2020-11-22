@@ -30,18 +30,10 @@
 
 }
 
-
-
-
 /* Grid */
 .content .grid{
 
 }
-
-
-
-
-
 
 /*Paging*/
 .paging-bar{
@@ -125,3 +117,10 @@
 	font-weight: bold;
 	font-size: 16px;
 }
+.button-change-page{
+     background: #019160;
+     border: none;
+     outline: none;
+     cursor: pointer;
+     color:white;
+ }
