@@ -1,6 +1,9 @@
-﻿/**
+﻿$(document).ready(function () {
+
+})
+/**
  * Hàm định dạng hiển thị ngày/tháng/năm
- * @param {any} date input kiểu dữ liệu bất kỳ
+ * @param {any} date tham số có kiểu dữ liệu bất kỳ
  * Author: TVHa (12/11/2020)
  */
 function formatDate(date) {

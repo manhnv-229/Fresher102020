@@ -48,7 +48,8 @@
                         margin-right: 16px;
                     }
                 .content .content-box .head-content .head-content-right .btn-add {
-                    width: 161px;
+                    width: 147px;
+                    padding: unset;
                     height: 40px;
                     display: flex;
                     margin-left: 16px;
@@ -57,8 +58,9 @@
                     border: none;
                     border-radius: 4px;
                     align-items: center;
+                    font-size: 13px;
+                    font-family: 'GoogleSans-Regular';
                     cursor: pointer;
-                    justify-content: space-around;
                 }
                     .content .content-box .head-content .head-content-right .btn-add:hover {
                         background-color: #2fbe8e;
@@ -96,7 +98,7 @@
                 }
                         .content .content-box .content-toolbox .toolbox-left .searchbox input#search {
                             width: 320px;
-                            font-size: 12px;
+                            font-size: 13px;
                             font-family: 'GoogleSans-Regular';
                             float: left;
                             color: #000000;
@@ -396,4 +398,12 @@ a, a:visited, a:active {
 
 input.border-red {
     border: 1px solid #ff0000;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.text-align-right {
+    text-align: right;
 }

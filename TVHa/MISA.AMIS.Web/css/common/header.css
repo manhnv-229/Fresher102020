@@ -1,6 +1,7 @@
 ﻿.header {
     width: calc(100% - 221px);
     height: 50px;
+    align-items: center;
     border-bottom: 1px solid #e5e5e5;
     display: flex;
 }
@@ -41,16 +42,65 @@
         cursor: pointer;
     }
     .header .avatar {
-        background-image: url('../../content/img/Ảnh thẻ vuông.png');
+        background-image: url('/content/img/Ảnh thẻ vuông.png');
         /*border-radius: 50%;*/
         -webkit-border-radius: 50%;
         align-self: center;
         height: 30px;
         width: 30px;
         position: absolute;
-        right: 140px;
+        right: 104px;
         cursor: pointer;
         background-size: contain;
         /*background-repeat: no-repeat;*/
         background-position: center;
     }
+
+    .header .department-info {
+        padding: 16px;
+        font-size: 13px;
+    }
+
+        .header .department-info select {
+            height: 40px;
+            width: 224px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            font-size: 13px;
+            font-family: 'GoogleSans-Regular';
+        }
+
+        .header .department-info option {
+            cursor: pointer;
+        }
+
+
+    .header .account-info {
+        position: absolute;
+        right: 24px;
+        display: flex;
+        align-items: center;
+    }
+
+        .header .account-info .account-avatar {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            background-image: url('/content/icon/avatar-default.png');
+            background-size: contain;
+        }
+
+        .header .account-info .account-name {
+            padding: 10px;
+        }
+
+        .header .account-info .account-option {
+            height: 16px;
+            width: 16px;
+            cursor: pointer;
+            background-image: url('/content/icon/option.png');
+            background-position: center;
+            background-repeat: no-repeat;
+        }
