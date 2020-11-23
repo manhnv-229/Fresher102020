@@ -10,6 +10,14 @@
             modal: true,
         
         });
+        dialogConfirm = $("#dialog-confirm").dialog({
+            autoOpen: false,
+            resizable: false,
+            height: "auto",
+            width: 400,
+            modal: true,
+        });
+       
     })
 })
 
@@ -21,8 +29,7 @@
         constructor() {
             super();
         }
-
-        setDataURL() {
-            this.getDataURL = "http://api.manhnv.net/api/customers";
+        setApiRouter() {
+            this.apiRouter = "/api/customers";
         }
     }
