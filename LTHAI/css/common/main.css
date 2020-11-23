@@ -88,3 +88,6 @@ button:focus {
 input.border-red{
     border: 1px solid red;
 }
+.active {
+    background-color: #019160 !important;
+}

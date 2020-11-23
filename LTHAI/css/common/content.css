@@ -61,6 +61,7 @@
                     color: #ffffff;
                     font-family: 'GoogleSans-Regular';
                     background-color: #019160;
+                    height: 38px;
                 }
 
                 .right-content .content .header-content .header-function .synchronized:hover {
@@ -89,7 +90,7 @@
 
                 .right-content .content .header-content .header-function .add-employee {
                     background-color: #019160;
-                    width: 160px;
+                    width: 166px;
                     margin-right: 10px;
                     display: flex;
                     padding-right: 10px;
@@ -203,11 +204,25 @@
 
             .right-content .content .filter-form .icon-right-filter-form {
                 display: flex;
-                margin-right: 38px;
                 width: 40px;
                 height: 40px;
                 background-color: antiquewhite;
+                margin-right: 30px;
             }
+
+                .right-content .content .filter-form .icon-right-filter-form .icon-remove button {
+                    width: 40px;
+                    height: 40px;
+                    font-size: 16px;
+                    border-radius: 5px;
+                    margin-right: 8px;
+                    border: none;
+                    background-color: red;
+                    color: white;
+                    position: absolute;
+                    right: 70px;
+                    display: none;
+                }
 
                 .right-content .content .filter-form .icon-right-filter-form .icon-refresh button {
                     background-color: #ffffff;
@@ -217,20 +232,21 @@
                     border: 1px solid #bbbbbb;
                     border-radius: 5px;
                 }
+
                     .right-content .content .filter-form .icon-right-filter-form .icon-refresh button:hover {
                         background-color: #bbbbbb;
                     }
-/**
+        /**
 Css cho data-table
 */
-                    .right-content .content .data-table {
-                        height: 400px;
-                        overflow: scroll;
-                        margin-right: 30px;
-                        margin-left: 16px;
-                        margin-top: 16px;
-                        overflow-x: auto;
-                    }
+        .right-content .content .data-table {
+            height: 400px;
+            overflow: scroll;
+            margin-right: 30px;
+            margin-left: 16px;
+            margin-top: 16px;
+            overflow-x: auto;
+        }
 
             .right-content .content .data-table .table {
                 width: 1300px;
