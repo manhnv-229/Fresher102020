@@ -1,6 +1,8 @@
 ﻿
 $(document).ready(function () {
     var customerJs = new CustomerJs();
+
+    //dialog chi tiết khách hàng
     dialogDetail = $(".m-dialog").dialog({
         autoOpen: false,
         fluid: true,
@@ -11,12 +13,53 @@ $(document).ready(function () {
         modal: true,
         position: ({ my: "center", at: "center", of: window }),
     });
+
+    //dialog cảnh báo khi thực hiện các hành động xóa dữ liệu
+    dialogWarning = $(".show-pop-up-warning").dialog({
+        autoOpen: false,
+        fluid: true,
+        //height: 400,
+        //width: '700px',
+        minWidth: 400,
+        resizable: true,
+        modal: true,
+        position: ({ my: "center", at: "center", of: window }),
+    });
+
+    //sự kiện để ẩn context menu
     $('.menu-show').click(function () {
         $('.menu-show').hide();
     });
     $(document).click(function () {
         $('.menu-show').hide();
     });
+
+    // sự kiện click vào button x để tắt thông báo
+    $(".btn-close-messenger").click(function () {
+        $(".show-toast-messenger").css("visibility", "hidden");
+    })
+
+
+    //$.notify.addStyle('happyblue', {
+    //    html: `<div class="toast- messenger">
+    //    <i class="far fa-check-circle fa-lg" style="color: #BAFFE7;"></i>
+    //    <span>Thành công</span>
+    //    <button type="button" class="btn-close-messenger">
+    //            <i class="fas fa-times icon-close-messenger fa-lg icon-close-messenger" style="color: #BAFFE7;"></i>
+    //    </button>
+    //    </div > `,
+    //    classes: {
+    //        base: {
+    //            "white-space": "nowrap",
+    //            "background-color": "lightblue",
+    //            "padding": "5px"
+    //        },
+    //        superblue: {
+    //            "color": "white",
+    //            "background-color": "blue"
+    //        }
+    //    }
+    //});
 
 });
 
@@ -49,11 +92,11 @@ class CustomerJs extends Base {
         //        top: e.pageY + 'px',
         //        left: e.pageX + 'px'
         //    }).show();
-            
+
         //    debugger
         //    return false;
         //});
-       
+
     }
     validateRequired(target) {
         // debugger;
@@ -110,5 +153,5 @@ class CustomerJs extends Base {
             alert("Vui lòng nhập đầy đủ thông tin");
         }
     }
-    
+
 }
