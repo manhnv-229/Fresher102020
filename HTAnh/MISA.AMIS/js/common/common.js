@@ -8,7 +8,23 @@ function formatDate(date) {
     var day = date.getDate();
     var month = date.getMonth() + 1;
     var year = date.getFullYear();
+    day = day < 10 ? '0' + day : day;
+    month = month < 10 ? '0' + month : month;
     return day + '/' + month + '/' + year;
+}
+/**
+ * Hàm format dữ liệu ngày tháng cho chuẩn form của trình duyệt -> ngày-tháng-năm
+ * @param {any} date
+ *Created by: HTAnh
+ */
+function formatDateHigh(date) {
+    var date = new Date(date);
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+    day = day < 10 ? '0' + day : day;
+    month = month < 10 ? '0' + month : month;
+    return year + '-' + month + '-' + day;
 }
 
 /**
@@ -22,21 +38,21 @@ function formatMoney(money) {
 
 /**
  * Hàm ẩn dialog thêm dữ liệu
- * Created by: HTANH
+ * Created by: HTANH (11/2020)
  * */
 function hideDialog() {
     $('.m-dialog').addClass('hide');
+    $('.confirm-dialog').addClass('hide');
+    $('input[required],input[type="email"]').removeClass('warning');
+    $('input[required],input[type="email"]').attr("validate", true);
 }
+
+
 
 /**
- * Hàm hiện dialog thêm dữ liệu
- * Created by: HTANH
+ * Hàm ẩn dialog làm mới dữ liệu
+ * Created by: HTANH (11/2020)
  * */
-function addDialog() {
-    $('.m-dialog').removeClass('hide');
-}
-
-
 function refreshData() {
     this.loadData();
     alert('da load thanh cong');

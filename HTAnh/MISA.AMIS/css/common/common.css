@@ -1,0 +1,36 @@
+﻿.loading{
+	display:none;
+}
+.loading-modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background-color: #000;
+	opacity: .5;
+	z-index:999;
+}
+
+
+.loading-icon {
+	position: fixed;
+	width: 30px;
+	height: 30px;
+	top: calc(50% - 15px);
+	left: calc(50% - 15px);
+	border-radius: 50%;
+	border: 2px solid #4cff00;
+	border-bottom: none;
+	animation: spin 2s linear infinite;
+}
+/*hiệu ứng xoay*/
+@keyframes spin{
+	0% {
+		transform: rotate(0deg);
+	}
+	100%{
+		transform: rotate(360deg);
+	}
+}
+
