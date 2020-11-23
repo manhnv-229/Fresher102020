@@ -27,6 +27,7 @@ function formatDate(date) {
 /**
  * Hàm định dạng ngày-tháng-năm
  * @param {any} date
+ * createdby ngochtb(21/11/2020)
  */
 function formatDatePicker(date){
     var date = new Date(date);
