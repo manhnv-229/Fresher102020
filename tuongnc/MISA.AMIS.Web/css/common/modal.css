@@ -115,7 +115,7 @@
         border-radius: 4px;
         box-shadow: 4px 3px 6px #d1caca;
         padding: 0px 16px;
-        top: 10%;
+        top: 0;
         left: 50%;
         display: flex;
     }
@@ -141,4 +141,16 @@
 
 .icon-alert-information {
     background-image: url('/content/img/messenger/information-button.png');
+}
+
+/*popup-delete-css*/
+
+#popup-notice .modal-body .label-field-input {
+    align-self: center;
+}
+
+.modal-body .misa-icon-button {
+    width: 24px;
+    height: 24px;
+    background-image: url('/content/img/messenger/alert-triangle.svg');
 }

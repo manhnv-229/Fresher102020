@@ -236,6 +236,7 @@
                         <th fieldName="Email">Email</th>
                         <th fieldName="Address" formatType="hoverTitle">Địa chỉ</th>
                         <th fieldName="CompanyName">Tên công ty</th>
+                        <th fieldName="CustomerGroupName">Nhóm khách hàng</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -277,24 +278,17 @@
     <div class="modal" id="popup-notice">
         <div class="modal-header">
             <div class="title-header">
-                <div class="title">Xóa Bản ghi</div>
+                <div class="title" style="font-size:15px">Xóa Bản ghi</div>
                 <button class="close-button btnClose">&times;</button>
             </div>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" style="display:flex">
+            <div class="misa-icon-button"></div>
             <label class="label-field-input">Bạn có chắc muốn xóa bản ghi này không ?</label>
         </div>
         <div class="modal-footer">
             <button id="btnSubDelete" class="misa-btn-red">Đồng ý</button>
             <button class="misa-btn-second btnClose">Hủy</button>
-        </div>
-    </div>
-    <!------------------->
-    <!--popup-MESSENGER-->
-    <div id="messenger-popup">
-        <div class="messenger">
-            <div class="nav-item-icon"></div>
-            <div id="messenger-text">Thông tin lỗi</div>
         </div>
     </div>
     <!------------------->

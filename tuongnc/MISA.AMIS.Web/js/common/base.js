@@ -340,33 +340,38 @@ class BaseJS {
     * CreatedBy TuongNC (21/11/2020)
     * */
     eventClickDeleteEntity() {
-        var me = this;
-        // hiện thị popup notice delete
-        $('#modal').hide();
-        $('#popup-notice').show();
-        // xự kiện click button [đồng ý] trong popup
-        $('#btnSubDelete').click(function () {
-            $.ajax({
-                url: me.host + me.apiRouter + '/' + me.recordId,
-                method: 'DELETE',
-            }).done(function (res) {
-                console.log(res);
-                $('#popup-notice').hide();
-                $('#overlay').hide();
-                me.loadData();
-            }).fail(function (res) {
-                console.log(res);
-                $('#popup-notice').hide();
-                $('#overlay').hide();
-                me.toastMessenger('triangle');
-                me.loadData();
+        try {
+            var me = this;
+            // hiện thị popup notice delete
+            $('#modal').hide();
+            $('#popup-notice').show();
+            // xự kiện click button [đồng ý] trong popup
+            $('#btnSubDelete').click(function () {
+                $.ajax({
+                    url: me.host + me.apiRouter + '/' + me.recordId,
+                    method: 'DELETE',
+                }).done(function (res) {
+                    console.log(res);
+                    $('#popup-notice').hide();
+                    $('#overlay').hide();
+                    me.toastMessenger('check');
+                    me.loadData();
+                }).fail(function (res) {
+                    console.log(res);
+                    $('#popup-notice').hide();
+                    $('#overlay').hide();
+                    me.toastMessenger('triangle');
+                    me.loadData();
+                });
             });
-        });
-        // xự kiênk click button [hủy] trong popup nitice delete
-        $('.btnClose').click(function () {
-            $('#popup-notice').hide();
-            $('#modal').show();
-        });
+            // xự kiênk click button [hủy] trong popup nitice delete
+            $('.btnClose').click(function () {
+                $('#popup-notice').hide();
+                $('#modal').show();
+            });
+        } catch (e) {
+            console.log(e)
+        }
     }
     /**************************************************
     * Hàm thực hiện map dữ liệu message
@@ -401,7 +406,7 @@ class BaseJS {
             default:
                 break;
         }
-        $('#messenger-popup').toggle(1000);
-        $('#messenger-popup').hide(2000);
+        $('#messenger-popup').fadeIn(1000);
+        $('#messenger-popup').fadeOut(2000);
     }
 }
