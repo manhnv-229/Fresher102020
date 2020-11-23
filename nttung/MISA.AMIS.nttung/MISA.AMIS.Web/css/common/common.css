@@ -1,0 +1,391 @@
+﻿.grid .grid-table .money {
+    text-align: right;
+}
+
+.required-error {
+    border: 1px solid #ff0000;
+}
+/*css dialog*/
+.dialog-model {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #808080;
+    opacity: 0.3;
+}
+
+.dialog {
+    display: none;
+    width: 610px;
+    height: 510px;
+    background-color: #fff;
+    border-radius: 5px;
+    position: absolute;
+    top: calc(50% - 245px);
+    left: calc(50% - 305px);
+}
+
+    .dialog .dialog-title {
+        display: flex;
+        height: 40px;
+    }
+
+        .dialog .dialog-title .title-text {
+            font-size: 18px;
+            line-height: 25px;
+            text-transform: uppercase;
+            padding: 8px 10px;
+        }
+
+        .dialog .dialog-title .title-close-button {
+            width: 25px;
+            height: 25px;
+            position: absolute;
+            right: 5px;
+            line-height: 25px;
+            font-size: 20px;
+            background-color:#fff;
+            border-radius: 0 5px 0 0;
+            border: none
+        }
+
+.title-close-button:hover {
+    color: #ff0000;
+    cursor: pointer;
+}
+/*dialog body css*/
+.dialog .dialog-body {
+    background-color: #fff;
+    height: calc(100% - 80px);
+}
+
+.information-title {
+    width: 100%;
+    height: 25px;
+    font-size: 18px;
+}
+
+.general-information-content {
+    display: block;
+}
+/*Thong tin khach hang pha tren tu ma khach hang den gioi tinh*/
+.information-content-top {
+    display: flex;
+}
+
+.img-avatar {
+    height: 152px;
+    width: 185px;
+    background-position: center;
+    background-size: 152px 152px;
+    background-repeat: no-repeat;
+    background-image: url('/content/image/content/icon-avatar-default.png');
+}
+
+.text-avatar {
+    text-align: center;
+}
+.colum-right {
+    height: 170px;
+    width: 184px;
+    padding: 0px 8px;
+}
+.colum-left {
+    width: calc(100% - 222px);
+}
+.colum-left-input {
+    display: flex;
+}
+#txtCustomerCode{
+    width:168px;
+}
+#txtMemberCardCode{
+    width: 168px;
+}
+.chkGender {
+    display: flex;
+}
+#dtDateOfBirth {
+    width: 170px;
+}
+.dialog .dialog-body .information-content input {
+    padding-left: 16px;
+    height: 33px;
+    padding-bottom: 4px;
+    margin-right: 21px;
+    margin-bottom: 10px;
+}
+
+.dialog .dialog-body .information-content input:focus {
+    border: 1px solid #019160;
+}
+
+.ddlGroupCustomer {
+    height: 40px;
+    width: 178px;
+    border-radius: 3px;
+    padding: 1px 2px 4px 16px;
+}
+
+.dialog .dialog-body label {
+    margin: 8px 16px;
+}
+.Gender{
+    display: flex;
+}
+.dialog .dialog-body .Gender group{
+    display:flex;
+}
+.radGender{
+    width:20px;
+}
+/*thong tin khach hang phan giua email, sdt, cong ty, ma so thue*/
+.email-phone {
+    display: flex;
+}
+
+.content-mid-email {
+    width: 359px;
+    margin-left: 10px;
+}
+.content-mid-phone {
+    position: absolute;
+    right: 0px;
+}
+
+#txtEmail {
+    width: 100%;
+}
+
+#txtCompanyName {
+    width: 100%;
+}
+/*dialog body bottom thong tin dialog chi*/
+.information-content-bottom {
+    width: 564px;
+}
+
+#txtAddress {
+    margin-left: 10px;
+    width: 100%;
+}
+/*Xu ly div dialog-footer*/
+.dialog .dialog-footer {
+    position: absolute;
+    bottom: 0px;
+    height: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #bbbbbb;
+}
+
+    .dialog .dialog-footer button {
+        width: 85px;
+        height: 35px;
+        border: none;
+        padding: 4px 4px;
+        border-radius: 4px;
+        margin-right: 10px;
+    }
+        .dialog .dialog-footer button:hover {
+            background-color: #2FBE8E;
+            cursor:pointer;
+        }
+
+button#btnSave {
+    background-color: #019160;
+    display:flex;
+    padding-left:18px;
+}
+    button#btnSave:hover {
+        background-color: #2FBE8E;
+    }
+
+    button#btnCanel {
+    }
+    button#btnDelete{
+        background-color:#ff0000;
+        color:#fff;
+    }
+        button#btnDelete:hover {
+            background-color: #2FBE8E;
+        }
+/*css bottom default*/
+.m-btn {
+    display: flex;
+    align-items: center;
+    background-color: #019160;
+    border-radius: 4px;
+    height: 40px;
+    font-size: 13px;
+    color: #ffff;
+    font-family: GoogleSans-Regular;
+    padding-left: 16px;
+    padding-right: 16px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    margin-top: 16px;
+    margin-right: 16px;
+}
+
+    .m-btn:hover {
+        background-color: #2FBE8E;
+        cursor: pointer;
+    }
+    /*icon loading du lieu*/
+.loading-box {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #bbb;
+    opacity: 0.5;
+    z-index:99;
+}
+.loader {
+    border: 8px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 8px solid #019160;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+    margin:auto;
+    margin-top: auto;
+    position: fixed;
+    top : calc(50% - 30px);
+    left: calc(50% - 30px);
+
+}
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+/*css cho pop-up cảnh báo*/
+.pop-up-layout {
+    display:none;
+    position:absolute;
+    right: 0;
+    top:0;
+    left:0;
+    bottom:0;
+    background-color:#bbb;
+    opacity:0.5;
+}
+.pop-up {
+    display:none;
+    width: 400px;
+    height: 200px;
+    position: fixed;
+    left: calc(50% - 200px);
+    top: calc(50% - 100px);
+    background-color: #fff;
+    color:#000;
+    border-radius:5px;
+    z-index:120;
+}
+    .pop-up .pop-up-title {
+        height: 40px;
+        font-size: 15px;
+        padding-left: 24px;   
+    }
+        .pop-up .pop-up-title label{
+            line-height:40px;
+        }
+        .pop-up-btnclose {
+            width: 30px;
+            height: 30px;
+            border: none;
+            background-color: #fff;
+            float: right;
+        }
+.pop-up .pop-up-content {
+    width: 100%;
+    height: calc(100% - 100px);
+    font-size: 13px;
+    display: flex;
+}
+.pop-up-icon {
+    width: 60px;
+    height: 60px;
+    background-image: url('/content/image/content/icon-danger.png');
+    background-repeat: no-repeat;
+    background-size: 60px 60px;
+    border-radius:50px;
+    margin-left:24px;
+    align-self:center;
+    margin-right:10px;
+}
+.pop-up-text{
+    width:calc(100% - 70px);
+    line-height:100px;
+}
+.pop-up .pop-up-footer {
+    height: 60px;
+    width: 100%;
+    background-color: #ccc;
+}
+.pop-up-confirm{
+    width:80px;
+}
+.pop-up-cancel {
+    width: 80px;
+    background-color: #e05555;
+}
+.btnpopup-footer{
+    display:flex;
+    position:absolute;
+    right:0px;
+}
+/*thông báo thao tác thành công*/
+.notification {
+    height: 25px;
+    width: 221px;
+    border-radius: 2px;
+    display: flex;
+    position: absolute;
+    bottom: 0px;
+    display: none; 
+    color: #fff;
+    background-color: #019160;
+    
+}
+.notification-icon{
+    height:25px;
+    width:25px;
+}
+.notification-text {
+    align-self: center;
+    position: absolute;
+    right: calc(50% - 38px);
+    bottom: 0;
+    padding-bottom: 4px;
+}
+/*thong bao that bai*/
+.notification-fail {
+    display:none;
+    height: 25px;
+    width: 221px;
+    border-radius: 2px;
+    display: flex;
+    position: absolute;
+    bottom: 0px;
+    display: none;
+    color: #fff;
+    background-color: #e05555;
+    z-index: 999;
+}
+.row-selected {
+    background-color: #FFF3EB;
+}
