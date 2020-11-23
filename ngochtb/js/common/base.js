@@ -2,7 +2,7 @@
 
 
 /**
- * Class quản lý 
+ * Class quản lý sự kiện, function
  * created by ngochtb(13/11/2020)*/
 class BaseJS {
     constructor() {
