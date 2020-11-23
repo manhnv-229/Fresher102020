@@ -12,7 +12,8 @@ class Customer extends BaseJS {
         $('.navbar-content').find("#customerPage").addClass("active");
     }
 
-    setDataUrl() {
-        this.getDataUrl = "http://api.manhnv.net/api/customers";
+    setData() {
+        this.apiRouter = "/api/customers";
+        this.page = 'Customer';
     }
 }

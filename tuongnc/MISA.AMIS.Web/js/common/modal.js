@@ -1,18 +1,17 @@
 ﻿$(document).ready(function () {
-    $('#overlay').hide();
-    $('#modal').hide();
+    
 
     const openModalButtons = $('[data-modal-target]');
     const closeModalButtons = $('[data-close-button]');
-
-    openModalButtons.each(function (index) {
+    // xét mở modal
+    openModalButtons.each(function () {
         const modal = $(this).attr('data-modal-target');
         $(this).click(function () {
             oppenModal(modal);
         });
     });
 
-
+    // xét đóng modal
     closeModalButtons.each(function () {
         $(this).click(function () {
             closeModal();

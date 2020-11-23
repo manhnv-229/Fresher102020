@@ -10,6 +10,16 @@ function formatDate(dateValue) {
         + '/' + date.getFullYear();
 
 }
+/**
+ * function định dạng ngày tháng năm -> ngày-tháng-năm
+ * @param {any} dateValue
+ * CreateBy: TuongNC (11/11/2020)
+ */
+function formatDateInput(dateValue) {
+    var date = new Date(dateValue);
+    return date.getFullYear() + '-' + ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1)))
+        + '-' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate()));
+}
 
 /**
  * function Định dạng tiền lương

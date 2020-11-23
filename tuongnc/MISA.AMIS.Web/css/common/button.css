@@ -59,3 +59,21 @@
 }
 /*---------------------------------------------*/
 
+/*btn-red*/
+.misa-btn-red {
+    background-color: #c11111;
+    height: 40px;
+    border-radius: 4px;
+    color: #ffffff;
+    padding: 0px 16px 0px 16px;
+    border: none;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.misa-btn-red:hover {
+    background-color: #ff0000;
+}
+/*----------------------------*/

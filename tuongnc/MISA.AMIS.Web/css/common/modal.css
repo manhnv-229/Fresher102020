@@ -10,6 +10,7 @@
     z-index: 10;
     background-color: #ffffff;
     max-width: 80%;
+    display: none;
 }
 
     .modal .active {
@@ -89,6 +90,7 @@
     left: 0px;
     background-color: rgba(0,0,0,.5);
     pointer-events: all;
+    display: none;
 }
 
 
@@ -96,4 +98,59 @@
 #overlay .active {
     opacity: 1;
     pointer-events: all;
+}
+
+/*messenger-css*/
+#messenger-popup {
+    display: none;
+}
+
+    #messenger-popup .messenger {
+        z-index: 11;
+        align-items: center;
+        position: fixed;
+        /* width: 280px; */
+        background-color: #ffffff;
+        height: 48px;
+        border-radius: 4px;
+        box-shadow: 4px 3px 6px #d1caca;
+        padding: 0px 16px;
+        top: 0;
+        left: 50%;
+        display: flex;
+    }
+
+    .messenger .nav-item-icon {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+.icon-alert-triangle {
+    background-image: url('/content/img/messenger/alert-octagon.svg');
+}
+
+.icon-alert-octagon {
+    background-image: url('/content/img/messenger/alert-triangle.svg');
+}
+
+.icon-alert-check {
+    background-image: url('/content/img/messenger/check.png');
+}
+
+.icon-alert-information {
+    background-image: url('/content/img/messenger/information-button.png');
+}
+
+/*popup-delete-css*/
+
+#popup-notice .modal-body .label-field-input {
+    align-self: center;
+}
+
+.modal-body .misa-icon-button {
+    width: 24px;
+    height: 24px;
+    background-image: url('/content/img/messenger/alert-triangle.svg');
 }
