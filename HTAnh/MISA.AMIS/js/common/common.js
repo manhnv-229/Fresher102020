@@ -55,7 +55,6 @@ function hideDialog() {
  * */
 function refreshData() {
     this.loadData();
-    alert('da load thanh cong');
 }
 
 /**
