@@ -212,6 +212,17 @@ input:focus {
     height: 100%;
 }
 
+    .filter .filter-right .delelte-icon {
+        height: 40px;
+        width: 40px;
+        margin-right: 16px;
+        border-radius: 4px;
+        background-color: #019160;
+        background-repeat: no-repeat;
+        background-size: 16px 16px;
+        background-position: center;
+    }
+
     .filter .filter-right .download-icon {
         height: 100%;
         width: 38px;
