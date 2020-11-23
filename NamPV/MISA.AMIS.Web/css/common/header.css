@@ -1,5 +1,5 @@
-﻿
-/* Định dạng header toàn trang*/
+﻿/* Định dạng header toàn trang*/
+
 .header {
     width: calc(100% - 221px);
     height: 48px;
@@ -7,7 +7,9 @@
     float: left;
 }
 
+
     /* Định dạng left-header, logo chi nhánh MISA*/
+
     .header .header-selector-box {
         float: left;
         height: 48px;
@@ -15,11 +17,13 @@
         width: 50%;
     }
 
-    /* Icon logo*/
+        /* Icon logo*/
+
         .header .header-selector-box .header-icon {
             height: 30px;
             width: 30px;
-            margin: auto 0px auto 16px;;
+            margin: auto 0px auto 16px;
+            ;
             background-image: url('/content/icon/toggle.png');
             background-repeat: no-repeat;
             background-position: center;
@@ -28,6 +32,7 @@
         }
 
         /* Box chọn chi nhánh*/
+
         .header .header-selector-box .selector-box {
             height: 20px;
             display: inline-flex;
@@ -52,6 +57,7 @@
                 }
 
     /* Định dạng right-header, thông báo/ avatar/ option*/
+
     .header .header-account {
         display: inline-flex;
         float: right;
@@ -59,7 +65,9 @@
         /*padding-right: 16px;*/
     }
 
+
         /* Avatar*/
+
         .header .header-account .header-icon-avatar {
             background-image: url('/content/icon/avatar-default.png');
             background-size: 28px 28px;
@@ -73,7 +81,9 @@
             margin: auto;
         }
 
+
         /* Option*/
+
         .header .header-account .header-icon-more {
             background-image: url('/content/icon/option.png');
             background-size: 16px;

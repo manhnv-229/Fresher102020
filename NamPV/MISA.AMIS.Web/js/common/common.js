@@ -1,17 +1,24 @@
 ﻿
+$(document).ready(function () {
+    setSizeInputPlaceholder();
+})
 /**
  * Định dạng date về dạng ngày/tháng/năm
  * @param {Date} date
  * CreatedBy: NamPV (12/11/2020)
  */
 function formatDate(date) {
-    var date = new Date(date);
-    var day = date.getDate(),
-        month = date.getMonth() + 1,
-        year = date.getFullYear();
-    day = day < 10 ? `0` + day : day;
-    month = month < 10 ? `0` + month : month;
-    return day + `/` + month + `/` + year;
+    try {
+        var date = new Date(date);
+        var day = date.getDate(),
+            month = date.getMonth() + 1,
+            year = date.getFullYear();
+        day = day < 10 ? `0` + day : day;
+        month = month < 10 ? `0` + month : month;
+        return day + `/` + month + `/` + year;
+    } catch (e) {
+
+    }
 }
 
 /**
@@ -20,8 +27,12 @@ function formatDate(date) {
  * CreatedBy: NamPV (12/11/2020)
  */
 function formatMoney(money) {
-    if (money) {
-        return money.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    try {
+        if (money) {
+            return money.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+        }
+    } catch (e) {
+
     }
 }
 
@@ -49,61 +60,44 @@ function formatDateReg(date) {
     return arr[2] + '-' + arr[1] + '-' + arr[0];
 }
 
-// Khai báo dialog xác nhận xoá bản ghi
-dialogConfirm = $(`.confirm-delete-dialog`).dialog({
+/**
+ * Khai báo dialog xác nhận xoá bản ghi
+ * CreatedBy: NamPV (16/11/2020)
+ */
+dialogConfirm = $(`.customer-delete`).dialog({
     title: `Xác nhận xoá`,
+    autoOpen: false,
+    modal: true,
+    open: function () {
+        $('.FullName').text($(`.row-selected td[id="FullName"]`).html());
+        $(`.CustomerCode`).text($(`.row-selected td[id="CustomerCode"]`).html());
+    }
+})
+/**
+ * Khai báo popup thông báo dữ liệu không hợp lệ
+ * CreatedBy: NamPV (22/11/2020)
+ */
+dialogNotify = $(`.data-invalid`).dialog({
+    title: `Thông báo`,
     autoOpen: false,
     modal: true
 })
 
-// Khái báo popup thông báo thành công
-popupSuccess = $(`#popup-success`).dialog({
-    title: `Thành công`,
-    position: {
-        my: "left top", at: "left bottom"
-    },
-    autoOpen: false,
-    beforeClose: function () {
-        return closeable;
-    },
-    open: function () {
-        var counter = 5;
-        var intID = setInterval(function () {
-            counter--;
-            $('.delayTime').text(counter);
-            if (counter == 0) {
-                clearInterval(intID)
-                closeable = true;
-                $('#popup-success').dialog("close")
-            }
-        }, 1000)
-    },
-    show: { effect: "blind", duration: 800 },
-    hide: { effect: "blind", duration: 800 },
-})
+/**
+ * Hiển thị popup thông báo
+ * @param {any} msg
+ * CreatedBy: NamPV (19/11/2020)
+ */
+function showPopupNotification(msg) {
+    $(`#popup-notification`).text(msg).slideDown(1000).delay(2000).slideUp(1000);
+}
 
-// Khái báo popup thoogn báo thất bại
-popupFail = $(`#popup-fail`).dialog({
-    title: `Thất bại`,
-    position: {
-        my: "left top", at: "left bottom"
-    },
-    autoOpen: false,
-    beforeClose: function () {
-        return closeable;
-    },
-    open: function () {
-        var counter = 5;
-        var intID = setInterval(function () {
-            counter--;
-            $('.delayTime').text(counter);
-            if (counter == 0) {
-                clearInterval(intID)
-                closeable = true;
-                $('#popup-fail').dialog("close")
-            }
-        }, 1000)
-    },
-    show: { effect: "blind", duration: 800 },
-    hide: { effect: "blind", duration: 800 },
-})
+/**
+ *  Set kích thước các input có placholder
+ * CreatedBy: NamPV (21/11/2020)
+ */
+function setSizeInputPlaceholder() {
+    $("input[placeholder]").each(function () {
+        $(this).attr('size', $(this).attr('placeholder').length);
+    })
+};

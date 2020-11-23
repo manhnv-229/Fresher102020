@@ -15,6 +15,7 @@
     display: flex;
     justify-content: space-between;
     padding: 0px 16px;
+    background-color: #E9EBEE;
 }
 
     .pagination .pagi-center {
@@ -33,6 +34,8 @@
 
         .pagination .pagi-center button {
             margin: auto 4px;
+            border: none;
+            background-color: #e9ebee;
         }
 
         .pagination .pagi-center a.active {
@@ -40,7 +43,7 @@
         }
 
         .pagination .pagi-center a:hover, .pagination .pagi-center button:hover {
-            background-color: #bbb;
+            background-color: #fff;
         }
 
         .pagination .pagi-center .privious-page {

@@ -1,4 +1,11 @@
-﻿/*css định nghĩa lại thư viện jqueryUI*/
+﻿@font-face {
+    font-family: 'GoogleSans-Regular';
+    src: url('/content/font/Google Sans/GoogleSans-Regular.otf') format('opentype');
+}
+
+
+/*css định nghĩa lại thư viện jqueryUI*/
+
 .ui-corner-all,
 .ui-corner-bottom,
 .ui-corner-right,
@@ -6,14 +13,16 @@
     border-radius: 5px;
 }
 
+
 /**/
+
 .ui-dialog {
     padding: 0;
     /*border-radius: 4px;*/
 }
 
     .ui-dialog .ui-dialog-titlebar {
-        padding: 24px;
+        padding: 24px 24px 0px 24px;
         font-size: 20px;
         text-transform: uppercase;
         font-weight: bold;
@@ -44,7 +53,8 @@
             background-color: #ccc;
         }
 
-.ui-button .ui-icon, .ui-button .ui-icon:hover {
+.ui-button .ui-icon,
+.ui-button .ui-icon:hover {
     background-image: none;
     background-repeat: no-repeat;
     background-position: center;
@@ -68,24 +78,63 @@
     opacity: .5;
 }
 
+.dialog-body {
+    padding: 24px;
+}
+
+user agent stylesheet div {
+    display: block;
+}
+
+.ui-widget-content {
+    border: 1px solid #dddddd;
+    background: #ffffff;
+    color: #333333;
+}
+
+.ui-widget,
+.ui-widget input,
+.ui-widget select,
+.ui-widget textarea,
+.ui-widget button {
+    font-family: GoogleSans-Regular;
+    font-size: 13px;
+}
+
+
 /* Các class dùng chung*/
+
+/* Căn giữa text*/
 .text-align-center {
     text-align: center;
 }
-
+/* căn phải text*/
 .text-align-right {
     text-align: right;
 }
-
+/* Ẩn nội dung*/
 .disable {
     display: none;
 }
 
-/* Popup thông báo*/
-#popup-success, #popup-fail {
-    margin: auto 24px;
-    background-color: #019160;
+.border-red {
+    border: 1px solid #f00;
 }
+
+/* Popup thông báo*/
+
+#popup-notification {
+    display: none;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 50px;
+    width: 200px;
+    background-color: #2FBE8E;
+    text-align: center;
+    font-size: 24px;
+}
+
 
 /* Loading icon*/
 
@@ -131,4 +180,94 @@
     100% {
         transform: rotate(360deg);
     }
+}
+
+
+/* Popup cảnh báo*/
+
+.popup-alert {
+    background-color: #fff;
+    border-radius: 4px;
+    margin: auto;
+}
+
+
+/* Định dạng popup/dialog body, footer*/
+
+.dialog-body {
+    padding: 24px;
+}
+
+    .dialog-body .m-radio-group {
+        height: 40px;
+    }
+
+        .dialog-body .m-radio-group label {
+            margin: auto 4px;
+        }
+
+    .dialog-body .customer-avatar {
+        height: 200px;
+        background-image: url('/content/icon/avatar.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+.dialog-footer {
+    height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    float: right;
+    background-color: #f4f4f4;
+    border-radius: 0px 0px 4px 4px;
+}
+
+    .dialog-footer .group-footer-button {
+        display: flex;
+        position: absolute;
+        right: 24px;
+    }
+
+    .dialog-footer .btn-cancel {
+        background-color: #f4f4f4;
+        margin-right: 16px;
+        color: #000;
+        border: none;
+    }
+
+    .dialog-footer .btn-delete {
+        background-color: #f00;
+        margin-right: 16px;
+        background-image: url('/content/icon/trash-2.png');
+    }
+
+    .dialog-footer .btn-save {
+        background-image: url('/content/icon/save.png');
+    }
+
+    .dialog-footer .confirm-delete {
+        background-color: #ff0000;
+    }
+
+.dialog-body .m-radio {
+    height: 20px;
+    width: 20px;
+    margin: auto 0px auto 24px;
+}
+
+.dialog-body .col {
+    padding-right: 16px;
+}
+
+.dialog-body input {
+    margin-bottom: 16px;
+    margin-top: 4px;
+    width: calc(100% - 19px);
+}
+
+.dialog-body select {
+    margin-bottom: 16px;
+    margin-top: 4px;
+    width: 100%;
 }

@@ -19,19 +19,19 @@
      * */
     initEvent() {
         // Sự kiện click khi nhấn thêm mới
-        $(`.employee-content .header-content .content-feature .content-add-box .btn-add`).click(this.btnAddOnClick.bind(this));
+        $(`.customer .btn-add`).click(this.btnAddOnClick.bind(this));
 
         // Sự kiện load lại trang
-        $(`.employee-content .header-content .content-feature .btn-sync`).click(this.loadData.bind(this));
+        $(`.btn-sync`).click(this.loadData.bind(this));
 
         // Ẩn form chi tiết khi bấm huỷ
-        $(`.dialog-modal .dialog-footer .btn-cancel`).click(this.btnCancelOnClick.bind(this));
+        $(`.customer-add .dialog-footer .btn-cancel`).click(this.btnCancelOnClick.bind(this));
 
         // Hiển thị dialog xác nhận xoá bản ghi
-        $(`.dialog-modal .dialog-footer .btn-delete`).click(this.btnDeleteOnClick.bind(this));
+        $(`.customer-add .dialog-footer .btn-delete`).click(this.btnDeleteOnClick.bind(this));
 
         // Thực hiện lưu dữ liệu khi nhấn button lưu
-        $(`.dialog-modal .dialog-footer .btn-save`).click(this.btnSaveOnClick.bind(this));
+        $(`.customer-add .dialog-footer .btn-save`).click(this.btnSaveOnClick.bind(this));
 
         // Thêm attribute khi kích đúp vào 1 bản ghi
         $(`table tbody`).on(`dblclick`, `tr`, this.rowOnClick);
@@ -40,16 +40,17 @@
         $(`table tbody`).on(`dblclick`, `tr`, this.dblClickOnRecord.bind(this));
 
         // Validate các trường cần điền đầy đủ thông tin
-        $(`input[required]`).blur(this.validateInputRequired.bind(this));
+        $(`input[required]`).blur(this.validateInputRequired);
 
         // Validate email đúng định dạng
-        $(`input[type="email"]`).blur(this.validateInputEmailData.bind(this));
+        $(`input[type="email"]`).blur(this.validateInputEmailData);
 
         // Ẩn dialog xác nhận xoá
-        $(`.cancel-delete`).click(this.btnCancelDeleteOnClick.bind(this));
+        $(`.customer-delete .btn-cancel, .data-invalid .btn-cancel`).click(this.btnCancelDeleteOnClick.bind(this));
 
         // Xoá bản ghi khi nhấn đồng ý
-        $(`.confirm-delete`).click(this.btnConfirmDeleteOnClick.bind(this));
+        $(`.customer-delete .confirm-delete`).click(this.btnConfirmDeleteOnClick.bind(this));
+
     }
 
     /**
@@ -59,6 +60,8 @@
     loadData() {
         var me = this;
         try {
+            var count = 0;
+            $(`table tbody`).empty();
             var ths = $(`table thead th`);
             $(`.loading-data`).show();
             $.ajax({
@@ -66,10 +69,35 @@
                 method: "GET"
             }).done(function (res) {
                 $.each(res, function (index, obj) {
+                    count++;
                     var tr = $(`<tr></tr>`);
                     $.each(ths, function (index, th) {
                         var td = $(`<td></td>`);
                         var fieldname = $(th).attr(`fieldname`);
+                        switch (true) {
+                            case (fieldname.includes(`Code`)):
+                                td.css(`min-width`, `90px`);
+                                td.css(`max-width`, `90px`);
+                                $(`th[fieldname=${fieldname}]`).css(`min-width`, `90px`);
+                                $(`th[fieldname=${fieldname}]`).css(`max-width`, `90px`);
+                                break;
+                            case fieldname.includes(`Email`)
+                                || fieldname.includes(`FullName`)
+                                || fieldname.includes(`CompanyName`):
+                                td.css(`min-width`, `150px`);
+                                td.css(`max-width`, `150px`);
+                                $(`th[fieldname=${fieldname}]`).css(`min-width`, `150px`);
+                                $(`th[fieldname=${fieldname}]`).css(`max-width`, `150px`);
+                                break;
+                            case fieldname.includes(`Address`):
+                                td.css(`min-width`, `300px`);
+                                td.css(`max-width`, `300px`);
+                                $(`th[fieldname=${fieldname}]`).css(`min-width`, `300px`);
+                                $(`th[fieldname=${fieldname}]`).css(`max-width`, `300px`);
+                                break;
+                            default:
+                                break;
+                        }
                         var value = obj[fieldname];
                         td.attr(`id`, fieldname);
                         var formatType = $(th).attr(`formatType`);
@@ -79,9 +107,10 @@
                                 $(td).addClass(`text-align-center`);
                                 $(th).addClass(`text-align-center`);
                                 break;
-                            case `Number`:
+                            case `money`:
                                 value = formatMoney(value);
                                 $(td).addClass(`text-align-right`);
+                                $(`th[formatType=${formatType}]`).addClass(`text-align-right`);
                                 break;
                             default:
                         }
@@ -91,13 +120,15 @@
                     tr.data(`recordId`, obj.CustomerId);
                     $(`table tbody`).append(tr);
                 })
+                $(`.total`).text(count);
             }).fail(function (res) {
-
+                showPopupNotification("Tải dữ liệu thất bại!")
             })
         } catch (e) {
 
         }
         $(`.loading-data`).hide();
+        //showPopupNotification("Tải dữ liệu thành công!");
     }
 
     /**
@@ -105,19 +136,23 @@
      * CreatedBy: NamPV (18/11/2020)
      * */
     btnAddOnClick() {
-        this.FormMode = `Add`;
-        var me = this;
-        $(`.btn-delete`).addClass(`disable`);
-        var inputs = $(`input[fieldname], select[fieldname]`);
-        $.each(inputs, function (index, input) {
-            if (input.type != `radio`)
-                $(input).val(``);
-        })
-        $(`.loading-data`).show();
-        me.getDataForSelectTag();
-        $(`.loading-data`).hide();
-        dialogDetail.dialog(`open`);
-        // Lấy dữ liệu nhóm khách hàng
+        try {
+            this.FormMode = `Add`;
+            var me = this;
+            $(`.btn-delete`).addClass(`disable`);
+            var inputs = $(`input[fieldname], select[fieldname]`);
+            $.each(inputs, function (index, input) {
+                if (input.type != `radio`)
+                    $(input).val(``);
+            })
+            // Lấy dữ liệu nhóm khách hàng
+            $(`.loading-data`).show();
+            me.getDataForSelectTag();
+            $(`.loading-data`).hide();
+            dialogDetail.dialog(`open`);
+        } catch (e) {
+
+        }
     }
 
     /**
@@ -133,59 +168,64 @@
      * CreatedBy: NamPV (18/11/2020)
      * */
     btnSaveOnClick() {
-        var me = this;
-        // Validate dữ liệu
-        var inputValidates = $(`input[required], input[type="email"]`);
-        $.each(inputValidates, function (index, input) {
-            $(this).trigger('blur');
-        })
-        var inputNotValids = $(`input[validate="false"]`);
-        if (inputNotValids && inputNotValids.length > 0) {
-            alert("Dữ liệu không hợp lệ. Vui lòng kiểm tra lại");
-            inputNotValids[0].focus();
-        }
-
-        //Thu thập thông tin => build thành object
-        var inputs = $(`input[fieldname], select[fieldname]`);
-        var entity = {};
-        $.each(inputs, function (index, input) {
-            var fieldname = $(input).attr(`fieldname`);
-            var value = $(input).val();
-            if (this.type == `radio`) {
-                if (this.checked) {
-                    entity[fieldname] = value;
-                }
-            } else {
-                if (this.type == `select-one`) {
-                    var fieldid = $(input).attr(`fieldid`);
-                    entity[fieldid] = value;
-                }
-                else
-                    entity[fieldname] = value;
+        try {
+            var me = this;
+            // Validate dữ liệu
+            var inputValidates = $(`input[required], input[type="email"]`);
+            $.each(inputValidates, function (index, input) {
+                $(this).trigger('blur');
+            })
+            var inputNotValids = $(`input[validate="false"]`);
+            if (inputNotValids && inputNotValids.length > 0) {
+                dialogNotify.dialog(`open`);
+                inputNotValids[0].focus();
             }
+            else {
+                //Thu thập thông tin => build thành object
+                var inputs = $(`input[fieldname], select[fieldname]`);
+                var entity = {};
+                $.each(inputs, function (index, input) {
+                    var fieldname = $(input).attr(`fieldname`);
+                    var value = $(input).val();
+                    if (this.type == `radio`) {
+                        if (this.checked) {
+                            entity[fieldname] = value;
+                        }
+                    } else {
+                        if (this.type == `select-one`) {
+                            var fieldid = $(input).attr(`fieldid`);
+                            entity[fieldid] = value;
+                        }
+                        else
+                            entity[fieldname] = value;
+                    }
 
-        })
-        //Gọi API để đẩy lưu dữ liệu
-        if (me.FormMode == `Add`) {
-            var method = `POST`;
-            var url = me.host + me.api;
-        } else if (me.FormMode == `Edit`) {
-            method = `PUT`;
-            var url = me.host + me.api + `/` + $(`tr.row-selected`).data(`recordId`);
+                })
+                //Gọi API để đẩy lưu dữ liệu
+                var method = `POST`;
+                var msg = "Thêm mới"
+                if (me.FormMode == `Edit`) {
+                    method = `PUT`;
+                    entity.CustomerId = $(`tr.row-selected`).data(`recordId`);
+                    msg = "Sửa"
+                }
+                $.ajax({
+                    url: me.host + me.api,
+                    method: method,
+                    data: JSON.stringify(entity),
+                    contentType: "application/json"
+                }).done(function (res) {
+                    //Đưa ra thông báo thành công => ẩn form => load lại trang
+                    showPopupNotification(msg + ` thành công!`);
+                    dialogDetail.dialog(`close`);
+                    me.loadData();
+                }).fail(function (res) {
+                    showPopupNotification(msg + ` thất bại!`);
+                })
+            }
+        } catch (e) {
+
         }
-        $.ajax({
-            url: url,
-            method: method,
-            data: JSON.stringify(entity),
-            contentType: "application/json"
-        }).done(function (res) {
-            //Đưa ra thông báo thành công => ẩn form => load lại trang
-            popupSuccess.dialog('open');
-            dialogDetail.dialog(`close`);
-            me.loadData();
-        }).fail(function (res) {
-            popupFail.dialog('open');
-        })
     }
 
     /**
@@ -201,19 +241,23 @@
      * CreatedBy: NamPV (18/11/2020)
      * */
     btnConfirmDeleteOnClick() {
-        var me = this;
-        var selectedRecord = $(`tr.row-selected`);
-        $.ajax({
-            url: me.host + me.api + `/` + selectedRecord.data(`recordId`),
-            method: `DELETE`
-        }).done(function (res) {
-            dialogConfirm.dialog(`close`);
-            dialogDetail.dialog(`close`);
-            popupSuccess.dialog('open');
-            me.loadData();
-        }).fail(function (res) {
-            popupFail.dialog('open');
-        })
+        try {
+            var me = this;
+            var selectedRecord = $(`tr.row-selected`);
+            $.ajax({
+                url: me.host + me.api + `/` + selectedRecord.data(`recordId`),
+                method: `DELETE`
+            }).done(function (res) {
+                dialogConfirm.dialog(`close`);
+                dialogDetail.dialog(`close`);
+                showPopupNotification(`Xoá thành công!`);
+                me.loadData();
+            }).fail(function (res) {
+                showPopupNotification(`Xoá thất bại`);
+            })
+        } catch (e) {
+
+        }
     }
 
     /**
@@ -222,6 +266,7 @@
      * */
     btnCancelDeleteOnClick() {
         dialogConfirm.dialog(`close`);
+        dialogNotify.dialog(`close`);
     }
 
     /**
@@ -229,46 +274,50 @@
      * CreatedBy: PVNam (17/11/2020)
      */
     dblClickOnRecord() {
-        this.FormMode = `Edit`;
-        var me = this;
-        $(`.btn-delete`).removeClass(`disable`);
-        var selectedRecord = $(`tr.row-selected`);
-        dialogDetail.dialog(`open`);
-        var inputs = $(`input[fieldname], select[fieldname]`);
-        //Lấy dữ liệu chi tiết của bản ghi
-        $(`.loading-data`).show();
-        me.getDataForSelectTag();
-        $(`.loading-data`).hide();
-        $.ajax({
-            url: me.host + me.api + `/` + selectedRecord.data(`recordId`),
-            method: "GET"
-        }).done(function (res) {
-            // Binding dữ liệu vào các input
-            $.each(inputs, function (index, input) {
-                var fieldname = $(input).attr(`fieldname`);
-                var value = res[fieldname];
-                if (input.type == `radio`) {
-                    if (input.value == value) {
-                        this.checked = true;
+        try {
+            this.FormMode = `Edit`;
+            var me = this;
+            $(`.btn-delete`).removeClass(`disable`);
+            var selectedRecord = $(`tr.row-selected`);
+            dialogDetail.dialog(`open`);
+            var inputs = $(`input[fieldname], select[fieldname]`);
+            inputs.removeClass("border-red");
+            $(`.loading-data`).show();
+            me.getDataForSelectTag();
+            $(`.loading-data`).hide();
+            //Lấy dữ liệu chi tiết của bản ghi
+            $.ajax({
+                url: me.host + me.api + `/` + selectedRecord.data(`recordId`),
+                method: "GET"
+            }).done(function (res) {
+                // Binding dữ liệu vào các input
+                $.each(inputs, function (index, input) {
+                    var fieldname = $(input).attr(`fieldname`);
+                    var value = res[fieldname];
+                    if (input.type == `radio`) {
+                        if (input.value == value) {
+                            this.checked = true;
+                        }
+                    } else {
+                        switch (input.type) {
+                            case `date`:
+                                value = formatDateReg(value);
+                                break;
+                            case `select-one`:
+                                var fieldid = $(input).attr(`fieldid`);
+                                value = res[fieldid];
+                                break;
+                            default: value = res[fieldname];
+                                break;
+                        }
+                        $(input).val(value);
                     }
-                } else {
-                    switch (input.type) {
-                        case `date`:
-                            value = formatDateReg(value);
-                            break;
-                        case `select-one`:
-                            var fieldid = $(input).attr(`fieldid`);
-                            value = res[fieldid];
-                            break;
-                        default: value = res[fieldname];
-                            break;
-                    }
-                    $(input).val(value);
-                }
-            })
-        }).fail(function (res) {
+                })
+            }).fail(function (res) {
 
-        })
+            })
+        } catch (e) {
+        }
     }
 
     /**
@@ -277,13 +326,14 @@
      * */
     validateInputRequired() {
         // Kiểm tra dữ liệu
-        var value = $(`input[required]`).val();
+        var value = $(this).val();
         if (!value) {
             $(this).addClass(`border-red`);
             $(this).attr('title', `Cần điền đầy đủ thông tin này`);
             $(this).attr(`validate`, `false`);
         } else {
             $(this).removeClass(`border-red`);
+            $(this).removeAttr('title', `Cần điền đầy đủ thông tin này`);
             $(this).attr(`validate`, `true`);
         }
     }
@@ -293,8 +343,8 @@
      * CreatedBy: PVNam (17/11/2020)
      * */
     validateInputEmailData() {
-        var value = $(`input[type="email"]`).val();
-        var testEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        var value = $(this).val();
+        var testEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
         if (testEmail.test(value)) {
             $(this).removeClass(`border-red`);
             $(this).removeAttr(`title`, `Email không đúng định dạng`);
@@ -311,24 +361,28 @@
      * CreatedBy: NamPV (17/11/2020)
      * */
     getDataForSelectTag() {
-        var me = this;
-        var selects = $(`select[api]`);
-        $.each(selects, function (index, select) {
-            $.ajax({
-                url: me.host + $(select).attr(`api`),
-                method: "GET"
-            }).done(function (res) {
-                $(select).empty();
-                $.each(res, function (index, obj) {
-                    var fieldname = $(select).attr(`fieldname`);
-                    var fieldid = $(select).attr(`fieldid`);
-                    var option = $(`<option value=${obj[fieldid]}>${obj[fieldname]}</option>`);
-                    $(select).append(option);
-                })
-            }).fail(function (res) {
+        try {
+            var me = this;
+            var selects = $(`select[api]`);
+            $.each(selects, function (index, select) {
+                $.ajax({
+                    url: me.host + $(select).attr(`api`),
+                    method: "GET"
+                }).done(function (res) {
+                    $(select).empty();
+                    $.each(res, function (index, obj) {
+                        var fieldname = $(select).attr(`fieldname`);
+                        var fieldid = $(select).attr(`fieldid`);
+                        var option = $(`<option value=${obj[fieldid]}>${obj[fieldname]}</option>`);
+                        $(select).append(option);
+                    })
+                }).fail(function (res) {
 
+                })
             })
-        })
+        } catch (e) {
+
+        }
     }
 
     /** 
@@ -339,4 +393,5 @@
         $(this).siblings().removeClass(`row-selected`);
         $(this).click().addClass(`row-selected`);
     }
+
 }
