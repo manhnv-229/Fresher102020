@@ -3,6 +3,7 @@ body{
     margin:0;
     font-family : GoogleSans-Regular;
     font-size : 13px;
+    overflow: hidden;
 }
 @font-face {
     font-family: 'GoogleSans-Regular';
