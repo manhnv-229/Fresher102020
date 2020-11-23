@@ -1,0 +1,17 @@
+﻿.m-select {
+    position: relative;
+}
+
+.select-item {
+    width: 100%;
+    height: 40px;
+    background-color: #ffffff;
+}
+
+    .select-item:hover {
+        background-color: #E9EBEE;
+    }
+
+    .select-item::selection {
+        background-color: #019160;
+    }

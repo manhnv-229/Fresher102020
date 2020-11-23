@@ -60,11 +60,11 @@
     }
 
     /* khi radio ở trạng thái checked */
-    .m-radio input:checked ~ .checkmark {
+    .m-radio input[type=radio]:checked ~ .checkmark {
         border: 1px solid #019160;
     }
 
-        .m-radio input:checked ~ .checkmark:after {
+        .m-radio input[type=radio]:checked ~ .checkmark:after {
             display: block;
         }
     /* hình tròn tại tâm radio button mới */

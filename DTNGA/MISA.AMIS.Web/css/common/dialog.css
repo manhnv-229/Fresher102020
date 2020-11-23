@@ -95,9 +95,13 @@
     .dialog-detail .dialog-footer button{
         margin-right: 16px;
     }
-        .dialog-detail .dialog-footer .btn-cancel{
-            color: #ffffff;
-            background-color: none;
+    .dialog-detail .dialog-footer .btn-cancel {
+        color: #ffffff;
+        background-color: #E9EBEE;
+        color: #000000;
+    }
+        .dialog-detail .dialog-footer .btn-cancel:hover {
+            background-color: #bbbbbb;
         }
         /* các loại khung input*/
         .input-box-small {

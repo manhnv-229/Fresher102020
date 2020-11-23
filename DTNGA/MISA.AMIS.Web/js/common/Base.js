@@ -6,6 +6,7 @@ class BaseJS {
             me.Host = "http://api.manhnv.net";
             me.apiRouter = null;
             me.getApiRouter();
+            me.formMode = ''; // add- thêm, edit-sửa/cập nhật, delete-xóa
             me.ObjectName = "";
             me.getObjectName();
             me.loadData();
@@ -22,6 +23,7 @@ class BaseJS {
     getApiRouter() {
         return "";
     }
+
     /**
      * Lấy tên Object lấy từ Api
      * CreatedBy dtnga (18/11/2020)
@@ -29,6 +31,7 @@ class BaseJS {
     getObjectName() {
         return "";
     }
+
     /**Khởi tạo sự kiện
      * Modifiedby dtnga (16/11/2020)
 /     * */
@@ -38,17 +41,7 @@ class BaseJS {
         $(`#btn-add`).on("click", me.onClick_btnAdd.bind(me));
         $(`table tbody`).on("click", "tr", me.tr_onClick);
         $(`#btn-delete`).on("click", me.onClick_btnDelete.bind(me));
-
-        //TODO tách ra hàm riêng
-        $(`table tbody`).on("dblclick", "tr", function () {
-            $(`tbody tr`).removeClass("selected");
-            $(this).addClass("selected");
-            $(`.m-dialog`).show();
-            // kiểm tra dữ liệu
-            me.checkRequired();
-            me.validateEmail();
-        });
-        //   $(`table tbody`).on("dblclick", "tr", me.onDblClick_trow.bind(me));
+        $(`table tbody`).on("dblclick", "tr", me.onDblClick_trow.bind(me));
     }
 
     /**
@@ -66,11 +59,68 @@ class BaseJS {
      * */
     onDblClick_trow() {
         var me = this;
-        $(`tbody tr`).addClass("selected");
+        me.formMode = "edit";
+        var selected = $(`tbody`).find(`tr.selected`);
+        $(`tbody tr`).removeClass("selected");
+        $(selected).addClass("selected");
         $(`.m-dialog`).show();
+        me.loadSelect();
+        // bind dữ liệu hàng được chọn lên form
+        var id = selected.data('keyId');
+        // Lấy thông tin từ api bằng id tương ứng
+        $.ajax({
+            url: me.Host + me.apiRouter + '/' + id,
+            method: "GET",
+        }).done(function (obj) {
+            console.log(obj);
+            var inputs = $(`.m-input, .radio`);
+            $.each(inputs, function (index, input) {
+                var fieldName = $(input).attr("fieldName");
+                var value = '';
+                if (!obj[fieldName]) {
+                    value = '';
+                } else
+                    value = obj[fieldName].trim();
+                if ($(input).attr('type') == "radio") {
+                    var radioValue = $(input).val();
+                    if (radioValue == value) {
+                        input.checked=true;
+                    }
+                }
+                else if ($(input).attr('type') == "date") {
+                    var date = formatDate(value, "yyyy-mm-dd");
+                    $(input).val(date);
+                }
+                else if ($(input).is("select")) {
+                    // Lấy đối tượng được select hiển thị
+                    var showedObjectName = $(input).parent().attr("fieldName");
+                    // Lấy option có id bằng id trong obj
+                    var options = $(input).children();
+                    $.each(options, function (index, option) {
+                        var key = showedObjectName + "Id";
+                        var id = $(option).data(key);
+                        if (id == obj[key]) {
+                            // bind option
+                            option.selected = true;
+                        }
+                    })
+                }
+                else {
+                    $(input).val(value);
+                }
+
+            })
+
+        }).fail(function (res) {
+            console.log(res);
+        })
         // kiểm tra dữ liệu
         me.checkRequired();
         me.validateEmail();
+        $(`#btn-exit`).on("click", me.onClick_Exit_Dialog.bind(me));
+        $(`#btn-cancel`).on("click", me.onClick_Exit_Dialog.bind(me));
+        $(`#btn-save`).on("click", me.onClick_btnSave.bind(me));
+        $(`#btn-saveAdd`).on("click", me.onClick_btnSaveAdd.bind(me));
     }
 
     /** Thực hiện xóa bản ghi được chọn
@@ -78,6 +128,7 @@ class BaseJS {
      */
     onClick_btnDelete() {
         var me = this;
+        me.formMode = "delete";
         // Set dữ liệu động trong popup
         var selected = $(`tbody`).find(`tr.selected`);
         var name = selected.data('keyName');
@@ -91,7 +142,6 @@ class BaseJS {
         $(`#btn-exit-popup`).on("click", me.onClick_Exit.bind(popup));
         $(`#btn-cancel-popup`).on("click", me.onClick_Exit.bind(popup));
         $(`#btn-delete-popup`).on("click", me.deleteAnRecord.bind(me));
-        debugger;
     }
 
     /** Thực hiện đóng form (cảnh báo/ thông báo/ không chứa input) hiện tại
@@ -112,12 +162,11 @@ class BaseJS {
         var id = selected.data('keyId');
         $.ajax({
             url: me.Host + me.apiRouter + `/` + id,
-            method: "DELETE",
+            method: me.formMode,
         }).done(function (res) {
             // Ẩn popup cảnh báo
             $(`#popup-delete`).hide();
             // Hiện popup thông báo thành công
-            me.mode = 'DELETE';
             me.status = "success";
             me.openToastMesseger();
             //Lấy row ngay sau row được chọn và chuyển nó sang trạng thái selected
@@ -129,7 +178,7 @@ class BaseJS {
             nextRow.addClass("selected");
         }).fail(function (res) {
             // Hiện popup thông báo không thành công
-            me.mode = 'DELETE';
+            me.formMode = 'DELETE';
             me.status = "fail";
             me.openToastMesseger();
             console.log(res);
@@ -142,20 +191,24 @@ class BaseJS {
     openToastMesseger() {
         var me = this;
         // Lấy trạng thái thông báo ( thành công hay không)
-        if (me.status == "success")
-            var toastMesseger = $(`#success-Messeger`);
-        else if (me.status == "fail")
-            var toastMesseger = $(`#fail-Messeger`);
+        var status = me.status.trim();
+        var mode = me.formMode.trim();
+        var objName = me.ObjectName.trim();
+
+        if (status == "success")
+            var toastMesseger = $(`#success-messeger`);
+        else if (status == "fail")
+            var toastMesseger = $(`#fail-messeger`);
         // Tạo messeger
         var span = toastMesseger.find(`span`);
         var mess = "";
-        if (me.mode == 'DELETE') mess = "Xóa";
-        else if (me.mode == "POST") mess = "Thêm ";
-        else if (me.mode == "PUT") mess = "Cập nhật";
+        if (mode == 'delete') mess = "Xóa";
+        else if (mode == "add") mess = "Thêm ";
+        else if (mode == "edit") mess = "Cập nhật";
 
-        if (me.ObjectName == "Customer")
+        if (objName == "Customer")
             mess = mess + " khách hàng ";
-        else if (me.ObjectName == "Employee")
+        else if (objName == "Employee")
             mess = mess + " nhân viên ";
         // Gán messeger vào span thông báo
         span.text(mess);
@@ -166,7 +219,7 @@ class BaseJS {
         setTimeout(function () {
             toastMesseger.hide();
         }, 3000);
-        me.mode = "";
+        me.formMode = "";
         me.status = "";
     }
 
@@ -176,8 +229,11 @@ class BaseJS {
       */
     onClick_btnAdd() {
         var me = this;
+        me.formMode = "add";
         var dialog = $(`.m-dialog`);
         dialog.show();
+        //TODO đọc thông tin nhóm khách hàng và sinh các option cho select
+        me.loadSelect();
         // kiểm tra dữ liệu
         me.checkRequired();
         me.validateEmail();
@@ -185,6 +241,16 @@ class BaseJS {
         $(`#btn-cancel`).on("click", me.onClick_Exit_Dialog.bind(me));
         $(`#btn-save`).on("click", me.onClick_btnSave.bind(me));
         $(`#btn-saveAdd`).on("click", me.onClick_btnSaveAdd.bind(me));
+    }
+
+    /** Thực hiện load select
+     * CreatedBy dtnga (19/11/2020)
+     * */
+    loadSelect() {
+        var me = this;
+        var select = $(`.m-select`);
+        var length = select.length();
+        //TODO sinh select (base)
     }
 
     /**Kiểm tra dữ liệu, nếu trống thì cảnh báo
@@ -254,16 +320,21 @@ class BaseJS {
             }
         });
         console.log(obj);
+        if (me.formMode == "add") var method = "POST";
+        else if (me.formMode == "edit") var method = "PUT";
         // Gọi Api Lưu dữ liệu
         $.ajax({
             url: me.Host + me.apiRouter,
-            method: "POST",
+            method: method,
             data: JSON.stringify(obj),
             contentType: "application/json"
         }).done(function (res) {
-            alert("Thêm thành công");
+            me.status = "success";
+            me.openToastMesseger();
         }).fail(function (res) {
             console.log(res);
+            me.status = "fail";
+            me.openToastMesseger();
         })
         // Lưu và thêm 
 
@@ -289,7 +360,7 @@ class BaseJS {
     /** Đóng dialog thêm
      created by dtnga (14/11/2020)
      */
-    onClick_Exit_Dialog(){
+    onClick_Exit_Dialog() {
         this.clear();
         var dialog = $(`.m-dialog`);
         dialog.hide();
@@ -302,8 +373,9 @@ class BaseJS {
         $(`input`).val(null);
         $(`input[required],input[type="email"]`).removeClass("m-input-warning");
         $(`input[required],input[type="email"]`).attr('validate', 'false');
-        //TODO clear ngày, select
-
+        //clear ngày, select, radio button
+        $(`input[type="radio"]`).prop('checked', false);
+        $(`select option`).remove();
     }
 
     /** Tải lại dữ liệu khi nhấn nút refresh
@@ -344,7 +416,7 @@ class BaseJS {
                                 td.addClass("text-align-right");
                                 break;
                             case "ddmmyy":
-                                value = formatDate(value);
+                                value = formatDate(value, "dd/mm/yyyy");
                                 td.addClass("text-align-center");
                                 break;
                             default:

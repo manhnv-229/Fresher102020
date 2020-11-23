@@ -224,31 +224,39 @@
                                 <input class=" m-input" type="text" id="txtCustomerCode" required fieldName="CustomerCode" validate="false" />
                             </div>
                             <div class="input-box input-box-small">
-                                <div class="input-title">Mã thẻ thành viên</div>
-                                <input class="m-input" type="text" id="txtCustomerId" fieldName="MemberCardCode" />
-                            </div>
-                        </div>
-                        <div class="input-line">
-                            <div class="input-box input-box-medium">
-                                <div class="input-title">Nhóm khách hàng</div>
-                                <input class=" m-input" type="text" id="txtCustomerGroup" fieldName="CustomerGroupName" />
-                            </div>
-                        </div>
-                        <div class="input-line">
-                            <div class="input-box input-box-small">
                                 <div class="input-title">Họ và tên (<span>*</span>)</div>
                                 <input class="m-input" type="text" id="txtCustomerName" required fieldName="FullName" validate="false" />
                             </div>
+                        </div>
+                        <div class="input-line">
+                            <div class="input-box input-box-small">
+                                <div class="input-title">Mã thẻ thành viên</div>
+                                <input class="m-input" type="text" id="txtCustomerId" fieldName="MemberCardCode" />
+                            </div>
+                            <div class="input-box input-box-small">
+                                <div class="input-title">Nhóm khách hàng</div>
+                                <div class="m-select" id="CustomerGroup" fieldName="CustomerGroup">
+                                    <select class="m-input"  fieldName="CustomerGroupName">
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-line">
+                            <div class="input-box input-box-small ">
+                                <div class="input-title">Ngày sinh</div>
+                                <input class="m-input" type="date" id="txtDateOfBirth" fieldName="DateOfBirth" />
+                            </div>
                             <div class="input-box input-box-small">
                                 <div class="input-title">Giới tính</div>
-                                <div class="radio-button-group">
+                                <div class="radio-button-group" >
                                     <label class="m-radio">
-                                        <input class="radio" type="radio" checked name="gender" value="1" id="rbMale" fieldName="Gender" />
+                                        <input class="radio" type="radio" name="Gender" value="1" id="rdMale" fieldName="Gender" />
                                         <span class="checkmark"></span>
                                         <label>Nam</label>
                                     </label>
                                     <label class="m-radio">
-                                        <input class="radio" type="radio" name="gender" value="0" id="rdFemale" fieldName="Gender" />
+                                        <input class="radio" type="radio" name="Gender" value="0" id="rdFemale" fieldName="Gender" />
                                         <span class="checkmark"></span>
                                         <label>Nữ</label>
                                     </label>
@@ -259,18 +267,15 @@
                 </div>
                 <div class="detail-wrap-down">
                     <div class="input-line">
-                        <div class="input-box input-box-small ">
-                            <div class="input-title">Ngày sinh</div>
-                            <input class=" m-input" type="text" id="txtDateOfBirth" fieldName="DateOfBirth" />
+                        <div class="input-box input-box-medium ">
+                            <div class="input-title">Email</div>
+                            <input class="m-input" type="email" id="txtEmail" placeholder="example@gmail.com" fieldName="Email" validate="false" />
                         </div>
                         <div class="input-box input-box-small ">
                             <div class="input-title">Số điện thoại (<span>*</span>)</div>
                             <input class="m-input" type="text" id="txtPhoneNumber" required fieldName="PhoneNumber" validate="false" />
                         </div>
-                        <div class="input-box input-box-small ">
-                            <div class="input-title">Email</div>
-                            <input class="m-input" type="email" id="txtEmail" placeholder="example@gmail.com" fieldName="Email" validate="false" />
-                        </div>
+                        
                     </div>
                     <div class="input-line">
                         <div class="input-box input-box-medium ">
@@ -319,18 +324,18 @@
         </div>
     </div>
 
-    <div class="m-Toast-Messeger" id="success-Messeger">
+    <div class="m-toast-messeger" id="success-messeger">
         <div class="toast-messeger" id="toast-messeger">
-            <div class="messeger-icon messeger-icon-success"></div>
+            <div class="messeger-icon messeger-icon"></div>
             <div class="messeger"><span id="spanName"></span> thành công</div>
             <button class="messeger-icon btn-exit-messeger" id="btn-exit-messeger"></button>
         </div>
     </div>
 
-    <div class="m-Toast-Messeger" id="fail-Messeger">
+    <div class="m-toast-messeger" id="fail-messeger">
         <div class="toast-messeger" id="toast-messeger">
-            <div class="messeger-icon messeger-icon-success"></div>
-            <div class="messeger"><span id="spanName"></span> thành công</div>
+            <div class="messeger-icon messeger-icon"></div>
+            <div class="messeger"><span id="spanName"></span> không thành công</div>
             <button class="messeger-icon btn-exit-messeger" id="btn-exit-messeger"></button>
         </div>
     </div>
