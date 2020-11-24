@@ -149,7 +149,7 @@
             $(`.loading-data`).show();
             me.getDataForSelectTag();
             $(`.loading-data`).hide();
-            dialogDetail.dialog(`open`);
+            commonJS.dialogDetail.dialog(`open`);
         } catch (e) {
 
         }
@@ -160,7 +160,7 @@
      * CreatedBy: NamPV (17/11/2020)
      * */
     btnCancelOnClick() {
-        dialogDetail.dialog(`close`);
+        commonJS.dialogDetail.dialog(`close`);
     }
 
     /**
@@ -177,7 +177,7 @@
             })
             var inputNotValids = $(`input[validate="false"]`);
             if (inputNotValids && inputNotValids.length > 0) {
-                dialogNotify.dialog(`open`);
+                commonJS.dialogNotify.dialog(`open`);
                 inputNotValids[0].focus();
             }
             else {
@@ -217,7 +217,7 @@
                 }).done(function (res) {
                     //Đưa ra thông báo thành công => ẩn form => load lại trang
                     showPopupNotification(msg + ` thành công!`);
-                    dialogDetail.dialog(`close`);
+                    commonJS.dialogDetail.dialog(`close`);
                     me.loadData();
                 }).fail(function (res) {
                     showPopupNotification(msg + ` thất bại!`);
@@ -233,7 +233,7 @@
      * CreatedBy: NamPV (18/11/2020)
      * */
     btnDeleteOnClick() {
-        dialogConfirm.dialog(`open`);
+        commonJS.dialogConfirm.dialog(`open`);
     }
 
     /**
@@ -248,8 +248,8 @@
                 url: me.host + me.api + `/` + selectedRecord.data(`recordId`),
                 method: `DELETE`
             }).done(function (res) {
-                dialogConfirm.dialog(`close`);
-                dialogDetail.dialog(`close`);
+                commonJS.dialogConfirm.dialog(`close`);
+                commonJS.dialogDetail.dialog(`close`);
                 showPopupNotification(`Xoá thành công!`);
                 me.loadData();
             }).fail(function (res) {
@@ -265,8 +265,8 @@
      * CreatedBy: NamPV (18/11/2020)
      * */
     btnCancelDeleteOnClick() {
-        dialogConfirm.dialog(`close`);
-        dialogNotify.dialog(`close`);
+        commonJS.dialogConfirm.dialog(`close`);
+        commonJS.dialogNotify.dialog(`close`);
     }
 
     /**
@@ -279,7 +279,7 @@
             var me = this;
             $(`.btn-delete`).removeClass(`disable`);
             var selectedRecord = $(`tr.row-selected`);
-            dialogDetail.dialog(`open`);
+            commonJS.dialogDetail.dialog(`open`);
             var inputs = $(`input[fieldname], select[fieldname]`);
             inputs.removeClass("border-red");
             $(`.loading-data`).show();
