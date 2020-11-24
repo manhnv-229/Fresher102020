@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace MISA.CukCuk.Web.Entities
+namespace MISA.Entity.Entities
 {
     /// <summary>
-    /// Nhân viên
+    /// Khách hàng
     /// </summary>
     /// CreatedBy: NamPV (23/11/2020)
-    public class Employee
+    public class Customer
     {
         #region Field
 
@@ -18,11 +17,11 @@ namespace MISA.CukCuk.Web.Entities
         /// <summary>
         /// Khóa chính
         /// </summary>
-        public Guid EmployeeId { get; set; }
+        public Guid CustomerId { get; set; }
         /// <summary>
         /// mã khách hàng
         /// </summary>
-        public string EmployeeCode { get; set; }
+        public string CustomerCode { get; set; }
         /// <summary>
         /// Họ
         /// </summary>
@@ -56,53 +55,29 @@ namespace MISA.CukCuk.Web.Entities
         /// </summary>
         public string Address { get; set; }
         /// <summary>
-        /// Số chứng minh thư nhân dân
+        /// Mã hóm khách hàng
         /// </summary>
-        public string IdentityNumber { get; set; }
+        public Guid? CustomerGroupId { get; set; }
         /// <summary>
-        /// Ngày cấp chứng minh thư nhân dân
+        /// Số tiền nợ
         /// </summary>
-        public DateTime IdentityDate { get; set; }
+        public double? DebitAmount { get; set; }
         /// <summary>
-        /// Nơi cấp chúng minh thư nhân dân
+        /// Mã thẻ thành viên
         /// </summary>
-        public string IdentityPlace { get; set; }
+        public string MemberCardCode { get; set; }
         /// <summary>
-        /// Ngày vào làm
+        /// Tên công ty
         /// </summary>
-        public DateTime JoinDate { get; set; }
+        public string CompanyName { get; set; }
         /// <summary>
-        /// Tình trạng hôn nhân
+        /// Mã số thuế
         /// </summary>
-        public int? MaritalStatus { get; set; }
+        public string CompanyTaxCode { get; set; }
         /// <summary>
-        /// Nền giáo dục
+        /// Ngừng theo dõi
         /// </summary>
-        public int? EducationalBackGround { get; set; }
-        /// <summary>
-        /// ID trình độ chuyên môn 
-        /// </summary>
-        public string QualificationId { get; set; }
-        /// <summary>
-        /// ID phòng ban
-        /// </summary>
-        public string DepartmentId { get; set; }
-        /// <summary>
-        /// ID chức vụ
-        /// </summary>
-        public string PositionId { get; set; }
-        /// <summary>
-        /// Tình trạng làm việc
-        /// </summary>
-        public int? WorkStatus { get; set; }
-        /// <summary>
-        /// Mã số thuế ca nhân
-        /// </summary>
-        public string PersonalTaxCode { get; set; }
-        /// <summary>
-        /// Mức lương
-        /// </summary>
-        public double Salary { get; set; }
+        public Boolean? IsStopFollow { get; set; }
         /// <summary>
         /// Ngày tạo bản ghi
         /// </summary>
