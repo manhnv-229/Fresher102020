@@ -39,28 +39,6 @@ $(document).ready(function () {
         $(".show-toast-messenger").css("visibility", "hidden");
     })
 
-
-    //$.notify.addStyle('happyblue', {
-    //    html: `<div class="toast- messenger">
-    //    <i class="far fa-check-circle fa-lg" style="color: #BAFFE7;"></i>
-    //    <span>Thành công</span>
-    //    <button type="button" class="btn-close-messenger">
-    //            <i class="fas fa-times icon-close-messenger fa-lg icon-close-messenger" style="color: #BAFFE7;"></i>
-    //    </button>
-    //    </div > `,
-    //    classes: {
-    //        base: {
-    //            "white-space": "nowrap",
-    //            "background-color": "lightblue",
-    //            "padding": "5px"
-    //        },
-    //        superblue: {
-    //            "color": "white",
-    //            "background-color": "blue"
-    //        }
-    //    }
-    //});
-
 });
 
 class CustomerJs extends Base {
