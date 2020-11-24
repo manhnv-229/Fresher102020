@@ -51,6 +51,12 @@
         // Xoá bản ghi khi nhấn đồng ý
         $(`.customer-delete .confirm-delete`).click(this.btnConfirmDeleteOnClick.bind(this));
 
+        // Bấm chọn ngày tháng khi nhập input
+        $(`.datepicker-icon`).click(pickDate);
+
+        // Xoá ký tự đã nhập trong input
+        $(`.clear-input-icon`).click(clearInputText);
+
     }
 
     /**
@@ -196,8 +202,15 @@
                             var fieldid = $(input).attr(`fieldid`);
                             entity[fieldid] = value;
                         }
-                        else
-                            entity[fieldname] = value;
+                        else {
+                            if (this.className == `date-picker`) {
+                                value = stringToDate(this.value);
+                                entity[fieldname] = value;
+                            }
+                            else {
+                                entity[fieldname] = value;
+                            }
+                        }
                     }
 
                 })
@@ -300,15 +313,15 @@
                         }
                     } else {
                         switch (input.type) {
-                            case `date`:
-                                value = formatDateReg(value);
-                                break;
                             case `select-one`:
                                 var fieldid = $(input).attr(`fieldid`);
                                 value = res[fieldid];
                                 break;
                             default: value = res[fieldname];
                                 break;
+                        }
+                        if (this.className == `date-picker`) {
+                            value = formatDate(value);
                         }
                         $(input).val(value);
                     }

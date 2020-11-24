@@ -13,6 +13,7 @@
     <link href="/css/common/grid.css" rel="stylesheet" />
     <link href="/css/common/content.css" rel="stylesheet" />
     <link href="/css/common/button.css" rel="stylesheet" />
+    <link href="/css/common/datepicker.css" rel="stylesheet" />
     <link href="/css/page/customer.css" rel="stylesheet" />
     <link href="/css/common/select.css" rel="stylesheet" />
 </head>
@@ -83,7 +84,7 @@
                 <div class="filter-left">
                     <div class="input-box">
                         <input class="search" type="text" name="search" placeholder="Tìm kiếm theo mã khách hàng, họ tên">
-                        <div class="clear-input-icon" style="top: 13px;">&times;</div>
+                        <div class="clear-input-icon" fieldname="search" style="top: 13px;">&times;</div>
                     </div>
                     <select></select>
                 </div>
@@ -146,19 +147,23 @@
                                     <label>Mã khách hàng <span style="color:red;">*</span></label>
                                     <div class="input-box">
                                         <input id="txtCustomerCode" fieldname="CustomerCode" type="text" required />
-                                        <div class="clear-input-icon">&times;</div>
+                                        <div class="clear-input-icon" fieldname="CustomerCode">&times;</div>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <label>Mã thẻ thành viên</label>
                                     <div class="input-box">
                                         <input id="txtMemberCardCode" fieldname="MemberCardCode" type="text" />
-                                        <div class="clear-input-icon">&times;</div>
+                                        <div class="clear-input-icon" fieldname="MemberCardCode">&times;</div>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <label>Ngày sinh</label>
-                                    <input id="dtDateOfBirth" fieldname="DateOfBirth" type="date" />
+                                    <!--<input id="dtDateOfBirth" fieldname="DateOfBirth" type="date" />-->
+                                    <div class="datepicker-box">
+                                        <input type="text" class="date-picker" fieldname="DateOfBirth">
+                                        <div class="m-btn btn-single-icon datepicker-icon" fieldname="DateOfBirth"></div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -166,7 +171,7 @@
                                     <label>Họ và tên <span style="color: #ff0000;">*</span></label>
                                     <div class="input-box">
                                         <input id="txtFullName" fieldname="FullName" type="text" required>
-                                        <div class="clear-input-icon">&times;</div>
+                                        <div class="clear-input-icon" fieldname="FullName">&times;</div>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -195,14 +200,14 @@
                         <label>Email <span style="color:red;">*</span></label>
                         <div class="input-box">
                             <input id="txtEmail" fieldname="Email" type="email" required>
-                            <div class="clear-input-icon">&times;</div>
+                            <div class="clear-input-icon" fieldname="Email">&times;</div>
                         </div>
                     </div>
                     <div class="col-4">
                         <label>Số điện thoại <span style="color:red;">*</span></label>
                         <div class="input-box">
                             <input id="txtPhoneNumber" fieldname="PhoneNumber" type="text" required>
-                            <div class="clear-input-icon">&times;</div>
+                            <div class="clear-input-icon" fieldname="PhoneNumber">&times;</div>
                         </div>
                     </div>
                 </div>
@@ -211,14 +216,14 @@
                         <label>Tên công ty</label>
                         <div class="input-box">
                             <input fieldname="CompanyName" type="text">
-                            <div class="clear-input-icon">&times;</div>
+                            <div class="clear-input-icon" fieldname="CompanyName">&times;</div>
                         </div>
                     </div>
                     <div class="col-4">
                         <label>Mã số thuế</label>
                         <div class="input-box">
                             <input fieldname="CompanyTaxCode" type="text">
-                            <div class="clear-input-icon">&times;</div>
+                            <div class="clear-input-icon" fieldname="CompanyTaxCode">&times;</div>
                         </div>
                     </div>
                 </div>
@@ -227,7 +232,7 @@
                         <label>Địa chỉ</label>
                         <div class="input-box">
                             <input id="txtAddress" fieldname="Address" type="text" style="margin-bottom: 0px;">
-                            <div class="clear-input-icon">&times;</div>
+                            <div class="clear-input-icon" fieldname="Address">&times;</div>
                         </div>
                     </div>
                 </div>

@@ -83,9 +83,9 @@ commonJS = {
  * @param {string} string
  * CreatedBy: NamPV (16/11/2020)
  */
-function formatDateReg(date) {
-    var arr = formatDate(date).split(`/`);
-    return arr[2] + '-' + arr[1] + '-' + arr[0];
+function stringToDate(string) {
+    var arr = string.split(`/`);
+    return new Date(arr[2] + '-' + arr[1] + '-' + arr[0]);
 }
 
 /**
@@ -106,3 +106,25 @@ function setSizeInputPlaceholder() {
         $(this).attr('size', $(this).attr('placeholder').length);
     })
 };
+
+/**
+ * Chọn ngày tháng năm
+ * CreatedBy: NamPV (23/11/2020)
+ * */
+function pickDate() {
+    $(`.datepicker-icon`).datepicker({
+        onSelect: function () {
+            $(this).datepicker(`destroy`);
+            var fieldname = $(this).attr(`fieldname`);
+            $(`input[fieldname=${fieldname}]`).val(formatDate($(this).val()));
+        }
+    });
+}
+/**
+ * Xoá ký tự đã nhập liệu vào input
+ * CreatedBy: NamPV(23/11/2020)
+ * */
+function clearInputText() {
+    var fieldname = $(this).attr(`fieldname`);
+    $(`input[fieldname=${fieldname}], input[name=${fieldname}]`).val(``);
+})

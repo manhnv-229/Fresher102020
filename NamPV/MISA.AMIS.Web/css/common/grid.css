@@ -7,37 +7,37 @@
     overflow-x: scroll;
 }
 
-table {
-    width: 100%;
-    background-color: #fff;
-}
-
-    table tbody tr:hover {
-        cursor: pointer;
-        background-color: #2FBE8E;
+    .grid table {
+        width: 100%;
+        background-color: #fff;
     }
 
-    table thead > tr {
-        position: relative;
-        display: block;
-    }
-
-    table tbody {
-        display: block;
-        height: calc(100vh - 291px);
-        overflow: scroll;
-    }
-
-        table thead tr th, table tbody tr td {
-            border-bottom: 1px solid #bbbbbb;
-            padding: 10px 16px;
-            text-align: left;
-            min-width: 100px;
-            max-width: 100px;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
+        .grid table tbody tr:hover {
+            cursor: pointer;
+            background-color: #2FBE8E;
         }
+
+        .grid table thead > tr {
+            position: relative;
+            display: block;
+        }
+
+        .grid table tbody {
+            display: block;
+            height: calc(100vh - 291px);
+            overflow: scroll;
+        }
+
+            .grid table thead tr th, .grid table tbody tr td {
+                border-bottom: 1px solid #bbbbbb;
+                padding: 10px 16px;
+                text-align: left;
+                min-width: 100px;
+                max-width: 100px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
 /*Chia đều kích thước màn hình theo 12 cột*/
 .col {
     display: block;

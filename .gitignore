@@ -350,3 +350,4 @@ MigrationBackup/
 .ionide/
 /NamPV/MISA.DL
 /NamPV/MISA.DemoWebAPI/MISA.DemoWebAPI
+*.html
