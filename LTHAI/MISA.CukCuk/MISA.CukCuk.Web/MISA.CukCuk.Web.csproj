@@ -12,5 +12,10 @@
     <PackageReference Include="MySql.Data" Version="8.0.22" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Entity\Entity.csproj" />
+    <ProjectReference Include="..\MISA.ApplicationCore\MISA.ApplicationCore.csproj" />
+  </ItemGroup>
+
 
 </Project>

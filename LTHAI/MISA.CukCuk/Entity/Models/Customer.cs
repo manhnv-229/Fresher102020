@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MISA.CukCuk.Web.Models
+namespace MISA.Entity.Models
 {
     /// <summary>
     /// Khách hàng

@@ -4,8 +4,10 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
+using Entity.Models;
 using Microsoft.AspNetCore.Mvc;
-using MISA.CukCuk.Web.Models;
+using MISA.ApplicationCore;
+using MISA.Entity.Models;
 using MySql.Data.MySqlClient;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -28,8 +30,8 @@ namespace MISA.CukCuk.Web.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            IDbConnection dbConnection = new MySqlConnection(connectionString);
-            var customers = dbConnection.Query<Customer>("Proc_GetCustomers", commandType: CommandType.StoredProcedure);
+            CustomerService customerService = new CustomerService();
+            var customers = customerService.GetCustomers();
             return Ok(customers);
         }
 
@@ -41,10 +43,14 @@ namespace MISA.CukCuk.Web.Controllers
         /// CreatedBy: LTHAI(23/11/2020)
         [HttpGet("{id}")]
         public IActionResult Get(string id)
-        {   
-            IDbConnection dbConnection = new MySqlConnection(connectionString);
-            var customer = dbConnection.Query<Customer>("Proc_GetCustomerById", new { CustomerId = id}, commandType: CommandType.StoredProcedure);
-            return Ok(customer);
+        {
+            CustomerService customerService = new CustomerService();
+            var customer = customerService.GetCustomerById(id);
+            if(customer != null)
+            {
+                return Ok(customer);
+            }
+            return BadRequest();
         }
 
         /// <summary>
@@ -59,61 +65,15 @@ namespace MISA.CukCuk.Web.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Customer customer)
         {
-            // Validate dữ liệu trường bắt buộc
-            var customerCode = customer.CustomerCode;
-            if (string.IsNullOrEmpty(customerCode))
-            
+            CustomerService customerService = new CustomerService();
+            var objResult = customerService.InsertCustomer(customer);
+            if(objResult.MisaCode == MISACode.NotValid)
             {
-                var msg = new {
-                    devMsg = new { fieldName = "CustomerCode", Msg = "Trường customerCode không được để trống" },
-                    userMsg = "Trường customerCode không được để trống",
-                    errorCode = 999
-                };
-                return BadRequest(msg);
+                return BadRequest(objResult);
             }
-            // Validate trùng CustomerCode
-            IDbConnection dbConnection = new MySqlConnection(connectionString);
-            var result = dbConnection.Query("Proc_GetCustomerByCode", new {CustomerCode = customerCode }, commandType: CommandType.StoredProcedure);
-            if(result.Count() > 0)
+            else if(objResult.MisaCode == MISACode.IsValid && Convert.ToInt32(objResult.Data) > 0)
             {
-                var msg = new
-                {
-                    devMsg = new { fieldName = "CustomerCode", Msg = "Trường customerCode đã tồn tại" },
-                    userMsg = "Trường customerCode đã tồn tại",
-                    errorCode = 400
-                };
-                return BadRequest(msg);
-            }
-            // Đổi kiểu Guid thành string nếu có
-            var properties = customer.GetType().GetProperties();
-            var parameters = new DynamicParameters();
-            foreach (var property in properties)
-            {
-                var propertyName = property.Name;
-                var propertyValue = property.GetValue(customer);
-                var propertyType = property.PropertyType;
-                if (propertyType == typeof(Guid) || propertyType == typeof(Guid?))
-                {
-                    if(propertyName == "CustomerId")
-                    {
-                        parameters.Add(propertyName, Guid.NewGuid(), DbType.String);
-                    }
-                    else
-                    {
-                        parameters.Add(propertyName, propertyValue, DbType.String);
-                    }
-                    
-                }
-                else
-                {
-                    parameters.Add(propertyName, propertyValue);
-                }
-            }
-            // Thực hiện thêm khách hàng
-            var rowAffects = dbConnection.Execute("Proc_InsertCustomer", parameters, commandType: CommandType.StoredProcedure);
-            if (rowAffects > 0)
-            {
-                return Created("Success", parameters);
+                return Ok(objResult);
             }
             return NoContent();
         }
@@ -131,44 +91,38 @@ namespace MISA.CukCuk.Web.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(string id, [FromBody] Customer customer)
         {
-            // Đổi kiểu Guid thành string nếu có
-            var properties = customer.GetType().GetProperties();
-            var parameters = new DynamicParameters();
-            foreach (var property in properties)
+            CustomerService customerService = new CustomerService();
+            var objResult = customerService.UpdateCustomer(id, customer);
+            if (objResult.MisaCode == MISACode.NotValid)
             {
-                var propertyName = property.Name;
-                var propertyValue = property.GetValue(customer);
-                var propertyType = property.PropertyType;
-                if (propertyType == typeof(Guid?))
-                {
-                    parameters.Add(propertyName, propertyValue, DbType.String);
-                }
-                else if(propertyType == typeof(Guid)){
-                    parameters.Add(propertyName, id);
-                }
-                else if (propertyType == typeof(bool))
-                {
-                    
-                    parameters.Add(propertyName, propertyValue, DbType.SByte);
-                }
-                else
-                {
-                    parameters.Add(propertyName, propertyValue);
-                }
+                return BadRequest(objResult);
             }
-            IDbConnection dbConnection = new MySqlConnection(connectionString);
-            var rowAffects = dbConnection.Execute("Proc_UpdateCustomer", parameters, commandType: CommandType.StoredProcedure);
-            if(rowAffects > 0)
+            else if (objResult.MisaCode == MISACode.IsValid && Convert.ToInt32(objResult.Data) > 0)
             {
-                return Ok(rowAffects);
+                return Ok(objResult);
             }
             return NoContent();
         }
 
-        // DELETE api/<CustomersController>/5
+        /// <summary>
+        /// Cập nhật một khách hàng
+        /// </summary>
+        /// <param name="id">CustomerId</param>
+        /// <returns>
+        /// + Thành công : Trả về Ok
+        /// + Không thành công: NoContent
+        /// </returns>
+        /// CreatedBy: LTHAI(24/11/2020)
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(string id)
         {
+            CustomerService customerService = new CustomerService();
+            var rowAffects = customerService.DeleteCustomerById(id);
+            if(rowAffects > 0)
+            {
+                return Ok();
+            }
+            return NoContent();
         }
     }
 }
