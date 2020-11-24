@@ -34,6 +34,13 @@ class BaseJS {
         // Load lại dữ liệu khi nhấn button nạp
         $('#btnRefresh').click(function () {
             me.loadData(me.FormMode = '');
+            $('#contentMessenger').empty();
+            $('#contentMessenger').append("Load dữ liệu thành công.")
+            $('.messenger-complete').addClass('animationHide');
+            setTimeout(function () {
+                $('.messenger-complete').removeClass('animationHide');
+                console.log("ok");
+            }, 3000);
             
         })
 
@@ -82,10 +89,8 @@ class BaseJS {
         // Hiển thị thông tin chi tiết cho 1 bản ghi khi ấn đúp chuột
         $('table tbody').on('dblclick', 'tr', function () {
             me.FormMode = 'Edit';
-            //Load form
-            //Load dữ liệu cho các combobox
             
-                //Lấy dữ liệu nhóm khách hàng
+            //Lấy dữ liệu nhóm khách hàng
             //Load dữ liệu cho các combobox
             var select = $('select#cbxCustomerGroup');
             select.empty();
@@ -237,7 +242,7 @@ class BaseJS {
                     })
                     $('table tbody').append(tr);
                     $('.loading-modal').hide();
-                    debugger;
+                    //debugger;
                     if (me.FormMode == 'Add') {
                         if ($(tr).data('recordId') == $(obj).attr('CustomerId')) {
                             $(tr).addClass('row-selected');
@@ -292,6 +297,8 @@ class BaseJS {
      */
     activeItem() {
         //var listItems = $('.item_menu');
+        console.log("activeItem");
+        var me = this;
         $.each($('.item_menu'), function (index, item) {
             if ($(item).attr('statuss') == "active") {
                 $(item).addClass('bacbackground-primary');
@@ -299,6 +306,10 @@ class BaseJS {
         })
 
         $.each($('.m-btn-footer'), function (index, item) {
+            if ($(item).attr('statuss') == 'active') {
+                $(item).addClass('active');
+            }
+            
             $(item).click(function () {
                 $.each($('.m-btn-footer'), function (index, subIitem) {
                     $(subItem).removeAttr('statuss');
@@ -460,7 +471,6 @@ class BaseJS {
                     $('.messenger-complete').removeClass('animationHide');
                     console.log("ok");
                 }, 3000);
-                console.log("after save: recordId = ", recordId)
             }
             else {
                 $('#contentMessenger').empty();
