@@ -102,6 +102,7 @@
     <Content Include="content\image\navbar-item\plus-simple-7.png" />
     <Content Include="content\image\navbar-item\woman-man-7.png" />
     <Content Include="content\image\toggle.png" />
+    <Content Include="content\Site.css" />
     <Content Include="css\common\common.css" />
     <Content Include="css\common\content.css" />
     <Content Include="css\common\grid.css" />
@@ -121,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -144,6 +146,10 @@
     <Content Include="content\font\GoogleSans-ThinItalic.otf" />
     <Content Include="manifest.webmanifest" />
     <None Include="packages.config" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -153,6 +159,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Data\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

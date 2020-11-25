@@ -7,5 +7,6 @@ namespace MISA.AMIS.Web.Models
 {
     public class Customer
     {
+
     }
 }

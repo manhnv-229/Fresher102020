@@ -100,11 +100,11 @@
             <table class="grid-table">
                 <thead>
                     <tr>
-                        <th fieldName="index">STT</th>
+                        <!--<th fieldName="index">STT</th>-->
                         <th fieldName="CustomerCode">Mã khách hàng</th>
                         <th fieldName="FullName">Họ và tên</th>
-                        <th fieldName="Gender">Giới tính</th>
-                        <th fieldName="DateOfBirth">Ngày sinh</th>
+                        <th fieldName="Gender" formatType="Gender">Giới tính</th>
+                        <th fieldName="DateOfBirth" formatType="ddmmyyyy">Ngày sinh</th>
                         <th fieldName="Email">Email</th>
                         <th fieldName="PhoneNumber">ĐT di động</th>
                         <th fieldName="Address">Địa chỉ</th>
@@ -161,8 +161,6 @@
                             <div>
                                 <label>Nhóm khách hàng<br /></label>
                                 <select id="ddlCustomerGroupName" class="ddlGroupCustomer" fieldName="CustomerGroupId">
-                                    <option value=1>Khách VIP</option>
-                                    <option value=2>Khách vãng lai</option>
                                 </select>
                             </div>
                         </div>
@@ -175,9 +173,9 @@
                                 <label>Giới tính<br /></label>
                                 <div class="Gender">
                                     <group>
-                                        <input type="radio" id="rdMale" value="1" fieldName="Gender" class="radGender" />
+                                        <input type="radio" id="rdMale" value="1" fieldName="Gender" name="Gender" class="radGender" />
                                         <label>Nam</label>
-                                        <input type="radio" id="rdFemale" value="0" fieldName="Gender" class="radGender" />
+                                        <input type="radio" id="rdFemale" value="0" fieldName="Gender" name="Gender" class="radGender" />
                                         <label>Nữ</label>
                                     </group>
                                 </div>
