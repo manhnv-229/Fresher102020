@@ -6,6 +6,7 @@
     <title></title>
     <link href="/css/common/content.css" rel="stylesheet" />
     <link href="/css/common/header.css" rel="stylesheet" />
+    <link href="/css/common/dialog.css" rel="stylesheet" />
     <link href="/css/common/navbar.css" rel="stylesheet" />
     <link href="/css/common/main.css" rel="stylesheet" />
     <link href="/css/page/employee.css" rel="stylesheet" />
@@ -36,6 +37,10 @@
             <div class="nav-item">
                 <img class="nav-item-icon" src="../content/icon/pie-chart.svg" />
                 <div class="nav-item-text">Theo dõi đóng</div>
+            </div>
+            <div class="nav-item">
+                <img class="nav-item-icon" src="../content/icon/group.svg" />
+                <div class="nav-item-text">Quản lí khách hàng</div>
             </div>
             <div class="nav-item">
                 <img class="nav-item-icon" src="../content/icon/customer.svg" />
@@ -108,21 +113,20 @@
             <table class="content-table" id="tableData">
                 <thead>
                     <tr class="table-header" style="height: 20px;">
-                        <th>Mã nhân viên</th>
-                        <th>Họ và tên</th>
-                        <th>Giới tính</th>
-                        <th>Ngày sinh</th>
-                        <th>Số điện thoại</th>
-                        <th>Email</th>
-                        <th>Vị trí/chức vụ</th>
-                        <th>Phòng ban</th>
-                        <th>Hệ số/Mức lương đóng</th>
-                        <th>Địa chỉ</th>
-                        <th>Trạng thái tham gia</th>
+                        <th fieldName="EmployeeCode">Mã nhân viên</th>
+                        <th fieldName="FullName">Họ và tên</th>
+                        <th fieldName="GenderName">Giới tính</th>
+                        <th fieldName="DateOfBirth" formatType="Date">Ngày sinh</th>
+                        <th fieldName="PhoneNumber">Số điện thoại</th>
+                        <th fieldName="Email">Email</th>
+                        <th fieldName="PositionName">Vị trí/chức vụ</th>
+                        <th fieldName="DepartmentName">Phòng ban</th>
+                        <th fieldName="Salary" formatType="Money">Hệ số/Mức lương đóng</th>
+                        <th fieldName="Address" formatType="Address">Địa chỉ</th>
+                        <th fieldName="WorkStatusName">Trạng thái tham gia</th>
                     </tr>
                 </thead>
                 <tbody>
-
                 </tbody>
             </table>
         </div>
@@ -148,7 +152,10 @@
             </div>
         </div>
     </div>
+
     <script src="/js/lib/jquery.js"></script>
+    <script src="/js/common/common.js"></script>
+    <script src="/js/common/base.js"></script>
     <script src="/js/page/employee.js"></script>
 </body>
 
