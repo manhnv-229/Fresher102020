@@ -1,5 +1,6 @@
 ﻿using Dapper;
-using MISA.Entity.Model;
+using MISA.ApplicationCore.Entities;
+using MISA.ApplicationCore.Interfaces;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -10,15 +11,9 @@ using System.Text;
 
 namespace MISA.Infarstructure
 {
-    public class CustomerContext
+    public class CustomerContext : ICustomerRepository
     {
         #region Method
-        // Lấy toàn bộ danh sách khách hàng
-        /// <summary>
-        /// Lấy toàn bộ danh sách khách hàng
-        /// </summary>
-        /// <returns>Danh sách khách hàng</returns>
-        /// CreatedByL HNANH (24/11/2020)
         public IEnumerable<Customer> GetCustomers()
         {
             //Kết nối đến CSDL
@@ -30,14 +25,14 @@ namespace MISA.Infarstructure
             return customers;
         }
 
-        //Lấy thông tin khách hàng theo mã khách hàng
+        public Customer GetCustomerById(string customerId)
+        {
+            var connectionString = "User Id=dev;Host=35.194.135.168; Port= 3306; Database= WEB1020_MISACukcuk_HNAnh; Password= 12345678@Abc;Character Set=utf8";
+            IDbConnection dbConnection = new MySqlConnection(connectionString);
+            var customer = dbConnection.Query<Customer>("Proc_GetCustomerById", new { CustomerId = customerId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            return customer;
+        }
 
-        //Thêm mới khách hàng
-        /// <summary>
-        /// Thêm mới khách hàng
-        /// </summary>
-        /// <returns>Số bản ghi thêm mới được</returns>
-        /// CreatedByL HNANH (24/11/2020)
         public int InsertCustomer(Customer customer)
         {
             //Khởi tạo kết nối với database
@@ -69,11 +64,7 @@ namespace MISA.Infarstructure
             //Trả về số bản ghi thêm mới được            
             return rowAffected;
         }
-        /// <summary>
-        /// Sửa khách hàng
-        /// </summary>
-        /// <returns>Số bản ghi được sửa</returns>
-        /// CreatedByL HNANH (24/11/2020)
+
         public int UpdateCustomer(Customer customer)
         {
             var connectionString = "User Id=dev;Host=35.194.135.168; Port= 3306; Database= WEB1020_MISACukcuk_HNAnh; Password= 12345678@Abc;Character Set=utf8";
@@ -104,16 +95,9 @@ namespace MISA.Infarstructure
         {
             var connectionString = "User Id=dev;Host=35.194.135.168; Port= 3306; Database= WEB1020_MISACukcuk_HNAnh; Password= 12345678@Abc;Character Set=utf8";
             var dbConnection = new MySqlConnection(connectionString);
-            var rowAffected = dbConnection.Execute("Proc_DeleteCustomer", new { CustomerId= customerId}, commandType: CommandType.StoredProcedure);
+            var rowAffected = dbConnection.Execute("Proc_DeleteCustomer", new { CustomerId = customerId }, commandType: CommandType.StoredProcedure);
             return rowAffected;
         }
-
-        /// <summary>
-        /// Lấy khách hàng theo mã khách hàng
-        /// </summary>
-        /// <param name="customerCode">Mã khách hàng</param>
-        /// <returns>Object khách hàng đầu tiên lấy được</returns>
-        /// CreatedBy: HNANH (25/11/2020)
 
         public Customer GetCustomerByCode(string customerCode)
         {
@@ -122,12 +106,7 @@ namespace MISA.Infarstructure
             var customerByCode = dbConnection.Query<Customer>("Proc_GetCustomerByCode", new { CustomerCode = customerCode }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             return customerByCode;
         }
-        /// <summary>
-        /// Lấy danh sách khách hàng có cùng mã khách hàng và có id khác với id khách hàng đang kiểm tra
-        /// </summary>
-        /// <param name="customer">Đối tượng khách hàng</param>
-        /// <returns>Khách hàng đầu tiên thỏa mãn điều kiện</returns>
-        /// CreadtedBy HNANH (25/11/2020)
+
         public Customer GetAllCustomerByCode(Customer customer)
         {
             var customerId = customer.CustomerId;
@@ -138,12 +117,7 @@ namespace MISA.Infarstructure
             var customerByCode = dbConnection.Query<Customer>("Proc_GetAllCustomerByCode", new { CustomerId = customerIdString, CustomerCode = customerCode }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             return customerByCode;
         }
-        /// <summary>
-        /// Lấy danh sách khách hàng có cùng số điện thoại và có id khác với id khách hàng đang kiểm tra
-        /// </summary>
-        /// <param name="customer">Đối tượng khách hàng</param>
-        /// <returns>Khách hàng đầu tiên thỏa mãn điều kiện</returns>
-        /// CreadtedBy HNANH (25/11/2020)
+
         public Customer GetAllCustomerByPhoneNumber(Customer customer)
         {
             var customerId = customer.CustomerId;
@@ -151,14 +125,11 @@ namespace MISA.Infarstructure
             var phoneNumber = customer.PhoneNumber;
             var connectionString = "User Id=dev;Host=35.194.135.168; Port= 3306; Database= WEB1020_MISACukcuk_HNAnh; Password= 12345678@Abc;Character Set=utf8";
             var dbConnection = new MySqlConnection(connectionString);
-            var customersByPhoneNumber = dbConnection.Query<Customer>("Proc_GetAllCustomerByPhoneNumber", new {CustomerId = customerIdString, PhoneNumber = phoneNumber }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            var customersByPhoneNumber = dbConnection.Query<Customer>("Proc_GetAllCustomerByPhoneNumber", new { CustomerId = customerIdString, PhoneNumber = phoneNumber }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             return customersByPhoneNumber;
         }
 
-        //Sửa thông tin khách hàng
-
-        // Xóa khách hàng theo khóa chính
-#endregion
+        #endregion
 
     }
 }

@@ -7,7 +7,9 @@ using Dapper;
 using System.Data;
 using MySql.Data.MySqlClient;
 using MISA.ApplicationCore;
-using MISA.Entity.Model;
+using MISA.ApplicationCore.Interfaces;
+using MISA.ApplicationCore.Entities;
+using MISA.ApplicationCore.Enums;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,36 +23,45 @@ namespace MISA.CukCuk.Web.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
+        ICustomerService _customerService;
+        #region Construtor
+        public CustomersController(ICustomerService customerService)
+        {
+            _customerService = customerService;
+        }
+        #endregion
+
+        #region Method
         /// <summary>
         /// Lấy toàn bộ danh sách khách hàng
         /// </summary>
-        /// <returns>Danh sách hàng</returns>
+        /// <returns>Danh sách khách hàng</returns>
         /// CrearedBy HNANH (24/11/2020)
-        // GET: api/<CustomersController>
         [HttpGet]
+        // GET: api/<CustomersController>
         public IActionResult Get()
         {
-            var customerService = new CustomerService();
-            var customers = customerService.GetCustomers();
+            var customers = _customerService.GetCustomers();
             return Ok(customers);
         }
+
         /// <summary>
-        /// Lấy danh sách khách hàng theo id
+        /// Lấy thông tin khách hàng theo id
         /// </summary>
-        /// <param name="id">Khóa chính</param>
-        /// <returns>Danh sách khách hàng</returns>
+        /// <param name="customerId">Khóa chính</param>
+        /// <returns>Khách hàng</returns>
         /// CreatedBy HNANH (25/11/2020)
-        [HttpGet("{id}")]
-        public IActionResult Get(string id)
+        [HttpGet("{customerId}")]
+        public IActionResult Get(string customerId)
         {
-            var connectionString = "User Id=dev;Host=35.194.135.168; Port= 3306; Database= WEB1020_MISACukcuk_HNAnh; Password= 12345678@Abc;Character Set=utf8";
-            IDbConnection dbConnection = new MySqlConnection(connectionString);
-            //var customers = dbConnection.Query<Customer>("SELECT * FROM View_Customer ORDER BY CreatedDate ASC", commandType: CommandType.Text);
-            var customer = dbConnection.Query<Customer>("Proc_GetCustomerById", new { CustomerId = id }, commandType: CommandType.StoredProcedure);
-            return Ok(customer);
+            var customer = _customerService.GetCustomerById(customerId);
+            if(customer != null)
+            {
+                return Ok(customer);
+            }
+            return NotFound("Không tìm thấy");
         }
 
-        // POST api/<CustomersController>
         /// <summary>
         /// Thêm mới khách hàng
         /// </summary>
@@ -58,16 +69,16 @@ namespace MISA.CukCuk.Web.Controllers
         /// <returns>Số khách hàng thêm mới</returns>
         /// CreatedBy HNANH (25/11/2020)
         [HttpPost]
+        // POST api/<CustomersController>
         public IActionResult Post(Customer customer)
         {
-            var customerService = new CustomerService();
-            var serviceResult = customerService.InsertCustomer(customer);
+            var serviceResult = _customerService.InsertCustomer(customer);
 
-            if (serviceResult.MISACode == Entity.MISACode.IsValid && (int)serviceResult.Data > 0)
+            if (serviceResult.MISACode == MISACode.IsValid && (int)serviceResult.Data > 0)
             {
                 return Created("Success", 1);
             }
-            if (serviceResult.MISACode == Entity.MISACode.NotValid)
+            if (serviceResult.MISACode == MISACode.NotValid)
             {
                 return BadRequest(serviceResult.Data);
             }
@@ -78,7 +89,6 @@ namespace MISA.CukCuk.Web.Controllers
 
         }
 
-        // PUT api/<CustomersController>/5
         /// <summary>
         /// Sửa khách hàng
         /// </summary>
@@ -86,13 +96,12 @@ namespace MISA.CukCuk.Web.Controllers
         /// <returns>Kết quả sửa</returns>
         /// CreatedBy HNANH (25/11/2020)
         [HttpPut()]
-
+        // PUT api/<CustomersController>/5
         //TODO: Cần chỉnh sửa để trả về: Không được quyền sửa
         public IActionResult Put(Customer customer)
         {
-            var customerService = new CustomerService();
-            var serviceResult = customerService.UpdateCustomer(customer);
-            if (serviceResult.MISACode == Entity.MISACode.Success && (int)serviceResult.Data > 0)
+            var serviceResult = _customerService.UpdateCustomer(customer);
+            if (serviceResult.MISACode == MISACode.Success && (int)serviceResult.Data > 0)
             {
                 return Ok((int)serviceResult.Data);
             }
@@ -101,20 +110,20 @@ namespace MISA.CukCuk.Web.Controllers
                 return BadRequest(serviceResult.Data);
             }
         }
+
         /// <summary>
         /// Xóa bản ghi khách hàng
         /// </summary>
         /// <param name="id">Khóa chính</param>
         /// <returns>Thông điệp sau khi xóa</returns>
         /// CreatedBy: HNANH (25/11/2020)
-        // DELETE api/<CustomersController>/5
         [HttpDelete("{id}")]
+        // DELETE api/<CustomersController>/5
         public IActionResult Delete(string id)
         {
-            var customerService = new CustomerService();
-            var serviceResult = customerService.DeleteCustomer(id);
+            var serviceResult = _customerService.DeleteCustomer(id);
 
-            if (serviceResult.MISACode == Entity.MISACode.Success)
+            if (serviceResult.MISACode == MISACode.Success)
             {
                 return Ok(serviceResult.Data);
             }
@@ -123,5 +132,7 @@ namespace MISA.CukCuk.Web.Controllers
                 return NotFound(serviceResult.Data);
             }
         }
+
+        #endregion
     }
 }

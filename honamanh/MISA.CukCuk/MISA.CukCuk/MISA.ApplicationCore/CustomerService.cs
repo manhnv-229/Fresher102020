@@ -1,29 +1,42 @@
 ﻿using MISA.ApplicationCore.Entities;
-using MISA.Entity;
-using MISA.Entity.Model;
-using MISA.Infarstructure;
+using MISA.ApplicationCore.Enums;
+using MISA.ApplicationCore.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace MISA.ApplicationCore
 {
-    public class CustomerService
+    public class CustomerService : ICustomerService
     {
+        ICustomerRepository _customerReponsitory;
+        #region Constructor
+        public CustomerService(ICustomerRepository customerReponsitory)
+        {
+            _customerReponsitory = customerReponsitory;
+        }
+        #endregion
         #region Method
-        //Lấy danh sách khách hàng
         public IEnumerable<Customer> GetCustomers()
         {
-            var customerContext = new CustomerContext();
-            var customers = customerContext.GetCustomers();
+            var customers = _customerReponsitory.GetCustomers();
+            // var customerContext = new CustomerContext();
+            // var customers = customerContext.GetCustomers();
             return customers;
         }
 
-        // Thêm mới khách hàng
+        public Customer GetCustomerById(string customerId)
+        {
+            //var customerContext = new CustomerContext();
+            //var customer = customerContext.GetCustomerById(customerId);
+            var customer = _customerReponsitory.GetCustomerById(customerId);
+            return customer;
+        }
+
         public ServiceResult InsertCustomer(Customer customer)
         {
             var serviceResult = new ServiceResult();
-            var customerContext = new CustomerContext();
+            //var customerContext = new CustomerContext();
             // Validate dữ liệu
             // Kiểm tra bắt buộc nhập,  nếu dữ liệu chưa hợp lệ thì trả về mô tả lỗi        
             var customerCode = customer.CustomerCode;
@@ -45,7 +58,7 @@ namespace MISA.ApplicationCore
                 return serviceResult;
             }
             // Kiểm tra có bị trùng mã không
-            var customerByCode = customerContext.GetCustomerByCode(customerCode);
+            var customerByCode = _customerReponsitory.GetCustomerByCode(customerCode);
             if (customerByCode != null)
             {
                 var msg = new
@@ -63,24 +76,41 @@ namespace MISA.ApplicationCore
                 serviceResult.Data = msg;
                 return serviceResult;
             }
-
+            // Kiểm tra có bị trùng sô điện thoại không
+            var phoneNumber = customer.PhoneNumber;
+            var customerByPhoneNumber = _customerReponsitory.GetAllCustomerByPhoneNumber(customer);
+            if (customerByPhoneNumber != null)
+            {
+                var msg = new
+                {
+                    devMsg = new
+                    {
+                        fieldName = "PhoneNumber",
+                        msg = "Số điện thoại khách hàng đã tồn tại"
+                    },
+                    userMsg = "Số điện thoại khách hàng đã tồn tại",
+                    Code = MISACode.NotValid,
+                };
+                serviceResult.MISACode = MISACode.NotValid;
+                serviceResult.Messenger = "Số điện thoại khách hàng đã tồn tại";
+                serviceResult.Data = msg;
+                return serviceResult;
+            }
             // thêm mới khi dữ liệu hợp lệ
-            var rowAffected = customerContext.InsertCustomer(customer);
+            var rowAffected = _customerReponsitory.InsertCustomer(customer);
             serviceResult.MISACode = MISACode.IsValid;
             serviceResult.Messenger = "Thêm thành công";
             serviceResult.Data = rowAffected;
             return serviceResult;
         }
 
-
-        //Sửa thông tin khách hàng
         public ServiceResult UpdateCustomer(Customer customer)
         {
-            var customerContext = new CustomerContext();
+            //var customerContext = new CustomerContext();
             var serviceResult = new ServiceResult();
             // Validate dữ liệu, nếu không hợp lệ trả về thông báo lỗi
             // kiểm tra CustomerCode có bị trùng không
-            var customerByCode = customerContext.GetAllCustomerByCode(customer);
+            var customerByCode = _customerReponsitory.GetAllCustomerByCode(customer);
             if (customerByCode != null)
             {
                 var msg = new
@@ -100,7 +130,7 @@ namespace MISA.ApplicationCore
             }
 
             // kiểm tra số điện thoại có bị trùng
-            var customerByPhoneNumber = customerContext.GetAllCustomerByPhoneNumber(customer);
+            var customerByPhoneNumber = _customerReponsitory.GetAllCustomerByPhoneNumber(customer);
             if (customerByPhoneNumber != null)
             {
                 var msg = new
@@ -118,7 +148,7 @@ namespace MISA.ApplicationCore
                 serviceResult.Data = msg;
                 return serviceResult;
             }
-            var rowAffected = customerContext.UpdateCustomer(customer);
+            var rowAffected = _customerReponsitory.UpdateCustomer(customer);
             serviceResult.MISACode = MISACode.Success;
             serviceResult.Messenger = "Sửa thành công";
             serviceResult.Data = rowAffected;
@@ -126,19 +156,18 @@ namespace MISA.ApplicationCore
 
             // nếu dữ liệu hợp lệ, trả về thông báo hợp lệ
         }
-        //Xóa khách hàng
 
         public ServiceResult DeleteCustomer(string customerId)
         {
-            var customerContext = new CustomerContext();
+            //var customerContext = new CustomerContext();
             var serviceResult = new ServiceResult();
-            var rowAffected = customerContext.DeleteCustomer(customerId);
-            if(rowAffected > 0)
+            var rowAffected = _customerReponsitory.DeleteCustomer(customerId);
+            if (rowAffected > 0)
             {
                 serviceResult.MISACode = MISACode.Success;
                 serviceResult.Messenger = "Xóa thành công";
                 serviceResult.Data = rowAffected;
-               
+
             }
             else
             {
