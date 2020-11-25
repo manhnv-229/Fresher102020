@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using MySql.Data.MySqlClient;
 using MISA.ApplicationCore;
-using MISA.Infarstructure.Models;
-using MISA.Entity;
+using MISA.ApplicationCore.Interfaces;
+using MISA.ApplicationCore.Entities;
+using MISA.ApplicationCore.Enums;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,6 +23,12 @@ namespace MISA.CukCuk.Web.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
+        ICustomerService _customerService;
+        public CustomersController(ICustomerService customerService)
+        {
+            _customerService = customerService;
+        }
+
         /// <summary>
         /// Lấy toàn bộ khách hàng
         /// </summary>
@@ -30,8 +37,7 @@ namespace MISA.CukCuk.Web.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var customerService = new CustomerService();
-            var customers =  customerService.GetCustomers();
+            var customers = _customerService.GetCustomers();
             return Ok(customers);
         }
 
@@ -55,8 +61,7 @@ namespace MISA.CukCuk.Web.Controllers
         [HttpPost]
         public IActionResult Post(Customer customer)
         {
-            var customerService = new CustomerService();
-            var serviceResult = customerService.InsertCustomer(customer);
+            var serviceResult = _customerService.AddCustomer(customer);
             if (serviceResult.MISACode == MISACode.NotValid)
                 return BadRequest(serviceResult.Data);
             if (serviceResult.MISACode == MISACode.IsValid && (int)serviceResult.Data > 0)

@@ -5,11 +5,9 @@ VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MISA.CukCuk.Web", "MISA.CukCuk.Web\MISA.CukCuk.Web.csproj", "{11300D53-6123-41F8-986A-5D7AD0401ED7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MISA.ApplicationCore", "MISA.ApplicationCore\MISA.ApplicationCore.csproj", "{0D72784A-1FC0-446E-822D-2A75BD062B14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MISA.ApplicationCore", "MISA.ApplicationCore\MISA.ApplicationCore.csproj", "{0D72784A-1FC0-446E-822D-2A75BD062B14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MISA.Infarstructure", "MISA.Infarstructure\MISA.Infarstructure.csproj", "{433AB9C7-C55F-46F7-87E5-2DDEBA83670C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MISA.Entity", "MISA.Entity\MISA.Entity.csproj", "{3BAE2E88-750B-476C-8295-A46DF51F0FEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MISA.Infarstructure", "MISA.Infarstructure\MISA.Infarstructure.csproj", "{433AB9C7-C55F-46F7-87E5-2DDEBA83670C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +27,6 @@ Global
 		{433AB9C7-C55F-46F7-87E5-2DDEBA83670C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{433AB9C7-C55F-46F7-87E5-2DDEBA83670C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{433AB9C7-C55F-46F7-87E5-2DDEBA83670C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3BAE2E88-750B-476C-8295-A46DF51F0FEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3BAE2E88-750B-476C-8295-A46DF51F0FEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3BAE2E88-750B-476C-8295-A46DF51F0FEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3BAE2E88-750B-476C-8295-A46DF51F0FEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
