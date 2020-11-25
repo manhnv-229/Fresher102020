@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Entity.Models
+namespace MISA.ApplicationCore.Entities
 {
     /// <summary>
     /// MISACode để xác định trạng thái của việc validate

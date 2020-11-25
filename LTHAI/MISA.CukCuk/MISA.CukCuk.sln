@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MISA.ApplicationCore", "MIS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MISA.Infrastructure", "MISA.Infrastructure\MISA.Infrastructure.csproj", "{695E3C12-BA98-44AA-B579-033229E5FF57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entity", "Entity\Entity.csproj", "{26767A5A-053C-4124-8702-71DA673350CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MISA.Entity", "Entity\MISA.Entity.csproj", "{26767A5A-053C-4124-8702-71DA673350CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

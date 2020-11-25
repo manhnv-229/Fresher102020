@@ -1,30 +1,31 @@
-﻿using Entity.Models;
-using MISA.ApplicationCore.Entities;
-using MISA.Entity.Models;
-using MISA.Infrastructure;
-using System;
+﻿using MISA.ApplicationCore.Entities;
 using System.Collections.Generic;
-using System.Text;
+using MISA.ApplicationCore.Interface;
 
-namespace MISA.ApplicationCore
+namespace MISA.ApplicationCore.Repository
 {
-    public class CustomerService
+    /// <summary>
+    /// Thực thi các phương thức của ICustomerServiceRepository
+    /// </summary>
+    public class CustomerServiceRepository: ICustomerServiceRepository
     {
+        #region Attribute
+        private readonly ICustomerRepository _customerRepository;
+        #endregion
+        #region Contructor
+        public CustomerServiceRepository(ICustomerRepository customerRepository)
+        {
+            this._customerRepository = customerRepository;
+        }
+        #endregion
         #region Method
-        /// <summary>
-        /// Lấy toàn bộ danh sách khách hàng
-        /// </summary>
-        /// <returns>Danh sách khách hàng</returns>
-        /// CreatedBy: LTHAI(23/11/2020)
         public IEnumerable<Customer> GetCustomers()
         {
-            CustomerDbContext customerDbContext = new CustomerDbContext();
-            return customerDbContext.GetCustomers();
+            return _customerRepository.GetCustomers();
         }
         public Customer GetCustomerById(string id)
         {
-            CustomerDbContext customerDbContext = new CustomerDbContext();
-            var customer = customerDbContext.GetCustomerById(id);
+            var customer = _customerRepository.GetCustomerById(id);
             return customer;
         }
         /// <summary>
@@ -33,7 +34,7 @@ namespace MISA.ApplicationCore
         /// <param name="customer">Thông tin mới khách hàng</param>
         /// <returns>Object thông báo</returns>
         /// CreatedBy: LTHAI(23/11/2020)
-        public ServiceResult InsertCustomer(Customer customer)
+        public ServiceResult AddCustomer(Customer customer)
         {
             // Validate dữ liệu trường bắt buộc
             var customerCode = customer.CustomerCode;
@@ -50,8 +51,7 @@ namespace MISA.ApplicationCore
             }
             // Validate trùng CustomerCode
             // + Lấy khách hàng thông qua CustomerCode
-            CustomerDbContext customerDbContext = new CustomerDbContext();
-            var res = customerDbContext.GetCustomerByCode(customerCode);
+            var res = _customerRepository.GetCustomerByCode(customerCode);
             if (res != null)
             {
                 // Trả về obj thông báo lỗi
@@ -64,7 +64,7 @@ namespace MISA.ApplicationCore
                 return serviceResult;
             }
             // Gọi hàm thêm mới khách hàng 
-            var rowEffects = customerDbContext.InsertCustomer(customer);
+            var rowEffects = _customerRepository.AddCustomer(customer);
             return new ServiceResult() { Data = rowEffects, MisaCode = MISACode.IsValid };
               
         }
@@ -91,9 +91,8 @@ namespace MISA.ApplicationCore
                 return serviceResult;
             }
             // Gọi cập nhật khách hàng 
-            CustomerDbContext customerDbContext = new CustomerDbContext();
-            var rowEffects = customerDbContext.UpdateCustomer(id, customer);
-            return new ServiceResult() { Data = rowEffects, MisaCode = MISACode.IsValid };
+            var rowAffects = _customerRepository.UpdateCustomer(id, customer);
+            return new ServiceResult() { Data = rowAffects, MisaCode = MISACode.IsValid };
         }
    
         /// <summary>
@@ -102,12 +101,12 @@ namespace MISA.ApplicationCore
         /// <param name="id">Khóa chính (CustomerId)</param>
         /// <returns>Số lượng bản ghi bị ảnh hưởng</returns>
         /// CreatedBy: LTHAI(24/11/2020)
-        public int DeleteCustomerById(string id)
+        public ServiceResult DeleteCustomerById(string id)
         {
-            CustomerDbContext customerDbContext = new CustomerDbContext();
-            var rowAffects = customerDbContext.DeleteCustomerById(id);
-            return rowAffects;
+            var rowAffects = _customerRepository.DeleteCustomerById(id);
+            return new ServiceResult() { Data = rowAffects, MisaCode = MISACode.IsValid };
         }
+
         #endregion
     }
 }

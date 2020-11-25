@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using Dapper;
-using Entity.Models;
 using Microsoft.AspNetCore.Mvc;
-using MISA.ApplicationCore;
-using MISA.Entity.Models;
-using MySql.Data.MySqlClient;
+using MISA.ApplicationCore.Interface;
+using MISA.ApplicationCore.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,16 +15,24 @@ namespace MISA.CukCuk.Web.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        public readonly string connectionString = @"User Id=dev;Host=35.194.135.168;Port=3306;Database=MISACukCuk;Password=12345678@Abc;Character Set=utf8;";
+        #region Attribute
+        private readonly ICustomerServiceRepository _customerServiceRepository;
+        #endregion
+
+        #region Contructor
+        public CustomersController(ICustomerServiceRepository customerServiceRepository)
+        {
+            this._customerServiceRepository = customerServiceRepository;
+        }
+        #endregion
         /// <summary>
         /// Lấy toàn bộ danh sách khách hàng
         /// </summary>
-        /// <returns>Danh sách khách hàng</returns>
+        /// <returns>Danh sách khách hàng</returns>D:\FresherMisa\AMIS\Fresher102020\LTHAI\MISA.CukCuk\MISA.CukCuk.Web\Controllers\
         [HttpGet]
         public IActionResult Get()
         {
-            CustomerService customerService = new CustomerService();
-            var customers = customerService.GetCustomers();
+            var customers = _customerServiceRepository.GetCustomers();
             return Ok(customers);
         }
 
@@ -44,8 +45,8 @@ namespace MISA.CukCuk.Web.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
-            CustomerService customerService = new CustomerService();
-            var customer = customerService.GetCustomerById(id);
+           
+            var customer = _customerServiceRepository.GetCustomerById(id);
             if(customer != null)
             {
                 return Ok(customer);
@@ -65,8 +66,7 @@ namespace MISA.CukCuk.Web.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Customer customer)
         {
-            CustomerService customerService = new CustomerService();
-            var objResult = customerService.InsertCustomer(customer);
+            var objResult = _customerServiceRepository.AddCustomer(customer);
             if(objResult.MisaCode == MISACode.NotValid)
             {
                 return BadRequest(objResult);
@@ -91,8 +91,8 @@ namespace MISA.CukCuk.Web.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(string id, [FromBody] Customer customer)
         {
-            CustomerService customerService = new CustomerService();
-            var objResult = customerService.UpdateCustomer(id, customer);
+           
+            var objResult = _customerServiceRepository.UpdateCustomer(id, customer);
             if (objResult.MisaCode == MISACode.NotValid)
             {
                 return BadRequest(objResult);
@@ -116,9 +116,9 @@ namespace MISA.CukCuk.Web.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {
-            CustomerService customerService = new CustomerService();
-            var rowAffects = customerService.DeleteCustomerById(id);
-            if(rowAffects > 0)
+            
+            var objResult = _customerServiceRepository.DeleteCustomerById(id);
+            if(objResult.MisaCode  == MISACode.IsValid && Convert.ToInt32(objResult.Data) > 0)
             {
                 return Ok();
             }

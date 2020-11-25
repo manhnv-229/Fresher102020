@@ -1,23 +1,24 @@
 ﻿using Dapper;
-using MISA.Entity.Models;
+using MISA.ApplicationCore.Entities;
+using MISA.ApplicationCore.Interface;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 
 namespace MISA.Infrastructure
 {
-    public class CustomerDbContext
+    /// <summary>
+    /// Thực thi các phương thức của ICustomerRepository
+    /// </summary>
+    public class CustomerRepository : ICustomerRepository
     {
+        #region Attribute
         public readonly string connectionString = @"User Id=dev;Host=35.194.135.168;Port=3306;Database=MISACukCuk;Password=12345678@Abc;Character Set=utf8;";
+        #endregion
+
         #region Method
-        /// <summary>
-        /// Lấy toàn bộ danh sách khách hàng
-        /// </summary>
-        /// <returns>Danh sách khách hàng</returns>
-        /// CreatedBy: LTHAI(24/11/2020)
         public IEnumerable<Customer> GetCustomers()
         {
             // Kết nối cơ sở dữ liệu 
@@ -27,27 +28,13 @@ namespace MISA.Infrastructure
             // Trả về
             return customers;
         }
-
-        /// <summary>
-        ///   Lấy khách hàng theo khóa chính (CustomerId)
-        /// </summary>
-        /// <param name="id">khóa chính (CustomerId)</param>
-        /// <returns>Một khách hàng</returns>
-        /// CreatedBy: LTHAI(24/11/2020)
         public Customer GetCustomerById(string id)
         {
             IDbConnection dbConnection = new MySqlConnection(connectionString);
             var customer = dbConnection.Query<Customer>("Proc_GetCustomerById", new { CustomerId = id }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             return customer;
         }
-
-        /// <summary>
-        /// Thêm mới khách hàng
-        /// </summary>
-        /// <param name="customer">Thông tin khách hàng mới</param>
-        /// <returns>Số lượng bản ghi bị ảnh hưởng</returns>
-        /// CreatedBy: LTHAI(24/11/2020)
-        public int InsertCustomer(Customer customer)
+        public int AddCustomer(Customer customer)
         {
             // Kết nối cơ sở dữ liệu 
             IDbConnection dbConnection = new MySqlConnection(connectionString);
@@ -97,26 +84,12 @@ namespace MISA.Infrastructure
             // Trả về số lượng bản ghi bị ảnh hưởng
             return rowAffects;
         }
-        /// <summary>
-        /// Lấy khách hàng theo mã khách hàng (CustomerCode)
-        /// </summary>
-        /// <param name="customerCode">Mã khách hàng(CustomerCode)</param>
-        /// <returns>Trả về một khách hàng đầu tiên nếu có</returns>
-        /// CreatedBy: LTHAI(24/11/2020)
         public Customer GetCustomerByCode(string customerCode)
         {
             IDbConnection dbConnection = new MySqlConnection(connectionString);
             var result = dbConnection.Query<Customer>("Proc_GetCustomerByCode", new { CustomerCode = customerCode }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             return result;
         }
-
-        /// <summary>
-        /// Sửa thông tin khách hàng
-        /// </summary>
-        /// <param name="id">Khóa chính (CustomerId)</param>
-        /// <param name="customer">Thông tin khách hàng cần cập nhật</param>
-        /// <returns>Số lượng bản ghi bị ảnh hưởng</returns>
-        /// CreatedBy: LTHAI(24/11/2020)
         public int UpdateCustomer(string id, Customer customer)
         {
             // Đổi kiểu Guid thành string nếu có
@@ -161,12 +134,6 @@ namespace MISA.Infrastructure
             // Trả về số lượng bản ghi bị ảnh hưởng
             return rowAffects;
         }
-        /// <summary>
-        ///  Xóa khách hàng theo khóa chính (CustomerId)
-        /// </summary>
-        /// <param name="id">Khóa chính (CustomerId) </param>
-        /// <returns>Số lượng bản ghi bị ảnh hưởng</returns>
-        /// CreatedBy: LTHAI(24/11/2020)
         public int DeleteCustomerById(string id)
         {
             IDbConnection dbConnection = new MySqlConnection(connectionString);
@@ -174,6 +141,5 @@ namespace MISA.Infrastructure
             return rowAffects;
         }
         #endregion
-
     }
 }

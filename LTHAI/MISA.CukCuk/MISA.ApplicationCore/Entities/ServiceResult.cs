@@ -1,4 +1,4 @@
-﻿using Entity.Models;
+﻿using MISA.Entity.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
