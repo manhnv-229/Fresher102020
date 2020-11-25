@@ -8,8 +8,9 @@ using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 using MISA.ApplicationCore;
-using MISA.Infrastructure.Models;
-using MISA.Entity;
+using MISA.ApplicationCore.Interfaces;
+using MISA.ApplicationCore.Entities;
+using MISA.ApplicationCore.Enums;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,6 +24,15 @@ namespace MISA.CukCuk.Web.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
+        ICustomerService _customerService;
+
+        #region Constructor
+        public CustomersController(ICustomerService customerService)
+        {
+            _customerService = customerService;
+        }
+        #endregion
+
         /// <summary>
         /// Lấy toàn bộ khách hàng
         /// </summary>
@@ -31,8 +41,7 @@ namespace MISA.CukCuk.Web.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var customerService = new CustomerService();
-            var customers = customerService.GetCustomers();
+            var customers = _customerService.GetCustomers();
             return Ok(customers);
         }
 
@@ -44,22 +53,8 @@ namespace MISA.CukCuk.Web.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
-            var customerService = new CustomerService();
-            var customer = customerService.GetCustomerById(id); 
+            var customer = _customerService.GetCustomerById(id); 
             return Ok(customer);
-        }
-
-        /// <summary>
-        /// Lấy danh sách khách hàng theo id và tên
-        /// </summary>
-        /// <param name="id">id của khách hàng</param>
-        /// <param name="name">tên của khách hàng</param>
-        /// <returns>Danh sách khách hàng</returns>
-        /// CreatedBy: NTNghia (23/11/2020)
-        [HttpGet("filter")]
-        public IActionResult Get([FromQuery]int id, [FromQuery] string name)
-        {
-            return Ok("value");
         }
 
         /// <summary>
@@ -72,8 +67,7 @@ namespace MISA.CukCuk.Web.Controllers
         public IActionResult Post(Customer customer)
         {
             customer.CustomerId = Guid.NewGuid();
-            var customerService = new CustomerService();
-            var serviceResult = customerService.InsertCustomer(customer);
+            var serviceResult = _customerService.AddCustomer(customer);
 
             if (serviceResult.MISACode == MISACode.NotValid)
                 return BadRequest(serviceResult.Data);
@@ -92,9 +86,16 @@ namespace MISA.CukCuk.Web.Controllers
 
         // DELETE api/<CustomersController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(string id)
         {
-            return Ok(1);
+            var serviceResult = _customerService.DeleteCustomer(id);
+
+            if (serviceResult.MISACode == MISACode.NotValid)
+                return BadRequest(serviceResult.Messenger);
+            if (serviceResult.MISACode == MISACode.IsValid && (int)serviceResult.Data > 0)
+                return Delete("Delete customer");
+            else
+                return NoContent();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MISA.Entity
+namespace MISA.ApplicationCore.Enums
 {
     /// <summary>
     /// MISACode để xác định trạng thái dữ liệu khi validate

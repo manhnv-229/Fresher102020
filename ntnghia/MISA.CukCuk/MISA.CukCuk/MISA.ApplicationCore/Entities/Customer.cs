@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MISA.Infrastructure.Models
+namespace MISA.ApplicationCore.Entities
 {
     /// <summary>
     /// Khách hàng
