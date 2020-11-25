@@ -13,10 +13,34 @@
     border: none;
     cursor: pointer;
 }
+.m-btn-alert {
+    border-radius: 4px;
+    height: 40px;
+    font-size: 13px;
+    color: #ffffff;
+    font-family: GoogleSans-Regular;
+    padding-left: 16px;
+    padding-right: 16px;
+    display: flex;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+}
+.btn-cancel-alert {
+    border: none;
+    cursor: pointer;
+    background-color: none;
+}
+.btn-cancel-alert:focus {
+    outline: none;
+}
+.btn-delete-alert {
+    background-color: #F65454;
+}
 
-    .m-btn:hover {
-        background-color: #2FBE8E;
-    }
+.m-btn:hover {
+    background-color: #2FBE8E;
+}
 
     .m-btn .btn-text {
         margin-left: 8px;

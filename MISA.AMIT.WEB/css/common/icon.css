@@ -19,3 +19,11 @@
     width: 24px;
     align-items: center;
 }
+.icon-alert {
+    background-image: url('/content/icon/alert-triangle.svg');
+    background-size: contain;
+    height: 24px;
+    width: 24px;
+    align-items: center;
+    margin-right: 10px;
+}

@@ -10,6 +10,16 @@
         position: ({ my: "center", at: "center", of: window }),
         modal: true,
     });
+    dialogConfirmDelete = $(".dialog-confirm-delete").dialog({
+        autoOpen: false,
+        fluid: true,
+        //height: 400,
+        //width: '700px',
+        minWidth: 400,
+        resizable: true,
+        position: ({ my: "center", at: "center", of: window }),
+        modal: true,
+    });
 })
 
 /**

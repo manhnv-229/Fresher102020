@@ -44,8 +44,11 @@ class BaseJS {
         // sự kiện cho button click vào 1 row trong table
         $('table tbody').on('click', 'tr', this.btnClickSelectRow);
 
-        // sự kiện xóa 1 bản ghi sau khi chọn 1 row trong table
-        $('#btnDelete').on('click', me.btnDeleteRowTable.bind(me));
+        // sự kiện gọi đến dialog xác nhận xóa 1 bản ghi
+        $('#btnDelete').on('click', me.btnDeleteShowConfirm.bind(me));
+
+        // sự kiện xác nhận xóa 1 bản ghi thông qua dialog xác nhận xóa bản ghi
+        $('#btnDeleteConfirm').on('click', me.btnDeleteRowTable.bind(me));
 
         // hiển thị thông tin chi tiết khi nhấn đúp chuột chọn 1 bản ghi
         $('table tbody').on('dblclick', 'tr', this.btnDoubleClickRowTable.bind(this));
@@ -192,33 +195,54 @@ class BaseJS {
         try {
             $(this).siblings().removeClass('row-select');
             $(this).addClass('row-select');
+
         } catch (e) {
         }
     }
 
     /**
-     * Hàm xóa 1 row đã được select trong table
+     * Hàm gọi ra dialog xác nhận xóa 1 bản ghi
      * createdby: dvquang (20/11/2020)
      * */
-    btnDeleteRowTable() {
+    btnDeleteShowConfirm() {
         try {
-            var me = this;
-            var select = $('table .row-select');
-            var id = select.data('recordId');
-            $.ajax({
-                url: me.host + me.apiRouter + `/${id}`,
-                method: 'DELETE',
-                contentType: "application/json",
-            }).done(function (res) {
-                alert('Xóa bản ghi thành công!');
-                me.loadData();
-            }).fail(function (res) {
-                alert('Xóa bản ghi không thành công!');
-            })
+
+            
+            dialogConfirmDelete.dialog('open');
         } catch (e) {
 
         }
 
+    }
+    /**
+     * Hàm xác nhận xóa 1 bản ghi
+     * createdby: dvquang(23/11/2020)
+     * */
+    btnDeleteRowTable() {
+        try {
+            
+            var me = this;
+            var tr = $("table tbody tr.row-select");
+
+            // Lấy khóa chính của bản ghi:
+            var recordId = tr.data('recordId');
+
+            console.log(recordId);
+            $.ajax({
+                url: me.host + me.apiRouter + `/${recordId}`,
+                method: 'delete',
+                contenttype: "application/json",
+            }).done(function (res) {
+                // đóng dialog xác nhận xóa và load lại dữ liệu
+                dialogConfirmDelete.dialog('close');
+                me.loadData();
+                
+            }).fail(function (res) {
+                
+            })
+        } catch (e) {
+
+        }
     }
 
     /**
@@ -260,7 +284,7 @@ class BaseJS {
                                 td.addClass("text-address");
                                 $(".text-address").attr("title", value);
                             default:
-                               
+
                         }
 
                         td.append(value);
@@ -377,7 +401,7 @@ class BaseJS {
             alert('them khach hang thanh cong!')
             dialogDetail.dialog('close');
             me.loadData();
-    
+
         }).fail(function (res) {
 
         })

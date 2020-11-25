@@ -43,3 +43,8 @@
         margin-left: 16px;
     }
 
+.confirm-delete-content {
+    display: flex;
+    align-items: center;
+    padding: 24px;
+}
