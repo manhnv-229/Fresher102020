@@ -316,18 +316,7 @@
                     var value = res[attr];
                     if (value != null) {
                         if ($(this).attr('type') == 'date') {
-                            var dateConvert = new Date(value);
-                            var day = dateConvert.getDay();
-                            var month = dateConvert.getMonth();
-                            var year = dateConvert.getFullYear();
-                            if (day < 10) {
-                                day = "0" + day;
-                            }
-                            if (month < 10) {
-                                month = "0" + month;
-                            }
-
-                            $(this).val(year + "-" + month + "-" + day);
+                            $(this).val(formatDob(value));
                         } else if ($(this).attr('type') == 'radio') {
                             console.log(res['FullName']);
                             console.log($(this));
