@@ -24,6 +24,27 @@ function formatDate(date) {
 }
 
 /**
+ * Format dữ liệu ngày tháng năm để hiển thị
+ * CreatedBy: NTNghia (23/11/2020)
+ * @param {any} date tham số có kiểu dữ liệu bất kì
+ */
+function formatDob(date) {
+    var date = new Date(date);
+    if (Number.isNaN(date.getTime())) {
+        return "";
+    } else {
+        var day = date.getDate(),
+            month = date.getMonth() + 1,
+            year = date.getFullYear();
+
+        day = day < 10 ? '0' + day : day;
+        month = month < 10 ? '0' + month : month;
+
+        return year + "-" + month + "-" + day;
+    }
+}
+
+/**
  * Hàm định dạng hiển thị tiền tệ
  * CreatedBy: NTNghia (11/11/2020)
  * @param {any} money Số tiền
