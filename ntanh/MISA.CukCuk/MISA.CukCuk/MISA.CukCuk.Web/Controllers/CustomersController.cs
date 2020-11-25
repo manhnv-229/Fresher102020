@@ -5,8 +5,10 @@ using System.Data;
 using Dapper;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using MISA.CukCuk.Web.Modals;
 using MySql.Data.MySqlClient;
+using MISA.ApplicationCore;
+using MISA.Infarstructure.Modals;
+using MISA.Entity;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -29,11 +31,10 @@ namespace MISA.CukCuk.Web.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var connectionString = "User Id=dev;Host=35.194.135.168;Port=3306;Database=WEB1020_MISACukcuk_NTAnh;Password=12345678@Abc;Character Set=utf8";
-            IDbConnection dbConnection = new MySqlConnection(connectionString);
-            var customers = dbConnection.Query<Customer>("PROC_GetCustomers", commandType: CommandType.StoredProcedure);
+            var customerServive = new CustomerService();
+            var customers = customerServive.GetCustomers();
             return Ok(customers);
-        }
+         }
 
         /// <summary>
         /// Lấy danh sách khách hàng theo id và tên
@@ -48,7 +49,7 @@ namespace MISA.CukCuk.Web.Controllers
         {
             var connectionString = "User Id=dev;Host=35.194.135.168;Port=3306;Database=WEB1020_MISACukcuk_NTAnh;Password=12345678@Abc;Character Set=utf8";
             IDbConnection dbConnection = new MySqlConnection(connectionString);
-            var customers = dbConnection.Query<Customer>("PROC_GetCustomerById",new {CustomerId = id} ,commandType: CommandType.StoredProcedure);
+            var customers = dbConnection.Query<Customer>("PROC_GetCustomerById", new { CustomerId = id }, commandType: CommandType.StoredProcedure);
             return Ok(customers);
         }
 
@@ -58,7 +59,31 @@ namespace MISA.CukCuk.Web.Controllers
         {
             // Validate dữ liệu:
             // Check trường bắt buộc nhập
+            var customerService = new CustomerService();
+            var serviceResult = customerService.InsertCustomer(customer);
+
+            if(serviceResult.MISACode == MISACode.NotValid)
+            {
+                return BadRequest(serviceResult.Data);
+            }
+
+            if (serviceResult.MISACode == MISACode.IsValid && (int)serviceResult.Data > 0)
+                return Created("adfd", customer);
+            else
+                return NoContent();
+        }
+
+        // PUT api/<CustomersController>/5
+        [HttpPut("{id}")]
+        public IActionResult Put(string id, [FromBody] Customer customer)
+        {
+            var connectionString = "User Id=dev;Host=35.194.135.168;Port=3306;Database=WEB1020_MISACukcuk_NTAnh;Password=12345678@Abc;Character Set=utf8";
+            IDbConnection dbConnection = new MySqlConnection(connectionString);
+            // Validate dữ liệu:
+            // Check trường bắt buộc nhập
             var customerCode = customer.CustomerCode;
+            //var customers = dbConnection.Query<Customer>("PROC_GetCustomerById", new { CustomerId = id }, commandType: CommandType.StoredProcedure);
+
             if (string.IsNullOrEmpty(customerCode))
             {
                 var msg = new
@@ -70,13 +95,14 @@ namespace MISA.CukCuk.Web.Controllers
                 return BadRequest(msg);
             }
             // Check trùng mã
-            var connectionString = "User Id=dev;Host=35.194.135.168;Port=3306;Database=WEB1020_MISACukcuk_NTAnh;Password=12345678@Abc;Character Set=utf8";
-            IDbConnection dbConnection = new MySqlConnection(connectionString);
+            
+            
             var res = dbConnection.Query("PROC_GetCustomerByCode", new { CustomerCode = customerCode }, commandType: CommandType.StoredProcedure);
-            if(res.Count() > 0)
+            if (res.Count() > 0)
             {
                 return BadRequest("Mã khách hàng đã tồn tại");
             }
+
             var properties = customer.GetType().GetProperties();
             var parameters = new DynamicParameters();
             foreach (var property in properties)
@@ -94,24 +120,35 @@ namespace MISA.CukCuk.Web.Controllers
                 }
 
             }
+            //var propertiesUser = customers.GetType().GetProperties();
+            //var parametersUser = new DynamicParameters();
+            //foreach(var propertyUser in propertiesUser)
+            //{
+            //    var propertyUserName = propertyUser.Name;
+            //    var propertyUserValue = propertyUser.GetValue(customer);
+            //    var propertyUserType = propertyUser.PropertyType;
+            //    foreach (var property in properties)
+            //    {
+            //        var propertyName = property.Name;
+            //        var propertyValue = property.GetValue(customer);
+            //        var propertyType = property.PropertyType;
+            //        if (propertyName == propertyUserName)
+            //        {
+            //            propertyUserValue = propertyValue;
+            //        }
+            //    }
+            //}
             
-            var rowAffects = dbConnection.Execute("PROC_InsertCustomer", parameters, commandType: CommandType.StoredProcedure);
+            var rowAffects = dbConnection.Execute("PROC_UpdateCustomer", parameters, commandType: CommandType.StoredProcedure);
             if (rowAffects > 0)
-                return Created("adfd", customer);
+                return Ok(parameters);
             else
                 return NoContent();
         }
 
-        // PUT api/<CustomersController>/5
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] string value)
-        {
-            return Ok(1);
-        }
-
         // DELETE api/<CustomersController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(string id)
         {
             var connectionString = "User Id=dev;Host=35.194.135.168;Port=3306;Database=WEB1020_MISACukcuk_NTAnh;Password=12345678@Abc;Character Set=utf8";
             IDbConnection dbConnection = new MySqlConnection(connectionString);

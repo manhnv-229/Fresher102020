@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MISA.CukCuk.Web.Modals
+namespace MISA.Infarstructure.Modals
 {
     /// <summary>
     /// Khách hàng
