@@ -120,7 +120,7 @@ namespace MISA.CukCuk.Web.Controllers
             var objResult = _customerServiceRepository.DeleteCustomerById(id);
             if(objResult.MisaCode  == MISACode.IsValid && Convert.ToInt32(objResult.Data) > 0)
             {
-                return Ok();
+                return Ok(objResult);
             }
             return NoContent();
         }

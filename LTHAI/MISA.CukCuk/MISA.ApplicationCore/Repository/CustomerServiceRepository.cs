@@ -52,7 +52,7 @@ namespace MISA.ApplicationCore.Repository
             // Validate trùng CustomerCode
             // + Lấy khách hàng thông qua CustomerCode
             var res = _customerRepository.GetCustomerByCode(customerCode);
-            if (res != null)
+            if (res == null)
             {
                 // Trả về obj thông báo lỗi
                 ServiceResult serviceResult = new ServiceResult()

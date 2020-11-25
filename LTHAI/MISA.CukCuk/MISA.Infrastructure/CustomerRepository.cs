@@ -15,7 +15,7 @@ namespace MISA.Infrastructure
     public class CustomerRepository : ICustomerRepository
     {
         #region Attribute
-        public readonly string connectionString = @"User Id=dev;Host=35.194.135.168;Port=3306;Database=MISACukCuk;Password=12345678@Abc;Character Set=utf8;";
+        public readonly string connectionString = @"User Id=dev;Host=35.194.135.168;Port=3306;Database=WEB1020_MISACukCuk_LTHAI;Password=12345678@Abc;Character Set=utf8;";
         #endregion
 
         #region Method
