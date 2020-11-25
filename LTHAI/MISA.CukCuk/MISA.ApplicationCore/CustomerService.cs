@@ -90,22 +90,8 @@ namespace MISA.ApplicationCore
                 };
                 return serviceResult;
             }
-            // Validate trùng CustomerCode
-            // + Lấy khách hàng thông qua CustomerCode
-            CustomerDbContext customerDbContext = new CustomerDbContext();
-            var res = customerDbContext.GetCustomerByCode(customerCode);
-            if (res != null)
-            {
-                // Trả về obj thông báo lỗi
-                ServiceResult serviceResult = new ServiceResult()
-                {
-                    Data = new { fieldName = "CustomerCode", Msg = "Trường customerCode đã tồn tại" },
-                    Message = "Trường customerCode đã tồn tại",
-                    MisaCode = MISACode.NotValid
-                };
-                return serviceResult;
-            }
             // Gọi cập nhật khách hàng 
+            CustomerDbContext customerDbContext = new CustomerDbContext();
             var rowEffects = customerDbContext.UpdateCustomer(id, customer);
             return new ServiceResult() { Data = rowEffects, MisaCode = MISACode.IsValid };
         }

@@ -106,7 +106,7 @@ namespace MISA.Infrastructure
         public Customer GetCustomerByCode(string customerCode)
         {
             IDbConnection dbConnection = new MySqlConnection(connectionString);
-            var result = dbConnection.Query("Proc_GetCustomerByCode", new { CustomerCode = customerCode }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            var result = dbConnection.Query<Customer>("Proc_GetCustomerByCode", new { CustomerCode = customerCode }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             return result;
         }
 
