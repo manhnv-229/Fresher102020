@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MISA.Entity
+namespace MISA.ApplicationCore.Enums
 {
     /// <summary>
     /// MISACode để xác định của việc validate  
