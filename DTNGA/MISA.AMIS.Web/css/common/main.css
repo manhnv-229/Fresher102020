@@ -1,4 +1,21 @@
-﻿body {
+﻿@import url('common.css');
+@import url('button.css');
+@import url('input.css');
+@import url('icon.css');
+@import url('select.css');
+@import url('toastMesseger.css');
+@import url('popup.css');
+@import url('grid.css');
+@import url('dialog.css');
+@import url('navbar.css');
+@import url('header.css');
+@import url('content.css');
+
+
+*{
+    box-sizing: border-box;
+}
+body {
     font-family: GoogleSans-Regular;
     font-size: 13px;
     margin: 0px;

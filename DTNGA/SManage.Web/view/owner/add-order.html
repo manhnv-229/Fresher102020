@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="/css/common/main.css" rel="stylesheet" />
+    <link href="/css/page/common.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="dialog-detail">
+        <div class="dialog-header">
+            <div class="header-text">ĐƠN HÀNG</div>
+            <div class="btn-exit" id="btn-exit"></div>
+        </div>
+        <div class="dialog-body">
+            <div class="dialog-col dialog-col-left">
+                <div class="content-box">
+                    <div class="box-title">THÔNG TIN CHUNG </div>
+                    <div class="box-body">
+                        <div class="input-line">
+                            <div class="input-box input-box-small">
+                                <div class="input-title">Mã đơn hàng</div>
+                                <span fieldName="OrderCode">005</span>
+                            </div>
+                        </div>
+                        <div class="input-line">
+                            <div class="input-box input-box-small">
+                                <div class="input-title">Người tạo</div>
+                                <span fieldName="CreatedBy">Đặng Thị Nga</span>
+                            </div>
+                        </div>
+                        <div class="input-line">
+                            <div class="input-box input-box-small">
+                                <div class="input-title">Người xử lý</div>
+                                <span fieldName="CreatedBy">Đặng Thị Nga</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dialog-col dialog-col-mid">
+                <div class="content-box">
+                    <div class="box-title">SẢN PHẨM </div>
+                    <div class="box-body">
+                        <div class="input-line">
+                            <div class="input-box input-box-small">
+                                <div class="input-title">Mã sản phẩm (<span>*</span>)</div>
+                                <input class=" m-input" type="text" required fieldName="ProductCode" validate="false" />
+                            </div>
+                            <div class="input-box input-box-small">
+                                <div class="input-title">Tên sản phẩm (<span>*</span>)</div>
+                                <input class="m-input" type="text" required fieldName="ProductName" validate="false" />
+                            </div>
+                        </div>
+                        <div class="input-line">
+                            <div class="input-box input-box-big">
+                                <div class="input-title">Giỏ hàng (<span>*</span>)</div>
+                                <div class="product-list">
+                                    <div class="product-detail">
+                                        <div class="product-line">
+                                            <div class="product-line-left">
+                                                <div class="sort">1</div>
+                                                <div class="product-code">DasT-szS</div>
+                                            </div>
+                                            <div class="product-line-right">
+                                                <div><input class="m-input price" type="number" /></div>
+                                                <div> x </div>
+                                                <div><input class="m-input quantity" type="number" min="0" value="1" /></div>
+                                            </div>
+                                        </div>
+                                        <div class="cost-line">
+                                            <div class="cost">5000000</div>
+                                        </div>
+                                    </div>
+                                    <div class="product-detail">
+                                        <div class="product-line">
+                                            <div class="product-line-left">
+                                                <div class="sort">1</div>
+                                                <div class="product-code">DasT-szS</div>
+                                            </div>
+                                            <div class="product-line-right">
+                                                <div><input class="m-input price" type="number" /></div>
+                                                <div> x </div>
+                                                <div><input class="m-input quantity" type="number" min="0" value="1" /></div>
+                                            </div>
+                                        </div>
+                                        <div class="cost-line">
+                                            <div class="cost">5000000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-box">
+                    <div class="box-title">THÔNG TIN THANH TOÁN </div>
+                    <div class="box-body">
+                        <div class="input-line">
+                            <div class="input-box input-box-medium">
+                                <div class="input-title">Phí vận chuyển</div>
+                                <input class=" m-input" type="text" required fieldName="ProductCode" validate="false" />
+                            </div>
+                        </div>
+                        <div class="input-line">
+                            <div class="input-box input-box-medium">
+                                <div class="input-title">Tổng số tiền</div>
+                                <input class=" m-input" type="text" required fieldName="ProductCode" validate="false" />
+                            </div>
+                        </div>
+                        <div class="input-line">
+                            <div class="input-box input-box-medium">
+                                <div class="input-title">Đã thanh toán</div>
+                                <input class=" m-input" type="text" required fieldName="ProductName" validate="false" />
+                            </div>
+                        </div>
+                        <div class="input-line">
+                            <div class="input-box input-box-medium">
+                                <div class="input-title">Còn thiếu</div>
+                                <input class=" m-input" type="text" required fieldName="ProductName" validate="false" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dialog-col dialog-col-right">
+                <div class="content-box">
+                    <div class="box-title">THÔNG TIN NGƯỜI NHẬN</div>
+                    <div class="box-body">
+                        <div class="input-line">
+                            <div class="input-box input-box-small">
+                                <div class="input-title">Tên khách hàng (<span>*</span>)</div>
+                                <input class=" m-input" type="text" required fieldName="CustomerName" validate="false" />
+                            </div>
+                            <div class="input-box input-box-small">
+                                <div class="input-title">Số điện thoại (<span>*</span>)</div>
+                                <input class=" m-input" type="text" required fieldName="PhoneNumber" validate="false" />
+                            </div>
+                        </div>
+                        <div class="input-line">
+                            <div class="input-box input-box-big ">
+                                <div class="input-title">Địa chỉ</div>
+                                <input class="m-input" type="text" id="txtAddress" fieldName="Address" />
+                            </div>
+                        </div>
+                        <div class="input-line">
+                            <div class="input-box input-box-small">
+                                <div class="input-title">Tỉnh/Thành phố</div>
+                                <div class="m-select" fieldName="">
+                                    <select class="m-input">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="input-box input-box-small">
+                                <div class="input-title">Quận/Huyện</div>
+                                <div class="m-select" fieldName="">
+                                    <select class="m-input">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-line">
+                            <div class="input-box input-box-small">
+                                <div class="input-title">Phường/Xã</div>
+                                <div class="m-select" fieldName="">
+                                    <select class="m-input">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-box">
+                    <div class="box-title">THÔNG TIN VẬN CHUYỂN</div>
+                    <div class="box-body">
+                        <div class="input-line">
+                            <div class="input-box input-box-small">
+                                <div class="input-title">Đơn vị vận chuyển</div>
+                                <div class="m-select" fieldName="">
+                                    <select class="m-input">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-line">
+                            <div class="input-box input-box-small">
+                                <div class="input-title">Mã vận đơn(<span>*</span>)</div>
+                                <input class=" m-input" type="text" required fieldName="ProductCode" validate="false" />
+                            </div>
+                            <div class="input-box input-box-small">
+                                <div class="input-title">Phí vận chuyển (<span>*</span>)</div>
+                                <input class=" m-input" type="text" required fieldName="ProductName" validate="false" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="dialog-footer">
+            <button class="m-button m-button-short btn-cancel" id="btn-cancel">Hủy</button>
+            <button class="m-button m-button-short" id="btn-save">
+                <div class="icon save-icon"></div>
+                <div class="btn-text">Lưu</div>
+            </button>
+            <button class="m-button m-button-long" id="btn-saveAdd">Lưu và thêm mới</button>
+        </div>
+    </div>
+</body>
+</html>

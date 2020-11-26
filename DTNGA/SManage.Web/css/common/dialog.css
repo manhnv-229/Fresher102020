@@ -1,0 +1,227 @@
+﻿/* style cho dialog dùng chung */
+
+.m-dialog {
+    position: relative;
+    display: none;
+}
+/*-------------------------*/
+/*Màn mờ phía sau dialog*/
+.modal {
+    width: 100%;
+    height: 100vh;
+    margin: 0px;
+    background-color: #000000;
+    opacity: 0.5;
+}
+
+/*-------------------------*/
+/*dialog*/
+.dialog-detail {
+    width: 1000px;
+    height: calc(100vh - 48px);
+    border-radius: 4px;
+    top: 24px;
+    left: calc(50% - 500px);
+    position: fixed;
+    z-index: 1;
+    background-color: #ffffff;
+}
+    /*header của dialog*/
+    .dialog-detail .dialog-header {
+        width: 100%;
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 16px;
+    }
+
+        .dialog-detail .dialog-header .header-text {
+            font-family: GoogleSans-Bold;
+            font-size: 20px;
+        }
+
+
+    /*Body: thông tin chi tiết*/
+    .dialog-detail .dialog-body {
+        width: calc(100% - 48px);
+        margin: 0 24px;
+        height: calc(100% - 120px);
+        display: flex;
+        justify-content: space-between;
+        overflow: scroll;
+    }
+
+        .dialog-detail .dialog-body::-webkit-scrollbar {
+            height: 5px;
+            width: 0;
+        }
+
+        .dialog-detail .dialog-body::-webkit-scrollbar-track {
+            background: #E9EBEE;
+        }
+
+        .dialog-detail .dialog-body::-webkit-scrollbar-thumb {
+            background: #bbbbbb;
+            border-radius: 10px;
+        }
+
+        .dialog-detail .dialog-body::-webkit-scrollbar-corner {
+            background: #E9EBEE;
+        }
+
+        .dialog-detail .dialog-body .dialog-col {
+            margin-right: 48px;
+        }
+
+            .dialog-detail .dialog-body .dialog-col:last-child {
+                margin-right: 0;
+            }
+
+        .dialog-detail .dialog-body .dialog-col-left {
+            width: 20%;
+        }
+
+        .dialog-detail .dialog-body .dialog-col-mid {
+            width: 40%;
+        }
+
+        .dialog-detail .dialog-body .dialog-col-right {
+            width: 40%;
+        }
+
+        .dialog-detail .dialog-body .content-box {
+        }
+
+    .dialog-detail .dialog-col .content-box .box-title {
+        font-family: GoogleSans-Bold;
+        font-size: 15px;
+        text-align: left;
+        margin-bottom: 24px;
+        border-bottom: 2px solid #019160;
+    }
+
+    .dialog-detail .dialog-col .content-box .box-body {
+    }
+
+.product-list .product-detail {
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+    .product-list .product-detail .price {
+        text-align: right;
+        padding-right: 16px;
+    }
+
+        .product-list .product-detail .price::-webkit-inner-spin-button,
+        .product-list .product-detail .price::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+
+    .product-list .product-detail .quantity {
+        width: 40px;
+        border: none;
+        outline: none;
+        padding-left: 8px;
+    }
+        .product-list .product-detail .quantity::-webkit-inner-spin-button,
+        .product-list .product-detail .quantity::-webkit-outer-spin-button {
+            opacity:1;
+            background-color: none;
+        }
+    .product-list .product-detail .product-line {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .product-list .product-detail .product-line-left {
+        display: flex;
+        align-items: center;
+    }
+
+        .product-list .product-detail .product-line-left div {
+            margin-right: 10px;
+        }
+
+    .product-list .product-detail .product-line-right {
+        display: flex;
+        align-items: center;
+    }
+
+        .product-list .product-detail .product-line-right div {
+            margin-right: 10px;
+        }
+
+            .product-list .product-detail .product-line-right div:last-child {
+                margin-right: 0;
+            }
+
+.product-detail .cost-line {
+    display: flex;
+    justify-content: flex-end;
+}
+
+    .product-detail .cost-line .cost {
+        font-weight: bold;
+        color: #019160;
+        margin-top: 4px;
+    }
+/*footer*/
+.dialog-detail .dialog-footer {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    background-color: #E9EBEE;
+    align-items: center;
+    justify-content: flex-end;
+    border-radius: 0 0 4px 4px;
+}
+
+    .dialog-detail .dialog-footer button {
+        margin-right: 16px;
+    }
+
+    .dialog-detail .dialog-footer .btn-cancel {
+        color: #ffffff;
+        background-color: #E9EBEE;
+        color: #000000;
+    }
+
+        .dialog-detail .dialog-footer .btn-cancel:hover {
+            background-color: #bbbbbb;
+        }
+/* các loại khung input*/
+.input-box-small {
+    width: 50%;
+    margin-right: 10px;
+}
+
+    .input-box-small:last-child {
+        margin-right: 0px;
+    }
+
+.input-box-medium {
+    width: 100%;
+    margin-right: 10px;
+}
+
+    .input-box-medium:last-child {
+        margin-right: 0px;
+    }
+
+.input-box-big {
+    width: 100%;
+}
+
+
+/*-------------*/
+/* radio button group*/
+.radio-button-group {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    margin-top: 4px;
+    align-items: center;
+}

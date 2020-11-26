@@ -1,0 +1,48 @@
+﻿/* Style phần header dùng chung*/
+/* header left*/
+.header .header-left {
+    width: 50%;
+    display: flex;
+}
+
+.header .header-left select {
+    height: 40px;
+    margin-left: 16px;
+    align-self: center;
+    border: none;
+    font-family: GoogleSans-Bold;
+    font-size: 15px;
+    outline: none;
+}
+
+/*header right*/
+.header .header-right {
+    width: 50%;
+    display: flex;
+}
+
+    .header .header-right .header-right-box {
+        display: flex;
+        width: auto;
+        margin-right: 0px;
+        margin-left: auto;
+        padding-right: 16px;
+    }
+    .header .header-right .avatar {
+        height: 35px;
+        width: 35px;
+        background-image: url('/content/image/female-profile.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        align-self: center;
+        margin-left: 16px;
+    }
+    .header .header-right .username {
+        width: auto;
+        margin-left: 16px;
+        margin-right: 16px;
+        align-self: center;
+    }
+    .header .header-right .setting-more-icon {
+        align-self: center;
+    }
