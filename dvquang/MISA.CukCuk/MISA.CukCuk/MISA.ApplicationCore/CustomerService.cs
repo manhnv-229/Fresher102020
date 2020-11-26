@@ -1,13 +1,36 @@
 ﻿using MISA.ApplicationCore.Entities;
-using MISA.Entity.Models;
-using MISA.Infrastructure;
+using MISA.ApplicationCore.Enums;
+using MISA.ApplicationCore.interfaces;
+
 using System.Collections.Generic;
 
 
 namespace MISA.ApplicationCore
 {
-    public class CustomerService
+    public class CustomerService:ICustomerService
     {
+
+        ICustomerRepository _customerRepository;
+        #region Constructor
+        public CustomerService(ICustomerRepository customerRepository)
+        {
+            _customerRepository = customerRepository;
+        }
+
+    
+
+        public ServiceResult DeleteCustomer(System.Guid CustomerId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+
+
+        public Customer GetCustomerById(System.Guid CustomerId)
+        {
+            throw new System.NotImplementedException();
+        }
+        #endregion
         #region Method
         /// <summary>
         /// lấy danh sách khách hàng
@@ -16,8 +39,8 @@ namespace MISA.ApplicationCore
         /// CreatedBy: DVQuang (25/11/2020)
         public IEnumerable<Customer> GetCustomers()
         {
-            var customerContext = new CustomerContext();
-            var customers = customerContext.GetCustomers();
+          
+            var customers = _customerRepository.GetCustomers();
             return customers;
         }
         /// <summary>
@@ -26,11 +49,11 @@ namespace MISA.ApplicationCore
         /// <param name="customer"></param>
         /// <returns>serviceResult thêm mới thành công</returns>
         /// CreatedBy: DVQuang (25/11/2020)
-        public ServiceResult InsertCustomer(Customer customer)
+        public ServiceResult AddCustomer(Customer customer)
         {
             var serviceResult = new ServiceResult();
 
-            var customerContext = new CustomerContext();
+            //var customerContext = new CustomerContext();
 
             // validate dữ liệu
             // kiểm tra trường dữ liệu không hợp lệ
@@ -51,7 +74,7 @@ namespace MISA.ApplicationCore
                 return serviceResult;
             }
             // check trùng mã
-            var res = customerContext.GetCustomerByCode(customerCode);
+            var res = _customerRepository.GetCustomerByCode(customerCode);
             if (res != null)
             {
                 var msg = new
@@ -67,12 +90,19 @@ namespace MISA.ApplicationCore
                 return serviceResult;
             }
             // thêm mới nếu dữ liệu nếu ok
-            var row = customerContext.InsertCustomer(customer);
+            var row = _customerRepository.AddCustomer(customer);
             serviceResult.MISACode = MISACode.IsValid;
             serviceResult.Messenger = "thêm mới khách hàng thành công";
             serviceResult.Data = row;
             return serviceResult;
         }
+
+        public ServiceResult UpdateCustomer(Customer customer)
+        {
+            throw new System.NotImplementedException();
+        }
+
+      
         // sửa khách hàng
         // xóa khách hàng
         #endregion

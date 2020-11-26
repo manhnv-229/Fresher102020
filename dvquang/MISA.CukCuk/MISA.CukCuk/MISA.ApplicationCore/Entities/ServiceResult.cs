@@ -1,4 +1,5 @@
-﻿using MISA.Entity.Models;
+﻿
+using MISA.ApplicationCore.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;

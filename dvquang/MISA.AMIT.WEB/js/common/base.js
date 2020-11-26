@@ -326,11 +326,11 @@ class BaseJS {
                 method: "GET"
             }).done(function (res) {
                 if (res) {
-                    console.log(res);
+                    //console.log(res);
                     $.each(res, function (index, obj) {
                         var option = $(`<option value="${obj.CustomerGroupId}">${obj.CustomerGroupName}</option>`);
                         select.append(option);
-                        console.log(option);
+                        //console.log(option);
                     })
                 }
                 $('.loading').hide();
@@ -398,7 +398,7 @@ class BaseJS {
             // + ẩn form chi tiết, 
             // + load lại lại dữ liệu
 
-            alert('them khach hang thanh cong!')
+            //alert('them khach hang thanh cong!')
             dialogDetail.dialog('close');
             me.loadData();
 

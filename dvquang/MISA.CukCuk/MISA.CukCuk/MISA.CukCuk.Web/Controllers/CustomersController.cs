@@ -2,9 +2,11 @@
 using System.Data;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
-using MISA.ApplicationCore;
-using MISA.Entity.Models;
-using MISA.Infrastructure;
+
+using MISA.ApplicationCore.Entities;
+using MISA.ApplicationCore.Enums;
+using MISA.ApplicationCore.interfaces;
+
 using MySql.Data.MySqlClient;
 
 
@@ -16,6 +18,13 @@ namespace MISA.CukCuk.Web.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
+        ICustomerService _customerService;
+        #region Constructor
+        public CustomersController(ICustomerService customerService)
+        {
+            _customerService = customerService;
+        }
+        #endregion
         /// <summary>
         /// Get api
         /// </summary>
@@ -25,8 +34,8 @@ namespace MISA.CukCuk.Web.Controllers
         public IActionResult Get()
 
         {
-            var customerService = new CustomerService();
-            var customers = customerService.GetCustomers();
+            
+            var customers = _customerService.GetCustomers();
             return Ok(customers);
         }
 
@@ -56,8 +65,8 @@ namespace MISA.CukCuk.Web.Controllers
         public IActionResult Post(Customer customer)
             
         {
-            var customerService = new CustomerService();
-            var serviceResult = customerService.InsertCustomer(customer);
+           
+            var serviceResult = _customerService.AddCustomer(customer);
             if(serviceResult.MISACode == MISACode.NotValid)          
                 return BadRequest(serviceResult.Data);       
             if (serviceResult.MISACode == MISACode.IsValid && (int) serviceResult.Data > 0)           
