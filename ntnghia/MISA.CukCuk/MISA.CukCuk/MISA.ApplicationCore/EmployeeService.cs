@@ -7,36 +7,48 @@ using System.Text;
 
 namespace MISA.ApplicationCore
 {
-    public class CustomerService: BaseService<Customer>, ICustomerService
+    public class EmployeeService: BaseService<Employee>, IEmployeeService
     {
-        ICustomerRepository _customerRepository;
         #region Constructor
-        public CustomerService(IBaseRepository<Customer> baseRepository, ICustomerRepository customerRepository) : base(baseRepository)
+        public EmployeeService(IBaseRepository<Employee> baseRepository) : base(baseRepository)
         {
-            _customerRepository = customerRepository;
         }
         #endregion
 
         #region Method
 
-        public Customer GetCustomerByCode(string customerId)
-        {
-            var customer = _customerRepository.GetCustomerByCode(customerId);
-            return customer;
-        }
+        ////Lấy danh sách khách hàng:
+        //public IEnumerable<Employee> GetEmployees()
+        //{
+        //    var employees = _employeeRepository.GetEmployees();
+        //    return employees;
+        //}
 
-        //Thêm mới khách hàng:
-        //public ServiceResult AddCustomer(Customer customer)
+        ////Lấy khách hàng theo id:
+        //public Employee GetEmployeeById(string employeeId)
+        //{
+        //    var employee = _employeeRepository.GetEmployeeById(employeeId);
+        //    return employee;
+        //}
+
+        //public Employee GetEmployeeByCode(string employeeId)
+        //{
+        //    var employee = _employeeRepository.GetEmployeeById(employeeId);
+        //    return employee;
+        //}
+
+        ////Thêm mới khách hàng:
+        //public ServiceResult AddEmployee(Employee employee)
         //{
         //    var serviceResult = new ServiceResult();
         //    //validate dữ liệu, nếu dữ liệu chưa hợp lệ thì trả về lỗi
         //    //Check trường bắt buộc nhập
-        //    var customerCode = customer.CustomerCode;
-        //    if (string.IsNullOrEmpty(customerCode))
+        //    var employeeCode = employee.EmployeeCode;
+        //    if (string.IsNullOrEmpty(employeeCode))
         //    {
         //        var msg = new
         //        {
-        //            devMsg = new { fieldName = "CustomerCode", msg = "Mã khách hàng không được phép để trống" },
+        //            devMsg = new { fieldName = "EmployeeCode", msg = "Mã khách hàng không được phép để trống" },
         //            userMsg = "Mã khách hàng không được phép để trống",
         //            Code = MISACode.NotValid,
         //        };
@@ -47,12 +59,12 @@ namespace MISA.ApplicationCore
         //    }
 
         //    //Check trùng mã
-        //    var res = _customerRepository.GetCustomerByCode(customerCode);
+        //    var res = _employeeRepository.GetEmployeeByCode(employeeCode);
         //    if (res != null)
         //    {
         //        var msg = new
         //        {
-        //            devMsg = new { fieldName = "CustomerCode", msg = "Mã khách hàng đã tồn tại" },
+        //            devMsg = new { fieldName = "EmployeeCode", msg = "Mã khách hàng đã tồn tại" },
         //            userMsg = "Mã khách hàng đã tồn tại",
         //            Code = MISACode.NotValid,
         //        };
@@ -61,27 +73,27 @@ namespace MISA.ApplicationCore
         //        serviceResult.Data = msg;
         //        return serviceResult;
         //    }
-               
+
         //    //Thêm mới khi dữ liệu đã hợp lệ:
-        //    var rowAffects = _customerRepository.AddCustomer(customer);
+        //    var rowAffects = _employeeRepository.AddEmployee(employee);
         //    serviceResult.MISACode = MISACode.IsValid;
         //    serviceResult.Messenger = "Thêm thành công";
         //    serviceResult.Data = rowAffects;
         //    return serviceResult;
         //}
 
-        //Sửa thông tin khách hàng:
-        //public ServiceResult UpdateCustomer(Customer customer)
+        ////Sửa thông tin khách hàng:
+        //public ServiceResult UpdateEmployee(Employee employee)
         //{
         //    var serviceResult = new ServiceResult();
         //    //validate dữ liệu, nếu dữ liệu chưa hợp lệ thì trả về lỗi
         //    //Check trường bắt buộc nhập
-        //    var customerCode = customer.CustomerCode;
-        //    if (string.IsNullOrEmpty(customerCode))
+        //    var employeeCode = employee.EmployeeCode;
+        //    if (string.IsNullOrEmpty(employeeCode))
         //    {
         //        var msg = new
         //        {
-        //            devMsg = new { fieldName = "CustomerCode", msg = "Mã khách hàng không được phép để trống" },
+        //            devMsg = new { fieldName = "EmployeeCode", msg = "Mã khách hàng không được phép để trống" },
         //            userMsg = "Mã khách hàng không được phép để trống",
         //            Code = MISACode.NotValid,
         //        };
@@ -92,12 +104,12 @@ namespace MISA.ApplicationCore
         //    }
 
         //    //Check trùng mã
-        //    var res = _customerRepository.GetCustomerByCode(customerCode);
+        //    var res = _employeeRepository.GetEmployeeByCode(employeeCode);
         //    if (res != null)
         //    {
         //        var msg = new
         //        {
-        //            devMsg = new { fieldName = "CustomerCode", msg = "Mã khách hàng đã tồn tại" },
+        //            devMsg = new { fieldName = "EmployeeCode", msg = "Mã khách hàng đã tồn tại" },
         //            userMsg = "Mã khách hàng đã tồn tại",
         //            Code = MISACode.NotValid,
         //        };
@@ -108,7 +120,7 @@ namespace MISA.ApplicationCore
         //    }
 
         //    //Thêm mới khi dữ liệu đã hợp lệ:
-        //    var rowAffects = _customerRepository.AddCustomer(customer);
+        //    var rowAffects = _employeeRepository.AddEmployee(employee);
         //    serviceResult.MISACode = MISACode.IsValid;
         //    serviceResult.Messenger = "Thêm thành công";
         //    serviceResult.Data = rowAffects;
@@ -116,19 +128,19 @@ namespace MISA.ApplicationCore
         //}
 
         ////Xóa khách hàng:
-        //public ServiceResult DeleteCustomer(string customerId)
+        //public ServiceResult DeleteEmployee(string employeeId)
         //{
         //    var serviceResult = new ServiceResult();
         //    // Kiểm tra id của khách hàng có hợp lệ:
-        //    var customer = _customerRepository.GetCustomerById(customerId);
-        //    if (customer != null)
+        //    var employee = _employeeRepository.GetEmployeeById(employeeId);
+        //    if (employee != null)
         //    {
-        //        var rowAffects = _customerRepository.DeleteCustomer(customerId);
+        //        var rowAffects = _employeeRepository.DeleteEmployee(employeeId);
 
         //        serviceResult.MISACode = MISACode.IsValid;
         //        serviceResult.Messenger = "Xóa thành công";
         //        serviceResult.Data = rowAffects;
-        //    } 
+        //    }
         //    else
         //    {
         //        serviceResult.MISACode = MISACode.NotValid;
@@ -137,16 +149,6 @@ namespace MISA.ApplicationCore
         //    }
         //    return serviceResult;
         //}
-
-        public IEnumerable<Customer> GetCustomerPaging(int limit, int offset)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Customer> GetCustomersByDepartment(Guid departmentId)
-        {
-            throw new NotImplementedException();
-        }
 
         #endregion
     }
