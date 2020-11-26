@@ -35,8 +35,6 @@
         color: #ffffff;
         font-family: GoogleSans-Medium;
         outline: none;
-        border-radius: 0;
-
     }
 
         .nav-content .nav-item:focus ~ .nav-item-icon{

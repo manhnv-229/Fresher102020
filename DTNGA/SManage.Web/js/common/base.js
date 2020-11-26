@@ -1,12 +1,11 @@
-﻿$(document).ready(function () {
-    var base = new Base();
-})
-
+﻿
 class Base {
     constructor() {
         try {
             var me = this;
             me.ObjectName = "Order";
+            me.loadCommonElement();
+            me.loadAccount();
             me.loadData();
             me.initEvent();
         }
@@ -14,7 +13,25 @@ class Base {
             console.log(e);
         }
     }
-    /* Hàm thực hiện khởi tạo sự kiện */
+
+    loadCommonElement() {
+        $(`#navbar`).load("/view/common/navbar.html");
+        $(`#header`).load("/view/common/header.html");
+    }
+
+    /** Thực hiện lấy thông tin người dùng sau khi đăng nhập
+     * CreatedBy dtnga (26/11/2020)
+     * */
+    loadAccount() {
+        // TODO lấy thông tin người dùng từ API
+        var user = userInfo;
+        var fullName = user["FullName"];
+        $(`.header .username`).text(fullName);
+    }
+
+    /* Hàm thực hiện khởi tạo sự kiện
+     * CreatedBy dtnga (21/11/2020)
+     * */
     initEvent() {
         try {
             var me = this;
@@ -24,16 +41,12 @@ class Base {
 
             // TODO Sự kiện khi chọn filter
 
-            // đóng form khi nhấn ESC
-            var dialog = $(`.m-dialog`);
-            $('body').on("keydown", me.onClick_ESC.bind(dialog));
             // Sự kiện khi thao tác với từng hàng dữ liệu trong bảng
             $(`table tbody`).on("click", "tr", me.tr_onClick);
             $(`table tbody`).on("dblclick", "tr", me.onDblClick_trow.bind(me));
             // sự kiện khi tick vào checkbox/ nhiều checkbox
             $(`table thead input[type="checkbox"]`).on("click", me.onClickCheckAll.bind(me));
-            $(`tbody input[type="checkbox"]`).on("click", me.onClickCheckbox.bind(me));
-            
+
         }
         catch (e) {
             console.log(e);
@@ -68,6 +81,8 @@ class Base {
         // kiểm tra dữ liệu
         me.checkRequired();
         me.validateEmail();
+        // đóng form khi nhấn ESC
+        $('body').on("keydown", me.onClick_ESC.bind(dialog));
         $(`#btn-exit`).on("click", me.onClick_Exit_Dialog.bind(me));
         $(`#btn-cancel`).on("click", me.onClick_Exit_Dialog.bind(me));
         $(`#btn-save`).on("click", me.onClick_btnSave.bind(me));
@@ -284,7 +299,7 @@ class Base {
         var id = selected.data('keyId');
         // Lấy thông tin từ api bằng id tương ứng
 
-        
+
     }
 
     /** Thực hiện chọn tất cả bản ghi
@@ -394,8 +409,6 @@ class Base {
         $(`tbody tr:first`).addClass("selected");
         $(`tbody tr:first input[type="checkbox"]`).prop("checked", true);
     }
-
-
 }
 
 var userInfo = {

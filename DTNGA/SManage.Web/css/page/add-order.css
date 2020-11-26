@@ -1,0 +1,21 @@
+﻿.content .dialog-detail {
+    width: calc(100% - 32px);
+    height: calc(100vh - 100px);
+    border-radius: 0;
+    top: 0;
+    left: 0;
+    position: absolute;
+    z-index: 0;
+    margin-top: 56px;
+    margin-left: 16px;
+    background-color: none;
+}
+
+    .content .dialog-detail .dialog-body {
+        width: 100%;
+        margin: 0;
+        height: 100%;
+        display: flex;
+        justify-content: left;
+        overflow: scroll;
+    }

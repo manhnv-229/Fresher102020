@@ -1,5 +1,4 @@
 ﻿
-
 /**
  * Hàm xử lý định dạng ngày
  * @param {any} date Bất kì kiểu dữ liệu nào

@@ -139,6 +139,8 @@
     .product-list .product-detail .product-line-left {
         display: flex;
         align-items: center;
+        width: 50%;
+        margin-right: 16px;
     }
 
         .product-list .product-detail .product-line-left div {
@@ -146,6 +148,7 @@
         }
 
     .product-list .product-detail .product-line-right {
+        width: 50%;
         display: flex;
         align-items: center;
     }
