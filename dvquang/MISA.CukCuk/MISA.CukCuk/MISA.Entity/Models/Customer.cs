@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MISA.CukCuk.Web.Models
+namespace MISA.Infrastructure
 {
     /// <summary>
     /// class khách hàng
@@ -20,14 +20,7 @@ namespace MISA.CukCuk.Web.Models
         /// mã khách hàng
         /// </summary>
         public string CustomerCode { get; set; }
-        /// <summary>
-        /// Họ và đệm khách hàng
-        /// </summary>
-        public string FirstName { get; set; }
-        /// <summary>
-        /// tên khách hàng
-        /// </summary>
-        public string LastName { get; set; }
+      
         /// <summary>
         /// họ và tên khách hàng
         /// </summary>
