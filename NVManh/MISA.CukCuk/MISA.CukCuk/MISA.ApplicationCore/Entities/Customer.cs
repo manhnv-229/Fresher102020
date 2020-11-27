@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,7 +10,7 @@ namespace MISA.ApplicationCore.Entities
     /// Khách hàng
     /// </summary>
     /// CreatedBy: NVMANH (23/11/2020)
-    public class Customer
+    public class Customer:BaseEntity
     {
         #region Declare
 
@@ -26,16 +27,20 @@ namespace MISA.ApplicationCore.Entities
         /// <summary>
         /// Khóa chính
         /// </summary>
+        [PrimaryKey]
         public Guid CustomerId { get; set; }
 
         /// <summary>
         /// Mã khách hàng
         /// </summary>
+        [Required]
+        [DisplayName("Mã khách hàng")]
         public string CustomerCode { get; set; }
 
         /// <summary>
         /// Họ và đệm
         /// </summary>
+        [DisplayName("Họ và đệm")]
         public string FirstName { get; set; }
 
         /// <summary>
@@ -71,6 +76,9 @@ namespace MISA.ApplicationCore.Entities
         /// <summary>
         ///  Số điện thoại
         /// </summary>
+        /// 
+        [CheckDuplicate]
+        [DisplayName("Số điện thoại")]
         public string PhoneNumber { get; set; }
 
         /// <summary>

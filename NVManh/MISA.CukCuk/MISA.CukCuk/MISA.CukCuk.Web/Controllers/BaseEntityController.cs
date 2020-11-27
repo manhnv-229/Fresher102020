@@ -11,7 +11,7 @@ namespace MISA.CukCuk.Web.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class BaseEntityController<TEntity> : ControllerBase
+    public abstract class BaseEntityController<TEntity> : ControllerBase
     {
         IBaseService<TEntity> _baseService;
         public BaseEntityController(IBaseService<TEntity> baseService)
@@ -55,16 +55,31 @@ namespace MISA.CukCuk.Web.Controllers
 
         // PUT api/<CustomersController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] string value)
+        public IActionResult Put([FromRoute] string id, [FromBody] TEntity entity)
         {
-            return Ok(1);
+            var keyProperty = entity.GetType().GetProperty($"{typeof(TEntity).Name}Id");
+            if (keyProperty.PropertyType == typeof(Guid))
+            {
+                keyProperty.SetValue(entity, Guid.Parse(id));
+            }
+            else if (keyProperty.PropertyType == typeof(int))
+            {
+                keyProperty.SetValue(entity, int.Parse(id));
+            }
+            else
+            {
+                keyProperty.SetValue(entity, id);
+            }
+
+            var rowAffects = _baseService.Update(entity);
+            return Ok(rowAffects);
         }
 
         // DELETE api/<CustomersController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-            var res =_baseService.Delete(id);
+            var res = _baseService.Delete(id);
             return Ok(res);
         }
     }
