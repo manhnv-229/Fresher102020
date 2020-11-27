@@ -1,0 +1,92 @@
+﻿/*style cho phần grid ( bảng dữ liệu ) dùng chung*/
+.grid {
+    width: 100%;
+    height: calc(100% - 180px);
+    overflow-x: scroll;
+    overflow-y: scroll;
+}
+
+    .grid::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+
+    .grid::-webkit-scrollbar-track {
+        background: #E9EBEE;
+    }
+
+    .grid::-webkit-scrollbar-thumb {
+        background: #bbbbbb;
+        border-radius: 10px;
+    }
+
+    .grid::-webkit-scrollbar-corner {
+        background: #E9EBEE;
+    }
+
+/* table */
+    .grid table {
+        border-collapse: collapse;
+        background-color: #ffffff;
+    }
+
+    /* thead */
+    .grid thead tr {
+        height: 48px;
+    }
+
+    .grid thead th {
+        width: 200px;
+        position: sticky;
+        top: 0;
+        background-color: #ffffff;
+    }
+
+    .grid thead .thead-box {
+        width: auto;
+        min-width: 71px;
+        display: flex;
+        align-self: center;
+        padding-left: 10px;
+    }
+
+        .grid thead .thead-box .thead-text {
+            font-family: GoogleSans-Bold;
+            white-space: nowrap;
+            overflow: hidden !important;
+            text-overflow: ellipsis;
+            text-align: left;
+            margin-right: 8px;
+        }
+
+    .grid thead .field-short {
+        width: 60px;
+    }
+
+    .grid thead .field-long {
+        width: 300px;
+        min-width: 150px;
+    }
+
+    /* tbody */
+    .grid table tbody tr {
+        height: 48px;
+        border-top: 1px solid #e5e5e5;
+    }
+
+        .grid table tbody tr:hover {
+            background-color: #e9ebee !important;
+        }
+/* row khi được chọn */
+.selected {
+    background-color: #e3f3ee;
+}
+
+.grid table tbody td div {
+    background-color: none;
+    padding: 10px;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}

@@ -1,0 +1,127 @@
+﻿/* Grid ( bảng dữ liệu )*/
+.grid {
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+}
+
+    .grid::-webkit-scrollbar {
+        height: 5px;
+        width: 0px;
+    }
+
+    .grid::-webkit-scrollbar-thumb {
+        background: #364152;
+        border-radius: 5px;
+    }
+
+        .grid::-webkit-scrollbar-thumb:hover {
+            background: #28313f;
+        }
+
+    /*table*/
+    .grid table {
+        border-collapse: collapse;
+        overflow-x: scroll;
+    }
+
+        .grid table thead tr {
+            height: 40px;
+        }
+
+        .grid table thead th {
+            width: 200px;
+            min-width: 50px;
+            position: sticky;
+            top: 0;
+            background-color: #f3f3f3;
+            white-space: nowrap;
+            overflow: hidden !important;
+            text-overflow: ellipsis;
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        .grid table thead .field-short {
+            width: 60px;
+        }
+
+        .grid table thead .field-long {
+            width: 300px;
+            min-width: 150px;
+        }
+
+        .grid table tbody tr {
+            height: 48px;
+            border-top: 1px solid #e5e5e5;
+        }
+
+            .grid table tbody tr:hover {
+                background-color: #3641520f !important;
+            }
+
+.selected {
+    background-color: #3641523d;
+}
+
+.grid table tbody td div {
+    background-color: none;
+    padding: 10px;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+
+/* Style cho select tại mỗi row*/
+.grid tbody td select {
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    height: 20px;/*
+    background-color: #00a2ae;
+    color: #ffffff;*/
+}
+    .grid tbody td select:focus{
+        outline: none;
+    }
+.select:hover::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+.grid tbody select option {
+    text-align: center;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    margin-top: 2px;
+}
+.grid tbody td select {
+}
+    /* Mới*/
+    /*.grid tbody td select option[value="1"] {
+        background-color: #00a2ae;
+    }*/
+    /* Đã xác nhận*/
+    /*.grid tbody td select option[value="2"] {
+        background-color: #7cb342;
+    }*/
+    /* Chờ giao hàng*/
+    /*.grid tbody td select option[value="3"] {
+        background-color: #e09a00;
+    }*/
+    /* Đang giao hàng*/
+    /*.grid tbody td select option[value="4"] {
+        background-color: #f78e3d;
+    }*/
+    /* Đã nhận hàng*/
+    /*.grid tbody td select option[value="5"] {
+        background-color: #3dbd7d;
+    }*/
+    /* Hoàn hàng*/
+    /*.grid tbody td select option[value="6"] {
+        background-color: #ff5053;
+    }*/
+    /* Đã thanh toán*/
+    /*.grid tbody td select option[value="7"] {
+        background-color: #ff3860;
+    }*/

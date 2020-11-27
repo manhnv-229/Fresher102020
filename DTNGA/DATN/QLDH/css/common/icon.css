@@ -1,0 +1,12 @@
+﻿/*--------------------------------------------------*/
+/*định nghĩa chung cho một số thành phần dùng chung*/
+
+/*icon*/
+.n-icon {
+    width: 15px;
+    height: 15px;
+    align-self: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}

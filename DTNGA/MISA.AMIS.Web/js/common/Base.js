@@ -53,6 +53,7 @@ class BaseJS {
         $(this).addClass("selected");
         //TODO set màu cho bản ghi được chọn khi hover
     }
+
     /**
      * Hiển thị form Sửa thông tin khi double click vào 1 bản ghi
      * CreatedBy dtnga (17/11/2020)
@@ -232,7 +233,7 @@ class BaseJS {
         me.formMode = "add";
         var dialog = $(`.m-dialog`);
         dialog.show();
-        //TODO đọc thông tin nhóm khách hàng và sinh các option cho select
+        //đọc thông tin nhóm khách hàng và sinh các option cho select
         me.loadSelect();
         // kiểm tra dữ liệu
         me.checkRequired();
@@ -443,7 +444,7 @@ class BaseJS {
             $(`tbody tr:first`).select();
             $(`tbody tr:first`).addClass("selected");
         }).fail(function (res) {
-
+            console.log(res);
         })
     }
 

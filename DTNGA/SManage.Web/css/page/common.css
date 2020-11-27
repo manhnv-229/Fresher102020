@@ -1,0 +1,37 @@
+﻿/*Phân chia bố cục chung cho các page*/
+@import url('navbar.css');
+@import url('header.css');
+@import url('content.css');
+
+/*----------------------------*/
+/* navbar bên trái */
+.navbar {
+    float: left;
+    width: 220px;
+    background-color: #FFFFFF;
+    border-right: 1px solid #E5E5E5;
+    height: 100vh;
+}
+
+/*----------------------------*/
+/* Header */
+
+.header {
+    float: left;
+    width: calc(100% - 221px);
+    height: 48px;
+    border-bottom: 1px solid #e5e5e5;
+    display: flex;
+}
+
+/*----------------------------*/
+/* Content */
+
+.content {
+    position: absolute;
+    top: 49px;
+    left: 221px;
+    width: calc( 100% - 221px);
+    height: calc( 100vh - 49px);
+    padding: 0 16px;
+}

@@ -1,0 +1,15 @@
+﻿/* style cho Combobox dùng chung*/
+
+.m-combobox {
+    height: 40px;
+    border: 1px solid #BBBBBB;
+    border-radius: 4px;
+}
+
+    .m-combobox:focus {
+        border: 1px solid #019160;
+    }
+
+    /* khung nhập bên trong combo box*/
+
+    /* icon trong combo box*/

@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link href="/css/common/main.css" rel="stylesheet" />
+    <link href="/css/common/grid.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="side-bar">
+        <div class="top-bar">
+            <a href="" class="a-avatar tooltip">
+                <span class="tooltiptext">Thông tin tài khoản</span>
+                <div class="n-icon avatar"></div>
+            </a>
+            <a href="addorder.html" class="page-link tooltip">
+                <span class="tooltiptext">Tạo đơn hàng</span>
+                <div class="n-icon shopping-cart-icon"></div>
+            </a>
+            <a href="homehtml.html" class="page-link tooltip">
+                <span class="tooltiptext">Quản lý đơn hàng</span>
+                <div class="n-icon orders-icon"></div>
+            </a>
+            <a href="" class="page-link tooltip">
+                <span class="tooltiptext">Vận chuyển</span>
+                <div class=" n-icon truck-icon"></div>
+            </a>
+        </div>
+        <div class="bottom-bar">
+            <a href="" class="page-link tooltip">
+                <span class="tooltiptext">Cài đặt</span>
+                <div class="n-icon setting-icon"></div>
+            </a>
+        </div>
+    </div>
+    <div class="content">
+        <div class="header-content">
+            <div class="header-left">
+                <div class="n-icon header-left-icon"></div>
+                <div class="header-left-text" id="PageTitle">ĐƠN HÀNG</div>
+            </div>
+            <div class="header-mid">
+                <div class="n-icon search-icon"></div>
+                <input class="n-input search-input" type="text" placeholder="Mã đơn / Mã vận chuyển / Tên / Số điện thoại" />
+            </div>
+            <div class="header-right"></div>
+        </div>
+        <div class="body-content">
+            <div class="toolbar">
+                <div class="toolbar-left">
+                    <button class="n-button round-button btn-add" id="btn-add" title="Thêm mới"></button>
+                    <button class="n-button round-button btn-refresh" id="btn-refresh" title="Làm mới"></button>
+                </div>
+                <div class="toolbar-right">
+                    <button class="n-button round-button btn-filter" id="btn-filter" title="Lọc"></button>
+                    <button class="n-button round-button btn-clear-filter" id="btn-clear-filter" title="Xóa bộ lọc"></button>
+                </div>
+            </div>
+            <div class="filter">
+                <div class="filter-item selected">
+                    <label class="n-radio">
+                        <input class="radio" type="radio" name="filter" value="all" checked fieldName="" />
+                        <span class="checkmark"></span>
+                        <span class="radio-label">Tất cả</span>
+                        <span class="quantity-label">227</span>
+                    </label>
+                </div>
+                <div class="filter-item">
+                    <label class="n-radio">
+                        <input class="radio" type="radio" name="filter" value="1" fieldName="" />
+                        <span class="checkmark"></span>
+                        <span class="radio-label">Mới</span>
+                        <span class="quantity-label">5</span>
+                    </label>
+                </div>
+                <div class="filter-item">
+                    <label class="n-radio">
+                        <input class="radio" type="radio" name="filter" value="2" fieldName="" />
+                        <span class="checkmark"></span>
+                        <span class="radio-label">Đã xác nhận</span>
+                        <span class="quantity-label">50</span>
+                    </label>
+                </div>
+                <div class="filter-item">
+                    <label class="n-radio">
+                        <input class="radio" type="radio" name="filter" value="3" fieldName="" />
+                        <span class="checkmark"></span>
+                        <span class="radio-label">Chờ giao hàng</span>
+                        <span class="quantity-label">0</span>
+                    </label>
+                </div>
+                <div class="filter-item">
+                    <label class="n-radio">
+                        <input class="radio" type="radio" name="filter" value="4" fieldName="" />
+                        <span class="checkmark"></span>
+                        <span class="radio-label">Đang giao hàng</span>
+                        <span class="quantity-label">100</span>
+                    </label>
+                </div>
+                <div class="filter-item">
+                    <label class="n-radio">
+                        <input class="radio" type="radio" name="filter" value="5" fieldName="" />
+                        <span class="checkmark"></span>
+                        <span class="radio-label">Đã nhận hàng</span>
+                        <span class="quantity-label">100</span>
+                    </label>
+                </div>
+                <div class="filter-item">
+                    <label class="n-radio">
+                        <input class="radio" type="radio" name="filter" value="6" fieldName="" />
+                        <span class="checkmark"></span>
+                        <span class="radio-label">Hoàn hàng</span>
+                        <span class="quantity-label">100</span>
+                    </label>
+                </div>
+                <div class="filter-item">
+                    <label class="n-radio">
+                        <input class="radio" type="radio" name="filter" value="7" fieldName="" />
+                        <span class="checkmark"></span>
+                        <span class="radio-label">Đã thanh toán</span>
+                        <span class="quantity-label">100</span>
+                    </label>
+                </div>
+            </div>
+            <div class="grid">
+                <table class="n-table" id="orders-table">
+                    <thead>
+                        <tr>
+                            <th class="field-short" fieldName="Checkbox">
+                                <input type="checkbox" name="order" id="checkAll" />
+                            </th>
+                            <th fieldName="OrderCode">Mã đơn hàng</th>
+                            <th fieldName="CustomerName">Khách hàng</th>
+                            <th fieldName="PhoneNumber">Số điện thoại</th>
+                            <th class="field-long" fieldName="ReceiveInfo">Thông tin nhận hàng</th>
+                            <th class="field-long" fieldName="ProductInfo">Sản phẩm</th>
+                            <th fieldName="CreateDate" formatType="ddmmyy" class="text-align-center">Thời gian tạo</th>
+                            <th fieldName="UpdateDate" formatType="ddmmyy" class="text-align-center">Thời gian cập nhật</th>
+                            <th fieldName="Total" formatType="money" class="text-align-right">Tổng tiền</th>
+                            <th fieldName="State">Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+    <script src="/js/lib/jquery-3.5.1.min.js"></script>
+    <script src="/js/comon/common.js"></script>
+    <script src="/js/base/base.js"></script>
+</body>
+</html>

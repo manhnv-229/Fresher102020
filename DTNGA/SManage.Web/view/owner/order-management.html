@@ -1,0 +1,463 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="/css/common/main.css" rel="stylesheet" />
+    <link href="/css/page/common.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- navbar -->
+    <div class="navbar">
+        <div class="nav-header">
+            <div class="logo-box">
+                <div class="m-icon toggle-icon"></div>
+                <div class="logo-image"></div>
+            </div>
+        </div>
+        <div class="nav-content">
+            <a href="add-order.html">
+                <div class="nav-item" tabindex="1">
+                    <div class="nav-item-box">
+                        <div class="m-icon nav-item-icon create-order-icon"></div>
+                        <div class="nav-item-text">Tạo đơn mới</div>
+                    </div>
+                </div>
+            </a>
+            <a href="order-management.html">
+                <div class="nav-item" tabindex="2">
+                    <div class="nav-item-box">
+                        <div class="m-icon nav-item-icon orders-list-icon"></div>
+                        <div class="nav-item-text">Quản lý đơn hàng</div>
+                    </div>
+                </div>
+            </a>
+            <a href="">
+                <div class="nav-item" tabindex="3">
+                    <div class="nav-item-box">
+                        <div class="m-icon nav-item-icon shipping-icon"></div>
+                        <div class="nav-item-text">Vận chuyển</div>
+                    </div>
+                </div>
+            </a>
+            <a href="">
+                <div class="nav-item" tabindex="4">
+                    <div class="nav-item-box">
+                        <div class="m-icon nav-item-icon setting-icon"></div>
+                        <div class="nav-item-text">Thiết lập</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left"></div>
+
+        <div class="header-right">
+            <div class="header-right-box">
+                <div class="avatar"></div>
+                <div class="username"></div>
+                <div class="m-icon setting-more-icon"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <div class="content-header">
+            <div class="content-header-title">Đơn hàng</div>
+            <div class="content-header-right"></div>
+        </div>
+        <div class="content-filter">
+            <div class="content-filter-left">
+                <div class="m-input">
+                    <div class="m-icon search-icon"></div>
+                    <input class="search-field" id="search-field" name="seacrh" type="text" placeholder="Tìm kiếm theo mã đơn hàng/số điện thoại" />
+                </div>
+                <div class="m-dropdown state-box">
+                    <select>
+                        <option>Mới</option>
+                        <option>Đã xác nhận</option>
+                        <option>Chờ giao hàng</option>
+                        <option>Đang giao hàng</option>
+                        <option>Đã nhận hàng</option>
+                        <option>Hoàn hàng</option>
+                        <option>Đã thanh toán</option>
+                    </select>
+                </div>
+            </div>
+            <div class="content-filter-right">
+                <button class="m-button-icon" id="btn-addOrder">
+                    <div class="m-icon add-icon"></div>
+                </button>
+                <button class="m-button-icon" id="btn-refresh">
+                    <div class="m-icon refresh-icon"></div>
+                </button>
+            </div>
+        </div>
+        <div class="grid">
+            <table class="m-table" id="orders-table">
+                <thead>
+                    <tr>
+                        <th class="field-short" fieldName="Checkbox">
+                            <input type="checkbox" name="order" id="checkAll" />
+                        </th>
+                        <th fieldName="OrderCode">
+                            <div class="thead-box">
+                                <div class="thead-text">Mã đơn hàng</div>
+                                <div class="m-icon sort-icon"></div>
+                            </div>
+                        </th>
+                        <th fieldName="CustomerName">
+                            <div class="thead-box">
+                                <div class="thead-text">Khách hàng</div>
+                                <div class="m-icon sort-icon"></div>
+                            </div>
+                        </th>
+                        <th fieldName="PhoneNumber">
+                            <div class="thead-box">
+                                <div class="thead-text">Số điện thoại</div>
+                                <div class="m-icon sort-icon"></div>
+                            </div>
+                        </th>
+                        <th class="field-long" fieldName="ReceiveInfo">
+                            <div class="thead-box">
+                                <div class="thead-text">Thông tin nhận hàng</div>
+                                <div class="m-icon sort-icon"></div>
+                            </div>
+                        </th>
+                        <th class="field-long" fieldName="ProductInfo">
+                            <div class="thead-box">
+                                <div class="thead-text">Sản phẩm</div>
+                                <div class="m-icon sort-icon"></div>
+                            </div>
+                        </th>
+                        <th fieldName="CreateDate" formatType="ddmmyy" class="text-align-center">
+                            <div class="thead-box">
+                                <div class="thead-text">Thời gian tạo</div>
+                                <div class="m-icon sort-icon"></div>
+                            </div>
+                        </th>
+                        <th fieldName="UpdateDate" formatType="ddmmyy" class="text-align-center">
+                            <div class="thead-box">
+                                <div class="thead-text">Thời gian cập nhật</div>
+                                <div class="m-icon sort-icon"></div>
+                            </div>
+                        </th>
+                        <th fieldName="Total" formatType="money" class="text-align-right">
+                            <div class="thead-box">
+                                <div class="thead-text">Tổng tiền</div>
+                                <div class="m-icon sort-icon"></div>
+                            </div>
+                        </th>
+                        <th fieldName="State">
+                            <div class="thead-box">
+                                <div class="thead-text">Trạng thái</div>
+                                <div class="m-icon sort-icon"></div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="paging">
+            <div class="paging-left">
+                <div class="paging-left-text">Hiển thị <span>1-15/100</span> đơn hàng</div>
+            </div>
+            <div class="paging-mid">
+                <button class="m-button-icon">
+                    <div class="m-icon chevrons-left-icon"></div>
+                </button>
+                <button class="m-button-icon chevron-left">
+                    <div class="m-icon chevron-left-icon"></div>
+                </button>
+                <div class="paging-numbber">
+                    <button class="m-button-round">1</button>
+                    <button class="m-button-round">2</button>
+                    <button class="m-button-round">3</button>
+                    <button class="m-button-round">4</button>
+                </div>
+                <button class="m-button-icon chevron-right">
+                    <div class="m-icon chevron-right-icon"></div>
+                </button>
+                <button class="m-button-icon">
+                    <div class="m-icon chevrons-right-icon"></div>
+                </button>
+            </div>
+            <div class="paging-right">
+                <select>
+                    <option>15/trang</option>
+                    <option>20/trang</option>
+                    <option>25/trang</option>
+                    <option>30/trang</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- dialog -->
+    <div class="m-dialog">
+        <div class="modal"></div>
+        <div class="dialog-detail">
+            <div class="dialog-header">
+                <div class="header-text">ĐƠN HÀNG</div>
+                <div class="btn-exit" id="btn-exit"></div>
+            </div>
+            <div class="dialog-body">
+                <div class="dialog-col dialog-col-left">
+                    <div class="content-box">
+                        <div class="box-title">THÔNG TIN CHUNG </div>
+                        <div class="box-body">
+                            <div class="input-line">
+                                <div class="input-box input-box-small">
+                                    <div class="input-title">Mã đơn hàng</div>
+                                    <span fieldName="OrderCode">005</span>
+                                </div>
+                            </div>
+                            <div class="input-line">
+                                <div class="input-box input-box-small">
+                                    <div class="input-title">Người tạo</div>
+                                    <span fieldName="CreatedBy">Đặng Thị Nga</span>
+                                </div>
+                            </div>
+                            <div class="input-line">
+                                <div class="input-box input-box-small">
+                                    <div class="input-title">Người xử lý</div>
+                                    <span fieldName="ProcessingBy">Đặng Thị Nga</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dialog-col dialog-col-mid">
+                    <div class="content-box">
+                        <div class="box-title">THÔNG TIN SẢN PHẨM </div>
+                        <div class="box-body">
+                            <div class="input-line">
+                                <div class="input-box input-box-big">
+                                    <div class="input-title">Giỏ hàng</div>
+                                    <div class="product-list">
+                                        <div class="product-detail">
+                                            <div class="product-line">
+                                                <div class="product-line-left">
+                                                    <div class="sort">1</div>
+                                                    <div class="product-code">DasT-szS</div>
+                                                </div>
+                                                <div class="product-line-right">
+                                                    <div><input class="m-input price" type="text" typeFormat="money" /></div>
+                                                    <div> x </div>
+                                                    <div><input class="m-input quantity" type="number" min="0" value="1" /></div>
+                                                </div>
+                                            </div>
+                                            <div class="cost-line">
+                                                <div class="cost">5000000</div>
+                                            </div>
+                                        </div>
+                                        <div class="product-detail">
+                                            <div class="product-line">
+                                                <div class="product-line-left">
+                                                    <div class="sort">2</div>
+                                                    <div class="product-code">DasT-szS</div>
+                                                </div>
+                                                <div class="product-line-right">
+                                                    <div><input class="m-input price" type="text" typeFormat="money" /></div>
+                                                    <div> x </div>
+                                                    <div><input class="m-input quantity" type="number" min="0" value="1" /></div>
+                                                </div>
+                                            </div>
+                                            <div class="cost-line">
+                                                <div class="cost">5000000</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="total-line">
+                                        <div class="total-quantity">Tổng sản phẩm: <span>2</span></div>
+                                        <div class="total-money">1000000</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-box">
+                        <div class="box-title">THÔNG TIN NGƯỜI NHẬN</div>
+                        <div class="box-body">
+                            <div class="input-line">
+                                <div class="input-box input-box-small">
+                                    <div class="input-title">Tên khách hàng (<span>*</span>)</div>
+                                    <input class="m-input" type="text" required fieldName="CustomerName" />
+                                </div>
+                                <div class="input-box input-box-small">
+                                    <div class="input-title">Số điện thoại (<span>*</span>)</div>
+                                    <input class="m-input" type="tel" required fieldName="PhoneNumber" />
+                                </div>
+                            </div>
+                            <div class="input-line">
+                                <div class="input-box input-box-big ">
+                                    <div class="input-title">Địa chỉ (<span>*</span>)</div>
+                                    <input class="m-input" type="text" required fieldName="Address" />
+                                </div>
+                            </div>
+                            <div class="input-line">
+                                <div class="input-box input-box-small">
+                                    <div class="input-title">Tỉnh/Thành phố (<span>*</span>)</div>
+                                    <div class="m-select" fieldName="Province">
+                                        <select class="m-input" validate="false">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="input-box input-box-small">
+                                    <div class="input-title">Quận/Huyện (<span>*</span>)</div>
+                                    <div class="m-select" fieldName="District">
+                                        <select class="m-input" validate="false">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-line">
+                                <div class="input-box input-box-small">
+                                    <div class="input-title">Phường/Xã</div>
+                                    <div class="m-select" fieldName="Ward">
+                                        <select class="m-input">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="dialog-col dialog-col-right">
+                    <div class="content-box">
+                        <div class="box-title">THÔNG TIN VẬN CHUYỂN</div>
+                        <div class="box-body">
+                            <div class="input-line">
+                                <div class="input-box input-box-small">
+                                    <div class="input-title">Đơn vị vận chuyển (<span>*</span>)</div>
+                                    <div class="m-select" fieldName="TransportorId">
+                                        <select class="m-input" validate="false">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-line">
+                                <div class="input-box input-box-small">
+                                    <div class="input-title">Phí vận chuyển (<span>*</span>)</div>
+                                    <input class=" m-input" type="number" required fieldName="ProductName" typeFormat="money" />
+                                </div>
+                            </div>
+                            <div class="input-line">
+                                <div class="input-box input-box-small">
+                                    <div class="input-title">Thời gian lấy hàng</div>
+                                    <div class="radio-button-group">
+                                        <label class="m-radio">
+                                            <input class="radio" type="radio" name="picktime" value="0" fieldName="PickTime" />
+                                            <span class="checkmark"></span>
+                                            <label>Buổi sáng</label>
+                                        </label>
+                                        <label class="m-radio">
+                                            <input class="radio" type="radio" name="picktime" value="1" fieldName="PickTime" />
+                                            <span class="checkmark"></span>
+                                            <label>Buổi tối</label>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="input-box input-box-small">
+                                    <div class="input-title">Thời gian nhận hàng</div>
+                                    <div class="radio-button-group">
+                                        <label class="m-radio">
+                                            <input class="radio" type="radio" name="receivetime" value="0" fieldName="ReceiveTime" />
+                                            <span class="checkmark"></span>
+                                            <label>Buổi sáng</label>
+                                        </label>
+                                        <label class="m-radio">
+                                            <input class="radio" type="radio" name="receivetime" value="1" fieldName="ReceiveTime" />
+                                            <span class="checkmark"></span>
+                                            <label>Buổi tối</label>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-box">
+                        <div class="box-title">THÔNG TIN THANH TOÁN </div>
+                        <div class="box-body">
+                            <div class="input-line">
+                                <div class="input-box input-box-medium">
+                                    <div class="input-title">Tổng số tiền</div>
+                                    <input class=" m-input" type="text" required fieldName="ProductCode" validate="false" />
+                                </div>
+                            </div>
+                            <div class="input-line">
+                                <div class="input-box input-box-medium">
+                                    <div class="input-title">Đã thanh toán</div>
+                                    <input class=" m-input" type="text" required fieldName="ProductName" validate="false" />
+                                </div>
+                            </div>
+                            <div class="input-line">
+                                <div class="input-box input-box-medium">
+                                    <div class="input-title">Còn thiếu</div>
+                                    <input class=" m-input" type="text" required fieldName="ProductName" validate="false" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dialog-footer">
+                <button class="m-button m-button-short btn-cancel" id="btn-cancel">Hủy</button>
+                <button class="m-button" id="btn-save">
+                    <div class="m-icon save-icon"></div>
+                    <div class="btn-text">Lưu</div>
+                </button>
+                <button class="m-button m-button-long" id="btn-saveAdd">Lưu và thêm mới</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup -->
+    <div class="m-popup" id="popup-delete">
+        <div class="modal"></div>
+        <div class="popup popup-delete">
+            <div class="popup-header">
+                <div class="popup-header-text">Xóa bản ghi A</div>
+                <button class="btn-exit" id="btn-exit-popup"></button>
+            </div>
+            <div class="popup-body">
+                <div class="popup-body-icon warning-icon"></div>
+                <div class="popup-body-text">Bạn có chắc chắn muốn xóa khách hàng <span id="spanName" fieldName="CustomerName">Nguyễn Văn Mạnh</span> (Mã khách hàng <span id="spanCode" fieldName="CustomerCode">KH00099</span>) không?</div>
+            </div>
+            <div class="popup-footer">
+                <button class="m-btn m-btn-short btn-cancel" id="btn-cancel-popup">Hủy</button>
+                <button class="m-btn m-btn-short btn-delete" id="btn-delete-popup">Xóa</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast messenger -->
+    <div class="m-toast-messeger" id="success-messeger">
+        <div class="toast-messeger" id="toast-messeger">
+            <div class="messeger-icon messeger-icon"></div>
+            <div class="messeger"><span id="spanName"></span> thành công</div>
+            <button class="messeger-icon btn-exit-messeger" id="btn-exit-messeger"></button>
+        </div>
+    </div>
+
+    <div class="m-toast-messeger" id="fail-messeger">
+        <div class="toast-messeger" id="toast-messeger">
+            <div class="messeger-icon messeger-icon"></div>
+            <div class="messeger"><span id="spanName"></span> không thành công</div>
+            <button class="messeger-icon btn-exit-messeger" id="btn-exit-messeger"></button>
+        </div>
+    </div>
+
+    <!-- Thư viện -->
+    <script src="/js/lib/jquery-3.5.1.min.js"></script>
+    <script src="/js/common/common.js"></script>
+    <script src="/js/common/base.js"></script>
+    <script src="/js/page/order-management.js"></script>
+</body>
+</html>
