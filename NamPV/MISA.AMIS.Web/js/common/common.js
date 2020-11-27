@@ -1,7 +1,7 @@
-﻿
-$(document).ready(function () {
+﻿$(document).ready(function () {
     setSizeInputPlaceholder();
 })
+
 /**
  * Định dạng date về dạng ngày/tháng/năm
  * @param {Date} date
@@ -36,52 +36,57 @@ function formatMoney(money) {
     }
 }
 
-/**
- * Ẩn hiện dialog
- * CreatedBy: NVManh (13/11/2020)
- */
-dialogDetail = $(".dialog-modal").dialog({
-    autoOpen: false,
-    fluid: true,
-    minWidth: 700,
-    resizable: true,
-    position: ({ my: "center", at: "center", of: window }),
-    modal: true,
-    title: `Thông tin khách hàng`
-});
+commonJS = {
+    /**
+     * Ẩn hiện dialog
+     * CreatedBy: NVManh (13/11/2020)
+     */
+    dialogDetail: $(".dialog-modal").dialog({
+        autoOpen: false,
+        fluid: true,
+        minWidth: 700,
+        resizable: true,
+        position: ({
+            my: "center",
+            at: "center",
+            of: window
+        }),
+        modal: true,
+        title: `Thông tin khách hàng`
+    }),
+    /**
+     * Khai báo dialog xác nhận xoá bản ghi
+     * CreatedBy: NamPV (16/11/2020)
+     */
+    dialogConfirm: $(`.customer-delete`).dialog({
+        title: `Xác nhận xoá`,
+        autoOpen: false,
+        modal: true,
+        open: function () {
+            $('.FullName').text($(`.row-selected td[id="FullName"]`).html());
+            $(`.CustomerCode`).text($(`.row-selected td[id="CustomerCode"]`).html());
+        }
+    }),
+    /**
+     * Khai báo popup thông báo dữ liệu không hợp lệ
+     * CreatedBy: NamPV (22/11/2020)
+     */
+    dialogNotify: $(`.data-invalid`).dialog({
+        title: `Thông báo`,
+        autoOpen: false,
+        modal: true
+    })
+}
 
 /**
  * Chuyển đổi string về ngày tháng
  * @param {string} string
  * CreatedBy: NamPV (16/11/2020)
  */
-function formatDateReg(date) {
-    var arr = formatDate(date).split(`/`);
-    return arr[2] + '-' + arr[1] + '-' + arr[0];
+function stringToDate(string) {
+    var arr = string.split(`/`);
+    return new Date(arr[2] + '-' + arr[1] + '-' + arr[0]);
 }
-
-/**
- * Khai báo dialog xác nhận xoá bản ghi
- * CreatedBy: NamPV (16/11/2020)
- */
-dialogConfirm = $(`.customer-delete`).dialog({
-    title: `Xác nhận xoá`,
-    autoOpen: false,
-    modal: true,
-    open: function () {
-        $('.FullName').text($(`.row-selected td[id="FullName"]`).html());
-        $(`.CustomerCode`).text($(`.row-selected td[id="CustomerCode"]`).html());
-    }
-})
-/**
- * Khai báo popup thông báo dữ liệu không hợp lệ
- * CreatedBy: NamPV (22/11/2020)
- */
-dialogNotify = $(`.data-invalid`).dialog({
-    title: `Thông báo`,
-    autoOpen: false,
-    modal: true
-})
 
 /**
  * Hiển thị popup thông báo
@@ -101,3 +106,25 @@ function setSizeInputPlaceholder() {
         $(this).attr('size', $(this).attr('placeholder').length);
     })
 };
+
+/**
+ * Chọn ngày tháng năm
+ * CreatedBy: NamPV (23/11/2020)
+ * */
+function pickDate() {
+    $(`.datepicker-icon`).datepicker({
+        onSelect: function () {
+            $(this).datepicker(`destroy`);
+            var fieldname = $(this).attr(`fieldname`);
+            $(`input[fieldname=${fieldname}]`).val(formatDate($(this).val()));
+        }
+    });
+}
+/**
+ * Xoá ký tự đã nhập liệu vào input
+ * CreatedBy: NamPV(23/11/2020)
+ * */
+function clearInputText() {
+    var fieldname = $(this).attr(`fieldname`);
+    $(`input[fieldname=${fieldname}], input[name=${fieldname}]`).val(``);
+})
