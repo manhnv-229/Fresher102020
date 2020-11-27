@@ -91,6 +91,7 @@
         }
 
         .dialog-detail .dialog-body .content-box {
+            margin-top: 16px;
         }
 
     .dialog-detail .dialog-col .content-box .box-title {
@@ -171,16 +172,31 @@
         color: #019160;
         margin-top: 4px;
     }
-/*footer*/
-.dialog-detail .dialog-footer {
-    width: 100%;
-    height: 60px;
-    display: flex;
-    background-color: #E9EBEE;
-    align-items: center;
-    justify-content: flex-end;
-    border-radius: 0 0 4px 4px;
+.total-line{
+    display:flex;
+    justify-content: space-between;
+    border-top: 1px solid #e5e5e5;
+    height: 40px;
+    align-items:center;
 }
+    .total-line .total-quantity span {
+        margin-left: 10px;
+        font-weight: bold;
+    }
+    .total-line .total-money{
+        color: #019160;
+        font-weight: bold;
+    }
+    /*footer*/
+    .dialog-detail .dialog-footer {
+        width: 100%;
+        height: 60px;
+        display: flex;
+        background-color: #E9EBEE;
+        align-items: center;
+        justify-content: flex-end;
+        border-radius: 0 0 4px 4px;
+    }
 
     .dialog-detail .dialog-footer button {
         margin-right: 16px;

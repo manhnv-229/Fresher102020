@@ -60,6 +60,11 @@
 .refresh-icon {
     background-image: url('/content/icon/common/BlackIcon/rotate-cw.svg');
 }
+
+.save-icon {
+    background-image: url('/content/icon/common/whiteIcon/save-icon-white.png');
+    opacity:1;
+}
 /*grid*/
 
 .sort-icon {

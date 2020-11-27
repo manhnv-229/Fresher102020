@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="nav-content">
-            <a href="add-order.html"> 
+            <a href="add-order.html">
                 <div class="nav-item" tabindex="1">
                     <div class="nav-item-box">
                         <div class="m-icon nav-item-icon create-order-icon"></div>
@@ -54,11 +54,7 @@
 
     <!-- Header -->
     <div class="header">
-        <div class="header-left">
-            <select>
-                <option>Kho MIXI</option>
-            </select>
-        </div>
+        <div class="header-left"></div>
 
         <div class="header-right">
             <div class="header-right-box">
@@ -74,6 +70,21 @@
         <div class="content-header">
             <div class="content-header-title">Tạo đơn</div>
             <div class="content-header-right"></div>
+        </div>
+        <div class="content-filter">
+            <div class="content-filter-left">
+                <div class="m-input">
+                    <div class="m-icon search-icon"></div>
+                    <input class="search-field" id="search-product-field" name="seacrh" type="text" placeholder="Tìm kiếm theo tên sản phẩm" />
+                </div>
+            </div>
+            <div class="content-filter-right">
+                <button class="m-button m-button-short btn-cancel" id="btn-clear">Nhập lại</button>
+                <button class="m-button" id="btn-create">
+                    <div class="m-icon save-icon"></div>
+                    <div class="btn-text">Lưu</div>
+                </button>
+            </div>
         </div>
         <div class="dialog-detail">
             <div class="dialog-body">
@@ -130,6 +141,10 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="total-line">
+                                <div class="total-quantity">Tổng sản phẩm: <span>2</span></div>
+                                <div class="total-money">1000000</div>
+                            </div>
                         </div>
                     </div>
                     <div class="content-box">
@@ -138,31 +153,31 @@
                             <div class="input-line">
                                 <div class="input-box input-box-small">
                                     <div class="input-title">Tên khách hàng (<span>*</span>)</div>
-                                    <input class="m-input" type="text" required fieldName="CustomerName" />
+                                    <input class="m-input" type="text" required fieldName="CustomerName" validate="false" />
                                 </div>
                                 <div class="input-box input-box-small">
                                     <div class="input-title">Số điện thoại (<span>*</span>)</div>
-                                    <input class="m-input" type="tel" required fieldName="PhoneNumber" />
+                                    <input class="m-input" type="tel" required fieldName="PhoneNumber" validate="false" />
                                 </div>
                             </div>
                             <div class="input-line">
                                 <div class="input-box input-box-big ">
                                     <div class="input-title">Địa chỉ (<span>*</span>)</div>
-                                    <input class="m-input" type="text" required fieldName="Address" />
+                                    <input class="m-input" type="text" required fieldName="Address" validate="false" />
                                 </div>
                             </div>
                             <div class="input-line">
                                 <div class="input-box input-box-small">
                                     <div class="input-title">Tỉnh/Thành phố (<span>*</span>)</div>
                                     <div class="m-select" fieldName="Province">
-                                        <select class="m-input">
+                                        <select class="m-input" validate="false">
                                         </select>
                                     </div>
                                 </div>
                                 <div class="input-box input-box-small">
                                     <div class="input-title">Quận/Huyện (<span>*</span>)</div>
                                     <div class="m-select" fieldName="District">
-                                        <select class="m-input">
+                                        <select class="m-input" validate="false">
                                         </select>
                                     </div>
                                 </div>
@@ -171,7 +186,7 @@
                                 <div class="input-box input-box-small">
                                     <div class="input-title">Phường/Xã (<span>*</span>)</div>
                                     <div class="m-select" fieldName="Ward">
-                                        <select class="m-input">
+                                        <select class="m-input" validate="false">
                                         </select>
                                     </div>
                                 </div>
@@ -187,7 +202,7 @@
                                 <div class="input-box input-box-small">
                                     <div class="input-title">Đơn vị vận chuyển (<span>*</span>)</div>
                                     <div class="m-select" fieldName="TransportorId">
-                                        <select class="m-input">
+                                        <select class="m-input" validate="false">
                                         </select>
                                     </div>
                                 </div>
@@ -195,7 +210,7 @@
                             <div class="input-line">
                                 <div class="input-box input-box-small">
                                     <div class="input-title">Phí vận chuyển (<span>*</span>)</div>
-                                    <input class=" m-input" type="number" required fieldName="ProductName" typeFormat="money" />
+                                    <input class=" m-input" type="number" required fieldName="ProductName" typeFormat="money" validate="false" />
                                 </div>
                             </div>
                             <div class="input-line">
@@ -235,12 +250,6 @@
                     <div class="content-box">
                         <div class="box-title">THÔNG TIN THANH TOÁN </div>
                         <div class="box-body">
-                            <div class="input-line">
-                                <div class="input-box input-box-medium">
-                                    <div class="input-title">Phí vận chuyển</div>
-                                    <input class=" m-input" type="text" required fieldName="ProductCode" validate="false" />
-                                </div>
-                            </div>
                             <div class="input-line">
                                 <div class="input-box input-box-medium">
                                     <div class="input-title">Tổng số tiền</div>

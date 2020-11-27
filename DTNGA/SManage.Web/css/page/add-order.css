@@ -1,12 +1,11 @@
 ﻿.content .dialog-detail {
-    width: calc(100% - 32px);
-    height: calc(100vh - 100px);
+    height: calc(100vh - 171px);
     border-radius: 0;
     top: 0;
     left: 0;
     position: absolute;
     z-index: 0;
-    margin-top: 56px;
+    margin-top: 122px;
     margin-left: 16px;
     background-color: none;
 }
@@ -19,3 +18,6 @@
         justify-content: left;
         overflow: scroll;
     }
+.dialog-detail .dialog-body .dialog-col {
+    width: 50%;
+}

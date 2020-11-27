@@ -4,8 +4,8 @@ class Base {
         try {
             var me = this;
             me.ObjectName = "Order";
-            me.loadCommonElement();
             me.loadAccount();
+            me.loadShop();
             me.loadData();
             me.initEvent();
         }
@@ -14,10 +14,6 @@ class Base {
         }
     }
 
-    loadCommonElement() {
-        $(`#navbar`).load("/view/common/navbar.html");
-        $(`#header`).load("/view/common/header.html");
-    }
 
     /** Thực hiện lấy thông tin người dùng sau khi đăng nhập
      * CreatedBy dtnga (26/11/2020)
@@ -27,6 +23,27 @@ class Base {
         var user = userInfo;
         var fullName = user["FullName"];
         $(`.header .username`).text(fullName);
+    }
+
+    /** Thực hiện load thông tin cửa hàng do user làm chủ
+     * CreatedBy dtnga (27/11/2020)
+     * */
+    loadShop() {
+        // TODO lấy danh sách cửa hàng do user làm chủ từ API
+        var shops = listShop;
+        //bind tên shop + id vào combobox
+        var select = $(`<select></select>`);
+        $.each(shops, function (index, shop) {
+            var option = $(`<option></option>`);
+            var shopName = shop["ShopName"];
+            var shopId = shop["ShopId"];
+            option.append(shopName);
+            select.append(option);
+            // Lưu shopId vào data
+            option.data("keyId", shopId);
+        });
+        var headerLeft = $(`.header .header-left`);
+        headerLeft.append(select);
     }
 
     /* Hàm thực hiện khởi tạo sự kiện
@@ -122,7 +139,7 @@ class Base {
         try {
             var me = this;
             // kiểm tra validate (bắt buộc nhập, email, ...), nếu vẫn còn trường chưa valid thì cảnh báo
-            var invalidInputs = $(`input[validate="false"]`);
+            var invalidInputs = $(`input[validate="false"], select[validate="false"]`);
             if (invalidInputs && invalidInputs.length > 0) {
                 $.each(invalidInputs, function (index, input) {
                     $(input).trigger('blur');
@@ -248,12 +265,12 @@ class Base {
     * CreatedBy dtnga (17/11/2020) 
     */
     clear() {
-        $(`input`).val(null);
-        $(`input[required],input[type="email"]`).removeClass("m-input-warning");
-        $(`input[required],input[type="email"]`).attr('validate', 'false');
+        $(`.m-dialog input`).val(null);
+        $(`.m-dialog input[required],input[type="email"]`).removeClass("m-input-warning");
+        $(`.m-dialog input[required],input[type="email"]`).attr('validate', 'false');
         //clear ngày, select, radio button
-        $(`input[type="radio"]`).prop('checked', false);
-        $(`select option`).remove();
+        $(`.m-dialog input[type="radio"]`).prop('checked', false);
+        $(`.m-dialog select option`).remove();
     }
 
     /** Hàm thực hiện làm mới dữ liệu
@@ -294,7 +311,6 @@ class Base {
         $(`.m-dialog .header-text`).text("Cập nhật đơn hàng");
         // Hiển thị dialog
         me.showDialog();
-
         //TODO  bind dữ liệu hàng được chọn lên form
         var id = selected.data('keyId');
         // Lấy thông tin từ api bằng id tương ứng
@@ -412,9 +428,24 @@ class Base {
 }
 
 var userInfo = {
+    UserId: "d8c26030-7d87-4983-9cba-1fde544a25b0",
     FullName: "Đặng Thị Nga"
 }
 
+var listShop = [
+    {
+        ShopId: "a8f94c16-d0c8-4079-aa08-ebc60f23db63",
+        ShopName: "Kho MIXI"
+    },
+    {
+        ShopId: "a2472d49-dd5b-4c91-968b-454f7e69ab5d",
+        ShopName: "Kho ANAN"
+    },
+    {
+        ShopId: "61907e71-271b-4186-83e2-e488cdb99d78",
+        ShopName: "Kho Guadiant"
+    }
+]
 var listOrderState = [
     {
         OrderStateId: "eaf88144-42b8-4adb-89da-4df5b9103389",
