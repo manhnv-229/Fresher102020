@@ -36,7 +36,11 @@
     color: #FF4747;
 }
 
-
+/*trường input có kiểu là money*/
+input[typeFormat="money"] {
+    text-align: right;
+    padding-right: 16px;
+}
 /*-----------------*/
 /*input type "radio"*/
 /**/
@@ -51,6 +55,7 @@
         position: absolute;
         opacity: 0;
         cursor: pointer;
+        width: 100%;
     }
     /* Tạo radio button mới*/
     .m-radio .checkmark {

@@ -1,4 +1,16 @@
-﻿.content .dialog-detail {
+﻿/* Button*/
+
+.btn-clear {
+    color: #ffffff;
+    background-color: #E9EBEE;
+    color: #000000;
+}
+
+    .btn-clear:hover {
+        background-color: #bbbbbb;
+    }
+/* style lại thành phần body*/
+.content .dialog-detail {
     height: calc(100vh - 171px);
     border-radius: 0;
     top: 0;
@@ -21,3 +33,4 @@
 .dialog-detail .dialog-body .dialog-col {
     width: 50%;
 }
+

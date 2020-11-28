@@ -54,10 +54,18 @@ class Base {
             var me = this;
             $(`#btn-addOrder`).on("click", me.onClick_btnAdd.bind(me));
             $(`#btn-refresh`).on("click", me.onClick_btnRefresh.bind(me));
+            $(`#btn-create`).on("click", me.onClick_btnCreate.bind(me));
+            $(`#btn-clear`).on("click", me.onClick_btnClear.bind(me));
             // TODO sự kiện khi nhập trường Tìm kiếm
 
             // TODO Sự kiện khi chọn filter
-
+            // Set autocomplete cho các trường yêu cầu AutoCompete
+            me.autoComplete();
+            // format khi nhập liệu số tiền
+            me.autoFormatMoney();
+            // kiểm tra dữ liệu
+            me.checkRequired();
+            me.validateEmail();
             // Sự kiện khi thao tác với từng hàng dữ liệu trong bảng
             $(`table tbody`).on("click", "tr", me.tr_onClick);
             $(`table tbody`).on("dblclick", "tr", me.onDblClick_trow.bind(me));
@@ -69,6 +77,100 @@ class Base {
             console.log(e);
         }
 
+    }
+
+    /** Hàm thực hiện set AutoComplete cho các trường yêu cầu AutoComplete
+     * CreatedBy dtnga (28/11/200)
+     * */
+    autoComplete() {
+        var inputs = $(`input[autocomplete="on"]`);
+        $.each(inputs, function (index, input) {
+            var fieldName = $(input).attr("fieldName");
+            var data = listProduct;
+            //Tạo source theo fielName của trường input
+            var sourceList = [];
+            $.each(data, function (index, item) {
+                var label= item[fieldName];
+                var value = item["ProductId"]; // TODO :)
+                sourceList.push({ label: label, value: value });
+            });
+            $(input).autocomplete({
+                source: sourceList,
+                autoFocus: true,
+                focus: function (event, suggest) {
+                    $(input).val(suggest.item.label);
+                    return false;
+                },
+                select: function (event, suggest) {
+                    $(input).val(suggest.item.label);
+                    return false;
+                }
+            });
+        })
+    }
+
+    /** Hàm thực hiện clear dữ liệu khi nhấn button Clear
+     * CreatedBy dtnga (27/11/2020)
+     * */
+    onClick_btnClear() {
+        var me = this;
+        me.clear($(`.dialog-detail`));
+    }
+
+    /** Hàm thực hiện thêm đơn hàng
+     * CreatedBy dtnga (27/11/2020)
+     * */
+    onClick_btnCreate() {
+        try {
+            var me = this;
+            // kiểm tra validate (bắt buộc nhập, email, ...), nếu vẫn còn trường chưa valid thì cảnh báo
+            var invalidInputs = $(`input[validate="false"], select[validate="false"]`);
+            if (invalidInputs && invalidInputs.length > 0) {
+                $.each(invalidInputs, function (index, input) {
+                    $(input).trigger('blur');
+                });
+                invalidInputs[0].focus();
+            }
+            // build dữ liệu
+            // Lấy dữ liệu từ input
+            var obj = new Object();
+            var inputs = $(`.dialog-detail input`);
+            $.each(inputs, function (index, input) {
+                var value = $(input).val();
+                var fieldName = $(input).attr('fieldName');
+                // gán dữ liệu vào thuộc tính của obj (json) tương ứng với fieldName
+                if (input.type == "radio") {
+                    if (input.checked)
+                        obj[fieldName] = value;
+                }
+                else {
+                    obj[fieldName] = value;
+                }
+            });
+            console.log(obj);
+            if (me.formMode == "add") var method = "POST";
+            else if (me.formMode == "edit") var method = "PUT";
+            // Gọi Api Lưu dữ liệu
+            //$.ajax({
+            //    url: me.Host + me.apiRouter,
+            //    method: method,
+            //    data: JSON.stringify(obj),
+            //    contentType: "application/json"
+            //}).done(function (res) {
+            //    me.status = "success";
+            //    me.openToastMesseger();
+            //}).fail(function (res) {
+            //    console.log(res);
+            //    me.status = "fail";
+            //    me.openToastMesseger();
+            //})
+
+            // Lưu và thêm 
+
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
 
     /** Hàm thực hiện thêm dữ liệu mới
@@ -91,13 +193,7 @@ class Base {
         var me = this;
         var dialog = $(`.m-dialog`);
         dialog.show();
-        //tự động focus
-        me.addFocusSupport();
-        // format khi nhập liệu số tiền
-        me.autoFormatMoney();
-        // kiểm tra dữ liệu
-        me.checkRequired();
-        me.validateEmail();
+        
         // đóng form khi nhấn ESC
         $('body').on("keydown", me.onClick_ESC.bind(dialog));
         $(`#btn-exit`).on("click", me.onClick_Exit_Dialog.bind(me));
@@ -186,7 +282,6 @@ class Base {
         catch (e) {
             console.log(e);
         }
-
     }
 
     /** Hàm hỗ trợ focus nhập liệu
@@ -194,8 +289,7 @@ class Base {
      * */
     addFocusSupport() {
         try {
-            var me = this;
-            var inputs = $(`.m-dialog input`)
+            var inputs = $(`input[type="text"]`);
             // focus đến ô nhập liệu đầu tiên
             inputs[0].focus();
         }
@@ -245,8 +339,8 @@ class Base {
      Created by dtnga (14/11/2020)
      */
     onClick_Exit_Dialog() {
-        this.clear();
         var dialog = $(`.m-dialog`);
+        this.clear(dialog);
         dialog.hide();
     }
 
@@ -261,16 +355,16 @@ class Base {
             }
         });
     }
-    /** Thực hiện clear dữ liệu và cảnh báo trên form
+    /** Thực hiện clear dữ liệu và cảnh báo trên object truyền vào hàm
     * CreatedBy dtnga (17/11/2020) 
     */
-    clear() {
-        $(`.m-dialog input`).val(null);
-        $(`.m-dialog input[required],input[type="email"]`).removeClass("m-input-warning");
-        $(`.m-dialog input[required],input[type="email"]`).attr('validate', 'false');
+    clear(obj) {    
+        $(obj).find(`input`).val(null);
+        $(obj).find(`input[required],input[type="email"]`).removeClass("m-input-warning");
+        $(obj).find(`input[required],input[type="email"]`).attr('validate', 'false');
         //clear ngày, select, radio button
-        $(`.m-dialog input[type="radio"]`).prop('checked', false);
-        $(`.m-dialog select option`).remove();
+        $(obj).find(`input[type="radio"]`).prop('checked', false);
+        $(obj).find(`select option`).remove();
     }
 
     /** Hàm thực hiện làm mới dữ liệu
@@ -446,6 +540,7 @@ var listShop = [
         ShopName: "Kho Guadiant"
     }
 ]
+
 var listOrderState = [
     {
         OrderStateId: "eaf88144-42b8-4adb-89da-4df5b9103389",
@@ -484,6 +579,58 @@ var listOrderState = [
     }
 
 
+]
+
+var listProduct = [
+    {
+        ProductId:"e16c44b9-1761-40c6-86c8-fc416c16cb3a",
+        ProductCode:"D82MS-H",
+        ProductName:"Máy tính kỹ thuật Deli - Đen/Xanh dương/Hồng/Trắng - D82MS",
+        Color:"Hồng",
+        Price:"178000"
+    },
+    {
+        ProductId:"c4c2a268-210e-4df4-89fa-10d2d106fbb1",
+        ProductCode:"D82MS-T",
+        ProductName:"Máy tính kỹ thuật Deli - Đen/Xanh dương/Hồng/Trắng - D82MS",
+        Color: "Trắng",
+        Price:"178000"
+    },
+    {
+        ProductId:"94c5c0e8-79ab-4c4f-9070-1cd1f0e1db04",
+        ProductCode:"D82MS-Đ",
+        ProductName:"Máy tính kỹ thuật Deli - Đen/Xanh dương/Hồng/Trắng - D82MS",
+        Color:"Đen",
+        Price:"178000"
+    },
+    {
+        ProductId:"7c7b7ae6-ce62-4232-8881-1158a9d7224b",
+        ProductCode:"D82MS-X",
+        ProductName:"Máy tính kỹ thuật Deli - Đen/Xanh dương/Hồng/Trắng - D82MS",
+        Color: "Xanh dương",
+        Price:"178000"
+    },
+    {
+        ProductId:"ecb85d35-baaf-476c-b029-e8e1e07cbf48",
+        ProductCode:"HA560",
+        ProductName:"Sổ tay còng A5 Deli - Bìa cứng - Có thể thay lõi sổ - Lõi ô vuông/kẻ ngang -HA560/NA560",
+        Type:"Sổ bìa trong - HA560",
+        Price:"85000"
+    },
+    {
+        ProductId:"0cd8a906-fc20-4481-b275-0c4ffbaa5490",
+        ProductCode:"NA560-V",
+        ProductName:"Sổ tay còng A5 Deli - Bìa cứng - Có thể thay lõi sổ - Lõi ô vuông/kẻ ngang -HA560/NA560",
+        Type:"Tệp ô vuông- NA560-V",
+        Price:"19000"
+    },
+    {
+        ProductId:"be5d4b42-f987-45c0-81bd-2ed41b15b91a",
+        ProductCode:"NA560-KN",
+        ProductName:"Sổ tay còng A5 Deli - Bìa cứng - Có thể thay lõi sổ - Lõi ô vuông/kẻ ngang -HA560/NA560",
+        Type:"Tệp ngang - NA560-KN",
+        Price:"19000"
+    }
 ]
 
 var listObj = [

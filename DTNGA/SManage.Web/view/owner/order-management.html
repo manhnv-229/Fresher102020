@@ -287,17 +287,17 @@
                             <div class="input-line">
                                 <div class="input-box input-box-small">
                                     <div class="input-title">Tên khách hàng (<span>*</span>)</div>
-                                    <input class="m-input" type="text" required fieldName="CustomerName" />
+                                    <input class="m-input" type="text" required fieldName="CustomerName"  validate="false" />
                                 </div>
                                 <div class="input-box input-box-small">
                                     <div class="input-title">Số điện thoại (<span>*</span>)</div>
-                                    <input class="m-input" type="tel" required fieldName="PhoneNumber" />
+                                    <input class="m-input" type="tel" required fieldName="PhoneNumber"  validate="false"/>
                                 </div>
                             </div>
                             <div class="input-line">
                                 <div class="input-box input-box-big ">
                                     <div class="input-title">Địa chỉ (<span>*</span>)</div>
-                                    <input class="m-input" type="text" required fieldName="Address" />
+                                    <input class="m-input" type="text" required fieldName="Address"  validate="false"/>
                                 </div>
                             </div>
                             <div class="input-line">
@@ -337,7 +337,7 @@
                                 <div class="input-box input-box-small">
                                     <div class="input-title">Đơn vị vận chuyển (<span>*</span>)</div>
                                     <div class="m-select" fieldName="TransportorId">
-                                        <select class="m-input" validate="false">
+                                        <select class="m-input" validate="false" autofocus>
                                         </select>
                                     </div>
                                 </div>
@@ -345,7 +345,7 @@
                             <div class="input-line">
                                 <div class="input-box input-box-small">
                                     <div class="input-title">Phí vận chuyển (<span>*</span>)</div>
-                                    <input class=" m-input" type="number" required fieldName="ProductName" typeFormat="money" />
+                                    <input class=" m-input" type="text" required fieldName="ProductName" typeFormat="money"  validate="false"/>
                                 </div>
                             </div>
                             <div class="input-line">
@@ -353,7 +353,7 @@
                                     <div class="input-title">Thời gian lấy hàng</div>
                                     <div class="radio-button-group">
                                         <label class="m-radio">
-                                            <input class="radio" type="radio" name="picktime" value="0" fieldName="PickTime" />
+                                            <input class="radio" type="radio" name="picktime" value="0" checked fieldName="PickTime" />
                                             <span class="checkmark"></span>
                                             <label>Buổi sáng</label>
                                         </label>
@@ -368,7 +368,7 @@
                                     <div class="input-title">Thời gian nhận hàng</div>
                                     <div class="radio-button-group">
                                         <label class="m-radio">
-                                            <input class="radio" type="radio" name="receivetime" value="0" fieldName="ReceiveTime" />
+                                            <input class="radio" type="radio" name="receivetime" value="0" checked fieldName="ReceiveTime" />
                                             <span class="checkmark"></span>
                                             <label>Buổi sáng</label>
                                         </label>
