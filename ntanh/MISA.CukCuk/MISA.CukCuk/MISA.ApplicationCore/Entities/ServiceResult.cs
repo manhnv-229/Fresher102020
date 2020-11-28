@@ -1,7 +1,4 @@
-﻿using MISA.Entity;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MISA.ApplicationCore.Enums;
 
 namespace MISA.ApplicationCore.Entities
 {
