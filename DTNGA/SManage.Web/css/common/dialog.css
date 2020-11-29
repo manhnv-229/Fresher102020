@@ -3,6 +3,7 @@
 .m-dialog {
     position: relative;
     display: none;
+    z-index: 999;
 }
 /*-------------------------*/
 /*Màn mờ phía sau dialog*/
@@ -131,13 +132,18 @@
         display: flex;
         justify-content: space-between;
     }
-
-    .product-list .product-detail .product-line-left {
-        display: flex;
-        align-items: center;
-        width: 50%;
-        margin-right: 16px;
-    }
+        .product-list .product-detail .product-line .button-delete {
+            border: none;
+            outline: none;
+            background-color: #e5e5e5;
+            margin-right: 16px;
+        }
+        .product-list .product-detail .product-line-left {
+            display: flex;
+            align-items: center;
+            width: 50%;
+            margin-right: 16px;
+        }
 
         .product-list .product-detail .product-line-left div {
             margin-right: 10px;

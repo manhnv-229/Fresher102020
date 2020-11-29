@@ -34,3 +34,13 @@
     width: 50%;
 }
 
+/* Style phần phân loại sản phẩm */
+
+.product-type-group, .product-color-group {
+    width: 80%;
+    margin-left: auto;
+
+}
+.type-line, .color-line {
+    display:flex;
+}

@@ -28,6 +28,21 @@
     margin-bottom: 16px;
 }
 
+.flex-line{
+    display:flex;
+}
+/* Dòng chứa thành phần căn phải */
+.right-line{
+    justify-content: flex-end;
+}
+/* Dòng chứa thành phần căn giữa */
+.center-line {
+    justify-content: center;
+}
+/* Dòng chứa thành phần căn đều sang 2 bên */
+.space-between-line {
+    justify-content: space-between;
+}
 /* * đỏ thể hiện trường bắt buộc nhập */
 .input-box .input-title {
     font-family: GoogleSans-Bold;
@@ -88,8 +103,50 @@ input[typeFormat="money"] {
         width: 12px;
         height: 12px;
         top: 16%;
-        left: 16%;
+        left: 17%;
         background: #019160;
         border-radius: 50%;
         display: none;
+    }
+
+/* custome input type checkbox */
+.m-checkbox{
+    position:relative;
+    width: 20px;
+    height: 20px;
+    margin-right: 16px;
+    z-index: 0;
+}
+
+    /*ẩn checkbox button mặc định đi */
+    .m-checkbox .checkbox {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        width: 100%;
+    }
+    /* Tạo checkbox button mới*/
+    .m-checkbox .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 20px;
+        width: 20px;
+        background-color: #ffffff;
+        border: 1px solid #bbbbbb;
+        border-radius: 4px;
+    }
+
+    .m-checkbox:hover .checkbox ~ .checkmark {
+        background-color: #e5e5e5;
+    }
+
+    /* khi checkbox ở trạng thái checked */
+    .m-checkbox input[type=checkbox]:checked ~ .checkmark {
+        border: none;
+        background-color: #019160;
+        background-image: url('/content/icon/common/whiteIcon/check.svg');
+        background-position:center;
+        background-repeat: no-repeat;
+        background-size: 16px;
     }

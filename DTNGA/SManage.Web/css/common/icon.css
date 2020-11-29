@@ -9,6 +9,9 @@
     opacity: 0.7;
 }
 
+.round-icon{
+    border-radius: 50%;
+}
 /*----------------------*/
 /* Các icon */
 /*navbar*/
@@ -84,4 +87,14 @@
 
 .chevron-right-icon {
     background-image: url('/content/icon/common/BlackIcon/chevron-right.svg');
+}
+
+/* add-order page */
+.shopping-icon {
+    background-image: url('/content/icon/common/whiteIcon/shopping-cart.svg');
+}
+
+.delete-icon {
+    background-image: url('/content/icon/common/BlackIcon/x.svg');
+    background-size: 12px;
 }

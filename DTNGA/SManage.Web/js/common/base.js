@@ -72,11 +72,53 @@ class Base {
             // sự kiện khi tick vào checkbox/ nhiều checkbox
             $(`table thead input[type="checkbox"]`).on("click", me.onClickCheckAll.bind(me));
 
+            // Sự kiện tự động thêm sản phẩm vào giỏ khi click nút Thêm vào giỏ
+            $(`#btn-addToShoppingCard`).on("click", me.onClick_addToShoppingCard);
+            // Sự kiện khi nhấn nút xóa tại mỗi dòng sản phẩm
+            $(`.product-line button`).on("click", me.onClick_deleteProduct);
+
         }
         catch (e) {
             console.log(e);
         }
 
+    }
+
+    /** Thực hiện thêm sản phẩm vào giỏ hàng
+     * CreatedBy dtnga (29/11/2020)
+     * */
+    //TODO thêm sản phẩm vào giỏ hàng
+    onClick_addToShoppingCard() {
+        //Lấy thông tin sản phẩm
+        var productName = $(`input[fieldName="ProductName"]`).val();
+        var productCode = $(`input[fieldName="ProductCode"]`).val();
+        var productType = $(`.product-type-group input[type=radio]:checked`).attr("value");
+        var productcolor = $(`.product-color-group input[type=radio]:checked`).attr("value");
+        // check và lấy Id sản phẩm
+
+        // Lấy thông tin chi tiết sản phẩm bằng id qua api
+
+        // Thêm sản phẩm vào giỏ hàng
+
+    }
+
+    /** Thực hiện xóa sản phẩm trong giỏ hàng
+     * CreatedBy dtnga (29/11/2020)
+     * */
+    onClick_deleteProduct() {
+        //Lấy thành phần cha: product-line
+        var parentNode = this.parentNode.parentNode;
+        // Lấy giá tiền sản phẩm cần xóa
+        var productCost = $(parentNode).find(`.cost`).text();
+        // Xóa dòng chứa thông tin sản phẩm
+        parentNode.remove();
+        //Cập nhật tổng số lượng và số tiền của giỏ hàng
+        var totalQuantity = $(`.total-quantity span`);
+        totalQuantity.text(totalQuantity.text() - 1);
+        var totalMoney = $(`.total-money`);
+        totalMoney.text(totalMoney.text() - productCost);
+
+        
     }
 
     /** Hàm thực hiện set AutoComplete cho các trường yêu cầu AutoComplete
@@ -98,11 +140,12 @@ class Base {
                 source: sourceList,
                 autoFocus: true,
                 focus: function (event, suggest) {
-                    $(input).val(suggest.item.label);
+                    //$(input).val(suggest.item.label);
                     return false;
                 },
                 select: function (event, suggest) {
                     $(input).val(suggest.item.label);
+                    var id = suggest.item.value;
                     return false;
                 }
             });
@@ -193,7 +236,6 @@ class Base {
         var me = this;
         var dialog = $(`.m-dialog`);
         dialog.show();
-        
         // đóng form khi nhấn ESC
         $('body').on("keydown", me.onClick_ESC.bind(dialog));
         $(`#btn-exit`).on("click", me.onClick_Exit_Dialog.bind(me));
@@ -443,7 +485,10 @@ class Base {
                 // Lấy fielname th 
                 var fieldName = $(th).attr('fieldName');
                 if (fieldName == "Checkbox") {
-                    var checkbox = $(`<div><input type="checkbox" name="order" /> </div>`);
+                    var checkbox = $(`<div><label class="m-checkbox">
+                                                <input class="checkbox" type="checkbox" name="order" />
+                                                <span class="checkmark"></span>
+                                      </label></div>`);
                     td.append(checkbox);
                 }
                 else if (fieldName == "State") {

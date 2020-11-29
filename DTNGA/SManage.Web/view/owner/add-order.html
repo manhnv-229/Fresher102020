@@ -95,22 +95,66 @@
                         <div class="box-body">
                             <div class="input-line">
                                 <div class="input-box input-box-small">
-                                    <div class="input-title">Mã sản phẩm</div>
-                                    <input class="m-input" type="text" fieldName="ProductCode" validate="false" autofocus autocomplete="on"/>
+                                    <div class="input-title">Tên sản phẩm</div>
+                                    <input class="m-input" type="text" fieldName="ProductName" validate="false" autofocus autocomplete="on" />
                                 </div>
                                 <div class="input-box input-box-small">
-                                    <div class="input-title">Tên sản phẩm</div>
-                                    <input class="m-input" type="text" fieldName="ProductName" validate="false" autocomplete="on"/>
+                                    <div class="input-title">Mã sản phẩm</div>
+                                    <input class="m-input" type="text" fieldName="ProductCode" validate="false" autocomplete="on" />
                                 </div>
+                            </div>
+                            <div class="input-line product-type">
+                                <div>Loại:</div>
+                                <div class="product-type-group">
+                                    <div class="type-line">
+                                        <label class="m-radio">
+                                            <input class="radio" type="radio" name="picktime" value="0" fieldName="PickTime" />
+                                            <span class="checkmark"></span>
+                                            <label>Sổ bìa trong - HA560</label>
+                                        </label>
+                                        <label class="m-radio">
+                                            <input class="radio" type="radio" name="picktime" value="1" fieldName="PickTime" />
+                                            <span class="checkmark"></span>
+                                            <label>Tệp ô vuông- NA560-V</label>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-line product-color">
+                                <div>Màu sắc:</div>
+                                <div class="product-color-group">
+                                    <div class="color-line">
+                                        <label class="m-radio">
+                                            <input class="radio" type="radio" name="picktime" value="hồng" fieldName="PickTime" />
+                                            <span class="checkmark"></span>
+                                            <label>Hồng</label>
+                                        </label>
+                                        <label class="m-radio">
+                                            <input class="radio" type="radio" name="picktime" value="trắng" fieldName="PickTime" />
+                                            <span class="checkmark"></span>
+                                            <label>Trắng</label>
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="input-line right-line">
+                                <button class="m-button" id="btn-addToShoppingCard">
+                                    <div class="m-icon shopping-icon"></div>
+                                    <div class="btn-text">Thêm vào giỏ</div>
+                                </button>
                             </div>
                             <div class="input-line">
                                 <div class="input-box input-box-big">
-                                    <div class="input-title">Giỏ hàng</div>
+                                    <div class="input-title flex-line">
+                                        <div>Giỏ hàng</div>
+                                    </div>
                                     <div class="product-list">
                                         <div class="product-detail">
                                             <div class="product-line">
+                                                <button class="button-delete m-icon round-icon delete-icon" title="Xóa"></button>
                                                 <div class="product-line-left">
-                                                    <div class="sort">1</div>
+
                                                     <div class="product-code">DasT-szS</div>
                                                 </div>
                                                 <div class="product-line-right">
@@ -120,13 +164,14 @@
                                                 </div>
                                             </div>
                                             <div class="cost-line">
-                                                <div class="cost">5000000</div>
+                                                <div class="cost">500000</div>
                                             </div>
                                         </div>
                                         <div class="product-detail">
                                             <div class="product-line">
+                                                <button class="button-delete m-icon round-icon delete-icon" title="Xóa"></button>
                                                 <div class="product-line-left">
-                                                    <div class="sort">2</div>
+                                                    
                                                     <div class="product-code">DasT-szS</div>
                                                 </div>
                                                 <div class="product-line-right">
@@ -136,13 +181,13 @@
                                                 </div>
                                             </div>
                                             <div class="cost-line">
-                                                <div class="cost">5000000</div>
+                                                <div class="cost">500000</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="total-line">
+                            <div class="input-line total-line">
                                 <div class="total-quantity">Tổng sản phẩm: <span>2</span></div>
                                 <div class="total-money">1000000</div>
                             </div>

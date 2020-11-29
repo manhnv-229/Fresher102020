@@ -41,7 +41,9 @@
         top: 0;
         background-color: #ffffff;
     }
-
+    .grid thead th[fieldName="Checkbox"]{
+        z-index: 1;
+    }
     .grid thead .thead-box {
         width: auto;
         min-width: 71px;

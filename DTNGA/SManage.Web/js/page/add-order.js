@@ -4,6 +4,13 @@
 
 class AddOrder extends Base {
     constructor() {
-        super();
+        try {
+            super();
+
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
+
 }
