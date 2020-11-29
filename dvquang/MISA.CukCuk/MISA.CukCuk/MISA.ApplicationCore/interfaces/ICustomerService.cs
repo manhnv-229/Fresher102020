@@ -10,12 +10,9 @@ namespace MISA.ApplicationCore.interfaces
     /// interface cho CustomerService
     /// </summary>
     /// CreatedBy: DVQuang (25/11/2020)
-    public interface ICustomerService
+    public interface ICustomerService:IBaseService<Customer>
     {
-        IEnumerable<Customer> GetCustomers();
-        Customer GetCustomerById(Guid CustomerId);
-        ServiceResult AddCustomer(Customer customer);
-        ServiceResult UpdateCustomer(Customer customer);
-        ServiceResult DeleteCustomer(Guid CustomerId);
+        IEnumerable<Customer> GetCustomerPading(int limit, int offset);
+        IEnumerable<Customer> GetCustomerByDepartment(Guid departmentId);
     }
 }

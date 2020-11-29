@@ -1,8 +1,9 @@
 ﻿
+using System;
 using System.Data;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
-
+using MISA.ApplicationCore.Services;
 using MISA.ApplicationCore.Entities;
 using MISA.ApplicationCore.Enums;
 using MISA.ApplicationCore.interfaces;
@@ -16,76 +17,12 @@ namespace MISA.CukCuk.Web.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class CustomersController : ControllerBase
+    public class CustomersController : BaseApiController<Customer>
     {
-        ICustomerService _customerService;
-        #region Constructor
-        public CustomersController(ICustomerService customerService)
+        ICustomerService _baseService;
+        public CustomersController(ICustomerService baseService) : base(baseService)
         {
-            _customerService = customerService;
-        }
-        #endregion
-        /// <summary>
-        /// Get api
-        /// </summary>
-        /// <returns>200</returns>
-        /// CreatedBy: DVQuang (24/11/2020)
-        [HttpGet]
-        public IActionResult Get()
-
-        {
-            
-            var customers = _customerService.GetCustomers();
-            return Ok(customers);
-        }
-
-        /// <summary>
-        /// GET api/<CustomersController>
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns>200 ok</returns>
-        /// CreatedBy: DVQuang (24/11/2020)
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
-        {
-            var connectionString = "User Id=dev;Port=3306;Password=12345678@Abc;Database=WEB1020_MISACukcuk_DVQuang;Host=35.194.135.168;Character Set=utf8";
-            IDbConnection dbConnection = new MySqlConnection(connectionString);
-            var customers = dbConnection.Query<Customer>("Proc_GetCustomerById",new {CustomerId = id }, commandType: CommandType.StoredProcedure);
-  
-            return Ok(customers);
-        }
-
-        /// <summary>
-        /// POST api/<CustomersController>
-        /// </summary>
-        /// <param name="customer"></param>
-        /// <returns>kết quả trạng thái</returns>
-        /// CreatedBy: DVQuang (24/11/2020)
-        [HttpPost]
-        public IActionResult Post(Customer customer)
-            
-        {
-           
-            var serviceResult = _customerService.AddCustomer(customer);
-            if(serviceResult.MISACode == MISACode.NotValid)          
-                return BadRequest(serviceResult.Data);       
-            if (serviceResult.MISACode == MISACode.IsValid && (int) serviceResult.Data > 0)           
-                return Created("addd", customer);
-            else         
-                return NoContent();
-            
-        }
-
-        // PUT api/<CustomersController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<CustomersController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            _baseService = baseService;
         }
     }
 }

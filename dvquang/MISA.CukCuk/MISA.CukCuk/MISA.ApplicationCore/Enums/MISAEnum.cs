@@ -13,4 +13,13 @@ namespace MISA.ApplicationCore.Enums
         NotValid = 900,
         Success =  200,
     }
+    /// <summary>
+    /// Xác định trạng thái của object
+    /// </summary>
+    public enum EntityState 
+    { 
+        Addnew = 1,
+        Update = 2,
+        Delete = 3,
+    }
 }

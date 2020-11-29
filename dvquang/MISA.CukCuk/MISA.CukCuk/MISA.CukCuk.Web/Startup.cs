@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MISA.ApplicationCore;
 using MISA.ApplicationCore.interfaces;
+using MISA.ApplicationCore.Services;
 using MISA.Infrastructure;
 
 namespace MISA.CukCuk.Web
@@ -28,6 +29,8 @@ namespace MISA.CukCuk.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
+            services.AddScoped( typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ICustomerService, CustomerService>();
         }

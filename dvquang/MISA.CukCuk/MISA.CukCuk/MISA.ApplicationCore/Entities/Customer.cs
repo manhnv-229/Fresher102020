@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.ComponentModel;
 
 namespace MISA.ApplicationCore.Entities
 { 
@@ -7,21 +7,26 @@ namespace MISA.ApplicationCore.Entities
     /// class khách hàng
     /// </summary>
     /// createdby: dvquang (24/11/2020)
-public class Customer
+public class Customer:BaseEntity
     {
         #region property
         /// <summary>
         /// id khách hàng
         /// </summary>
+        [PrimaryKey]
         public Guid CustomerId { get; set; }
         /// <summary>
         /// mã khách hàng
         /// </summary>
+        [Required]
+        [CheckDuplicate]
+        [DisplayName("Mã khách hàng")]
         public string CustomerCode { get; set; }
-      
+
         /// <summary>
         /// họ và tên khách hàng
         /// </summary>
+        [DisplayName("Họ và tên")]
         public string FullName { get; set; }
         /// <summary>
         /// giới tính
@@ -42,6 +47,9 @@ public class Customer
         /// <summary>
         /// số điện thoại
         /// </summary>
+        [Required]
+        [CheckDuplicate]
+        [DisplayName("số điện thoại")]
         public string PhoneNumber { get; set; }
         /// <summary>
         /// id nhóm khách hàng
