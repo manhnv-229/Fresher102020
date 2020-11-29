@@ -235,8 +235,9 @@ class BaseJS {
             }).done(function (res) {
                 // đóng dialog xác nhận xóa và load lại dữ liệu
                 dialogConfirmDelete.dialog('close');
-                me.loadData();
                 
+                me.loadData();
+                console.log(url);
             }).fail(function (res) {
                 
             })
@@ -369,8 +370,11 @@ class BaseJS {
 
             // Check với trường hợp input là radio, thì chỉ lấy value của input có attribute là checked:
             if ($(this).attr('type') == "radio") {
-                if (this.checked) {
-                    entity[propertyName] = value;
+                if ($(input).is(":checked")) {
+                    
+                    var valueInput = $(input).attr("genderValue");
+                    entity[propertyName] = valueInput;
+                    //entity[propertyName] = value;
                 }
             } else {
                 entity[propertyName] = value;
