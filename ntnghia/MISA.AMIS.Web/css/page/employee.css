@@ -22,46 +22,28 @@ p, h2 {
         align-items: center;
     }
 
-
-.content .content-header .btn-hrm {
-    display: flex;
-    padding: 8px 15px 7px 7px;
-    border-radius: 5px;
-    cursor: pointer;
-    border: 1px solid #eee;
-    margin-right: 10px;
-    color: #019160;
-}
-
-
-    .content .content-header .btn-hrm:hover {
-        background: #e5e5e5;
-    }
-    .content .content-header .hrm-icon {
-        margin: 0 5px;
-        width: 20px;
-        height: 20px;
-    }
-
     .content .content-header .btn-add {
         display: flex;
         background-color: #019160;
-        border-radius: 5px;
+        height: 40px;
+        border-radius: 4px;
         cursor: pointer;
         color: #fff;
+        align-items:center;
+        justify-content:center;
+        padding: 0 16px
     }
-
-        .content .content-header .btn-add p {
-            padding: 8px 8px 8px 0;
-            border-right: 1px solid #fff;
-        }
 
     .content .content-header .fa-user-plus{
-        margin: 10px;
+        margin-right: 8px;
     }
 
-    .content .content-header .add-icon {
-        margin: 8px;
+    .content .content-header .btn-add:hover {
+        background-color: #2FBE8E;
+    }
+
+    .content .content-header .btn-add:focus {
+        background-color: #01B075;
     }
 
     .content .content-search {
@@ -77,82 +59,85 @@ p, h2 {
 
             .content .content-search .input-container .fa-search {
                 position: absolute;
-                top: 10px;
-                left: 10px;
+                top: 12px;
+                left: 16px;
                 color: #888;
+                font-size: 16px;
             }
+
 
         .content .content-search .search-employee {
             outline: none;
             width: 280px;
+            height: 36px !important;
             border: 1px solid #bbb;
-            border-radius: 5px;
-            padding: 8px 10px 8px 28px;
+            border-radius: 4px;
+            padding-left: 40px;
             margin-right: 10px;
-        }
-
-        .content .content-search .input-container .fa-caret-down {
-            position: absolute;
-            top: 10px;
-            right: 17px;
-            color: #888;
-            cursor: pointer;
-        }
-
-        .content .content-search .search-department, .search-status {
-            cursor: pointer;
-            outline: none;
-            border: 1px solid #bbb;
-            border-radius: 5px;
-            padding: 8px 50px 8px 10px;
-            margin-right: 10px;
-        }
-
-        .content .content-search .search-department:hover, .search-status:hover {
-            background: #e5e5e5;
-        }
-
-        .content .content-search .input-container .i-fa-angle-down {
-            position: absolute;
-            padding-top: 10px;
-            padding-left: 8px;
-            height:calc(100% - 10px);
-            border-left: 1px solid #e5e5e5;
-            right: 23px;
-            top: 0;
-            color: #888;
-            cursor: pointer;
+            height: 40px;
+            font-size: 12px;
         }
 
         .content .content-search .search-employee:focus {
             border: 1px solid #019160;
         }
 
+        .content .content-search .select-department, .select-position {
+            cursor: pointer;
+            outline: none;
+            width: 280px;
+            height: 40px;
+            border: 1px solid #bbb;
+            border-radius: 4px;
+            padding-left: 16px;
+            padding-right: 12px;
+            margin-right: 10px;
+            height: 40px;
+            font-size: 13px;
+        }
 
+        .content .content-search .search-department:hover, .search-position:focus {
+            border: 1px solid #019160;
+        }
+
+        .content .content-search .select-department option, .select-position option{
+            height: 40px;
+        }
+
+            .content .content-search .select-department option:hover, .select-position option:hover {
+                background-color: #E9EBEE;
+            }
+
+            .content .content-search .select-department option:focus, .select-position option:focus {
+                background-color: #019160;
+            }
+
+
+
+/*Nút bấm bên phải*/
     .content .content-search .btn-icon {
         display: flex;
         align-items: center;
         position: absolute;
-        right: 20px;
+        right: 10px;
     }
 
-        .content .content-search .btn-download, .btn-refresh {
+        .content .content-search .btn-delete, .btn-refresh {
             background-color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 5px;
-            width: 28px;
-            height: 28px;
+            border-radius: 4px;
+            width: 40px;
+            height: 40px;
             cursor: pointer;
-            border: 1px solid #eee;
-            margin-left: 10px;
+            border: 1px solid #bbb;
             outline: none;
         }
 
-    .content .content-search .btn-download:hover, .btn-refresh:hover {
-       background: #e5e5e5;
-    }
+            .content .content-search .btn-delete:hover, .btn-refresh:hover {
+                background: #E9EBEE;
+            }
 
         .content .content-search .right-icon {
             color: #e5e5e5;
@@ -161,9 +146,9 @@ p, h2 {
         }
 
 .table-container {
-    height: calc(100% - 155px);
+    height: calc(100% - 170px);
     overflow: auto;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .content-table {
@@ -185,6 +170,10 @@ p, h2 {
             padding: 0 10px;
         }
 
+    .row-selected {
+        background-color: #E9EBEE;
+    }
+
         .content-table .table-item .item-number{
             width: 30px;
             padding-left: 5px;
@@ -192,7 +181,7 @@ p, h2 {
 
         .content-table .table-item .table-item-salary {
             text-align: right;
-            padding-right: 10px;
+            padding-right: 50px;
         }
 
         .content-table .table-item .table-item-address {

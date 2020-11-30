@@ -6,10 +6,11 @@
     <title></title>
     <link href="/css/common/content.css" rel="stylesheet" />
     <link href="/css/common/header.css" rel="stylesheet" />
-    <link href="/css/common/dialog.css" rel="stylesheet" />
+    <link href="/css/common/deleteAlert.css" rel="stylesheet" />
     <link href="/css/common/navbar.css" rel="stylesheet" />
     <link href="/css/common/main.css" rel="stylesheet" />
     <link href="/css/page/employee.css" rel="stylesheet" />
+    <link href="../css/common/employeeDialog.css" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/0f72905f9f.js" crossorigin="anonymous"></script>
 </head>
 
@@ -44,7 +45,7 @@
             </div>
             <div class="nav-item">
                 <img class="nav-item-icon" src="../content/icon/customer.svg" />
-                <div class="nav-item-text">Quản lý lao động</div>
+                <div class="nav-item-text">Quản lý nhân viên</div>
             </div>
             <div class="nav-item">
                 <img class="nav-item-icon" src="../content/icon/settings.svg" />
@@ -54,11 +55,11 @@
     </div>
 
     <div class="header">
-        <p class="left-header">Công ty cổ phần MISA TEST BHXH</p>
+        <p class="left-header">Công ty cổ phần MISA</p>
         <i class="fas fa-angle-down"></i>
         <div class="right-header">
             <div class="avatar"></div>
-            <p>Demo AMIS BHXH</p>
+            <p>Nguyễn Trung Nghĩa</p>
             <div class="right-header-icon">
                 <i class="fas fa-ellipsis-h"></i>
             </div>
@@ -67,18 +68,11 @@
 
     <div class="content">
         <div class="content-header">
-            <h2>Quản lý lao động</h2>
+            <h2>Danh sách nhân viên</h2>
             <div class="content-header-btn">
-                <div class="btn-hrm">
-                    <img class="hrm-icon" src="../content/icon/sync.svg" />
-                    <p>Đồng bộ từ HRM</p>
-                </div>
-                <div class="btn-add">
+                <div class="btn-add" id="btnAdd">
                     <i class="fas fa-user-plus"></i>
-                    <p>Thêm lao động</p>
-                    <div class="add-icon">
-                        <i class="fas fa-angle-down"></i>
-                    </div>
+                    <p>Thêm nhân viên</p>
                 </div>
             </div>
         </div>
@@ -86,22 +80,45 @@
         <div class="content-search">
             <div class="input-container">
                 <i class="fas fa-search"></i>
-                <input class="search-employee" type="text" placeholder="Tìm kiếm theo mã nhân viên, họ tên" />
+                <input class="search-employee" type="text" placeholder="Tìm kiếm theo Mã, Tên hoặc Số điện thoại" />
             </div>
-            <div class="input-container" id="select-department">
-                <p class="search-department">Chọn bộ phận phòng ban</p>
-                <i class="fas fa-caret-down"></i>
-            </div>
-            <div class="input-container">
-                <p class="search-status">Trạng thái BHXH</p>
-                <div class="i-fa-angle-down">
-                    <i class="fas fa-angle-down"></i>
-                </div>
 
-            </div>
+            <select class="select-department" id="selectDepartment" fieldname="Department">
+                <option selected="selected">
+                    Tất cả phòng ban
+                </option>
+                <option>
+                    Phòng Nhân sự
+                </option>
+                <option>
+                    Phòng đào tạo
+                </option>
+                <option>
+                    Phòng Công nghệ
+                </option>
+                <option>
+                    Phòng Marketting
+                </option>
+            </select>
+
+            <select class="select-position" id="selectPosition" fieldname="Position">
+                <option selected="selected">
+                    Tất cả vị trí
+                </option>
+                <option>
+                    Giám đốc
+                </option>
+                <option>
+                    Nhân viên Marketting
+                </option>
+                <option>
+                    Thu ngân
+                </option>
+            </select>
+
             <div class="btn-icon">
-                <button class="btn-download">
-                    <img class="right-icon" src="../content/icon/download.svg" />
+                <button class="btn-delete" style="margin-right:10px">
+                    <img class="right-icon" src="../content/icon/trash.svg" />
                 </button>
                 <button class="btn-refresh">
                     <img class="right-icon" src="../content/icon/sync (1).svg" />
@@ -122,7 +139,6 @@
                         <th fieldName="PositionName">Vị trí/chức vụ</th>
                         <th fieldName="DepartmentName">Phòng ban</th>
                         <th fieldName="Salary" formatType="Money">Hệ số/Mức lương đóng</th>
-                        <th fieldName="Address" formatType="Address">Địa chỉ</th>
                         <th fieldName="WorkStatusName">Trạng thái tham gia</th>
                     </tr>
                 </thead>
@@ -131,24 +147,184 @@
             </table>
         </div>
         <div class="content-footer">
-            <p>Hiển thị 1 - 15/59 lao động</p>
+            <p>Hiển thị 1-10/1000 nhân viên</p>
             <div class="content-footer-page">
-                <div class="arrow-icon">
-                    <i class="fas fa-angle-left"></i>
-                </div>
                 <div class="page-number-container">
                     <div class="page-number">1</div>
                     <div class="page-number">2</div>
                     <div class="page-number">3</div>
                     <div class="page-number">4</div>
                 </div>
-                <div class="arrow-icon" style="margin-left: 10px;">
-                    <i class="fas fa-angle-right"></i>
+            </div>
+
+            <p class="page-btn">10 nhân viên/trang</p>
+
+        </div>
+    </div>
+
+    <div class="dialog-modal">
+        <div class="dialog-content">
+            <div class="dialog-header">
+                <h2>Thông tin nhân viên</h2>
+                <i class="fas fa-times" style="cursor:pointer;"></i>
+            </div>
+
+            <div class="dialog-body">
+                <div class="upload-avatar">
+                    <img class="avatar" src="../content/img/images.png" />
+                    <p>Vui lòng chọn ảnh có định dạng <strong>.jpg .jpeg .png .gif</strong></p>
+                </div>
+
+                <div class="right-body">
+                    <p class="input-head">
+                        A. THÔNG TIN CHUNG:
+                    </p>
+                    <div class="green-line"></div>
+
+                    <div class="double-input">
+                        <div class="input-form">
+                            <label class="input-label" for="EmployeeCode">Mã nhân viên(*)</label>
+                            <input class="input-required" id="EmployeeCode" />
+                        </div>
+                        <div class="input-form">
+                            <label class="input-label" for="FullName">Họ và tên(*)</label>
+                            <input class="input-required" id="FullName" />
+                        </div>
+                    </div>
+                    <div class="double-input">
+                        <div class="input-form">
+                            <label class="input-label" for="DateOfBirth">Ngày sinh</label>
+                            <input class="date-of-birth" id="DateOfBirth" type="date" />
+                        </div>
+                        <div class="input-form">
+                            <label class="input-label" for="Gender">Giới tính</label>
+                            <select class="dialog-select" id="Gender">
+                                <option selected="selected">
+                                    Nam
+                                </option>
+                                <option>
+                                    Nữ
+                                </option>
+                                <option>
+                                    Khác
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="double-input">
+                        <div class="input-form">
+                            <label class="input-label" for="IdentityNumber">Số CMTND/Căn cước(*)</label>
+                            <input class="input-required" id="IdentityNumber" />
+                        </div>
+                        <div class="input-form">
+                            <label class="input-label" for="IdentityDate">Ngày cấp</label>
+                            <input id="IdentityDate" type="date" />
+                        </div>
+                    </div>
+
+                    <div class="input-form">
+                        <label class="input-label" for="IdentityPlace">Nơi cấp</label>
+                        <input id="IdentityPlace" />
+                    </div>
+
+                    <div class="double-input">
+                        <div class="input-form">
+                            <label class="input-label" for="Email">Email(*)</label>
+                            <input  class="input-required" id="Email" type="email" />
+                        </div>
+                        <div class="input-form">
+                            <label class="input-label" for="PhoneNumber">Số điện thoại(*)</label>
+                            <input class="input-required" id="PhoneNumber" />
+                        </div>
+                    </div>
+
+                    <p class="input-head">B. THÔNG TIN CÔNG VIỆC:</p>
+                    <div class="green-line"></div>
+
+                    <div class="double-input">
+                        <div class="input-form">
+                            <label class="input-label" for="PositionId">Vị trí</label>
+                            <select class="select-position" id="PositionId">
+                                <option selected="selected">
+                                    Giám đốc
+                                </option>
+                                <option>
+                                    Nhân viên Marketting
+                                </option>
+                                <option>
+                                    Thu ngân
+                                </option>
+                            </select>
+                        </div>
+                        <div class="input-form">
+                            <label class="input-label" for="DepartmentId">Phòng ban</label>
+                            <select class="select-department" id="DepartmentId">
+                                <option selected="selected">
+                                    Phòng nhân sự
+                                </option>
+                                <option>
+                                    Nhân viên Marketting
+                                </option>
+                                <option>
+                                    Thu ngân
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="double-input">
+                        <div class="input-form">
+                            <label class="input-label" for="PersonalTaxCode">Mã số thuế cá nhân</label>
+                            <input id="PersonalTaxCode" />
+                        </div>
+                        <div class="input-form">
+                            <label class="input-label" for="Salary">Mức lương cơ bản</label>
+                            <input id="Salary" />
+                        </div>
+                    </div>
+
+                    <div class="double-input">
+                        <div class="input-form">
+                            <label class="input-label" for="JoinDate">Ngày gia nhập công ty</label>
+                            <input id="JoinDate" type="date" />
+                        </div>
+                        <div class="input-form">
+                            <label class="input-label" for="DateOfBirth">Tình trạng công việc</label>
+                            <select class="select-department" id="selectDepartment" fieldname="Department">
+                                <option selected="selected">
+                                    Đang làm việc
+                                </option>
+                                <option>
+                                    Đã nghỉ việc
+                                </option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="page-container">
-                <p class="page-btn">15 trang</p>
-                <img class="updown-btn" src="../content/icon/up-and-down.svg" />
+            <div class="dialog-footer">
+                <button class="footer-button cancel-button" id="cancel">Hủy</button>
+                <button class="footer-button save-button">
+                    <i class="far fa-save"></i>
+                    <p style="margin-left: 8px;">Lưu</p>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-delete">
+        <div class="delete-alert">
+            <div class="delete-header">
+                <h2>Cảnh báo</h2>
+                <i class="fas fa-times" style="cursor:pointer;"></i>
+            </div>
+
+            <p style="margin:0 15px 15px; font-size:18px;">Bạn có chắc chắn muốn xóa khách hàng này?</p>
+
+            <div class="dialog-footer">
+                <button class="footer-button cancel-button" id="cancel">Hủy</button>
+                <button class="footer-button delete-button" id="delete">Đồng ý</button>
             </div>
         </div>
     </div>

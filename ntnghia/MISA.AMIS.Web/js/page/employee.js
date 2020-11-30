@@ -14,12 +14,6 @@ class EmployeeJS extends BaseJS {
     setApiRouter() {
         this.apiRouter = "/api/employees";
     }
-
-    setDataUrl() {
-        this.getDataUrl = "http://api.manhnv.net/api/employees";
-    }
-
-
 }
 
 
