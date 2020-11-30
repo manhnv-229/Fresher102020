@@ -24,4 +24,19 @@ namespace MISA.ApplicationCore.Entities
         /// </summary>
         Success = 200
     }
+    public enum EntityState
+    {
+        /// <summary>
+        /// Thêm mới
+        /// </summary>
+        Add = 1,
+        /// <summary>
+        /// Cập nhật
+        /// </summary>
+        Update = 2,
+        /// <summary>
+        /// Xóa
+        /// </summary>
+        Delete = 3
+    }
 }

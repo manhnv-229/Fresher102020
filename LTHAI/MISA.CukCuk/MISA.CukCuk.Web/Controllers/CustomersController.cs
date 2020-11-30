@@ -16,11 +16,11 @@ namespace MISA.CukCuk.Web.Controllers
     public class CustomersController : ControllerBase
     {
         #region Attribute
-        private readonly ICustomerServiceRepository _customerServiceRepository;
+        private readonly ICustomerService _customerServiceRepository;
         #endregion
 
         #region Contructor
-        public CustomersController(ICustomerServiceRepository customerServiceRepository)
+        public CustomersController(ICustomerService customerServiceRepository)
         {
             this._customerServiceRepository = customerServiceRepository;
         }
@@ -32,7 +32,7 @@ namespace MISA.CukCuk.Web.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var customers = _customerServiceRepository.GetCustomers();
+            var customers = _customerServiceRepository.Gets();
             return Ok(customers);
         }
 
@@ -46,7 +46,7 @@ namespace MISA.CukCuk.Web.Controllers
         public IActionResult Get(string id)
         {
            
-            var customer = _customerServiceRepository.GetCustomerById(id);
+            var customer = _customerServiceRepository.GetById(id);
             if(customer != null)
             {
                 return Ok(customer);
@@ -66,12 +66,12 @@ namespace MISA.CukCuk.Web.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Customer customer)
         {
-            var objResult = _customerServiceRepository.AddCustomer(customer);
-            if(objResult.MisaCode == MISACode.NotValid)
+            var objResult = _customerServiceRepository.Add(customer);
+            if(((ServiceResult)objResult).MisaCode == MISACode.NotValid)
             {
                 return BadRequest(objResult);
             }
-            else if(objResult.MisaCode == MISACode.IsValid && Convert.ToInt32(objResult.Data) > 0)
+            else if(((ServiceResult)objResult).MisaCode == MISACode.IsValid && Convert.ToInt32(((ServiceResult)objResult).MisaCode) > 0)
             {
                 return Ok(objResult);
             }
@@ -92,12 +92,12 @@ namespace MISA.CukCuk.Web.Controllers
         public IActionResult Put(string id, [FromBody] Customer customer)
         {
            
-            var objResult = _customerServiceRepository.UpdateCustomer(id, customer);
-            if (objResult.MisaCode == MISACode.NotValid)
+            var objResult = _customerServiceRepository.Update(id, customer);
+            if (((ServiceResult)objResult).MisaCode == MISACode.NotValid)
             {
                 return BadRequest(objResult);
             }
-            else if (objResult.MisaCode == MISACode.IsValid && Convert.ToInt32(objResult.Data) > 0)
+            else if (((ServiceResult)objResult).MisaCode == MISACode.IsValid && Convert.ToInt32(((ServiceResult)objResult).MisaCode) > 0)
             {
                 return Ok(objResult);
             }
@@ -117,8 +117,8 @@ namespace MISA.CukCuk.Web.Controllers
         public IActionResult Delete(string id)
         {
             
-            var objResult = _customerServiceRepository.DeleteCustomerById(id);
-            if(objResult.MisaCode  == MISACode.IsValid && Convert.ToInt32(objResult.Data) > 0)
+            var objResult = _customerServiceRepository.Delete(id);
+            if(((ServiceResult)objResult).MisaCode == MISACode.IsValid && Convert.ToInt32(((ServiceResult)objResult).MisaCode) > 0)
             {
                 return Ok(objResult);
             }

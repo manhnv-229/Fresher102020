@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace MISA.ApplicationCore.Entities
     /// Khách hàng
     /// CreatedBy: LTHAI(23/11/2020)
     /// </summary>
-    public class Customer
+    public class Customer: BaseEntity
     {
         #region Declare
         #endregion
@@ -22,10 +23,15 @@ namespace MISA.ApplicationCore.Entities
         /// <summary>
         /// Khóa chính
         /// </summary>
+        [PrimaryKey]
         public Guid CustomerId { get; set; }
         /// <summary>
         /// Mã khách hàng
         /// </summary>
+        [Require]
+        [CheckExist]
+        [@DisplayName("Mã khách hàng")]
+        [@MaxLength(20, "Mã khách hàng không được vượt quá 20 kí tự")]
         public string CustomerCode { get; set; }
         /// <summary>
         /// Họ
@@ -38,6 +44,8 @@ namespace MISA.ApplicationCore.Entities
         /// <summary>
         /// Họ và tên
         /// </summary>
+        [Require]
+        [@DisplayName("Hộ tên khách hàng")]
         public string FullName { get; set; }
         /// <summary>
         /// Giới tính
@@ -54,6 +62,7 @@ namespace MISA.ApplicationCore.Entities
         /// <summary>
         /// Hòm thư của khách hàng
         /// </summary>
+        [Require]
         public string Email { get; set; }
         /// <summary>
         /// Số điện thoại
@@ -82,11 +91,8 @@ namespace MISA.ApplicationCore.Entities
         /// <summary>
         /// Dừng theo dõi
         /// </summary>
-        public bool? IsStopFollow { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public string CreatedBy { get; set; }   
-        public DateTime? ModifiedDate { get; set; }
-        public string ModifiedBy { get; set; }
+        public int? IsStopFollow { get; set; }
+        
         #endregion
 
         #region Method

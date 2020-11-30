@@ -31,8 +31,10 @@ namespace MISA.CukCuk.Web
         {
             services.AddControllers();
             #region Dependency injection
+            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<ICustomerRepository, CustomerRepository>();
-            services.AddScoped<ICustomerServiceRepository, CustomerServiceRepository>();
+            services.AddScoped<ICustomerService, CustomerService>();
+            
             #endregion
 
         }
