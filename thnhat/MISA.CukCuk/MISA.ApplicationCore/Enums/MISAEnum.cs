@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MISA.Entity
+namespace MISA.Enums
 {
     public enum MISACode
     {

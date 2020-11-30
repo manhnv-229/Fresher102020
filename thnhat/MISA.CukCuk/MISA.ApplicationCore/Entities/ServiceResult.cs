@@ -1,9 +1,9 @@
-﻿using MISA.Entity;
+﻿using MISA.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MISA.ApplicationCore.Entity
+namespace MISA.ApplicationCore.Entities
 {
     public class ServiceResult
     {
