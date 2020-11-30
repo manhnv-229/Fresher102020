@@ -1,0 +1,273 @@
+﻿@font-face {
+    font-family: 'GoogleSans-Regular';
+    src: url('/content/font/Google Sans/GoogleSans-Regular.otf') format('opentype');
+}
+
+
+/*css định nghĩa lại thư viện jqueryUI*/
+
+.ui-corner-all,
+.ui-corner-bottom,
+.ui-corner-right,
+.ui-corner-br {
+    border-radius: 5px;
+}
+
+
+/**/
+
+.ui-dialog {
+    padding: 0;
+    /*border-radius: 4px;*/
+}
+
+    .ui-dialog .ui-dialog-titlebar {
+        padding: 24px 24px 0px 24px;
+        font-size: 20px;
+        text-transform: uppercase;
+        font-weight: bold;
+        background-color: #FFFFFF;
+        border: none;
+    }
+
+    .ui-dialog .ui-dialog-titlebar-close {
+        margin: unset;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 0 4px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        opacity: .7;
+        background-color: #FFFFFF;
+        background-image: url('/content/icon/cancel.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 20px;
+    }
+
+        .ui-dialog .ui-dialog-titlebar-close:hover {
+            background-color: #ccc;
+        }
+
+.ui-button .ui-icon,
+.ui-button .ui-icon:hover {
+    background-image: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px;
+}
+
+.ui-dialog .ui-dialog-content {
+    padding: 0;
+}
+
+.ui-widget.ui-widget-content {
+    border: unset;
+}
+
+.ui-button:hover .ui-icon {
+    background-image: none;
+}
+
+.ui-widget-overlay {
+    background-color: #000;
+    opacity: .5;
+}
+
+.dialog-body {
+    padding: 24px;
+}
+
+user agent stylesheet div {
+    display: block;
+}
+
+.ui-widget-content {
+    border: 1px solid #dddddd;
+    background: #ffffff;
+    color: #333333;
+}
+
+.ui-widget,
+.ui-widget input,
+.ui-widget select,
+.ui-widget textarea,
+.ui-widget button {
+    font-family: GoogleSans-Regular;
+    font-size: 13px;
+}
+
+
+/* Các class dùng chung*/
+
+/* Căn giữa text*/
+.text-align-center {
+    text-align: center;
+}
+/* căn phải text*/
+.text-align-right {
+    text-align: right;
+}
+/* Ẩn nội dung*/
+.disable {
+    display: none;
+}
+
+.border-red {
+    border: 1px solid #f00;
+}
+
+/* Popup thông báo*/
+
+#popup-notification {
+    display: none;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 50px;
+    width: 200px;
+    background-color: #2FBE8E;
+    text-align: center;
+    font-size: 24px;
+}
+
+
+/* Loading icon*/
+
+.loading-data {
+    background-color: #bbb;
+    opacity: 0.5;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+}
+
+.loading-icon {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #019160;
+    width: 40px;
+    height: 40px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    position: fixed;
+    top: calc(50% - 20px);
+    left: calc(50% - 20px);
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* Popup cảnh báo*/
+
+.popup-alert {
+    background-color: #fff;
+    border-radius: 4px;
+    margin: auto;
+}
+
+
+/* Định dạng popup/dialog body, footer*/
+
+.dialog-body {
+    padding: 24px;
+}
+
+    .dialog-body .m-radio-group {
+        height: 40px;
+    }
+
+        .dialog-body .m-radio-group label {
+            margin: auto 4px;
+        }
+
+    .dialog-body .customer-avatar {
+        height: 200px;
+        background-image: url('/content/icon/avatar.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+.dialog-footer {
+    height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    float: right;
+    background-color: #f4f4f4;
+    border-radius: 0px 0px 4px 4px;
+}
+
+    .dialog-footer .group-footer-button {
+        display: flex;
+        position: absolute;
+        right: 24px;
+    }
+
+    .dialog-footer .btn-cancel {
+        background-color: #f4f4f4;
+        margin-right: 16px;
+        color: #000;
+        border: none;
+    }
+
+    .dialog-footer .btn-delete {
+        background-color: #f00;
+        margin-right: 16px;
+        background-image: url('/content/icon/trash-2.png');
+    }
+
+    .dialog-footer .btn-save {
+        background-image: url('/content/icon/save.png');
+    }
+
+    .dialog-footer .confirm-delete {
+        background-color: #ff0000;
+    }
+
+.dialog-body .m-radio {
+    height: 20px;
+    width: 20px;
+    margin: auto 0px auto 24px;
+}
+
+.dialog-body .col {
+    padding-right: 16px;
+}
+
+.dialog-body input {
+    margin-bottom: 16px;
+    margin-top: 4px;
+    width: calc(100% - 19px);
+}
+
+.dialog-body select {
+    margin-bottom: 16px;
+    margin-top: 4px;
+    width: 100%;
+}

@@ -1,0 +1,48 @@
+﻿
+/* Định dạng lại datepicker của thư viện JQueryUI*/
+.ui-datepicker {
+    position: absolute;
+    top: 42px;
+    right: -1px;
+    z-index: 1;
+}
+
+    .ui-datepicker td span, .ui-datepicker td a {
+        text-align: center;
+    }
+
+.ui-widget.ui-widget-content {
+    border: 1px solid #bbb;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default {
+    border: none;
+    background-color: #fff;
+}
+
+    .ui-state-default, .ui-widget-content .ui-state-default:hover {
+        background-color: #bbb;
+    }
+
+/*Định dạng thẻ chứa datepicker*/
+.datepicker-box {
+    display: flex;
+    position: relative;
+}
+
+    .datepicker-box .datepicker-icon {
+        position: absolute;
+        right: 2px;
+        top: 5px;
+        border: none;
+        border-left: 1px solid #bbb;
+        border-radius: 0px 4px 4px 0px;
+        background-image: url('/content/icon/calendar.png');
+        width: 40px;
+        padding: 0px;
+    }
+
+        .datepicker-box .datepicker-icon:focus {
+            border: none;
+            border-left: 1px solid #bbb;
+        }

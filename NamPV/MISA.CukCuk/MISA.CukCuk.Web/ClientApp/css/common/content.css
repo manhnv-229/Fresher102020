@@ -1,0 +1,77 @@
+﻿
+/*Phần hiển thị nội dung trang web*/
+.content {
+    width: calc(100% - 221px);
+    height: calc(100vh - 105px);
+    position: absolute;
+    background-color: #e9ebee;
+    margin-top: 49px;
+    margin-left: 221px;
+}
+
+/*Phân trang*/
+.pagination {
+    height: 56px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 16px;
+    background-color: #E9EBEE;
+}
+
+    .pagination .pagi-center {
+        display: flex;
+    }
+        /* Nút bấm chuyển trang*/
+        .pagination .pagi-center a {
+            border-radius: 50%;
+            color: black;
+            padding: 10.85px 16px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            margin: auto 4px;
+            background-color: none;
+        }
+
+        .pagination .pagi-center button {
+            margin: auto 4px;
+            border: none;
+            background-color: #e9ebee;
+        }
+
+        .pagination .pagi-center a.active {
+            background-color: #109160;
+        }
+
+        .pagination .pagi-center a:hover, .pagination .pagi-center button:hover {
+            background-color: #fff;
+        }
+
+        .pagination .pagi-center .privious-page {
+            background-image: url('/content/icon/chevron-left.png');
+        }
+
+        .pagination .pagi-center .next-page {
+            background-image: url('/content/icon/chevron-right.png');
+        }
+
+        .pagination .pagi-center .first-page {
+            background-image: url('/content/icon/chevrons-left.png');
+        }
+
+        .pagination .pagi-center .last-page {
+            background-image: url('/content/icon/chevrons-right.png');
+        }
+
+    .pagination .pagi-left span {
+        color: #bbbbbb;
+    }
+
+/* Text hiển thị*/
+.pagi-center, .pagi-left, .pagi-right {
+    align-self: center;
+}
+
+/* Label text*/
+label {
+    margin-bottom: 4px;
+}

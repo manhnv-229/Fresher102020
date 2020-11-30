@@ -1,0 +1,17 @@
+﻿
+
+select {
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    height: 42.5px;
+    border: 1px solid #bbbbbb;
+    border-radius: 4px;
+    background-color: #fff;
+    padding-left: 16px;
+    outline: none;
+}
+
+    select:focus {
+        border: 1px solid #019160;
+    }

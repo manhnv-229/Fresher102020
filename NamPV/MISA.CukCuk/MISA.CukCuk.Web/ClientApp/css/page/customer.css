@@ -1,0 +1,87 @@
+
+@font-face {
+    font-family: 'GoogleSans-Bold';
+    src: url('/content/font/Google Sans/GoogleSans-Bold.otf') format('opentype');
+}
+/*Tiêu đề nội dung page*/
+.page-content .header-content {
+    display: flex;
+    padding: 16px 16px;
+}
+
+    .page-content .header-content h1 {
+        font-family: GoogleSans-Bold;
+        font-size: 20px;
+        flex: auto;
+    }
+
+    .page-content .header-content .content-feature {
+        display: flex;
+    }
+
+        .page-content .header-content .content-feature .btn-sync {
+            background-image: url('/content/icon/refresh.png');
+        }
+
+        .page-content .header-content .content-feature .content-add-box {
+            display: flex;
+            margin: auto 0px auto 16px;
+            background-color: #019160;
+            border-radius: 4px;
+            color: #ffffff;
+        }
+
+            .page-content .header-content .content-feature .content-add-box .btn-add {
+                background-image: url('/content/icon/add.png');
+                border: none;
+            }
+
+
+/*Thanh công cụ tìm kiếm/lọc*/
+
+.page-content .filter-bar {
+    display: flex;
+    padding: 0px 16px;
+}
+
+    .page-content .filter-bar .filter-left {
+        display: flex;
+        flex: auto;
+    }
+
+        .page-content .filter-bar .filter-left .search {
+            background-image: url('/content/icon/search.png');
+            padding-left: 40px;
+        }
+
+        .page-content .filter-bar .filter-left select {
+            width: 200px;
+            margin: auto 16px;
+        }
+
+            .page-content .filter-bar .filter-left select:hover {
+                cursor: pointer;
+            }
+
+    .page-content .filter-bar .filter-right {
+        display: flex;
+    }
+
+        .page-content .filter-bar .filter-right .download-btn {
+            background-image: url("/content/icon/download.png");
+            margin-right: 16px;
+        }
+
+        .page-content .filter-bar .filter-right .btn-sync {
+            background-image: url('/content/icon/refresh.png');
+        }
+
+
+/*dialog thêm lao động*/
+
+.customer-add {
+    width: 700px;
+    background-color: #fff;
+    border-radius: 10px;
+    margin: auto;
+}

@@ -9,9 +9,4 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\MISA.Entity\MISA.Entity.csproj" />
-    <ProjectReference Include="..\MISA.Infrastructure\MISA.Infrastructure.csproj" />
-  </ItemGroup>
-
 </Project>
