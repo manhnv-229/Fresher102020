@@ -91,3 +91,7 @@ input.border-red{
 .active {
     background-color: #019160 !important;
 }
+.title{
+    font-size: 20px;
+    font-weight: bold;
+}

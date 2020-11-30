@@ -1,4 +1,5 @@
-﻿.modal {
+﻿/*Css cho modal*/
+.modal {
     top: 0;
     bottom: auto;
     right: 10px;
@@ -9,6 +10,7 @@
 .modal-content {
     background-color: #7ae873;
 }
-#myModel{
-   visibility: hidden;
+
+#myModel {
+    visibility: hidden;
 }
