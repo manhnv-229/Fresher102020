@@ -15,8 +15,6 @@ using MISA.ApplicationCore.Interfaces.IModelService;
 
 namespace MISA.CukCuk.Web.Controllers
 {
-    [Route("api/v1/[controller]")]
-    [ApiController]
     public class CustomersController : BaseController<ICustomerService, Customer>
     {
         public CustomersController(ICustomerService iCustomerService): base(iCustomerService)

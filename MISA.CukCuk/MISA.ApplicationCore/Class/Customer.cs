@@ -4,16 +4,24 @@ using System.Text;
 
 namespace MISA.ApplicationCore.Class
 {
+    /// <summary>
+    /// Khách hàng
+    /// </summary>
+    /// CreatedBy: tqhuy(30/11/2020)
     public class Customer
     {
         #region property
         /// <summary>
         /// khóa chính 
         /// </summary>
+        /// 
+        [PrimaryKey]
         public Guid CustomerID { get; set; }
         /// <summary>
         /// mã khách hàng
         /// </summary>
+        [CheckDuplicate]
+        [Required]
         public string CustomerCode { get; set; }
         /// <summary>
         /// fristName khách hàng

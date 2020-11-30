@@ -9,8 +9,10 @@ using MISA.ApplicationCore.Interfaces.Base;
 
 namespace MISA.CukCuk.Web.Controllers
 {
+    [Route("api/v1/[controller]")]
+    [ApiController]
     public  class BaseController<IModelService,TModel> : ControllerBase
-        where IModelService: IBaseRepos<TModel>
+        where IModelService: IBaseService<TModel>
         where TModel: class
     {
         IModelService _iModelService;
@@ -54,7 +56,7 @@ namespace MISA.CukCuk.Web.Controllers
         /// CreatedBy: tqhuy(25/11/2020)
         [HttpPost]
         public IActionResult Post(TModel model)
-        {
+        {           
             var newItem = _iModelService.Insert(model);
             return Ok(newItem);
         }
@@ -69,8 +71,8 @@ namespace MISA.CukCuk.Web.Controllers
         /// CreatedBy: tqhuy(25/11/2020)
         [HttpPut("{id}")]
         public IActionResult Put(Guid id, [FromBody] TModel model)
-        {
-            var newItem = _iModelService.Update(model);
+        {           
+            var newItem = _iModelService.Update(id,model);
             return Ok(newItem);
         }
 
