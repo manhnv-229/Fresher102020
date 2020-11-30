@@ -20,20 +20,6 @@ namespace MISA.ApplicationCore.Service
         {
             _customerRepos = customerRepos;
         }
-
-        public override IMethodResult Insert(Customer TModel)
-        {
-            string customerCode = _customerRepos.GetCustomerCode(TModel.CustomerCode);
-            if(customerCode == null)
-            {
-                return base.Insert(TModel);
-            }
-            else
-            {
-                return MethodResult.ResultWithError(error: "Not found",message: "Mã nhân viên viên bị trùng!", status: MISACode.NotValid);
-            }
-            
-        }
         public MethodResult GetCustomerForDepartment(Guid id)
         {
             throw new NotImplementedException();

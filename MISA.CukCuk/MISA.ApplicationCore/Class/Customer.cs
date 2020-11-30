@@ -8,7 +8,7 @@ namespace MISA.ApplicationCore.Class
     /// Khách hàng
     /// </summary>
     /// CreatedBy: tqhuy(30/11/2020)
-    public class Customer
+    public class Customer: BaseEntity
     {
         #region property
         /// <summary>
@@ -22,6 +22,7 @@ namespace MISA.ApplicationCore.Class
         /// </summary>
         [CheckDuplicate]
         [Required]
+        [DisplayName("Mã khách hàng")]
         public string CustomerCode { get; set; }
         /// <summary>
         /// fristName khách hàng
@@ -34,11 +35,18 @@ namespace MISA.ApplicationCore.Class
         /// <summary>
         /// full name kasch hàng
         /// </summary>
+        /// 
+        [Required]
+        [DisplayName("Họ và Tên")]
         public string FullName { get; set; }
         /// <summary>
         /// giới tính: 0-nam , 1-nữ, 2-khác
         /// </summary>
         public int Gender { get; set; }
+        /// <summary>
+        /// tên giới tính
+        /// </summary>
+        public string GenderName { get; set; }
         /// <summary>
         /// địa chỉ khách hàng
         /// </summary>
@@ -54,10 +62,20 @@ namespace MISA.ApplicationCore.Class
         /// <summary>
         /// email khách hàng
         /// </summary>
+        /// 
+        [Required]
+        [Email]
+        [CheckDuplicate]
+        [DisplayName("Email")]
         public string Email { get; set; }
         /// <summary>
         /// điện thoại khách hàng
         /// </summary>
+        /// 
+        [Required]
+        [PhoneNumber]
+        [CheckDuplicate]
+        [DisplayName("Số điện thoại")]
         public string PhoneNumber { get; set; }
         /// <summary>
         /// tên công ty khách hàng
@@ -75,22 +93,6 @@ namespace MISA.ApplicationCore.Class
         /// khóa ngoại với bảng nhóm khách hàng
         /// </summary>
         public Guid CustomerGroupID { get; set; }
-        /// <summary>
-        /// ngày tạo bản ghi
-        /// </summary>
-        public DateTime CreatedDate { get; set; }
-        /// <summary>
-        /// người tạo bản nghi
-        /// </summary>
-        public String CreatedBy { get; set; }
-        /// <summary>
-        /// ngày chỉnh sửa gần nhất
-        /// </summary>
-        public DateTime ModifiedDate { get; set; }
-        /// <summary>
-        /// \người chỉnh sửa bản ghi gần nhất
-        /// </summary>
-        public String ModifiedBy { get; set; }
         #endregion
     }
 }

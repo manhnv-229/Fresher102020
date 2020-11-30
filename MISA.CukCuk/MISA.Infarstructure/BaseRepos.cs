@@ -9,11 +9,14 @@ using System.Linq;
 using MISA.ApplicationCore.Interfaces.Base;
 using Microsoft.Extensions.Configuration;
 using System.Data;
+using System.Reflection;
+using MISA.ApplicationCore.Entities.Enums;
+using MISA.ApplicationCore.Class;
 
 namespace MISA.Infarstructure
 {
     public class BaseRepos<TModel>: IBaseRepos<TModel>
-        where TModel: class
+        where TModel: BaseEntity
     {
         string connectionstring;
         protected string _tableName;
@@ -38,8 +41,7 @@ namespace MISA.Infarstructure
         /// createdBy: tqhuy(25/11/2020)
         public IMethodResult<List<TModel>> GetAll()
         {            
-            string sql = $"select*from {_tableName}";
-            var data = conn.Query<TModel>(sql).ToList();
+            var data = conn.Query<TModel>($"Proc_Get{_tableName}s", commandType: CommandType.StoredProcedure).ToList();
             return MethodResult<List<TModel>>.ResultWithData(data, totalRecord: data.Count);
         }
         /// <summary>
@@ -90,6 +92,25 @@ namespace MISA.Infarstructure
             string sql = $"DELETE FROM {_tableName} WHERE {_tableName}ID = '{id}'";
             var data = conn.Execute(sql, commandType: CommandType.Text);
             return MethodResult.ResultWithSuccess(totalRecord: data);
+        }
+
+        public TModel GetEntityByProperty(PropertyInfo propertyInfo, TModel model)
+        {
+            var id = model.GetType().GetProperty($"{_tableName}ID").GetValue(model);
+            if(model.State == EntityState.AddNew)
+            {
+                var sql = $"select * from {_tableName} where {propertyInfo.Name} = '{propertyInfo.GetValue(model)}'";
+                var result = conn.Query<TModel>(sql, commandType: CommandType.Text).FirstOrDefault();
+                return result;
+            }
+            else if (model.State == EntityState.Update)
+            {
+                var sql = $"select * from {_tableName} where {propertyInfo.Name} = '{propertyInfo.GetValue(model)}' AND {_tableName}ID <> '{id}'";
+                var result = conn.Query<TModel>(sql, commandType: CommandType.Text).FirstOrDefault();
+                return result;
+            }
+            else { return null; }
+            
         }
         #endregion
     }

@@ -40,6 +40,7 @@ namespace MISA.CukCuk.Web
             services.AddScoped<ICustomerRepos, CustomerRepos>();
             services.AddScoped<IDepartmentRepos, DepartmentRepos>();
             services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
 
         }
 

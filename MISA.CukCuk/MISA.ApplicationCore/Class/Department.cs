@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MISA.ApplicationCore.Class
 {
-    public class Department
+    public class Department: BaseEntity
     {
         /// <summary>
         /// id phòng ban

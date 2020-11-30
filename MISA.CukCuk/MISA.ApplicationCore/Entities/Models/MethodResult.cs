@@ -21,7 +21,7 @@ namespace MISA.ApplicationCore.Entities.Models
         /// <summary>
         /// Diễn giải cho lỗi (nếu có)
         /// </summary>
-        string Message { get; set; }
+        object Message { get; set; }
         /// <summary>
         /// Mã lỗi trả về (trong trường hợp trả về qua http thì đây là http status code)
         /// </summary>
@@ -38,7 +38,7 @@ namespace MISA.ApplicationCore.Entities.Models
     {
         public bool Success { get; set; } = true;
         public string Error { get; set; }
-        public string Message { get; set; }
+        public object Message { get; set; }
         public MISACode? Status { get; set; }
         public int TotalRecord { get; set; }
 

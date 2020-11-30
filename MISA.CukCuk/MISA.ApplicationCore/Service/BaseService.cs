@@ -4,7 +4,9 @@ using MISA.ApplicationCore.Entities.Models;
 using MISA.ApplicationCore.Interfaces.Base;
 using System;
 using System.Collections.Generic;
+using System.Net.Mail;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace MISA.ApplicationCore.Service
 {
@@ -32,7 +34,7 @@ namespace MISA.ApplicationCore.Service
             }
             else
             {
-                result.Message = "Không có dữ liệu";
+                result.Message = Properties.Resources.Msg_NotData;
             }
             return result;
 
@@ -52,45 +54,63 @@ namespace MISA.ApplicationCore.Service
             }
             else
             {
-                result.Message = "không tìm thấy khách hàng có id: " + id;
+                result.Message = String.Format(Properties.Resources.Msg_NotDataByID, id);
             }
             return result;
         }
         /// <summary>
         /// thêm bản ghi
         /// </summary>
-        /// <param name="TModel">object</param>
+        /// <param name="model">object</param>
         /// <returns>MethodReult-số bản ghi bị ảnh hưởng</returns>
         /// createdBy: tqhuy(24/11/2020)
-        public virtual IMethodResult Insert(TModel TModel)
+        public virtual IMethodResult Insert(TModel model)
         {
-            var result = _baseRepos.Insert(TModel);
-            if (result.TotalRecord != 0)
+            model.GetType().GetProperty("State").SetValue(model, EntityState.AddNew);
+            var isValidate = Validate(model);
+            if (isValidate.Status != MISACode.NotValid)
             {
-                result.Message = "Thêm dữ liệu thành công";
-                result.Status = MISACode.Success;
+                var result = _baseRepos.Insert(model);
+                if (result.TotalRecord != 0)
+                {
+                    result.Message = Properties.Resources.Msg_InsertSuccess;
+                    result.Status = MISACode.Success;
+                }
+                else
+                {
+                    result.Message = Properties.Resources.Msg_InsertError;
+                }
+                return result;
             }
             else
             {
-                result.Message = "Thêm dữ liệu không thành công!";
+                return isValidate;
             }
-            return result;
         }
 
-        public virtual IMethodResult Update(Guid id,TModel tModel)
+        public virtual IMethodResult Update(Guid id,TModel model)
         {
-            tModel.GetType().GetProperty($"{typeof(TModel).Name}ID").SetValue(tModel, id);
-            var result = _baseRepos.Update(tModel);
-            if(result.TotalRecord == 0)
+            model.GetType().GetProperty($"{typeof(TModel).Name}ID").SetValue(model, id);
+            model.GetType().GetProperty("State").SetValue(model, EntityState.Update);
+            var isValidate = Validate(model);
+            if (isValidate.Status != MISACode.NotValid)
             {
-                result.Message = "update dữ liệu không thành công";                
+                var result = _baseRepos.Update(model);
+                if (result.TotalRecord != 0)
+                {
+                    result.Message = Properties.Resources.Msg_UpdateSuccess;
+                    result.Status = MISACode.Success;
+                }
+                else
+                {
+                    result.Message = Properties.Resources.Msg_UpdateError;
+                }
+                return result;
             }
             else
             {
-                result.Message = "Update dữ liệu thành công";
-                result.Status = MISACode.Success;
-            }
-            return result;
+                return isValidate;
+            }            
         }
         /// <summary>
         /// Xóa bản ghi theo id
@@ -103,26 +123,81 @@ namespace MISA.ApplicationCore.Service
             var result = _baseRepos.Delete(id);
             if (result.TotalRecord == 0)
             {
-                result.Message = "Xóa dữ liệu không thành công";
+                result.Message = Properties.Resources.Msg_DeleteError;
 
             }
             else
             {
-                result.Message = "Xóa dữ liệu thành công";
+                result.Message = Properties.Resources.Msg_DeleteSuccess;
                 result.Status = MISACode.Success;
             }
             return result;
         }
 
-        public bool Validate(TModel model)
+        public IMethodResult Validate(TModel model)
         {
+            MethodResult methodResult = new MethodResult();
+            List<string> msg = new List<string>();
             var properties = model.GetType().GetProperties();
-            foreach(var property in properties)
+            foreach (var property in properties)
             {
-                if (property.IsDefined(typeof(Required), false){
+                var displayNameAtt = property.GetCustomAttributes(typeof(DisplayName), true);
+                var displayName = string.Empty;
+                var propertyValue = property.GetValue(model);
+                if (displayNameAtt.Length > 0)
+                {
+                    displayName = (displayNameAtt[0] as DisplayName).Name;
+                }
+                if (property.IsDefined(typeof(Required), false))
+                {
+                    
+                    if (propertyValue == null)
+                    {
+                        msg.Add(string.Format(string.Format(Properties.Resources.Msg_Required, displayName)));
+                        methodResult.Status = MISACode.NotValid;
+                        methodResult.Success = false;
+                    }
+                }
+                if(property.IsDefined(typeof(PhoneNumber), false))
+                {
+                    string pattern = @"[\Wa-zA-Z]";
+                    RegexOptions options = RegexOptions.Multiline;
+                    Regex regex = new Regex(pattern, options);
+                    Match result = regex.Match(propertyValue.ToString());
+                    if(result.Success)
+                    {
+                        msg.Add(Properties.Resources.Msg_isNotPhoneNumber);
+                        methodResult.Status = MISACode.NotValid;
+                        methodResult.Success = false;
+                    }
 
                 }
+                if(property.IsDefined(typeof(Email), false))
+                {
+                    try
+                    {
+                        MailAddress m = new MailAddress(propertyValue.ToString()); 
+                    }
+                    catch (FormatException)
+                    {
+                        msg.Add(Properties.Resources.Msg_isNotEmail);
+                        methodResult.Status = MISACode.NotValid;
+                        methodResult.Success = false;
+                    }
+                }
+                if (property.IsDefined(typeof(CheckDuplicate), false))
+                {
+                    var entity = _baseRepos.GetEntityByProperty(property, model);
+                    if (entity != null)
+                    {
+                        msg.Add(string.Format(Properties.Resources.Msg_Duplicate, displayName));
+                        methodResult.Status = MISACode.NotValid;
+                        methodResult.Success = false;
+                    }
+                }
             }
+            methodResult.Message = msg;
+            return methodResult;
         }
         #endregion
     }
