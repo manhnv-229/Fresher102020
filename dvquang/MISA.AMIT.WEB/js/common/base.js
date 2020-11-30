@@ -205,14 +205,38 @@ class BaseJS {
      * createdby: dvquang (20/11/2020)
      * */
     btnDeleteShowConfirm() {
-        try {
+        //try {
 
             
-            dialogConfirmDelete.dialog('open');
+        //    dialogConfirmDelete.dialog('open');
+        //} catch (e) {
+
+        //}
+        try {
+            var me = this;
+            var tr = $("table tbody tr.row-select");
+
+            // Lấy khóa chính của bản ghi:
+            var recordId = tr.data('recordId');
+            var recordId = recordId;
+            $.ajax({
+                url: me.host + me.apiRouter + `/${recordId}`,
+                method: "GET",
+            }).done(function (res) {
+                var customerName = res["FullName"];
+                var customerCode = res["CustomerCode"];
+
+                $(".content-delete").text("Bạn có chắc chắn muốn xóa khách hàng "
+                    + customerName + " (Mã khách hàng " + customerCode + ") không ? ");
+                $("span.ui-dialog-title").text('Xác nhận xóa bản ghi');
+                dialogConfirmDelete.dialog("open");
+                //$(".m-seconds-button-2").blur();
+            }).fail(function () {
+
+            })
         } catch (e) {
-
+            console.log(e);
         }
-
     }
     /**
      * Hàm xác nhận xóa 1 bản ghi
@@ -282,12 +306,14 @@ class BaseJS {
                                 value = formatMoney(value);
                                 break;
                             case "locate":
-                                td.addClass("text-address");
-                                $(".text-address").attr("title", value);
+                                td.addClass('text-address');
+                                $('.text-address').attr('title', value);
+                               
+                                
                             default:
-
+                                
                         }
-
+                        
                         td.append(value);
                         $(tr).append(td);
                     })
@@ -411,5 +437,6 @@ class BaseJS {
         })
 
     }
+    
 }
 

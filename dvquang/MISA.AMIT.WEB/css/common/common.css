@@ -54,3 +54,7 @@ input.border-red {
 .mg-left-10px {
     margin-left: 10px;
 }
+
+.note-avatar {
+    text-align: center;
+}

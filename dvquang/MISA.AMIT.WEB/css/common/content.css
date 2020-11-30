@@ -2,9 +2,9 @@
     position: absolute;
     top: 61px;
     left: 221px;
-    width: calc(100% - 221px);
+    width: calc(100% - 253px);
     height: calc(100vh - 61px);
-    
+    padding: 16px;
 
 }
 

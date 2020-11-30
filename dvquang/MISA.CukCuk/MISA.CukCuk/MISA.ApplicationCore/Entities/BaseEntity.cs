@@ -6,6 +6,15 @@ using System.Text;
 namespace MISA.ApplicationCore.Entities
 {
     [AttributeUsage(AttributeTargets.Property)]
+    public class DisplayName : Attribute
+    {
+        public string Name { get; set; }
+        public DisplayName(string name)
+        {
+            this.Name = name;
+        }
+    }
+    [AttributeUsage(AttributeTargets.Property)]
     public class Required:Attribute
     {
 
@@ -20,6 +29,20 @@ namespace MISA.ApplicationCore.Entities
     {
 
     }
+
+    [AttributeUsage(AttributeTargets.Property)]
+    public class MaxLength : Attribute 
+    {
+        public int Value { get; set; }
+        public string ErrorMsg { get; set; }
+        public MaxLength(int length, string errorMsg="")
+        {
+            this.Value = length;
+            this.ErrorMsg = errorMsg;
+
+        }
+    }
+
     public class BaseEntity
     {
         public EntityState EntityState { get; set; } = EntityState.Addnew;

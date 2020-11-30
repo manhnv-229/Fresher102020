@@ -1,6 +1,6 @@
 ﻿/* gird-customer trong customer.html*/
 .grid-customer {
-    height: calc(100vh - 220px);
+    height: calc(100vh - 246px);
 }
 /*avatar form thêm thông tin khách hàng*/
 .avatar-customer {
@@ -21,6 +21,4 @@
     background-position: center;
     background-size: cover;
 }
-.note-avatar {
-    text-align: center;
-}
+

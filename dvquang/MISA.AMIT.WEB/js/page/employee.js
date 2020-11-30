@@ -1,5 +1,15 @@
 ﻿$(document).ready(function () {
     new EmployeeJS();
+    dialogDetail = $(".dialog-add-employee").dialog({
+        autoOpen: false,
+        fluid: true,
+        //height: 400,
+        //width: '700px',
+        minWidth: 650,
+        resizable: true,
+        position: ({ my: "center", at: "center", of: window }),
+        modal: true,
+    });
 })
 
 /**

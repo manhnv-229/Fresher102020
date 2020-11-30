@@ -1,4 +1,16 @@
 ﻿/* gird-employee trong employee.html*/
-.grid-employee {
+.grid-customer {
     height: calc(100vh - 220px);
+}
+.avatar-employee .avatar {
+    border: 1px solid #ccc;
+    width: 180px;
+    height: 180px;
+    margin: 0 auto;
+    border-radius: 50%;
+    cursor: pointer;
+    background-image: url('/content/img/default-avatar.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }

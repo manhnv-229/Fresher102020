@@ -21,9 +21,11 @@
 }
 .icon-alert {
     background-image: url('/content/icon/alert-triangle.svg');
+    margin-right: 10px;
     background-size: contain;
     height: 24px;
-    width: 24px;
+    width: 40px;
     align-items: center;
     margin-right: 10px;
+    background-repeat: no-repeat;
 }

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
+
 
 namespace MISA.ApplicationCore.Entities
 { 
@@ -21,6 +21,7 @@ public class Customer:BaseEntity
         [Required]
         [CheckDuplicate]
         [DisplayName("Mã khách hàng")]
+        [MaxLength(20,"Mã khách hàng không vượt quá 20 kí tự")]
         public string CustomerCode { get; set; }
 
         /// <summary>

@@ -20,28 +20,28 @@
         <div class="navbar-content">
             <div class="nav-item">
                 <div class="nav-item-icon nav-item-document-online"></div>
-                <div class="nav-item-text">Lập hồ sơ điện tử</div>
+                <div class="nav-item-text">Tổng quan</div>
             </div>
             <div class="nav-item">
                 <div class="nav-item-icon nav-item-2"></div>
-                <div class="nav-item-text">Lập hồ sơ giấy</div>
+                <div class="nav-item-text">Báo cáo</div>
             </div>
             <div class="nav-item">
                 <div class="nav-item-icon nav-item-3"></div>
-                <div class="nav-item-text">Theo dõi chi</div>
+                <div class="nav-item-text">Mua hàng</div>
             </div>
             <a href="customer.html" class="nav-item">
 
                 <div class="nav-item-icon nav-item-4"></div>
-                <div class="nav-item-text">Quản lí khách hàng</div>
+                <div class="nav-item-text">Danh mục khách hàng</div>
             </a>
             <a href="employee.html" class="nav-item">
                 <div class="nav-item-icon nav-item-5"></div>
-                <div class="nav-item-text">Quản lí lao động</div>
+                <div class="nav-item-text">Danh mục nhân viên</div>
             </a>
             <div class="nav-item">
                 <div class="nav-item-icon nav-item-6"></div>
-                <div class="nav-item-text">Thiết lập</div>
+                <div class="nav-item-text">Thiết lập hệ thống</div>
             </div>
         </div>
     </div>
@@ -131,7 +131,6 @@
                             <div class="mg-left-10px m-flex-1">
                                 <div clas="m-label">Nhóm khách hàng</div>
                                 <select id="cbxCustomerGroup" fieldName="CustomerGroupName" fieldValue="CustomerGroupId" api="/api/customergroups" class="m-control">
-                         
                                 </select>
                                 <combobox id="cbxCustomerGroup"
                                           fieldName=""
@@ -144,9 +143,9 @@
                                 <div clas="m-label">Ngày sinh</div>
                                 <div class="m-control"><input id="dtDateOfBirth" fieldName="DateOfBirth" type="date" /></div>
                             </div>
-                            <div class="mg-left-10px m-flex-1"  >
-                                <div class="m-label" >Giới tính</div>
-                                <div class="m-radio-group"  id="rdGender">
+                            <div class="mg-left-10px m-flex-1">
+                                <div class="m-label">Giới tính</div>
+                                <div class="m-radio-group" id="rdGender">
                                     <div class="m-radio-item">
                                         <input type="radio" id="rdMale" fieldName="Gender" genderValue="1" name="gender" checked />
                                         <label for="rdMale">Nam</label>
@@ -160,35 +159,35 @@
                                         <label for="rdOther">Khác</label>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="m-row m-flex" >
-                    <div class="m-input4-left m-flex-2" >
+                <div class="m-row m-flex">
+                    <div class="m-input4-left m-flex-2">
                         <div class="m-label">Email</div>
-                        <div class="m-control"><input  id="txtEmail" fieldName="Email" type="email" placeholder="example@domain.com" /></div>
+                        <div class="m-control"><input id="txtEmail" fieldName="Email" type="email" placeholder="example@domain.com" /></div>
                     </div>
                     <div class="mg-left-10px m-flex-1">
                         <div class="m-label">Số điện thoại (<span class="label-required">*</span>)</div>
                         <div class="m-control"><input id="txtPhoneNumber" fieldName="PhoneNumber" class="input-required" type="tel" required /></div>
                     </div>
                 </div>
-                <div class="m-row m-flex" >
-                    <div class="m-input5-left m-flex-2" >
+                <div class="m-row m-flex">
+                    <div class="m-input5-left m-flex-2">
                         <div class="m-label">Tên công ty</div>
-                        <div class="m-control"><input type="text" fieldName="CompanyName"  /></div>
+                        <div class="m-control"><input type="text" fieldName="CompanyName" /></div>
                     </div>
                     <div class="mg-left-10px m-flex-1">
                         <div class="m-label">Mã số thuế</div>
-                        <div class="m-control"><input type="text"  fieldName="CompanyTaxCode" placeholder="Mã số thuế của công ty" /></div>
+                        <div class="m-control"><input type="text" fieldName="CompanyTaxCode" placeholder="Mã số thuế của công ty" /></div>
                     </div>
                 </div>
                 <div class="m-row m-flex">
-                    <div class="input6 m-flex-3" >
+                    <div class="input6 m-flex-3">
                         <div class="m-label">Địa chỉ</div>
-                        <div class="m-control"><input  id="txtAddress" fieldName="Address" type="tel" /></div>
+                        <div class="m-control"><input id="txtAddress" fieldName="Address" type="tel" /></div>
                     </div>
                 </div>
             </div>
@@ -197,7 +196,7 @@
                 <button id="btnSave" class="m-btn m-btn-default"><i class="far fa-save"></i><span class="btn-text">Lưu</span></button>
             </div>
         </div>
-  
+
     </div>
 
     <div class="dialog-confirm-delete" title="Xóa bản ghi">
@@ -205,7 +204,7 @@
         <div class="confirm-delete-content">
             <div class="icon-alert"></div>
             <div class="content-delete">
-                bạn có chắc muốn xóa khách hàng này không?
+                Nội dung cảnh báo
             </div>
         </div>
         <div class="dialog-footer footer-dialog-delete">
