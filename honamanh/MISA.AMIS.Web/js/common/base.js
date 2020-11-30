@@ -87,21 +87,21 @@ class Base {
             $(this).addClass("rowSelected");
         })
 
-        $("table tbody").on('contextmenu', 'tr', function (e) {
-            //alert("mouse right on click")
+        //$("table tbody").on('contextmenu', 'tr', function (e) {
+        //    //alert("mouse right on click")
 
-            //hiện thị menu
-            $(this).siblings().removeClass('rowSelected');
-            $(this).addClass('rowSelected');
-            $('.menu-show').css({
-                top: e.pageY + 'px',
-                // left: e.pageX + 'px'
-                right: 16 + 'px'
-            }).show();
-            //   me.showDialogOnClick();
-            debugger
-            return false;
-        });
+        //    //hiện thị menu
+        //    $(this).siblings().removeClass('rowSelected');
+        //    $(this).addClass('rowSelected');
+        //    $('.menu-show').css({
+        //        top: e.pageY + 'px',
+        //        // left: e.pageX + 'px'
+        //        right: 16 + 'px'
+        //    }).show();
+        //    //   me.showDialogOnClick();
+        //    debugger
+        //    return false;
+        //});
 
         //sự kiện click khi ấn nút chuyển trang
         $(".button-bottom-bar").focus(this.btnChangePageOnFocus);
@@ -207,8 +207,11 @@ class Base {
                                 td.addClass("align-right");
                                 break;
                             case "address":
+                                debugger
                                 td.addClass("fix-width-table align-salary");
+                                //TODO: Cần sửa lỗi tooltip sau khi sử dựng jquery ui
                                 $(".fix-width-table").attr("title", value);
+                                $(".fix-width-table").tooltip();
                             default:
                         }
                         $(tr).data('keyId', obj['CustomerId']);

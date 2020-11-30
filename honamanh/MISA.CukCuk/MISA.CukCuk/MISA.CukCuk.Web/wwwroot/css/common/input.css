@@ -1,0 +1,43 @@
+﻿/*Css cho input lấy thông tin từ người dùng*/
+.field-input {
+    padding: 0;
+    border: 1px solid #bbbbbb;
+    border-radius: 4px;
+    height: 40px;
+    color: #000000;
+    font-size: 13px;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    padding-left: 4px;
+}
+
+    .field-input:focus {
+        border: 1px solid #019160;
+    }
+/*input có icon*/
+.field-input-icon {
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    height: 38px;
+    font-size: 12px;
+    color: #bbbbbb;
+    padding: 0px 10px 0 40px;
+    background-image: url('/content/icon/search.svg');
+    background-position: 16px 10px;
+    background-size: 16px 16px;
+    background-repeat: no-repeat;
+    outline: none;
+}
+
+    .field-input-icon:focus {
+        border: 1px solid #019160;
+    }
+/*đổi màu hint, 1 số trình duyệt không hỗ trợ*/
+::placeholder {
+    color: #bbbbbb;
+}
+
+input.border-red {
+    border: 1px solid #ff0000;
+}

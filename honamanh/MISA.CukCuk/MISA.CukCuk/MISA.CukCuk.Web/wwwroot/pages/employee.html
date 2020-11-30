@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <!--Nhúng bootrap, phần dùng chung trước-->
+    <link href="/lib/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" />
+    <link href="/lib/fontawesome-free-5.15.1-web/css/all.css" rel="stylesheet" />
+    <link href="/css/common/main.css" rel="stylesheet" />
+    <link href="/css/page/employee.css" rel="stylesheet" />
+</head>
+<body>
+    <!--nav-bar-->
+    <div class="navbar">
+        <div class="logo-site">
+            <div class="logo-box">
+                <div class="toggle-icon"></div>
+                <div class="amis-logo"></div>m
+            </div>
+
+        </div>
+        <div class="navbar-content">
+            <a class="nav-item" href="employee.html">
+                <div class="image-menu nav-item-icon nav-item-document-online"></div>
+                <div class="nav-item-text">Nhân viên</div>
+            </a>
+            <a class="nav-item" href="customer.html">
+                <div class="image-menu nav-item-icon nav-item-document-paper"></div>
+                <div class="nav-item-text">Khách hàng</div>
+            </a>
+            <a class="nav-item" href="">
+                <div class="image-menu nav-item-icon nav-item-track-spending"></div>
+                <div class="nav-item-text">Theo dõi chi</div>
+            </a>
+            <a class="nav-item" href="">
+                <div class="image-menu nav-item-icon nav-item-records-labor"></div>
+                <div class="nav-item-text">Hồ sơ lao động</div>
+            </a>
+
+        </div>
+    </div>
+    <!--header-->
+    <div class="header">
+        <div class="top-header">
+            <div class="image-branch"></div>
+            <div class="title-header">Công ty cổ phần MISA TEST BHXH</div>
+            <div class="selection-header">
+                <i class="fas fa-caret-down fa-lg icon-selection-header"></i>
+            </div>
+        </div>
+        <div class="user-account">
+            <div class="icon-notify">
+                <i class="far fa-bell fa-lg"></i>
+            </div>
+            <div class="avatar-user"></div>
+            <div class="username">
+                Demo AMIS BHXH
+                <i class="fas fa-ellipsis-h icon-extend-user"></i>
+            </div>
+        </div>
+    </div>
+    <!--content-->
+    <div class="content">
+        <div class="toolbar-of-table">
+            <div class="title-toolbar"><h1>Quản lý lao động</h1></div>
+            <div class="button-toolbar">
+                <button type="button" class="m-button-icon margin-button">
+                    <i class="fas fa-sync-alt icon-syncing"></i>
+                    <div class="title-button-icon">Đồng bộ từ HRM</div>
+                </button>
+                <button type="button" class="btn-add m-button-icon margin-button" style="border-radius: 4px 0 0 4px;">
+                    <i class="fas fa-user-plus icon-add-labor"></i>
+                    <div class="title-button-icon">Thêm lao động</div>
+                </button>
+                <button type="button" class="m-button-only-icon button-dropdown">
+                    <i class="fas fa-caret-down fa-lg icon-dropdown"></i>
+                </button>
+            </div>
+        </div>
+        <div class="search-table">
+            <div class="type-search">
+                <div class="search-by-id">
+                    <input class="field-input-icon" style="width: 200px;" placeholder="Tìm kiếm theo mã nhân viên, họ tên" />
+                </div>
+                <div class="choose-department">
+                    <select class="border-common select-department">
+                        <option selected="">Chọn bộ phận phòng ban</option>
+                        <option value="hr-department">Phòng Nhân Sự</option>
+                        <option value="traning-department">Phòng Đào Tạo</option>
+                        <option value="research-department">Phòng Nghiên Cứu</option>
+                    </select>
+                </div>
+                <!--<div class="choose-state">-->
+                <!--<button type="button" class="border-common btn-choose-state">
+                    Trạng thái tham gia BHXH
+                    <span class="fas fa-caret-down fa-lg icon-dropdown-choose-state"></span>
+                </button>-->
+                <button type="button" class="button-default btn-choose-state">
+                    <div class="title-btn-choose-state">Trạng thái tham gia BHXH</div>
+                    <!--   Trạng thái tham gia BHXH-->
+                    <div class="division"></div>
+                    <div class="icon-dropdown icon-btn-choose-state">
+                        <i class="fas fa-caret-down"></i>
+                    </div>
+                </button>
+                <!--</div>-->
+            </div>
+            <div class="download-and-syncing">
+                <div class="btn-download-and-syncing">
+                    <button type="button" class="m-button-only-icon"><i class="fas fa-download icon-download"></i></button>
+                    <button type="button" class="m-button-only-icon"><i class="fas fa-sync icon-syncing"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="content-main">
+            <div class="content-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th fieldName="EmployeeCode">Mã nhân viên<i class="fas fa-sort icon-sort"></i></th>
+                            <th fieldName="FullName">Họ và tên<i class="fas fa-sort icon-sort"></i></th>
+                            <th fieldName="GenderName">Giới tính<i class="fas fa-sort icon-sort"></i></th>
+                            <th fieldName="DateOfBirth" formatType="ddmmyyyy">Ngày sinh<i class="fas fa-sort icon-sort"></i></th>
+                            <th fieldName="PhoneNumber">Số điện thoại<i class="fas fa-sort icon-sort"></i></th>
+                            <th fieldName="Email">Email<i class="fas fa-sort icon-sort"></i></th>
+                            <th fieldName="PositionName">Chức vụ<i class="fas fa-sort icon-sort"></i></th>
+                            <th fieldName="DepartmentName">Phòng Ban<i class="fas fa-sort icon-sort"></i></th>
+                            <th fieldName="Salary" formatType="money">Mức lương hiện tại<i class="fas fa-sort icon-sort"></i></th>
+                            <th fieldName="Address" formatType="address" class="fix-width-table align-salary">Địa chỉ<i class="fas fa-sort icon-sort"></i></th>
+                            <th fieldName="WorkStatusName">Tình trạng công việc<i class="fas fa-sort icon-sort"></i></th>
+                            <!--<th class="fix-width-table align-salary">Hệ số Mức lương tham gia BHXH<i class="fas fa-sort icon-sort"></i></th>-->
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--<tr>
+                            <td>1</td>
+                            <td>MF633</td>
+                            <td>Hồ Nam Anh</td>
+                            <td>0123456789</td>
+                            <td>Nam</td>
+                            <td>Fresher</td>
+                            <td>Văn phòng Hà Nội</td>
+                            <td>3000000</td>
+                            <td>Đang tham gia</td>
+                            <td>Bệnh viện Thường Tín</td>
+                        </tr>-->
+                    </tbody>
+                </table>
+            </div>
+            <div class="nav-page">
+                <div class="title-nav-page">Hiển thị 1-15/59 lao động</div>
+                <div class="button-nav-page">
+                    <button class="button-bottom-bar button-back-page">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="button-bottom-bar button-change-page-number">1</button>
+                    <button class="button-bottom-bar button-change-page-number">2</button>
+                    <button class="button-bottom-bar button-change-page-number">3</button>
+                    <button class="button-bottom-bar button-change-page-number">4</button>
+                    <button class="button-bottom-bar button-next-page">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="button-control-show">
+                    <button type="button" class="button-change-show-table">
+                        15/Trang
+                        <i class="fas fa-chevron-down icon-change-show-table"></i>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/common/jquery-3.5.1.min.js"></script>
+    <script src="/js/common/common.js"></script>
+    <script src="/js/common/base.js"></script>
+    <script src="/js/page/employee.js"></script>
+</body>
+</html>

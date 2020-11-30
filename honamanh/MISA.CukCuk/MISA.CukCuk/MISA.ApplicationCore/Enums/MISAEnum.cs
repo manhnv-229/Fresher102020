@@ -27,4 +27,10 @@ namespace MISA.ApplicationCore.Enums
         /// </summary>
         NotFound= 404,
     }
+    public enum EntityState
+    {
+        AddNew=1,
+        Update=2,
+        Delete=3,
+    }
 }

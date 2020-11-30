@@ -9,7 +9,7 @@ namespace MISA.ApplicationCore.Entities
     /// Khách hàng
     /// CreatedBy: HNANH (23/11/2020)
     /// </summary>
-    public class Customer
+    public class Customer:BaseEntity
     {
         #region Declare
         #endregion
@@ -23,14 +23,26 @@ namespace MISA.ApplicationCore.Entities
         /// <summary>
         ///Khóa chính
         /// </summary>
+        /// 
+        [PrimaryKey]
         public Guid CustomerId { get; set; }
         /// <summary>
         /// Mã khách hàng
         /// </summary>
+        /// 
+        [CheckDuplicate]
+        
+        [DisplayName("Mã khách hàng")]
+        [MaxLength(20, "Mã khách hàng không được vượt quá 20 ký tự")]
         public string CustomerCode { get; set; }
-        /// <summary>
+        /// <summaryvl>
         /// Tên khách hàng
         /// </summary>
+        /// </summary>
+        /// 
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
         public string  FullName { get; set; }
         /// <summary>
         /// Mã thẻ thành viên
@@ -55,10 +67,16 @@ namespace MISA.ApplicationCore.Entities
         /// <summary>
         /// Số điện thoại
         /// </summary>
+        /// 
+        [Required]
+        [CheckDuplicate]
+        [DisplayName("Số điện thoại khách hàng")]
         public string PhoneNumber { get; set; }
         /// <summary>
         /// Địa chỉ email
         /// </summary>
+        /// 
+        [DisplayName("Email khách hàng")]
         public string  Email { get; set; }
         /// <summary>
         /// Địa chỉ
@@ -69,21 +87,13 @@ namespace MISA.ApplicationCore.Entities
         /// </summary>
         public Guid? CustomerGroupId { get; set; }
         /// <summary>
-        /// Ngày giờ tạo bản ghi
+        /// Số tiền nợ
         /// </summary>
-        public DateTime CreatedDate { get; set; }
+        public double? DebitAmount { get; set; }
         /// <summary>
-        /// Người tạo bản ghi
+        /// Dừng theo dõi
         /// </summary>
-        public string  CreatedBy { get; set; }
-        /// <summary>
-        /// Ngày giờ sửa bản ghi
-        /// </summary>
-        public DateTime ModifiedDate { get; set; }
-        /// <summary>
-        /// Tên người sửa bản ghi
-        /// </summary>
-        public string  ModifiedBy { get; set; }
+        public bool? IsStopFollow { get; set; }
         #endregion
         #region Method
         #endregion
