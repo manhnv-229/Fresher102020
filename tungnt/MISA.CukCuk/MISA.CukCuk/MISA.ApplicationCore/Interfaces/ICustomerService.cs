@@ -5,14 +5,9 @@ using System.Text;
 
 namespace MISA.ApplicationCore.Interfaces
 {
-    public interface ICustomerService
+    public interface ICustomerService: IBaseService<Customer>
     {
-        IEnumerable<Customer> GetCustomers();
-        Customer GetCustomerById(string customerId);
+        Customer GetCustomerByCode(string customerCode);
         Customer GetCustomerByPhoneNumber(string phoneNumber);
-        ServiceResult InsertCustomer(Customer customer);
-        ServiceResult UpdateCustomer(Customer customer);
-        ServiceResult DeleteCustomer(string customerId);
-
     }
 }

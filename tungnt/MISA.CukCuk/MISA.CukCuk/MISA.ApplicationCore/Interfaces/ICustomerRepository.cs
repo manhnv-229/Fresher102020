@@ -5,15 +5,12 @@ using System.Text;
 
 namespace MISA.ApplicationCore.Interfaces
 {
-    public interface ICustomerRepository
+    public interface ICustomerRepository: IBaseRepository<Customer>
     {
-        IEnumerable<Customer> GetCustomers();
-        Customer GetCustomerById(string customerId);
-        int InsertCustomer(Customer customer);
-        int UpdateCustomer(Customer customer);
-        Customer DeleteCustomer(string customerId);
+
         Customer GetCustomerByCode(string customerCode);
         Customer GetCustomerByPhoneNumber(string phoneNumber);
+
 
     }
 }
