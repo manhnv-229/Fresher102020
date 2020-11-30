@@ -90,6 +90,7 @@
     <Content Include="content\image\content\icon2.png" />
     <Content Include="content\image\content\Loading-512.png" />
     <Content Include="content\image\content\number-1.jpg" />
+    <Content Include="content\image\content\save.svg" />
     <Content Include="content\image\content\write-simple-7.png" />
     <Content Include="content\image\header\bell-7.png" />
     <Content Include="content\image\header\dot-more-7.png" />
@@ -109,6 +110,7 @@
     <Content Include="css\common\header.css" />
     <Content Include="css\common\main.css" />
     <Content Include="css\common\navbar.css" />
+    <Content Include="css\page\Customer.css" />
     <Content Include="css\page\employee.css" />
     <Content Include="Global.asax" />
     <Content Include="js\common\base.js" />

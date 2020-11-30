@@ -16,30 +16,26 @@
     background: #808080;
     opacity: 0.3;
 }
-
 .dialog {
-    display: none;
-    width: 610px;
-    height: 490px;
+    display: block;
+    width: 600px;
+    height: 700px;
     background-color: #fff;
     border-radius: 5px;
     position: absolute;
-    top: calc(50% - 245px);
-    left: calc(50% - 305px);
+    top: calc(50% - 365px);
+    left: calc(50% - 300px);
 }
-
     .dialog .dialog-title {
         display: flex;
         height: 40px;
     }
-
         .dialog .dialog-title .title-text {
             font-size: 18px;
             line-height: 25px;
             text-transform: uppercase;
             padding: 8px 10px;
         }
-
         .dialog .dialog-title .title-close-button {
             width: 20px;
             height: 20px;
@@ -49,7 +45,6 @@
             font-size: 20px;
             border-radius: 0 5px 0 0;
         }
-
 .title-close-button:hover {
     color: #ff0000;
     cursor: pointer;
@@ -59,107 +54,62 @@
     background-color: #fff;
     height: calc(100% - 65px);
 }
-
 .information-title {
     width: 100%;
     height: 25px;
     font-size: 18px;
 }
-
 .general-information-content {
     display: block;
 }
 /*Thong tin khach hang pha tren tu ma khach hang den gioi tinh*/
-.information-content-top {
-    display: flex;
-}
-
 .img-avatar {
     height: 152px;
-    width: 185px;
+    width: 150px;
+    margin:auto;
     background-position: center;
     background-size: 152px 152px;
     background-repeat: no-repeat;
     background-image: url('/content/image/content/icon-avatar-default.png');
 }
-
 .text-avatar {
     text-align: center;
 }
-
-.colum-right {
-    height: 170px;
-    width: 184px;
-    padding: 0px 8px;
+.dialog-content{
+    width:100%;
+    background-color:#fff;
 }
-
-.colum-left {
-    width: calc(100% - 222px);
+.common-information{
+    height:63%;
 }
-
-.colum-left-input {
+.dialog-div-left {
     display: flex;
+    height: 60px;
+    margin-bottom: 8px;
+    margin-top: 8px;
 }
-
-.chkGender {
-    display: flex;
+.dialog-div-left div{
+    height:60px;
 }
-#dtDateOfBirth {
-    width: 170px;
+.dialog-div-left input{
+    height:30px;
+    width:205px;
+    margin-left:6px;
+    margin-right:6px;
+    border-radius:3px;
+    border: 1px solid #bbbbbb;
 }
-.dialog .dialog-body .information-content input {
-    padding-left: 16px;
-    height: 33px;
-    padding-bottom: 4px;
-    margin-right: 16px;
-    margin-bottom: 10px;
+.cbbDropDownList {
+    height: 30px;
+    width: 205px;
+    margin-left: 9px;
+    margin-right: 6px;
+    border-radius: 3px;
+    border: 1px solid #bbbbbb;
 }
-    .dialog .dialog-body .information-content input:focus {
-        border: 1px solid #019160;
-    }
-
-    .ddlGroupCustomer {
-        height: 40px;
-        width: 189px;
-        border: 1px solid #bbbbbb;
-    }
 
 .dialog .dialog-body label {
     margin: 8px 16px;
-}
-
-#ckbGender {
-    width: 20px;
-}
-/*thong tin khach hang phan giua email, sdt, cong ty, ma so thue*/
-.email-phone {
-    display: flex;
-}
-
-.content-mid-email {
-    width: 359px;
-    margin-left: 10px;
-}
-.content-mid-phone {
-    position: absolute;
-    right: 0px;
-}
-
-#txtEmail {
-    width: 100%;
-}
-
-#CompanyName {
-    width: 100%;
-}
-/*dialog body bottom thong tin dialog chi*/
-.information-content-bottom {
-    width: 564px;
-}
-
-#txtAddress {
-    margin-left: 10px;
-    width: 100%;
 }
 /*Xu ly div dialog-footer*/
 .dialog .dialog-footer {
@@ -172,7 +122,6 @@
     align-items: center;
     background-color: #bbbbbb;
 }
-
     .dialog .dialog-footer button {
         width: 85px;
         height: 35px;
@@ -185,15 +134,16 @@
             background-color: #2FBE8E;
             cursor:pointer;
         }
-
 button#btnSave {
     background-color: #019160;
-    display:flex;
-    padding-left:18px;
+    display: flex;
+    padding-left: 18px;
+    color: #fff;
 }
-    button#btnSave:hover {
-        background-color: #2FBE8E;
-    }
+
+button#btnSave:hover {
+    background-color: #2FBE8E;
+}
 
     button#btnCanel {
     }
@@ -215,7 +165,6 @@ button#btnSave {
     margin-top: 16px;
     margin-right: 16px;
 }
-
     .m-btn:hover {
         background-color: #2FBE8E;
         cursor: pointer;

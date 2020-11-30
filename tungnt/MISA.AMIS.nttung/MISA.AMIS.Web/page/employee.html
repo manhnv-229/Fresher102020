@@ -10,7 +10,8 @@
     <link href="/css/page/employee.css" rel="stylesheet" />
     <link href="/css/common/grid.css" rel="stylesheet" />
     <link href="/css/common/content.css" rel="stylesheet" />
-    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
 <body>
     <div class="header">
@@ -147,85 +148,109 @@
             <div class="title-close-button"><i class='fa fa-close'>&#xf410;</i></div>
         </div>
         <div class="dialog-body">
-            <div class="general-information">
-                <div class="information-title"><span>Thông tin chung</span></div>
-                <div class="general-information-content">
-                    <div class="row">
-                        <label>Mã nhân viên(*)</label>
-                        <input type="text" id="txtemployeecode" required/>
+            <div class="dialog-avatar">
+                <div class="img-avatar"></div>
+                <div class="text-avatar">
+                    Vui lòng chọn ảnh có định dạng<br /><span>.jpg,.jpeg,.png,.gif</span>
+                </div>
+            </div>
+            <div class="dialog-content">
+                <div class="common-information">
+                    <span>A.THÔNG TIN CHUNG:</span>
+                    <div class="dialog-div-left">
+                        <div>
+                            <label>Mã nhân viên(*)</label><br/>
+                            <input type="text" id="txtEmployeeCode" required/>
+                        </div>
+                        <div>
+                            <label>Họ và tên(*)</label><br />
+                            <input type="text" id="txtFullName" required/>
+                        </div>
                     </div>
-                    <div class="row">
-                        <label>Tên nhân viên (*)</label>
-                        <input type="text" id="txtFullname" required/>
+                    <div class="dialog-div-left">
+                        <div>
+                            <label>Ngày sinh</label><br />
+                            <input type="date" id="dtDateOfBirth"/>
+                        </div>
+                        <div>
+                            <label>Giới tính</label><br />
+                            <select id="cbbGender" class="cbbDropDownList">
+                                <option value="0">Nam</option>
+                                <option value="1">Nữ</option>
+                                <option value="2">Khác</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="row">
-                        <label>Ngày sinh</label>
-                        <input type="date" id="datIdentityDate" class="ipDate" />
-                        <label class="lblGender">Giới tính</label>
-                        <select id="ipGender" class="ipRight" >
-                            <option value=1>Nam</option>
-                            <option value=2>Nữ</option>
-                            <option value=3>Khác</option>
-                        </select>
-
-
+                    <div class="dialog-div-left">
+                        <div>
+                            <label>Số CMTND/Căn cước(*)</label><br />
+                            <input type="text" id="txtIdentityCode" required/>
+                        </div>
+                        <div>
+                            <label>Ngày cấp</label><br />
+                            <input type="date" id="dtIdentityDate" required/>
+                        </div>
                     </div>
-                    <div class="row">
-                        <label>Email(*)</label>
-                        <input type="text" id="txtEmail" required/>
+                    <div class="dialog-div-left">
+                        <div>
+                            <label>Nơi cấp</label><br />
+                            <input type="text" id="txtIdentityPlace"/>
+                        </div>
                     </div>
-                    <div class="row">
-                        <label>ĐT di động</label>
-                        <input type="text" id="txtPhoneNumber" />
+                    <div class="dialog-div-left">
+                        <div>
+                            <label>Email(*)</label><br />
+                            <input type="email" placeholder="example@gmail.com" id="txtEmail" required/>
+                        </div>
+                        <div>
+                            <label>Số điện thoại(*)</label><br />
+                            <input type="text" id="txtPhoneNumber" required/>
+                        </div>
                     </div>
-                    <div class="row">
-                        <label>Số CMT/HC</label>
-                        <input type="text" id="txtIdentityNumber" />
-                        <label>Ngày cấp</label>
-                        <input type="date" id="datIdentityDate" class="ipRight" />
+                </div>
+                <div class="work-information">
+                    <span>B.THÔNG TIN CÔNG VIỆC</span>
+                    <div class="dialog-div-left">
+                        <div>
+                            <label>Vị trí</label><br />
+                            <select id="cbbPositionName" class="cbbDropDownList"></select>
+                        </div>
+                        <div>
+                            <label>Phòng ban</label><br />
+                            <select id="cbbDepartmentName" class="cbbDropDownList"></select>
+                        </div>
                     </div>
-                    <div class="row">
-                        <label> Nơi cấp CMND</label>
-                        <input type="text" id="txtIdentityPlace" />
+                    <div class="dialog-div-left">
+                        <div>
+                            <label>Mã số thuế cá nhân</label><br />
+                            <input type="text" id="txtTaxCode" />
+                        </div>
+                        <div>
+                            <label>Mức lương cơ bản</label><br />
+                            <input type="text" id="txtSalary"/>
+                        </div>
+                    </div>
+                    <div class="dialog-div-left">
+                        <div>
+                            <label>Ngày gia nhập công ty</label><br />
+                            <input type="date" id="dtJoinDate" />
+                        </div>
+                        <div>
+                            <label>Tình trạng công việc</label><br />
+                            <select id="cbbWorkStatusCode" class="cbbDropDownList"></select>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="work-information">
-                <div class="information-title">
-                    <span>Thông tin công việc</span>
-                </div>
-                <div class="work-information-content">
-                    <div class="row">
-                        <label>Chức vụ</label>
-                        <input type="text" id="txtPositionName" />
-                    </div>
-                    <div class="row">
-                        <label>Phòng ban</label>
-                        <input type="text" id="txtQualificationName" />
-                    </div>
-                    <div class="row">
-                        <label>Mã sô thuế cá nhân</label>
-                        <input type="text" id="txtPersonalTaxCode" />
-                        <label>Mức lương</label>
-                        <input type="text" id="txtSalary" class="ipRight" />
-                    </div>
-                    <div class="row">
-                        <label>Ngày gia nhập</label>
-                        <input type="date" id="ipJoinDate" class="ipDate" />
-                        <label>Tình trạng</label>
-                        <select type="text" id="ipWorkStatusName" class="ipRight">
-                            <option value=1>Đang thử viêc</option>
-                            <option value=2>Đang làm việc</option>
-                            <option value=3>Đã nghỉ việc</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
         </div>
         <div class="dialog-footer">
-            <button id="btnSave">Lưu</button>
             <button id="btnCanel">Hủy</button>
+            <button id="btnSave">
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                </div>
+                <div style="line-height: 30px;">Lưu</div>
+            </button>
         </div>
     </div>
 

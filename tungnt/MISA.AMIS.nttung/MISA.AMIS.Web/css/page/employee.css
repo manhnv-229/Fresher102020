@@ -1,3 +1,6 @@
 ﻿.grid{
     height:calc(100vh - 236px);
 }
+.dialog-body{
+    display:flex;
+}
