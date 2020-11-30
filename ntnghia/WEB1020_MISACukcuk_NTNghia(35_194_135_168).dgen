@@ -598,6 +598,26 @@
           <GeneratorCategory>Personal</GeneratorCategory>
           <Length>50</Length>
         </Column>
+        <Column Name="DebitAmount">
+          <Checked>false</Checked>
+          <DataType>DOUBLE</DataType>
+          <GeneratorOptions xsi:type="MySqlDoubleGeneratorOptions">
+            <AllowNulls>true</AllowNulls>
+            <NullProportion>10</NullProportion>
+            <Unique>false</Unique>
+            <IsAlwaysUnique>false</IsAlwaysUnique>
+            <Increment xsi:type="xsd:double">1</Increment>
+            <ValueDistributionMode>Seed</ValueDistributionMode>
+            <SeedValue>1</SeedValue>
+            <MinValue>-999999999999999</MinValue>
+            <MaxValue>999999999999999</MaxValue>
+            <UseDefault>false</UseDefault>
+            <DefaultValue>NULL</DefaultValue>
+          </GeneratorOptions>
+          <GeneratorType>MySqlDoubleGenerator</GeneratorType>
+          <GeneratorName>double</GeneratorName>
+          <GeneratorDescription>fill with double numeric values</GeneratorDescription>
+        </Column>
         <Column Name="CompanyName">
           <Checked>true</Checked>
           <DataType>VARCHAR</DataType>
@@ -866,7 +886,7 @@
           <Checked>true</Checked>
           <DataType>INT</DataType>
           <GeneratorOptions xsi:type="MySqlIntegerGeneratorOptions">
-            <AllowNulls>true</AllowNulls>
+            <AllowNulls>false</AllowNulls>
             <NullProportion>10</NullProportion>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
@@ -1182,7 +1202,7 @@
           <Checked>true</Checked>
           <DataType>INT</DataType>
           <GeneratorOptions xsi:type="MySqlIntegerGeneratorOptions">
-            <AllowNulls>true</AllowNulls>
+            <AllowNulls>false</AllowNulls>
             <NullProportion>10</NullProportion>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
@@ -1190,7 +1210,7 @@
             <ValueDistributionMode>Seed</ValueDistributionMode>
             <SeedValue>10</SeedValue>
             <MinValue>0</MinValue>
-            <MaxValue>3</MaxValue>
+            <MaxValue>1</MaxValue>
             <UseDefault>false</UseDefault>
             <DefaultValue>NULL</DefaultValue>
           </GeneratorOptions>
@@ -1270,6 +1290,8 @@
   </Tables>
   <SynchronizationOptions xsi:type="DataSyncOptionGroup">
     <SynchronizationFileName>C:\Users\ADMIN\Documents\Devart\dbForge Studio for MySQL\DataGeneration_20201120-2053.sql</SynchronizationFileName>
+    <ExecuteCustomScriptTypeBefore>UseEmbeddedScript</ExecuteCustomScriptTypeBefore>
+    <ExecuteCustomScriptTypeAfter>UseEmbeddedScript</ExecuteCustomScriptTypeAfter>
     <BulkInsert>false</BulkInsert>
   </SynchronizationOptions>
 </DataGenDocument>
