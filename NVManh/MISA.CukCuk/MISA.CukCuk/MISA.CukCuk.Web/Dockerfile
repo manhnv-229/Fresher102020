@@ -7,6 +7,8 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["MISA.CukCuk.Web/MISA.CukCuk.Web.csproj", "MISA.CukCuk.Web/"]
+COPY ["MISA.ApplicationCore/MISA.ApplicationCore.csproj", "MISA.ApplicationCore/"]
+COPY ["MISA.Infarstructure/MISA.Infarstructure.csproj", "MISA.Infarstructure/"]
 RUN dotnet restore "MISA.CukCuk.Web/MISA.CukCuk.Web.csproj"
 COPY . .
 WORKDIR "/src/MISA.CukCuk.Web"

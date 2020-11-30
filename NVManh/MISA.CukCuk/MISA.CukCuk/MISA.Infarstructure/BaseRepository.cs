@@ -13,7 +13,7 @@ using System.Text;
 
 namespace MISA.Infarstructure
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity>, IDisposable where TEntity : BaseEntity
     {
         #region DECLARE
         IConfiguration _configuration;
@@ -31,17 +31,37 @@ namespace MISA.Infarstructure
         }
         public int Add(TEntity entity)
         {
-            // Khởi tạo kết nối với Db:
-            var parameters = MappingDbType(entity);
-            // Thực thi commandText:
-            var rowAffects = _dbConnection.Execute($"Proc_Insert{_tableName}", parameters, commandType: CommandType.StoredProcedure);
+            var rowAffects = 0;
+            _dbConnection.Open();
+            using (var transaction = _dbConnection.BeginTransaction())
+            {
+                try
+                {
+                    var parameters = MappingDbType(entity);
+                    // Thực hiện thêm khách hàng:
+                    rowAffects = _dbConnection.Execute($"Proc_Insert{_tableName}", parameters, commandType: CommandType.StoredProcedure);
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                }
+            }
             // Trả về kết quả (số bản ghi thêm mới được)
             return rowAffects;
         }
 
         public int Delete(Guid employeeId)
         {
-            throw new NotImplementedException();
+
+            var res = 0;
+            _dbConnection.Open();
+            using (var transaction = _dbConnection.BeginTransaction())
+            {
+                res = _dbConnection.Execute($"DELETE FROM {_tableName} WHERE {_tableName}Id = '{employeeId.ToString()}'", commandType: CommandType.Text);
+                transaction.Commit();
+            }
+            return res;
         }
 
         public virtual IEnumerable<TEntity> GetEntities()
@@ -49,6 +69,15 @@ namespace MISA.Infarstructure
             // Kết nối tới CSDL:
             // Khởi tạo các commandText:
             var entities = _dbConnection.Query<TEntity>($"SELECT * FROM {_tableName}", commandType: CommandType.Text);
+            // Trả về về dữ liệu:
+            return entities;
+        }
+
+        public virtual IEnumerable<TEntity> GetEntities(string storeName)
+        {
+            // Kết nối tới CSDL:
+            // Khởi tạo các commandText:
+            var entities = _dbConnection.Query<TEntity>($"{storeName}", commandType: CommandType.StoredProcedure);
             // Trả về về dữ liệu:
             return entities;
         }
@@ -115,6 +144,12 @@ namespace MISA.Infarstructure
                 return null;
             var entityReturn = _dbConnection.Query<TEntity>(query, commandType: CommandType.Text).FirstOrDefault();
             return entityReturn;
+        }
+
+        public void Dispose()
+        {
+            if (_dbConnection.State == ConnectionState.Open)
+                _dbConnection.Close();
         }
     }
 }

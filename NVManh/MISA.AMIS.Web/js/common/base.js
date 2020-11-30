@@ -1,7 +1,7 @@
 ﻿
 class BaseJS {
     constructor() {
-        this.host = "http://api.manhnv.net";
+        this.host = "http://localhost:51014";
         this.apiRouter = null;
         this.setApiRouter();
         this.initEvents();

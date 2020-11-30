@@ -6,36 +6,13 @@ using System.Text;
 
 namespace MISA.ApplicationCore.Services
 {
-    public class EmployeeService : IEmployeeService
+    public class EmployeeService : BaseService<Employee>, IEmployeeService
     {
         IEmployeeRepository _employeeRepository;
-        public EmployeeService(IEmployeeRepository employeeRepository)
+        public EmployeeService(IEmployeeRepository employeeRepository):base(employeeRepository)
         {
             _employeeRepository = employeeRepository;
         }
-        public ServiceResult AddEmployee(Employee employee)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ServiceResult DeleteEmployee(Guid employeeId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Employee GetEmployeeById(Guid employeeId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Employee> GetEmployees()
-        {
-            return _employeeRepository.GetEmployees();
-        }
-
-        public ServiceResult UpdateEmployee(Employee employee)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }
