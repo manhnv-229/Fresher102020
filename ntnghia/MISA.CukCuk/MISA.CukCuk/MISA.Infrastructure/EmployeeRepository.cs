@@ -18,6 +18,16 @@ namespace MISA.Infrastructure
         {
         }
 
+        public IEnumerable<Employee> GetEmployeesByDepartment(Guid departmentId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Employee> GetEmployeesByPosition(Guid positionId)
+        {
+            throw new NotImplementedException();
+        }
+
         #region Method
 
         #endregion

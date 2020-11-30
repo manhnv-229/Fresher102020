@@ -16,12 +16,12 @@ namespace MISA.CukCuk.Web.Controllers
     /// </summary>
     public class EmployeesController : BaseApiController<Employee>
     {
-        IBaseService<Employee> _baseService;
+        IEmployeeService _employeeService;
 
         #region Constructor
-        public EmployeesController(IBaseService<Employee> baseService) : base(baseService)
+        public EmployeesController(IEmployeeService employeeService) : base(employeeService)
         {
-            _baseService = baseService;
+            _employeeService = employeeService;
         }
         #endregion
     }

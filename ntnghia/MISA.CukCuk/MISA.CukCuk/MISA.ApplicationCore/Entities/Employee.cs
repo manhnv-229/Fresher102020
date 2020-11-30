@@ -35,11 +35,6 @@ namespace MISA.ApplicationCore.Entities
         public int? Gender { get; set; }
 
         /// <summary>
-        /// Địa chỉ
-        /// </summary>
-        public string Address { get; set; }
-
-        /// <summary>
         /// Ngày tháng năm sinh
         /// </summary>
         public DateTime? DateOfBirth { get; set; }
@@ -54,27 +49,31 @@ namespace MISA.ApplicationCore.Entities
         /// </summary>
         public string PhoneNumber { get; set; }
 
+        /// <summary>
+        /// Số CMTND/Căn cước
+        /// </summary>
         public string IdentityNumber { get; set; }
 
+        /// <summary>
+        /// Ngày cấp 
+        /// </summary>
         public DateTime? IdentityDate { get; set; }
 
+        /// <summary>
+        /// Nơi cấp
+        /// </summary>
         public string IdentityPlace { get; set; }
 
+        /// <summary>
+        /// Ngày vào công ty
+        /// </summary>
         public DateTime? JoinDate { get; set; }
 
-        public int MaritalStatus { get; set; }
-
-        public string PersonalTaxCode { get; set; }
-
+        
         /// <summary>
-        /// Số tiền nợ
+        /// Mức lương
         /// </summary>
         public double? Salary { get; set; }
-
-        /// <summary>
-        /// Số thẻ thành viên
-        /// </summary>
-        public int EducationalBackground { get; set; }
 
         /// <summary>
         /// Tên công ty làm việc
@@ -90,8 +89,6 @@ namespace MISA.ApplicationCore.Entities
         /// Mã văn phòng
         /// </summary>
         public Guid? DepartmentId { get; set; }
-
-        public Guid? QualificationId { get; set; }
 
         public DateTime? CreatedDate { get; set; }
         public string CreatedBy { get; set; }
