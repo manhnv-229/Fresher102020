@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace MISA.ApplicationCore.Interfaces
@@ -44,5 +45,7 @@ namespace MISA.ApplicationCore.Interfaces
         /// <returns>Số bản ghi bị ảnh hưởng</returns>
         /// CreatedBy: NTNghia (24/11/2020)
         int Delete(string entityId);
+
+        T GetEntityByProperty(T entity, PropertyInfo property);
     }
 }

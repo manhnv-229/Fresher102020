@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MISA.ApplicationCore.Entities
 {
-    public class Employee
+    public class Employee : BaseEntity
     {
         #region Constructor
         public Employee()

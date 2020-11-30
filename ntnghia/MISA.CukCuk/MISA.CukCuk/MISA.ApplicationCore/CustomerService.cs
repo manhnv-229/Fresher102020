@@ -11,7 +11,7 @@ namespace MISA.ApplicationCore
     {
         ICustomerRepository _customerRepository;
         #region Constructor
-        public CustomerService(IBaseRepository<Customer> baseRepository, ICustomerRepository customerRepository) : base(baseRepository)
+        public CustomerService(ICustomerRepository customerRepository) : base(customerRepository)
         {
             _customerRepository = customerRepository;
         }
@@ -21,9 +21,36 @@ namespace MISA.ApplicationCore
 
         public Customer GetCustomerByCode(string customerId)
         {
-            var customer = _customerRepository.GetCustomerByCode(customerId);
-            return customer;
+            return _customerRepository.GetCustomerByCode(customerId);
         }
+
+        protected override bool CustomValidate(Customer customer)
+        {
+            //validate riêng tại con:
+            return true;
+        }
+        //public override int Add(Customer entity)
+        //{
+        //    //validate dữ liệu, nếu dữ liệu chưa hợp lệ thì trả về lỗi
+        //    var isValid = true;
+        //    //Check trùng mã khách hàng:
+        //    var customerDuplicate = _customerRepository.GetCustomerByCode(entity.CustomerCode);
+        //    if(customerDuplicate != null)
+        //    {
+        //        isValid = false;
+        //    }
+        //    //Check trường bắt buộc nhập
+
+        //    if(isValid == true)
+        //    {
+        //        var res = base.Add(entity);
+        //        return res;
+        //    }
+        //    else
+        //    {
+        //        return 0;
+        //    }
+        //}
 
         //Thêm mới khách hàng:
         //public ServiceResult AddCustomer(Customer customer)
@@ -61,7 +88,7 @@ namespace MISA.ApplicationCore
         //        serviceResult.Data = msg;
         //        return serviceResult;
         //    }
-               
+
         //    //Thêm mới khi dữ liệu đã hợp lệ:
         //    var rowAffects = _customerRepository.AddCustomer(customer);
         //    serviceResult.MISACode = MISACode.IsValid;

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MISA.ApplicationCore.Interfaces
 {
-    public interface ICustomerRepository
+    public interface ICustomerRepository: IBaseRepository<Customer>
     {
         /// <summary>
         /// Lấy khách hàng theo mã khách hàng

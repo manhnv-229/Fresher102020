@@ -13,24 +13,17 @@ namespace MISA.Infrastructure
 {
     public class CustomerRepository : BaseRepository<Customer>, ICustomerRepository
     {
-        #region Declare
-        IConfiguration _configuration;
-        string _connectionString = string.Empty;
-        IDbConnection _dbConnection = null;
-        #endregion
 
         public CustomerRepository(IConfiguration configuration) : base(configuration)
         {
-            _configuration = configuration;
-            _connectionString = _configuration.GetConnectionString("MISACukCukConnectionString");
-            _dbConnection = new MySqlConnection(_connectionString);
+
         }
 
         #region Method
         public Customer GetCustomerByCode(string customerCode)
         {
-            var res = _dbConnection.Query<Customer>("Proc_GetCustomerByCode", new { CustomerCode = customerCode }, commandType: CommandType.StoredProcedure).FirstOrDefault();
-            return res;
+            var customerDuplicate = _dbConnection.Query<Customer>($"SELECT * FROM Customer WHERE CustomerCode = '{customerCode}'", commandType: CommandType.Text).FirstOrDefault();
+            return customerDuplicate;
         }
 
         public IEnumerable<Customer> GetCustomerPaging(int limit, int offset)

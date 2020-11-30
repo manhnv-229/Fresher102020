@@ -22,12 +22,12 @@ namespace MISA.CukCuk.Web.Controllers
     /// </summary>
     public class CustomersController : BaseApiController<Customer>
     {
-        IBaseService<Customer> _baseService;
+        ICustomerService _customerService;
 
         #region Constructor
-        public CustomersController(IBaseService<Customer> baseService) : base(baseService)
+        public CustomersController(ICustomerService customerService) : base(customerService)
         {
-            _baseService = baseService;
+            _customerService = customerService;
         }
         #endregion
     }

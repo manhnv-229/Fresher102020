@@ -9,7 +9,7 @@ namespace MISA.ApplicationCore.Entities
     /// Khách hàng
     /// </summary>
     /// CreatedBy: NTNghia (23/11/2020)
-    public class Customer
+    public class Customer: BaseEntity
     {
         #region Constructor
         public Customer()
@@ -22,11 +22,16 @@ namespace MISA.ApplicationCore.Entities
         /// <summary>
         /// Khóa chính
         /// </summary>
+        [PrimaryKey]
         public Guid CustomerId { get; set; }
 
         /// <summary>
         /// Mã khách hàng
         /// </summary>
+        [CheckDuplicate]
+        [Required]
+        [DisplayName("Mã khách hàng")]
+        [MaxLength(20,"Mã khách hàng không được quá 20 kí tự")]
         public string CustomerCode { get; set; }
 
         /// <summary>
@@ -67,6 +72,8 @@ namespace MISA.ApplicationCore.Entities
         /// <summary>
         /// Số điện thoại
         /// </summary>
+        [CheckDuplicate]
+        [DisplayName("Mã khách hàng")]
         public string PhoneNumber { get; set; }
 
         /// <summary>

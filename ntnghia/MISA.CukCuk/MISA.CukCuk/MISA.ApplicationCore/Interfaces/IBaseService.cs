@@ -27,7 +27,7 @@ namespace MISA.ApplicationCore.Interfaces
         /// <param name="entity">object entity</param>
         /// <returns>Số bản ghi bị ảnh hưởng (thêm mới được)</returns>
         /// CreatedBy: NTNghia (24/11/2020)
-        int Add(T entity);
+        ServiceResult Add(T entity);
 
         /// <summary>
         /// Sửa thông tin entity
@@ -35,7 +35,7 @@ namespace MISA.ApplicationCore.Interfaces
         /// <param name="entity">object entity cần sửa</param>
         /// <returns>Số bản ghi bị ảnh hưởng</returns>
         /// CreatedBy: NTNghia (24/11/2020)
-        int Update(T entity);
+        ServiceResult Update(T entity);
 
         /// <summary>
         /// Xóa entity
@@ -43,6 +43,6 @@ namespace MISA.ApplicationCore.Interfaces
         /// <param name="entityId">id entity cần xóa</param>
         /// <returns>Số bản ghi bị ảnh hưởng</returns>
         /// CreatedBy: NTNghia (24/11/2020)
-        int Delete(string entityId);
+        ServiceResult Delete(string entityId);
     }
 }

@@ -1,22 +1,25 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
+using MISA.ApplicationCore.Entities;
+using MISA.ApplicationCore.Enums;
 using MISA.ApplicationCore.Interfaces;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace MISA.Infrastructure
 {
-    public class BaseRepository<T> : IBaseRepository<T>
+    public class BaseRepository<T> : IBaseRepository<T> where T:BaseEntity
     {
         #region Declare
         IConfiguration _configuration;
         string _connectionString = string.Empty;
-        IDbConnection _dbConnection = null;
-        string _tableName;
+        protected IDbConnection _dbConnection = null;
+        protected string _tableName;
         #endregion
 
         #region Constructor
@@ -77,8 +80,14 @@ namespace MISA.Infrastructure
 
         public int Delete(string id)
         {
-            // Thực thi commandText:
-            var rowAffects = _dbConnection.Execute("Proc_DeleteCustomerById", id, commandType: CommandType.StoredProcedure);
+            var rowAffects = 0;
+            _dbConnection.Open();
+            using (var transition = _dbConnection.BeginTransaction())
+            {
+                // Thực thi commandText:
+                rowAffects = _dbConnection.Execute($"Proc_Delete{_tableName}ById", id, commandType: CommandType.StoredProcedure);
+                transition.Commit();
+            }
             // Trả về kết quả (Số bản ghi xóa)
             return rowAffects;
         }
@@ -103,6 +112,24 @@ namespace MISA.Infrastructure
                 }
             }
             return parameters;
+        }
+
+        public T GetEntityByProperty(T entity, PropertyInfo property) 
+        {
+            var propertyName = property.Name;
+            var propertyValue = property.GetValue(entity);
+            var keyValue = entity.GetType().GetProperty($"{_tableName}Id").GetValue(entity);
+            var query = string.Empty;
+
+            //Kiểm tra trạng thái
+            if (entity.EntityState == EntityState.AddNew)
+                query = $"SELECT * FROM {_tableName} WHERE {propertyName} = '{propertyValue}'";
+            else if (entity.EntityState == EntityState.Update)
+                query = $"SELECT * FROM {_tableName} WHERE {propertyName} = '{propertyValue}' AND {_tableName}Id <> '{keyValue}'";
+            else
+                return null;
+            var entityReturn = _dbConnection.Query<T>(query, commandType: CommandType.Text).FirstOrDefault();
+            return entityReturn;
         }
 
 
