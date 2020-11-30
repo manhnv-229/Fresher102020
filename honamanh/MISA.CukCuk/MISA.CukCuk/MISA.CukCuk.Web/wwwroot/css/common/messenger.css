@@ -1,0 +1,188 @@
+﻿
+/**-------------------------------------------
+    Css cho thông báo đã thực hiện thành công
+*/
+.show-toast-messenger {
+    position: absolute;
+    bottom: 0;
+    left: 16px;
+    visibility: hidden;
+}
+
+.toast-messenger {
+    height: 48px;
+    padding-left: 16px;
+    border-radius: 4px;
+    box-shadow: 0 3px 6px rgba(255, 255, 255, 0.16);
+    display: flex;
+    align-items: center;
+    border: 1px solid #bbbbbb;
+    background-color: #ffffff;
+}
+    /*Css cho phần icon của thông báo*/
+    .toast-messenger .div-icon-messenger {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 8px;
+        border-radius: 50%;
+        background-size: 16px 16px;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+/*.div-icon-messenger .icon-messenger {
+        width: 16px;
+        height: 16px;
+        background-size: 16px 16px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-image: url('/content/icon/danger.svg');
+    }*/
+
+.icon-messenger-danger {
+    /*color: #e22e2e;*/
+    background-color: #eb5151;
+    background-image: url('/content/icon/danger.svg');
+}
+
+.icon-messenger-warning {
+    /*color: #ffd800;*/
+    background-color: #efd336;
+    background-image: url('/content/icon/warning.svg');
+}
+
+.icon-messenger-success {
+    /*color: #019160;*/
+    background-color: #019160;
+    background-image: url('/content/icon/success.svg');
+}
+
+.icon-messenger-info {
+    /* color: #557ed3;*/
+    background-color: #3271f3;
+    background-image: url('/content/icon/info.svg');
+}
+/*Css cho tiêu đề của thông báo*/
+.toast-messenger .title-messenger {
+    color: #000000;
+    font-size: 13px;
+    width: 200px;
+}
+/*Css cho nút đóng thông báo*/
+.toast-messenger .btn-close-messenger {
+    border: none;
+    outline: none;
+    background-color: #ffffff;
+    position: relative;
+    right: 0;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+}
+
+.btn-close-messenger .icon-close-messenger {
+    height: 24px;
+    width: 24px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px 24px;
+}
+
+.icon-close-messenger-success {
+    /*color: #019160;*/
+    background-image: url('/content/icon/x_success.svg');
+}
+
+.icon-close-messenger-danger {
+    /*color: #eb5151;*/
+    background-image: url('/content/icon/x_danger.svg');
+}
+
+.icon-close-messenger-warning {
+    /*color: #efd336;*/
+    background-image: url('/content/icon/x_warning.svg');
+}
+
+.icon-close-messenger-info {
+    /*color: #3271f3;*/
+    background-image: url('/content/icon/x_info.svg');
+}
+
+
+/************************************************************
+Css đưa ra cảnh báo khi thực hiện các sự kiện sửa xóa dữ liệu
+*/
+.show-pop-up-warning {
+    display: none;
+    width: 200px;
+    height: 200px;
+    border-radius: 4px;
+    border: 1px solid #bbbbbb;
+}
+
+.pop-up-warning {
+}
+
+.header-pop-up {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+    /*Css cho header cảnh báo*/
+    .header-pop-up .title-pop-up {
+        padding: 24px 24px 0 24px;
+        color: #000000;
+        font-size: 15px;
+        font-weight: bold;
+    }
+    /*Css cho button close cảnh báo*/
+    .header-pop-up .btn-close-pop-up {
+        width: 24px;
+        height: 24px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        background-color: #ffffff;
+        border: none;
+        outline: none;
+        border-radius: 0 4px 0 4px;
+    }
+/*Css cho phần body của cảnh báo*/
+.body-pop-up {
+    padding: 24px;
+    display: flex;
+    align-items: center;
+}
+
+    .body-pop-up .icon-pop-up-warning {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin-right: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #e5e5e5;
+        flex: 1;
+    }
+
+        .body-pop-up .icon-pop-up-warning .icon-warning {
+            color: #ff0000;
+        }
+
+    .body-pop-up .content-pop-up-warning {
+        font-size: 13px;
+        color: #000000;
+        flex: 10;
+    }
+/*Css cho phần nút của cảnh báo*/
+.control-pop-up {
+    height: 60px;
+    background-color: #e5e5e5;
+    padding-right: 24px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}

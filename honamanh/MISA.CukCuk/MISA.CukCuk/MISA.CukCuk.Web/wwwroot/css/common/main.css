@@ -1,0 +1,37 @@
+﻿/*Css dùng chung cho cả trang web*/
+@import url('/css/common/common.css');
+@import url('/css/common/button.css');
+@import url('/css/common/align-content.css');
+@import url('/css/common/icon.css');
+@import url('/css/common/input.css');
+@import url('/css/common/dialog.css');
+@import url('/css/common/messenger.css');
+@import url('/css/common/navbar.css');
+@import url('/css/common/header.css');
+@import url('/css/common/content.css');
+@import url('/css/common/custom-jquery-ui.css');
+
+/*Css cho  font-face chữ*/
+
+body {
+    margin: 0;
+    font-family: GoogleSans-Regular;
+    font-size: 13px;
+}
+/*thiết lập các kiểu chữ*/
+@font-face {
+    font-family: 'GoogleSans-Regular';
+    src: url('/content/font/GoogleSans-Regular.otf') format('opentype');
+}
+@font-face {
+    font-family: 'GoogleSans-Bold';
+    src: url('/content/font/GoogleSans-Bold.otf') format('opentype');
+}
+@font-face {
+    font-family: 'GoogleSans-Italic';
+    src: url('/content/font/GoogleSans-Italic.otf') format('opentype');
+}
+@font-face {
+    font-family: 'GoogleSans-Light';
+    src: url('/content/font/GoogleSans-Light.otf') format('opentype');
+}

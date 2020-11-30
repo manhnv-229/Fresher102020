@@ -1,0 +1,63 @@
+﻿/**
+    Css khi click vào 1 hàng trong bảng
+*/
+.rowSelected {
+    background-color: #bbbbbb;
+}
+
+/**
+    Css cho phần menu khi click chuột phải
+*/
+.menu-show {
+    // width: 100px;
+    border: 1px solid #bbbbbb;
+    display: none;
+    background-color: #ffffff;
+    position: fixed;
+}
+
+    .menu-show .button-menu-dialog {
+        display: flex;
+        justify-content: center;
+        margin: 5px;
+    }
+
+/**
+    Css cho phần loading khi tải dữ liệu
+*/
+.loading {
+    display: none;
+}
+
+    .loading .loading-modal {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: #000000;
+        opacity: 0.5;
+        z-index: 999;
+    }
+
+    .loading .loading-icon {
+        border: 5px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 5px solid #019160;
+        width: 30px;
+        height: 30px;
+        animation: spin 2s linear infinite;
+        position: fixed;
+        top: calc(50% - 15px);
+        left: calc(50% - 15px);
+        z-index:1000;
+    }
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

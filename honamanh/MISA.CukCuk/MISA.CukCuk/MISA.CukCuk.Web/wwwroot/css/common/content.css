@@ -1,0 +1,243 @@
+﻿/*Css cho phần nội dung chính của trang*/
+.content {
+    position: absolute;
+    top: 51px;
+    left: 221px;
+    width: calc(100% - 221px);
+    height: calc(100vh - 51px);
+    background: #ffffff;
+}
+
+/*toolbar của bảng*/
+.content .toolbar-of-table {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    position: relative;
+}
+
+    .content .toolbar-of-table .title-toolbar h1 {
+        position: absolute;
+        left: 16px;
+        line-height: 60px;
+        margin: 0;
+    }
+
+    .content .toolbar-of-table .button-toolbar {
+        position: absolute;
+        right: 16px;
+        align-self: center;
+        display: flex;
+        height: 100%;
+        align-items: center;
+    }
+
+
+
+/*button thả xuống khi thêm nhân viên*/
+.button-toolbar .button-dropdown {
+    background: #019160;
+    border-radius: 0 4px 4px 0;
+    border: none;
+    border-left: 1px solid #bbbbbb;
+    line-height: 40px;
+    text-align: center;
+    margin: 0;
+}
+
+    .button-toolbar .button-dropdown .icon-dropdown {
+        color: #ffffff;
+    }
+
+.button-dropdown:hover {
+    background-color: #2FBE8E;
+    border: 1px solid #019160;
+    cursor: pointer;
+}
+
+.button-dropdown:focus {
+    background-color: #01B075;
+    border: 1px solid #019160;
+    cursor: pointer;
+}
+
+/*lọc tìm kiếm trong bảng*/
+.content .search-table {
+    display: flex;
+    height: 40px;
+    width: 100%;
+    position: relative;
+}
+
+    .content .search-table .type-search {
+        width: 80%;
+        height: 100%;
+        display: flex;
+        overflow: auto;
+    }
+       
+/*Lọc theo phòng ban*/
+.type-search .choose-department .select-department {
+    height: calc(100% - 2px);
+    margin-left: 16px;
+    border: 1px solid #bbbbbb;
+    padding-left: 16px;
+    color: #bbbbbb;
+    outline: none;
+}
+
+/*Lọc theo trạng thái*/
+.btn-choose-state {
+    display: flex;
+    margin-left: 16px;
+    margin-right: 12px;
+    height: calc(100% - 2px);
+    background-color: #ffffff;
+    color: #bbbbbb;
+    align-items: center;
+    outline: none;
+}
+
+    .btn-choose-state .title-btn-choose-state {
+        margin-right: 16px;
+        width: 150px;
+    }
+
+    .btn-choose-state .division {
+        height: 100%;
+        border-right: 1px solid #bbbbbb;
+        margin-right: 12px;
+    }
+
+    .btn-choose-state .icon-btn-choose-state {
+    }
+
+/*nút trên thanh toolbar: download và đồng bộ*/
+.search-table .download-and-syncing {
+    height: 100%;
+    width: 20%;
+    position: relative;
+}
+
+    .search-table .download-and-syncing .btn-download-and-syncing {
+        height: 100%;
+        display: flex;
+        position: absolute;
+        right: 0;
+    }
+
+
+/*table*/
+.content-main {
+    height: calc(100% - 60px - 40px);
+}
+
+    .content-main .content-table {
+        height: calc(100% - 51px);
+        width: 100%;
+        overflow: auto;
+    }
+
+table {
+    border-collapse: collapse;
+    margin-left: 16px;
+    width: 100%;
+}
+tr{
+    display: flex:
+}
+th, td {
+    text-align: left;
+    padding: 6px;
+    border: none;
+    border-bottom: 1px solid #bbbbbb;
+    margin-left: 10px;
+    height: 30px;
+}
+
+    th .icon-sort {
+        color: #bbbbbb;
+        margin-left: 8px;
+    }
+
+.align-salary {
+    text-align: right;
+}
+/*Cố định chiều dài cột, khi dữ liệu dài quá max-width thì hiện...*/
+.fix-width-table {
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+
+table tbody tr:hover {
+    background: #e5e5e5;
+}
+/*thanh điều hướng bảng*/
+.content-main .nav-page {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    border-top: 1px double #bbbbbb;
+}
+
+.nav-page .title-nav-page {
+    width: 20%;
+    padding-left: 16px;
+    line-height: 50px;
+}
+
+.nav-page .button-nav-page {
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+
+.button-nav-page .button-back-page, .button-next-page {
+    border-radius: 4px;
+    width: 30px;
+}
+
+.button-change-page-number {
+    border-radius: 50%;
+}
+
+.button-nav-page .button-bottom-bar {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #bbbbbb;
+    margin: 0 3px;
+}
+
+    /*.button-nav-page .button-bottom-bar:hover {
+        background: #ffffff;
+        cursor: pointer;
+    }*/
+
+  /*  .button-nav-page .button-bottom-bar:focus {
+        background: #019160;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }*/
+  .button-change-page-select {
+        background: #019160;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+
+.nav-page .button-control-show {
+    width: 20%;
+    position: relative;
+    display: flex;
+    border-radius: 4px;
+}
+
+.button-control-show .button-change-show-table {
+    position: absolute;
+    right: 16px;
+    align-self: center;
+}
