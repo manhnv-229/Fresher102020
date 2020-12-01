@@ -66,21 +66,53 @@ class Base {
             // kiểm tra dữ liệu
             me.checkRequired();
             me.validateEmail();
+            //Nếu giỏ hàng có sản phẩm thì tao sự kiện khi thay đổi giá bán
+            me.onChangeProductPrice();
             // Sự kiện khi thao tác với từng hàng dữ liệu trong bảng
             $(`table tbody`).on("click", "tr", me.tr_onClick);
             $(`table tbody`).on("dblclick", "tr", me.onDblClick_trow.bind(me));
             // sự kiện khi tick vào checkbox/ nhiều checkbox
             $(`table thead input[type="checkbox"]`).on("click", me.onClickCheckAll.bind(me));
 
+
             // Sự kiện tự động thêm sản phẩm vào giỏ khi click nút Thêm vào giỏ
             $(`#btn-addToShoppingCard`).on("click", me.onClick_addToShoppingCard);
             // Sự kiện khi nhấn nút xóa tại mỗi dòng sản phẩm
             $(`.product-line button`).on("click", me.onClick_deleteProduct);
 
+            // sự kiện khi thay đổi số lượng sản phẩm
+            $(`.product-detail .amount`).on("change", me.onChange_amount);
         }
         catch (e) {
             console.log(e);
         }
+    }
+
+    /** TODO Thực hiện cập nhật tổng tiền của giỏ hàng khi thay đổi giá sản  phẩm
+     * CreatedBy dtnga (01/12/2020)
+     * */
+    onChangeProductPrice() {
+        try {
+            if ($(`.product-list .product-detail`).length == 0) {
+                alert("giỏ hàng trống");
+                return;
+            }
+            var moneyInputs = $(`.product-list input[typeFormat="money"]`);
+            $.each(moneyInputs, function (index, input) {
+                $(input).on("change", function (e) {
+                    alert("fgfggf");
+                });
+            })
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    /** Thực hiện cập nhật tổng tiền của giỏ hàng khi cập nhật số lượng sản phẩm
+     * CreatedBy dtnga (01/12/2020)
+     * */
+    onChange_amount() {
 
     }
 
@@ -104,8 +136,8 @@ class Base {
             //    console.log(res);
             //});
             var product = listProduct.find(p => p["ProductCode"] == productCode);
+            // Đưa ra thông báo sản phẩm không tồn tại
             if (!product) {
-                // Đưa ra thông báo sản phẩm không tồn tại
                 var popup = $(`.popup-notification`);
                 var popupBody = $(popup).find(`.popup-body`);
                 $(popupBody).children().remove();
@@ -124,8 +156,8 @@ class Base {
                 });
                 return;
             }
+            // Đưa ra thông báo sản phẩm đã hết
             else if (product["Amount"] <= 0) {
-                // Đưa ra thông báo sản phẩm không tồn tại
                 var popup = $(`.popup-notification`);
                 var popupBody = $(popup).find(`.popup-body`);
                 $(popupBody).children().remove();
@@ -139,7 +171,7 @@ class Base {
                     popup.hide();
                 });
                 $('body').on("keydown", function (e) {
-                    if (e.which == 27) 
+                    if (e.which == 27)
                         $(popup).hide();
                 });
                 return;
@@ -149,6 +181,7 @@ class Base {
                 // Nếu sản phẩm đã có trong giỏ hàng => số lượng + 1 và tăng tổng tiền
                 var existProducts = $(`.product-list .product-detail`);
                 var addNew = 1;
+                // Nếu đã tồn tại trong giỏ hàng => cập nhật số lượng + số tiền 
                 if (existProducts) {
                     $.each(existProducts, function (index, item) {
                         var code = $(item).find(`.product-code`).text().trim();
@@ -171,14 +204,17 @@ class Base {
                 }
                 // Nếu chưa tồn tại trong giỏ hàng => thêm mới
                 if (addNew == 1) {
+                    // Ẩn Empty mark 
+                    var emptyMark = $(`.product-list .empty-mark`);
+                    $(emptyMark).addClass(`.displayNone`);
                     var productDetail = $(`<div class="product-detail">
                                             <div class="product-line">
-                                                <button class="button-delete m-icon round-icon delete-icon" title="Xóa"></button>
                                                 <div class="product-line-left">
+                                                    <button class="button-delete m-icon round-icon delete-icon" title="Xóa"></button>
                                                     <div class="product-code">`+ productCode + `</div>
                                                 </div>
                                                 <div class="product-line-right">
-                                                    <div><input class="m-input price" type="text" typeFormat="money" value="`+ parseInt(product["Price"], 10) + `"/></div>
+                                                    <div><input class="m-input price" type="text" typeFormat="money" fieldName="CurrentPrice" value="`+ parseInt(product["Price"], 10) + `"/></div>
                                                     <div> x </div>
                                                     <div><input class="m-input quantity" type="number" min="0" value="1" /></div>
                                                 </div>
@@ -226,23 +262,35 @@ class Base {
                 $(popup).hide();
         });
     }
+
     /** Thực hiện xóa sản phẩm trong giỏ hàng
      * CreatedBy dtnga (29/11/2020)
      * */
     onClick_deleteProduct() {
         try {
             //Lấy thành phần cha: product-line
-            var parentNode = this.parentNode.parentNode;
+            var parentNode = this.parentNode.parentNode.parentNode;
             // Lấy giá tiền sản phẩm cần xóa
-            var productCost = $(parentNode).find(`.cost`).text();
+            var productCost = parseInt($(parentNode).find(`.cost`).attr("value"), 10);
             // Xóa dòng chứa thông tin sản phẩm
             parentNode.remove();
-            //Cập nhật tổng số lượng và số tiền của giỏ hàng
-            var totalQuantity = $(`.total-quantity span`);
-            totalQuantity.text(totalQuantity.text() - 1);
-            var totalMoney = $(`.total-money`);
-            totalMoney.text(totalMoney.text() - productCost);
-
+            //Cập nhật tổng số lượng sản phẩm trong giỏ hàng
+            var totalQuantity = $(`.product-list`).children().length - 1; // trừ empty mark đi
+            $(`.total-quantity span`).text(totalQuantity);
+            // Nếu trống thì hiển thị empty mark
+            if (totalQuantity <= 0) {
+                var emptyMark = $(`.product-list .empty-mark`);
+                $(emptyMark).removeClass(`displayNone`);
+            }
+            // Cập nhật tổng số tiền giỏ hàng
+            var productList = $(`.product-list .product-detail`);
+            var newTotal = 0;
+            $.each(productList, function (index, item) {
+                var cost = parseInt($(item).find(`.cost`).attr("value"), 10);
+                newTotal = newTotal + cost;
+            });
+            $(`.total-money`).text(formatMoney(newTotal));
+            $(`.total-money`).attr("value", newTotal);
         }
         catch (e) {
             console.log(e);
@@ -395,6 +443,7 @@ class Base {
                 var ip = ip.replace(/[\D\s\._\-]+/g, "");
                 // convert thành ip số
                 ip = ip ? parseInt(ip, 10) : 0;
+                $(this).attr("value", ip);
                 $(this).val(function () {
                     return (ip === 0) ? "" : ip.toLocaleString("vi-VN");
                 });

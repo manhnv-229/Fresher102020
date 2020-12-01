@@ -26,6 +26,7 @@
     width: 100%;
     display: flex;
     margin-bottom: 16px;
+    justify-content: space-between;
 }
 
 .flex-line{
@@ -42,6 +43,11 @@
 /* Dòng chứa thành phần căn đều sang 2 bên */
 .space-between-line {
     justify-content: space-between;
+}
+
+/** Dòng chứa button */
+.input-line button {
+    align-self: flex-end;
 }
 /* * đỏ thể hiện trường bắt buộc nhập */
 .input-box .input-title {
@@ -102,7 +108,7 @@ input[typeFormat="money"] {
         position: absolute;
         width: 12px;
         height: 12px;
-        top: 16%;
+        top: 17%;
         left: 17%;
         background: #019160;
         border-radius: 50%;

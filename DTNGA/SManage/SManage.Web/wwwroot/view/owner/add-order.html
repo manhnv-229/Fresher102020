@@ -56,7 +56,6 @@
     <!-- Header -->
     <div class="header">
         <div class="header-left"></div>
-
         <div class="header-right">
             <div class="header-right-box">
                 <div class="avatar"></div>
@@ -89,17 +88,18 @@
         </div>
         <div class="dialog-detail">
             <div class="dialog-body">
-                <div class="dialog-col dialog-col-mid">
+                <div class="dialog-col dialog-col-left">
                     <div class="content-box">
-                        <div class="box-title">THÔNG TIN SẢN PHẨM </div>
+                        <div class="box-title">
+                            <span>THÔNG TIN SẢN PHẨM</span>
+                            <div class="border-bottom"></div>
+                        </div>
                         <div class="box-body">
                             <div class="input-line">
-                                <div class="input-box input-box-big">
+                                <div class="input-box input-box-small">
                                     <div class="input-title">Mã sản phẩm (<span>*</span>)</div>
                                     <input class="m-input" type="text" fieldName="ProductCode" required validate="false" autocomplete="on" />
                                 </div>
-                            </div>
-                            <div class="input-line right-line">
                                 <button class="m-button" id="btn-addToShoppingCard">
                                     <div class="m-icon shopping-icon"></div>
                                     <div class="btn-text">Thêm vào giỏ</div>
@@ -111,6 +111,7 @@
                                         <div>Giỏ hàng</div>
                                     </div>
                                     <div class="product-list">
+                                        <div class="empty-mark">Giỏ hàng trống</div>
                                     </div>
                                 </div>
                             </div>
@@ -121,7 +122,10 @@
                         </div>
                     </div>
                     <div class="content-box">
-                        <div class="box-title">THÔNG TIN NGƯỜI NHẬN</div>
+                        <div class="box-title">
+                            <span>THÔNG TIN NGƯỜI NHẬN</span>
+                            <div class="border-bottom"></div>
+                        </div>
                         <div class="box-body">
                             <div class="input-line">
                                 <div class="input-box input-box-small">
@@ -169,7 +173,10 @@
                 </div>
                 <div class="dialog-col dialog-col-right">
                     <div class="content-box">
-                        <div class="box-title">THÔNG TIN VẬN CHUYỂN</div>
+                        <div class="box-title">
+                            <span>THÔNG TIN VẬN CHUYỂN</span>
+                            <div class="border-bottom"></div>
+                        </div>
                         <div class="box-body">
                             <div class="input-line">
                                 <div class="input-box input-box-small">
@@ -221,7 +228,10 @@
                         </div>
                     </div>
                     <div class="content-box">
-                        <div class="box-title">THÔNG TIN THANH TOÁN </div>
+                        <div class="box-title">
+                            <span>THÔNG TIN THANH TOÁN</span>
+                            <div class="border-bottom"></div>
+                        </div>
                         <div class="box-body">
                             <div class="input-line">
                                 <div class="input-box input-box-medium">
@@ -248,7 +258,7 @@
         </div>
     </div>
 
-    <!-- Popup -->
+    <!-- Popup Xóa-->
     <div class="m-popup" id="popup-delete">
         <div class="modal"></div>
         <div class="popup popup-delete">
@@ -261,12 +271,13 @@
                 <div class="popup-body-text">Bạn có chắc chắn muốn xóa sản phẩm <span id="spanName" fieldName="ProductName"> ... </span> (Mã sản phẩm <span id="spanCode" fieldName="ProductCode">...</span>) không?</div>
             </div>
             <div class="popup-footer">
-                <button class="m-btn m-btn-short btn-cancel" id="btn-cancel-popup">Hủy</button>
-                <button class="m-btn m-btn-short btn-delete" id="btn-delete-popup">Xóa</button>
+                <button class="m-button m-btn-short btn-cancel" id="btn-cancel-popup">Hủy</button>
+                <button class="m-button m-btn-short btn-delete" id="btn-delete-popup">Xóa</button>
             </div>
         </div>
     </div>
 
+    <!-- Popup thông báo -->
     <div class="m-popup popup-notification">
         <div class="modal"></div>
         <div class="popup popup-notification">
@@ -280,6 +291,7 @@
             </div>
         </div>
     </div>
+
     <!-- lib -->
     <script src="/js/lib/jquery-3.5.1.min.js"></script>
     <script src="/js/lib/jquery-ui.min.js"></script>
