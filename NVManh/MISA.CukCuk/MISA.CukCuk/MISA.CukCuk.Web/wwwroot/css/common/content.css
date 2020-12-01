@@ -4,7 +4,7 @@
     left: 221px;
     width: calc(100% - 253px);
     background-color: #ffffff;
-    padding:16px;
+    padding:16px 16px 0 16px;
 }
 
 /*Page tile*/

@@ -224,7 +224,7 @@
                 </div>
             </div>-->
             <div class="dialog-body">
-               
+
                 <div class="m-row m-flex">
                     <div class="m-col el-avatar-employee m-flex-1">
                         <div class="el-avatar"></div>
@@ -251,15 +251,29 @@
                         </div>
                         <div class="m-row m-flex">
                             <div class="m-flex-1">
-                                <div class="m-label">Ngày sinh</div>
-                                <div class="m-control"><input id="dtDateOfBirth" fieldName="DateOfBirth" type="date" /></div>
+                                <m-date-picker id="dtDateOfBirth"
+                                               label="Ngày sinh"
+                                               label-cls="m-label"
+                                               input-cls="m-control"
+                                               format="dd/mm/yyyy"
+                                               fieldName=""
+                                               placeholder="_ _/ _ _/ _ _ _ _" />
                             </div>
                             <div class="m-flex-1 mg-left-10px">
-                                <div class="m-label">Giới tính</div>
-                                <select id="cbxGender" fieldName="CustomerGroupName" fieldValue="CustomerGroupId" api="/api/customergroups" class="m-control">
+                                <!--<select id="cbxGender" fieldName="CustomerGroupName" fieldValue="CustomerGroupId" api="/api/customergroups" class="m-control">
                                     <option value="19165ed7-212e-21c4-0428-030d4265475f">Nam</option>
                                     <option value="19165ed7-212e-21c4-0428-030d4265475f">Nữ</option>
-                                </select>
+                                </select>-->
+                                <div class="m-combobox" control-type="combobox">
+                                    <div class="m-label">Giới tính</div>
+                                    <input class="m-combobox-input" type="text" autocomplete="off" />
+                                    <button class="m-combobox-trigger"><i class="fas fa-chevron-down"></i></button>
+                                    <div class="m-combobox-data">
+                                        <div class="m-combobox-item" value="1">Nam</div>
+                                        <div class="m-combobox-item" value="0">Nữ</div>
+                                        <div class="m-combobox-item" value="2">Khác</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="m-row m-flex">
@@ -268,8 +282,13 @@
                                 <div class="m-control"><input id="txtEmail" fieldName="text" type="text" required /></div>
                             </div>
                             <div class="m-flex-1 mg-left-10px">
-                                <div class="m-label">Ngày cấp</div>
-                                <div class="m-control"><input id="txtPhoneNumber" fieldName="PhoneNumber" class="input-required" type="date" /></div>
+                                <m-date-picker id="dtIndentityDate"
+                                               label="Ngày cấp"
+                                               label-cls="m-label"
+                                               input-cls="m-control"
+                                               format="dd/mm/yyyy"
+                                               fieldName=""
+                                               placeholder="_ _/ _ _/ _ _ _ _" />
                             </div>
                         </div>
                         <div class="m-row m-flex">
@@ -321,13 +340,17 @@
                             <div class="m-flex-1 mg-left-10px">
                                 <div class="m-label">Mức lương cơ bản</div>
                                 <div class="m-control"><input id="txtSalary" fieldName="Salary" type="text" style="text-align:right; padding-right: 56px" /><span class="currency-for-input">(VNĐ)</span></div>
-                                <!--<span class="currency-info-forinput">(VNĐ)</span>-->
                             </div>
                         </div>
                         <div class="m-row m-flex">
                             <div class="m-flex-1">
-                                <div class="m-label">Ngày gia nhập công ty</div>
-                                <div class="m-control"><input id="txtAddress" fieldName="Address" type="date" /></div>
+                                <m-date-picker id="dtJoinDate"
+                                               label="Ngày gia nhập"
+                                               label-cls="m-label"
+                                               input-cls="m-control"
+                                               format="dd/mm/yyyy"
+                                               fieldName=""
+                                               placeholder="_ _/ _ _/ _ _ _ _" />
                             </div>
 
                             <div class="m-flex-1 mg-left-10px">
@@ -343,7 +366,7 @@
 
                 </div>
 
-               
+
             </div>
             <div class="dialog-footer">
                 <button id="btnCancel" class="m-btn m-btn-default m-btn-cancel">Hủy</button>
@@ -355,6 +378,7 @@
     <script src="/lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
     <script src="/lib/jquery.tableScroll/jquery.tablescroll.js"></script>
     <script src="/js/common/common.js"></script>
+    <script src="/js/common/_control.js"></script>
     <script src="/js/common/base.js"></script>
     <script src="/js/page/employee.js"></script>
 </body>

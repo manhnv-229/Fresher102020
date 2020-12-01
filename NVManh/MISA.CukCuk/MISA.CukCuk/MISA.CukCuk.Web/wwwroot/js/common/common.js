@@ -1,5 +1,12 @@
 ﻿$(document).ready(function () {
-   
+    //$('input[type="text"].dateInput img').on('click', function () {
+    //    var k = this;
+    //    return k.datepicker._datepickerShowing && k.datepicker._lastInput === t[0] ? k.datepicker._hideDatepicker() : (k.datepicker._datepickerShowing && k.datepicker._lastInput !== t[0] && k.datepicker._hideDatepicker(),
+    //        k.datepicker._showDatepicker(t[0])),
+    //        !1
+    //})
+
+    
 })
 /** ----------------------------------------------
  * Format dữ liệu ngày tháng sang ngày/tháng/năm
@@ -42,6 +49,6 @@ function showSuccessMessenger() {
     $('.box-toast-msg').toggle();
     setTimeout(function () {
         $('.box-toast-msg').toggle();
-    },2000)
+    }, 2000)
 
 }

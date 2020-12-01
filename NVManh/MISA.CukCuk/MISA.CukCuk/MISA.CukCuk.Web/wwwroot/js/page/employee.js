@@ -10,6 +10,8 @@
         position: ({ my: "center", at: "center", of: window }),
         modal: true,
     });
+
+
 })
 
 
@@ -55,3 +57,12 @@ class EmployeeJS extends BaseJS{
         }
     }
 }
+$(function () {
+    $("#dtDateOfBirth").datepicker({
+        showOn: "button",
+        buttonImage: "/content/icon/date-picker.svg",
+        buttonImageOnly: true,
+        buttonText: "Chọn ngày",
+        dateFormat:"dd/mm/yy"
+    });
+});
