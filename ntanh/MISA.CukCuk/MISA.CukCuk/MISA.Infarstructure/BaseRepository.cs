@@ -46,7 +46,7 @@ namespace MISA.Infarstructure
 
         public TEntity GetEntityById(string entityId)
         {
-            var entity = _dbConnection.Query<TEntity>($"PROC_Get{_tableName}ById", new { TEntityId = entityId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            var entity = _dbConnection.Query<TEntity>($"PROC_Get{_tableName}ById", new { CustomerId = entityId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             return entity;
         }
 
@@ -57,6 +57,11 @@ namespace MISA.Infarstructure
         }
 
         public TEntity UpdateEntity(TEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        ServiceResult IBaseRepository<TEntity>.AddEntity(TEntity entity)
         {
             throw new NotImplementedException();
         }

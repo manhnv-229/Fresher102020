@@ -1,4 +1,5 @@
-﻿using MISA.ApplicationCore.Interfaces;
+﻿using MISA.ApplicationCore.Entities;
+using MISA.ApplicationCore.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,7 +23,7 @@ namespace MISA.ApplicationCore
         #endregion
         #region Method
 
-        public int AddEntity(TEntity entity)
+        public ServiceResult AddEntity(TEntity entity)
         {
             var rowAffects = _baseRepository.AddEntity(entity);
             return rowAffects;
@@ -46,7 +47,7 @@ namespace MISA.ApplicationCore
             return entities;
         }
 
-        public TEntity UpdateEntity(TEntity entity)
+        public ServiceResult UpdateEntity(TEntity entity)
         {
             throw new NotImplementedException();
         }

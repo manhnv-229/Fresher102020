@@ -119,6 +119,16 @@ namespace MISA.ApplicationCore
         {
             throw new NotImplementedException();
         }
+
+        ServiceResult IBaseService<Customer>.AddEntity(Customer entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        ServiceResult IBaseService<Customer>.UpdateEntity(Customer entity)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }

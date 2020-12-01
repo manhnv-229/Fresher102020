@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MISA.ApplicationCore.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -32,7 +33,7 @@ namespace MISA.ApplicationCore.Interfaces
         /// <param name="entity">Obj Entity</param>
         /// <returns>Entity new</returns>
         /// CreatedBy: NTANH 27/11//2020
-        int AddEntity(TEntity entity);
+        ServiceResult AddEntity(TEntity entity);
 
         /// <summary>
         /// Sủa thông tin Entity

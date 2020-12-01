@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MISA.ApplicationCore.Interfaces
 {
-    public interface ICustomerService
+    public interface ICustomerService:IBaseService<Customer>
     {
         /// <summary>
         /// Lấy danh sách khách hàng

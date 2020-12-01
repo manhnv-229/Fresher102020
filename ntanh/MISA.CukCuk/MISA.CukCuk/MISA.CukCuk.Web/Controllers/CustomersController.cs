@@ -16,87 +16,12 @@ namespace MISA.CukCuk.Web.Controllers
     /// Api danh mục khách hàng
     /// CreatedBy: NTANH 24/11/2020
     /// </summary>
-    [Route("api/v1/[controller]")]
-    [ApiController]
-    public class CustomersController : ControllerBase
+    public class CustomersController : BaseEntityController<Customer>
     {
-        ICustomerService _customerService;
-        public CustomersController(ICustomerService customerService)
+        IBaseService<Customer> _baseService;
+        public CustomersController(IBaseService<Customer> baseService):base(baseService)
         {
-            _customerService = customerService;
-        }
-        /// <summary>
-        /// Lấy toàn bộ khách hàng
-        /// </summary>
-        /// <returns>Danh sách khách hàng</returns>
-        /// CreatedBy: NTANH 24/11/2020
-        // GET: api/<CustomersController>
-        [HttpGet]
-        public IActionResult Get()
-        {
-            var customers = _customerService.GetCustomers();
-            return Ok(customers);
-         }
-
-        /// <summary>
-        /// Lấy danh sách khách hàng theo id và tên
-        /// </summary>
-        /// <param name="id">id của khách hàng</param>
-        /// <param name="name">tên của khách hàng</param>
-        /// <returns>Danh sách khách hàng</returns>
-        /// CreatedBy: NTANH 24/11/2020
-        // GET api/<CustomersController>/5
-        [HttpGet("{id}")]
-        public IActionResult Get(string id)
-        {
-            var customer = _customerService.GetCustomerById(id);
-            return Ok(customer);
-        }
-
-        // POST api/<CustomersController>
-        [HttpPost]
-        public IActionResult Post(Customer customer)
-        {
-            // Validate dữ liệu:
-            // Check trường bắt buộc nhập
-            var serviceResult = _customerService.AddCustomer(customer);
-
-            if(serviceResult.MISACode == MISACode.NotValid)
-            {
-                return BadRequest(serviceResult.Data);
-            }
-
-            if (serviceResult.MISACode == MISACode.IsValid && (int)serviceResult.Data > 0)
-                return Created("adfd", customer);
-            else
-                return NoContent();
-        }
-
-        // PUT api/<CustomersController>/5
-        [HttpPut("{id}")]
-        public IActionResult Put(string id, [FromBody] Customer customer)
-        {
-            // Validate dữ liệu:
-            // Check trường bắt buộc nhập
-            var serviceResult = _customerService.UpdateCustomer(customer);
-
-            if (serviceResult.MISACode == MISACode.NotValid)
-            {
-                return BadRequest(serviceResult.Data);
-            }
-
-            if (serviceResult.MISACode == MISACode.IsValid && (int)serviceResult.Data > 0)
-                return Created("adfd", customer);
-            else
-                return NoContent();
-        }
-
-        // DELETE api/<CustomersController>/5
-        [HttpDelete("{id}")]
-        public int Delete(string id)
-        {
-            var rowAffects = _customerService.DeleteCustomer(id);
-            return rowAffects;
+            _baseService = baseService;
         }
     }
 }
