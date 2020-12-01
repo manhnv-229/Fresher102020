@@ -13,7 +13,7 @@ using System.Text;
 
 namespace MISA.Infrastructure
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
+    public class BaseRepository<T> : IBaseRepository<T>, IDisposable where T : BaseEntity
     {
         #region Declare
         IConfiguration _configuration;
@@ -138,6 +138,13 @@ namespace MISA.Infrastructure
                 return null;
             var entityReturn = _dbConnection.Query<T>(query, commandType: CommandType.Text).FirstOrDefault();
             return entityReturn;
+        }
+
+        //Thực thi khi object không sử dụng nữa
+        public void Dispose()
+        {
+            if (_dbConnection.State == ConnectionState.Open)
+                _dbConnection.Close();
         }
 
         #endregion

@@ -8,6 +8,8 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["MISA.CukCuk.Web/MISA.CukCuk.Web.csproj", "MISA.CukCuk.Web/"]
+COPY ["MISA.Infrastructure/MISA.Infrastructure.csproj", "MISA.Infrastructure/"]
+COPY ["MISA.ApplicationCore/MISA.ApplicationCore.csproj", "MISA.ApplicationCore/"]
 RUN dotnet restore "MISA.CukCuk.Web/MISA.CukCuk.Web.csproj"
 COPY . .
 WORKDIR "/src/MISA.CukCuk.Web"

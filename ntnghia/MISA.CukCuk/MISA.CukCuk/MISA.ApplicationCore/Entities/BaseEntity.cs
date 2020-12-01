@@ -34,6 +34,14 @@ namespace MISA.ApplicationCore.Entities
 
     }
 
+
+    [AttributeUsage(AttributeTargets.Property)]
+    public class CheckEmail : Attribute
+    {
+
+    }
+
+
     [AttributeUsage(AttributeTargets.Property)]
     public class MaxLength : Attribute
     {
