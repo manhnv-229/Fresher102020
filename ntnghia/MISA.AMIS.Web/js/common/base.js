@@ -78,12 +78,16 @@
             //Lấy thông tin các cột dữ liệu
             var columns = $('table thead th');
 
+            me.listEmployee = [];
+
             $.ajax({
                 url: me.host + me.apiRouter,
                 method: "GET",
                 async: true
             }).done(function (res) {
                 $.each(res, function (index, obj) {
+
+                    me.listEmployee.push(obj);
                     var tr = $(`<tr class="table-item"></tr>`);
                     $(tr).data('recordId', obj.EmployeeId);
 
@@ -263,7 +267,7 @@
                 $('.modal-delete').css("display", "none");
                 me.loadData();
             }).fail(function (res) {
-                console.log(res);
+                $('.modal-delete').css("display", "none");
                 alert('Xóa không thành công!');
             })
         } catch (e) {
@@ -375,5 +379,68 @@
             $(this).removeClass('border-red');
             $(this).attr('validate', 'true');
         }
+    }
+
+    //Sự kiện tìm kiếm:
+    onSearchChange() {
+        $('table tbody').empty();
+        //Lấy thông tin các cột dữ liệu
+        var columns = $('table thead th');
+
+
+        $.each(me.listEmployee, function (index, obj) {
+
+            
+                var tr = $(`<tr class="table-item"></tr>`);
+                $(tr).data('recordId', obj.EmployeeId);
+
+                // Lấy thông tin dữ liệu sẽ map với các cột tương ứng
+                $.each(columns, function (index, th) {
+                    var td = $(`<td></td>`);
+                    var fieldName = $(th).attr('fieldName');
+                    var value = obj[fieldName];
+                    var formatType = $(th).attr('formatType');
+                    switch (formatType) {
+                        case "Date":
+                            value = formatDate(value);
+                            break;
+                        case "Money":
+                            value = formatMoney(value);
+                            td.addClass("table-item-salary");
+                            break;
+                        case "Address":
+                            td.addClass("table-item-address");
+                            break;
+                        case "Email":
+                            td.addClass("table-item-email");
+                            break;
+                        default:
+                            break;
+                    }
+                    td.append(value);
+                    $(tr).append(td);
+                })
+
+                $('table tbody').append(tr);
+            })
+        
+    
+
+        div.innerHTML = "";
+        var filtered = conversations.filter(function (element) {
+            return element.name.includes(event.target.value);
+        });
+
+        for (let i = 0; i < filtered.length; i++) {
+            var html = `<div class="message-item">
+                    <img class="message-img" src="https://picsum.photos/seed/picsum/45/45">
+                    <div class="info">
+                        <div class="message-name">` + filtered[i].name + `</div>
+                        <div class="message-content">` + filtered[i].content + `</div>
+                    </div>
+                    </div>`
+            div.insertAdjacentHTML('beforeend', html);
+        }
+        initEvents();
     }
 }

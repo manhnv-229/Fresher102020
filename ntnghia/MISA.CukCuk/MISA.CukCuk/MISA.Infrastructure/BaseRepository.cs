@@ -139,7 +139,6 @@ namespace MISA.Infrastructure
             return entityReturn;
         }
 
-
         #endregion
     }
 }
