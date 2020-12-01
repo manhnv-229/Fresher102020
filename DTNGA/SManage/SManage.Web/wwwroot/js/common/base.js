@@ -66,26 +66,30 @@ class Base {
             // kiểm tra dữ liệu
             me.checkRequired();
             me.validateEmail();
-            //Nếu giỏ hàng có sản phẩm thì tao sự kiện khi thay đổi giá bán
-            me.onChangeProductPrice();
+
             // Sự kiện khi thao tác với từng hàng dữ liệu trong bảng
             $(`table tbody`).on("click", "tr", me.tr_onClick);
             $(`table tbody`).on("dblclick", "tr", me.onDblClick_trow.bind(me));
             // sự kiện khi tick vào checkbox/ nhiều checkbox
             $(`table thead input[type="checkbox"]`).on("click", me.onClickCheckAll.bind(me));
-
-
             // Sự kiện tự động thêm sản phẩm vào giỏ khi click nút Thêm vào giỏ
             $(`#btn-addToShoppingCard`).on("click", me.onClick_addToShoppingCard);
-            // Sự kiện khi nhấn nút xóa tại mỗi dòng sản phẩm
-            $(`.product-line button`).on("click", me.onClick_deleteProduct);
+            // TODO Sự kiện khi focus vào ô nhập liệu
+            $(`input`).focus(function () { });
 
-            // sự kiện khi thay đổi số lượng sản phẩm
-            $(`.product-detail .amount`).on("change", me.onChange_amount);
         }
         catch (e) {
             console.log(e);
         }
+    }
+
+    /**
+     * Thực hiện gen và thêm sản phẩm mới vào giỏ hàng
+     * CreatedBy dtnga (01/12/2020)
+     * @param {object} product
+     */
+    addProductToCart(product) {
+        
     }
 
     /** TODO Thực hiện cập nhật tổng tiền của giỏ hàng khi thay đổi giá sản  phẩm
@@ -93,16 +97,23 @@ class Base {
      * */
     onChangeProductPrice() {
         try {
-            if ($(`.product-list .product-detail`).length == 0) {
-                alert("giỏ hàng trống");
-                return;
-            }
-            var moneyInputs = $(`.product-list input[typeFormat="money"]`);
-            $.each(moneyInputs, function (index, input) {
-                $(input).on("change", function (e) {
-                    alert("fgfggf");
-                });
-            })
+            var index = convertInt($(this).attr("index"));
+            var newPrice = convertInt($(this).attr("value"));
+            var productList = $(`.product-list .product-detail`);
+            var currentProduct = $(productList)[index - 1];
+            var quantity = convertInt( $(currentProduct).find(`input[type="number"]`).val());
+            var newCost = quantity * newPrice;
+            // Cập nhật tổng tiền sản phẩm
+            $(currentProduct).find(`.cost`).text(formatMoney(newCost));
+            $(currentProduct).find(`.cost`).attr("value", newCost);
+            // Cập nhật tổng tiền giỏ hàng
+            var newTotal = 0;
+            $.each(productList, function (index, item) {
+                var cost = convertInt($(item).find(`.cost`).attr("value"));
+                newTotal = newTotal + cost;
+            });
+            $(`.shopping-cart .total-money`).text(formatMoney(newTotal));
+            $(`.shopping-cart .total-money`).attr("value", newTotal);
         }
         catch (e) {
             console.log(e);
@@ -112,8 +123,29 @@ class Base {
     /** Thực hiện cập nhật tổng tiền của giỏ hàng khi cập nhật số lượng sản phẩm
      * CreatedBy dtnga (01/12/2020)
      * */
-    onChange_amount() {
-
+    onChangeAmount() {
+        try {
+            var index = convertInt($(this).attr("index"));
+            var newQuantity = convertInt($(this).val());
+            var productList = $(`.product-list .product-detail`);
+            var currentProduct = $(productList)[index - 1];
+            var currentPrice = convertInt($(currentProduct).find(`input[typeFormat="money"]`).attr("value"));
+            var newCost = currentPrice * newQuantity;
+            // Cập nhật tổng tiền sản phẩm
+            $(currentProduct).find(`.cost`).text(formatMoney(newCost));
+            $(currentProduct).find(`.cost`).attr("value", newCost);
+            // cập nhật tổng số tiền đơn hàng
+            var newTotal = 0;
+            $.each(productList, function (index, item) {
+                var cost = convertInt($(item).find(`.cost`).attr("value"));
+                newTotal = newTotal + cost;
+            });
+            $(`.total-money`).text( formatMoney(newTotal) );
+            $(`.total-money`).attr("value", newTotal);
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
 
     /** Thực hiện thêm sản phẩm vào giỏ hàng
@@ -189,14 +221,15 @@ class Base {
                             $(item).find(`.quantity`).val(function (i, oldval) {
                                 return ++oldval;
                             })
+                            var productPrice = parseInt(product["Price"], 10);
                             var oldCost = $(item).find(`.cost`).attr("value");
-                            var newCost = parseInt(oldCost, 10) * 2;
+                            var newCost = parseInt(oldCost, 10) + productPrice;
                             $(item).find(`.cost`).text(formatMoney(newCost));
                             $(item).find(`.cost`).attr("value", newCost);
                             addNew = 0;
                             // Cập nhật tổng giá trị giỏ hàng
                             var oldTotal = parseInt($(`.total-money`).attr("value"), 10);
-                            var newTotal = oldTotal + newCost;
+                            var newTotal = oldTotal + productPrice;
                             $(`.total-money`).text(formatMoney(newTotal));
                             $(`.total-money`).attr("value", newTotal);
                         }
@@ -207,37 +240,7 @@ class Base {
                     // Ẩn Empty mark 
                     var emptyMark = $(`.product-list .empty-mark`);
                     $(emptyMark).addClass(`.displayNone`);
-                    var productDetail = $(`<div class="product-detail">
-                                            <div class="product-line">
-                                                <div class="product-line-left">
-                                                    <button class="button-delete m-icon round-icon delete-icon" title="Xóa"></button>
-                                                    <div class="product-code">`+ productCode + `</div>
-                                                </div>
-                                                <div class="product-line-right">
-                                                    <div><input class="m-input price" type="text" typeFormat="money" fieldName="CurrentPrice" value="`+ parseInt(product["Price"], 10) + `"/></div>
-                                                    <div> x </div>
-                                                    <div><input class="m-input quantity" type="number" min="0" value="1" /></div>
-                                                </div>
-                                            </div>
-                                            <div class="cost-line">
-                                                <div class="cost" value="`+ product["Price"] + `">` + formatMoney(parseInt(product["Price"], 10)) + `</div>
-                                            </div>
-                                        </div>`);
-                    var productList = $(`.product-list`);
-                    productList.append(productDetail);
-                    // Cập nhật tổng số lượng sản phẩm
-                    var totalQuantity = $(`.total-quantity span`);
-                    var oldQuantity = parseInt($(totalQuantity).text(), 10);
-                    $(totalQuantity).text(++oldQuantity);
-                    // Cập nhật tổng giá trị giỏ hàng
-                    var oldTotal = parseInt($(`.total-money`).attr("value"), 10);
-                    var newTotal = oldTotal + parseInt(product["Price"], 10);
-                    $(`.total-money`).text(formatMoney(newTotal));
-                    $(`.total-money`).attr("value", newTotal);
-                    // format khi nhập liệu số tiền
-                    me.autoFormatMoney();
-                    // Sự kiện khi nhấn nút xóa tại mỗi dòng sản phẩm
-                    $(`.product-line button`).on("click", me.onClick_deleteProduct);
+                    me.addProductToCart(product);
                 }
             }
         }
@@ -317,7 +320,7 @@ class Base {
                     source: sourceList,
                     autoFocus: true,
                     focus: function (event, suggest) {
-                        //$(input).val(suggest.item.label);
+                        $(input).val(suggest.item.label);
                         return false;
                     },
                     select: function (event, suggest) {
@@ -814,6 +817,7 @@ var listProduct = [
         ProductName: "Máy tính kỹ thuật Deli - Đen/Xanh dương/Hồng/Trắng - D82MS",
         Color: "Hồng",
         Price: "178000",
+        CurrentPrice: "178000",
         Amount: 0
     },
     {
@@ -821,42 +825,54 @@ var listProduct = [
         ProductCode: "D82MS-T",
         ProductName: "Máy tính kỹ thuật Deli - Đen/Xanh dương/Hồng/Trắng - D82MS",
         Color: "Trắng",
-        Price: "178000"
+        Price: "178000",
+        CurrentPrice: "178000",
+        Amount: 5
     },
     {
         ProductId: "94c5c0e8-79ab-4c4f-9070-1cd1f0e1db04",
         ProductCode: "D82MS-Đ",
         ProductName: "Máy tính kỹ thuật Deli - Đen/Xanh dương/Hồng/Trắng - D82MS",
         Color: "Đen",
-        Price: "178000"
+        Price: "178000",
+        CurrentPrice: "178000",
+        Amount: 10
     },
     {
         ProductId: "7c7b7ae6-ce62-4232-8881-1158a9d7224b",
         ProductCode: "D82MS-X",
         ProductName: "Máy tính kỹ thuật Deli - Đen/Xanh dương/Hồng/Trắng - D82MS",
         Color: "Xanh dương",
-        Price: "178000"
+        Price: "178000",
+        CurrentPrice: "150000",
+        Amount: 2
     },
     {
         ProductId: "ecb85d35-baaf-476c-b029-e8e1e07cbf48",
         ProductCode: "HA560",
         ProductName: "Sổ tay còng A5 Deli - Bìa cứng - Có thể thay lõi sổ - Lõi ô vuông/kẻ ngang -HA560/NA560",
         Type: "Sổ bìa trong - HA560",
-        Price: "85000"
+        Price: "85000",
+        CurrentPrice: "80000",
+        Amount: 21
     },
     {
         ProductId: "0cd8a906-fc20-4481-b275-0c4ffbaa5490",
         ProductCode: "NA560-V",
         ProductName: "Sổ tay còng A5 Deli - Bìa cứng - Có thể thay lõi sổ - Lõi ô vuông/kẻ ngang -HA560/NA560",
         Type: "Tệp ô vuông- NA560-V",
-        Price: "19000"
+        Price: "19000",
+        CurrentPrice: "17000",
+        Amount: 35
     },
     {
         ProductId: "be5d4b42-f987-45c0-81bd-2ed41b15b91a",
         ProductCode: "NA560-KN",
         ProductName: "Sổ tay còng A5 Deli - Bìa cứng - Có thể thay lõi sổ - Lõi ô vuông/kẻ ngang -HA560/NA560",
         Type: "Tệp ngang - NA560-KN",
-        Price: "19000"
+        Price: "19000",
+        CurrentPrice: "17000",
+        Amount: 15
     }
 ]
 

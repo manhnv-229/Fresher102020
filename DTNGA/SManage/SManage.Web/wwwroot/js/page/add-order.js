@@ -141,39 +141,8 @@ class AddOrder extends Base {
                             // Ẩn Empty mark 
                             var emptyMark = $(`.product-list .empty-mark`);
                             $(emptyMark).addClass(`displayNone`);
-
-                            var productDetail = $(`<div class="product-detail">
-                                            <div class="product-line">
-                                                <div class="product-line-left">
-                                                    <button class="button-delete m-icon round-icon delete-icon" title="Xóa"></button>
-                                                    <div class="product-code">`+ value + `</div>
-                                                </div>
-                                                <div class="product-line-right">
-                                                    <div><input class="m-input price" type="text" typeFormat="money" fieldName="CurrentPrice" value="`+ parseInt(product["Price"], 10) + `"/></div>
-                                                    <div> x </div>
-                                                    <div><input class="m-input quantity" type="number" min="0" value="1" /></div>
-                                                </div>
-                                            </div>
-                                            <div class="cost-line">
-                                                <div class="cost" value="`+ product["Price"] + `">` + formatMoney(parseInt(product["Price"], 10)) + `</div>
-                                            </div>
-                                        </div>`);
-                            var productList = $(`.product-list`);
-                            me.autoFormatMoney();
-                            productList.append(productDetail);
-                            // Cập nhật tổng số lượng sản phẩm
-                            var totalQuantity = $(`.total-quantity span`);
-                            var oldQuantity = parseInt($(totalQuantity).text(), 10);
-                            $(totalQuantity).text(++oldQuantity);
-                            // Cập nhật tổng giá trị giỏ hàng
-                            var oldTotal = parseInt($(`.total-money`).attr("value"), 10);
-                            var newTotal = oldTotal + parseInt(product["Price"], 10);
-                            $(`.total-money`).text(formatMoney(newTotal));
-                            $(`.total-money`).attr("value", newTotal);
-                            // format khi nhập liệu số tiền
-                            me.autoFormatMoney();
-                            // Sự kiện khi nhấn nút xóa tại mỗi dòng sản phẩm
-                            $(`.product-line button`).on("click", me.onClick_deleteProduct);
+                            me.addProductToCart(product);
+                            
                         }
                     }
                     return false;
@@ -207,6 +176,60 @@ class AddOrder extends Base {
         // Nếu đã tồn tại => Tự động binding dữ liệu ( địa chỉ khách đặt gần đây nhất)
 
         // Nếu chưa có thì nhập chay
+    }
+
+    /**
+     * Thực hiện gen và thêm sản phẩm mới vào giỏ hàng
+     * CreatedBy dtnga (01/12/2020)
+     * @param {object} product
+     */
+    addProductToCart(product) {
+        if (!product) {
+            alert("Không có thông tin sản phẩm. Vui lòng kiểm tra lại");
+            return;
+        }
+        var me = this;
+        var productList = $(`.product-list`);
+        var index = $(productList).find(`.product-detail`).length + 1;
+        var productCode = product["ProductCode"];
+        var productPrice = convertInt(product["CurrentPrice"]);
+        var curentAmount = convertInt(product["Amount"]);
+        var productDetail = $(`<div class="product-detail">
+                                            <div class="product-line">
+                                                <div class="product-line-left">
+                                                    <button class="button-delete m-icon round-icon delete-icon" title="Xóa" index="`+ index + `"></button>
+                                                    <div class="product-code">`+ productCode + `</div>
+                                                </div>
+                                                <div class="product-line-right">
+                                                    <div><input class="m-input price" type="text" typeFormat="money" fieldName="CurrentPrice" value="`+ productPrice + `" index="` + index + `"/></div>
+                                                    <div> x </div>
+                                                    <div class="quantity-box"><input class="m-input quantity" type="number" min="1" max="`+ curentAmount + `" value="1" placeholder="Còn lại ` + curentAmount + ` sản phẩm" index="` + index + `"/></div>
+                                                </div>
+                                            </div>
+                                            <div class="cost-line">
+                                                <div class="cost" value="`+ productPrice + `">` + formatMoney(productPrice) + `</div>
+                                            </div>
+                                        </div>`);
+
+        productList.append(productDetail);
+        // Cập nhật tổng số lượng sản phẩm
+        var totalQuantity = $(`.shopping-cart .total-quantity span`);
+        var oldQuantity = convertInt($(totalQuantity).text());
+        $(totalQuantity).text(++oldQuantity);
+        // Cập nhật tổng giá trị giỏ hàng
+        var totalMoney = $(`.shopping-cart .total-money`);
+        var oldTotal = convertInt(totalMoney.attr("value"));
+        var newTotal = oldTotal + productPrice;
+        totalMoney.text(formatMoney(newTotal));
+        totalMoney.attr("value", newTotal);
+        // format khi nhập liệu số tiền
+        me.autoFormatMoney();
+        // Sự kiện khi nhấn nút xóa tại mỗi dòng sản phẩm
+        $(`.product-list .product-line button`).on("click", me.onClick_deleteProduct);
+        // sự kiện khi thay đổi giá bán sản phẩm
+        $(`.product-list .product-line input[typeFormat="money"]`).on("keyup", me.onChangeProductPrice);
+        // sự kiện khi thay đổi số lượng sản phẩm
+        $(`.product-list .product-line input[type="number"]`).on("input", me.onChangeAmount);
     }
 
 }

@@ -128,7 +128,7 @@
     }
 
     .product-list .product-detail .quantity {
-        width: 40px;
+        width: 100%;
         border: none;
         outline: none;
         padding-left: 8px;
@@ -179,6 +179,9 @@
             .product-list .product-detail .product-line-right div:last-child {
                 margin-right: 0;
             }
+.product-detail .quantity-box {
+    width: 50%;
+}
 
 .product-detail .cost-line {
     display: flex;

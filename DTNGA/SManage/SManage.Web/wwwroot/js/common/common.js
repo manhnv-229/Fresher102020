@@ -55,3 +55,12 @@ function formatMoney(money) {
     else
         return "";
 }
+
+/**
+ * Thực hiện chuyển đổi string sang số int
+ * CreatedBy dtnga (01/12/2020)
+ * @param {string} value
+ */
+function convertInt(value){
+    return parseInt(value, 10);
+}
