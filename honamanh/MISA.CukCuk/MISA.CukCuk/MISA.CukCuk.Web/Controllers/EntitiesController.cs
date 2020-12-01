@@ -52,32 +52,35 @@ namespace MISA.CukCuk.Web.Controllers
         [HttpPut("{id}")]
         public IActionResult Put([FromRoute]string id, TEntity entity)
         {
-            //var entityIdType = entity.GetType().GetProperty($"{typeof(TEntity).Name}Id").PropertyType;
-            //if (entityIdType == typeof(Guid)){
-            //    entity.GetType().GetProperty($"{typeof(TEntity).Name}Id").SetValue(entity, Guid.Parse(id));
-            //}
-            //else
-            //{
-            //    var entiIdConvert = Convert.ChangeType(id, entityIdType);
-            //    entity.GetType().GetProperty($"{typeof(TEntity).Name}Id").SetValue(entity, entiIdConvert);
-            //}
+            var entityIdType = entity.GetType().GetProperty($"{typeof(TEntity).Name}Id").PropertyType;
+            if (entityIdType == typeof(Guid))
+            {
+                entity.GetType().GetProperty($"{typeof(TEntity).Name}Id").SetValue(entity, Guid.Parse(id));
+            }
+            else
+            {
+                var entiIdConvert = Convert.ChangeType(id, entityIdType);
+                entity.GetType().GetProperty($"{typeof(TEntity).Name}Id").SetValue(entity, entiIdConvert);
+            }
 
-            //var rowAffects = _baseService.Update(entity);
-            var serviceResult = _baseService.Insert(entity);
+            var serviceResult = _baseService.Update(entity);
             if (serviceResult.MISACode == MISACode.NotValid)
             {
                 return BadRequest(serviceResult);
             }
             else return Ok(serviceResult);
-            //else return Ok("", serviceResult);
         }
 
         // DELETE api/<EntitiesController>/5
         [HttpDelete("{entityId}")]
-        public ServiceResult Delete(string entityId)
+        public IActionResult Delete(string entityId)
         {
-            //var rowAffects = _baseService.Delete(entityId);
-            return _baseService.Delete(entityId);
+            var serviceResult = _baseService.Delete(entityId);
+            if (serviceResult.MISACode == MISACode.NotFound)
+            {
+                return NotFound();
+            }
+            else return Ok(serviceResult);
         }
     }
 }

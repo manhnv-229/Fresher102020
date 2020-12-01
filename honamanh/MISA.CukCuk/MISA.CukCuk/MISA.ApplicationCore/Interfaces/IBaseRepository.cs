@@ -17,6 +17,7 @@ namespace MISA.ApplicationCore.Interfaces
         /// <returns>Danh sách thực thể</returns>
         /// CreatedBy: HNANH (27/11/2020)
         IEnumerable<TEntity> GetEntities();
+        IEnumerable<TEntity> GetEntities(string procedureName);
         /// <summary>
         /// Lấy thông tin thực thể qua id
         /// </summary>

@@ -35,16 +35,28 @@ namespace MISA.Infarstructure
         #region Method
         public int Delete(string entityId)
         {
-            var param = new DynamicParameters();
-            param.Add($"@{_entityId}", entityId, DbType.String);
-           // var rowAffected = _dbConnection.Execute($"Proc_Delete{_entity}", new { _entityId = entityId }, commandType: CommandType.StoredProcedure);
-            //var rowAffected = _dbConnection.Execute($"Proc_Delete{_entity}", param, commandType: CommandType.StoredProcedure);
-           
+            // var param = new DynamicParameters();
+            // param.Add($"@{_entityId}", entityId, DbType.String);
+            //// var rowAffected = _dbConnection.Execute($"Proc_Delete{_entity}", new { _entityId = entityId }, commandType: CommandType.StoredProcedure);
+            // //var rowAffected = _dbConnection.Execute($"Proc_Delete{_entity}", param, commandType: CommandType.StoredProcedure);
+
+
+            // var a = $"DELETE FROM {_tableName} WHERE {_tableName}Id = '{entityId}'";
+            // var rowAffected = _dbConnection.Execute($"DELETE FROM {_tableName} WHERE {_tableName}Id = '{entityId}'", commandType: CommandType.Text);
+            // //var entity = _dbConnection.Query<TEntity>($"Proc_Get{_entity}ById", new { _entityId = entityId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            // return rowAffected; 
+            var rowAffected = 0;
+            _dbConnection.Open();
+            using (var transaction= _dbConnection.BeginTransaction()) {
+                var query = $"DELETE FROM {_tableName} WHERE EmployeeCode = 'NV-5894639705';" +
+                    $"DELETE FROM {_tableName} WHERE EmployeeCode = 'NV-5941431498';" +
+                    $"DELETE FROM ABC WHERE EmployeeCode = 'NV-4876706246';" +
+                    $"DELETE FROM {_tableName} WHERE EmployeeCode = 'NV-5203249546';";
+                rowAffected = _dbConnection.Execute(query, commandType: CommandType.Text);
+                transaction.Commit();
+            }
+            return rowAffected;
             
-            var a = $"DELETE FROM {_tableName} WHERE {_tableName}Id = '{entityId}'";
-            var rowAffected = _dbConnection.Execute($"DELETE FROM {_tableName} WHERE {_tableName}Id = '{entityId}'", commandType: CommandType.Text);
-            //var entity = _dbConnection.Query<TEntity>($"Proc_Get{_entity}ById", new { _entityId = entityId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
-            return rowAffected; 
         }
 
 
@@ -62,7 +74,16 @@ namespace MISA.Infarstructure
 
         public IEnumerable<TEntity> GetEntities()
         {
+            //Thực hiện câu lệnh truy vấn
             var entities = _dbConnection.Query<TEntity>($"Proc_Get{_tableName}s", commandType: CommandType.StoredProcedure);
+            //Trả về dữ liệu
+            return entities;
+        }
+
+        public IEnumerable<TEntity> GetEntities(string procedureName)
+        {
+            //Thực hiện câu lệnh truy vấn
+            var entities = _dbConnection.Query<TEntity>(procedureName, commandType: CommandType.StoredProcedure);
             //Trả về dữ liệu
             return entities;
         }

@@ -21,7 +21,18 @@ namespace MISA.ApplicationCore.Services
         #region Method
         public ServiceResult Delete(string entityId)
         {
-            _serviceResult.Data= _baseRepository.Delete(entityId);
+            var rowAffected= _baseRepository.Delete(entityId);
+            _serviceResult.Data = rowAffected;
+            if (rowAffected == 0)
+            {
+                _serviceResult.Messenger = "Không tìm thấy server";
+                _serviceResult.MISACode = Enums.MISACode.NotFound;
+            }
+            else
+            {
+                _serviceResult.Messenger = "Xóa thành công";
+                _serviceResult.MISACode = Enums.MISACode.Success;
+            }
             return _serviceResult;
         }
 
