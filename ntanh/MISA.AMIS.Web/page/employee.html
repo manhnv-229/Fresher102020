@@ -112,7 +112,7 @@
         </div>
     </div>
     <!--<div class="content">
-            
+
     </div>-->
     <div class="content">
         <div class="page-title">
@@ -139,18 +139,40 @@
         </div>
         <div class="grid grid-employee">
             <table>
+                <colgroup>
+                    <col span="1" style="width: 100px" />
+                    <col span="1" style="width: 100px" />
+                    <col span="1" style="width: 100px" />
+                    <col span="1" style="width: 100px" />
+                    <col span="1" style="width: 100px" />
+                    <col span="1" style="width: 100px" />
+                    <col span="1" style="width: 100px" />
+                    <col span="1" style="width: 100px" />
+                    <col span="1" style="width: 100px" />
+                    <col span="1" style="width: 100px" />
+                    <col span="1" style="width: 100px" />
+                    <col span="1" style="width: 100px" />
+                    <col span="1" style="width: 100px" />
+                    <col span="1" style="width: 100px" />
+                    <col span="1" style="width: 100px" />
+                    <col span="1" style="width: 100px" />
+                </colgroup>
                 <thead>
                     <tr>
                         <th fieldName="EmployeeCode">Mã nhân viên</th>
                         <th fieldName="FullName">Họ và tên</th>
-                        <th fieldName="GenderName">Giới tính</th>
                         <th fieldName="DateOfBirth" formatType="ddmmyyyy">Ngày sinh</th>
-                        <th fieldName="PhoneNumber">Số điện thoại</th>
+                        <th fieldName="GenderName">Giới tính</th>
+                        <th fieldName="NumberEdentity">Số CMTND/ Căn cước</th>
+                        <th fieldName="DateOfIdentity">Ngày cấp</th>
+                        <th fieldName="PlaceIdentity">Nơi cấp</th>
                         <th fieldName="Email">Email</th>
-                        <th fieldName="Address">Địa chỉ</th>
-                        <th fieldName="PositionName">Chức vụ</th>
+                        <th fieldName="PhoneNumber">Số điện thoại</th>
+                        <th fieldName="Position">Vị trí</th>
                         <th fieldName="DepartmentName">Bộ phận/phòng ban</th>
-                        <th fieldName="Salary" formatType="money">Hệ số/Mức lương đóng</th>
+                        <th fieldName="TaxCode">Mã số thuế</th>
+                        <th fieldName="Salary" formatType="money">Hệ số/Mức lương đóng</th>X
+                        <th fieldName="DateOfApply">Ngày gia nhập công ty</th>
                         <th fieldName="WorkStatusName">Trạng thái tham gia</th>
                     </tr>
                 </thead>
@@ -205,7 +227,100 @@
     <div class="back_def">
 
     </div>
-    
+    <!-- dialog -->
+    <div class="m-dialog dialog-add-employee" id="dialog-form" title="Thông tin khách hàng">
+        <div class="dialog-content">
+            <div class="dialog-content_top">
+                <div class="content-left">
+                    <div class="change_avatar">
+
+                    </div>
+                    <div class="about_change_avatar">
+                        Vui lòng chọn ảnh có định dạng <b>.jpg, .jpeg, .png, .gif.</b>
+                    </div>
+                </div>
+                <div class="content-right multiply-2">
+                    <div class="item-line">
+                        <div class="item-short margin-right">
+                            <span class="title-input">Mã nhân viên (<span style="color: red;">*</span>)</span>
+                            <input id="txtCustomerCode" fieldName="EmployeeCode" type="text" name="employeecode" value="" required />
+                        </div>
+                        <div class="item-short">
+                            <span class="title-input">Họ tên (<span style="color: red;">*</span>)</span>
+                            <input id="txtFullName" fieldName="FullName" type="text" name="fullname" value="" required />
+                        </div>
+                    </div>
+
+                    <div class="item-line">
+                        <div class="item-short margin-right">
+                            <span class="title-input">Ngày sinh</span>
+                            <input id="dtDateOfBirth" fieldName="DateOfBirth" type="date" name="dateofbirth" value="" />
+                        </div>
+                        <div class="item-short">
+                            <span class="title-input">Giới tính</span>
+                            <div class="m-input-checkbox">
+                                <input type="radio" class="m-radio" fieldName="Gender" name="gender" value="10" genderId="1" checked /> Nam
+                                <input type="radio" class="m-radio" fieldName="Gender" name="gender" value="11" genderId="0" /> Nữ
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-line">
+                        <div class="item-short margin-right">
+                            <span class="title-input">Số CMTND hoặc Căn cước</span>
+                            <input id="txtIdentityCode" fieldName="IdentityCode" type="text" name="identitycode" value="" />
+                        </div>
+                        <div class="item-short">
+                            <span class="title-input">Ngày cấp</span>
+                            <input id="dtDateOfIdentity" fieldName="DateOfIdentity" type="date" name="dateofidentity" value="" />
+                        </div>
+                    </div>
+                    <div class="item-line">
+                        <div class="item-short margin-right">
+                            <span class="title-input">Nơi cấp</span>
+                            <input id="txtPlaceSupply" fieldName="PlaceSupply" type="text" name="placesupply" value="" />
+                        </div>
+                    </div>
+                    <div class="item-line">
+                        <div class="item-short margin-right">
+                            <span class="title-input">Email</span>
+                            <input id="txtEmail" type="email" fieldName="Email" name="email" placeholder="example@domain.com" value="" />
+                        </div>
+                        <div class="item-short">
+                            <span class="title-input">Số điện thoại (<span style="color: red;">*</span>)</span>
+                            <input id="txtPhoneNumber" type="text" fieldName="PhoneNumber" name="customerphone" value="" required />
+                        </div>
+                    </div>
+                    <div class="item-line">
+                        <div class="item-short  margin-right">
+                            <span class="title-input">Vị trí</span>
+                            <input id="txtPositionName" type="text" fieldName="PosititonName" name="positionname" value="" />
+                        </div>
+                        <div class="item-short">
+                            <span class="title-input">Phòng ban</span>
+                            <input id="txtDepartmentName" class="" type="text" fieldName="DipartmentName" name="taxcode" value="" />
+                        </div>
+                    </div>
+                    <div class="item-line">
+                        <div class="item-short margin-right">
+                            <span class="title-input">Ngày gia nhập công ty</span>
+                            <input id="txtDateJoin" fieldName="DateJoin" type="date" name="datejoin" value="" />
+                        </div>
+                        <div class="item-short">
+                            <span class="title-input">Tình trạng công việc</span>
+                            <input id="txtWorkStatus" fieldName="WorkStatus" type="date" name="workstatus" value="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+        </div>
+        <div class="dialog-footer">
+            <button class="m-btn m-btn-cannel btnClose" id="btnCloseDialog"><span class="content-m-btn">Hủy</span></button>
+            <button id="btnSave" class="m-btn m-btn-save"><i class="far fa-save" style="padding-right: 10px"></i><span class="content-m-btn">Lưu</span></button>
+            <button class="m-btn m-btn-savenew"><span class="content-m-btn">Lưu và thêm mới</span></button>
+        </div>
+    </div>
     <script src="/lib/jquery-3.5.1.min.js"></script>
     <script src="/js/common/base.js"></script>
     <script src="/js/common/common.js"></script>
