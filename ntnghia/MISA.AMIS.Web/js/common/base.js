@@ -26,6 +26,11 @@
         })
         //có thể dùng .bind(this) 
 
+        //Sự kiện nhập liệu vào ô tìm kiếm
+        $(".search-employee").keyup(function (e) {
+            me.onSearchChange(e);
+        });
+
         //Xóa khách hàng được chọn khi nhấn nút Delete:
         $('.btn-delete').click(function () {
             $('.modal-delete').css("display", "flex");
@@ -381,16 +386,27 @@
         }
     }
 
-    //Sự kiện tìm kiếm:
-    onSearchChange() {
+    /**
+     * Hàm bắt sự kiện khi nhập vào ô tìm kiếm
+     * CreatedBy: NTNghia (01/12/2020)
+     * */
+    onSearchChange(e) {
+        var me = this;
         $('table tbody').empty();
         //Lấy thông tin các cột dữ liệu
         var columns = $('table thead th');
+        console.log(event.target.value);
+        var allEntity = me.listEmployee;
+        debugger
+        var filtered = allEntity.filter(function (element) {
+            //if (element.FullName.includes(event.target.value) || element.EmployeeCode.includes(event.target.value) || element.PhoneNumber.includes(event.target.value))
+            //    return true;
+            //else
+            //    return false;
+            return element.FullName.includes(event.target.value);
+        });
 
-
-        $.each(me.listEmployee, function (index, obj) {
-
-            
+        $.each(filtered, function (index, obj) {
                 var tr = $(`<tr class="table-item"></tr>`);
                 $(tr).data('recordId', obj.EmployeeId);
 
@@ -423,24 +439,5 @@
 
                 $('table tbody').append(tr);
             })
-        
-    
-
-        div.innerHTML = "";
-        var filtered = conversations.filter(function (element) {
-            return element.name.includes(event.target.value);
-        });
-
-        for (let i = 0; i < filtered.length; i++) {
-            var html = `<div class="message-item">
-                    <img class="message-img" src="https://picsum.photos/seed/picsum/45/45">
-                    <div class="info">
-                        <div class="message-name">` + filtered[i].name + `</div>
-                        <div class="message-content">` + filtered[i].content + `</div>
-                    </div>
-                    </div>`
-            div.insertAdjacentHTML('beforeend', html);
-        }
-        initEvents();
     }
 }

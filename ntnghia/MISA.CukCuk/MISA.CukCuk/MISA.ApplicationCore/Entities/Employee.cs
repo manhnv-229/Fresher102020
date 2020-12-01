@@ -17,11 +17,16 @@ namespace MISA.ApplicationCore.Entities
         /// <summary>
         /// Khóa chính
         /// </summary>
+        [PrimaryKey]
         public Guid EmployeeId { get; set; }
 
         /// <summary>
         /// Mã khách hàng
         /// </summary>
+        [CheckDuplicate]
+        [Required]
+        [DisplayName("Mã nhân viên")]
+        [MaxLength(20, "Mã nhân viên không được quá 20 kí tự")]
         public string EmployeeCode { get; set; }
 
         /// <summary>
@@ -47,6 +52,8 @@ namespace MISA.ApplicationCore.Entities
         /// <summary>
         /// Số điện thoại
         /// </summary>
+        [CheckDuplicate]
+        [DisplayName("Số điện thoại")]
         public string PhoneNumber { get; set; }
 
         /// <summary>

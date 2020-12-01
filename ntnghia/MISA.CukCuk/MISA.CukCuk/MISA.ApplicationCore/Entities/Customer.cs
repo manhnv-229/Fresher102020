@@ -73,7 +73,7 @@ namespace MISA.ApplicationCore.Entities
         /// Số điện thoại
         /// </summary>
         [CheckDuplicate]
-        [DisplayName("Mã khách hàng")]
+        [DisplayName("Số điện thoại")]
         public string PhoneNumber { get; set; }
 
         /// <summary>

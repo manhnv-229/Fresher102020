@@ -38,7 +38,6 @@ namespace MISA.ApplicationCore
             if(isValidate == true)
             {
                 _serviceResult.Data = _baseRepository.Add(entity);
-                //serviceResult.Messenger = ;
                 _serviceResult.MISACode = Enums.MISACode.IsValid;
                 return _serviceResult;
             }
@@ -64,7 +63,6 @@ namespace MISA.ApplicationCore
             {
                 return _serviceResult;
             }
-
         }
 
         public ServiceResult Delete(string entityId)
@@ -89,6 +87,7 @@ namespace MISA.ApplicationCore
                 {
                     displayName = (displayNameAttributes[0] as DisplayName).Name;
                 }
+
                 //Kiểm tra xem có attribute cần phải validate không
                 if (property.IsDefined(typeof(Required), false))
                 {
