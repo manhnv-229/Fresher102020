@@ -45,7 +45,7 @@ namespace MISA.ApplicationCore.Service
         {
             // Validate dữ liệu 
             employee.entityState = EntityState.Update;
-            var serviceResult = base.Validate(employee);
+            var serviceResult = base.Validate(employee, employeeId);
             if (serviceResult != null)
             {
                 return serviceResult;

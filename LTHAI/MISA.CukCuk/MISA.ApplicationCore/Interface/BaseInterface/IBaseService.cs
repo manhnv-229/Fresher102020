@@ -51,7 +51,8 @@ namespace MISA.ApplicationCore.Interface.BaseInterface
         /// Xác thực dữ liệu
         /// </summary>
         /// <param name="entity">thực thể cần xác thực</param>
+        /// <param name="id">Khóa chính</param>
         /// <returns>đối tượng ghi lỗi</returns>
-        ServiceResult Validate(TEntity entity);
+        ServiceResult Validate(TEntity entity, string id = null);
     }
 }

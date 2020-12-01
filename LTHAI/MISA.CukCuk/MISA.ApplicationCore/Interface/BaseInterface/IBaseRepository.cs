@@ -54,12 +54,13 @@ namespace MISA.ApplicationCore.Interface.BaseInterface
         /// <returns>Số lượng bản ghi bị ảnh hưởng</returns>
         /// CreatedBy: LTHAI(24/11/2020)
         public int Delete(string entityId);
-        /// <summary>
-        /// Lấy thông tin thực thể theo property
-        /// </summary>
-        /// <param name="entity">thực thể</param>
-        /// <param name="specs">tên thuộc tính</param>
-        /// <returns>thực thể</returns>
-        public TEntity GetEntityByProperty(TEntity entity, PropertyInfo propertyInfo);
+          /// <summary>
+          /// Lấy thông tin của thực thể theo thuộc tính chỉ định
+          /// </summary>
+          /// <param name="entity">Thực thể</param>
+          /// <param name="propertyInfo">Thuộc tính chỉ định</param>
+          /// <param name="id">Khóa chính</param>
+          /// <returns></returns>
+        public TEntity GetEntityByProperty(TEntity entity, PropertyInfo propertyInfo, string id = null);
     }
 }

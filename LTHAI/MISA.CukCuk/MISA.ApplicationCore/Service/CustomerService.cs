@@ -25,6 +25,7 @@ namespace MISA.ApplicationCore.Service
         {
             this._customerRepository = customerRepository;
         }
+        #endregion
         #region Hàm viết lại cho customer từ base
         public override object Add(Customer customer)
         {
@@ -48,7 +49,7 @@ namespace MISA.ApplicationCore.Service
         {
             // Validate dữ liệu 
             customer.entityState = EntityState.Update;
-            var serviceResult = base.Validate(customer);
+            var serviceResult = base.Validate(customer, customerId);
             if (serviceResult != null)
             {
                 return serviceResult;
@@ -68,7 +69,7 @@ namespace MISA.ApplicationCore.Service
             throw new NotImplementedException();
         }
         #endregion
-        #endregion
+      
 
     }
 }

@@ -43,6 +43,10 @@ namespace MISA.CukCuk.Web
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<IPositionRepository, PositionRepository>();
+            services.AddScoped<IPositionService, PositionService>();
             #endregion
             services.AddControllers().AddNewtonsoftJson(
                 options =>

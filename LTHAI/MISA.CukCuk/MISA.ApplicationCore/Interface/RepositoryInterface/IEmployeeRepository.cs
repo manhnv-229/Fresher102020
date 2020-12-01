@@ -7,7 +7,7 @@ using System.Text;
 namespace MISA.ApplicationCore.Interface.RepositoryInterface
 {
     /// <summary>
-    /// Quy định các phương thức thực hiện truy vấn database của khách hàng
+    /// Quy định các phương thức thực hiện truy vấn database của nhân viên
     /// CreatedBy: LTHAI(30/11/2020)
     /// </summary>
     public interface IEmployeeRepository : IBaseRepository<Employee>

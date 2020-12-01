@@ -50,7 +50,7 @@ namespace MISA.ApplicationCore.BaseService
         {
             return _baseRepository.Update(entityId, entity);
         }
-        public ServiceResult Validate(TEntity entity)
+        public ServiceResult Validate(TEntity entity, string id = null)
         {
             var serviceResult = new ServiceResult();
             // Đọc các property 
@@ -75,7 +75,7 @@ namespace MISA.ApplicationCore.BaseService
                 // Check trùng lặp dữ liệu
                 if (property.IsDefined(typeof(CheckExist), false))
                 {
-                    var entityExist = _baseRepository.GetEntityByProperty(entity, property);
+                    var entityExist = _baseRepository.GetEntityByProperty(entity, property, id);
                     if (entityExist != null)
                     {
                         var displayName = property.GetCustomAttributes(typeof(DisplayName), true)[0];

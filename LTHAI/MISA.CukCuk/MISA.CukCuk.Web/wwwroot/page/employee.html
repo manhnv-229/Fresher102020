@@ -66,7 +66,7 @@
                 </div>
                 <div class="profile">
                     <div class="avatar"></div>
-                    <div class="name-profile">Demo AMIS BHXH</div>
+                    <div class="name-profile">Demo CukCuk</div>
                     <div class="profile-icon"></div>
                 </div>
             </div>
@@ -74,7 +74,7 @@
                 <div class="header-content">
                     <div class="name-page">Danh sách nhân viên</div>
                     <div class="header-function">
-                        <div class="add-employee" id="btn-add-customer">
+                        <div class="add-employee" id="btn-add-employee">
                             <div class="icon-add-employee"><i class="fas fa-user-plus"></i></div>
                             <div class="text-add-employee"><button>Thêm khách hàng</button></div>
                         </div>
@@ -115,16 +115,16 @@
                     <table class="table" width="1600">
                         <thead>
                             <tr>
-                                <th width="150" fieldName="CustomerCode">Mã nhân viên</th>
+                                <th width="150" fieldName="EmployeeCode">Mã nhân viên</th>
                                 <th width="150" fieldName="FullName">Họ tên</th>
                                 <th width="150" fieldName="GenderName">Giới tính</th>
                                 <th width="150" fieldName="DateOfBirth" formatType="ddmmyyyy" class="text-align-center">Ngày sinh</th>
                                 <th width="150" fieldName="PhoneNumber">Điện thoại</th>
-                                <th width="200" fieldName="MemberCardCode">Email</th>
-                                <th width="200" fieldName="Address">Chức vụ</th>
-                                <th width="200" fieldName="CompanyName">Phòng ban</th>
-                                <th width="150" fieldName="CustomerGroupName">Mức lương cơ bản</th>
-                                <th width="150" fieldName="CompanyTaxCode">Tình trạng công việc</th>
+                                <th width="200" fieldName="Email">Email</th>
+                                <th width="200" fieldName="PositionName">Chức vụ</th>
+                                <th width="200" fieldName="DepartmentName">Phòng ban</th>
+                                <th width="150" fieldName="Salary" formatType="Money" class="text-align-right">Mức lương cơ bản</th>
+                                <th width="150" fieldName="WorkStatusName">Tình trạng công việc</th>
                             </tr>
                         </thead>
                         <tbody id="render-data">
@@ -195,8 +195,8 @@
         </div>
     </div>
     <!--html cho dialog-->
+    <div class="d-dialog-modal"></div>
     <div class="d-dialog-detail" title="Thông tin khách hàng" id="d-dialog" tabindex="-1">
-        <div class="d-dialog-modal"></div>
         <div class="d-dialog-content">
             <div class="d-header-dialog">
                 <div class="d-dialog-name">Thông tin nhân viên</div>
@@ -221,7 +221,7 @@
                     <div class="d-same-row">
                         <div class="d-left-row">
                             <div class="first d-label"> Mã nhân viên (<span>*</span>)</div>
-                            <div class="form-input"><input type="text" name="Mã khách hàng" value="" required id="txtCustomerCode" bind-data="CustomerCode" /></div>
+                            <div class="form-input"><input type="text" name="Mã khách hàng" value="" required id="txtEmployeeCode" bind-data="EmployeeCode" /></div>
                         </div>
                         <div class="d-fullName">
                             <div class="first d-label"> Họ và tên(<span>*</span>)</div>
@@ -308,14 +308,15 @@
                             </div>
                         </div>
                     </div>
+                    <div class="d-group-button">
+                        <div class="d-same-row">
+                            <button id="d-btn-cancel" title="Hủy">Hủy</button>
+                            <button id="d-btn-save" title="Lưu"><span><i class="far fa-save"></i></span> Lưu</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="d-group-button">
-                <div class="d-same-row">
-                    <button id="d-btn-cancel" title="Hủy">Hủy</button>
-                    <button id="d-btn-save" title="Lưu"><span><i class="far fa-save"></i></span> Lưu</button>
-                </div>
-            </div>
+
         </div>
     </div>
     <!--html cho modal thông báo-->
@@ -349,6 +350,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="/js/common/common.js"></script>
     <script src="/js/common/base.js"></script>
-    <script src="/js/page/customer.js"></script>
+    <script src="/js/page/employee.js"></script>
 </body>
 </html>

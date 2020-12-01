@@ -47,6 +47,30 @@ namespace MISA.ApplicationCore.Entities
         /// </summary>
         public int? Gender { get; set; }
         /// <summary>
+        /// Tên giới tính
+        /// </summary>
+        public string GenderName {
+            get
+            {
+                switch (Gender)
+                {
+                    case 0: 
+                        {
+                            return "Nữ";
+                        }
+                    case 1:
+                        {
+                            return "Nam";
+                        }
+                    default:
+                        {
+                            return "Khác";
+                        }
+
+                }
+            }
+         }
+        /// <summary>
         /// Số CMTND/Hộ chiếu
         /// </summary>
         [Require]
@@ -99,6 +123,10 @@ namespace MISA.ApplicationCore.Entities
         /// Trạng thái
         /// </summary>
         public int? WorkStatus { get; set; }
+        /// <summary>
+        /// Trạng thái làm việc
+        /// </summary>
+        public string WorkStatusName { get; set; }
         /// <summary>
         /// Tên phòng ban
         /// </summary>

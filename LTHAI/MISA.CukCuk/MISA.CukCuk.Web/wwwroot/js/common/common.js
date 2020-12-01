@@ -47,7 +47,6 @@ function formatMoney(money) {
     } else {
         return money.toFixed(0).replace(/(\d)(?=(\d{3})+\b)/g, '$1.');
     }
-
 }
 /**
  * Làm mới lại trang dialog
@@ -67,53 +66,33 @@ function RefreshDialog() {
     })
     $('#d-dialog').css("display", "none");
 }
-/**
- * Hàm lấy dữ liệu để truyền vào combobox nhóm người dùng
- * @param {any} url đường dẫn được truyền 
- * CreatedBy: LTHAI(19/11/2020)
- */
-function GetDataOfCustomerGroup(url) {
-    let select = $("select#CustomerGroup");
-    select.empty();
-    try {
-        $.ajax({
-            url: url,
-            method: "GET",
-            async: false
-        }).done(function (res) {
-            $.each(res, function (index, obj) {
-                select.append(`<option value ='${obj.CustomerGroupId}'>${obj.CustomerGroupName}</option>`)
-            })
-        }).fail(function (res) {
-            debugger
-        })
-    } catch (e) {
 
-    }
-}
-/**
- * Hàm lấy ra nội dung của một khách hàng thông qua id
- * @param {any} url đường dẫn để lấy data từ service
- * CreatedBy: LTHAI(19/11/2020)
- */
-function GetDataOfACustomer(url) {
-    let result;
-    try {
-        $.ajax({
-            url: url,
-            method: "GET",
-            async: false
-        }).done(function (res) {
-            result = res;
-        }).fail(function (res) {
-            debugger;
-            // Lấy dữ liệu không thành công
-            $('.modal-body').text("Lấy dữ liệu không thành công !");
-            $('#myModal').trigger('click');
-        })
-    } catch (e) {
 
-    }
-    return result;
+/**
+* Đưa ra cảnh báo cho những sự kiện cần xác nhận
+* @param {any} title Thông tin tiêu đề
+* @param {any} body Nội dung của cảnh báo
+* CreatedBy: LTHAI(19/11/2020)
+*/
+function ShowPopUp(title, body) {
+    $('.pop-up-title').text(title);
+    $('.pop-up-inf').text(body);
+    $('.p-pop-up').css('display', 'block');
 }
 
+/**
+* Kiểm tra các trường bắt buộc
+* @param {any} self đại diện cho đối tượng input
+* CreatedBy: LTHAI(15/11/2020)
+* */
+function EventsValidateRequiredWhenInputBlur(self) {
+    let value = $(self).val();
+    if (!value) {
+        $(self).addClass("border-red");
+        $(self).attr('title', `${$(self).attr('name')} không được để trống`)
+        $(self).attr("validated", false);
+    } else {
+        $(self).removeClass("border-red");
+        $(self).attr("validated", true);
+    }
+}

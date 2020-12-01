@@ -63,16 +63,15 @@ namespace MISA.Infrastructure.BaseRepository
             return entity;
         }
 
-        public TEntity GetEntityByProperty(TEntity entity, PropertyInfo propertyInfo)
+        public TEntity GetEntityByProperty(TEntity entity, PropertyInfo propertyInfo, string id = null)
         {
             
             string query = $"SELECT * FROM {_tableName} WHERE {propertyInfo.Name} = '{propertyInfo.GetValue(entity)}'";
             if (entity.entityState == EntityState.Update)
             {
                 var keyValue = entity.GetType().GetProperty($"{propertyInfo.Name}").GetValue(entity);
-                query = $"SELECT * FROM {_tableName} WHERE {propertyInfo.Name} = '{propertyInfo.GetValue(entity)}' AND {_tableName}Id != '{keyValue}'";
+                query = $"SELECT * FROM {_tableName} WHERE {propertyInfo.Name} = '{propertyInfo.GetValue(entity)}' AND {_tableName}Id != '{id}'";
             }
-
             var entityResult = dbConnection.Query<TEntity>(query, commandType: CommandType.Text).FirstOrDefault();
             return entityResult;
         }

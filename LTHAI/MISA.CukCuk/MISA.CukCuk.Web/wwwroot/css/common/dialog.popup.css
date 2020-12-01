@@ -8,6 +8,7 @@
     background-color: black;
     opacity: 0.4;
     z-index: 10;
+    display: none;
     height: 100vh;
     width: 100%;
     top: 0;
@@ -17,9 +18,9 @@
 .d-dialog-content, .pop-up-content {
     position: absolute;
     width: 860px;
-    height: 838px;
+    height: 852px;
     z-index: 50;
-    top: calc(50% - 440px);
+    top: calc(50% - 450px);
     left: calc(50% - 430px);
     background-color: #ffffff;
     border-radius: 5px;
@@ -91,6 +92,7 @@
 .d-left-row {
     margin-right: 10px;
 }
+
 .d-work-inf {
     margin-top: 24px;
 }
@@ -106,7 +108,12 @@
     justify-content: flex-end;
     padding-right: 24px;
     margin-top: 24px;
+    position: relative;
     background-color: #bbbbbb;
+    width: 860px;
+    right: 248px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 /*css cho riêng pop-up*/
 .pop-up-content {
