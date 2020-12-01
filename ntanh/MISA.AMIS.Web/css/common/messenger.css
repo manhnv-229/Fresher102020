@@ -13,7 +13,7 @@
     overflow: hidden;
     align-items: center;
     padding: 0 16px 0 24px;
-    margin-bottom: -100px;
+    margin-bottom: -150px;
 }
 
     .messenger-complete.animationHide {
@@ -22,7 +22,7 @@
     }
 
 @keyframes hideMessenger {
-    from {margin-bottom: -100px}
+    from {margin-bottom: -150px}
     to {margin-bottom: 0px}
 }
 
