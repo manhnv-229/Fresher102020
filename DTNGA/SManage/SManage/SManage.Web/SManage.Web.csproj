@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\content\icon\page\" />
+    <Folder Include="wwwroot\content\image\page\" />
+    <Folder Include="wwwroot\view\saler\" />
+  </ItemGroup>
+
+</Project>
