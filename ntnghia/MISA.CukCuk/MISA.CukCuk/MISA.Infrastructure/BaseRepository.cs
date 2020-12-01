@@ -37,8 +37,7 @@ namespace MISA.Infrastructure
         {
             // Khởi tạo các commandText:
 
-            //var entities = _dbConnection.Query<T>($"Proc_Get{_tableName}s", commandType: CommandType.StoredProcedure);
-            var entities = _dbConnection.Query<T>("select * from Employee", commandType: CommandType.Text);
+            var entities = _dbConnection.Query<T>($"Proc_Get{_tableName}s", commandType: CommandType.StoredProcedure);
 
             // Trả về dữ liệu:
             return entities;
@@ -47,7 +46,7 @@ namespace MISA.Infrastructure
         public T GetEntityById(string id)
         {
             // Khởi tạo các commandText:
-            var entity = _dbConnection.Query<T>($"Proc_Get{_tableName}ById", new { CustomerId = id }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            var entity = _dbConnection.Query<T>($"SELECT * FROM {_tableName} WHERE {_tableName}Id = '{id}'", commandType: CommandType.Text).FirstOrDefault();
 
             // Trả về dữ liệu:
             return entity;
@@ -92,7 +91,9 @@ namespace MISA.Infrastructure
             using (var transition = _dbConnection.BeginTransaction())
             {
                 // Thực thi commandText:
-                rowAffects = _dbConnection.Execute($"Proc_Delete{_tableName}ById", id, commandType: CommandType.StoredProcedure);
+                //rowAffects = _dbConnection.Execute($"Proc_Delete{_tableName}ById", id, commandType: CommandType.StoredProcedure);
+                rowAffects = _dbConnection.Execute($"DELETE FROM {_tableName} WHERE {_tableName}Id = '{id}'", commandType: CommandType.Text);
+
                 transition.Commit();
             }
             // Trả về kết quả (Số bản ghi xóa)

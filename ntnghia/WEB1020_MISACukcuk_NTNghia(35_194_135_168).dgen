@@ -230,7 +230,7 @@
       </Columns>
     </Table>
     <Table Name="Department">
-      <Checked>false</Checked>
+      <Checked>true</Checked>
       <Settings>
         <Truncate>true</Truncate>
         <RowsToGenerate>0</RowsToGenerate>
@@ -244,26 +244,24 @@
       </Settings>
       <Columns>
         <Column Name="DepartmentId">
-          <Checked>false</Checked>
+          <Checked>true</Checked>
           <DataType>CHAR</DataType>
-          <GeneratorOptions xsi:type="MySqlRegularExpressionGeneratorOptions">
-            <AllowEmptyStrings>false</AllowEmptyStrings>
-            <EmptyStringProportion>10</EmptyStringProportion>
+          <GeneratorOptions xsi:type="UniqueidentifierGeneratorOptions">
+            <Unique>true</Unique>
+            <IsAlwaysUnique>true</IsAlwaysUnique>
+            <UseDefault>false</UseDefault>
             <AllowNulls>false</AllowNulls>
             <NullProportion>0</NullProportion>
             <ValueDistributionMode>Seed</ValueDistributionMode>
-            <SeedValue>18</SeedValue>
-            <Unique>true</Unique>
-            <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <SeedValue>6</SeedValue>
           </GeneratorOptions>
-          <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
-          <GeneratorName>Reg Exp</GeneratorName>
-          <GeneratorDescription>values based on a regular expression</GeneratorDescription>
+          <GeneratorType>MySqlStringUniqueidentifierGenerator</GeneratorType>
+          <GeneratorName>Uniqueidentifier</GeneratorName>
+          <GeneratorDescription>fill with 16-byte GUID values</GeneratorDescription>
           <Length>36</Length>
         </Column>
         <Column Name="DepartmentName">
-          <Checked>false</Checked>
+          <Checked>true</Checked>
           <DataType>VARCHAR</DataType>
           <GeneratorOptions xsi:type="MySqlVarcharGeneratorOptions">
             <AllowEmptyStrings>false</AllowEmptyStrings>
@@ -292,7 +290,7 @@
       </Columns>
     </Table>
     <Table Name="Position">
-      <Checked>false</Checked>
+      <Checked>true</Checked>
       <Settings>
         <Truncate>true</Truncate>
         <RowsToGenerate>0</RowsToGenerate>
@@ -306,26 +304,24 @@
       </Settings>
       <Columns>
         <Column Name="PositionId">
-          <Checked>false</Checked>
+          <Checked>true</Checked>
           <DataType>CHAR</DataType>
-          <GeneratorOptions xsi:type="MySqlRegularExpressionGeneratorOptions">
-            <AllowEmptyStrings>false</AllowEmptyStrings>
-            <EmptyStringProportion>10</EmptyStringProportion>
+          <GeneratorOptions xsi:type="UniqueidentifierGeneratorOptions">
+            <Unique>true</Unique>
+            <IsAlwaysUnique>true</IsAlwaysUnique>
+            <UseDefault>false</UseDefault>
             <AllowNulls>false</AllowNulls>
             <NullProportion>0</NullProportion>
             <ValueDistributionMode>Seed</ValueDistributionMode>
-            <SeedValue>29</SeedValue>
-            <Unique>true</Unique>
-            <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <SeedValue>10</SeedValue>
           </GeneratorOptions>
-          <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
-          <GeneratorName>Reg Exp</GeneratorName>
-          <GeneratorDescription>values based on a regular expression</GeneratorDescription>
+          <GeneratorType>MySqlStringUniqueidentifierGenerator</GeneratorType>
+          <GeneratorName>Uniqueidentifier</GeneratorName>
+          <GeneratorDescription>fill with 16-byte GUID values</GeneratorDescription>
           <Length>36</Length>
         </Column>
         <Column Name="PositionName">
-          <Checked>false</Checked>
+          <Checked>true</Checked>
           <DataType>VARCHAR</DataType>
           <GeneratorOptions xsi:type="MySqlVarcharGeneratorOptions">
             <AllowEmptyStrings>false</AllowEmptyStrings>
@@ -736,13 +732,13 @@
       </Columns>
     </Table>
     <Table Name="Employee">
-      <Checked>false</Checked>
+      <Checked>true</Checked>
       <Settings>
         <Truncate>true</Truncate>
         <RowsToGenerate>0</RowsToGenerate>
         <PopulationDetails>
           <PopulationType>RowsCount</PopulationType>
-          <RowsCount>1000</RowsCount>
+          <RowsCount>300</RowsCount>
           <LookupProportion>30</LookupProportion>
           <ProportionOfExistingData>10</ProportionOfExistingData>
           <TimeTicksToPopulate>100000000</TimeTicksToPopulate>
@@ -750,7 +746,7 @@
       </Settings>
       <Columns>
         <Column Name="EmployeeId">
-          <Checked>false</Checked>
+          <Checked>true</Checked>
           <DataType>CHAR</DataType>
           <GeneratorOptions xsi:type="UniqueidentifierGeneratorOptions">
             <Unique>true</Unique>
@@ -767,7 +763,7 @@
           <Length>36</Length>
         </Column>
         <Column Name="EmployeeCode">
-          <Checked>false</Checked>
+          <Checked>true</Checked>
           <DataType>VARCHAR</DataType>
           <GeneratorOptions xsi:type="MySqlRegularExpressionGeneratorOptions">
             <AllowEmptyStrings>false</AllowEmptyStrings>
@@ -786,7 +782,7 @@
           <Length>20</Length>
         </Column>
         <Column Name="FullName">
-          <Checked>false</Checked>
+          <Checked>true</Checked>
           <DataType>VARCHAR</DataType>
           <GeneratorOptions xsi:type="MySqlRegularExpressionGeneratorOptions">
             <AllowEmptyStrings>false</AllowEmptyStrings>
@@ -797,7 +793,7 @@
             <SeedValue>7</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>$"VNHo.txt"</Expression>
+            <Expression>(($"VNHo.txt") ($"VNDemNam.txt") ($"VNTenNam.txt"))|(($"VNHo.txt") ($"VNDemNu.txt") ($"VNTenNu.txt"))</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -805,7 +801,7 @@
           <Length>100</Length>
         </Column>
         <Column Name="Gender">
-          <Checked>false</Checked>
+          <Checked>true</Checked>
           <DataType>INT</DataType>
           <GeneratorOptions xsi:type="MySqlIntegerGeneratorOptions">
             <AllowNulls>false</AllowNulls>
@@ -826,7 +822,7 @@
           <Precision>11</Precision>
         </Column>
         <Column Name="DateOfBirth">
-          <Checked>false</Checked>
+          <Checked>true</Checked>
           <DataType>DATE</DataType>
           <GeneratorOptions xsi:type="DateGeneratorOptions">
             <AllowNulls>true</AllowNulls>
@@ -852,7 +848,7 @@
           <GeneratorDescription>fill with date values</GeneratorDescription>
         </Column>
         <Column Name="PhoneNumber">
-          <Checked>false</Checked>
+          <Checked>true</Checked>
           <DataType>VARCHAR</DataType>
           <GeneratorOptions xsi:type="MySqlRegularExpressionGeneratorOptions">
             <AllowEmptyStrings>false</AllowEmptyStrings>
@@ -871,7 +867,7 @@
           <Length>50</Length>
         </Column>
         <Column Name="Email">
-          <Checked>false</Checked>
+          <Checked>true</Checked>
           <DataType>VARCHAR</DataType>
           <GeneratorOptions xsi:type="MySqlRegularExpressionGeneratorOptions">
             <AllowEmptyStrings>false</AllowEmptyStrings>
@@ -890,7 +886,7 @@
           <Length>100</Length>
         </Column>
         <Column Name="IdentityNumber">
-          <Checked>false</Checked>
+          <Checked>true</Checked>
           <DataType>VARCHAR</DataType>
           <GeneratorOptions xsi:type="MySqlRegularExpressionGeneratorOptions">
             <AllowEmptyStrings>false</AllowEmptyStrings>
@@ -909,7 +905,7 @@
           <Length>25</Length>
         </Column>
         <Column Name="IdentityDate">
-          <Checked>false</Checked>
+          <Checked>true</Checked>
           <DataType>DATE</DataType>
           <GeneratorOptions xsi:type="DateGeneratorOptions">
             <AllowNulls>true</AllowNulls>
@@ -935,7 +931,7 @@
           <GeneratorDescription>fill with date values</GeneratorDescription>
         </Column>
         <Column Name="IdentityPlace">
-          <Checked>false</Checked>
+          <Checked>true</Checked>
           <DataType>VARCHAR</DataType>
           <GeneratorOptions xsi:type="MySqlRegularExpressionGeneratorOptions">
             <AllowEmptyStrings>false</AllowEmptyStrings>
@@ -954,7 +950,7 @@
           <Length>255</Length>
         </Column>
         <Column Name="JoinDate">
-          <Checked>false</Checked>
+          <Checked>true</Checked>
           <DataType>DATE</DataType>
           <GeneratorOptions xsi:type="DateGeneratorOptions">
             <AllowNulls>true</AllowNulls>
@@ -980,29 +976,28 @@
           <GeneratorDescription>fill with date values</GeneratorDescription>
         </Column>
         <Column Name="Salary">
-          <Checked>false</Checked>
-          <DataType>DECIMAL</DataType>
-          <GeneratorOptions xsi:type="DecimalGeneratorOptions">
+          <Checked>true</Checked>
+          <DataType>DOUBLE</DataType>
+          <GeneratorOptions xsi:type="MySqlDoubleGeneratorOptions">
             <AllowNulls>true</AllowNulls>
             <NullProportion>10</NullProportion>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Increment xsi:type="xsd:decimal">1</Increment>
+            <Increment xsi:type="xsd:double">1</Increment>
             <ValueDistributionMode>Seed</ValueDistributionMode>
             <SeedValue>7</SeedValue>
-            <MinValue>19999</MinValue>
-            <MaxValue>119999</MaxValue>
+            <MinValue>10000000</MinValue>
+            <MaxValue>50000000</MaxValue>
             <UseDefault>false</UseDefault>
             <DefaultValue>NULL</DefaultValue>
           </GeneratorOptions>
-          <GeneratorType>MySqlDecimalGenerator</GeneratorType>
-          <GeneratorName>decimal</GeneratorName>
-          <GeneratorDescription>fill with fixed precision and scale number values</GeneratorDescription>
-          <Scale>4</Scale>
-          <Precision>18</Precision>
+          <GeneratorType>MySqlDoubleGenerator</GeneratorType>
+          <GeneratorName>US Annual Salary</GeneratorName>
+          <GeneratorDescription>23500, 44600, 35800, 110000, ...</GeneratorDescription>
+          <GeneratorCategory>Personal</GeneratorCategory>
         </Column>
         <Column Name="WorkStatus">
-          <Checked>false</Checked>
+          <Checked>true</Checked>
           <DataType>INT</DataType>
           <GeneratorOptions xsi:type="MySqlIntegerGeneratorOptions">
             <AllowNulls>false</AllowNulls>
@@ -1023,12 +1018,12 @@
           <Precision>11</Precision>
         </Column>
         <Column Name="PositionId">
-          <Checked>false</Checked>
+          <Checked>true</Checked>
           <DataType>CHAR</DataType>
           <GeneratorOptions xsi:type="ForeignKeyGeneratorOptions">
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <AllowNulls>true</AllowNulls>
+            <AllowNulls>false</AllowNulls>
             <NullProportion>10</NullProportion>
             <ValueDistributionMode>Seed</ValueDistributionMode>
             <SeedValue>20</SeedValue>
@@ -1045,7 +1040,7 @@
           <Length>36</Length>
         </Column>
         <Column Name="DepartmentId">
-          <Checked>false</Checked>
+          <Checked>true</Checked>
           <DataType>CHAR</DataType>
           <GeneratorOptions xsi:type="ForeignKeyGeneratorOptions">
             <Unique>false</Unique>
@@ -1067,10 +1062,10 @@
           <Length>36</Length>
         </Column>
         <Column Name="CreatedDate">
-          <Checked>false</Checked>
+          <Checked>true</Checked>
           <DataType>DATETIME</DataType>
           <GeneratorOptions xsi:type="MySqlDateTimeGeneratorOptions">
-            <AllowNulls>true</AllowNulls>
+            <AllowNulls>false</AllowNulls>
             <NullProportion>10</NullProportion>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
@@ -1102,29 +1097,34 @@
           <GeneratorDescription>fill with date and time with fractional seconds values</GeneratorDescription>
         </Column>
         <Column Name="CreatedBy">
-          <Checked>false</Checked>
+          <Checked>true</Checked>
           <DataType>VARCHAR</DataType>
-          <GeneratorOptions xsi:type="MySqlRegularExpressionGeneratorOptions">
+          <GeneratorOptions xsi:type="MySqlTextFileGeneratorOptions">
             <AllowEmptyStrings>false</AllowEmptyStrings>
             <EmptyStringProportion>10</EmptyStringProportion>
-            <AllowNulls>true</AllowNulls>
+            <AllowNulls>false</AllowNulls>
             <NullProportion>10</NullProportion>
             <ValueDistributionMode>Seed</ValueDistributionMode>
-            <SeedValue>27</SeedValue>
+            <SeedValue>8</SeedValue>
+            <IsLoop>true</IsLoop>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <FileName>FirstNamesFemale.txt</FileName>
+            <TrimLeft>false</TrimLeft>
+            <TrimRight>false</TrimRight>
+            <CodePage>-1</CodePage>
           </GeneratorOptions>
-          <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
-          <GeneratorName>Reg Exp</GeneratorName>
-          <GeneratorDescription>values based on a regular expression</GeneratorDescription>
+          <GeneratorType>MySqlTextFileGenerator</GeneratorType>
+          <GeneratorName>First Name (female)</GeneratorName>
+          <GeneratorDescription>Adelina, Marilyn, Rosa, Xenia, Elisa, ...</GeneratorDescription>
+          <GeneratorCategory>Personal</GeneratorCategory>
           <Length>100</Length>
         </Column>
         <Column Name="ModifiedDate">
-          <Checked>false</Checked>
+          <Checked>true</Checked>
           <DataType>DATETIME</DataType>
           <GeneratorOptions xsi:type="MySqlDateTimeGeneratorOptions">
-            <AllowNulls>true</AllowNulls>
+            <AllowNulls>false</AllowNulls>
             <NullProportion>10</NullProportion>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
@@ -1156,22 +1156,27 @@
           <GeneratorDescription>fill with date and time with fractional seconds values</GeneratorDescription>
         </Column>
         <Column Name="ModifiedBy">
-          <Checked>false</Checked>
+          <Checked>true</Checked>
           <DataType>VARCHAR</DataType>
-          <GeneratorOptions xsi:type="MySqlRegularExpressionGeneratorOptions">
+          <GeneratorOptions xsi:type="MySqlTextFileGeneratorOptions">
             <AllowEmptyStrings>false</AllowEmptyStrings>
             <EmptyStringProportion>10</EmptyStringProportion>
             <AllowNulls>true</AllowNulls>
             <NullProportion>10</NullProportion>
             <ValueDistributionMode>Seed</ValueDistributionMode>
-            <SeedValue>28</SeedValue>
+            <SeedValue>9</SeedValue>
+            <IsLoop>true</IsLoop>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <FileName>LastNames.txt</FileName>
+            <TrimLeft>false</TrimLeft>
+            <TrimRight>false</TrimRight>
+            <CodePage>-1</CodePage>
           </GeneratorOptions>
-          <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
-          <GeneratorName>Reg Exp</GeneratorName>
-          <GeneratorDescription>values based on a regular expression</GeneratorDescription>
+          <GeneratorType>MySqlTextFileGenerator</GeneratorType>
+          <GeneratorName>Last Name</GeneratorName>
+          <GeneratorDescription>Harter, Nicholson, Eller, Kozlowski, Bennett, Norwood, Olivarez, ...</GeneratorDescription>
+          <GeneratorCategory>Personal</GeneratorCategory>
           <Length>100</Length>
         </Column>
       </Columns>
