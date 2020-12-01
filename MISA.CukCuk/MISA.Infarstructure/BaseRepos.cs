@@ -52,8 +52,10 @@ namespace MISA.Infarstructure
         /// createdBy: tqhuy(25/11/2020)
         public IMethodResult<TModel> GetById(Guid id)
         {
-            string sql = $"select*from {_tableName} where {_tableName}ID = '{id}'";
-            var data = conn.Query<TModel>(sql).FirstOrDefault();
+            var parameters = new DynamicParameters();
+            parameters.Add($"{_tableName}ID", id, DbType.String);
+            //string sql = $"select*from {_tableName} where {_tableName}ID = '{id}'";
+            var data = conn.Query<TModel>($"Proc_Get{_tableName}ByID", parameters, commandType: CommandType.StoredProcedure).FirstOrDefault();
             return MethodResult<TModel>.ResultWithData(data);
         }
         /// <summary>

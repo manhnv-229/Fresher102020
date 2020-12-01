@@ -13,7 +13,7 @@ namespace MISA.ApplicationCore.Class
         /// <summary>
         /// khóa chính
         /// </summary>
-        public Guid EmployeeId { get; set; }
+        public Guid EmployeeID { get; set; }
         /// <summary>
         /// mã nhân viên
         /// </summary>
@@ -48,7 +48,7 @@ namespace MISA.ApplicationCore.Class
         /// <summary>
         /// ngày sinh
         /// </summary>
-        public DateTime DateOfBrith { get; set; }
+        public DateTime DateOfBirth { get; set; }
         /// <summary>
         /// số điện thoại
         /// </summary>
@@ -94,7 +94,7 @@ namespace MISA.ApplicationCore.Class
         /// <summary>
         /// khóa ngoại mã phòng ban
         /// </summary>
-        public Guid DepartmentId { get; set; }
+        public Guid DepartmentID { get; set; }
         /// <summary>
         /// tên phòng ban
         /// </summary>
@@ -102,11 +102,11 @@ namespace MISA.ApplicationCore.Class
         /// <summary>
         /// khóa ngoại vị trí/ chức vụ
         /// </summary>
-        public Guid PositionId { get; set; }
+        public Guid PossitionID { get; set; }
         /// <summary>
         /// tên chức vụ
         /// </summary>
-        public string PositionName { get; set; }
+        public string PossitionName { get; set; }
         /// <summary>
         /// trạng thái làm việc: 0-nghỉ việc, 1-đang thực tập, 2-đang thử việc, 3-đang làm việc
         /// </summary>

@@ -1,0 +1,127 @@
+﻿/*
+    css cho navbar - phần menu bên tay trái của trang
+*/
+.navbar{
+    float: left;
+    width:220px;
+    height: 100vh;
+    background-color: #ffffff;
+    border-right:  1px #e5e5e5 solid;
+}
+    .navbar .logo-site {
+        display: flex;
+        width: 220px;
+        height: 60px;
+    }
+
+
+    .navbar .logo-box {
+        display: flex;
+        width: 220px;
+        position: absolute;
+        top: 16px;
+        left: 12px;
+    }
+
+    .navbar .logo-box .toggle-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 10px;
+        background-image: url('/content/img/toggle.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    .navbar .logo-box .logo-amis {
+        width: 100%;
+        height: 24px;
+        background-image: url('/content/img/amis-logo.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    .navbar .navbar-content {
+        width: 100%;
+    }
+
+        .navbar .navbar-content .nav-item {
+            display: flex;
+            height: 44px;
+            cursor: pointer;
+            line-height: 44px;
+        }
+
+            .navbar .navbar-content .nav-item:hover {
+                background-color: #e5e5e5;
+                color: #000000;
+            }
+
+            .navbar .navbar-content .nav-item:focus {
+                background-color: #019160;
+                color: #ffffff;
+            }
+
+
+        .navbar .navbar-content .nav-item-icon {
+            width: 52px;
+            height: 44px;
+            align-self: center;
+        }
+
+        .navbar .navbar-content .nav-item-text{
+            font-size: 13px;
+        }
+
+.navbar-content .nav-item-text a{
+    color: #000000;
+}
+
+.icon-document-online {
+    background-size: 20px;
+    background-position-y: center;
+    background-position-x: center;
+    background-repeat: no-repeat;
+    background-image: url('/content/icon/icon-document-online.jpg');
+}
+
+.icon-document {
+    background-size: 20px;
+    background-position-y: center;
+    background-position-x: center;
+    background-repeat: no-repeat;
+    background-image: url('/content/icon/icon-document.jpg');
+}
+
+.icon-track-spending {
+    background-size: 20px;
+    background-position-y: center;
+    background-position-x: center;
+    background-repeat: no-repeat;
+    background-image: url('/content/icon/icon-track-spendingjpg.jpg');
+}
+
+.icon-track-contribution {
+    background-size: 20px;
+    background-position-y: center;
+    background-position-x: center;
+    background-repeat: no-repeat;
+    background-image: url('/content/icon/icon-track-contributions.png');
+}
+
+.icon-laborer {
+    background-size: 20px;
+    background-position-y: center;
+    background-position-x: center;
+    background-repeat: no-repeat;
+    background-image: url('/content/icon/icon-laborer.jpg');
+}
+
+.icon-setting {
+    background-size: 20px;
+    background-position-y: center;
+    background-position-x: center;
+    background-repeat: no-repeat;
+    background-image: url('/content/icon/icon-setting.png');
+}
+
+

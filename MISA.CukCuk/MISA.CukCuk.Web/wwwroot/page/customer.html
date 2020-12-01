@@ -1,0 +1,308 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="/css/common/main.css" rel="stylesheet" />
+    <link href="/css/common/header.css" rel="stylesheet" />
+    <link href="/css/common/navbar.css" rel="stylesheet" />
+    <link href="/css/common/content.css" rel="stylesheet" />
+    <link href="/css/common/common.css" rel="stylesheet" />
+    <link href="/css/page/customer.css" rel="stylesheet" />
+    <link href="/css/dialog/detailCustomer.css" rel="stylesheet" />
+    <link href="/css/common/snackbar.css" rel="stylesheet" />
+    <link href="/css/common/popup.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo-site">
+            <div class="logo-box">
+                <div class="toggle-icon"></div>
+                <div class="logo-amis"></div>
+            </div>
+        </div>
+        <div class="navbar-content">
+            <div class="nav-item">
+                <div class="nav-item-icon icon-document-online"></div>
+                <div class="nav-item-text">Lập hồ sơ điện tử</div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-icon icon-document"></div>
+                <div class="nav-item-text">Lập hồ sơ giấy</div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-icon icon-track-spending"></div>
+                <div class="nav-item-text">Theo dõi chi</div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-icon icon-track-contribution"></div>
+                <div class="nav-item-text">Theo dõi đóng</div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-icon icon-laborer"></div>
+                <div class="nav-item-text">
+                    <a href="employee.html">Quản lý lao động</a>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-icon icon-laborer"></div>
+                <div class="nav-item-text">
+                    <a href="customer.html">Danh mục khách hàng</a>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-icon icon-setting"></div>
+                <div class="nav-item-text">Thiết lập</div>
+
+            </div>
+        </div>
+    </div>
+    <div class="header">
+        <div class="header-title">
+            <div class="header-title-text">Công ty cổ phần MISA TEST BHXH</div>
+            <i class="fa fa-angle-down"></i>
+        </div>
+        <div class="header-account">
+            <div class="header-account-photo"></div>
+            <div class="header-account-text">AMIS BHXH</div>
+            <i class="material-icons">more_horiz</i>
+        </div>
+
+    </div>
+    <div class="content">
+        <div class="header-content">
+            <div class="header-content-left">Quản lý khách hàng</div>
+            <div class="hearder-content-right">
+                <button class="button-sync btn-icon">
+                    <i class="fas fa-retweet"></i>
+                    <div class="button-text">Đồng bộ từ HRM</div>
+                </button>
+                <button class="button-insert btn-icon">
+                    <i class="fas fa-user-plus"></i>
+                    <div class="button-text">Thêm khách hàng</div>
+                </button>
+                <div class="icon-down">
+                    <i class="fa fa-angle-down"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="toolbar-content">
+            <i class="fa fa-search"></i>
+            <input id="search-employee" type="search" placeholder="Tìm kiếm theo mã nhân viên, họ tên" />
+            <select id="department">
+                <option value="" disabled selected hidden>Chọn bộ phận phòng ban</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
+
+            <select id="insurrance">
+                <option value="" disabled selected hidden>Trạng thái tham gia BHXH</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
+
+            <div class="toolbar-content-right">
+                <button class="btn-icon btn-delete"><i class="fas fa-trash-alt"></i></button>
+                <button class="btn-icon btn-refresh">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            </div>
+
+
+        </div>
+
+        <div class="gird">
+
+            <table id="table-employee" style="width:100%;" cellspacing="0">
+                <colgroup>
+                    <col style="width:50px;" />
+                    <col style="width:130px" />
+                    <col style="width:100px" />
+                    <col style="width:100px" />
+                    <col style="width:100px" />
+                    <col style="width:150px" />
+                    <col style="width:100px" />
+                    <col style="width:150px" />
+                    <col style="width:100px" />
+                </colgroup>
+                <thead class="gird-header">
+                    <tr fieldPK="CustomerId">
+                        <th fieldName="index"> </th>
+                        <th fieldName="CustomerCode">Mã khách hàng</th>
+                        <th fieldName="MemberCardCode">Mã thành viên</th>
+                        <th fieldName="FullName">Họ và tên</th>
+                        <th fieldName="PhoneNumber">Số điện thoại</th>
+                        <th fieldName="Email">Email</th>
+                        <th fieldName="DateOfBirth" formatType="ddmmyyyy">Ngày sinh</th>
+                        <th fieldName="Address">Địa chỉ</th>
+                        <th fieldName="CustomerGroupName">Nhóm khách hàng</th>
+                    </tr>
+                </thead>
+                <tbody class="gird-content">
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="tfoot">
+            <div class="count-emplyee">Hiển thị 1-5 lao động</div>
+            <div class="page-navigations">
+                <i class="fas fa-angle-double-left"></i>
+                <i class="fas fa-angle-left"></i>
+                <button class="page-table page-selected">1</button>
+                <button class="page-table">2</button>
+                <button class="page-table">3</button>
+                <button class="page-table">4</button>
+                <i class="fas fa-angle-right"></i>
+                <i class="fas fa-angle-double-right"></i>
+
+            </div>
+            <div class="count-page">5/trang</div>
+        </div>
+
+    </div>
+    <div class="dialog-modal"></div>
+    <div class="pop-up-modal"></div>
+    <div class="dialog">
+        <div class="pop-up-modal"></div>
+        <div class="dialog-header">
+            <div class="dialog-header-text">Thông tin khách hàng</div>
+            <buttom class="dialog-header-icon btn-cancel"></buttom>
+        </div>
+        <div class="dialog-content">
+            <div class="img-customer">
+                <div class="el-avatar"></div>
+                <div class="el-avatar-note text-align-center">
+                    Vui lòng chọn ảnh có định dạng <br><b>.jpg, .jpeg, .png, .gif. </b>
+                </div>
+            </div>
+            <div class="info-customer-right">
+                <div class="info-customer-row1">
+                    <div class="info-customer">
+                        <div class="lable-info">Mã khách hàng (*)</div>
+                        <input id="CustomerCode" class="input-required input-info pop-up-info pop-up-info-1" fieldName="CustomerCode" type="text" required />
+                    </div>
+                    <div class="info-customer">
+                        <div class="lable-info">Họ và Tên (*)</div>
+                        <input id="FullName" class="input-required input-info pop-up-info pop-up-info-0" fieldName="FullName" type="text" required />
+                    </div>
+                </div>
+                <div class="info-customer-row2">
+                    <div class="info-customer">
+                        <div class="lable-info">Mã thẻ thành viên</div>
+                        <input type="text" fieldName="MemberCardCode" class="input-info" id="MemberCardCode" required />
+                    </div>
+                    <div class="info-customer">
+                        <div class="lable-info">Nhóm khách hàng</div>
+                        <select fieldValue="CustomerGroupId" fieldName="CustomerGroupName" class="input-info build-select" id="CustomerGroupName" api="customergroups">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="info-customer-row3">
+                    <div class="info-customer">
+                        <div class="lable-info">Ngày sinh</div>
+                        <input type="date" fieldName="DateOfBirth" class="input-info" id="DateOfBirth" />
+                    </div>
+                    <div class="info-customer">
+                        <div class="lable-info">Giới tính</div>                      
+                        <form action="">
+                            <input type="radio" fieldName="Gender" name="gender" value="1" class="gender-radio input-info" checked="checked"> Nam
+                            <input type="radio" fieldName="Gender" name="gender" value="0" class="gender-radio input-info"> Nữ
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-customer-bottom">
+                <div class="info-customer-row4">
+                    <div class="info-customer row-left">
+                        <div class="lable-info">Email</div>
+                        <input type="email" placeholder="email@gmail.com" fieldName="Email" class="input-info" id="Email" required />
+                    </div>
+                    <div class="info-customer row-right">
+                        <div class="lable-info">Số điện thoại (*)</div>
+                        <input type="text" fieldName="PhoneNumber" class="input-info" id="PhoneNumber" required />
+                    </div>
+                </div>
+                <div class="info-customer-row5">
+                    <div class="info-customer row-left">
+                        <div class="lable-info">Tên công ty</div>
+                        <input type="text" class="input-info" fieldName="CompanyName" />
+                    </div>
+                    <div class="info-customer row-right">
+                        <div class="lable-info">Mã số thuế</div>
+                        <input type="text" class="input-info" fieldName="CompanyTaxCode" />
+                    </div>
+                </div>
+                <div class="info-customer-row6">
+                    <div class="info-customer">
+                        <div class="lable-info">Địa chỉ</div>
+                        <input type="text" fieldName="Address" class="input-info" id="Address" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tfoot-dialog">
+            <div>
+                <button class="btn btn-cancel">Hủy</button>
+                <button class="btn-icon btn-delete">
+                    <i class="fas fa-trash-alt"></i>
+                    <div>Xóa</div>
+                </button>
+                <button class="btn-icon btn-save">
+                    <i class="fas fa-save"></i>
+                    <div>Lưu</div>
+                </button>
+            </div>
+        </div>
+
+    </div>
+    <div class="snackbar snackbar-success">
+        <div class="icon-snackbar"><i class="fas fa-check-circle"></i> </div>
+        <div class="snackbar-mesenger">Thành công</div>
+        <i class="fas fa-times btn-cancel-snackbar"></i>
+    </div>
+    <div class="snackbar snackbar-err">
+        <div class="icon-snackbar"><i class="fas fa-exclamation-triangle"></i></div>
+        <div class="snackbar-mesenger">Có lỗi</div>
+        <i class="fas fa-times btn-cancel-snackbar"></i>
+    </div>
+
+    <div class="pop-up">
+        <div class="btn-cancel"></div>
+        <div class="pop-up-title">
+            Xóa bản ghi
+        </div>
+        <div class="pop-up-content">
+            <div class="icon-warning"><i class="fas fa-exclamation-triangle"></i></div>
+            <div class="pop-up-mesenger">Bạn có chắc muốn xóa </div>
+        </div>
+        <div class="pop-up-tfoot">
+            <div>
+                <button class="btn-cancel">Hủy</button>
+                <button class="btn-confirm">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/lib/jquery-3.5.1.min.js"></script>
+    <script src="/js/common/common.js"></script>
+    <script src="/js/common/base.js"></script>
+    <script src="/js/page/customer.js"></script>
+</body>
+</html>

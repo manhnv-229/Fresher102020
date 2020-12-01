@@ -1,0 +1,176 @@
+﻿/*css cho dialog - form hiển thị chi tiết, thêm mới, sửa thông tin khách hàng, nhân viên*/
+.dialog {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    width: 700px;
+    height: auto;
+    background-color: #ffffff;
+    z-index: 1000;
+    border-radius: 4px;
+}
+
+.dialog-modal-opacity {
+    opacity: .5;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: black;
+    z-index: 999;
+}
+
+.dialog-header {
+    margin: 24px;
+    background-color: #ffffff;
+    color: #000000;
+    font-weight: bold;
+}
+
+.dialog-header-icon {
+    position: absolute;
+    right: 0;
+    top: 4px;
+    width: 30px;
+    height: 30px;
+    background-image: url('/content/icon/x.svg');
+    background-repeat: no-repeat;
+}
+
+.dialog-content {
+    background-color: #ffffff;
+    height: calc(100% - 48px);
+    margin: 24px 16px 24px 24px;
+}
+
+
+    .dialog-content .img-customer {
+        float: left;
+        width: 200px;
+        height: 215px;
+        margin-right: 10px;
+        margin-bottom: 16px;
+    }
+
+        .dialog-content .img-customer .el-avatar {
+            width: 200px;
+            height: 180px;
+            background-image: url('/content/img/default-avatar.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+    .dialog-content .info-customer {
+        color: #000000;
+        font-size: 13px;
+    }
+
+    .dialog-content .info-customer-right {
+        float: left;
+        width: calc(100% - 210px);
+    }
+
+    .dialog-content .info-customer .label-info {
+        margin-bottom: 4px;
+    }
+
+.info-customer-right .info-customer {
+    margin-right: 8px;
+    width: 50%;
+}
+
+.info-customer select {
+    width: 100%;
+    height: 40px;
+    /*    border-radius: 4px;
+    border: 1px solid #BBBBBB;
+    color: #000000;
+    font-size: 13px;*/
+}
+
+.info-customer form input {
+    /*    border-radius: 4px;
+    border: 1px solid #BBBBBB;
+    background-color: #ffffff;
+    width:20px;
+    height: 20px;*/
+    margin-right: 8px;
+}
+
+.info-customer form.selected {
+    background-color: #019160;
+}
+
+
+.info-customer-row1 {
+    display: flex;
+    margin-bottom: 16px;
+}
+
+.info-customer-row2 {
+    display: flex;
+    margin-bottom: 16px;
+}
+
+.info-customer-row3 {
+    display: flex;
+    margin-bottom: 16px;
+}
+
+.info-customer-row4 {
+    width: 100%;
+    display: flex;
+    margin-bottom: 16px;
+}
+
+.info-customer-row5 {
+    display: flex;
+    margin-bottom: 16px;
+}
+
+.info-customer-row6 {
+    display: flex;
+    margin-bottom: 16px;
+}
+
+.dialog-content .info-customer {
+    margin-right: 8px;
+}
+
+.info-customer-bottom .row-left {
+    width: 370px;
+}
+
+.info-customer-bottom .row-right {
+    width: calc(100% - 390px);
+}
+
+.info-customer-row6 .info-customer {
+    width: 100%;
+}
+
+    .info-customer-row6 .info-customer input {
+        margin-right: 8px;
+        width: 100%;
+    }
+
+.tfoot-dialog {
+    display: flex;
+    height: 60px;
+    background-color: #E9EBEE;
+    align-items: center;
+}
+
+    .tfoot-dialog button {
+        margin-left: 16px;
+    }
+
+    .tfoot-dialog > div {
+        display: flex;
+        position: absolute;
+        right: 24px;
+        align-items: center;
+    }

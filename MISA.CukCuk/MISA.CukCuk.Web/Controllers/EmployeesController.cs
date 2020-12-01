@@ -9,11 +9,20 @@ using MISA.ApplicationCore.Interfaces.IModelServices;
 
 namespace MISA.CukCuk.Web.Controllers
 {
-    public class EmployeesController : BaseController<IEmployeeService,Employee>
+    public class EmployeesController : BaseController<IEmployeeService, Employee>
     {
-        public EmployeesController(IEmployeeService employeeService): base(employeeService)
+        IEmployeeService _employeeService;
+        public EmployeesController(IEmployeeService employeeService) : base(employeeService)
         {
+            _employeeService = employeeService;
+        }
 
+        //[Route("search")]
+        [HttpGet("search/{propertyValue}")]
+        public IActionResult SearchByProperty(string propertyValue)
+        {
+            var result = _employeeService.GetEmployeeByPropertyValue(propertyValue);
+            return Ok(result);
         }
     }
 }
