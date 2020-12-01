@@ -13,7 +13,7 @@ using System.Text;
 
 namespace MISA.Infarstructure
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity:BaseEntity
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity>, IDisposable where TEntity:BaseEntity
     {
         #region Declare
         IConfiguration _configuration;
@@ -90,12 +90,18 @@ namespace MISA.Infarstructure
 
         public int Insert(TEntity entity)
         {
-            var param = MappingDbType(entity);
-            //Thực thi các mã lệnh
-            //var customers = dbConnection.Query<Customer>("SELECT * FROM View_Customer ORDER BY CreatedDate ASC", commandType: CommandType.Text);
-            var rowAffected = _dbConnection.Execute($"Proc_Insert{_tableName}", param, commandType: CommandType.StoredProcedure);
+            var rowAffected = 0;
+            _dbConnection.Open();
+            using (var transaction= _dbConnection.BeginTransaction())
+            {
+                var param = MappingDbType(entity);
+                //Thực thi các mã lệnh
+                //var customers = dbConnection.Query<Customer>("SELECT * FROM View_Customer ORDER BY CreatedDate ASC", commandType: CommandType.Text);
+                rowAffected = _dbConnection.Execute($"Proc_Insert{_tableName}", param, commandType: CommandType.StoredProcedure);
+                transaction.Commit();
+            }
+            //Trả về số bản ghi thêm mới được 
 
-            //Trả về số bản ghi thêm mới được            
             return rowAffected;
         }
 
@@ -160,6 +166,14 @@ namespace MISA.Infarstructure
             else return null;
             var entityDuplicate = _dbConnection.Query<TEntity>(query, commandType: CommandType.Text).FirstOrDefault();
             return entityDuplicate;
+        }
+
+        public void Dispose()
+        {
+            if(_dbConnection.State == ConnectionState.Open)
+            {
+                _dbConnection.Close();
+            }
         }
         #endregion
     }

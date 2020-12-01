@@ -2,23 +2,28 @@
 
 class Base {
     constructor() {
-        this.host = "http://api.manhnv.net";
+        this.host = "http://localhost:51261";
         this.apiRouter = null;
         this.setApiRouter();
+        this.objName = null;
+        this.setObjName();
         this.initEvent();
         this.loadData();
     }
     setApiRouter() {
 
     }
+    setObjName() {
+
+    }
     initEvent() {
         var me = this;
         //#region "Sự kiện với các nút" // dùng region để gộp các đoạn code giúp dễ quản lý và sửa đổi  
         //sự kiện click khi nhấn vào thêm mới
-        $("#btn-add-customer").click(this.btnAddOnClick.bind(this));
+        $("#btn-add").click(this.btnAddOnClick.bind(this));
 
         //sự kiện click khi nhấn vào sửa
-        $(".btn-edit-customer").click(this.btnEditOnClick.bind(this));
+        $(".btn-edit").click(this.btnEditOnClick.bind(this));
 
         //load lại dữ liệu khi nhấn button nạp
         $("#btnRefresh").click(function () {
@@ -34,7 +39,7 @@ class Base {
         $("#btnSave").click(this.btnSaveOnClick.bind(this));
 
         //Thực hiện xóa dữ liệu khi ấn button xóa
-        $('.btn-delete-customer').click(this.btnDeleteOnClick.bind(this));
+        $('.btn-delete').click(this.btnDeleteOnClick.bind(this));
 
         // sự kiện click vào button hủy để tắt cảnh báo
         $(".btn-cancel-warning").click(function () {
@@ -75,6 +80,35 @@ class Base {
             }
         })
 
+
+        // Sự kiện khi người dùng nhập dữ liệu tiền tệ
+        $(".input-money").on("keyup", function (event) {
+
+
+            // When user select text in the document, also abort.
+            var selection = window.getSelection().toString();
+            if (selection !== '') {
+                return;
+            }
+
+            // When the arrow keys are pressed, abort.
+            if ($.inArray(event.keyCode, [38, 40, 37, 39]) !== -1) {
+                return;
+            }
+
+
+            var $this = $(this);
+
+            // Get the value.
+            var input = $this.val();
+
+            var input = input.replace(/[\D\s\._\-]+/g, "");
+            input = input ? parseInt(input, 10) : 0;
+
+            $this.val(function () {
+                return (input === 0) ? "" : input.toLocaleString("vi-VN");
+            });
+        });
         //#endregion Dialog
 
         //#region "Sự kiện với chuột" // dùng region để gộp các đoạn code giúp dễ quản lý và sửa đổi  
@@ -168,7 +202,7 @@ class Base {
     loadData() {
         var me = this;
         try {
-
+            var entityId = me.objName + "Id";
             $(".loading").show();
             //xóa hết dữ liệu bảng trước khi nạp, tránh bị nạp tiếp vào dữ liệu đã có
             $('table tbody').empty();
@@ -189,7 +223,7 @@ class Base {
 
                 $.each(res, function (index, obj) {
                     var tr = $(`<tr></tr>`);
-                    tr.data("recordid", obj["CustomerId"]);
+                    tr.data("recordid", obj[entityId]);
                     tr.data("customer", obj);
                     $.each(ths, function (index, th) {
                         var td = $(`<td></td>`);
@@ -254,7 +288,7 @@ class Base {
             })
 
             //load dữ liệu cho các combobox 
-            var selects = $('select[fieldName]');
+            var selects = $('select[selectName]');
             var api = selects.attr("api");
 
             //xử lý xóa các option trước để tránh bị trùng khi nhấn button add các lần tiếp theo
@@ -266,8 +300,8 @@ class Base {
 
             $.each(selects, function (index, select) {
                 var api = $(this).attr("api");
-                var fieldName = $(this).attr("fieldName");
-                var fieldValue = $(this).attr("fieldValue");
+                var fieldName = $(this).attr("selectName");
+                var fieldValue = $(this).attr("selectValue");
                 //lấy dữ liệu nhóm khách hàng
                 $.ajax({
                     url: me.host + api,
@@ -317,7 +351,7 @@ class Base {
 
             // lấy tất cả các control nhập liệu
             var inputs = $('input[fieldName], select[fieldName]');
-            var emtity = {};
+            var entity = {};
             $.each(inputs, function (index, input) {
                 var propertyName = $(input).attr('fieldName');
                 var value = $(input).val();
@@ -329,25 +363,28 @@ class Base {
 
                 if ($(this).attr("type") == 'radio') {
                     if ($(this).is(":checked")) {
-                        emtity[propertyName] = value;
+                        entity[propertyName] = value;
                         // debugger
                     }
                 }
                 else {
-                    emtity[propertyName] = value;
+                    entity[propertyName] = value;
                 }
             });
-            //debugger;
+            debugger;
             //Gọi sevice tương ứng thực hiện lưu dữ liệu
             var method = "POST";
+            var endPoint = "";
             if (me.FormMode == "Edit") {
                 method = "PUT";
-                emtity["CustomerId"] = me.recordId;
+                var entityId = me.objName + "Id";
+                entity[entityId] = me.recordId;
+                endPoint = me.recordId;
             }
             $.ajax({
-                url: me.host + me.apiRouter,
+                url: me.host + me.apiRouter + `/${endPoint}`,
                 method: method,
-                data: JSON.stringify(emtity),
+                data: JSON.stringify(entity),
                 contentType: 'application/json',
             }).done(function (res) {
 
@@ -378,7 +415,7 @@ class Base {
         try {
             var me = this;
             //load dữ liệu cho các combobox 
-            var selects = $('select[fieldName]');
+            var selects = $('select[selectName]');
             var api = selects.attr("api");
             //xử lý xóa các option trước để tránh bị trùng khi nhấn button add các lần tiếp theo
             //$('select option').remove();
@@ -388,8 +425,8 @@ class Base {
             $(".loading").show();
             $.each(selects, function (index, select) {
                 var api = $(this).attr("api");
-                var fieldName = $(this).attr("fieldName");
-                var fieldValue = $(this).attr("fieldValue");
+                var fieldName = $(this).attr("selectName");
+                var fieldValue = $(this).attr("selectValue");
 
                 //lấy dữ liệu nhóm khách hàng
                 $.ajax({
@@ -448,6 +485,10 @@ class Base {
                         else {
                             $(this).prop("checked", false);
                         }
+                    }
+                    else if ($(this).attr("typeName") == 'money') {
+                        var money = formatMoney(value);
+                        $(this).val(money);
                     }
                     else {
                         $(this).val(value).change();

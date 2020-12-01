@@ -15,6 +15,8 @@ using MISA.ApplicationCore.Interfaces;
 using MISA.ApplicationCore.Services;
 using MISA.CukCuk.Web.MiddleWare;
 using MISA.Infarstructure;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace MISA.CukCuk.Web
 {
@@ -30,7 +32,12 @@ namespace MISA.CukCuk.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddCors();
+            services.AddControllers().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
             // thêm middleware để xử lý mapping dữ liệu sang kiểu guid
             SqlMapper.AddTypeHandler(new MySqlGuidTypeHandler());
             SqlMapper.RemoveTypeMap(typeof(Guid));
@@ -53,6 +60,7 @@ namespace MISA.CukCuk.Web
             }
 
             app.UseRouting();
+            app.UseCors(option => option.AllowAnyMethod().AllowAnyOrigin().AllowAnyOrigin());
             app.UseStaticFiles();
 
             app.UseAuthorization();

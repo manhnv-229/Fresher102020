@@ -67,17 +67,25 @@
             border: none;
             border-radius: 0 5px 0 0;
         }
-    /*Khối dialog body*/
-    .m-dialog .m-dialog-content {
-        padding: 0 24px 24px;
-    }
+.m-dialog-content-title {
+    color: #000000;
+    font-size: 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+    align-self: center;
+    margin-top: 24px;
+}
+/*Khối dialog body*/
+.m-dialog .m-dialog-content {
+    padding: 0 24px 24px;
+}
 
         .m-dialog .m-dialog-content .m-dialog-content-top {
             display: flex;
             align-items: center;
         }
 /*Css cho img trong dialog*/
-.m-img-left .avatar-dialog {
+.avatar-dialog {
     width: 180px;
     height: 180px;
     border: 1px solid #bbbbbb;
@@ -101,6 +109,10 @@
     flex: 2;
 }
 
+.m-flex-3 {
+    flex: 3;
+}
+
 .m-dialog-left {
     margin-left: 10px;
 }
@@ -119,6 +131,10 @@
     margin-bottom: 4px;
     font-size: 13px;
 }
+
+    .m-label .m-label-required {
+        color: #ff0000;
+    }
 /*Css riêng cho phần button trong dialog*/
 .m-dialog .m-button-dialog {
     height: 60px;
@@ -185,4 +201,14 @@
 .m-input-radio:checked::before {
     border-color: #019160;
     background-color: #019160;
+}
+
+.input-money::placeholder{
+    padding-right: 5px;
+}
+.input-money:before {
+    position: absolute;
+    top: 0;
+    content: "VND";
+    left: 5px;
 }
