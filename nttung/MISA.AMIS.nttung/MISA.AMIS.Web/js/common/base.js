@@ -111,7 +111,7 @@
      * cretedby nttung (19/11/2020)
      * */
     showNotification() {
-        $('.notification').delay(500).show(1000);
+        $('.notification').delay(300).show(1000);
     }
     hideNotification() {
         $('.notification').delay(1300).hide(1000);
@@ -122,7 +122,7 @@
      * */
     showNotificationFail() {
         try {
-            $('.notification-fail').delay(500).show(1000);
+            $('.notification-fail').delay(300).show(1000);
         } catch (e) {
             console.log(e);
         }
@@ -156,28 +156,26 @@
                     $.each(ths, function (index, th) {
                         var td = $(`<td><div><span></span></div></td>`);
                         var fieldName = $(th).attr('fieldName');
-                        if (fieldName == "index") {
-                            var tdSortNumber = $(`<td><div><span>` + sortNumber + `</span></div></td>`);
-                            $(tr).append(tdSortNumber);
-                        } else if (fieldName == "DateOfBirth") {
-                            var date = fomatDate(obj[fieldName]);
-                            td.append(date);
-                            $(tr).append(td);
-                        } else if (fieldName == "Salary") {
-                            var salary = fomatMoney(obj[fieldName]);
-                            td.append(salary);
-                            td.addClass("money");
-                            $(tr).append(td);
-                        } else if (fieldName == "Gender") {
-                            var gender = fomatGender(obj[fieldName]);
-                            td.append(gender);
-                            $(tr).append(td);
+                        var value = obj[fieldName];
+                        var formatType = $(th).attr('formatType');
+                        switch (formatType) {
+                            case "ddmmyyyy":
+                                td.find('div').addClass("text-align-center");
+                                value = fomatDate(value);
+                                break;
+                            case "Money":
+                                td.addClass("text-align-right");
+                                value = fomatMoney(value);
+                                break;
+                            case "Gender":
+                                value = fomatGender(value);
+                                break;
+                            default:
+                                break;
                         }
-                        else {
-                            var value = obj[fieldName];
-                            td.append(value);
-                            $(tr).append(td);
-                        }
+
+                        td.find('div').append(value);
+                        $(tr).append(td);
                     })
                     $('table tbody').append(tr);
                 })
@@ -226,7 +224,7 @@
                 }
             })
             var method = "POST";
-            //gọi service tương ứng thực hiện lưu dữ liệu
+            //gọi service tương ứng thực hiện lưu dữ liệu cho customer
             if (me.FormMode == 'Edit') {
                 method = "PUT";
                 entity.CustomerId = me.RecordId;
@@ -301,7 +299,7 @@
         }
     }
     /**
-     * Load combo box nhóm khách hàng cho dialog
+     * Load combo box nhóm khách hàng cho dialog customer
      * ceatedby nttung(18/11/2020)
      * */
     loadDataForComboBox() {
@@ -376,7 +374,7 @@
                             case `date`:
                                 value = fomatDateYYYYMMdd(value);
                                 break;
-                            case `select-one`:
+                            case `radio`:
                                 var fieldid = $(input).attr(`fieldid`);
                                 value = res[fieldid];
                                 break;
@@ -387,7 +385,7 @@
                     }
                 })
             }).fail(function (res) {
-
+                
             })
         } catch (e) {
             console.log(e);

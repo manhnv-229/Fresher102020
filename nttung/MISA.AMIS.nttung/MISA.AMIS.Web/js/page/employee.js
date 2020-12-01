@@ -16,6 +16,9 @@ class EmployeeJS extends BaseJS {
      * Hàm ghi đè cho lớp cha để set url api
      * createdby nttung (10/12/2020)
      * */
+    setApiRouter() {
+        this.apiRoutor = "/api/employees";
+    }
     setDataUrl() {
         this.getDataUrl = "http://api.manhnv.net/api/employees";
     }

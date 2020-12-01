@@ -1,0 +1,67 @@
+﻿.ddlGroupCustomer {
+    height: 40px;
+    width: 189px;
+    border: 1px solid #bbbbbb;
+}
+.colum-right {
+    height: 170px;
+    width: 184px;
+    padding: 0px 8px;
+}
+
+.colum-left {
+    width: calc(100% - 222px);
+}
+
+.colum-left-input {
+    display: flex;
+}
+
+.chkGender {
+    display: flex;
+}
+#ckbGender {
+    width: 20px;
+}
+/*thong tin khach hang phan giua email, sdt, cong ty, ma so thue*/
+.email-phone {
+    display: flex;
+}
+
+.content-mid-email {
+    width: 359px;
+    margin-left: 10px;
+}
+
+.content-mid-phone {
+    position: absolute;
+    right: 0px;
+}
+
+#txtEmail {
+    width: 100%;
+}
+
+#CompanyName {
+    width: 100%;
+}
+/*dialog body bottom thong tin dialog chi*/
+.information-content-bottom {
+    width: 564px;
+}
+
+#txtAddress {
+    margin-left: 10px;
+    width: 100%;
+}
+.dialog .dialog-body .information-content input {
+    padding-left: 16px;
+    height: 33px;
+    padding-bottom: 4px;
+    margin-right: 16px;
+    margin-bottom: 10px;
+}
+
+    .dialog .dialog-body .information-content input:focus {
+        border: 1px solid #019160;
+    }
