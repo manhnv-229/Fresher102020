@@ -8,6 +8,8 @@
 class EmployeeJS extends BaseJS {
     constructor() {
         super();
+
+        this.loadList();
     }
     /**
      *  Lấy url api
@@ -16,5 +18,15 @@ class EmployeeJS extends BaseJS {
     setApiRouter() {
         this.apiRouter = "api/employees";
     }
-    
+
+    loadList() {
+        $.ajax({
+            url: "https://localhost:44341/api/v1/Customers",
+            method: "GET",
+        }).done(function () {
+
+        }).fail(function () {
+
+        })
+    }
 }

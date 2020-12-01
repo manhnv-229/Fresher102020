@@ -5,7 +5,7 @@
 
 class BaseJS {
     constructor() {
-        this.host = 'http://api.manhnv.net/';
+        this.host = 'https://localhost:44341/';
         this.apiRouter = null;
         this.setApiRouter();
         this.loadData();
@@ -205,7 +205,7 @@ class BaseJS {
             //Lấy dữ liệu về
             $('.loading-modal').show();
             $.ajax({
-                url: me.host + me.apiRouter,
+                url: "https://localhost:64676/api/v1/Customers",
                 method: "GET",
                 async: true
             }).done(function (res) {
