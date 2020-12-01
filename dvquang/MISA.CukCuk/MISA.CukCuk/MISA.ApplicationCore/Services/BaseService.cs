@@ -101,9 +101,9 @@ namespace MISA.ApplicationCore.Services
                     if (propertyValue == null)
                     {
                         isValid = false;
-                        mesArrayErro.Add( $"Thông tin {displayName} không được phép để trống!");
+                        mesArrayErro.Add(string.Format(Properties.Resources.Msg_Emty, displayName));
                         _serviceResult.MISACode = Enums.MISACode.NotValid;
-                        _serviceResult.Messenger = "Dữ liệu không hợp lệ.";
+                        _serviceResult.Messenger = Properties.Resources.Msg_isNotValid;
                     }
                 }
                 if (property.IsDefined(typeof(CheckDuplicate), false))
@@ -114,9 +114,9 @@ namespace MISA.ApplicationCore.Services
                     if (entityDuplicate != null)
                     {
                         isValid = false;
-                        mesArrayErro.Add ( $"Thông tin {displayName} đã tồn tạo trong hệ thống!");
+                        mesArrayErro.Add (string.Format(Properties.Resources.Msg_Duplicate, displayName));
                         _serviceResult.MISACode = Enums.MISACode.NotValid;
-                        _serviceResult.Messenger = "Dữ liệu không hợp lệ.";
+                        _serviceResult.Messenger = Properties.Resources.Msg_isNotValid;
                     }
                 }
                 if (property.IsDefined(typeof(MaxLength), false))
@@ -128,9 +128,9 @@ namespace MISA.ApplicationCore.Services
                     if (propertyValue.ToString().Trim().Length > length)
                     {
                         isValid = false;
-                        mesArrayErro.Add($"Thông tin {displayName} vượt quá {length} kí tự cho phép!");
+                        mesArrayErro.Add(string.Format(Properties.Resources.Msg_Maxlength, displayName, length));
                         _serviceResult.MISACode = Enums.MISACode.NotValid;
-                        _serviceResult.Messenger = "Dữ liệu không hợp lệ.";
+                        _serviceResult.Messenger = Properties.Resources.Msg_isNotValid;
                     }
                     
                 }

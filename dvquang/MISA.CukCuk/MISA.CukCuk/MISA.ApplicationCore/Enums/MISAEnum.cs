@@ -9,9 +9,22 @@ namespace MISA.ApplicationCore.Enums
     /// </summary>
     public enum MISACode
     {
+        /// <summary>
+        /// du lieu hop le
+        /// </summary>
         IsValid = 100,
+        /// <summary>
+        /// du lieu chua hop le
+        /// </summary>
         NotValid = 900,
+        /// <summary>
+        /// thanh cong
+        /// </summary>
         Success =  200,
+        /// <summary>
+        /// ngoai le
+        /// </summary>
+        Exception = 500
     }
     /// <summary>
     /// Xác định trạng thái của object

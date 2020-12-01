@@ -13,7 +13,7 @@ using System.Text;
 
 namespace MISA.Infrastructure
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity:BaseEntity
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity>,IDisposable where TEntity:BaseEntity
     {
         #region DECLARE
         IConfiguration _configuration;
@@ -33,12 +33,28 @@ namespace MISA.Infrastructure
         #endregion
         public int Add(TEntity entity)
         {
-            var parameters = MappingDbType(entity);
+            var rowAffects = 0;
+            _dbConnection.Open();
+            using (var transaction = _dbConnection.BeginTransaction())
+            {
+                try
+                {
+                    var parameters = MappingDbType(entity);
 
-            // thực thi câu kệnh thêm mới khách
-            var row = _dbConnection.Execute($"Proc_Insert{_tableName}", parameters, commandType: CommandType.StoredProcedure);
+                    // thực thi câu kệnh thêm mới khách
+                    var row = _dbConnection.Execute($"Proc_Insert{_tableName}", parameters, commandType: CommandType.StoredProcedure);
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+
+                    transaction.Rollback();
+                }
+                
+            }
+
             //trả về số bản ghi thêm mới được
-            return row;
+            return rowAffects;
         }
 
         public int Delete(Guid customerId)
@@ -113,6 +129,14 @@ namespace MISA.Infrastructure
                 return null;
             var entityReturn = _dbConnection.Query<TEntity>(query, commandType: CommandType.Text).FirstOrDefault();
             return entityReturn;
+        }
+
+        public void Dispose()
+        {
+            if (_dbConnection.State == ConnectionState.Open)
+            {
+                _dbConnection.Close();
+            }
         }
     }
 }
