@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Dapper;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
-using MySql.Data.MySqlClient;
-using MISA.ApplicationCore;
-using MISA.ApplicationCore.Interfaces;
 using MISA.ApplicationCore.Entities;
-using MISA.ApplicationCore.Enums;
+using MISA.ApplicationCore.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,13 +14,13 @@ namespace MISA.CukCuk.Web.Controllers
     /// Api Danh mục khách hàng 
     /// createdBy:NTDong(23/11/2020)
     /// </summary>
-    
-    public class CustomersController : BaseEntityController<Customer>
+
+    public class EmployeesController : BaseEntityController<Customer>
     {
-        ICustomerService _customerService;
-        public CustomersController(ICustomerService customerService) : base(customerService)
+        IBaseService<Customer> _baseService;
+        public EmployeesController(IBaseService<Customer> baseService) : base(baseService)
         {
-            _customerService = customerService;
+            _baseService = baseService;
         }
-    }
+    } 
 }

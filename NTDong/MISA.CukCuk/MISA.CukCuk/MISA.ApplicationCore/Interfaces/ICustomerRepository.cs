@@ -5,13 +5,17 @@ using System.Text;
 
 namespace MISA.ApplicationCore.Interfaces
 {
-    public interface ICustomerRepository
+    /// <summary>
+    /// Interface Danh mục khách hàng 
+    /// </summary>
+    /// Created By : NTDong(23/11/2020)
+    public interface ICustomerRepository:IBaseRepository<Customer>
     {
-        IEnumerable<Customer> GetCustomers();
-        Customer GetCustomeById(Guid customerId);
-        int AddCustomer(Customer customer);
-        int UpdateCustomer(Customer customer);
-        int DeleteCustomer(Guid customerId);
+        /// <summary>
+        /// Lay thong tin khasch hang theo ma khach hang 
+        /// </summary>
+        /// <param name="customerCode"></param>
+        /// <returns></returns>
         Customer GetCustomeByCode(string customerCode);
     }
 }

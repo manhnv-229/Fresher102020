@@ -7,6 +7,7 @@ namespace MISA.ApplicationCore.Enums
     /// <summary>
     /// MISACode để xác định của việc validate  
     /// </summary>
+    /// CraetedBy: NTDong(24/11/2020)
     public enum MISACode
     {
         /// <summary>
@@ -22,5 +23,13 @@ namespace MISA.ApplicationCore.Enums
         /// </summary>
         Success = 200
     }
-
+    /// <summary>
+    /// Xac dinh trang thai cua object
+    /// </summary>
+    public enum EntityState
+    {
+        AddNew = 1,
+        Update = 2,
+        Delete = 3,
+    }
 }

@@ -185,9 +185,9 @@
     .button-add:hover{
         background-color: #2FBE8E;
     }
-input.border-red{
+    input.border-red{
     border:1px solid red !important;
-}
+    }
 
 /**
  * Dialog delete

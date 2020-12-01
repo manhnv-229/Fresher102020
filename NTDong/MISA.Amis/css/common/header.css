@@ -8,7 +8,12 @@
 .header-title{
 	display: flex;
 	float: left;
+	font-size: 15px;
 	padding:12px 10px 12px 16px;
+}
+.header-title-text{
+	font-size: 15px;
+	font-weight: bold;
 }
 .header-title-icon{
 	margin-top: 3px;
@@ -31,6 +36,7 @@
 	margin-right: 10px;
 	font-size: 13px;
 	line-height: 20px;
+	font-weight: bold;
 }
 .header-icon-user{
 	margin-right: 10px;

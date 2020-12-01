@@ -42,8 +42,7 @@
             $(this).siblings().removeClass("click-change-column");
             $(this).addClass("click-change-column");
         })
-
-
+        
 
         // Hiển thị thông tin chi tiết khi nhấn đúp chuột chọn 1 bản ghi trên danh sách dữ liệu:
         $('table tbody').on('dblclick', 'tr', function () {
@@ -137,15 +136,18 @@
         $('input[required]').blur(function () {
             // Kiểm tra dữ liệu đã nhập, cảnh báo nếu dữ liệu trống 
             var value = $(this).val();
+            debugger;
             if (!value) {
                 $(this).addClass('border-red');
+            debugger;
+
                 $(this).attr('title', 'Trường này không được phép để trống');
                 $(this).attr("validate", false);
             } else {
                 $(this).removeClass('border-red');
                 $(this).attr("validate", true);
             }
-
+ 
         })
 
         /* --------------------------
@@ -184,6 +186,8 @@
         $('#d-delete').click(function(){
             var tr = $('tr.click-change-column');
             var recordId = $(tr).data('recordId');
+            console.log(recordId);
+            debugger;
             $.ajax({
             url: me.host + me.apiRouter + `/${recordId}`,
             method: "DELETE",
@@ -364,4 +368,5 @@
         $(this).siblings().removeClass("button-change-page");
         $(this).addClass("button-change-page");
     }
+
 }

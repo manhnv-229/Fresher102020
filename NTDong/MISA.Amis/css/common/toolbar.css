@@ -9,6 +9,7 @@
 	padding-left: 16px;
 	padding-right: 16px;
 	outline: none;
+	display: flex;
 }
 .filter-bar .filter-right{
 	position: absolute;
@@ -17,4 +18,22 @@
 .input-search{
 	outline: none;
 	border: none;
+}
+.departments{
+	border: 1px solid #bbb;
+	height: 40px;
+	width: 150px;
+	margin-left: 16px;
+	border-radius: 4px;
+	line-height: 40px;
+	padding-left: 16px;
+}
+.positions{
+	border: 1px solid #bbb;
+	height: 40px;
+	width: 150px;
+	margin-left: 16px;
+	border-radius: 4px;
+	line-height: 40px;
+	padding-left: 16px;
 }
