@@ -81,10 +81,10 @@ namespace MISA.CukCuk.Web.Controllers
         /// <param name="id">Khóa chính của nhân viên</param>
         /// <param name="employee">Thông tin cần cập nhật</param>
         /// <returns>Đối tượng thông báo lỗi</returns>
-        [HttpPut("{id}")]
-        public IActionResult Put(string id, [FromBody] Employee employee)
+        [HttpPut]
+        public IActionResult Put([FromBody] Employee employee)
         {
-            var objResult = _employeeService.Update(id, employee);
+            var objResult = _employeeService.Update(employee.EmployeeId.ToString(), employee);
             if (((ServiceResult)objResult).MisaCode == MISACode.NotValid)
             {
                 return BadRequest(objResult);
@@ -110,6 +110,38 @@ namespace MISA.CukCuk.Web.Controllers
                 return Ok(objResult);
             }
             return NoContent();
+        }
+        /// <summary>
+        /// Lấy danh sách trạng thái làm việc
+        /// CreatedBy: LTHAI(1/12/2020)
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("workstatuses")]
+        public IActionResult GetWorkStatuses()
+        {
+            var workStatuses = _employeeService.GetWorkStatuses();
+            if (workStatuses != null)
+            {
+                return Ok(workStatuses);
+            }
+            return BadRequest();
+        }
+        /// <summary>
+        /// Lấy danh sách trạng thái làm việc
+        /// CreatedBy: LTHAI(1/12/2020)
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("employeecodemax")]
+        public IActionResult GetEmployeeCodeMax()
+        {
+            var employeeCodeMax = _employeeService.GetEmployeeCodeMax();
+            if (employeeCodeMax != null)
+            {
+                return Ok(employeeCodeMax);
+            }
+            return BadRequest();
         }
     }
 }

@@ -55,6 +55,7 @@ function formatMoney(money) {
  * Làm mới thêm trường hợp radio button
  * */
 function RefreshDialog() {
+
     let inputs = $('#d-dialog input,#d-dialog select');
     $.each(inputs, function (index, input) {
         $(input).val('');
@@ -64,7 +65,7 @@ function RefreshDialog() {
              $(input).prop("checked", false);
         }
     })
-    $('#d-dialog').css("display", "none");
+    
 }
 
 
@@ -77,22 +78,26 @@ function RefreshDialog() {
 function ShowPopUp(title, body) {
     $('.pop-up-title').text(title);
     $('.pop-up-inf').text(body);
+    $('.pop-up-modal').css('display', 'block');
     $('.p-pop-up').css('display', 'block');
 }
 
-/**
-* Kiểm tra các trường bắt buộc
-* @param {any} self đại diện cho đối tượng input
-* CreatedBy: LTHAI(15/11/2020)
-* */
-function EventsValidateRequiredWhenInputBlur(self) {
-    let value = $(self).val();
-    if (!value) {
-        $(self).addClass("border-red");
-        $(self).attr('title', `${$(self).attr('name')} không được để trống`)
-        $(self).attr("validated", false);
-    } else {
-        $(self).removeClass("border-red");
-        $(self).attr("validated", true);
-    }
+    /**
+    * Tắt pop-up
+    * CreatedBy: LTHAI(19/11/2020)
+    * */
+function ClosePopUp() {
+    $('.p-pop-up').css('display', 'none');
+    $('.pop-up-modal').css('display', 'none');
 }
+   /**
+    * Hiển thị thông báo
+    * CreatedBy: LTHAI(18/11/2020)
+    * */
+function ShowModal() {
+    $("#staticBackdrop").modal({ backdrop: false });
+    setTimeout(function () {
+        $('#staticBackdrop').modal('hide');
+    }, 1500);
+}
+

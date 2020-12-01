@@ -21,6 +21,9 @@ namespace MISA.ApplicationCore.Entities
         /// <summary>
         /// Tên phòng ban
         /// </summary>
+        [Require]
+        [CheckExist]
+        [DisplayName("Tên phòng ban")]
         public string DepartmentName { get; set; }
         /// <summary>
         /// Mô tả

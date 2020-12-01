@@ -22,34 +22,29 @@ class BaseJS {
      * CreatedBy: LTHAI(15/11/2020)
      * */
     initEvents() {
-        let me = this;
+        let base = this;
         //Hiển thị dialog khi nhấn 1 lần vào từng dòng trong bảng
         $('table tbody').on('click', 'tr', function () {
-            me.EventsWhenClickTr(this);
-        })
-
-        //Thoát khỏi dialog bằng icon hủy hoặc nút hủy
-        $('#d-btn-exit, #d-btn-cancel').click(function () {
-            RefreshDialog();
+            base.EventsWhenClickTr(this);
         })
         //Load lại dữ liệu
         $('#btn-refresh').click(this.EventsWhenClickLoadData.bind(this))
 
         //Kiểm tra giá trị input bắt buộc nhập
         $('input[required]').blur(function () {
-            me.EventsValidateRequiredWhenInputBlur(this);
+            base.EventsValidateRequiredWhenInputBlur(this);
         })
 
         //Kiểm tra định dạng của email
         $("input[type = 'email']").blur(function () {
-            me.EventsValidateEmailWhenInputBlur(this);
+            base.EventsValidateEmailWhenInputBlur(this);
         })
 
         //Hiển thị thông báo 
-        $('#myModal').click(this.ShowModal);
+        $('#myModal').click(ShowModal);
 
         // Đóng popup 
-        $('.pop-up-cancel').click(me.ClosePopUp)
+        $('.pop-up-cancel').click(ClosePopUp)
         
     }
 
@@ -73,7 +68,7 @@ class BaseJS {
                 $.each(data, function (index, obj) {
                     $(".loader").css('display', "none");
                     var tr = $(`<tr></tr>`);
-                    $(tr).data("recordId", obj.CustomerId);
+                    $(tr).data("recordId", obj.EmployeeId);
 
                     // Lấy thông tin dữ liệu sẽ map tương ứng với các cột
                     $.each(columns, function (index, item) {
@@ -138,14 +133,29 @@ class BaseJS {
             $('.icon-remove').find('button').data('recordId', $(self).data('recordId'));
         }
     }
-
+    /**
+     * Kiểm tra trường bắt buộc nhập
+     * @param {any} seft dại diện cho đối tượng input,select
+     * CreatedBy: LTHAI(1/12/2020)
+     */
+    EventsValidateRequiredWhenInputBlur(seft) {
+        var inScope = seft;
+        let value = $(inScope).val();
+        if (!value) {
+            $(inScope).addClass("border-red");
+            $(inScope).attr('title', `${$(self).attr('name')} không được để trống`)
+            $(inScope).attr("validated", false);
+        } else {
+            $(inScope).removeClass("border-red");
+            $(inScope).attr("validated", true);
+        }
+    }
     /**
     * Kiểm tra định dạng email
-    * @param {any} self đại diện cho đối tượng input
+    * @param {any} self đại diện cho đối tượng input,select
     *  CreatedBy: LTHAI(15/11/2020)
     * */
     EventsValidateEmailWhenInputBlur(self) {
-
         var value = $(self).val();
         var regexEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
         if (!regexEmail.test(value)) {
@@ -156,24 +166,5 @@ class BaseJS {
             $(self).removeClass('border-red');
             $(self).attr("validated", true);
         }
-    }
-
-    /**
-    * Hiển thị thông báo
-    * CreatedBy: LTHAI(18/11/2020)
-    * */
-    ShowModal() {
-    $("#staticBackdrop").modal({ backdrop: false });
-        setTimeout(function () {
-            $('#staticBackdrop').modal('hide');
-        }, 1500);
-    }
-        /**
-    * Tắt pop-up
-    * CreatedBy: LTHAI(19/11/2020)
-    * */
-    ClosePopUp() {
-        $('.p-pop-up').css('display', 'none');
-    }
-   
+    }   
 }

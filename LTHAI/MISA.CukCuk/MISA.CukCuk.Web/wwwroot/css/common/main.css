@@ -85,13 +85,16 @@ button:focus {
     overflow: hidden !important;
     text-overflow: ellipsis;
 }
-input.border-red{
+
+input.border-red {
     border: 1px solid red;
 }
+
 .active {
     background-color: #019160 !important;
 }
-.title{
-    font-size: 20px;
+
+.title {
+    font-size: 16px;
     font-weight: bold;
 }

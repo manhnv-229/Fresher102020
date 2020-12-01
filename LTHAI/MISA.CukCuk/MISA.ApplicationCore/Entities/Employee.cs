@@ -122,7 +122,7 @@ namespace MISA.ApplicationCore.Entities
         /// <summary>
         /// Trạng thái
         /// </summary>
-        public int? WorkStatus { get; set; }
+        public int? WorkStatusId { get; set; }
         /// <summary>
         /// Trạng thái làm việc
         /// </summary>

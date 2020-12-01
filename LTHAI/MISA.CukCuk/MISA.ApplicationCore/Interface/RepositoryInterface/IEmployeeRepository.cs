@@ -12,6 +12,16 @@ namespace MISA.ApplicationCore.Interface.RepositoryInterface
     /// </summary>
     public interface IEmployeeRepository : IBaseRepository<Employee>
     {
-        
+        /// <summary>
+        /// Lấy toàn bộ danh sách trạng thái làm việc
+        /// </summary>
+        /// <returns>Danh sách trạng thái làm việc</returns>
+        /// CreatedBy: LTHAI(1/12/2020)
+        public IEnumerable<WorkStatus> GetWorkStatuses();
+        /// <summary>
+        /// Lấy mã nhân viên lớn nhất
+        /// </summary>
+        /// <returns>Nhân viên</returns>
+        public Employee GetEmployeeCodeMax();
     }
 }

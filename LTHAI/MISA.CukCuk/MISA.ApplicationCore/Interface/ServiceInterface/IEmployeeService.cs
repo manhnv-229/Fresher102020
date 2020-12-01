@@ -12,6 +12,16 @@ namespace MISA.ApplicationCore.Interface.ServiceInterface
     /// </summary>
     public interface IEmployeeService : IBaseService<Employee>
     {
-       
+        /// <summary>
+        /// Nghiệp vụ lấy trạng thái làm việc
+        /// </summary>
+        /// <returns>Danh sách trạng thái làm việc</returns>
+        /// CreatedBy: LTHAI(1/12/2020)
+        public IEnumerable<WorkStatus> GetWorkStatuses();
+        /// <summary>
+        /// Lấy mã nhân viên lớn nhất
+        /// </summary>
+        /// <returns>Nhân viên</returns>
+        public Employee GetEmployeeCodeMax();
     }
 }

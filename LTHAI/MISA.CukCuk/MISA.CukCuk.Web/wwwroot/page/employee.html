@@ -196,7 +196,7 @@
     </div>
     <!--html cho dialog-->
     <div class="d-dialog-modal"></div>
-    <div class="d-dialog-detail" title="Thông tin khách hàng" id="d-dialog" tabindex="-1">
+    <div class="d-dialog-detail" title="Thông tin nhân viên" id="d-dialog">
         <div class="d-dialog-content">
             <div class="d-header-dialog">
                 <div class="d-dialog-name">Thông tin nhân viên</div>
@@ -221,7 +221,7 @@
                     <div class="d-same-row">
                         <div class="d-left-row">
                             <div class="first d-label"> Mã nhân viên (<span>*</span>)</div>
-                            <div class="form-input"><input type="text" name="Mã khách hàng" value="" required id="txtEmployeeCode" bind-data="EmployeeCode" /></div>
+                            <div class="form-input"><input type="text" name="Mã khách hàng" required id="txtEmployeeCode" bind-data="EmployeeCode" /></div>
                         </div>
                         <div class="d-fullName">
                             <div class="first d-label"> Họ và tên(<span>*</span>)</div>
@@ -236,36 +236,40 @@
                         <div class="d-gender">
                             <div class="d-label">Giới tính</div>
                             <div class="form-input">
-                                <select bind-data="CustomerGroupId" id="CustomerGroup"></select>
+                                <select bind-data="Gender" id="Gender">
+                                    <option value="0">Nữ</option>
+                                    <option value="1">Nam</option>
+                                    <option value="2">Khác</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                     <div class="d-same-row">
                         <div class="d-left-row">
                             <div class="d-label">Số CMTND/Căn cước<span>*</span></div>
-                            <div class="form-input"><input type="text" name="name" id="txtMemberCardCode" bind-data="MemberCardCode" /></div>
+                            <div class="form-input"><input type="text" id="txtIdentityNumber" required bind-data="IdentityNumber" /></div>
                         </div>
                         <div class="">
                             <div class="d-label">Ngày cấp</div>
                             <div class="form-input">
-                                <div class="form-input"><input type="date" name="name" value="" id="dtDateOfBirth" bind-data="DateOfBirth" /></div>
+                                <div class="form-input"><input type="date" id="txtIdentityDate" bind-data="IdentityDate" /></div>
                             </div>
                         </div>
                     </div>
                     <div class="d-same-row">
                         <div class="d-left-row">
                             <div class="d-label">Nơi cấp</div>
-                            <div class="form-input"><input type="text" name="name" id="txtMemberCardCode" bind-data="MemberCardCode" /></div>
+                            <div class="form-input"><input type="text" id="txtIdentityPlace" bind-data="IdentityPlace" /></div>
                         </div>
                     </div>
                     <div class="d-same-row">
                         <div class="d-left-row">
-                            <div class="d-label">Email</div>
-                            <div class="form-input"><input type="email" name="name" placeholder="example@domain.com" id="txtEmail" bind-data="Email" /></div>
+                            <div class="d-label">Email(<span>*</span>)</div>
+                            <div class="form-input"><input type="email" required placeholder="example@domain.com" id="txtEmail" bind-data="Email" /></div>
                         </div>
                         <div class="">
                             <div class="d-label"> Số điện thoại(<span>*</span>)</div>
-                            <div class="form-input"><input type="tel" name="Số điện thoại" value="" id="txtPhoneNumber" required bind-data="PhoneNumber" /></div>
+                            <div class="form-input"><input type="tel" id="txtPhoneNumber" required bind-data="PhoneNumber" /></div>
                         </div>
                     </div>
                     <div class="d-work-inf">
@@ -276,35 +280,37 @@
                         <div class="d-left-row">
                             <div class="first d-label">Vị trí</div>
                             <div class="form-input">
-                                <select bind-data="CustomerGroupId" id="CustomerGroup"></select>
+                                <select bind-data="PositionId" id="Position"></select>
                             </div>
                         </div>
                         <div class="">
                             <div class="first d-label">Phòng nhân sự</div>
                             <div class="form-input">
-                                <select bind-data="CustomerGroupId" id="CustomerGroup"></select>
+                                <select bind-data="DepartmentId" id="Department"></select>
                             </div>
                         </div>
                     </div>
                     <div class="d-same-row">
                         <div class="d-left-row">
                             <div class="d-label">Mã số thuế cá nhân</div>
-                            <div class="form-input"><input type="text" name="name" value="" id="txtAddress" bind-data="Address" /></div>
+                            <div class="form-input"><input type="text" id="txtPersonalTaxCode" bind-data="PersonalTaxCode" /></div>
                         </div>
                         <div class="">
                             <div class="d-label">Mức lương cơ bản</div>
-                            <div class="form-input"><input type="text" name="name" value="" id="txtAddress" bind-data="Address" /></div>
+                            <div class="form-input"><input type="text" id="txtSalary" bind-data="Salary" /></div>
                         </div>
                     </div>
                     <div class="d-same-row">
                         <div class="d-left-row">
                             <div class="d-label">Ngày gia nhập công ty</div>
-                            <div class="form-input"><input type="date" name="name" value="" id="dtDateOfBirth" bind-data="DateOfBirth" /></div>
+                            <div class="form-input"><input type="date" id="dtDateOfBirth" bind-data="DateOfBirth" placeholder="dd/mm/yyyy" /></div>
                         </div>
                         <div class="d-gender">
                             <div class="d-label">Tình trạng công việc</div>
                             <div class="form-input">
-                                <select bind-data="CustomerGroupId" id="CustomerGroup"></select>
+                                <select bind-data="WorkStatusId" id="WorkStatus">
+                                    <option value=""></option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -330,6 +336,7 @@
         </div>
     </div>
     <!--html cho popup-->
+    
     <div class="p-pop-up">
         <div class="pop-up-modal"></div>
         <div class="pop-up-content">
@@ -339,7 +346,7 @@
                 <div class="pop-up-inf">
                 </div>
             </div>
-            <div class="d-group-button d-same-row">
+            <div class="d-group-button pop-up d-same-row">
                 <button id="d-btn-cancel" class="pop-up-cancel" title="Hủy">Hủy</button>
                 <button id="btn-delete" title="Xóa">Xóa</button>
             </div>

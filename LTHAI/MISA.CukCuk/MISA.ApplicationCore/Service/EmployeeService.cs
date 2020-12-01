@@ -59,9 +59,19 @@ namespace MISA.ApplicationCore.Service
             var rowAffects = base.Delete(employeeId);
             return new ServiceResult() { Data = rowAffects, MisaCode = MISACode.IsValid };
         }
+
+        public IEnumerable<WorkStatus> GetWorkStatuses()
+        {
+            return _employeeRepository.GetWorkStatuses();
+        }
+
+        public Employee GetEmployeeCodeMax()
+        {
+            return _employeeRepository.GetEmployeeCodeMax();
+        }
         #endregion
         #region Hàm riêng cho employee
-       
+
         #endregion
 
     }

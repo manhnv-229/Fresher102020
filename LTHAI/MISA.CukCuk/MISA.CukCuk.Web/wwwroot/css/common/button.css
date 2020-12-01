@@ -2,7 +2,7 @@
 * Css cho button của dialog
 */
 #d-btn-cancel, #d-btn-save, #btn-delete {
-    width: 80px;
+    width: 81px;
     height: 40px;
     margin-left: 16px;
     margin-top: 10px;
@@ -50,5 +50,9 @@ button#btn-delete {
 }
 
     button#btn-delete:hover {
-        background-color: #ff00007a;
+        background-color: #F65454;
     }
+
+.right-content .content .filter-form .icon-right-filter-form .icon-remove button:hover {
+    background: #F65454;
+}

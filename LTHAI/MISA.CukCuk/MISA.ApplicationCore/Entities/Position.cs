@@ -21,6 +21,9 @@ namespace MISA.ApplicationCore.Entities
         /// <summary>
         /// Tên chức vụ
         /// </summary>
+        [Require]
+        [CheckExist]
+        [DisplayName("Tên chức vụ")]
         public string PositionName { get; set; }
         /// <summary>
         /// Mô tả
