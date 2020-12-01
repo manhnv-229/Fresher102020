@@ -85,7 +85,7 @@
             }).done(function (res) {
                 $.each(res, function (index, obj) {
                     var tr = $(`<tr class="table-item"></tr>`);
-                    $(tr).data('recordId', obj.CustomerId);
+                    $(tr).data('recordId', obj.EmployeeId);
 
                     // Lấy thông tin dữ liệu sẽ map với các cột tương ứng
                     $.each(columns, function (index, th) {
@@ -175,7 +175,6 @@
             //validate dữ liệu:
             var inputValidates = $('.input-required, input[type="email"]');
             $.each(inputValidates, function (index, input) {
-                var value = $(input).val();
                 $(input).trigger('blur');
             })
 
@@ -188,7 +187,7 @@
 
             //thu thập dữ liệu được nhập -> build thành object
 
-            var customer = {}
+            var employee = {}
             //lấy tất cả control nhập liệu:
             var elements = $('.dialog-content input[id], select[id]');
             $.each(elements, function (index, input) {
@@ -198,27 +197,27 @@
                 //Check trường hợp input là radio button, lấy ra giới tính
                 if ($(this).attr('type') == "radio") {
                     if (this.checked) {
-                        customer[attr] = value;
+                        employee[attr] = value;
                     }
                 } else {
-                    customer[attr] = value;
+                    employee[attr] = value;
                 }
             })
-            console.log(customer);
+            console.log(employee);
 
             var method = "POST";
             var txt_alert = "Thêm thành công!";
             if (me.FormMode == 'Edit') {
                 method = "PUT";
                 txt_alert = "Sửa thành công!";
-                customer.CustomerId = me.recordId;
+                employee.EmployeeId = me.recordId;
             }
 
             //gọi service tương ứng thực hiện lưu trữ dữ liệu
             $.ajax({
                 url: me.host + me.apiRouter,
                 method: method,
-                data: JSON.stringify(customer),
+                data: JSON.stringify(employee),
                 contentType: 'application/json'
             }).done(function (res) {
                 //Sau khi lưu thành công:
@@ -244,8 +243,7 @@
         var me = this;
         $('table tbody tr').find('td').removeClass('row-selected');
         $(e.currentTarget).find('td').addClass('row-selected');
-        var recordId = $(e.currentTarget).data('recordId');
-        me.recordId = recordId;
+        me.recordId = $(e.currentTarget).data('recordId');
         $('.btn-delete').show();
     }
 
@@ -266,6 +264,7 @@
                 me.loadData();
             }).fail(function (res) {
                 console.log(res);
+                alert('Xóa không thành công!');
             })
         } catch (e) {
             console.log(e);
@@ -300,9 +299,7 @@
             })
 
             //Lấy khóa chính của bản ghi
-            var recordId = $(e.currentTarget).data('recordId');
-
-            me.recordId = recordId;
+            var recordId = me.recordId;
 
             //Gọi service lấy thông tin chi tiết qua id
             $.ajax({

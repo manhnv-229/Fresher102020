@@ -13,7 +13,7 @@ using System.Text;
 
 namespace MISA.Infrastructure
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T:BaseEntity
+    public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
         #region Declare
         IConfiguration _configuration;
@@ -36,7 +36,9 @@ namespace MISA.Infrastructure
         public IEnumerable<T> GetEntities()
         {
             // Khởi tạo các commandText:
-            var entities = _dbConnection.Query<T>($"Proc_Get{_tableName}s", commandType: CommandType.StoredProcedure);
+
+            //var entities = _dbConnection.Query<T>($"Proc_Get{_tableName}s", commandType: CommandType.StoredProcedure);
+            var entities = _dbConnection.Query<T>("select * from Employee", commandType: CommandType.Text);
 
             // Trả về dữ liệu:
             return entities;
@@ -55,15 +57,14 @@ namespace MISA.Infrastructure
         {
             var parameters = MappingDbType<T>(entity);
 
-            //Insert khách hàng dùng Z.Dapper.Plus
-            //customer.CustomerId = Guid.NewGuid();
-            //var data = dbConnection.BulkInsert(customer);
-            //return Ok(data);
-
-            //Insert dùng stored:
-
-            // Thực thi commandText:
-            var rowAffects = _dbConnection.Execute($"Proc_Insert{_tableName}", parameters, commandType: CommandType.StoredProcedure);
+            var rowAffects = 0;
+            _dbConnection.Open();
+            using (var transition = _dbConnection.BeginTransaction())
+            {
+                // Thực thi commandText:
+                rowAffects = _dbConnection.Execute($"Proc_Insert{_tableName}", parameters, commandType: CommandType.StoredProcedure);
+                transition.Commit();
+            } 
             // Trả về kết quả (Số bản ghi thêm mới được)
             return rowAffects;
         }
@@ -72,8 +73,14 @@ namespace MISA.Infrastructure
         {
             var parameters = MappingDbType<T>(entity);
 
-            // Thực thi commandText:
-            var rowAffects = _dbConnection.Execute($"Proc_Update{_tableName}", parameters, commandType: CommandType.StoredProcedure);
+            var rowAffects = 0;
+            _dbConnection.Open();
+            using (var transition = _dbConnection.BeginTransaction())
+            {
+                // Thực thi commandText:
+                rowAffects = _dbConnection.Execute($"Proc_Update{_tableName}", parameters, commandType: CommandType.StoredProcedure);
+                transition.Commit();
+            }
             // Trả về kết quả (Số bản ghi thêm mới được)
             return rowAffects;
         }
@@ -114,7 +121,7 @@ namespace MISA.Infrastructure
             return parameters;
         }
 
-        public T GetEntityByProperty(T entity, PropertyInfo property) 
+        public T GetEntityByProperty(T entity, PropertyInfo property)
         {
             var propertyName = property.Name;
             var propertyValue = property.GetValue(entity);

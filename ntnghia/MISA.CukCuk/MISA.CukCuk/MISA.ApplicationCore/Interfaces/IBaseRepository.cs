@@ -46,6 +46,12 @@ namespace MISA.ApplicationCore.Interfaces
         /// CreatedBy: NTNghia (24/11/2020)
         int Delete(string entityId);
 
+        /// <summary>
+        /// Lấy entity theo property
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="property"></param>
+        /// <returns></returns>
         T GetEntityByProperty(T entity, PropertyInfo property);
     }
 }

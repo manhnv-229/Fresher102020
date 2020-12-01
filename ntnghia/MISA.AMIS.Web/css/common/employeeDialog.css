@@ -1,7 +1,7 @@
 ﻿/* The Modal (background) */
 
 .dialog-modal {
-    display: flex;
+    display: none;
     /* Hidden by default */
     position: fixed;
     /* Stay in place */
@@ -122,6 +122,10 @@
     height: 40px;
     width: 284px;
     margin-right: 0;
+}
+
+.dialog-modal .dialog-content .select-department {
+    margin-top: 10px !important;
 }
 
 .dialog-modal .dialog-content input:focus {

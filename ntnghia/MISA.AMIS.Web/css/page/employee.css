@@ -4,6 +4,7 @@
     left: 221px;
     width: calc(100% - 221px);
     height: calc(100vh - 61px);
+    overflow: hidden;
 }
 
 p, h2 {
@@ -94,6 +95,7 @@ p, h2 {
             margin-right: 10px;
             height: 40px;
             font-size: 13px;
+            margin-top:10px;
         }
 
         .content .content-search .search-department:hover, .search-position:focus {
@@ -146,7 +148,7 @@ p, h2 {
         }
 
 .table-container {
-    height: calc(100% - 170px);
+    height: calc(100% - 190px);
     overflow: auto;
     margin-top: 20px;
 }
