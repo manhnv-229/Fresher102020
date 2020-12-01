@@ -38,9 +38,9 @@ function formatMoney(money) {
         minimumFractionDigits: 0,
     })
     if (money)
-        return formatter.format(money);
+        return parseInt(formatter.format(money));
     else
-        return "";
+        return 0;
 }
 /**
  * Hàm xử lý dữ liệu tiền tệ, không chứa đơn vị tiền tệ

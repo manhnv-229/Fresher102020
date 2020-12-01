@@ -44,3 +44,9 @@
 .type-line, .color-line {
     display:flex;
 }
+
+.remain-quantity {
+    font-weight: bold;
+    margin-left: auto;
+    width: 80%;
+}

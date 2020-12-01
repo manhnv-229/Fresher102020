@@ -73,12 +73,12 @@
             <div class="content-header-right"></div>
         </div>
         <div class="content-filter">
-            <div class="content-filter-left">
+            <!--<div class="content-filter-left">
                 <div class="m-input">
                     <div class="m-icon search-icon"></div>
                     <input class="search-field" id="search-product-field" name="seacrh" type="text" placeholder="Tìm kiếm theo tên sản phẩm" autocomplete="on">
                 </div>
-            </div>
+            </div>-->
             <div class="content-filter-right">
                 <button class="m-button m-button-short btn-clear" id="btn-clear">Nhập lại</button>
                 <button class="m-button" id="btn-create">
@@ -94,48 +94,9 @@
                         <div class="box-title">THÔNG TIN SẢN PHẨM </div>
                         <div class="box-body">
                             <div class="input-line">
-                                <div class="input-box input-box-small">
-                                    <div class="input-title">Tên sản phẩm</div>
-                                    <input class="m-input" type="text" fieldName="ProductName" validate="false" autofocus autocomplete="on" />
-                                </div>
-                                <div class="input-box input-box-small">
-                                    <div class="input-title">Mã sản phẩm</div>
-                                    <input class="m-input" type="text" fieldName="ProductCode" validate="false" autocomplete="on" />
-                                </div>
-                            </div>
-                            <div class="input-line product-type">
-                                <div>Loại:</div>
-                                <div class="product-type-group">
-                                    <div class="type-line">
-                                        <label class="m-radio">
-                                            <input class="radio" type="radio" name="picktime" value="0" fieldName="PickTime" />
-                                            <span class="checkmark"></span>
-                                            <label>Sổ bìa trong - HA560</label>
-                                        </label>
-                                        <label class="m-radio">
-                                            <input class="radio" type="radio" name="picktime" value="1" fieldName="PickTime" />
-                                            <span class="checkmark"></span>
-                                            <label>Tệp ô vuông- NA560-V</label>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="input-line product-color">
-                                <div>Màu sắc:</div>
-                                <div class="product-color-group">
-                                    <div class="color-line">
-                                        <label class="m-radio">
-                                            <input class="radio" type="radio" name="picktime" value="hồng" fieldName="PickTime" />
-                                            <span class="checkmark"></span>
-                                            <label>Hồng</label>
-                                        </label>
-                                        <label class="m-radio">
-                                            <input class="radio" type="radio" name="picktime" value="trắng" fieldName="PickTime" />
-                                            <span class="checkmark"></span>
-                                            <label>Trắng</label>
-                                        </label>
-                                    </div>
-
+                                <div class="input-box input-box-big">
+                                    <div class="input-title">Mã sản phẩm (<span>*</span>)</div>
+                                    <input class="m-input" type="text" fieldName="ProductCode" required validate="false" autocomplete="on" />
                                 </div>
                             </div>
                             <div class="input-line right-line">
@@ -150,46 +111,12 @@
                                         <div>Giỏ hàng</div>
                                     </div>
                                     <div class="product-list">
-                                        <div class="product-detail">
-                                            <div class="product-line">
-                                                <button class="button-delete m-icon round-icon delete-icon" title="Xóa"></button>
-                                                <div class="product-line-left">
-
-                                                    <div class="product-code">DasT-szS</div>
-                                                </div>
-                                                <div class="product-line-right">
-                                                    <div><input class="m-input price" type="text" typeFormat="money" /></div>
-                                                    <div> x </div>
-                                                    <div><input class="m-input quantity" type="number" min="0" value="1" /></div>
-                                                </div>
-                                            </div>
-                                            <div class="cost-line">
-                                                <div class="cost">500000</div>
-                                            </div>
-                                        </div>
-                                        <div class="product-detail">
-                                            <div class="product-line">
-                                                <button class="button-delete m-icon round-icon delete-icon" title="Xóa"></button>
-                                                <div class="product-line-left">
-                                                    
-                                                    <div class="product-code">DasT-szS</div>
-                                                </div>
-                                                <div class="product-line-right">
-                                                    <div><input class="m-input price" type="text" typeFormat="money" /></div>
-                                                    <div> x </div>
-                                                    <div><input class="m-input quantity" type="number" min="0" value="1" /></div>
-                                                </div>
-                                            </div>
-                                            <div class="cost-line">
-                                                <div class="cost">500000</div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="input-line total-line">
-                                <div class="total-quantity">Tổng sản phẩm: <span>2</span></div>
-                                <div class="total-money">1000000</div>
+                                <div class="total-quantity" value="0">Tổng sản phẩm: <span>0</span></div>
+                                <div class="total-money" value="0"></div>
                             </div>
                         </div>
                     </div>
@@ -321,6 +248,38 @@
         </div>
     </div>
 
+    <!-- Popup -->
+    <div class="m-popup" id="popup-delete">
+        <div class="modal"></div>
+        <div class="popup popup-delete">
+            <div class="popup-header">
+                <div class="popup-header-text">Xóa bản ghi A</div>
+                <button class="btn-exit" id="btn-exit-popup"></button>
+            </div>
+            <div class="popup-body">
+                <div class="popup-body-icon warning-icon"></div>
+                <div class="popup-body-text">Bạn có chắc chắn muốn xóa sản phẩm <span id="spanName" fieldName="ProductName"> ... </span> (Mã sản phẩm <span id="spanCode" fieldName="ProductCode">...</span>) không?</div>
+            </div>
+            <div class="popup-footer">
+                <button class="m-btn m-btn-short btn-cancel" id="btn-cancel-popup">Hủy</button>
+                <button class="m-btn m-btn-short btn-delete" id="btn-delete-popup">Xóa</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="m-popup popup-notification">
+        <div class="modal"></div>
+        <div class="popup popup-notification">
+            <div class="popup-header">
+                <div class="popup-header-text">Pop-up thông báo</div>
+                <button class="btn-exit" id="btn-exit-popup"></button>
+            </div>
+            <div class="popup-body"> </div>
+            <div class="popup-footer">
+                <button class="m-button m-btn-short" id="btn-close">Đóng</button>
+            </div>
+        </div>
+    </div>
     <!-- lib -->
     <script src="/js/lib/jquery-3.5.1.min.js"></script>
     <script src="/js/lib/jquery-ui.min.js"></script>
