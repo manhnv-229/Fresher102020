@@ -12,8 +12,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MISA.ApplicationCore;
 using MISA.ApplicationCore.Interface;
-using MISA.ApplicationCore.Repository;
-using MISA.Infrastructure;
+using MISA.ApplicationCore.Interface.BaseInterface;
+using MISA.ApplicationCore.Interface.RepositoryInterface;
+using MISA.ApplicationCore.Interface.ServiceInterface;
+using MISA.ApplicationCore.Service;
+using MISA.Infrastructure.BaseRepository;
+using MISA.Infrastructure.Repository;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace MISA.CukCuk.Web
 {
@@ -30,12 +36,20 @@ namespace MISA.CukCuk.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors();
             #region Dependency injection
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<ICustomerService, CustomerService>();
-            
+            services.AddScoped<IEmployeeService, EmployeeService>();
             #endregion
+            services.AddControllers().AddNewtonsoftJson(
+                options =>
+                {
+                    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });
 
         }
 
@@ -50,7 +64,7 @@ namespace MISA.CukCuk.Web
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

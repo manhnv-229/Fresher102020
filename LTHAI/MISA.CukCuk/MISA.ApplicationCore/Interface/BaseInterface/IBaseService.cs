@@ -1,9 +1,10 @@
 ﻿using MISA.ApplicationCore.Entities;
+using MISA.ApplicationCore.Entities.BaseEntities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MISA.ApplicationCore.Interface
+namespace MISA.ApplicationCore.Interface.BaseInterface
 {
     /// <summary>
     /// Quy định các phương thức xử lý nghiệp vụ 

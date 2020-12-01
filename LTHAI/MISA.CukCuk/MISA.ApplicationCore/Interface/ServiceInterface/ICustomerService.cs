@@ -1,8 +1,9 @@
 ﻿using MISA.ApplicationCore.Entities;
+using MISA.ApplicationCore.Interface.BaseInterface;
 using System;
 using System.Collections.Generic;
 
-namespace MISA.ApplicationCore.Interface
+namespace MISA.ApplicationCore.Interface.ServiceInterface
 {
     /// <summary>
     /// Các phương thức thực hiện nghiệp vụ của khách hàng

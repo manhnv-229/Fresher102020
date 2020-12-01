@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MISA.ApplicationCore.Entities
+namespace MISA.ApplicationCore.Entities.BaseEntities
 {
     /// <summary>
     /// MISACode để xác định trạng thái của việc validate
@@ -24,6 +24,10 @@ namespace MISA.ApplicationCore.Entities
         /// </summary>
         Success = 200
     }
+    /// <summary>
+    /// Các trạng thái khi giao tiếp với cơ sở dữ liệu
+    /// CreatedBy: LTHAI(30/11/2020)
+    /// </summary>
     public enum EntityState
     {
         /// <summary>

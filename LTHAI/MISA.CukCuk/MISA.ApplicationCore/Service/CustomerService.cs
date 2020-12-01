@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using MISA.ApplicationCore.Interface;
 using System;
+using MISA.ApplicationCore.BaseService;
+using MISA.ApplicationCore.Entities.BaseEntities;
+using MISA.ApplicationCore.Interface.RepositoryInterface;
+using MISA.ApplicationCore.Interface.ServiceInterface;
 
-namespace MISA.ApplicationCore.Repository
+namespace MISA.ApplicationCore.Service
 {
     /// <summary>
     /// Thực thi các phương thức của ICustomerServiceRepository
+    /// CreatedBy: LTHAI(25/11/2020)
     /// </summary>
-    public  class CustomerService: BaseService<Customer>, ICustomerService
+    public class CustomerService: BaseService<Customer>, ICustomerService
     {
 
         #region Attribute
@@ -20,7 +25,7 @@ namespace MISA.ApplicationCore.Repository
         {
             this._customerRepository = customerRepository;
         }
-        #region Hàm viết lại cho customer
+        #region Hàm viết lại cho customer từ base
         public override object Add(Customer customer)
         {
             // Validate dữ liệu 

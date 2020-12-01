@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
-namespace MISA.ApplicationCore.Interface
+namespace MISA.ApplicationCore.Interface.BaseInterface
 {
+    /// <summary>
+    /// Quy định các phương thức thực hiện truy vấn database chung
+    /// CreatedBy: LTHAI(30/11/2020)
+    /// </summary>
     public interface IBaseRepository<TEntity>
     {
         /// <summary>

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using MISA.ApplicationCore.Entities.BaseEntities;
 
 namespace MISA.ApplicationCore.Entities
 {
@@ -13,12 +14,6 @@ namespace MISA.ApplicationCore.Entities
     /// </summary>
     public class Customer: BaseEntity
     {
-        #region Declare
-        #endregion
-
-        #region Constructor
-        #endregion
-
         #region Property
         /// <summary>
         /// Khóa chính
@@ -94,9 +89,5 @@ namespace MISA.ApplicationCore.Entities
         public int? IsStopFollow { get; set; }
         
         #endregion
-
-        #region Method
-        #endregion
-
     }
 }

@@ -1,7 +1,8 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
-using MISA.ApplicationCore.Entities;
+using MISA.ApplicationCore.Entities.BaseEntities;
 using MISA.ApplicationCore.Interface;
+using MISA.ApplicationCore.Interface.BaseInterface;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 
-namespace MISA.Infrastructure
+namespace MISA.Infrastructure.BaseRepository
 {
     public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
     {
@@ -43,19 +44,22 @@ namespace MISA.Infrastructure
 
         public int Delete(string entityId)
         {
-            var rowAffects = dbConnection.Execute($"Proc_Delete{_tableName}ById", new { CustomerId = entityId }, commandType: CommandType.StoredProcedure);
+            string query = $"DELETE FROM {_tableName} WHERE {_tableName}.{_tableName}Id LIKE '{entityId}' LIMIT 1;";
+            var rowAffects = dbConnection.Execute(query, commandType: CommandType.Text);
             return rowAffects;
         }
 
         public TEntity GetByCode(string entityCode)
         {
-            var result = dbConnection.Query<TEntity>($"Proc_Get{_tableName}ByCode", new { CustomerCode = entityCode }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            string query = $"SELECT * FROM {_tableName} e WHERE e.{_tableName}Code = '{entityCode}' LIMIT 1;";
+            var result = dbConnection.Query<TEntity>(query, commandType: CommandType.Text).FirstOrDefault();
             return result;
         }
 
         public TEntity GetById(string entityId)
         {
-            var entity = dbConnection.Query<TEntity>($"Proc_Get{_tableName}ById", new { CustomerId = entityId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            string query = $"SELECT * FROM {_tableName} e WHERE e.{_tableName}Id = '{entityId}' LIMIT 1;";
+            var entity = dbConnection.Query<TEntity>(query, commandType: CommandType.Text).FirstOrDefault();
             return entity;
         }
 
@@ -65,7 +69,7 @@ namespace MISA.Infrastructure
             string query = $"SELECT * FROM {_tableName} WHERE {propertyInfo.Name} = '{propertyInfo.GetValue(entity)}'";
             if (entity.entityState == EntityState.Update)
             {
-                var keyValue = entity.GetType().GetProperty($"CustomerId").GetValue(entity);
+                var keyValue = entity.GetType().GetProperty($"{propertyInfo.Name}").GetValue(entity);
                 query = $"SELECT * FROM {_tableName} WHERE {propertyInfo.Name} = '{propertyInfo.GetValue(entity)}' AND {_tableName}Id != '{keyValue}'";
             }
 
