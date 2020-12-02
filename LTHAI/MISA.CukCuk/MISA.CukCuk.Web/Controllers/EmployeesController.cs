@@ -32,7 +32,7 @@ namespace MISA.CukCuk.Web.Controllers
         public IActionResult Get()
         {
             var employee = _employeeService.Gets();
-            if (employee != null)
+            if (employee.Count() > 0)
             {
                 return Ok(employee);
             }
@@ -95,7 +95,6 @@ namespace MISA.CukCuk.Web.Controllers
             }
             return NoContent();
         }
-
         /// <summary>
         /// Xóa nhân viên
         /// </summary>
@@ -117,22 +116,6 @@ namespace MISA.CukCuk.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("workstatuses")]
-        public IActionResult GetWorkStatuses()
-        {
-            var workStatuses = _employeeService.GetWorkStatuses();
-            if (workStatuses != null)
-            {
-                return Ok(workStatuses);
-            }
-            return BadRequest();
-        }
-        /// <summary>
-        /// Lấy danh sách trạng thái làm việc
-        /// CreatedBy: LTHAI(1/12/2020)
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
         [Route("employeecodemax")]
         public IActionResult GetEmployeeCodeMax()
         {
@@ -140,6 +123,54 @@ namespace MISA.CukCuk.Web.Controllers
             if (employeeCodeMax != null)
             {
                 return Ok(employeeCodeMax);
+            }
+            return BadRequest();
+        }
+        /// <summary>
+        /// Lấy danh sách nhân viên theo chức vụ
+        /// CreatedBy: LTHAI(1/12/2020)
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("filterPosition")]
+        public IActionResult GetEmployeesByPositionId([FromQuery]string positionId)
+        {
+            var employees = _employeeService.GetEmployeesByPositionId(positionId);
+            if (employees.Count() > 0)
+            {
+                return Ok(employees);
+            }
+            return BadRequest();
+        }
+        /// <summary>
+        /// Lấy danh sách nhân viên theo phòng ban
+        /// CreatedBy: LTHAI(2/12/2020)
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("filterDepartment")]
+        public IActionResult GetEmployeesByDepartmentId([FromQuery] string departmentId)
+        {
+            var employees = _employeeService.GetEmployeesByDepartMentId(departmentId);
+            if (employees.Count() > 0)
+            {
+                return Ok(employees);
+            }
+            return BadRequest();
+        }
+        /// <summary>
+        /// Lấy danh sách nhân viên theo giá trị nhập
+        /// CreatedBy: LTHAI(2/12/2020)
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("filter")]
+        public IActionResult GetEmployeesByDynamicValue([FromQuery] string value)
+        {
+            var employees = _employeeService.GetEmployeesByDynamicValue(value);
+            if (employees.Count() > 0)
+            {
+                return Ok(employees);
             }
             return BadRequest();
         }

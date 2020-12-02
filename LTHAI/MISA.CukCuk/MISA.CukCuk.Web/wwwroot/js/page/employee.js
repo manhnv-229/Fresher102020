@@ -5,23 +5,28 @@
         autoOpen: false,
         fluid: true,
         minWidth: 860,
-        minHeight:832,
+        minHeight:863,
         resizable: true,
         position: ({ my: "center", at: "center", of: window }),
         modal: true,
     });
+    datePickerDetail = $('.datepicker').datepicker({
+        dateFormat: 'dd-mm-yy'
+    });
+    datePickerDetail.datepicker('enable');
 })
-/**
+/**================================================
  * Class quản lý sự kiện cho trang employee
  * CreatedBy: LTHAI(12/11/2020)
  * */
 class EmployeeJS extends BaseJS {
     constructor() {
-
         super();
         this.initEventsOfEmployee();
+        this.initValueDepartmentToolBar();
+        this.initValuePositionToolBar();
     }
-    /**
+    /**===================================================================
      * Quy định đường dẫn được sử dụng để lấy dữ liệu ở trang quản lý nhân viên
      * CreatedBy: LTHAI(12/11/2020)
      * */
@@ -38,10 +43,10 @@ class EmployeeJS extends BaseJS {
         $('#btn-add-employee').click(this.EventsWhenClickAddEmployee.bind(thisInit))
 
         //Thoát khỏi dialog bằng icon hủy hoặc nút hủy
-        $('#d-btn-exit, #d-btn-cancel').click(function () {
-            dialogDetail.dialog('close');
+        $('body').on('click', '.ui-dialog-titlebar-close, #d-btn-cancel', function () {
             RefreshDialog();
-        })
+            dialogDetail.dialog('close');
+        }) 
 
         //Hiển thị dialog khi nhấn 2 lần vào từng dòng trong bảng
         $('table tbody').on('dblclick', 'tr', function () {
@@ -52,6 +57,19 @@ class EmployeeJS extends BaseJS {
 
         //Thêm mới dữ liệu khi ấn nút lưu trong dialog
         $('#d-btn-save').click(this.SaveDataWhenClickButtonSave.bind(thisInit))
+
+         // Thay đổi text của nút khi chọn 
+        $('#data-position').on('click', 'a[filter="Position"]', function(){
+            thisInit.LoadDataByPosition(this);
+        })
+        $('#data-department').on('click', 'a[filter="Department"]', function () {
+            thisInit.LoadDataByDepartment(this);
+        }) 
+        $('#filterDynamic').on('keydown', function (e) {
+            if (e.which == 13) {
+                thisInit.FindDataByValueEnter(this);
+            }
+        });
     }
     /**=====================================================
     * Sự kiện khi click vào nút xóa thông tin của nhân viên
@@ -71,7 +89,6 @@ class EmployeeJS extends BaseJS {
         $('#btn-delete').data('recordId', recordId);
         //Hiển thị thông báo xác nhận xóa
         ShowPopUp(title, body);
-      
     }
 
     /**=====================================================
@@ -80,12 +97,12 @@ class EmployeeJS extends BaseJS {
     * */
     EventsWhenClickAddEmployee() {
         this.FormMode = "Add";
+        datePickerDetail.datepicker();
         dialogDetail.dialog('open');
         // Lấy dữ liệu của phòng ban và chức vụ và xây dựng select
         this.InitEmployeeCode();
         this.GetDepartments();
         this.GetPositions();
-        this.GetWorkStatuses();
     }
 
     /**=====================================================
@@ -93,7 +110,7 @@ class EmployeeJS extends BaseJS {
     * @param {any} url đường dẫn được truyền
     * CreatedBy: LTHAI(1/12/2020)
     */
-    GetDepartments(url) {
+    GetDepartments() {
         let select = $("select#Department");
         select.empty();
         try {
@@ -118,42 +135,17 @@ class EmployeeJS extends BaseJS {
     * @param {any} url đường dẫn được truyền
     * CreatedBy: LTHAI(1/12/2020)
     */
-    GetPositions(url) {
-    let select = $("select#Position");
-    select.empty();
-    try {
-        $.ajax({
-            url: this.host + "/api/v1/positions",
-            method: "GET",
-            async: false
-        }).done(function (res) {
-            $.each(res, function (index, obj) {
-                select.append(`<option value ='${obj.PositionId}'>${obj.PositionName}</option>`)
-            })
-        }).fail(function (res) {
-            debugger
-        })
-    } catch (e) {
-
-    }
-    }
-
-    /**=====================================================
-    * Hàm lấy dữ liệu để truyền vào combobox chức vụ
-    * @param {any} url đường dẫn được truyền
-    * CreatedBy: LTHAI(1/12/2020)
-    */
-    GetWorkStatuses(url) {
-        let select = $("select#WorkStatus");
+    GetPositions() {
+        let select = $("select#Position");
         select.empty();
         try {
             $.ajax({
-                url: this.host + "/api/v1/employees/workstatuses",
+                url: this.host + "/api/v1/positions",
                 method: "GET",
                 async: false
             }).done(function (res) {
                 $.each(res, function (index, obj) {
-                    select.append(`<option value ='${obj.WorkStatusId}'>${obj.WorkStatusName}</option>`)
+                    select.append(`<option value ='${obj.PositionId}'>${obj.PositionName}</option>`)
                 })
             }).fail(function (res) {
                 debugger
@@ -174,7 +166,7 @@ class EmployeeJS extends BaseJS {
                 method: "GET",
                 async: false
             }).done(function (res) {
-                $('#txtEmployeeCode').val(`${res.EmployeeCode}1`);
+                $('#txtEmployeeCode').val(InitCode(res.EmployeeCode));
             }).fail(function (res) {
                 debugger
             })
@@ -195,10 +187,8 @@ class EmployeeJS extends BaseJS {
         this.recordId = $(self).data('recordId');
 
         // Lấy dữ liệu của phòng ban và chức vụ và xây dựng select
-        this.InitEmployeeCode();
         this.GetDepartments();
         this.GetPositions();
-        this.GetWorkStatuses();
 
         // Gọi service lấy đối tượng khách hàng theo CustomerId
         let url = this.host + this.apiRouter + `/${this.recordId}`;
@@ -208,23 +198,14 @@ class EmployeeJS extends BaseJS {
         let inputs = $('input[bind-data], select[bind-data]');
         $.each(inputs, function (index, input) {
             let property = $(input).attr("bind-data");
-
-            if ($(input).attr('type') == "radio") {
-                if (res[property] == 1) {
-                    $('#Male').prop("checked", true);
-                } else if (res[property] == 0) {
-                    $('#feMale').prop("checked", true);
-                }
-            } else if ($(input).attr('type') == "date") {
-                let yyyyMMdd = formatDateOfBirthyyyyMMdd(res[property]);
-                $(input).val(yyyyMMdd);
+            if ($(input).attr('dbType') == "date") {
+                $(input).datepicker('setDate', new Date(res[property]));;
             }
             else {
                 $(input).val(res[property]);
             }
 
         })
-
         // Hiển thị dialog
         dialogDetail.dialog('open');
     }
@@ -279,7 +260,14 @@ class EmployeeJS extends BaseJS {
         $.each(inputs, function (index, input) {
             // Lấy nội dung của thộc tính bind-data của từng thẻ input
             let property = $(input).attr("bind-data");
-             entity[property] = $(input).val();
+            if ($(input).attr("dbType") == "date") {
+                entity[property] = $(input).datepicker('getDate');
+            } else if ($(input).attr("bind-data") == "Salary") {
+                entity[property] = ConvertMoneyToInt($(input).val());
+            }
+            else {
+                entity[property] = $(input).val();
+            }
         })
         // Kiểm tra xem nút lưu dùng để thêm hay cập nhật và tùy chỉnh phương thức của Resful 
         let method = "POST";
@@ -313,19 +301,13 @@ class EmployeeJS extends BaseJS {
                 thisHere.loadData();
 
             }).fail(function (res) {
-                // Sau khi load dữ liệu thành công
-                // + Hiện thị thông báo thêm thành công
-                if (thisHere.FormMode == "Edit") {
-                    $('.modal-body').text("Bạn đã cập nhật không thành công !");
-                } else {
-                    $('.modal-body').text("Bạn đã thêm khách hàng không thành công !");
-                }
-
+                // + Hiện thị thông báo không thành công
+                $('.modal-body').text(res.responseJSON.Data.Msg);
+                $('.modal-content').css('background-color', '#FF4747');
                 $('#myModal').trigger('click');
-
-                // + Đóng dialog
-                RefreshDialog();
-                dialogDetail.dialog('close');
+                let input = $(`input[bind-data = ${res.responseJSON.Data.fieldName}]`);
+                $(input).focus();
+               
                
             })
         } catch (e) {
@@ -365,6 +347,91 @@ class EmployeeJS extends BaseJS {
             })
         } catch (e) {
 
+        }
+    }
+    /**
+     *  Khởi tạo giá trị cho các combobox phòng ban trên toolbar
+     *  CreatedBy: LTHAI(2/12/2020)
+     * */
+
+    initValueDepartmentToolBar() {
+        let buttonSelect = $('#data-department')
+        buttonSelect.empty();
+        try {
+            $.ajax({
+                url: this.host + "/api/v1/departments",
+                method: "GET",
+                async: false
+            }).done(function (res) {
+                $.each(res, function (index, obj) {
+                    buttonSelect.append(`<a class="dropdown-item" filter="Department" data="${obj.DepartmentId}">${obj.DepartmentName}</a>`)
+                })
+            }).fail(function (res) {
+                debugger
+            })
+        } catch (e) {
+
+        }
+
+    } 
+     /**
+     *  Khởi tạo giá trị cho các combobox chức vụ trên toolbar
+     *  CreatedBy: LTHAI(2/12/2020)
+     * */
+    initValuePositionToolBar() {
+        let buttonSelect = $('#data-position')
+        buttonSelect.empty();
+        try {
+            $.ajax({
+                url: this.host + "/api/v1/positions",
+                method: "GET",
+                async: false
+            }).done(function (res) {
+                $.each(res, function (index, obj) {
+                    buttonSelect.append(`<a class="dropdown-item" filter="Position" data="${obj.PositionId}">${obj.PositionName}</a>`)
+                })
+            }).fail(function (res) {
+                debugger
+            })
+        } catch (e) {
+
+        }
+
+    }
+    /**
+     * Lọc theo chức vụ
+     * @param {any} seft đối tượng button
+     * CreatedBy: LTHAI(2/12/2020)
+     */
+    LoadDataByPosition(self) {
+        $('#button-search-position').text($(self).text());
+        $('#button-search-position').append('<i class="fas fa-caret-down"></i>');
+        let value = $(self).attr("data");
+        this.apiRouter = `/api/v1/employees/filterPosition?positionId=${value}`;
+        this.loadData();
+        this.setApiRouter();
+    }
+    /**
+     * Lọc theo phòng ban
+     * @param {any} self đối tượng button
+     * CreatedBy: LTHAI(2/12/2020)
+     */
+    LoadDataByDepartment(self) {
+        $('#button-search-department').text($(self).text());
+        $('#button-search-department').append('<i class="fas fa-caret-down"></i>');
+        let value = $(self).attr("data");
+        this.apiRouter = `/api/v1/employees/filterDepartment?departmentId=${value}`;
+        this.loadData();
+        this.setApiRouter();
+    }
+    FindDataByValueEnter(self) {
+        let value = $(self).val();
+        if (value == '') {
+            this.loadData();
+        } else {
+            this.apiRouter = `/api/v1/employees/filter?Value=${value}`;
+            this.loadData();
+            this.setApiRouter();
         }
     }
 }

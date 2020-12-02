@@ -66,7 +66,7 @@ namespace MISA.ApplicationCore.BaseService
                     {
                         var displayName = property.GetCustomAttributes(typeof(DisplayName), true)[0];
                         var propertyName = (displayName as DisplayName).Name;
-                        serviceResult.Data = new { fieldName = displayName, Msg = $"Trường {propertyName} không được để trống" };
+                        serviceResult.Data = new { fieldName = property.Name, Msg = $"Trường {propertyName} không được để trống" };
                         serviceResult.Message = $"Trường {propertyName} không được để trống";
                         serviceResult.MisaCode = MISACode.NotValid;
                         return serviceResult;
@@ -80,7 +80,7 @@ namespace MISA.ApplicationCore.BaseService
                     {
                         var displayName = property.GetCustomAttributes(typeof(DisplayName), true)[0];
                         var propertyName = (displayName as DisplayName).Name;
-                        serviceResult.Data = new { fieldName = propertyName, Msg = $"Trường {propertyName} đã tồn tại" };
+                        serviceResult.Data = new { fieldName = property.Name, Msg = $"Trường {propertyName} đã tồn tại" };
                         serviceResult.Message = $"Trường {propertyName} đã tồn tại";
                         serviceResult.MisaCode = MISACode.NotValid;
                         return serviceResult;
@@ -96,7 +96,7 @@ namespace MISA.ApplicationCore.BaseService
                     {
                         var displayName = property.GetCustomAttributes(typeof(DisplayName), true)[0];
                         var propertyName = (displayName as DisplayName).Name;
-                        serviceResult.Data = new { fieldName = propertyName, msg };
+                        serviceResult.Data = new { fieldName = property.Name, msg };
                         serviceResult.Message = msg;
                         serviceResult.MisaCode = MISACode.NotValid;
                         return serviceResult;
@@ -111,7 +111,7 @@ namespace MISA.ApplicationCore.BaseService
                     {
                         var displayName = property.GetCustomAttributes(typeof(DisplayName), true)[0];
                         var propertyName = (displayName as DisplayName).Name;
-                        serviceResult.Data = new { fieldName = propertyName, Msg = $"Trường {propertyName} đã tồn tại" };
+                        serviceResult.Data = new { fieldName = property.Name, Msg = $"Trường {propertyName} đã tồn tại" };
                         serviceResult.Message = $"Trường {propertyName} đã  không đúng định dạng của Email";
                         serviceResult.MisaCode = MISACode.NotValid;
                         return serviceResult;

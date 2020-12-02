@@ -75,6 +75,7 @@
 
 .d-general-inf, .d-work-inf h3 {
     text-transform: uppercase;
+    margin-bottom: 4px;
 }
 
 .d-main-content-dialog {
@@ -215,4 +216,8 @@
 
 div#d-dialog {
     overflow: hidden;
+}
+
+.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-draggable.ui-resizable {
+    top: 36.5px;
 }

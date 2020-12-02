@@ -18,24 +18,7 @@ function formatDateOfBirth(date) {
         return `${day}/${month}/${year}`;
     }
 }
-/**
- * Định dạng năm-tháng-ngày
- * @param {any} date Dữ liệu có dạng datetime
- * CreatedBy: LTHAI (19/11/2020)
- */
-function formatDateOfBirthyyyyMMdd(date) {
-    date = new Date(date);
-    if (Number.isNaN(date.getTime())) {
-        return "";
-    } else {
-        let day = date.getDate()
-        day = day < 10 ? ("0" + day) : day;
-        let month = date.getMonth() + 1;
-        month = month < 10 ? ("0" + month) : month;
-        let year = date.getFullYear();
-        return `${year}-${month}-${day}`;
-    }
-}
+
 /**
  * Định dạng tiền (dạng 2500 => 2.500)
  * @param {any} money dữ liệu số tiền
@@ -61,9 +44,6 @@ function RefreshDialog() {
         $(input).val('');
         $(input).removeAttr('validated');
         $(input).removeClass("border-red");
-        if ($(input).attr('type') == "radio") {
-             $(input).prop("checked", false);
-        }
     })
     
 }
@@ -100,4 +80,32 @@ function ShowModal() {
         $('#staticBackdrop').modal('hide');
     }, 1500);
 }
+/**
+ * Tự tạo ra một mã mới
+ * @param {any} code mã có giá trị lớn nhất trong dữ liệu
+ * CreatedBy: LTHAI(2/12/2020)
+ */
+function InitCode(code) {
+    let codes = code.split("");
+    let length = code.length;
+    let lastChar = codes[`${length - 1}`];
+    let lastnumber = parseInt(lastChar);
+    if (Number.isInteger(lastnumber)) {
+        codes[`${length - 1}`] = lastnumber + 1;
+    }
+    else {
+        codes[`${length - 1}`] = lastChar + 1;
+    }
+    code = codes.join('');
+    return code
+}
+/**
+* chuyển đổi định dạng tiền sang int
+* @param {any} money số tiền 
+*  CreatedBy: LTHAI(2/12/2020)
+* */
 
+function ConvertMoneyToInt(money) {
+    let int = money.replaceAll('.', '')
+    return int;
+}

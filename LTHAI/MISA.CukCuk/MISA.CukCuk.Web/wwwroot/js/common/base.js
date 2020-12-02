@@ -19,7 +19,7 @@ class BaseJS {
     }
     /**
      * Khởi tạo các sự kiện được thực hiện trong trang
-     * CreatedBy: LTHAI(15/11/2020)
+     * CreatedBy: LTHAI(1/12/2020)
      * */
     initEvents() {
         let base = this;
@@ -34,7 +34,10 @@ class BaseJS {
         $('input[required]').blur(function () {
             base.EventsValidateRequiredWhenInputBlur(this);
         })
-
+         //Chuyển đổi kiểu
+        $('input[Money]').blur(function () {
+            base.ConverToMoney(this);
+        })
         //Kiểm tra định dạng của email
         $("input[type = 'email']").blur(function () {
             base.EventsValidateEmailWhenInputBlur(this);
@@ -47,7 +50,6 @@ class BaseJS {
         $('.pop-up-cancel').click(ClosePopUp)
         
     }
-
     /**
      * Thực hiện load dữ liệu
      * CreatedBy: LTHAI(12/11/2020)
@@ -67,7 +69,7 @@ class BaseJS {
             }).done(function (data) {
                 $.each(data, function (index, obj) {
                     $(".loader").css('display', "none");
-                    var tr = $(`<tr></tr>`);
+                    let tr = $(`<tr></tr>`);
                     $(tr).data("recordId", obj.EmployeeId);
 
                     // Lấy thông tin dữ liệu sẽ map tương ứng với các cột
@@ -98,11 +100,18 @@ class BaseJS {
 
                         // Thêm nội dung vào thẻ tr trong tbody
                         td.find('span').append(value);
+                        td.attr('title', value);
                         $(tr).append(td);
                     })
                     $("#render-data").append(tr);
                 })
             }).fail(function (res) {
+                $(".loader").css('display', "none");
+                //Thông báo không thành công
+                $('.modal-body').text("Không tìm thấy dữ liệu!");
+                $('#myModal').trigger('click');
+                // Đóng pop-up
+                $('.pop-up-cancel').trigger('click');
 
             })
         } catch (e) {
@@ -112,7 +121,7 @@ class BaseJS {
     }
     /**
     * Load lại dữ liệu
-    * CreatedBy: LTHAI(15/11/2020)
+    * CreatedBy: LTHAI(1/12/2020)
     * */
     EventsWhenClickLoadData() {
         this.loadData();
@@ -120,7 +129,7 @@ class BaseJS {
     /**
     * Hiển thị dialog khi nhấn 1 lần vào từng dòng trong bảng
     * @param {any} self đại diện cho đối tượng tr
-    *  CreatedBy: LTHAI(15/11/2020)
+    *  CreatedBy: LTHAI(1/12/2020)
     * */
     EventsWhenClickTr(self){
         if ($(self).hasClass('active')) {
@@ -139,11 +148,11 @@ class BaseJS {
      * CreatedBy: LTHAI(1/12/2020)
      */
     EventsValidateRequiredWhenInputBlur(seft) {
-        var inScope = seft;
+        let inScope = seft;
         let value = $(inScope).val();
         if (!value) {
             $(inScope).addClass("border-red");
-            $(inScope).attr('title', `${$(self).attr('name')} không được để trống`)
+            $(inScope).attr('title', `${$(inScope).attr('name')} không được để trống`)
             $(inScope).attr("validated", false);
         } else {
             $(inScope).removeClass("border-red");
@@ -153,11 +162,11 @@ class BaseJS {
     /**
     * Kiểm tra định dạng email
     * @param {any} self đại diện cho đối tượng input,select
-    *  CreatedBy: LTHAI(15/11/2020)
+    *  CreatedBy: LTHAI(1/12/2020)
     * */
     EventsValidateEmailWhenInputBlur(self) {
-        var value = $(self).val();
-        var regexEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+        let value = $(self).val();
+        let regexEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
         if (!regexEmail.test(value)) {
             $(self).addClass('border-red');
             $(self).attr('title', 'Email không đúng định dạng.');
@@ -166,5 +175,20 @@ class BaseJS {
             $(self).removeClass('border-red');
             $(self).attr("validated", true);
         }
-    }   
+    }  
+    /**
+     * Định dạng số tiền khi sự kiện blur
+     * @param {any} seft đại diện cho đối tượng input
+     * CreatedBy: LTHAI(2/12/2020)
+     */
+    ConverToMoney(seft) {
+        let value = $(seft).val();
+        let valueInt = parseInt(value);
+        if (Number.isInteger(valueInt)) {
+            $(seft).val(formatMoney(valueInt));
+        } else if (value != '') {
+            $(seft).focus();
+            alert("Số tiền không đúng định dạng !")
+        }
+    }
 }

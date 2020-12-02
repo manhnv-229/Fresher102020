@@ -60,14 +60,24 @@ namespace MISA.ApplicationCore.Service
             return new ServiceResult() { Data = rowAffects, MisaCode = MISACode.IsValid };
         }
 
-        public IEnumerable<WorkStatus> GetWorkStatuses()
-        {
-            return _employeeRepository.GetWorkStatuses();
-        }
-
         public Employee GetEmployeeCodeMax()
         {
             return _employeeRepository.GetEmployeeCodeMax();
+        }
+
+        public IEnumerable<Employee> GetEmployeesByDepartMentId(string departmentId)
+        {
+            return _employeeRepository.GetEmployeesByDepartMentId(departmentId);
+        }
+
+        public IEnumerable<Employee> GetEmployeesByPositionId(string positionId)
+        {
+            return _employeeRepository.GetEmployeesByPositionId(positionId);
+        }
+
+        public IEnumerable<Employee> GetEmployeesByDynamicValue(string value)
+        {
+            return _employeeRepository.GetEmployeesByDynamicValue(value);
         }
         #endregion
         #region Hàm riêng cho employee

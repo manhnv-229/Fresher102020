@@ -126,7 +126,27 @@ namespace MISA.ApplicationCore.Entities
         /// <summary>
         /// Trạng thái làm việc
         /// </summary>
-        public string WorkStatusName { get; set; }
+        public string WorkStatusName {
+            get
+            {
+                switch (Gender)
+                {
+                    case 0:
+                        {
+                            return "Đang làm việc";
+                        }
+                    case 1:
+                        {
+                            return "Đã nghỉ việc";
+                        }
+                    default:
+                        {
+                            return "Khác";
+                        }
+
+                }
+            }
+        }
         /// <summary>
         /// Tên phòng ban
         /// </summary>

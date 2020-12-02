@@ -166,101 +166,76 @@
                     border-radius: 5px;
                     margin-left: 15px;
                     justify-content: space-between;
-                    display: flex;
-                }
-
-                    .right-content .content .filter-form .left-filter-form .select-office .text-select {
-                        padding-left: 12px;
-                    }
-
-                    .right-content .content .filter-form .left-filter-form .select-office .icon-select-office button {
-                        border: none;
-                        background-color: #ffffff;
-                        font-size: 16px;
-                        margin-right: 12px;
-                        height: 0;
-                    }
-
-                .right-content .content .filter-form .left-filter-form .select-state {
-                    height: 40px;
-                    width: 200px;
-                    border: 1px solid #bbbbbb;
-                    border-radius: 5px;
-                    line-height: 40px;
-                    margin-left: 12px;
-                    display: flex;
-                    justify-content: space-between;
-                }
-
-                    .right-content .content .filter-form .left-filter-form .select-state .text-select {
-                        padding: 0 12px 0 12px;
-                    }
-
-                    .right-content .content .filter-form .left-filter-form .select-state .icon-select-state button {
-                        margin-left: 14px;
-                        border: none;
-                        background-color: #ffffff;
-                        font-size: 16px;
-                        margin-right: 12px;
-                        height: 0;
-                    }
-
-            .right-content .content .filter-form .icon-right-filter-form {
-                display: flex;
-                width: 40px;
-                height: 40px;
-                background-color: antiquewhite;
-                margin-right: 30px;
-            }
-
-                .right-content .content .filter-form .icon-right-filter-form .icon-remove button {
-                    width: 40px;
-                    height: 40px;
-                    font-size: 16px;
-                    border-radius: 5px;
-                    margin-right: 8px;
-                    border: none;
-                    background-color: red;
-                    color: white;
-                    position: absolute;
-                    left: 1230px;
-                    display: none;
-                }
-
-                .right-content .content .filter-form .icon-right-filter-form .icon-refresh button {
                     background-color: #ffffff;
-                    width: 40px;
-                    height: 40px;
-                    font-size: 16px;
-                    border: 1px solid #bbbbbb;
-                    border-radius: 5px;
+                    display: flex;
+                    padding-left: 16px;
                 }
 
-                    .right-content .content .filter-form .icon-right-filter-form .icon-refresh button:hover {
-                        background-color: #bbbbbb;
+                    .right-content .content .filter-form .left-filter-form .select-office:hover {
+                        border: 1px solid #019160;
                     }
-        /**
+
+button.dropdown-toggle.select-office i {
+    font-size: 16px;
+    margin: 12px 12px;
+}
+
+.right-content .content .filter-form .icon-right-filter-form {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    background-color: antiquewhite;
+    margin-right: 30px;
+}
+
+    .right-content .content .filter-form .icon-right-filter-form .icon-remove button {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+        border-radius: 5px;
+        margin-right: 8px;
+        border: none;
+        background-color: red;
+        color: white;
+        position: absolute;
+        left: 1784px;
+        display: none;
+    }
+
+    .right-content .content .filter-form .icon-right-filter-form .icon-refresh button {
+        background-color: #ffffff;
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+        border: 1px solid #bbbbbb;
+        border-radius: 5px;
+    }
+
+        .right-content .content .filter-form .icon-right-filter-form .icon-refresh button:hover {
+            background-color: #bbbbbb;
+        }
+/**
 Css cho data-table
 */
-        .right-content .content .data-table {
-            height: 700px;
-            overflow: scroll;
-            margin-right: 30px;
-            margin-left: 16px;
-            margin-top: 16px;
-            overflow-x: auto;
+.right-content .content .data-table {
+    height: 700px;
+    overflow: scroll;
+    margin-right: 30px;
+    margin-left: 16px;
+    margin-top: 16px;
+    overflow-x: auto;
+}
+
+    .right-content .content .data-table .table {
+        width: 1300px;
+        border-spacing: 0px;
+        table-layout: fixed;
+        border-collapse: separate;
+    }
+
+        .right-content .content .data-table .table tr {
+            height: 50px;
         }
-
-            .right-content .content .data-table .table {
-                width: 1300px;
-                border-spacing: 0px;
-                table-layout: fixed;
-                border-collapse: separate;
-            }
-
-                .right-content .content .data-table .table tr {
-                    height: 50px;
-                }
 
 tbody tr:nth-child(2n+1) {
     background-color: #fafafa;
