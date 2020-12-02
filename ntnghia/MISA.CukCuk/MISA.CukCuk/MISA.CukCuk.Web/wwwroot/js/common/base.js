@@ -32,19 +32,21 @@
         });
 
         //Sự kiện lọc nhân viên theo phòng ban
-        $(".search-department").change(function () {
-            alert("Handler for .change() called.");
+        $(".search-department").change(function (e) {
+            var id = $('option:selected', this).attr('value');
+            if (id != "all")
+                me.onDepartmentChange(e, id);
         });
 
         //Sự kiện lọc nhân viên theo vị trí
-        $(".search-position").change(function () {
-            alert("Handler for .change() called.");
+        $(".search-position").change(function (e) {
+            var id = $('option:selected', this).attr('value');
+            if (id != "all")
+                me.onPositionChange(e, id);
         });
 
         //Xóa khách hàng được chọn khi nhấn nút Delete:
-        $('.btn-delete').click(function () {
-            $('.modal-delete').css("display", "flex");
-        });
+        $('.btn-delete').click(me.showDeleteDialog.bind(me));
 
         $('#delete').click(me.btnDeleteOnClick.bind(me));
 
@@ -65,6 +67,9 @@
         $('table tbody').on('dblclick', 'tr', function (e) {
             me.trDbClick(e);
         })
+
+        //format tiền khi nhập lương
+        $('input#Salary').blur(me.formatMoney)
 
         //validate bắt buộc nhập
         $('.input-required').blur(me.validateInput)
@@ -93,7 +98,7 @@
             //load dữ liệu cho các combo box
             var selectDepartment = $('select.search-department');
             selectDepartment.empty();
-            selectDepartment.append(`<option selected="selected">Tất cả phòng ban</option>`);
+            selectDepartment.append(`<option value="all" selected="selected">Tất cả phòng ban</option>`);
 
             me.listDepartment = [];
             //lấy dữ liệu phòng ban
@@ -115,7 +120,7 @@
             //lấy dữ liệu chức vụ
             var selectPosition = $('select.search-position');
             selectPosition.empty();
-            selectPosition.append(`<option selected="selected">Tất cả vị trí</option>`);
+            selectPosition.append(`<option value="all" selected="selected">Tất cả vị trí</option>`);
             me.listPosition = [];
             $.ajax({
                 url: me.host + "/api/v1/Positions",
@@ -132,7 +137,7 @@
 
             })
 
-             //Lấy thông tin các cột dữ liệu
+            //Lấy thông tin các cột dữ liệu
             $('table tbody').empty();
             var columns = $('table thead th');
 
@@ -148,13 +153,14 @@
                     me.listEmployee.push(obj);
                     var tr = $(`<tr class="table-item"></tr>`);
                     $(tr).data('recordId', obj.EmployeeId);
+                    $(tr).data('recordCode', obj.EmployeeCode);
 
                     // Lấy thông tin dữ liệu sẽ map với các cột tương ứng
                     $.each(columns, function (index, th) {
                         var td = $(`<td></td>`);
                         var fieldName = $(th).attr('fieldName');
                         var value = obj[fieldName];
-                        
+
                         var formatType = $(th).attr('formatType');
                         switch (formatType) {
                             case "Gender":
@@ -212,6 +218,8 @@
         })
 
         $('#loadingDialog').show();
+        $('#Gender').val("male");
+        $('#WorkStatus').val("in");
 
         try {
             var me = this;
@@ -263,7 +271,6 @@
         }
     }
 
-
     /**
     * Hàm xử lí khi nhấn button lưu
     * CreatedBy: NTNghia (18/11/2020)
@@ -304,7 +311,7 @@
                         employee[attr] = 1;
                     else if (value == "Nữ")
                         employee[attr] = 0;
-                    else 
+                    else
                         employee[attr] = 2;
                 } else if ($(this).attr('id') == "WorkStatus") {
                     if (value == "Đang làm việc")
@@ -374,7 +381,22 @@
         $('table tbody tr').find('td').removeClass('row-selected');
         $(e.currentTarget).find('td').addClass('row-selected');
         me.recordId = $(e.currentTarget).data('recordId');
+        me.recordCode = $(e.currentTarget).data('recordCode');
         $('.btn-delete').show();
+    }
+
+    /**
+    * Hàm xử lí khi nhấn xóa nhân viên
+    * CreatedBy: NTNghia (19/11/2020)
+    * */
+    showDeleteDialog() {
+        var me = this;
+        if (me.recordCode) {
+            $('.modal-delete').css("display", "flex");
+            $('#alertInfo').text(`Bạn có chắc chắn muốn xóa nhân viên ${me.recordCode}?`);
+        }
+        else
+            alert('Vui lòng chọn nhân viên cần xóa!');
     }
 
     /**
@@ -382,28 +404,25 @@
     * CreatedBy: NTNghia (19/11/2020)
     * */
     btnDeleteOnClick() {
-        if (me.recordId) {
-            var me = this;
-            try {
-                //Gọi service lấy thông tin chi tiết qua id
-                $.ajax({
-                    url: me.host + me.apiRouter + `/` + me.recordId,
-                    method: "DELETE"
-                }).done(function (res) {
-                    alert('Xóa thành công!');
-                    $('.modal-delete').css("display", "none");
-                    me.loadData();
-                }).fail(function (res) {
-                    $('.modal-delete').css("display", "none");
-                    alert('Xóa không thành công!');
-                })
-            } catch (e) {
-                console.log(e);
-            }
-            
+
+        var me = this;
+        try {
+            //Gọi service lấy thông tin chi tiết qua id
+            $.ajax({
+                url: me.host + me.apiRouter + `/` + me.recordId,
+                method: "DELETE"
+            }).done(function (res) {
+                alert('Xóa thành công!');
+                $('.modal-delete').css("display", "none");
+                me.loadData();
+            }).fail(function (res) {
+                $('.modal-delete').css("display", "none");
+                alert('Xóa không thành công!');
+            })
+        } catch (e) {
+            console.log(e);
         }
-        else
-            alert("Vui lòng chọn nhân viên cần xóa!");
+
     }
 
     /**
@@ -556,6 +575,17 @@
     }
 
     /**
+    * Hàm format định dạng tiền
+    * CreatedBy: NTNghia (18/11/2020)
+     * */
+    formatMoney() {
+        var format = parseInt(event.target.value.replace(/,/g, ""))
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        $(this).val(format);
+    }
+
+    /**
      * Hàm load dữ liệu cho các combo box
      * CreatedBy: NTNghia (02/12/2020)
      * */
@@ -640,66 +670,65 @@
         });
 
         $.each(filtered, function (index, obj) {
-                var tr = $(`<tr class="table-item"></tr>`);
-                $(tr).data('recordId', obj.EmployeeId);
+            var tr = $(`<tr class="table-item"></tr>`);
+            $(tr).data('recordId', obj.EmployeeId);
 
-                // Lấy thông tin dữ liệu sẽ map với các cột tương ứng
-                $.each(columns, function (index, th) {
-                    var td = $(`<td></td>`);
-                    var fieldName = $(th).attr('fieldName');
-                    var value = obj[fieldName];
-                    var formatType = $(th).attr('formatType');
-                    switch (formatType) {
-                        case "Gender":
-                            value = formatGender(value);
-                            break;
-                        case "Date":
-                            value = formatDate(value);
-                            break;
-                        case "Money":
-                            value = formatMoney(value);
-                            td.addClass("table-item-salary");
-                            break;
-                        case "Position":
-                            value = formatPosition(value, me.listPosition);
-                            break;
-                        case "Department":
-                            value = formatDepartment(value, me.listDepartment);
-                            break;
-                        case "WorkStatus":
-                            value = formatWorkStatus(value);
-                            break;
-                        case "Address":
-                            td.addClass("table-item-address");
-                            break;
-                        case "Email":
-                            td.addClass("table-item-email");
-                            break;
-                        default:
-                            break;
-                    }
-                    td.append(value);
-                    $(tr).append(td);
-                })
-
-                $('table tbody').append(tr);
+            // Lấy thông tin dữ liệu sẽ map với các cột tương ứng
+            $.each(columns, function (index, th) {
+                var td = $(`<td></td>`);
+                var fieldName = $(th).attr('fieldName');
+                var value = obj[fieldName];
+                var formatType = $(th).attr('formatType');
+                switch (formatType) {
+                    case "Gender":
+                        value = formatGender(value);
+                        break;
+                    case "Date":
+                        value = formatDate(value);
+                        break;
+                    case "Money":
+                        value = formatMoney(value);
+                        td.addClass("table-item-salary");
+                        break;
+                    case "Position":
+                        value = formatPosition(value, me.listPosition);
+                        break;
+                    case "Department":
+                        value = formatDepartment(value, me.listDepartment);
+                        break;
+                    case "WorkStatus":
+                        value = formatWorkStatus(value);
+                        break;
+                    case "Address":
+                        td.addClass("table-item-address");
+                        break;
+                    case "Email":
+                        td.addClass("table-item-email");
+                        break;
+                    default:
+                        break;
+                }
+                td.append(value);
+                $(tr).append(td);
             })
+
+            $('table tbody').append(tr);
+        })
     }
 
     /**
-     * Hàm bắt sự kiện khi lọc nhân viên theo vị trí
+     * Hàm bắt sự kiện khi lọc nhân viên theo vị trí 
      * CreatedBy: NTNghia (02/12/2020)
      * */
-    onPositionChange(e) {
+    onPositionChange(e, id) {
         var me = this;
         $('table tbody').empty();
         //Lấy thông tin các cột dữ liệu
         var columns = $('table thead th');
 
         var allEntity = me.listEmployee;
-
         var filtered = allEntity.filter(function (element) {
-            return element.PositionId == $(this).val();
+            return element.PositionId == id;
         });
 
         $.each(filtered, function (index, obj) {
@@ -750,19 +779,18 @@
     }
 
     /**
-     * Hàm bắt sự kiện khi nhập vào ô tìm kiếm
+     * Hàm bắt sự kiện khi lọc nhân viên theo phòng ban
      * CreatedBy: NTNghia (01/12/2020)
      * */
-    onDepartmentChange(e) {
+    onDepartmentChange(e, id) {
         var me = this;
         $('table tbody').empty();
         //Lấy thông tin các cột dữ liệu
         var columns = $('table thead th');
 
         var allEntity = me.listEmployee;
-
         var filtered = allEntity.filter(function (element) {
-            return element.DepartmentId == $(this).val();
+            return element.DepartmentId == id;
         });
 
         $.each(filtered, function (index, obj) {

@@ -14,6 +14,7 @@
     /* Black w/ opacity */
     justify-content: center;
     align-items: center;
+    overflow: auto;
 }
 
     /* dialog Content */
@@ -149,8 +150,6 @@
         display: flex;
     }
 
-
-
 /* style cho tất cả input */
 .dialog-modal .dialog-content input, select {
     border-radius: 4px;
@@ -184,6 +183,13 @@
     justify-content: center;
     margin: 5px 5px;
 }
+
+    .dialog-modal .dialog-content .dialog-body .input-form .vnd {
+        font-family: 'GoogleSans-Italic';
+        position: absolute;
+        bottom: 21px;
+        right: 10px;
+    }
 
 /* Phần dưới của dialog */
 .dialog-modal .dialog-content .dialog-footer {

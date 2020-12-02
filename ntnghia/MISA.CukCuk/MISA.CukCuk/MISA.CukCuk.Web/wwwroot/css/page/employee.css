@@ -4,7 +4,6 @@
     left: 221px;
     width: calc(100% - 221px);
     height: calc(100vh - 61px);
-    overflow: hidden;
 }
 
 p, h2 {
@@ -249,6 +248,7 @@ p, h2 {
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                margin-right: 10px;
             }
 
             .content .content-footer .content-footer-page .page-number {
@@ -268,24 +268,12 @@ p, h2 {
                 }
 
             .content .content-footer .content-footer-page .arrow-icon {
-                border: 1px solid #bbb;
-                border-radius: 10px;
-                display: flex;
-                width: 28px;
-                height: 28px;
-                padding: 0;
-                align-items: center;
-                justify-content: center;
+                background-size:contain;
+                width: 15px;
+                height: 15px;
                 cursor: pointer;
+                margin: 0 5px;
             }
-
-            .content .content-footer .content-footer-page .arrow-icon:hover {
-                background: #e5e5e5;
-            }
-
-                .content .content-footer .content-footer-page .arrow-icon:focus {
-                    background: #019160;
-                }
 
 .page-container {
     display: flex;

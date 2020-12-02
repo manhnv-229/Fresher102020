@@ -84,15 +84,9 @@
             </div>
 
             <select class="search-department" fieldname="Department">
-                <option selected="selected">
-                    Tất cả phòng ban
-                </option>
             </select>
 
             <select class="search-position" fieldname="Position">
-                <option selected="selected">
-                    Tất cả vị trí
-                </option>
             </select>
 
             <div class="btn-icon">
@@ -129,14 +123,17 @@
         <div class="content-footer">
             <p>Hiển thị 1-10/1000 nhân viên</p>
             <div class="content-footer-page">
+                <img class="arrow-icon" src="../content/icon/double-left-arrows-symbol.svg" />
+                <img class="arrow-icon" src="../content/icon/left-arrow.svg" />
                 <div class="page-number-container">
                     <div class="page-number">1</div>
                     <div class="page-number">2</div>
                     <div class="page-number">3</div>
                     <div class="page-number">4</div>
                 </div>
+                <img class="arrow-icon" src="../content/icon/right-arrow.svg" />
+                <img class="arrow-icon" src="../content/icon/fast-forward-double-right-arrows-symbol.svg" />
             </div>
-
             <p class="page-btn">10 nhân viên/trang</p>
 
         </div>
@@ -183,13 +180,13 @@
                         <div class="input-form">
                             <label class="input-label" for="Gender">Giới tính</label>
                             <select class="dialog-select" id="Gender">
-                                <option selected="selected">
+                                <option value="male">
                                     Nam
                                 </option>
-                                <option selected="selected">
+                                <option value="female">
                                     Nữ
                                 </option>
-                                <option>
+                                <option value="bede">
                                     Khác
                                 </option>
                             </select>
@@ -244,9 +241,10 @@
                             <label class="input-label" for="PersonalTaxCode">Mã số thuế cá nhân</label>
                             <input id="PersonalTaxCode" />
                         </div>
-                        <div class="input-form">
+                        <div class="input-form" style="position:relative">
                             <label class="input-label" for="Salary">Mức lương cơ bản</label>
-                            <input id="Salary" />
+                            <input id="Salary" style="text-align: right; padding-right:50px; width:215px;"/>
+                            <p class="vnd">(VND)</p>
                         </div>
                     </div>
 
@@ -258,10 +256,10 @@
                         <div class="input-form">
                             <label class="input-label" for="DateOfBirth">Tình trạng công việc</label>
                             <select class="select-workstatus" id="WorkStatus">
-                                <option selected="selected">
+                                <option value="in" selected="selected">
                                     Đang làm việc
                                 </option>
-                                <option selected="selected">
+                                <option value="out">
                                     Đã nghỉ việc
                                 </option>
                             </select>
@@ -290,7 +288,7 @@
                 <div class="alert-icon">
                     <i class="fas fa-exclamation-triangle"></i>
                 </div>
-                <p style="font-size:15px">Bạn có chắc chắn muốn xóa nhân viên này?</p>
+                <p id="alertInfo" style="font-size:15px">Bạn có chắc chắn muốn xóa nhân viên này?</p>
             </div>
             
 
