@@ -8,7 +8,7 @@ using System.Text;
 
 namespace MISA.ApplicationCore
 {
-    public class CustomerService:BaseService<Customer> , ICustomerService
+    public class CustomerService : BaseService<Employee>, ICustomerService
     {
         ICustomerRepository _customerRepository;
         #region Constructor
@@ -17,36 +17,23 @@ namespace MISA.ApplicationCore
             _customerRepository = customerRepository;
         }
 
-        //public override int Add(Customer entity)
-        //{
-        //    // Validate thong tin 
-        //    var isValid = true;
-        //    // 1. Check trung ma khach hang
-        //    var customerDuplicate = _customerRepository.GetCustomeByCode(entity.CustomerCode);
-        //    if (customerDuplicate != null)
-        //    {
-        //        isValid = false;
-        //    }
-        //    //Logic validate 
-        //    if (isValid == true)
-        //    {
-        //        var res = base.Add(entity);
-        //        return res;
-        //    }
-        //    else
-        //    {
-        //        return 0;
-        //    }
-        //}
-        public IEnumerable<Customer> GetCustomerPaging(int limit, int offset)
+        protected override bool ValidateCustom(Employee entity)
+        {
+            return true;
+        }
+
+        public IEnumerable<Employee> GetCustomerPaging(int limit, int offset)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Customer> GetCustomersByGroup(Guid groupId)
+        public IEnumerable<Employee> GetCustomersByGroup(Guid departmentId)
         {
             throw new NotImplementedException();
         }
+        // Sửa thông tin khách hàng:
+
+        // Xóa khách hàng:
         #endregion
     }
 }

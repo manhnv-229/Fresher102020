@@ -1,6 +1,6 @@
 ﻿class BaseJS {
     constructor() {
-        this.host = "http://api.manhnv.net";
+        this.host = "https://localhost:44308";
         this.apiRouter = null;
         this.setApiRouter();
         this.initEvents();
@@ -113,7 +113,7 @@
                             $(this).val(value);
                         }
                         // binding dữ liệu kiểu date 
-                        if ($(this).attr('type') == "date") {
+                        if ($(this).attr('class') == "datepicker") {
                                 var date = formatDateForm(value);
                                 $(this).val(date);
                         }
@@ -136,11 +136,8 @@
         $('input[required]').blur(function () {
             // Kiểm tra dữ liệu đã nhập, cảnh báo nếu dữ liệu trống 
             var value = $(this).val();
-            debugger;
             if (!value) {
                 $(this).addClass('border-red');
-            debugger;
-
                 $(this).attr('title', 'Trường này không được phép để trống');
                 $(this).attr("validate", false);
             } else {
@@ -186,8 +183,6 @@
         $('#d-delete').click(function(){
             var tr = $('tr.click-change-column');
             var recordId = $(tr).data('recordId');
-            console.log(recordId);
-            debugger;
             $.ajax({
             url: me.host + me.apiRouter + `/${recordId}`,
             method: "DELETE",
@@ -225,7 +220,7 @@
             }).done(function (res) {
                 $.each(res, function (index, obj) {
                     var tr = $(`<tr></tr>`);
-                    $(tr).data('recordId', obj.CustomerId);
+                    $(tr).data('recordId', obj.EmployeeId);
                     // Lấy thông tin dữ liệu sẽ map tương ứng với các cột:
                     $.each(columns, function (index, th) {
                         var td = $(`<td><div><span></span></div></td>`);
@@ -267,24 +262,41 @@
         try {
             var me = this;
             me.FormMode = 'Add';
-            $('#btnDelete-dialog').hide();
-
             // Hiển thị dialog thông tin chi tiết:
             dialogDetail.dialog('open');
             $('input').val(null);
             // load dữ liệu cho các combobox:
-            var select = $('#cbxCustomerGroup');
+            var select = $('#cbxDepartment');
             select.empty();
             // lấy dữ liệu nhóm khách hàng:
             $('.loading').show();
             $.ajax({
-                url: me.host + "/api/customergroups",
+                url: me.host + "/api/v1/departments",
                 method: "GET"
             }).done(function (res) {
                 if (res) {
                     $.each(res, function (index, obj) {
-                        var option = $(`<option value="${obj.CustomerGroupId}">${obj.CustomerGroupName}</option>`);
+                        var option = $(`<option value="${obj.DepartmentId}">${obj.DepartmentName}</option>`);
                         select.append(option);
+                    })
+                }
+                // $('.loading').hide();
+            }).fail(function (res) {
+                // $('.loading').hide();
+            })
+            // load dữ liệu cho các combobox:
+            var selects = $('#cbxPosition');
+            selects.empty();
+            // lấy dữ liệu nhóm khách hàng:
+            $('.loading').show();
+            $.ajax({
+                url: me.host + "/api/v1/positions",
+                method: "GET"
+            }).done(function (res) {
+                if (res) {
+                    $.each(res, function (index, obj) {
+                        var option = $(`<option value="${obj.PositionId}">${obj.PositionName}</option>`);
+                        selects.append(option);
                     })
                 }
                 // $('.loading').hide();
@@ -336,13 +348,17 @@
 
             })
             var method = "POST";
+            var urls = me.host+me.apiRouter;
             if (me.FormMode == 'Edit') {
                 method = "PUT";
-                entity.CustomerId = me.recordId;
+                var recordIds = me.recordId;
+                entity.EmployeeId = me.recordId;
+                urls=me.host + me.apiRouter + `/${recordIds}`;
+                console.log(entity);
             }
             // Gọi service tương ứng thực hiện lưu dữ liệu:
             $.ajax({
-                url: me.host + me.apiRouter,
+                url: urls,
                 method: method,
                 data: JSON.stringify(entity),
                 contentType: 'application/json'

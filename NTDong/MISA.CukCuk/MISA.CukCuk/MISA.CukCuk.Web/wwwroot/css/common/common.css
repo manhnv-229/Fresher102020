@@ -1,0 +1,152 @@
+.text-align-right{
+	text-align: right;
+}
+.text-align-center{
+	text-align: center;
+}
+.row-selected{
+	background-color: #00ff99 !important;
+}
+.alert{
+	background:green;
+	height: 40px;
+	min-width: 150px;
+	position: absolute;
+	bottom: 10px;
+	left: 20px;
+	border-radius: 4px;
+	overflow: hidden;
+	line-height: 40px;
+	text-align:center;
+}
+/*.alert .msg{
+	padding: 0 20px;
+	font-size: 13px;
+	color:white;
+	text-align: center;
+}
+.alert.show{
+	animation: show_slide 1s ease forwards;
+}
+@keyframes show_slide{
+	0%{
+		transform: translateY(100%);
+	}
+	40%{
+		transform: translateY(-10%);
+	}
+	80%{
+		transform: translateY(0%);
+	}
+	100%{
+		transform: translateY(-10px);
+	}
+}
+.alert.hide{
+	animation: hide_slide 1s ease forwards;
+}
+@keyframes hide_slide{
+	0%{
+		transform: translateY(-10px);
+	}
+	40%{
+		transform: translateY(0%);
+	}
+	80%{
+		transform: translateY(-20%);
+	}
+	100%{
+		transform: translateY(150%);
+	}
+}
+.alert .close-btn{
+	position: absolute;
+	right: 0px;
+	top: 50%;	
+	transform: translateY(-50%);
+	cursor: pointer;
+	padding:20px 18px;
+}
+#alert{
+	display: none;
+}*/
+.hidden{
+	visibility: hidden;
+}
+.alert-box{
+	position: absolute;
+	background-color:#02a602;
+	font-size: 16px;
+	color:#ffffff;
+	min-width: 180px;
+	height: 50px;	
+	z-index:10;
+	left: 20px;
+	bottom: 10px;
+	text-align: center;
+	line-height: 50px;
+	border-radius: 4px;
+}
+.alert-box .close-alert{
+	font-size:20px;
+	position: absolute;
+	right:10px;
+	top:15px;
+	cursor: pointer;
+	z-index: 11;
+}
+.alert-box.show::before{
+	content: '';
+	position: absolute;
+	left:0;
+	bottom:0;
+	height: 4px;
+	background-color:#0ed40e;
+	width: 100%;
+	box-sizing: border-box;
+	z-index: 11;
+	animation: hideMeter 3s linear;
+}
+@keyframes hideMeter {
+	0%{
+		width: 100%;
+	}
+	100%{
+		width: 0%;
+	}
+}
+.alert-box.show{
+	animation: showAlert 1s ease forwards;
+}
+@keyframes showAlert{
+	0%{
+		transform: translateY(100%);
+	}
+	40%{
+		transform: translateY(-15%);
+	}
+	80%{
+	   transform: translateY(0%);	
+	}
+	100%{
+	   transform: translateY(-10px);		
+	}
+}
+
+.alert-box.hide{
+	animation: hideAlert 1s ease forwards;
+}
+@keyframes hideAlert{
+	0%{
+		transform: translateY(-10px);		
+	}
+	40%{
+		transform: translateY(0%);	
+	}
+	80%{
+		transform: translateY(-15%);
+	}
+	100%{
+	   transform: translateY(150%);		
+	}
+}

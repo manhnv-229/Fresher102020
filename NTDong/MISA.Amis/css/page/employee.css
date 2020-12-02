@@ -136,6 +136,46 @@
     	background-color: #BBBBBB;
 
     }
+    .select-Gender{
+        height: 40px;
+        width: 241px;
+        margin-left: 5px;
+        border-radius: 4px;
+        border: 1px solid #bbbbbb;
+        padding-left: 16px;
+    }
+    .select-Gender:focus{
+        border: 1px solid green;
+    }
+    .select-Department{
+        height: 40px;
+        width: 241px;
+        margin-left: 5px;
+        border-radius: 4px;
+        border: 1px solid #bbbbbb;
+        padding-left: 16px;
+    }
+    .select-Department:focus{
+        border: 1px solid green;
+    }
+    .select-Position{
+        height: 40px;
+        width: 241px;
+        border-radius: 4px;
+        border: 1px solid #bbbbbb;
+        padding-left: 16px;
+    }
+    .select-Position:focus{
+        border: 1px solid #019160;
+    }
+    /*.money-box{
+        height: 40px;
+        width: 250px;
+        border: 1px solid red;
+    }
+    .money-box p:focus{
+        border: 1px solid green;
+    }*/
 /*.image-employee{
 	width: 150px;
 	height: 150px;

@@ -13,9 +13,9 @@ namespace MISA.ApplicationCore.Interfaces
         /// <returns></returns>
         /// CreatedBy: NTDong(24/11/2020)
         IEnumerable<TEntity> GetEntities();
-        TEntity GetEntityByID(Guid entityID);
+        TEntity GetEntityById(Guid entityId);
         ServiceResult Add(TEntity entity);
         ServiceResult Update(TEntity entity);
-        ServiceResult Delete(Guid entityID);
+        ServiceResult Delete(Guid entityId);
     }
 }

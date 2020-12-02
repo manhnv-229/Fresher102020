@@ -1,0 +1,57 @@
+.header{
+	float: left;
+	height: 48px;
+	width: calc(100% - 221px);
+	border-bottom: 1px solid #bbbbbb;
+
+}
+.header-title{
+	display: flex;
+	float: left;
+	font-size: 15px;
+	padding:12px 10px 12px 16px;
+}
+.header-title-text{
+	font-size: 15px;
+	font-weight: bold;
+}
+.header-title-icon{
+	margin-top: 3px;
+	margin-left: 10px;
+	width: 10px;
+	height: 10px;
+	background-image: url('../../content/img/arrow.png') ;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+.header-icon{
+	cursor: pointer;
+	display: flex;
+	float: right;
+	padding-top: 12px;
+	padding-bottom: 12px;
+	margin-right: 16px;
+}
+.header-text{
+	margin-right: 10px;
+	font-size: 13px;
+	line-height: 20px;
+	font-weight: bold;
+}
+.header-icon-user{
+	margin-right: 10px;
+	width: 24px;
+	height: 24px;
+	background-image:url('../../content/img/avatar.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+.header-icon-threedots{
+	margin-top:5px;
+	margin-right: 16px;
+	width: 10px;
+	height: 10px;
+	background-image:url('../../content/img/threedots.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+}

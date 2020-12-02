@@ -9,13 +9,13 @@ namespace MISA.ApplicationCore.Interfaces
     /// Interface Danh mục khách hàng 
     /// </summary>
     /// Created By : NTDong(23/11/2020)
-    public interface ICustomerRepository:IBaseRepository<Customer>
+    public interface ICustomerRepository:IBaseRepository<Employee>
     {
         /// <summary>
         /// Lay thong tin khasch hang theo ma khach hang 
         /// </summary>
         /// <param name="customerCode"></param>
         /// <returns></returns>
-        Customer GetCustomeByCode(string customerCode);
+        Employee GetCustomeByCode(string customerCode);
     }
 }

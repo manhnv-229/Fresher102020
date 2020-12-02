@@ -13,7 +13,7 @@ using System.Text;
 
 namespace MISA.Infarstructure
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity> , IDisposable where TEntity : BaseEntity
     {
         #region DECLARE
         IConfiguration _configuration;
@@ -31,17 +31,30 @@ namespace MISA.Infarstructure
         }
         public int Add(TEntity entity)
         {
-            // Khởi tạo kết nối với Db:
-            var parameters = MappingDbType(entity);
-            // Thực thi commandText:
-            var rowAffects = _dbConnection.Execute($"Proc_Insert{_tableName}", parameters, commandType: CommandType.StoredProcedure);
+            var rowAffects = 0;
+            _dbConnection.Open();
+            using (var transaction = _dbConnection.BeginTransaction())
+            {
+                // Khởi tạo kết nối với Db:
+                var parameters = MappingDbType(entity);
+                // Thực thi commandText:
+                rowAffects = _dbConnection.Execute($"Proc_Insert{_tableName}", parameters, commandType: CommandType.StoredProcedure);
+                transaction.Commit();
+            }
             // Trả về kết quả (số bản ghi thêm mới được)
             return rowAffects;
         }
 
         public int Delete(Guid employeeId)
         {
-            throw new NotImplementedException();
+            var res = 0;
+            _dbConnection.Open();
+            using (var transaction = _dbConnection.BeginTransaction())
+            {
+                res = _dbConnection.Execute($"DELETE FROM {_tableName} WHERE {_tableName}Id = '{employeeId.ToString()}'", commandType: CommandType.Text);
+                transaction.Commit();
+            }
+            return res;
         }
 
         public virtual IEnumerable<TEntity> GetEntities()
@@ -53,9 +66,11 @@ namespace MISA.Infarstructure
             return entities;
         }
 
-        public TEntity GetEntityById(Guid employeeId)
+        public TEntity GetEntityById(Guid entityId)
         {
-            throw new NotImplementedException();
+            string query = $"SELECT * FROM {_tableName} e WHERE e.{_tableName}Id = '{entityId}' LIMIT 1;";
+            var entity = _dbConnection.Query<TEntity>(query, commandType: CommandType.Text).FirstOrDefault();
+            return entity;
         }
 
         public int Update(TEntity entity)
@@ -118,9 +133,12 @@ namespace MISA.Infarstructure
             return entityReturn;
         }
 
-        public TEntity GetEntityByID(Guid entityID)
+        public void Dispose()
         {
-            throw new NotImplementedException();
+            if (_dbConnection.State == ConnectionState.Open)
+            {
+                _dbConnection.Close();
+            }
         }
     }
 }

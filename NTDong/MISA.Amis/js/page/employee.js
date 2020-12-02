@@ -10,6 +10,16 @@ $(document).ready(function(){
         position: ({ my: "center", at: "center", of: window }),
         modal: true,
     });
+    dialogDelete = $(".d-dialog").dialog({
+        autoOpen: false,
+        fluid: true,
+        // height: 400,
+        //width: '700px',
+        minWidth: 400,
+        resizable: true,
+        position: ({ my: "center", at: "center", of: window }),
+        modal: true,
+    })
 })
 
 /**
@@ -22,6 +32,6 @@ class EmployeeJS extends BaseJS{
 		super();
 	}
 	setApiRouter(){
-        this.apiRouter = "/api/employees";
+        this.apiRouter = "/api/v1/employees";
     }
 }

@@ -1,0 +1,128 @@
+/*Page-title*/
+.content{	
+	position: absolute;
+	top: 49px;
+	left: 221px;
+	height: calc(100vh - 49px);
+	width: calc(100% - 221px);
+
+}
+.content .header-content{
+	padding: 16px; 
+	display: flex;
+	align-items: center;
+
+}
+.content .header-content .title{
+	font-size: 20px;
+	font-weight: bold;
+}
+.content .header-content .content-feature{
+	position: absolute;
+	right: 16px;
+}
+
+.button-box{
+	display: flex;
+}
+/*filter-bar*/
+.content .filter-bar{
+
+}
+
+/* Grid */
+.content .grid{
+
+}
+
+/*Paging*/
+.paging-bar{
+	height: 56px;
+	display: flex;
+}
+.paging-bar-left{
+	margin-top: 15px;
+	margin-bottom: 4px;
+	margin-left: 40px;
+	height: 30px;
+	float: left;
+	line-height: 30px;
+}
+.paging-bar-right{
+	right:40px;
+	margin-top: 15px;
+	margin-bottom: 4px;
+	height: 30px;
+	position: absolute;
+	line-height: 30px;
+}
+
+
+.button-selected-left{
+	height: 40px;
+	width: 40px;
+	margin-top: 0 auto ;
+	margin-top: 10px;
+	margin-right: 16px;
+	background-image: url('../../content/img/chevron-left.svg'); ;
+	background-repeat: no-repeat;
+	background-size: 20px;
+	background-position: center;
+	outline: none;
+	border:none;
+	border-radius: 5px;
+	cursor: pointer;
+	background-color: white;
+}
+.button-selected-left:hover{
+	background-color: #2FBE8E;
+}
+.button-selected-right{
+	height: 40px;
+	width: 40px;
+	margin-top: 0 auto ;
+	margin-top: 10px;
+	margin-right: 16px;
+	background-image: url('../../content/img/chevron-right.svg'); ;
+	background-repeat: no-repeat;
+	background-size: 20px;
+	background-position: center;
+	outline: none;
+	border:none;
+	border-radius: 5px;
+	cursor: pointer;
+	background-color: white;
+	
+}
+.button-selected-right:hover{
+	background-color: #2FBE8E;
+}
+.button-circle{
+	width: 40px;
+	height: 40px;
+	margin-top: 10px;
+	border-radius: 50%;
+	margin-right: 16px;
+	outline: none;
+	border:none;
+	cursor: pointer;
+	
+}
+.button-circle:hover{
+	background-color: #2FBE8E;
+}
+.paging-bar-center{
+	display: flex;
+	margin-left: 250px;
+}
+.button-text{
+	font-weight: bold;
+	font-size: 16px;
+}
+.button-change-page{
+     background: #019160;
+     border: none;
+     outline: none;
+     cursor: pointer;
+     color:white;
+ }

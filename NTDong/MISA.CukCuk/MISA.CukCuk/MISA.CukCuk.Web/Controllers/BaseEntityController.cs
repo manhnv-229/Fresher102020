@@ -11,7 +11,7 @@ namespace MISA.CukCuk.Web.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class BaseEntityController<TEntity> : ControllerBase
+    public abstract class BaseEntityController<TEntity> : ControllerBase
     {
         IBaseService<TEntity> _baseService;
         public BaseEntityController(IBaseService<TEntity> baseService)
@@ -40,7 +40,7 @@ namespace MISA.CukCuk.Web.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
-            var entity = _baseService.GetEntityByID(Guid.Parse(id));
+            var entity = _baseService.GetEntityById(Guid.Parse(id));
             return Ok(entity);
         }
 
@@ -53,8 +53,12 @@ namespace MISA.CukCuk.Web.Controllers
         [HttpPost]
         public IActionResult Post(TEntity entity)
         {
-            var rowAffect = _baseService.Add(entity);
-            return Ok(rowAffect);
+            var serviceResult = _baseService.Add(entity);
+            if (serviceResult.MISACode == ApplicationCore.Enums.MISACode.NotValid)
+            {
+                return BadRequest(serviceResult);
+            }
+            return Ok(serviceResult);
 
         }
 

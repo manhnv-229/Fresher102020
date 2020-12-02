@@ -12,15 +12,15 @@ using System.Text;
 
 namespace MISA.Infrastructure
 {
-    public class CustomerRepository :BaseRepository<Customer> , ICustomerRepository
+    public class CustomerRepository :BaseRepository<Employee> , ICustomerRepository
     {
         public CustomerRepository(IConfiguration configuration):base(configuration)
         {
             
         }
-        public Customer GetCustomeByCode(string customerCode)
+        public Employee GetCustomeByCode(string customerCode)
         {
-            var customerDuplicate = _dbConnection.Query<Customer>($"SELECT * FROM Customer WHERE CustomerCode = '{customerCode}'" , commandType: CommandType.Text).FirstOrDefault();
+            var customerDuplicate = _dbConnection.Query<Employee>($"SELECT * FROM Customer WHERE CustomerCode = '{customerCode}'" , commandType: CommandType.Text).FirstOrDefault();
             return customerDuplicate;
         }
     }

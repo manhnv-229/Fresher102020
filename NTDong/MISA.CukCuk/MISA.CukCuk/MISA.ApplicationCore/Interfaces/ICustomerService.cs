@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MISA.ApplicationCore.Interfaces
 {
-    public interface ICustomerService:IBaseService<Customer>
+    public interface ICustomerService:IBaseService<Employee>
     {
         /// <summary>
         /// Lay du lieu phan trang 
@@ -14,13 +14,13 @@ namespace MISA.ApplicationCore.Interfaces
         /// <param name="offset"></param>
         /// <returns></returns>
         /// CreatedBy: NTDong(26/11/2020)
-        IEnumerable<Customer> GetCustomerPaging(int limit, int offset);
+        IEnumerable<Employee> GetCustomerPaging(int limit, int offset);
         /// <summary>
         /// Lay danh sach khach hang theo nhom khach hang 
         /// </summary>
         /// <param name="groupId">id nhom khach hang</param>
         /// <returns></returns>
         /// CreatedBy: NTDong(26/11/2020)
-        IEnumerable<Customer> GetCustomersByGroup(Guid groupId);
+        IEnumerable<Employee> GetCustomersByGroup(Guid groupId);
     }
 }

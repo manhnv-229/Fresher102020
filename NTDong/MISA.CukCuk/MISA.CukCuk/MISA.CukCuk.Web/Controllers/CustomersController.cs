@@ -20,7 +20,7 @@ namespace MISA.CukCuk.Web.Controllers
     /// createdBy:NTDong(23/11/2020)
     /// </summary>
     
-    public class CustomersController : BaseEntityController<Customer>
+    public class CustomersController : BaseEntityController<Employee>
     {
         ICustomerService _customerService;
         public CustomersController(ICustomerService customerService) : base(customerService)

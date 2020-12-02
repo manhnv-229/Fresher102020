@@ -1,0 +1,56 @@
+.navbar{
+    float: left;
+    width: 220px;
+    height: 100vh;
+    border-right: 1px solid #e5e5e5;
+}
+.navbar .logo-site{
+    display: flex;
+    width: 100%;
+    height: 48px;
+}
+.navbar .logo-box{
+    display: flex;
+    width: 100%;
+    padding:12px 0px 12px 16px;
+}
+.navbar .logo-box .toggle-icon{
+    margin-right: 10px;
+    width: 24px;
+    height: 24px;
+    background-image: url('../../content/img/toggle.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.navbar .logo-box .amis-logo{
+    width: 100%;
+    height: 24px;
+    background-image: url('../../content/img/amis-logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.navbar .navbar-content{
+    width: 100%;
+}
+.navbar  .navbar-content .nav-item{
+    display: flex;
+    padding-left: 16px;
+    height: 44px;
+    cursor: pointer;
+    line-height: 44px;
+}
+.navbar  .navbar-content .nav-item:hover{
+    background-color: #e5e5e5;
+    color: #000000;
+}
+.nav-item .nav-item-icon{
+    width: 20px;
+    height: 20px;    
+    margin-right: 10px;
+}
+.nav-item .nav-item-text{
+    text-decoration: none;
+    color: black;
+}
+
+
