@@ -79,8 +79,45 @@
     loadData() {
         var me = this;
         try {
+            //load dữ liệu cho các combo box
+            var selectDepartment = $('select.search-department');
+            me.listDepartment = [];
+            //lấy dữ liệu phòng ban
+            $.ajax({
+                url: me.host + "/api/v1/Departments",
+                method: 'GET'
+            }).done(function (res) {
+                if (res) {
+                    $.each(res, function (index, obj) {
+                        me.listDepartment.push(obj);
+                        var option = `<option value="${obj.DepartmentId}">${obj.DepartmentName}</option>`;
+                        selectDepartment.append(option);
+                    })
+                }
+            }).fail(function (res) {
+
+            })
+
+            //lấy dữ liệu chức vụ
+            var selectPosition = $('select.search-position');
+            me.listPosition = [];
+            $.ajax({
+                url: me.host + "/api/v1/Positions",
+                method: 'GET'
+            }).done(function (res) {
+                if (res) {
+                    $.each(res, function (index, obj) {
+                        me.listPosition.push(obj);
+                        var option = `<option value="${obj.PositionId}">${obj.PositionName}</option>`;
+                        selectPosition.append(option);
+                    })
+                }
+            }).fail(function (res) {
+
+            })
+
+             //Lấy thông tin các cột dữ liệu
             $('table tbody').empty();
-            //Lấy thông tin các cột dữ liệu
             var columns = $('table thead th');
 
             me.listEmployee = [];
@@ -101,14 +138,27 @@
                         var td = $(`<td></td>`);
                         var fieldName = $(th).attr('fieldName');
                         var value = obj[fieldName];
+                        
                         var formatType = $(th).attr('formatType');
                         switch (formatType) {
+                            case "Gender":
+                                value = formatGender(value);
+                                break;
                             case "Date":
                                 value = formatDate(value);
                                 break;
                             case "Money":
                                 value = formatMoney(value);
                                 td.addClass("table-item-salary");
+                                break;
+                            case "Position":
+                                value = formatPosition(value, me.listPosition);
+                                break;
+                            case "Department":
+                                value = formatDepartment(value, me.listDepartment);
+                                break;
+                            case "WorkStatus":
+                                value = formatWorkStatus(value);
                                 break;
                             case "Address":
                                 td.addClass("table-item-address");

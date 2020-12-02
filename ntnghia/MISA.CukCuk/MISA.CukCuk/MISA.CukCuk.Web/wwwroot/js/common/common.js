@@ -2,6 +2,68 @@
     navbarItemSelect();
     footerItemSelect();
 });
+
+/**
+ * Format dữ liệu giới tính
+ * CreatedBy: NTNghia (02/12/2020)
+ * @param {any} gender tham số có kiểu dữ liệu bất kì
+ */
+function formatGender(gender) {
+    if (Number.isNaN(gender)) {
+        return "";
+    } else {
+        if (gender == 0)
+            return "Nữ";
+        else if (gender == 1)
+            return "Nam";
+        else
+            return "Khác";
+    }
+}
+
+/**
+ * Format dữ liệu chức vụ
+ * CreatedBy: NTNghia (02/12/2020)
+ * @param {any} position
+ * @param {any} listPosition
+ */
+function formatPosition(position, listPosition) {
+    var positionName = "";
+    listPosition.forEach(function (element) {
+        if (String(element['PositionId']) == position)
+            positionName = element.PositionName;
+    });
+    return positionName;
+}
+
+/**
+ * Format dữ liệu phòng ban
+ * CreatedBy: NTNghia (02/12/2020)
+ * @param {any} department
+ * @param {any} listDepartment
+ */
+function formatDepartment(department, listDepartment) {
+    listDepartment.forEach(function (element) {
+        if (String(element['DepartmentId']) == department)
+            return element.DepartmentName;
+    });
+}
+
+/**
+ * Format tình trạng tham gia
+ * CreatedBy: NTNghia (02/12/2020)
+ * @param {any} workStatus tham số có kiểu dữ liệu bất kì
+ */
+function formatWorkStatus(workStatus) {
+    if (Number.isNaN(workStatus)) {
+        return "";
+    } else {
+        if (workStatus == 0)
+            return "Đã nghỉ việc";
+        else
+            return "Đang làm việc";
+    }
+}
 /**
  * Format dữ liệu ngày tháng sang ngày/tháng/năm
  * CreatedBy: NTNghia (11/11/2020)
@@ -54,7 +116,6 @@ function formatMoney(money) {
         return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
     }
     return "";
-
 }
 
 /**

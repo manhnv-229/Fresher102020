@@ -83,10 +83,10 @@ p, h2 {
             border: 1px solid #019160;
         }
 
-        .content .content-search .select-department, .select-position {
+        .content .content-search .search-department, .search-position {
             cursor: pointer;
             outline: none;
-            width: 280px;
+            width: 200px;
             height: 40px;
             border: 1px solid #bbb;
             border-radius: 4px;

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MISA.ApplicationCore.Interfaces
 {
-   public interface IEmployeeService: IBaseService<Employee>
+   public interface IEmployeeService : IBaseService<Employee>
     {
         /// <summary>
         /// Lấy danh sách nhân viên theo phòng ban

@@ -83,36 +83,15 @@
                 <input class="search-employee" type="text" placeholder="Tìm kiếm theo Mã, Tên hoặc Số điện thoại" />
             </div>
 
-            <select class="select-department" fieldname="Department">
+            <select class="search-department" fieldname="Department">
                 <option selected="selected">
                     Tất cả phòng ban
                 </option>
-                <option>
-                    Phòng Nhân sự
-                </option>
-                <option>
-                    Phòng đào tạo
-                </option>
-                <option>
-                    Phòng Công nghệ
-                </option>
-                <option>
-                    Phòng Marketting
-                </option>
             </select>
 
-            <select class="select-position" fieldname="Position">
+            <select class="search-position" fieldname="Position">
                 <option selected="selected">
                     Tất cả vị trí
-                </option>
-                <option>
-                    Giám đốc
-                </option>
-                <option>
-                    Nhân viên Marketting
-                </option>
-                <option>
-                    Thu ngân
                 </option>
             </select>
 
@@ -132,14 +111,14 @@
                     <tr class="table-header" style="height: 20px;">
                         <th fieldName="EmployeeCode">Mã nhân viên</th>
                         <th fieldName="FullName">Họ và tên</th>
-                        <th fieldName="GenderName">Giới tính</th>
+                        <th fieldName="Gender" formatType="Gender">Giới tính</th>
                         <th fieldName="DateOfBirth" formatType="Date">Ngày sinh</th>
                         <th fieldName="PhoneNumber">Số điện thoại</th>
                         <th fieldName="Email">Email</th>
-                        <th fieldName="PositionName">Vị trí/chức vụ</th>
-                        <th fieldName="DepartmentName">Phòng ban</th>
+                        <th fieldName="PositionId" formatType="Position">Vị trí/chức vụ</th>
+                        <th fieldName="DepartmentId" formatType="Department">Phòng ban</th>
                         <th fieldName="Salary" formatType="Money">Hệ số/Mức lương đóng</th>
-                        <th fieldName="WorkStatusName">Trạng thái tham gia</th>
+                        <th fieldName="WorkStatus" formatType="WorkStatus">Trạng thái tham gia</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -260,15 +239,7 @@
                         <div class="input-form">
                             <label class="input-label" for="DepartmentId">Phòng ban</label>
                             <select class="select-department" id="DepartmentId">
-                                <option selected="selected">
-                                    Phòng nhân sự
-                                </option>
-                                <option>
-                                    Nhân viên Marketting
-                                </option>
-                                <option>
-                                    Thu ngân
-                                </option>
+                                
                             </select>
                         </div>
                     </div>

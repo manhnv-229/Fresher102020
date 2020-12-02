@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MISA.ApplicationCore;
 using MISA.ApplicationCore.Interfaces;
+using MISA.ApplicationCore.Services;
 using MISA.CukCuk.Web.MiddleWares;
 using MISA.Infrastructure;
 using Newtonsoft.Json;
@@ -48,6 +49,10 @@ namespace MISA.CukCuk.Web
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<IPositionRepository, PositionRepository>();
+            services.AddScoped<IPositionService, PositionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
