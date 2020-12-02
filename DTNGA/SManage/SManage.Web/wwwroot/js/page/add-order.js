@@ -227,6 +227,7 @@ class AddOrder extends Base {
         var productList = $(`#order-add .product-list`);
         var index = $(productList).find(`.product-detail`).length + 1;
         var productCode = product["ProductCode"];
+        var defaultPrice = convertInt(product["Price"]);
         var productPrice = convertInt(product["CurrentPrice"]);
         var curentAmount = convertInt(product["Amount"]);
         var productDetail = $(`<div class="product-detail">

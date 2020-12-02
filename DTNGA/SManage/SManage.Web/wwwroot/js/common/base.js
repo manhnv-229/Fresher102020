@@ -675,7 +675,7 @@ class Base {
         var ths = $('table tr th');
 
         // Lấy data từ Api
-        var data = listObj;
+        var data = listOrder;
         $.each(data, function (index, obj) {
             var tr = $(`<tr></tr>`);
             $.each(ths, function (index, th) {
@@ -890,7 +890,7 @@ var listProduct = [
     }
 ]
 
-var listObj = [
+var listOrder = [
     {
         OrderId: "8dc1ecc8-94e6-4533-9d5a-c626f5b99ab4",
         OrderCode: "01",
@@ -1418,14 +1418,12 @@ var listCustomer = [
         ReceiverId: "126339f9-1e9c-7ed8-8a2a-acc8fc2f00af",
         FullName: "Nguyễn Văn Cường",
         PhoneNumber: "0915389872",
-        Address: "120, ngõ 322, đường Mỹ Đình",
         SuccessOrderedAmount: "2",
         OrderAmount: "3",
         CreatedDate: "2/22/2020 2:31:23 AM",
-        Province: "Hà Nội",
-        District: "",
-        Ward: "",
-        Street:""
+        Address: "120, ngõ 322, đường Mỹ Đình",
+        AdministrativeAreaCode: ""
+        
     },
     {
         ReceiverId: "1294ae7e-2858-2074-4429-0204eeb736fa",

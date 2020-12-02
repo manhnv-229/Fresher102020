@@ -65,6 +65,7 @@
             <div class="content-header-title">Đơn hàng</div>
             <div class="content-header-right"></div>
         </div>
+
         <div class="content-body" id="order-management" fieldName="OrderManagement" titleName="Đơn hàng">
             <div class="content-filter">
                 <div class="content-filter-left">
@@ -401,7 +402,20 @@
         </div>
 
         <div id="transportor" class="content-body displayNone" fieldName="Transportor" titleName="Vận chuyển"></div>
-        <div id="setting" class="content-body displayNone" fieldName="Setting" titleName="Cài đặt"></div>
+        <div id="setting" class="content-body displayNone" fieldName="Setting" titleName="Cài đặt">
+            <div class="tab-group" id="setting-tabs">
+                <ul>
+                    <li><a href="general-tab">Cấu hình chung</a></li>
+                    <li><a href="collaborator-tab">Cộng tác viên</a></li>
+                </ul>
+                <div id="general-tab">
+                    <div>Cấu hình chung</div>
+                </div>
+                <div id="collaborator-tab">
+                    <div>Cấu hình cộng tác viên</div>
+                </div>
+            </div>
+        </div>
 
     </div>
 
@@ -684,5 +698,6 @@
     <script src="/js/common/base.js"></script>
     <script src="/js/page/order-management.js"></script>
     <script src="/js/page/add-order.js"></script>
+    <script src="/js/page/setting.js"></script>
 </body>
 </html>

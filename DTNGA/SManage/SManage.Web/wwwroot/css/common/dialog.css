@@ -193,6 +193,16 @@
     justify-content: flex-end;
 }
 
+    .product-detail .cost-line div {
+        margin-left: 16px;
+    }
+
+    .product-detail .cost-line .default-price {
+        color: #F65454;
+        margin-top: 4px;
+        text-decoration: line-through;
+    }
+
     .product-detail .cost-line .cost {
         font-weight: bold;
         color: #019160;
