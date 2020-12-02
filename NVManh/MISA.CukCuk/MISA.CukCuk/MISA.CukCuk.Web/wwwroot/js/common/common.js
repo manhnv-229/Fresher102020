@@ -5,8 +5,6 @@
     //        k.datepicker._showDatepicker(t[0])),
     //        !1
     //})
-
-    
 })
 /** ----------------------------------------------
  * Format dữ liệu ngày tháng sang ngày/tháng/năm

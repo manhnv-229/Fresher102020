@@ -73,7 +73,7 @@
 
     .m-combobox input {
         padding-right: 56px;
-        z-index:1;
+        z-index: 1;
     }
 
     .m-combobox button {
@@ -85,7 +85,7 @@
         border-left: 1px solid #bbbbbb;
         background-color: rgba(0, 0, 170, 0.00);
         outline: none;
-        cursor: pointer;
+        cursor: pointer !important;
         z-index: 999;
     }
 
@@ -112,14 +112,18 @@
             border-top: none;
             line-height: 40px;
             padding: 0 16px;
-            
         }
 
-        .m-combobox .m-combobox-data .m-combobox-item:hover {
-            background-color: #E9EBEE;
-            cursor: pointer;
-        }
+            .m-combobox .m-combobox-data .m-combobox-item:hover {
+                background-color: #E9EBEE;
+                cursor: pointer;
+            }
 
             .m-combobox .m-combobox-data .m-combobox-item:last-child {
-                border-bottom:none;
+                border-bottom: none;
             }
+
+        .m-combobox .m-combobox-data .mCombobox__item--selected {
+            background-color: #019160 !important;
+            color: #ffffff;
+        }
