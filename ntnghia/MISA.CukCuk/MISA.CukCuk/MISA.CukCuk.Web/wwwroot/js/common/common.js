@@ -30,7 +30,7 @@ function formatGender(gender) {
 function formatPosition(position, listPosition) {
     var positionName = "";
     listPosition.forEach(function (element) {
-        if (String(element['PositionId']) == position)
+        if (element.PositionId == position)
             positionName = element.PositionName;
     });
     return positionName;
@@ -43,10 +43,12 @@ function formatPosition(position, listPosition) {
  * @param {any} listDepartment
  */
 function formatDepartment(department, listDepartment) {
+    var departmentName = "";
     listDepartment.forEach(function (element) {
-        if (String(element['DepartmentId']) == department)
-            return element.DepartmentName;
+        if (String(element.DepartmentId) == department)
+            departmentName = element.DepartmentName;
     });
+    return departmentName;
 }
 
 /**
