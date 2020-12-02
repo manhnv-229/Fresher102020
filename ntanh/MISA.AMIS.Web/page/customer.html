@@ -17,7 +17,6 @@
     <link href="/css/common/messenger.css" rel="stylesheet" />
     <link href="/css/common/header.css" rel="stylesheet" />
     <link href="/css/common/navbar.css" rel="stylesheet" />
-    <link href="/css/common/content.css" rel="stylesheet" />
     <link href="/css/common/content-new.css" rel="stylesheet" />
     <link href="/css/common/dialog.css" rel="stylesheet" />
     <link href="/css/page/employee.css" rel="stylesheet" />
@@ -88,7 +87,7 @@
         </div>
     </div>
     <div class="header">
-        <div class="company" ad="FullName">
+        <div class="company">
             <div class="company_logo cur_poiter">
 
             </div>
@@ -143,15 +142,15 @@
             <table>
                 <thead>
                     <tr>
-                        <th fieldName="CustomerCode">Mã khách hàng</th>
-                        <th fieldName="FullName">Họ và tên</th>
-                        <th fieldName="Gender" formatType="gender">Giới tính</th>
-                        <th fieldName="DateOfBirth" formatType="ddmmyyyy">Ngày sinh</th>
-                        <th fieldName="PhoneNumber">Số điện thoại</th>
-                        <th fieldName="Email">Email</th>
-                        <th fieldName="Address">Địa chỉ</th>
-                        <th fieldName="DebitAmount" formatType="money">Số tiền nợ</th>
-                        <th fieldName="MemberCardCode">Mã thẻ thành viên</th>
+                        <th fieldName="customerCode">Mã khách hàng</th>
+                        <th fieldName="fullName">Họ và tên</th>
+                        <th fieldName="gender" formatType="gender">Giới tính</th>
+                        <th fieldName="dateOfBirth" formatType="ddmmyyyy">Ngày sinh</th>
+                        <th fieldName="phoneNumber">Số điện thoại</th>
+                        <th fieldName="email">Email</th>
+                        <th fieldName="address">Địa chỉ</th>
+                        <th fieldName="debitAmount" formatType="money">Số tiền nợ</th>
+                        <th fieldName="memberCardCode">Mã thẻ thành viên</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -221,21 +220,21 @@
                     <div class="item-line">
                         <div class="item-short margin-right">
                             <span class="title-input">Mã khách hàng (<span style="color: red;">*</span>)</span>
-                            <input id="txtCustomerCode" fieldName="CustomerCode" type="text" name="customercode" value="" required />
+                            <input id="txtCustomerCode" fieldName="customerCode" type="text" name="customercode" value="" required />
                         </div>
                         <div class="item-short">
                             <span class="title-input">Họ tên (<span style="color: red;">*</span>)</span>
-                            <input id="txtFullName" fieldName="FullName" type="text" name="fullname" value="" required />
+                            <input id="txtFullName" fieldName="fullName" type="text" name="fullname" value="" required />
                         </div>
                     </div>
                     <div class="item-line">
                         <div class="item-short margin-right">
                             <span class="title-input">Mã thẻ thành viên</span>
-                            <input id="txtMemberCardCode" fieldName="MemberCardCode" type="text" name="membercardcode" value="" />
+                            <input id="txtMemberCardCode" fieldName="memberCardCode" type="text" name="membercardcode" value="" />
                         </div>
                         <div class="item-short">
                             <span class="title-input">Nhóm khách hàng</span>
-                            <select id="cbxCustomerGroup" fieldName="CustomerGroupId" fieldValue="CustomerGroupId" api="api/customergroups" class="m-select">
+                            <select id="cbxCustomerGroup" fieldName="customerGroupId" fieldValue="CustomerGroupId" api="api/customergroups" class="m-select">
                                 <!--<option value="19165ed7-212e-21c4-0428-030d4265475f">
                                     Khách VIP
                                 </option>
@@ -251,13 +250,13 @@
                     <div class="item-line">
                         <div class="item-short margin-right">
                             <span class="title-input">Ngày sinh</span>
-                            <input id="dtDateOfBirth" fieldName="DateOfBirth" type="date" name="dateofbirth" value="" />
+                            <input id="dtDateOfBirth" fieldName="dateOfBirth" type="date" name="dateofbirth" value="" />
                         </div>
                         <div class="item-short">
                             <span class="title-input">Giới tính</span>
                             <div class="m-input-checkbox">
-                                <input type="radio" class="m-radio" fieldName="Gender" name="gender" value="10" genderId="1" checked /> Nam
-                                <input type="radio" class="m-radio" fieldName="Gender" name="gender" value="11"genderId="0" /> Nữ
+                                <input type="radio" class="m-radio" fieldName="gender" name="gender" value="1" genderId="1" checked /> Nam
+                                <input type="radio" class="m-radio" fieldName="gender" name="gender" value="0" genderId="0" /> Nữ
                             </div>
                         </div>
                     </div>
@@ -268,27 +267,27 @@
                 <div class="item-line multiply-3">
                     <div class="item-short multiply-2 margin-right">
                         <span class="title-input">Email</span>
-                        <input id="txtEmail" type="email" fieldName="Email" name="email" placeholder="example@domain.com" value="" />
+                        <input id="txtEmail" type="email" fieldName="email" name="email" placeholder="example@domain.com" value="" />
                     </div>
                     <div class="item-short">
                         <span class="title-input">Số điện thoại (<span style="color: red;">*</span>)</span>
-                        <input id="txtPhoneNumber" type="text" fieldName="PhoneNumber" name="customerphone" value="" required />
+                        <input id="txtPhoneNumber" type="text" fieldName="phoneNumber" name="customerphone" value="" required />
                     </div>
                 </div>
                 <div class="item-line multiply-3">
                     <div class="item-short multiply-2 margin-right">
                         <span class="title-input">Tên công ty</span>
-                        <input class="" type="text" fieldName="CompanyName" name="companyname" value="" />
+                        <input class="" type="text" fieldName="companyName" name="companyname" value="" />
                     </div>
                     <div class="item-short">
                         <span class="title-input">Mã số thuế</span>
-                        <input class="" type="text" fieldName="CompanyTaxCode" name="taxcode" value="" />
+                        <input class="" type="text" fieldName="companyTaxCode" name="taxcode" value="" />
                     </div>
                 </div>
                 <div class="item-line multiply-3">
                     <div class="item-short multiply-3">
                         <span class="title-input">Địa chỉ</span>
-                        <input id="txtAddress" fieldName="Address" type="text" name="address" value="" />
+                        <input id="txtAddress" fieldName="address" type="text" name="address" value="" />
                     </div>
                 </div>
             </div>
@@ -297,7 +296,6 @@
         <div class="dialog-footer">
             <button class="m-btn m-btn-cannel btnClose" id="btnCloseDialog"><span class="content-m-btn">Hủy</span></button>
             <button id="btnSave" class="m-btn m-btn-save"><i class="far fa-save" style="padding-right: 10px"></i><span class="content-m-btn">Lưu</span></button>
-            <button class="m-btn m-btn-savenew"><span class="content-m-btn">Lưu và thêm mới</span></button>
         </div>
     </div>
     <!-- POP-UP Cảnh báo -->
@@ -307,7 +305,7 @@
                 <i class="fas fa-exclamation-triangle"></i>
             </div>
             <div class="content-warning">
-                Bạn có chắc chắn muốn xóa khách hàng <span id="nameCustomer" fieldName="FullName" style="font-weight: bold;"></span> (Mã khách hàng <span id="idCustomer" fieldName="CustomerCode" style="font-weight: bold;"></span>) không?
+                Bạn có chắc chắn muốn xóa khách hàng <span id="nameCustomer" fieldName="fullName" style="font-weight: bold;"></span> (<span id="idCustomer" fieldName="customerCode" style="font-weight: bold;"></span>) không?
             </div>
         </div>
         <div class="footer-popup">

@@ -111,10 +111,8 @@ button#btnDelete {
     }
 
 .m-btn.m-btn-save {
-    background-image: url('content/icon/add.png');
     background-repeat: no-repeat;
     background-position: center;
-    margin-right: 10px;
 }
 
 button.m-btn.m-btn-delete {

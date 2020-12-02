@@ -18,8 +18,8 @@ namespace MISA.CukCuk.Web.Controllers
     /// </summary>
     public class CustomersController : BaseEntityController<Customer>
     {
-        ICustomerService _baseService;
-        public CustomersController(ICustomerService baseService):base(baseService)
+        IBaseService<Customer> _baseService;
+        public CustomersController(IBaseService<Customer> baseService):base(baseService)
         {
             _baseService = baseService;
         }

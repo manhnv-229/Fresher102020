@@ -62,6 +62,9 @@
         height: 24px;
         margin-right: 16px;
         background-image: url('../../content/icon/profile_avt.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
     }
 
     .profile .profile_name {

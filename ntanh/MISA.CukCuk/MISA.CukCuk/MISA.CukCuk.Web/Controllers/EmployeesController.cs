@@ -14,50 +14,13 @@ using MySql.Data.MySqlClient;
 
 namespace MISA.CukCuk.Web.Controllers
 {
-    [Route("api/v1/[controller]")]
-    [ApiController]
-    public class EmployeesController : ControllerBase
+    
+    public class EmployeesController : BaseEntityController<Employee>
     {
-        IEmployeeService _employeeService;
-        
-        public EmployeesController(IEmployeeService employeeService)
+        IBaseService<Employee> _baseService;
+        public EmployeesController(IBaseService<Employee> baseService):base(baseService)
         {
-            _employeeService = employeeService;
-        }
-        // GET: api/<EmployeeController>
-        [HttpGet]
-        public IEnumerable<Employee> Get()
-        {
-            var employees = _employeeService.GetEmployees();
-            return employees;
-        }
-
-        // GET api/<EmployeeController>/5
-        [HttpGet("{id}")]
-        public Employee GetEmployeeById (string id)
-        {
-            var employee = _employeeService.GetEmployeeById(id);
-            return employee;
-        }
-
-        // POST api/<EmployeeController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<EmployeeController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<EmployeeController>/5
-        [HttpDelete("{id}")]
-        public int DeleteEmployee(string id)
-        {
-            var rowAffects = _employeeService.DeleteEmployee(id);
-            return rowAffects;
+            _baseService = baseService;
         }
     }
 }

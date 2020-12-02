@@ -74,7 +74,7 @@ namespace MISA.ApplicationCore.Entities
         /// <summary>
         /// Khóa chính phòng ban
         /// </summary>
-        public Guid DepartmentId { get; set; }
+        public Guid DepartmenId { get; set; }
 
         /// <summary>
         /// Mã số thuế

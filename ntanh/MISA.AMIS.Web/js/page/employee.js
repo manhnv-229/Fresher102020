@@ -1,32 +1,46 @@
 ﻿$(document).ready(function () {
     new EmployeeJS();
+    dialogDetail = $(".m-dialog").dialog({
+        autoOpen: false,
+        fluid: true,
+        //height: 400,
+        //width: '700px',
+        minWidth: 1000,
+        resizable: true,
+        position: ({ my: "center", at: "center", of: window }),
+        modal: true,
+    });
+
+    dialogWarning = $("#dialog-confirm").dialog({
+        autoOpen: false,
+        fluid: true,
+        //height: 400,
+        //width: '700px',
+        minWidth: 430,
+        minHeight: 205,
+        resizable: true,
+        position: ({ my: "center", at: "center", of: window }),
+        modal: true
+    });
+
+
 })
 /**
- * Class quản lý các sự kiện cho trang Employee
- * CreatedBy: NTANH (12/11/2020)
+ * Class Quản lý Employee
  * */
 class EmployeeJS extends BaseJS {
     constructor() {
         super();
-
-        this.loadList();
     }
+
     /**
      *  Lấy url api
      *  CreatedBy: NTANH (18/11/2020)
      * */
     setApiRouter() {
-        this.apiRouter = "api/employees";
+        this.apiRouter = 'api/v1/Employees';
     }
 
-    loadList() {
-        $.ajax({
-            url: "https://localhost:44341/api/v1/Customers",
-            method: "GET",
-        }).done(function () {
-
-        }).fail(function () {
-
-        })
+    removeAnimation() {
     }
 }

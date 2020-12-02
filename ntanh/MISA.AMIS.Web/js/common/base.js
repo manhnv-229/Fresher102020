@@ -14,6 +14,8 @@ class BaseJS {
         this.trOnSelected();
         //this.openPopup();
     }
+
+    
     /**
      *  Lấy url api
      *  CreatedBy: NTANH (18/11/2020)
@@ -57,35 +59,7 @@ class BaseJS {
         $('#btnSave').click(me.btnSaveOnClick.bind(me));
 
         //Thực hiện xóa khi nhân button Xóa trên tools bar
-        $('#btnDelete').click(function () {
-            dialogWarning.dialog('open');
-            $('#btnDeleteCustomer').click(function () {
-                //Lấy khóa chính bản ghi
-                var recordId = me.recordId
-                //me.recordId = recordId;
-                console.log("recordId", recordId);
-                //Gọi service lấy thông tin chi tiết qua Id
-                $.ajax({
-                    url: me.host + me.apiRouter + `/${recordId}`,
-                    method: 'DELETE',
-                    async: true
-                }).done(function (res) {
-                    // Đóng DialogWarning
-                    // Gọi Messenger Aleart
-                    dialogWarning.dialog('close');
-                    me.loadData(me.FormMode = '');
-                    $('#contentMessenger').empty();
-                    $('#contentMessenger').append("Đã xóa thành công.")
-                    $('.messenger-complete').addClass('animationHide');
-                    setTimeout(function () {
-                        $('.messenger-complete').removeClass('animationHide');
-                        console.log("ok");
-                    }, 3000);
-                }).fail(function (res) {
-                    console.log("fail");
-                })
-            })
-        })
+        $('#btnDelete').click(me.deleteCustomer.bind(me));
         // Hiển thị thông tin chi tiết cho 1 bản ghi khi ấn đúp chuột
         $('table tbody').on('dblclick', 'tr', function () {
             me.FormMode = 'Edit';
@@ -97,12 +71,12 @@ class BaseJS {
             //Lấy dữ liệu nhóm khách hàng
             $('.loading-modal').show();
             $.ajax({
-                url: me.host + "api/customergroups",
+                url: me.host + "api/v1/CustomerGroups",
                 method: "GET"
             }).done(function (res) {
                 if (res) {
                     $.each(res, function (index, obj) {
-                        var option = $(`<option value="${obj.CustomerGroupId}">${obj.CustomerGroupName}</option>`);
+                        var option = $(`<option value="${obj.customerGroupId}">${obj.customerGroupName}</option>`);
                         select.append(option);
                     })
                 }
@@ -197,7 +171,6 @@ class BaseJS {
             $('table tbody').empty();
             //  Lấy thông tin các cột dữ liệu
             var columns = $("table thead th");
-            var getDataUrl = this.getDataUrl;
             // Lấy thông tin dữ liệu sẽ map tương ứng với th
             //$.each(ths, function (index, item) {
 
@@ -205,13 +178,13 @@ class BaseJS {
             //Lấy dữ liệu về
             $('.loading-modal').show();
             $.ajax({
-                url: "https://localhost:64676/api/v1/Customers",
+                url: me.host + me.apiRouter,
                 method: "GET",
                 async: true
             }).done(function (res) {
                 $.each(res, function (index, obj) {
                     var tr = $(`<tr></tr>`);
-                    $(tr).data('recordId', obj.CustomerId);
+                    $(tr).data('recordId', obj.customerId);
                     $.each(columns, function (index, th) {
                         var td = $(`<td></td>`);
                         var div = $(`<div></div>`);
@@ -232,6 +205,18 @@ class BaseJS {
                             case "gender":
                                 td.addClass("text-align-center");
                                 value = formatGender(value);
+                                break;
+                            case "position":
+                                td.addClass("text-align-center");
+                                value = formatPosition(value);
+                                break;
+                            case "department":
+                                td.addClass("text-align-center");
+                                value = formatDepartment(value);
+                                break;
+                            case "workStatus":
+                                td.addClass("text-align-center");
+                                value = formatWorkStatus(value);
                                 break;
                             default:
                         }
@@ -325,35 +310,14 @@ class BaseJS {
      * CreatedBy: NTA (17/11/2020)
      * */
     trOnSelected() {
-        var me = this;
         $('table tbody').on('click', 'tr', function () {
             $.each($('table tbody tr'), function (index, item) {
                 $(this).removeClass('row-selected');
+                $(this).removeAttr('onAction');
             })
             $(this).addClass('row-selected');
+            $(this).attr('onAction', "On");
             $('#btnDelete').show();
-            //Lấy khóa chính bản ghi
-            var recordId = $(this).data('recordId');
-            me.recordId = recordId;
-            console.log(recordId);
-            //Gọi service lấy thông tin chi tiết qua Id
-            $.ajax({
-                url: me.host + me.apiRouter + `/${recordId}`,
-                method: 'GET'
-            }).done(function (res) {
-                //Building lên form chi tiết
-                // Lấy tất cả các control nhập liệu
-                var infors = $('#nameCustomer, #idCustomer');
-                infors.empty();
-                $.each(infors, function (index, infor) {
-                    var propertyName = $(this).attr('fieldName');
-                    var value = res[propertyName];
-                    $(this).append(value);
-                })
-            }).fail(function (res) {
-
-            })
-            console.log(this);
         })
     }
     /**
@@ -382,18 +346,35 @@ class BaseJS {
             // Hiển thị dialog thông tin chi tiết
             dialogDetail.dialog('open');
             $('input').val(null);
+            //Lấy customerCode khách hàng cuối cùng được thêm
+           
+            //Load dữ liệu cho CustomerCode
+            var inputCustomerCode = $('txtCustomerCode');
+            var newCustomerCode = null;
+            $.ajax({
+                url: me.host + me.apiRouter,
+                method: "GET"
+            }).done(function (res) {
+                if (res) {
+                    var firstObj = res[0];
+                    newCustomerCode = "KH" + (parseInt(firstObj.customerCode.substring(2)) + 1)
+                    $('input#txtCustomerCode').val(newCustomerCode);
+                }
+            }).fail(function (res) {
+
+            })
             //Load dữ liệu cho các combobox
             var select = $('select#cbxCustomerGroup');
             select.empty();
             //Lấy dữ liệu nhóm khách hàng
             $('.loading-modal').show();
             $.ajax({
-                url: me.host + "api/customergroups",
+                url: me.host + "api/v1/CustomerGroups",
                 method: "GET"
             }).done(function (res) {
                 if (res) {
                     $.each(res, function (index, obj) {
-                        var option = $(`<option value="${obj.CustomerGroupId}">${obj.CustomerGroupName}</option>`);
+                        var option = $(`<option value="${obj.customerGroupId}">${obj.customerGroupName}</option>`);
                         select.append(option);
                     })
                 }
@@ -437,7 +418,7 @@ class BaseJS {
              * value của input có attr là checked*/
             if ($(this).attr('type') == "radio") {
                 if (this.checked) {
-                    value = $(this).attr('genderId');
+                    value = parseInt($(this).attr('genderId'));
                     entity[propertyName] = value;
                 }
             }
@@ -487,5 +468,46 @@ class BaseJS {
             console.log(res);
         })
         
+    }
+
+    deleteCustomer() {
+        var me = this;
+        var recordId = null;
+        var cusName = null;
+        var cusCode = null;
+        $.each($('table tbody tr'), function (index, item) {
+            if ($(this).attr('onAction') == "On") {
+                recordId = $(this).data('recordId');
+                console.log("deleteCustomer", recordId);
+            }
+        })
+        //Lấy khóa chính bản ghi
+        dialogWarning.dialog('open');
+        $('#btnDeleteCustomer').click(function () {
+            //Lấy khóa chính bản ghi
+
+            //me.recordId = recordId;
+            //Gọi service lấy thông tin chi tiết qua Id
+            $.ajax({
+                url: me.host + me.apiRouter + `/${recordId}`,
+                method: 'DELETE',
+                async: true
+            }).done(function (res) {
+                $('#idCustomer').append({})
+                // Đóng DialogWarning
+                // Gọi Messenger Aleart
+                dialogWarning.dialog('close');
+                me.loadData(me.FormMode = '');
+                $('#contentMessenger').empty();
+                $('#contentMessenger').append("Đã xóa thành công.")
+                $('.messenger-complete').addClass('animationHide');
+                setTimeout(function () {
+                    $('.messenger-complete').removeClass('animationHide');
+                    console.log("ok");
+                }, 3000);
+            }).fail(function (res) {
+                console.log("fail");
+            })
+        })
     }
 }

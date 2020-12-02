@@ -38,7 +38,7 @@ class CustomerJS extends BaseJS {
      *  CreatedBy: NTANH (18/11/2020)
      * */
     setApiRouter() {
-        this.apiRouter = 'api/v1/customers';
+        this.apiRouter = 'api/v1/Customers';
     }
     
     removeAnimation() {
