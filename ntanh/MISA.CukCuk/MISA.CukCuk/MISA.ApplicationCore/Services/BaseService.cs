@@ -23,7 +23,7 @@ namespace MISA.ApplicationCore
         #endregion
         #region Method
 
-        public ServiceResult AddEntity(TEntity entity)
+        public virtual int AddEntity(TEntity entity)
         {
             var rowAffects = _baseRepository.AddEntity(entity);
             return rowAffects;
@@ -47,7 +47,7 @@ namespace MISA.ApplicationCore
             return entities;
         }
 
-        public ServiceResult UpdateEntity(TEntity entity)
+        public int UpdateEntity(TEntity entity)
         {
             throw new NotImplementedException();
         }

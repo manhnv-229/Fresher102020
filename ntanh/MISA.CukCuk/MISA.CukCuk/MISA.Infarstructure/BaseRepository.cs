@@ -17,8 +17,8 @@ namespace MISA.Infarstructure
         #region declare
         IConfiguration _configuration;
         string _connectionString = string.Empty;
-        IDbConnection _dbConnection;
-        string _tableName = typeof(TEntity).Name;
+        protected IDbConnection _dbConnection;
+        protected string _tableName = typeof(TEntity).Name;
         #endregion
 
         #region constructor
@@ -31,16 +31,16 @@ namespace MISA.Infarstructure
 
         #region method
        
-        public int AddEntity(TEntity entity)
-        {
-            var parameters = MappingDbType(entity);
-            var rowAffects = _dbConnection.Execute($"PROC_Insert{_tableName}", parameters, commandType: CommandType.StoredProcedure);
-            return rowAffects;
-        }
+        //public int AddEntity(TEntity entity)
+        //{
+        //    var parameters = MappingDbType(entity);
+        //    var rowAffects = _dbConnection.Execute("PROC_InsertCustomer", parameters, commandType: CommandType.StoredProcedure);
+        //    return rowAffects;
+        //}
 
         public int DeleteEntity(string entityId)
         {
-            var rowAffects = _dbConnection.Execute($"PROC_Delete{_tableName}ById", new { EntityId = entityId }, commandType: CommandType.StoredProcedure);
+            var rowAffects = _dbConnection.Execute("PROC_DeleteCustomerById", new { CustomerId = entityId }, commandType: CommandType.StoredProcedure);
             return rowAffects;
         }
 
@@ -56,14 +56,16 @@ namespace MISA.Infarstructure
             return entities;
         }
 
-        public TEntity UpdateEntity(TEntity entity)
+        public int UpdateEntity(TEntity entity)
         {
             throw new NotImplementedException();
         }
 
-        ServiceResult IBaseRepository<TEntity>.AddEntity(TEntity entity)
+        int IBaseRepository<TEntity>.AddEntity(TEntity entity)
         {
-            throw new NotImplementedException();
+            var par = MappingDbType(entity);
+            var res = _dbConnection.Execute("PROC_InsertCustomer", par, commandType : CommandType.StoredProcedure);
+            return res;
         }
 
         /// <summary>

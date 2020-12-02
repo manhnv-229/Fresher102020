@@ -52,19 +52,8 @@ namespace MISA.CukCuk.Web.Controllers
         [HttpPost]
         public IActionResult Post(TEntity entity)
         {
-            // Validate dữ liệu:
-            // Check trường bắt buộc nhập
-            var serviceResult = _baseService.AddEntity(entity);
-
-            if (serviceResult.MISACode == MISACode.NotValid)
-            {
-                return BadRequest(serviceResult.Data);
-            }
-
-            if (serviceResult.MISACode == MISACode.IsValid && (int)serviceResult.Data > 0)
-                return Created("adfd", entity);
-            else
-                return NoContent();
+            var rowAffects = _baseService.AddEntity(entity);
+            return Ok(rowAffects);
         }
 
         // PUT api/<CustomersController>/5
@@ -73,17 +62,18 @@ namespace MISA.CukCuk.Web.Controllers
         {
             // Validate dữ liệu:
             // Check trường bắt buộc nhập
-            var serviceResult = _baseService.UpdateEntity(entity);
+            var res = _baseService.UpdateEntity(entity);
 
-            if (serviceResult.MISACode == MISACode.NotValid)
-            {
-                return BadRequest(serviceResult.Data);
-            }
+            //if (serviceResult.MISACode == MISACode.NotValid)
+            //{
+            //    return BadRequest(serviceResult.Data);
+            //}
 
-            if (serviceResult.MISACode == MISACode.IsValid && (int)serviceResult.Data > 0)
-                return Created("adfd", entity);
-            else
-                return NoContent();
+            //if (serviceResult.MISACode == MISACode.IsValid && (int)serviceResult.Data > 0)
+            //    return Created("adfd", entity);
+            //else
+            //    return NoContent();
+            return Ok(res);
         }
 
         // DELETE api/<CustomersController>/5

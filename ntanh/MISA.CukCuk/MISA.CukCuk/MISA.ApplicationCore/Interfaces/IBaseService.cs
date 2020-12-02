@@ -35,7 +35,7 @@ namespace MISA.ApplicationCore.Interfaces
         /// <param name="entity">Obj Entity</param>
         /// <returns>Entity new</returns>
         /// CreatedBy: NTANH 27/11//2020
-        ServiceResult AddEntity(TEntity entity);
+        int AddEntity(TEntity entity);
 
         /// <summary>
         /// Sủa thông tin Entity
@@ -43,7 +43,7 @@ namespace MISA.ApplicationCore.Interfaces
         /// <param name="entity">Thông tin entity</param>
         /// <returns>Obj entity</returns>
         /// CreatedBy: NTANH 27/11/2020
-        ServiceResult UpdateEntity(TEntity entity);
+        int UpdateEntity(TEntity entity);
 
         /// <summary>
         /// Xóa thông tin 1 entity
