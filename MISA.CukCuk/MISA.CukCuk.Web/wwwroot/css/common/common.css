@@ -1,0 +1,135 @@
+﻿/**
+    css dùng chung cho tất cả các trang
+*/
+input.border-red {
+    border: 1px solid #ff0000;
+}
+
+.text-align-center{
+    text-align: center;
+}
+.text-align-right{
+    text-align: right;
+}
+
+table tbody tr td.max-with{
+    max-width: 130px;
+}
+
+table th, td {
+    height: 48px;
+    border-bottom: 1px solid #bbbbbb;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+tr.row-selected td {
+    background-color: #EBF9F4;
+}
+
+button.btn-icon {
+    display: flex;
+    align-items: center;
+    padding: 0 16px;   
+}
+button.btn-icon i{
+    width:auto;
+    color: #ffffff;
+}
+button.btn-icon div{
+    margin-left: 8px;
+}
+
+button {
+    background-color: #019160;
+    border-radius: 4px;
+    height: 40px;
+    color: #ffffff;
+    font-size: 13px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+
+    button:hover {
+        background-color: #2FBE8E;
+    }
+
+button.btn-cancel {
+    background-color: #E9EBEE;
+    border: none;
+    color: #000000;
+    width: 100px;
+    cursor: pointer;
+}
+    button.btn-cancel:hover {
+        background-color: #DADCE0;
+        border: none;
+    }
+
+input,select {
+    width: 100%;
+    height: 40px;
+    padding: 10px 16px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #bbbbbb;
+    outline: none;
+    border: 1px solid #bbbbbb;
+    box-sizing: border-box;
+}
+
+    input:focus, select:focus {
+        border: 1px solid #019160;
+    }
+
+    input[type=radio] {
+        height: 20px;
+        width: 20px;
+    }
+
+.input-search {
+    padding-left: 40px;
+}
+
+.gird {
+    width: 100%;
+    height: calc(100vh - 268px);
+    background-color: #ffffff;
+    padding-left: 16px;
+    padding-right: 16px;
+    overflow: auto;
+}
+
+
+    .gird .gird-header {
+        width: 100%;
+        height: 48px;
+        overflow: auto;
+    }
+
+the.gird-header tr {
+    position: relative;
+}
+
+.gird .gird-content {
+    width: 100%;
+    height: 340px;
+    overflow: auto;
+}
+
+.gird td {
+    padding-right: 16px;
+}
+
+.gird .salary {
+    text-align: right;
+}
+
+.gird table tr:hover {
+    background-color: #E9EBEE;
+}

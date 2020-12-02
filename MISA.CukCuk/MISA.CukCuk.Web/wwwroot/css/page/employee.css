@@ -1,0 +1,215 @@
+﻿/*css cho trang employee*/
+.header-content {
+    display: flex;
+    align-self: center;
+    height: 60px;
+    /*margin: 12px 0;*/
+    padding-left: 24px;
+    background-color: #ffffff;
+    align-items: center;
+}
+
+.header-content-left {
+    float: left;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000000;
+    align-self: center;
+}
+
+
+.hearder-content-right {
+    position: absolute;
+    right: 24px;
+    display: flex;
+    align-items: center;
+}
+
+
+.fas {
+    color: #ffffff;
+    margin-right: 8px;
+}
+
+.content .header-content .hearder-content-right .button-text {
+    color: #ffffff;
+    font-size: 13px;
+}
+
+.button-sync {
+    display: flex;
+    margin-right: 12px;
+    background-color: #019160;
+    padding: 0 16px;
+    border-radius: 4px;
+    border: 0;
+    height: 40px;
+    align-items: center;
+}
+
+    .button-sync:hover {
+        background-color: #2FBE8E;
+    }
+
+
+.button-insert {
+    display: flex;
+    background-color: #019160;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    border: 0;
+    padding: 0 16px;
+    height: 40px;
+    align-items: center;
+}
+
+    .button-insert:hover {
+       background-color: #2FBE8E;
+    }
+
+.icon-down {
+    height: 40px;
+    background-color: #019160;
+    padding: 10px 12px;
+    margin: 0;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+    border: 1px;
+    border-left-style: solid;
+    border-left-color: #ffffff;
+}
+
+    .icon-down:hover {
+        background-color: #2FBE8E;
+    }
+
+    .icon-down .fa {
+        color: #ffffff;
+        align-self: center;
+    }
+
+.navbar {
+    height: 60px;
+}
+
+.content .toolbar-content{
+    display: flex;
+    margin: 24px 0;
+    align-items: center;
+    padding-left: 24px;
+}
+
+
+.content .toolbar-content .toolbar-content-right {
+    position: absolute;
+    right: 0px;
+    margin-right: 8px;
+    float: left;
+    display: flex;
+}
+
+    .toolbar-content-right button{
+        height: 40px;
+        width: 40px;
+        margin-right: 16px;
+    }
+
+
+.search{
+    background-image: url('/content/icon/search.png');
+    background-repeat: no-repeat;
+    background-position-y: center;
+    background-position-x: 16px;
+    left: 16px;
+    width: 320px;
+    margin-right: 16px;
+    padding-left: 40px;
+    height: 40px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #bbbbbb;
+    outline: none;
+    border: 1px solid #bbbbbb;
+    box-sizing: border-box;
+}
+
+.toolbar-content select{
+    margin-right: 16px;
+    width: 160px;
+}
+
+    .gird table tr:hover {
+        background-color: #E9EBEE;
+    }
+
+.tfoot {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    width: calc(100% - 48px);
+    height: 56px;
+    padding-left: 24px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+    .tfoot .count-emplyee{
+        
+    }
+
+    .tfoot .count-page {
+        background-color: #ffffff;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .tfoot .page-navigations{
+        align-items:center;
+    }
+
+        .tfoot .page-navigations button {
+            outline: none;
+            color: #000000;
+            margin-left: 8px;
+            margin-right: 8px;
+            background-color: #E9EBEE;
+        }
+
+            .tfoot .page-navigations button:hover {
+                background-color: #2FBE8E;
+            }
+
+        .tfoot .page-navigations i {
+            color: #000000;
+        }
+
+        .tfoot .page-navigations .fa-angle-left {
+            margin-left: 18px;
+            margin-right: 10px;
+        }
+
+        .tfoot .page-navigations .fa-angle-right {
+            margin-left: 10px;
+            margin-right: 18px;
+        }
+
+
+
+        .tfoot .page-navigations .page-table {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+
+        .tfoot .page-navigations .fa-angle-double-left:hover {
+            padding: 10px;
+            background-color: #2FBE8E;
+        }
+
+        .tfoot .page-navigations .fa-angle-double-right:hover {
+            padding: 10px;
+            background-color: #2FBE8E;
+        }
+        .tfoot .page-navigations .page-selected {
+            background-color: #019160;
+        }
