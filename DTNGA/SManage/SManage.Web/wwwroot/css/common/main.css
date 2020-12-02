@@ -52,16 +52,15 @@ a {
     a:active {
         background-color: #019160;
     }
-    a:focus {
-        background-color: #019160;
-        color: #ffffff;
-        font-family: GoogleSans-Medium;
-        outline: none;
-    }
-
+.select-menu-item {
+    background-color: #019160;
+    color: #ffffff;
+    font-family: GoogleSans-Medium;
+    outline: none;
+}
 /*----------------------------*/
 /* style căn chỉnh text*/
-.text-align-left {
+.text-align-left {  
     text-align: left;
 }
 

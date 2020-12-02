@@ -158,3 +158,24 @@ input[typeFormat="money"], input[type="number"] {
         background-repeat: no-repeat;
         background-size: 16px;
     }
+
+/* Style text area*/
+.note-area {
+    min-height: 40px;
+    padding-top: 12px;
+    white-space: pre;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    resize: vertical;
+}
+
+/* Input Search field*/
+.search-field {
+    width: calc( 100% - 40px);
+    outline: none;
+    border: none;
+}
+.search-icon {
+    margin-right: 8px;
+    align-self: center;
+}

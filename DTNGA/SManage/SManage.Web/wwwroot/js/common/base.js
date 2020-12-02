@@ -29,21 +29,26 @@ class Base {
      * CreatedBy dtnga (27/11/2020)
      * */
     loadShop() {
-        // TODO lấy danh sách cửa hàng do user làm chủ từ API
-        var shops = listShop;
-        //bind tên shop + id vào combobox
-        var select = $(`<select></select>`);
-        $.each(shops, function (index, shop) {
-            var option = $(`<option></option>`);
-            var shopName = shop["ShopName"];
-            var shopId = shop["ShopId"];
-            option.append(shopName);
-            select.append(option);
-            // Lưu shopId vào data
-            option.data("keyId", shopId);
-        });
-        var headerLeft = $(`.header .header-left`);
-        headerLeft.append(select);
+        try {
+            // TODO lấy danh sách cửa hàng do user làm chủ từ API
+            var shops = listShop;
+            //bind tên shop + id vào combobox
+            var select = $(`<select></select>`);
+            $.each(shops, function (index, shop) {
+                var option = $(`<option></option>`);
+                var shopName = shop["ShopName"];
+                var shopId = shop["ShopId"];
+                option.append(shopName);
+                select.append(option);
+                // Lưu shopId vào data
+                option.data("keyId", shopId);
+            });
+            var headerLeft = $(`.header .header-left`);
+            headerLeft.append(select);
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
 
     /* Hàm thực hiện khởi tạo sự kiện
@@ -59,8 +64,7 @@ class Base {
             // TODO sự kiện khi nhập trường Tìm kiếm
 
             // TODO Sự kiện khi chọn filter
-            // Set autocomplete cho các trường yêu cầu AutoCompete
-            me.autoComplete();
+            
             // format khi nhập liệu số tiền
             me.autoFormatMoney();
             // kiểm tra dữ liệu
@@ -73,14 +77,50 @@ class Base {
             // sự kiện khi tick vào checkbox/ nhiều checkbox
             $(`table thead input[type="checkbox"]`).on("click", me.onClickCheckAll.bind(me));
             // Sự kiện tự động thêm sản phẩm vào giỏ khi click nút Thêm vào giỏ
-            $(`#btn-addToShoppingCard`).on("click", me.onClick_addToShoppingCard);
+            $(`#btn-addToShoppingCard`).on("click", me.onClick_addToShoppingCard.bind(me));
             // TODO Sự kiện khi focus vào ô nhập liệu
             $(`input`).focus(function () { });
 
+            $('.nav-item').on('click', function () {
+                $('.nav-item').removeClass('select-menu-item');
+                $(this).addClass('select-menu-item');
+                // Ẩn các content
+                $(`.content-body`).addClass("displayNone");
+                // Hiển thị content tương ứng
+                var fieldName = $(this).attr("fieldName");
+                var content = $(`.content-body[fieldName="` + fieldName + `"]`);
+                $(content).removeClass("displayNone");
+                $(`.content-header-title`).text(content.attr("titleName"));
+
+            })
         }
         catch (e) {
             console.log(e);
         }
+    }
+
+    /**
+     *Thực hiện bind dữ liệu khách hàng tự động
+     * CreatedBy dtnga (02/12/2020)
+     * @param {object} customer Thông tin khách hàng
+     */
+    autoBindCustomer(customer) {
+        if (!customer)
+            return;
+        var customerName = customer["FullName"].trim();
+        var phoneNumber = customer["PhoneNumber"].trim();
+        var address = customer["Address"].trim();
+        var province = customer["Province"].trim();
+        var district = customer["District"].trim();
+        var ward = customer["Ward"].trim();
+        // Bind dữ liệu
+        $(`.box-info input[fieldName="CustomerName"]`).val(customerName);
+        $(`.box-info input[fieldName="PhoneNumber"]`).val(phoneNumber);
+        $(`.box-info input[fieldName="Address"]`).val(address);
+        $(`.box-info input[fieldName="Province"]`).val(province);
+        $(`.box-info input[fieldName="District"]`).val(district);
+        $(`.box-info input[fieldName="Ward"]`).val(ward);
+
     }
 
     /**
@@ -89,59 +129,68 @@ class Base {
      * @param {object} product
      */
     addProductToCart(product) {
-        
+
     }
 
     /** TODO Thực hiện cập nhật tổng tiền của giỏ hàng khi thay đổi giá sản  phẩm
      * CreatedBy dtnga (01/12/2020)
      * */
-    onChangeProductPrice() {
+    onChangeProductPrice(priceInput) {
         try {
-            var index = convertInt($(this).attr("index"));
-            var newPrice = convertInt($(this).attr("value"));
-            var productList = $(`.product-list .product-detail`);
-            var currentProduct = $(productList)[index - 1];
-            var quantity = convertInt( $(currentProduct).find(`input[type="number"]`).val());
+            var newPrice = convertInt($(priceInput).attr("value"));
+            var currentProduct = $(priceInput).closest('.product-detail');
+            var quantity = convertInt($(currentProduct).find(`input[type="number"]`).val());
             var newCost = quantity * newPrice;
             // Cập nhật tổng tiền sản phẩm
             $(currentProduct).find(`.cost`).text(formatMoney(newCost));
             $(currentProduct).find(`.cost`).attr("value", newCost);
-            // Cập nhật tổng tiền giỏ hàng
-            var newTotal = 0;
-            $.each(productList, function (index, item) {
-                var cost = convertInt($(item).find(`.cost`).attr("value"));
-                newTotal = newTotal + cost;
-            });
-            $(`.shopping-cart .total-money`).text(formatMoney(newTotal));
-            $(`.shopping-cart .total-money`).attr("value", newTotal);
         }
         catch (e) {
             console.log(e);
         }
     }
 
-    /** Thực hiện cập nhật tổng tiền của giỏ hàng khi cập nhật số lượng sản phẩm
-     * CreatedBy dtnga (01/12/2020)
-     * */
-    onChangeAmount() {
+    /** Thực hiện lại tổng số lượng và số tiền các sản phẩm trong giỏ hàng 
+     * CreatedBy dtnga (02/12/2020)
+     */
+    calcculateTotal() {
         try {
-            var index = convertInt($(this).attr("index"));
-            var newQuantity = convertInt($(this).val());
-            var productList = $(`.product-list .product-detail`);
-            var currentProduct = $(productList)[index - 1];
-            var currentPrice = convertInt($(currentProduct).find(`input[typeFormat="money"]`).attr("value"));
-            var newCost = currentPrice * newQuantity;
-            // Cập nhật tổng tiền sản phẩm
-            $(currentProduct).find(`.cost`).text(formatMoney(newCost));
-            $(currentProduct).find(`.cost`).attr("value", newCost);
-            // cập nhật tổng số tiền đơn hàng
+            //Cập nhật tổng số lượng sản phẩm trong giỏ hàng
+            var totalQuantity = $(`#order-add .product-list`).children().length - 1; // trừ empty mark đi
+            $(`.total-quantity span`).text(totalQuantity);
+            // Nếu trống thì hiển thị empty mark
+            if (totalQuantity <= 0) {
+                var emptyMark = $(`.product-list .empty-mark`);
+                $(emptyMark).removeClass(`displayNone`);
+            }
+            // Cập nhật tổng số tiền giỏ hàng
+            var productList = $(`#order-add .product-list .product-detail`);
             var newTotal = 0;
             $.each(productList, function (index, item) {
                 var cost = convertInt($(item).find(`.cost`).attr("value"));
                 newTotal = newTotal + cost;
             });
-            $(`.total-money`).text( formatMoney(newTotal) );
-            $(`.total-money`).attr("value", newTotal);
+            $(`#order-add .total-money`).text(formatMoney(newTotal));
+            $(`#order-add .total-money`).attr("value", newTotal);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    /**
+     *  Thực hiện cập nhật tổng tiền của giỏ hàng khi cập nhật số lượng sản phẩm
+     * CreatedBy dtnga (01/12/2020)
+     * @param {any} quantity
+     */
+    onChangeAmount(quantity) {
+        try {
+            var newQuantity = convertInt($(quantity).val());
+            var currentProduct = $(quantity).closest('.product-detail');
+            var currentPrice = convertInt($(currentProduct).find(`input[typeFormat="money"]`).attr("value"));
+            var newCost = currentPrice * newQuantity;
+            // Cập nhật tổng tiền sản phẩm
+            $(currentProduct).find(`.cost`).text(formatMoney(newCost));
+            $(currentProduct).find(`.cost`).attr("value", newCost);
         }
         catch (e) {
             console.log(e);
@@ -151,12 +200,12 @@ class Base {
     /** Thực hiện thêm sản phẩm vào giỏ hàng
      * CreatedBy dtnga (29/11/2020)
      * */
-    //TODO thêm sản phẩm vào giỏ hàng
     onClick_addToShoppingCard() {
         try {
             var me = this;
             //Lấy thông tin sản phẩm
-            var productCode = $(`input[fieldName="ProductCode"]`).val().trim();
+            var productCodeField = $(`#order-add input[type="search"][fieldName="ProductCode"]`);
+            var productCode = productCodeField.val().trim();
 
             // Hoặc lấy qua API bằng ProductCode
             //$.ajax({
@@ -176,16 +225,7 @@ class Base {
                 var content = $(`<div class="popup-body-text">Sản phẩm mã <span> ` + productCode + ` </span> không tồn tại. Vui lòng kiểm tra và nhập lại</div>`);
                 popupBody.append(content);
                 popup.show();
-                $(`.popup-notification #btn-exit-popup`).on("click", function () {
-                    popup.hide();
-                });
-                $(`.popup-notification #btn-close`).on("click", function () {
-                    popup.hide();
-                });
-                $('body').on("keydown", function (e) {
-                    if (e.which == 27)
-                        $(popup).hide();
-                });
+                me.initEventPopup(popup);
                 return;
             }
             // Đưa ra thông báo sản phẩm đã hết
@@ -196,16 +236,7 @@ class Base {
                 var content = $(`<div class="popup-body-text">Sản phẩm mã <span> ` + productCode + ` </span> hiện đã hết. Vui lòng kiểm tra và nhập lại</div>`);
                 popupBody.append(content);
                 popup.show();
-                $(`.popup-notification #btn-exit-popup`).on("click", function () {
-                    popup.hide();
-                });
-                $(`.popup-notification #btn-close`).on("click", function () {
-                    popup.hide();
-                });
-                $('body').on("keydown", function (e) {
-                    if (e.which == 27)
-                        $(popup).hide();
-                });
+                me.initEventPopup(popup);
                 return;
             }
             else {
@@ -221,14 +252,14 @@ class Base {
                             $(item).find(`.quantity`).val(function (i, oldval) {
                                 return ++oldval;
                             })
-                            var productPrice = parseInt(product["Price"], 10);
+                            var productPrice = convertInt(product["CurrentPrice"]);
                             var oldCost = $(item).find(`.cost`).attr("value");
-                            var newCost = parseInt(oldCost, 10) + productPrice;
+                            var newCost = convertInt(oldCost) + productPrice;
                             $(item).find(`.cost`).text(formatMoney(newCost));
                             $(item).find(`.cost`).attr("value", newCost);
                             addNew = 0;
                             // Cập nhật tổng giá trị giỏ hàng
-                            var oldTotal = parseInt($(`.total-money`).attr("value"), 10);
+                            var oldTotal = convertInt($(`.total-money`).attr("value"));
                             var newTotal = oldTotal + productPrice;
                             $(`.total-money`).text(formatMoney(newTotal));
                             $(`.total-money`).attr("value", newTotal);
@@ -239,7 +270,7 @@ class Base {
                 if (addNew == 1) {
                     // Ẩn Empty mark 
                     var emptyMark = $(`.product-list .empty-mark`);
-                    $(emptyMark).addClass(`.displayNone`);
+                    $(emptyMark).addClass(`displayNone`);
                     me.addProductToCart(product);
                 }
             }
@@ -250,10 +281,11 @@ class Base {
     }
 
     /**
-     *  Hàm thực hiện khởi tạo sự kiện trên popup
+     * Hàm thực hiện khởi tạo sự kiện trên popup
      *  CreatedBy dtnga (30/11/2020)
+     * @param {Element} popup cần khởi tạo sự kiện
      */
-    initEventPopup() {
+    initEventPopup(popup) {
         $(`.m-popup #btn-exit-popup`).on("click", function () {
             $(popup).hide();
         });
@@ -266,34 +298,16 @@ class Base {
         });
     }
 
-    /** Thực hiện xóa sản phẩm trong giỏ hàng
-     * CreatedBy dtnga (29/11/2020)
-     * */
-    onClick_deleteProduct() {
+    /**
+     * Thực hiện xóa một sản phẩm trong giỏ hàng
+     * ModifiedBy dtnga (02/12/2020)
+     * @param {Element} button button xóa tại mỗi dòng sản phẩm
+     */
+    onClick_deleteProduct(button) {
         try {
-            //Lấy thành phần cha: product-line
-            var parentNode = this.parentNode.parentNode.parentNode;
-            // Lấy giá tiền sản phẩm cần xóa
-            var productCost = parseInt($(parentNode).find(`.cost`).attr("value"), 10);
+            var productdetail = $(button).closest(".product-detail");
             // Xóa dòng chứa thông tin sản phẩm
-            parentNode.remove();
-            //Cập nhật tổng số lượng sản phẩm trong giỏ hàng
-            var totalQuantity = $(`.product-list`).children().length - 1; // trừ empty mark đi
-            $(`.total-quantity span`).text(totalQuantity);
-            // Nếu trống thì hiển thị empty mark
-            if (totalQuantity <= 0) {
-                var emptyMark = $(`.product-list .empty-mark`);
-                $(emptyMark).removeClass(`displayNone`);
-            }
-            // Cập nhật tổng số tiền giỏ hàng
-            var productList = $(`.product-list .product-detail`);
-            var newTotal = 0;
-            $.each(productList, function (index, item) {
-                var cost = parseInt($(item).find(`.cost`).attr("value"), 10);
-                newTotal = newTotal + cost;
-            });
-            $(`.total-money`).text(formatMoney(newTotal));
-            $(`.total-money`).attr("value", newTotal);
+            $(productdetail).remove();
         }
         catch (e) {
             console.log(e);
@@ -1397,5 +1411,33 @@ var listObj = [
         OrderStateCode: 4,
         State: "Đang giao hàng"
     }
+]
 
+var listCustomer = [
+    {
+        ReceiverId: "126339f9-1e9c-7ed8-8a2a-acc8fc2f00af",
+        FullName: "Nguyễn Văn Cường",
+        PhoneNumber: "0915389872",
+        Address: "120, ngõ 322, đường Mỹ Đình",
+        SuccessOrderedAmount: "2",
+        OrderAmount: "3",
+        CreatedDate: "2/22/2020 2:31:23 AM",
+        Province: "Hà Nội",
+        District: "",
+        Ward: "",
+        Street:""
+    },
+    {
+        ReceiverId: "1294ae7e-2858-2074-4429-0204eeb736fa",
+        FullName: "Hoàng Văn Phan ",
+        PhoneNumber: "0916486170",
+        Address: "5, ngõ 67, đường Phùng Khoang",
+        SuccessOrderedAmount: "2",
+        OrderAmount: "3",
+        CreatedDate: "2/22/2020 2:31:23 AM",
+        Province: "Hà Nội",
+        District: "Nam Từ Liêm",
+        Ward: "Trung Văn",
+        Street: "Phùng Khoang"
+    }
 ]

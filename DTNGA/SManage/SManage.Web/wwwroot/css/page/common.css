@@ -35,3 +35,26 @@
     height: calc( 100vh - 49px);
     padding: 0 16px;
 }
+
+/* Style Thông tin cung cấp thêm*/
+.extra-info {
+    width: 100%;
+    padding: 16px;
+    background-color: #e3f3ee;
+    margin-bottom: 16px;
+}
+
+    .extra-info span {
+        font-weight: bold;
+    }
+
+/* Style Thông báo không có dữ liệu trên hệ thống*/
+.empty-result {
+    padding: 16px;
+    width: 100%;
+    background-color: #FFF3EB;
+    margin-bottom: 16px
+}
+    .empty-result span {
+        font-weight: bold;
+    }

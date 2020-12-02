@@ -1,0 +1,11 @@
+﻿/* Style cho các thành phần dùng chung trên giao diện Owner*/
+
+.extra-info {
+    width: 100%;
+    padding: 16px;
+    background-color: #e3f3ee;
+    margin-bottom: 16px;
+}
+.extra-info span{
+    font-weight: bold;
+}

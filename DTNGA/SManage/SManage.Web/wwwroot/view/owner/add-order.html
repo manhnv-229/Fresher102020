@@ -1,74 +1,8 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-    <link href="/css/common/main.css" rel="stylesheet" />
-    <link href="/css/page/common.css" rel="stylesheet" />
-    <link href="/css/page/add-order.css" rel="stylesheet" />
-    <link href="/css/lib/jquery-ui.css" rel="stylesheet" />
-</head>
-<body>
-    <!-- navbar -->
-    <div class="navbar">
-        <div class="nav-header">
-            <div class="logo-box">
-                <div class="m-icon toggle-icon"></div>
-                <div class="logo-image"></div>
-            </div>
-        </div>
-        <div class="nav-content">
-            <a href="add-order.html">
-                <div class="nav-item" tabindex="1">
-                    <div class="nav-item-box">
-                        <div class="m-icon nav-item-icon create-order-icon"></div>
-                        <div class="nav-item-text">Tạo đơn mới</div>
-                    </div>
-                </div>
-            </a>
-            <a href="order-management.html">
-                <div class="nav-item" tabindex="2">
-                    <div class="nav-item-box">
-                        <div class="m-icon nav-item-icon orders-list-icon"></div>
-                        <div class="nav-item-text">Quản lý đơn hàng</div>
-                    </div>
-                </div>
-            </a>
-            <a href="">
-                <div class="nav-item" tabindex="3">
-                    <div class="nav-item-box">
-                        <div class="m-icon nav-item-icon shipping-icon"></div>
-                        <div class="nav-item-text">Vận chuyển</div>
-                    </div>
-                </div>
-            </a>
-            <a href="">
-                <div class="nav-item" tabindex="4">
-                    <div class="nav-item-box">
-                        <div class="m-icon nav-item-icon setting-icon"></div>
-                        <div class="nav-item-text">Thiết lập</div>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-
-    <!-- Header -->
-    <div class="header">
-        <div class="header-left"></div>
-        <div class="header-right">
-            <div class="header-right-box">
-                <div class="avatar"></div>
-                <div class="username"></div>
-                <div class="m-icon setting-more-icon"></div>
-            </div>
-        </div>
-    </div>
-
+﻿
     <!-- Content -->
     <div class="content">
         <div class="content-header">
-            <div class="content-header-title">Tạo đơn</div>
+            <div class="content-header-title"></div>
             <div class="content-header-right"></div>
         </div>
         <div class="content-filter">
@@ -97,8 +31,8 @@
                         <div class="box-body">
                             <div class="input-line">
                                 <div class="input-box input-box-small">
-                                    <div class="input-title">Mã sản phẩm (<span>*</span>)</div>
-                                    <input class="m-input" type="text" fieldName="ProductCode" required validate="false" autocomplete="on" />
+                                    <div class="input-title">Mã sản phẩm</div>
+                                    <input class="m-input" type="text" placeholder="Nhập mã sản phẩm" fieldName="ProductCode" autocomplete="on" />
                                 </div>
                                 <button class="m-button" id="btn-addToShoppingCard">
                                     <div class="m-icon shopping-icon"></div>
@@ -130,45 +64,54 @@
                         <div class="box-body">
                             <div class="input-line">
                                 <div class="input-box input-box-small">
-                                    <div class="input-title">Tên khách hàng (<span>*</span>)</div>
-                                    <input class="m-input" type="text" required fieldName="CustomerName" validate="false" />
-                                </div>
-                                <div class="input-box input-box-small">
-                                    <div class="input-title">Số điện thoại (<span>*</span>)</div>
-                                    <input class="m-input" type="tel" required fieldName="PhoneNumber" validate="false" />
+                                    <input class="m-input" type="search" placeholder="Nhập số điện thoại" fieldName="PhoneNumber"/>
                                 </div>
                             </div>
-                            <div class="input-line">
-                                <div class="input-box input-box-big ">
-                                    <div class="input-title">Địa chỉ (<span>*</span>)</div>
-                                    <input class="m-input" type="text" required fieldName="Address" validate="false" />
-                                </div>
-                            </div>
-                            <div class="input-line">
-                                <div class="input-box input-box-small">
-                                    <div class="input-title">Tỉnh/Thành phố (<span>*</span>)</div>
-                                    <div class="m-select" fieldName="Province">
-                                        <select class="m-input" validate="false">
-                                        </select>
+                            <div class="empty-mark displayNone">Chưa có dữ liệu khách hàng</div>
+                            <div class="box-info displayNone">
+                                <div class="input-line">
+                                    <div class="input-box input-box-small">
+                                        <div class="input-title">Tên khách hàng (<span>*</span>)</div>
+                                        <input class="m-input" type="text" required fieldName="CustomerName" validate="false" />
+                                    </div>
+                                    <div class="input-box input-box-small">
+                                        <div class="input-title">Số điện thoại (<span>*</span>)</div>
+                                        <input class="m-input" type="tel" required fieldName="PhoneNumber" validate="false" />
                                     </div>
                                 </div>
-                                <div class="input-box input-box-small">
-                                    <div class="input-title">Quận/Huyện (<span>*</span>)</div>
-                                    <div class="m-select" fieldName="District">
-                                        <select class="m-input" validate="false">
-                                        </select>
+                                <div class="input-line">
+                                    <div class="input-box input-box-big ">
+                                        <div class="input-title">Địa chỉ (<span>*</span>)</div>
+                                        <input class="m-input" type="text" required fieldName="Address" validate="false" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <div class="input-box input-box-small">
+                                        <div class="input-title">Tỉnh/Thành phố (<span>*</span>)</div>
+                                        <div class="m-select" fieldName="Province">
+                                            <select class="m-input" validate="false">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="input-box input-box-small">
+                                        <div class="input-title">Quận/Huyện (<span>*</span>)</div>
+                                        <div class="m-select" fieldName="District">
+                                            <select class="m-input" validate="false">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <div class="input-box input-box-small">
+                                        <div class="input-title">Phường/Xã (<span>*</span>)</div>
+                                        <div class="m-select" fieldName="Ward">
+                                            <select class="m-input" validate="false">
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="input-line">
-                                <div class="input-box input-box-small">
-                                    <div class="input-title">Phường/Xã (<span>*</span>)</div>
-                                    <div class="m-select" fieldName="Ward">
-                                        <select class="m-input" validate="false">
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -299,5 +242,3 @@
     <script src="/js/common/common.js"></script>
     <script src="/js/common/base.js"></script>
     <script src="/js/page/add-order.js"></script>
-</body>
-</html>

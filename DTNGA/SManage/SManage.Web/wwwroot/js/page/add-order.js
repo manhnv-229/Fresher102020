@@ -7,9 +7,28 @@ class AddOrder extends Base {
         try {
             super();
             this.autoCompleteProduct();
-            
-            //Thông tin người nhận
-            this.autoCompleteCustomer();
+            this.initEventOrderAddPage();
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    /** Khởi tạo sự kiện cho các thành phần trên trang Order Add
+     * CreatedBy dtnga (02/12/2020)
+     * */
+    initEventOrderAddPage() {
+        try {
+            var me = this;
+            $(`#order-add input[type="search"][fieldName="ProductCode"]`).on("keyup", function (e) {
+                if (e.which === 13)
+                    $(`#btn-addToShoppingCard`).click();
+            });
+            $(`#order-add input[type="search"][fieldName="PhoneNumber"]`).on("keyup", function (e) {
+                if (e.which == 13) {
+                    me.checkCustomer(this);
+                }
+            })
         }
         catch (e) {
             console.log(e);
@@ -23,7 +42,7 @@ class AddOrder extends Base {
         try {
             var me = this;
             // Thiết lập dữ liệu gợi ý cho trường tìm kiếm ( ProductName + ProductCode )
-            var searchInput = $(`input[fieldName="ProductCode"]`);
+            var searchInput = $(`#order-add input[type="search"][fieldName="ProductCode"]`);
             //Lấy danh sách sản phẩm hiện có
             var productList = listProduct;
             // Tạo source autocomplete
@@ -44,26 +63,31 @@ class AddOrder extends Base {
                 var productPrice = product["Price"];
                 if (!productPrice)
                     productPrice = '';
+                var currentPrice = product["CurrentPrice"];
+                if (!currentPrice)
+                    currentPrice = '';
 
                 source.push({
-                    label: productName ,
+                    label: productName,
                     value: productCode,
                     code: productCode,
                     type: typeAndColor,
-                    price: productPrice
+                    price: productPrice,
+                    currentPrice: currentPrice
                 });
             })
+
             // set autocomplete
             $(searchInput).autocomplete({
                 source: source,
                 autoFocus: true,
                 focus: function (event, suggest) {
-                    //$(searchInput).val(suggest.item.label);
+                    $(searchInput).val(suggest.item.label);
                     return false;
                 },
                 select: function (event, suggest) {
                     var value = suggest.item.value;
-                    $(searchInput).val('');
+                    $(searchInput).val(value);
                     var product = listProduct.find(p => p["ProductCode"] == value);
                     // Hoặc lấy qua API bằng ProductCode
                     //$.ajax({
@@ -80,15 +104,10 @@ class AddOrder extends Base {
                         var popup = $(`.popup-notification`);
                         var popupBody = $(popup).find(`.popup-body`);
                         $(popupBody).children().remove();
-                        var content = $(`<div class="popup-body-text">Sản phẩm mã <span> ` + productCode + ` </span> không tồn tại. Vui lòng kiểm tra và nhập lại</div>`);
+                        var content = $(`<div class="popup-body-text">Sản phẩm <span> ` + productCode + ` </span> không tồn tại. Vui lòng kiểm tra và nhập lại</div>`);
                         popupBody.append(content);
                         popup.show();
-                        $(`.popup-notification #btn-exit-popup`).on("click", function () {
-                            popup.hide();
-                        });
-                        $(`.popup-notification #btn-close`).on("click", function () {
-                            popup.hide();
-                        });
+                        me.initEventPopup(popup);
                         return;
                     }
                     // Đưa ra thông báo sản phẩm hết hàng
@@ -99,12 +118,7 @@ class AddOrder extends Base {
                         var content = $(`<div class="popup-body-text">Sản phẩm mã <span> ` + value + ` </span> hiện đã hết. Vui lòng kiểm tra và nhập lại</div>`);
                         popupBody.append(content);
                         popup.show();
-                        $(`.popup-notification #btn-exit-popup`).on("click", function () {
-                            popup.hide();
-                        });
-                        $(`.popup-notification #btn-close`).on("click", function () {
-                            popup.hide();
-                        });
+                        me.initEventPopup(popup);
                         return;
                     }
                     // Nếu còn lại >0 tự động gen sản phẩm trong giỏ hàng
@@ -116,20 +130,22 @@ class AddOrder extends Base {
                             $.each(existProducts, function (index, item) {
                                 var code = $(item).find(`.product-code`).text().trim();
                                 if (code == value) {
+                                    addNew = 0;
                                     // Cập nhật số lượng sản phẩm
                                     var quantity = $(item).find(`.quantity`);
-                                    var oldQuantity= parseInt($(quantity).val(), 10);
+                                    var oldQuantity = parseInt($(quantity).val(), 10);
                                     var newQuantity = ++oldQuantity;
                                     $(quantity).val(newQuantity);
+
                                     // Cập nhật tổng số tiền sản phẩm
-                                    var productPrice = parseInt(product["Price"], 10);
-                                    var oldCost = parseInt($(item).find(`.cost`).attr("value"), 10);
+                                    var productPrice = convertInt(product["CurrentPrice"]);
+                                    var oldCost = convertInt($(item).find(`.cost`).attr("value"));
                                     var newCost = productPrice + oldCost;
                                     $(item).find(`.cost`).text(formatMoney(newCost));
                                     $(item).find(`.cost`).attr("value", newCost);
-                                    addNew = 0;
+
                                     // Cập nhật tổng giá trị giỏ hàng
-                                    var oldTotal = parseInt($(`.total-money`).attr("value"), 10);
+                                    var oldTotal = convertInt($(`.total-money`).attr("value"));
                                     var newTotal = oldTotal + productPrice;
                                     $(`.total-money`).text(formatMoney(newTotal));
                                     $(`.total-money`).attr("value", newTotal);
@@ -142,7 +158,7 @@ class AddOrder extends Base {
                             var emptyMark = $(`.product-list .empty-mark`);
                             $(emptyMark).addClass(`displayNone`);
                             me.addProductToCart(product);
-                            
+
                         }
                     }
                     return false;
@@ -150,33 +166,52 @@ class AddOrder extends Base {
             })
                 .data("ui-autocomplete")._renderItem = function (ul, item) {
                     //TODO custome autocomplete item
-                return $("<li>")
-                    .data("ui-autocomplete-item", item)
-                    .append("<div>" +
-                    item.label + "<br>" +
-                    "Mã sản phẩm" + item.code + "<br>" +
-                    "Phân loại: " + item.type + "<br>"+
-                    "Giá bán: " + item.price + 
-                        "</div>")
-                    .appendTo(ul);
-            };
+                    return $("<li>")
+                        .data("ui-autocomplete-item", item)
+                        .append("<div>" +
+                            item.label + "<br>" +
+                            "Mã sản phẩm" + item.code + "<br>" +
+                            "Phân loại: " + item.type + "<br>" +
+                            "Giá bán lẻ: " + item.price + "<br>" +
+                            "Giá khuyến mại: " + item.currentPrice +
+                            "</div>")
+                        .appendTo(ul);
+                };
         }
         catch (e) {
             console.log(e);
         }
     }
 
-
-    /**TODO Thực hiện check thông tin khách hàng và tự động điền
-     * CreatedBy dtnga (30/11/2020)
-     * */
-    autoCompleteCustomer() {
-        // Sau khi nhập số điện thoại => Check khách đã tồn tại chưa
-
-        // Nếu đã tồn tại => Tự động binding dữ liệu ( địa chỉ khách đặt gần đây nhất)
-
-        // Nếu chưa có thì nhập chay
+    /**
+     * Thực hiện kiểm tra khách hàng đã có thông tin trên hệ thống hay chưa
+     * CreatedBy dtnga (02/12/2020)
+     * @param {string} tel Số điện thoại
+     */
+    checkCustomer(tel) {
+        try {
+            var me = this;
+            // Lấy thông tin số điện thoại
+            var phoneNumber = $(tel).val();
+            //TODO Lấy thông tin khách hàng bằng số điện thoại qua API
+            var customer = listCustomer.find(c => phoneNumber == c["PhoneNumber"]);
+            // Nếu có thông tin => tự động bind dữ liệu vào box-info
+            if (customer) {
+                $(`.empty-result`).addClass("displayNone");
+                me.autoBindCustomer(customer);
+                $(`.box-info`).removeClass("displayNone");
+            }
+            // Nếu chưa có thông tin => Hiển thị thông báo Chưa có dữ liệu
+            else {
+                $(`.empty-result`).removeClass("displayNone");
+                $(`.box-info`).addClass("displayNone");
+            }
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
+
 
     /**
      * Thực hiện gen và thêm sản phẩm mới vào giỏ hàng
@@ -189,7 +224,7 @@ class AddOrder extends Base {
             return;
         }
         var me = this;
-        var productList = $(`.product-list`);
+        var productList = $(`#order-add .product-list`);
         var index = $(productList).find(`.product-detail`).length + 1;
         var productCode = product["ProductCode"];
         var productPrice = convertInt(product["CurrentPrice"]);
@@ -197,13 +232,13 @@ class AddOrder extends Base {
         var productDetail = $(`<div class="product-detail">
                                             <div class="product-line">
                                                 <div class="product-line-left">
-                                                    <button class="button-delete m-icon round-icon delete-icon" title="Xóa" index="`+ index + `"></button>
+                                                    <button class="button-delete m-icon round-icon delete-icon" title="Xóa"></button>
                                                     <div class="product-code">`+ productCode + `</div>
                                                 </div>
                                                 <div class="product-line-right">
                                                     <div><input class="m-input price" type="text" typeFormat="money" fieldName="CurrentPrice" value="`+ productPrice + `" index="` + index + `"/></div>
                                                     <div> x </div>
-                                                    <div class="quantity-box"><input class="m-input quantity" type="number" min="1" max="`+ curentAmount + `" value="1" placeholder="Còn lại ` + curentAmount + ` sản phẩm" index="` + index + `"/></div>
+                                                    <div class="quantity-box"><input class="m-input quantity" type="number" min="1" max="`+ curentAmount + `" value="1" placeholder="Còn lại ` + curentAmount + ` sản phẩm" title="Còn lại ` + curentAmount + ` sản phẩm" index="` + index + `"/></div>
                                                 </div>
                                             </div>
                                             <div class="cost-line">
@@ -225,11 +260,24 @@ class AddOrder extends Base {
         // format khi nhập liệu số tiền
         me.autoFormatMoney();
         // Sự kiện khi nhấn nút xóa tại mỗi dòng sản phẩm
-        $(`.product-list .product-line button`).on("click", me.onClick_deleteProduct);
+        $(`.product-list .product-line button`).on("click", function () {
+            me.onClick_deleteProduct(this);
+            me.calcculateTotal();
+        });
         // sự kiện khi thay đổi giá bán sản phẩm
-        $(`.product-list .product-line input[typeFormat="money"]`).on("keyup", me.onChangeProductPrice);
+        $(`.product-list .product-line input[typeFormat="money"]`).on("keyup", function () {
+            // Cập nhật tổng tiền sản phẩm
+            me.onChangeProductPrice(this);
+            // Cập nhật tổng số lượng và số tiền giỏ hàng
+            me.calcculateTotal();
+        });
         // sự kiện khi thay đổi số lượng sản phẩm
-        $(`.product-list .product-line input[type="number"]`).on("input", me.onChangeAmount);
+        $(`.product-list .product-line input[type="number"]`).on("input", function () {
+            // Cập nhật tổng tiền sản phẩm
+            me.onChangeAmount(this);
+            // Cập nhật tổng số lượng và số tiền giỏ hàng
+            me.calcculateTotal();
+        });
     }
 
 }

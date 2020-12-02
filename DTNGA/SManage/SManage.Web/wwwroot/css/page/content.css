@@ -37,16 +37,6 @@
         margin-top: 0;
     }
 
-    .content-filter .content-filter-left .search-icon {
-        margin-right: 8px;
-        align-self: center;
-    }
-
-    .content-filter .content-filter-left .search-field {
-        width: calc( 100% - 40px);
-        outline: none;
-        border: none;
-    }
 
         /* hint */
         .content-filter .content-filter-left .search-field::-webkit-input-placeholder {
@@ -79,7 +69,9 @@
 }
 
 /* content grid ( chứa bảng dữ liệu) => grid.css*/
-
+.content .content-body {
+    height: calc(100% - 50px);
+}
 /* paging (phần phân trang) */
 .content .paging {
     width: 100%;
