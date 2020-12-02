@@ -124,6 +124,7 @@
                 <tbody>
                 </tbody>
             </table>
+            <div class="loader" id="loadingIcon"></div>
         </div>
         <div class="content-footer">
             <p>Hiển thị 1-10/1000 nhân viên</p>
@@ -143,6 +144,10 @@
 
     <div class="dialog-modal">
         <div class="dialog-content">
+            <div class="loader-dialog">
+                <div class="loader-spinner" id="loaderDialog">
+                </div>
+            </div>
             <div class="dialog-header">
                 <h2>Thông tin nhân viên</h2>
                 <i class="fas fa-times" style="cursor:pointer;"></i>
@@ -181,7 +186,7 @@
                                 <option selected="selected">
                                     Nam
                                 </option>
-                                <option>
+                                <option selected="selected">
                                     Nữ
                                 </option>
                                 <option>
@@ -210,7 +215,7 @@
                     <div class="double-input">
                         <div class="input-form">
                             <label class="input-label" for="Email">Email(*)</label>
-                            <input  class="input-required" id="Email" type="email" />
+                            <input class="input-required" id="Email" type="email" />
                         </div>
                         <div class="input-form">
                             <label class="input-label" for="PhoneNumber">Số điện thoại(*)</label>
@@ -225,21 +230,11 @@
                         <div class="input-form">
                             <label class="input-label" for="PositionId">Vị trí</label>
                             <select class="select-position" id="PositionId">
-                                <option selected="selected">
-                                    Giám đốc
-                                </option>
-                                <option>
-                                    Nhân viên Marketting
-                                </option>
-                                <option>
-                                    Thu ngân
-                                </option>
                             </select>
                         </div>
                         <div class="input-form">
                             <label class="input-label" for="DepartmentId">Phòng ban</label>
                             <select class="select-department" id="DepartmentId">
-                                
                             </select>
                         </div>
                     </div>
@@ -262,11 +257,11 @@
                         </div>
                         <div class="input-form">
                             <label class="input-label" for="DateOfBirth">Tình trạng công việc</label>
-                            <select class="select-department" id="WorkStatus">
+                            <select class="select-workstatus" id="WorkStatus">
                                 <option selected="selected">
                                     Đang làm việc
                                 </option>
-                                <option>
+                                <option selected="selected">
                                     Đã nghỉ việc
                                 </option>
                             </select>
@@ -287,11 +282,17 @@
     <div class="modal-delete">
         <div class="delete-alert">
             <div class="delete-header">
-                <h2>Cảnh báo</h2>
-                <i class="fas fa-times" style="cursor:pointer;"></i>
+                <p style="margin: 24px; font-size: 17px; font-family:GoogleSans-Bold;">Cảnh báo</p>
+                <i class="fas fa-times" style="cursor:pointer; font-size: 18px;"></i>
             </div>
 
-            <p style="margin:0 15px 15px; font-size:18px;">Bạn có chắc chắn muốn xóa nhân viên này?</p>
+            <div class="alert-content">
+                <div class="alert-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <p style="font-size:15px">Bạn có chắc chắn muốn xóa nhân viên này?</p>
+            </div>
+            
 
             <div class="dialog-footer">
                 <button class="footer-button cancel-button" id="cancel">Hủy</button>

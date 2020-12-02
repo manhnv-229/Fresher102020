@@ -77,7 +77,11 @@ namespace MISA.ApplicationCore.Entities
         /// </summary>
         public DateTime? JoinDate { get; set; }
 
-        
+        /// <summary>
+        /// Mã số thuế cá nhân
+        /// </summary>
+        public string PersonalTaxCode { get; set; }
+
         /// <summary>
         /// Mức lương
         /// </summary>
