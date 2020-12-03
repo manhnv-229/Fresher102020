@@ -50,3 +50,17 @@ function showSuccessMessenger() {
     }, 2000)
 
 }
+
+var delayFunction = (function () {
+    var ticker = null;
+    return function (callback, ms, jsObject) {
+        if (ticker !== null) {
+            clearTimeout(ticker)
+        }
+        if (jsObject == null) {
+            ticker = setTimeout(callback, ms)
+        } else {
+            ticker = setTimeout(callback.bind(jsObject), ms)
+        }
+    }
+}());

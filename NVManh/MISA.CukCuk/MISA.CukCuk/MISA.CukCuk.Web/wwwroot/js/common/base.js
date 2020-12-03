@@ -4,10 +4,15 @@ class BaseJS {
         this.host = "";
         this.apiRouter = null;
         this.setApiRouter();
+        this.SubApiRouter = '';
         this.initEvents();
         this.beforeLoadDataCustom();
         this.loadData();
         this.afterLoadDataCustom();
+    }
+
+    setSubApiEndPoint() {
+        return null;
     }
 
     setApiRouter() {
@@ -176,13 +181,14 @@ class BaseJS {
     loadData() {
         var me = this;
         try {
+            me.setSubApiEndPoint();
             $('table tbody').empty();
             // Lấy thông tin các cột dữ liệu:
             var columns = $('table thead th');
             var getDataUrl = this.getDataUrl;
             $('.loading').show();
             $.ajax({
-                url: me.host + me.apiRouter,
+                url: me.host + me.apiRouter + me.SubApiRouter,
                 method: "GET",
                 async: true,
             }).done(function (res) {

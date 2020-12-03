@@ -110,6 +110,13 @@
             padding: 0 16px;
         }
 
+            .m-combobox .m-combobox-data .m-combobox-item::before {
+                font-family: 'Font Awesome 5 Pro';
+                content: "";
+                width:16px;
+                margin-right: 10px;
+            }
+
             .m-combobox .m-combobox-data .m-combobox-item:hover {
                 background-color: #E9EBEE;
                 cursor: pointer;
@@ -123,3 +130,9 @@
             background-color: #019160 !important;
             color: #ffffff;
         }
+
+            .m-combobox .m-combobox-data .mCombobox__item--selected::before {
+                font-family: 'Font Awesome 5 Pro';
+                content: "\f00c";
+                margin-right: 10px;
+            }

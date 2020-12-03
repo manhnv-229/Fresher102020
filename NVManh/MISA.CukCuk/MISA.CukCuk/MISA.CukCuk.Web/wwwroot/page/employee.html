@@ -274,9 +274,10 @@
                                            label="Giới tính"
                                            label-cls=""
                                            input-cls=""
-                                           fieldValue="Gender"
-                                           fieldText="GenderName"
-                                           getDataUrl=""
+                                           dataIndex="Gender"
+                                           fieldValue="value"
+                                           fieldText="text"
+                                           apiGetUrl="/api/v1/enums/gender"
                                            ></mcombobox>
                             </div>
                         </div>
@@ -380,7 +381,7 @@
     </div>
     <script src="/lib/jquery-3.5.1.min.js"></script>
     <script src="/lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-    <script src="/js/common/jquery-plugin-custom.js"></script>
+    <script src="/lib/plugin/jquery-plugin-custom.js"></script>
     <script src="/lib/jquery.tableScroll/jquery.tablescroll.js"></script>
     <script src="/js/common/common.js"></script>
     <script src="/js/common/_control.js"></script>

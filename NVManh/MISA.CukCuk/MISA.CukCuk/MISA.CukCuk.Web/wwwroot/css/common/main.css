@@ -1,4 +1,5 @@
-﻿@import url('/content/font/fontawesome-5.15.1/css/all.css');
+﻿/*@import url('/content/font/fontawesome-5.15.1/css/all.css');*/
+@import url('/lib/plugin/all.css');
 @import url('/css/common/common.css');
 @import url('/css/common/dialog.css');
 @import url('/css/common/icon.css');
