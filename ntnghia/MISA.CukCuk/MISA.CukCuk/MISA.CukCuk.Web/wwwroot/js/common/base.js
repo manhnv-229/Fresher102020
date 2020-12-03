@@ -34,15 +34,13 @@
         //Sự kiện lọc nhân viên theo phòng ban
         $(".search-department").change(function (e) {
             var id = $('option:selected', this).attr('value');
-            if (id != "all")
-                me.onDepartmentChange(e, id);
+            me.onDepartmentChange(e, id);
         });
 
         //Sự kiện lọc nhân viên theo vị trí
         $(".search-position").change(function (e) {
             var id = $('option:selected', this).attr('value');
-            if (id != "all")
-                me.onPositionChange(e, id);
+            me.onPositionChange(e, id);
         });
 
         //Xóa khách hàng được chọn khi nhấn nút Delete:
@@ -142,6 +140,10 @@
             var columns = $('table thead th');
 
             me.listEmployee = [];
+            me.filteredName = [];
+            me.filteredPosition = [];
+            me.filteredDepartment = [];
+            me.listEmployeeCode = [];
 
             $.ajax({
                 url: me.host + me.apiRouter,
@@ -151,6 +153,13 @@
                 $.each(res, function (index, obj) {
 
                     me.listEmployee.push(obj);
+                    me.filteredName.push(obj);
+                    me.filteredPosition.push(obj);
+                    me.filteredDepartment.push(obj);
+
+                    var code = parseInt(obj.EmployeeCode.substring(3, 9));
+                    me.listEmployeeCode.push(code);
+
                     var tr = $(`<tr class="table-item"></tr>`);
                     $(tr).data('recordId', obj.EmployeeId);
                     $(tr).data('recordCode', obj.EmployeeCode);
@@ -226,6 +235,13 @@
             me.FormMode = 'Add';
             //Hiển thị dialog thêm nhân viên
             $('.dialog-modal').css("display", "flex");
+
+            //Tự động thêm mã nhân viên
+            var maxCode = me.listEmployeeCode.reduce(function (a, b) {
+                return Math.max(a, b);
+            }) + 1;
+            $('#EmployeeCode').focus();
+            $('#EmployeeCode').val("NV-" + maxCode);
 
             //load dữ liệu cho các combo box
             var selectDepartment = $('select.select-department');
@@ -391,7 +407,7 @@
     * */
     showDeleteDialog() {
         var me = this;
-        if (me.recordCode) {
+        if (me.recordCode != null) {
             $('.modal-delete').css("display", "flex");
             $('#alertInfo').text(`Bạn có chắc chắn muốn xóa nhân viên ${me.recordCode}?`);
         }
@@ -404,7 +420,6 @@
     * CreatedBy: NTNghia (19/11/2020)
     * */
     btnDeleteOnClick() {
-
         var me = this;
         try {
             //Gọi service lấy thông tin chi tiết qua id
@@ -504,21 +519,25 @@
                         }
                         else if ($(this).attr('id') == 'Gender') {
                             if (value == 0) {
-                                $(this).val("Nữ");
+                                $(this).val("female");
                             }
                             else if (value == 1) {
-                                $(this).val("Nam");
+                                $(this).val("male");
                             }
                             else {
-                                $(this).val("Khác");
+                                $(this).val("bede");
                             }
+                        }
+                        else if ($(this).attr('id') == 'Salary') {
+                            $(this).val(formatMoney(value));
+
                         }
                         else if ($(this).attr('id') == 'WorkStatus') {
                             if (value == 1) {
-                                $(this).val("Đang làm việc");
+                                $(this).val("in");
                             }
                             else {
-                                $(this).val("Đã nghỉ việc");
+                                $(this).val("out");
                             }
                         }
                         else {
@@ -590,6 +609,7 @@
      * CreatedBy: NTNghia (02/12/2020)
      * */
     loadCombobox() {
+        var me = this;
         //load dữ liệu cho các combo box
         var select = $('select#CustomerGroupId');
         select.empty();
@@ -661,12 +681,20 @@
 
         var allEntity = me.listEmployee;
 
-        var filtered = allEntity.filter(function (element) {
+        me.filteredName = allEntity.filter(function (element) {
             //if (element.FullName.includes(event.target.value) || element.EmployeeCode.includes(event.target.value) || element.PhoneNumber.includes(event.target.value))
             //    return true;
             //else
             //    return false;
             return element.FullName.includes(event.target.value);
+        });
+
+        var common = $.grep(me.filteredName, function (element) {
+            return $.inArray(element, me.filteredPosition) !== -1;
+        });
+
+        var filtered = $.grep(common, function (element) {
+            return $.inArray(element, me.filteredDepartment) !== -1;
         });
 
         $.each(filtered, function (index, obj) {
@@ -725,10 +753,22 @@
         $('table tbody').empty();
         //Lấy thông tin các cột dữ liệu
         var columns = $('table thead th');
+        if (id != "all") {
+            var allEntity = me.listEmployee;
+            me.filteredPosition = allEntity.filter(function (element) {
+                return element.PositionId == id;
+            });
+        }
+        else {
+            me.filteredPosition = me.listEmployee;
+        }
 
-        var allEntity = me.listEmployee;
-        var filtered = allEntity.filter(function (element) {
-            return element.PositionId == id;
+        var common = $.grep(me.filteredName, function (element) {
+            return $.inArray(element, me.filteredPosition) !== -1;
+        });
+
+        var filtered = $.grep(common, function (element) {
+            return $.inArray(element, me.filteredDepartment) !== -1;
         });
 
         $.each(filtered, function (index, obj) {
@@ -776,6 +816,7 @@
 
             $('table tbody').append(tr);
         })
+
     }
 
     /**
@@ -788,9 +829,23 @@
         //Lấy thông tin các cột dữ liệu
         var columns = $('table thead th');
 
-        var allEntity = me.listEmployee;
-        var filtered = allEntity.filter(function (element) {
-            return element.DepartmentId == id;
+        if (id != "all") {
+            var allEntity = me.listEmployee;
+            me.filteredDepartment = allEntity.filter(function (element) {
+                return element.DepartmentId == id;
+            });
+        }
+        else {
+            me.filteredDepartment = me.listEmployee;
+            debugger
+        }
+
+        var common = $.grep(me.filteredName, function (element) {
+            return $.inArray(element, me.filteredPosition) !== -1;
+        });
+
+        var filtered = $.grep(common, function (element) {
+            return $.inArray(element, me.filteredDepartment) !== -1;
         });
 
         $.each(filtered, function (index, obj) {
