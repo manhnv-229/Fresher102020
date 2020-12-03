@@ -66,8 +66,19 @@
             me.trDbClick(e);
         })
 
+        $(".search-position").change(function (e) {
+            var id = $('option:selected', this).attr('value');
+            me.onPositionChange(e, id);
+        });
+
+        $("#Salary").change(function (e) {
+            me.onInputSalary(e);
+        });
+
         //format tiền khi nhập lương
-        $('input#Salary').blur(me.formatMoney)
+        $('input#Salary').blur(function (e) {
+            me.validateInputSalary(e);
+        });
 
         //validate bắt buộc nhập
         $('.input-required').blur(me.validateInput)
@@ -322,19 +333,25 @@
                     if (this.checked) {
                         employee[attr] = value;
                     }
-                } else if ($(this).attr('id') == "Gender") {
+                }
+                else if ($(this).attr('id') == "Gender") {
                     if (value == "Nam")
                         employee[attr] = 1;
                     else if (value == "Nữ")
                         employee[attr] = 0;
                     else
                         employee[attr] = 2;
-                } else if ($(this).attr('id') == "WorkStatus") {
+                }
+                else if ($(this).attr('id') == "Salary") {
+                    employee[attr] = me.EmployeeSalary;
+                }
+                else if ($(this).attr('id') == "WorkStatus") {
                     if (value == "Đang làm việc")
                         employee[attr] = 1;
                     else
                         employee[attr] = 0;
-                } else {
+                }
+                else {
                     employee[attr] = value;
                 }
             })
@@ -576,6 +593,27 @@
     }
 
     /**
+* Hàm kiểm tra nhập thông tin tiền lương
+* CreatedBy: NTNghia (03/12/2020)
+* */
+    validateInputSalary(e) {
+        var me = this;
+        //Kiểm tra dữ liệu đã nhập, nếu sai thì cảnh báo
+        var money = me.formatSalary(e.currentTarget.value);
+        console.log(money);
+        if (money == "NaN") {
+            //this.classList.add("border-red");
+            $(e.currentTarget).addClass('border-red');
+            $(e.currentTarget).attr('title', 'Không thể định dạng tiền lương!');
+            $(e.currentTarget).attr('validate', 'false');
+        } else {
+            $(e.currentTarget).removeClass('border-red');
+            $(e.currentTarget).attr('validate', 'true');
+            $(e.currentTarget).val(money);
+        }
+    }
+
+    /**
     * Hàm kiểm tra email đã đúng định dạng?
     * CreatedBy: NTNghia (18/11/2020)
     * */
@@ -597,11 +635,12 @@
     * Hàm format định dạng tiền
     * CreatedBy: NTNghia (18/11/2020)
      * */
-    formatMoney() {
-        var format = parseInt(event.target.value.replace(/,/g, ""))
+    formatSalary(money) {
+        var format = parseInt(money.replace(/,/g, ""))
             .toString()
             .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        $(this).val(format);
+        //$(this).val(format);
+        return format;
     }
 
     /**
@@ -893,5 +932,15 @@
 
             $('table tbody').append(tr);
         })
+    }
+
+/**
+* Hàm bắt sự kiện khi nhập lương
+* CreatedBy: NTNghia (03/12/2020)
+* */
+    onInputSalary(e) {
+        var me = this;
+        me.EmployeeSalary = event.target.value;
+        console.log(me.EmployeeSalary);
     }
 }
