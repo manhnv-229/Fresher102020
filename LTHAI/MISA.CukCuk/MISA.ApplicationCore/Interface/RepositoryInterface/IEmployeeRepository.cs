@@ -26,5 +26,7 @@ namespace MISA.ApplicationCore.Interface.RepositoryInterface
         /// <param name="departmentId">Mã phòng ban</param>
         /// <returns>Danh sách nhân viên</returns>
         public IEnumerable<Employee> GetEmployeesByFilters(string value, string positionId, string departmentId);
+
+       
     }
 }

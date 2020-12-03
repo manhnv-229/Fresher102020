@@ -30,36 +30,12 @@ namespace MISA.CukCuk.Web.Controllers
         /// Lấy toàn bộ thông tin chức vụ
         /// </summary>
         /// <returns>Danh sách chức vụ</returns>
+        /// CreatedBy: LTHAI(3/12/2020)
         [HttpGet]
         public IActionResult Get()
         {
             var positions = _positionService.Gets();
             return Ok(positions);
-        }
-
-        // GET api/<PositionsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<PositionsController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<PositionsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<PositionsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

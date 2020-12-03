@@ -45,7 +45,6 @@ namespace MISA.ApplicationCore.BaseService
         {
             return _baseRepository.Gets();
         }
-
         public virtual object Update(string entityId, TEntity entity)
         {
             return _baseRepository.Update(entityId, entity);

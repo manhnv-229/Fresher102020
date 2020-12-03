@@ -31,36 +31,12 @@ namespace MISA.CukCuk.Web.Controllers
         /// Lấy toàn bộ thôn tin phòng ban
         /// </summary>
         /// <returns>Danh sách phòng ban</returns>
+        /// CreatedBy: LTHAI(3/12/2020)
         [HttpGet]
         public IActionResult Get()
         {
             var departments = _departmentService.Gets();
             return Ok(departments);
-        }
-
-        // GET api/<DepartmentsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<DepartmentsController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<DepartmentsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<DepartmentsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

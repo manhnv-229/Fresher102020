@@ -75,8 +75,10 @@ class BaseJS {
             }).done(function (data) {
                 // Tắt icon load dữ liệu
                 $(".loader").css('display', "none");
-                // Hiển thị số bản ghi
-                $('#total').text(` 1-12/${data.length}`)
+
+                // - Hiển thị số bản ghi
+                let length = data.length;
+                $('#total').text(`1-12/${length}`)
                 $.each(data, function (index, obj) {
                     let tr = $(`<tr></tr>`);
                     $(tr).data("recordId", obj.EmployeeId);

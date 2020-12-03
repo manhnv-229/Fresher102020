@@ -65,13 +65,14 @@ class EmployeeJS extends BaseJS {
         //Thêm mới dữ liệu khi ấn nút lưu trong dialog
         $('#d-btn-save').click(this.SaveDataWhenClickButtonSave.bind(thisInit))
 
-        // Thay đổi text của nút khi chọn 
+        // Lọc khi chọn chức vụ
         $('#data-position').on('click', 'a[filter="Position"]', function () {
             $('#button-search-position').text($(this).text());
             $('#button-search-position').append('<i class="fas fa-caret-down"></i>');
             thisInit.positionId = $(this).attr("data");
             thisInit.LoadDataByFilters();
         })
+        // Lọc khi chọn chọn phòng ban
         $('#data-department').on('click', 'a[filter="Department"]', function () {
             $('#button-search-department').text($(this).text());
             $('#button-search-department').append('<i class="fas fa-caret-down"></i>');
@@ -85,7 +86,6 @@ class EmployeeJS extends BaseJS {
                 thisInit.LoadDataByFilters();
             }
         });
-         
     }
     /**=====================================================
     * Sự kiện khi click vào nút xóa thông tin của nhân viên
@@ -367,11 +367,11 @@ class EmployeeJS extends BaseJS {
 
         }
     }
+
     /**
      *  Khởi tạo giá trị cho các combobox phòng ban trên toolbar
      *  CreatedBy: LTHAI(2/12/2020)
      * */
-
     initValueDepartmentToolBar() {
         let buttonSelect = $('#data-department')
         buttonSelect.empty();
@@ -392,6 +392,7 @@ class EmployeeJS extends BaseJS {
         }
 
     } 
+
      /**
      *  Khởi tạo giá trị cho các combobox chức vụ trên toolbar
      *  CreatedBy: LTHAI(2/12/2020)
@@ -426,7 +427,6 @@ class EmployeeJS extends BaseJS {
         this.loadData();
         this.setApiRouter();
     }
-  
 }
 
 

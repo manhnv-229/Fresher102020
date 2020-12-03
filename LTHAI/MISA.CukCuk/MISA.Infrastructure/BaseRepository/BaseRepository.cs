@@ -12,12 +12,12 @@ using System.Reflection;
 
 namespace MISA.Infrastructure.BaseRepository
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
+    public class BaseRepository<TEntity> :IDisposable, IBaseRepository<TEntity> where TEntity : BaseEntity
     {
         #region Attribute
         protected readonly IConfiguration _configuration;
         protected readonly string _connectionString = string.Empty;
-        protected IDbConnection dbConnection = null;
+        protected IDbConnection _dbConnection = null;
         string _tableName = string.Empty;
         object fieldName = null;
         #endregion
@@ -26,7 +26,7 @@ namespace MISA.Infrastructure.BaseRepository
         {
             this._configuration = configuration;
             this._connectionString = _configuration.GetConnectionString("MISACukCukConnectionString");
-            this.dbConnection = new MySqlConnection(_connectionString);
+            this._dbConnection = new MySqlConnection(_connectionString);
             _tableName = typeof(TEntity).Name;
             fieldName = new object();
         }
@@ -34,60 +34,75 @@ namespace MISA.Infrastructure.BaseRepository
 
         public int Add(TEntity entity)
         {
-            // Chuyển đổi kiểu dữ liệu
-            var parameters = MappingDataType(entity);
-            // Thực hiện thêm khách hàng
-            var rowAffects = dbConnection.Execute($"Proc_Insert{_tableName}", parameters, commandType: CommandType.StoredProcedure);
+            var rowAffects = 0;
+            _dbConnection.Open();
+            using (var transaction = _dbConnection.BeginTransaction())
+            {
+                // Chuyển đổi kiểu dữ liệu
+                var parameters = MappingDataType(entity);
+                // Thực hiện thêm khách hàng
+                rowAffects = _dbConnection.Execute($"Proc_Insert{_tableName}", parameters, commandType: CommandType.StoredProcedure);
+                transaction.Commit();
+            }
             // Trả về số lượng bản ghi bị ảnh hưởng
             return rowAffects;
+
         }
 
         public int Delete(string entityId)
         {
-            string query = $"DELETE FROM {_tableName} WHERE {_tableName}.{_tableName}Id LIKE '{entityId}' LIMIT 1;";
-            var rowAffects = dbConnection.Execute(query, commandType: CommandType.Text);
+            var rowAffects = 0;
+            _dbConnection.Open();
+            using (var transaction = _dbConnection.BeginTransaction())
+            {
+                string query = $"DELETE FROM {_tableName} WHERE {_tableName}.{_tableName}Id LIKE '{entityId}' LIMIT 1;";
+                rowAffects = _dbConnection.Execute(query, commandType: CommandType.Text);
+                transaction.Commit();
+            }
+          
             return rowAffects;
         }
-
         public TEntity GetByCode(string entityCode)
         {
             string query = $"SELECT * FROM {_tableName} e WHERE e.{_tableName}Code = '{entityCode}' LIMIT 1;";
-            var result = dbConnection.Query<TEntity>(query, commandType: CommandType.Text).FirstOrDefault();
+            var result = _dbConnection.Query<TEntity>(query, commandType: CommandType.Text).FirstOrDefault();
             return result;
         }
 
         public TEntity GetById(string entityId)
         {
             string query = $"SELECT * FROM {_tableName} e WHERE e.{_tableName}Id = '{entityId}' LIMIT 1;";
-            var entity = dbConnection.Query<TEntity>(query, commandType: CommandType.Text).FirstOrDefault();
+            var entity = _dbConnection.Query<TEntity>(query, commandType: CommandType.Text).FirstOrDefault();
             return entity;
         }
 
         public TEntity GetEntityByProperty(TEntity entity, PropertyInfo propertyInfo, string id = null)
         {
-            
             string query = $"SELECT * FROM {_tableName} WHERE {propertyInfo.Name} = '{propertyInfo.GetValue(entity)}'";
             if (entity.entityState == EntityState.Update)
             {
                 var keyValue = entity.GetType().GetProperty($"{propertyInfo.Name}").GetValue(entity);
                 query = $"SELECT * FROM {_tableName} WHERE {propertyInfo.Name} = '{propertyInfo.GetValue(entity)}' AND {_tableName}Id != '{id}'";
             }
-            var entityResult = dbConnection.Query<TEntity>(query, commandType: CommandType.Text).FirstOrDefault();
+            var entityResult = _dbConnection.Query<TEntity>(query, commandType: CommandType.Text).FirstOrDefault();
             return entityResult;
         }
 
         public IEnumerable<TEntity> Gets()
         {
-            // Khới tạo các commandText
-            var entities = dbConnection.Query<TEntity>($"Proc_Get{_tableName}s", commandType: CommandType.StoredProcedure);
-            // Trả về
+            var entities = _dbConnection.Query<TEntity>($"Proc_Get{_tableName}s", commandType: CommandType.StoredProcedure);
             return entities;
         }
-
         public int Update(string entityId, TEntity entity)
         {
-            var parameters = MappingDataType(entity, entityId);
-            var rowAffects = dbConnection.Execute($"Proc_Update{_tableName}", parameters, commandType: CommandType.StoredProcedure);
+            var rowAffects = 0;
+            _dbConnection.Open();
+            using (var transaction = _dbConnection.BeginTransaction())
+            {
+                var parameters = MappingDataType(entity, entityId);
+                rowAffects = _dbConnection.Execute($"Proc_Update{_tableName}", parameters, commandType: CommandType.StoredProcedure);
+                transaction.Commit();
+            }
             // Trả về số lượng bản ghi bị ảnh hưởng
             return rowAffects;
         }
@@ -133,5 +148,13 @@ namespace MISA.Infrastructure.BaseRepository
             }
             return parameters;
         }
+        public void Dispose()
+        {
+            if(_dbConnection.State == ConnectionState.Open)
+            {
+                _dbConnection.Close();
+            }
+        }
+
     }
 }

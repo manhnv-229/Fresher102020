@@ -21,7 +21,7 @@ namespace MISA.Infrastructure.Repository
 
         public Employee GetEmployeeCodeMax()
         {
-            var entities = dbConnection.Query<Employee>($"Proc_GetEmployeeCodeMax", commandType: CommandType.StoredProcedure).FirstOrDefault();
+            var entities = _dbConnection.Query<Employee>($"Proc_GetEmployeeCodeMax", commandType: CommandType.StoredProcedure).FirstOrDefault();
             // Trả về
             return entities;
         }
@@ -33,7 +33,7 @@ namespace MISA.Infrastructure.Repository
             paramaters.Add(@"Value", input);
             paramaters.Add(@"DepartmentId", departmentId);
             paramaters.Add(@"PositionId", positionId);
-            var employees = dbConnection.Query<Employee>($"Proc_GetEmployeesByFilters", paramaters, commandType: CommandType.StoredProcedure);
+            var employees = _dbConnection.Query<Employee>($"Proc_GetEmployeesByFilters", paramaters, commandType: CommandType.StoredProcedure);
             // Trả về
             return employees;
         }
