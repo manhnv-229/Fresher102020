@@ -1,24 +1,27 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
+using MISA.ApplicationCore.Entities;
 using MISA.ApplicationCore.Interfaces;
+using MISA.Enums;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 
 namespace MISA.Infarstructure
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity>
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity>, IDisposable where TEntity:BaseEntity
     {
         #region DECLARE
         IConfiguration _iconfiguration;
         string _connectionString = string.Empty;
-        IDbConnection _dbConnection;
-        string _tableName;
+        protected IDbConnection _dbConnection;
+        protected string _tableName;
         #endregion
 
-        000#region Method
+        #region Method
         public BaseRepository(IConfiguration iconfiguration)
         {
             _iconfiguration = iconfiguration;
@@ -27,6 +30,96 @@ namespace MISA.Infarstructure
             _tableName = typeof(TEntity).Name;
         }
         public int Add(TEntity entity)
+        {
+            var parameters = MappingDbType(entity);
+            var rowsAffected = 0;
+            _dbConnection.Open();
+            using(var transaction = _dbConnection.BeginTransaction())
+            {
+                try
+                {
+                    rowsAffected = _dbConnection.Execute($"Proc_Insert{_tableName}", parameters, commandType: CommandType.StoredProcedure);
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                }
+                
+            }
+            return rowsAffected;
+        }
+
+        public int Delete(Guid entityId)
+        {
+            var rowsAffected = 0;
+            _dbConnection.Open();
+            using (var transaction = _dbConnection.BeginTransaction())
+            {
+                try
+                {
+                    var query = $"DELETE FROM {_tableName} WHERE {_tableName}id = '{entityId.ToString()}'";
+                    rowsAffected = _dbConnection.Execute(query, commandType: CommandType.Text);
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                }
+                
+            }
+            return rowsAffected;
+        }
+
+        public IEnumerable<TEntity> GetEntities()
+        {
+            // Lấy dữ liệu về và return
+            var entities = _dbConnection.Query<TEntity>($"Proc_Get{_tableName}s", commandType: CommandType.StoredProcedure);
+            return entities;
+        }
+
+        public int Update(TEntity entity)
+        {
+            var parameters = MappingDbType(entity);
+            var rowsAffected = 0;
+            _dbConnection.Open();
+            using (var transaction = _dbConnection.BeginTransaction())
+            {
+                try
+                {
+                    rowsAffected = _dbConnection.Execute($"Proc_Update{_tableName}", parameters, commandType: CommandType.StoredProcedure);
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                }
+                
+            }
+            return rowsAffected;
+        }
+
+        public TEntity GetEntityByProperty(TEntity entity, PropertyInfo property)
+        {
+            var propertyName = property.Name;
+            var propertyValue = property.GetValue(entity);
+            var keyValue = entity.GetType().GetProperty($"{_tableName}Id").GetValue(entity);
+            var query = string.Empty;
+            if (entity.EntityState == EntityState.AddNew)
+            {
+                query = $"SELECT * FROM {_tableName} WHERE {propertyName} = '{propertyValue}'";
+            } else if (entity.EntityState == EntityState.Update)
+            {
+                query = $"SELECT * FROM {_tableName} WHERE {propertyName} = '{propertyValue}' and {_tableName}Id <> '{keyValue.ToString()}'";
+            }
+            else
+            {
+                return null;
+            }
+            var entityRes = _dbConnection.Query<TEntity>(query, commandType: CommandType.Text).FirstOrDefault();
+            return entityRes;
+        }
+        public DynamicParameters MappingDbType(TEntity entity)
         {
             var properties = entity.GetType().GetProperties();
             var parameters = new DynamicParameters();
@@ -46,31 +139,15 @@ namespace MISA.Infarstructure
                     parameters.Add(propertyName, propertyValue);
                 }
             }
-            var rowsAffected = _dbConnection.Execute($"Insert{_tableName}", parameters, commandType: CommandType.StoredProcedure);
-            return rowsAffected;
+            return parameters;
         }
 
-        public int Delete(Guid entityId)
+        public void Dispose()
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<TEntity> GetEntities()
-        {
-            // Lấy dữ liệu về và return
-            var entities = _dbConnection.Query<TEntity>($"Proc_Get{_tableName}s", commandType: CommandType.StoredProcedure);
-            return entities;
-        }
-
-        public TEntity GetEntityById(Guid entityId)
-        {
-            var entity = _dbConnection.Query<TEntity>($"Proc_Get{_tableName}ById", new { CustomerId = entityId.ToString() }, commandType: CommandType.StoredProcedure).FirstOrDefault();
-            return entity;
-        }
-
-        public int Update(TEntity entity)
-        {
-            throw new NotImplementedException();
+            if(_dbConnection.State == ConnectionState.Open)
+            {
+                _dbConnection.Close();
+            }
         }
         #endregion
 

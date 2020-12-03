@@ -7,6 +7,5 @@ namespace MISA.ApplicationCore.Interfaces
 {
     public interface ICustomerService : IBaseService<Customer> { 
         Customer GetCustomerById(Guid customerId);
-        Customer GetCustomerByCode(String customerCode);
     }
 }

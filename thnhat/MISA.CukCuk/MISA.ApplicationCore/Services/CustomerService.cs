@@ -1,43 +1,27 @@
 ﻿using MISA.ApplicationCore.Entities;
 using MISA.ApplicationCore.Interfaces;
+using MISA.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace MISA.ApplicationCore.Services
 {
-    class CustomerService : BaseService<Customer>, ICustomerService
+    public class CustomerService : BaseService<Customer>, ICustomerService
     {
-        IBaseRepository<Customer> _baseRepository;
-        public CustomerService(IBaseRepository<Customer> baseRepository) : base(baseRepository)
+        ICustomerRepository _customerRepository;
+        public CustomerService(ICustomerRepository baseRepository) : base(baseRepository)
         {
-            _baseRepository = baseRepository;
-        }
-
-        public Customer GetCustomerByCode(string customerCode)
-        {
-            throw new NotImplementedException();
+            _customerRepository = baseRepository;
         }
 
         public Customer GetCustomerById(Guid customerId)
         {
-            throw new NotImplementedException();
+            var customer = _customerRepository.GetCustomerById(customerId);
+            return customer;
         }
 
-        public override ServiceResult Add(Customer entity)
-        {
-            //validate thông tin
-            var seviceResult = new ServiceResult();
-            var isValid = true;
-            // Logic validate:
-            if (isValid == false)
-            {
-                return base.Add(entity);
-            } else
-            {
-                return seviceResult;
-            }
-        }
+
 
         //        var serviceResult = new ServiceResult();
         //        // Validate dữ liệu, khi dữ liệu không hợp lệ trả về mô tả lỗi

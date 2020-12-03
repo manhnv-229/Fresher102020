@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MISA.ApplicationCore.Entities;
 using MISA.ApplicationCore.Interfaces;
 using MISA.Enums;
 using System;
@@ -25,12 +26,7 @@ namespace MISA.CukCuk.Web.Controllers
         }
 
         // GET api/<BaseController>/5
-        [HttpGet("{entityId}")]
-        public IActionResult Get(Guid entityId)
-        {
-            var entity = _baseService.GetEntityById(entityId);
-            return Ok(entity);
-        }
+
 
         // POST api/<BaseController>
         [HttpPost]
@@ -38,7 +34,7 @@ namespace MISA.CukCuk.Web.Controllers
         {
             var serviceResult = _baseService.Add(entity);
             if (serviceResult.MISACode == MISACode.Notvalid)
-                return BadRequest(serviceResult.Data);
+                return BadRequest(serviceResult);
             if (serviceResult.MISACode == MISACode.Isvalid)
                 return Created("Thêm thành công", serviceResult);
             else
@@ -47,14 +43,19 @@ namespace MISA.CukCuk.Web.Controllers
 
         // PUT api/<BaseController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put([FromRoute] Guid id, [FromBody] TEntity entity)
         {
+            entity.GetType().GetProperty($"{typeof(TEntity).Name}Id").SetValue(entity, id);
+            var serviceResult = _baseService.Update(entity);
+            return Ok(serviceResult);
         }
 
         // DELETE api/<BaseController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(Guid id)
         {
+            var serviceResult = _baseService.Delete(id);
+            return Ok(serviceResult);
         }
     }
 }

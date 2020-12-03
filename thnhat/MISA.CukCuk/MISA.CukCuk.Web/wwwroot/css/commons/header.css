@@ -1,0 +1,63 @@
+﻿.header {
+    position:relative;
+    float: left;
+    width: calc(100% - 221px);
+    height: 48px;
+    border-bottom: 1px solid #e5e5e5;
+}
+/**
+* Css phần bên trái của header
+*/
+.misa-popup {
+    position:absolute;
+    display:flex ;
+    left: 24px;
+    height: 100%;
+}
+
+    .misa-popup .misa-popup-text {
+        line-height: 48px;
+        font-size:15px;
+    }
+
+    .misa-popup .arrow-icon {
+        width: 12px;
+        height: 12px;
+        align-self: center;
+        margin-left: 10px;
+        background-image: url('../../contents/images/black-arrow.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+/**
+* Css phần bên phải của header
+*/
+.profile {
+    position:absolute;
+    display: flex;
+    height: 100%;
+    right: 16px;
+}
+
+    .profile .avatar {
+        width: 35px;
+        height: 35px;
+        align-self: center;
+        background-image: url('../../contents/images/avatar.png');
+        background-size:contain;
+    }
+
+    .profile .name {
+        line-height: 48px;
+        margin-left: 16px;
+    }
+
+    .profile .extra-icon {
+        width: 16px;
+        height: 16px;
+        align-self: center;
+        margin-left: 16px;
+        background-image: url('../../contents/images/three dots.png');
+        background-size:contain;
+        filter:invert(80%);
+    }

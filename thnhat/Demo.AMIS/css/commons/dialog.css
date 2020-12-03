@@ -2,11 +2,7 @@
     font-family: GoogleSans-Medium;
 }
 
-.upper-dialog {
-    display: flex;
-}
-
-    .upper-dialog .avatar {
+.dialog .avatar {
         width: 260px;
         height: 100%;
         background-image: url('../../contents/images/avatar-default.png');
@@ -34,8 +30,9 @@ select {
 .dialog input[type="text"], input[type="date"], input[type="email"] {
     margin-top: 4px;
     height: 38px;
-    padding-left: 16px;
+    padding: 0px 0px 0px 16px;
     border-radius: 4px;
+    width: 230px;
 }
 
 
@@ -69,17 +66,6 @@ form {
     .right {
         margin-left: 10px;
     }
-
-.dialog .width490 {
-    width: 490px;
-}
-
-.dialog .width750 {
-    width: 750px;
-}
-.width230{
-    width:230px;
-}
 .ui-dialog .dialog-footer {
     height: 56px;
     background-color: #E5E5E5;
@@ -134,8 +120,12 @@ form {
 .ui-corner-br {
     border-radius: 5px;
 }
+.ui-dialog{
+    padding:0;
+}
 .ui-dialog .dialog-content {
     padding: 16px;
+    display: flex;
 }
 
 .ui-dialog .ui-dialog-titlebar {
@@ -146,6 +136,9 @@ form {
     border: none;
 }
 
+.ui-dialog-title{
+    padding: 0.5em 0px 0px 0px;
+}
 .ui-dialog .ui-dialog-titlebar-close {
     margin: unset;
     position: absolute;

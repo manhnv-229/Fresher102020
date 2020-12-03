@@ -11,7 +11,7 @@ class CustomerJs extends BaseJs {
     }
 
     setUrl() {
-        this.getUrl = 'http://api.manhnv.net/api/customers';
+        this.getUrl = 'https://localhost:44308/api/v1/Customers';
     }
 }
 

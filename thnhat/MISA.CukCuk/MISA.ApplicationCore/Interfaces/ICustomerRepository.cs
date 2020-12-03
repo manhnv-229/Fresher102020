@@ -1,17 +1,14 @@
-﻿using MISA.ApplicationCore.Entites;
+﻿using MISA.ApplicationCore.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace MISA.ApplicationCore.Interfaces
 {
-    public interface ICustomerRepository
+    public interface ICustomerRepository : IBaseRepository<Customer>
     {
-        public IEnumerable<Entites.Customer> GetCustomers();
-        Entites.Customer GetCustomerById(Guid customerId);
-        int AddCustomer(Entites.Customer customer);
-        int UpdateCustomer(Entites.Customer customer);
-        int DeleteCustomer(Guid customerId);
-        Entites.Customer GetCustomerByCode(string customerCode);
+        public Customer GetCustomerById(Guid customerId);
+
+        public Customer GetCustomerByCode(string customCode);
     }
 }

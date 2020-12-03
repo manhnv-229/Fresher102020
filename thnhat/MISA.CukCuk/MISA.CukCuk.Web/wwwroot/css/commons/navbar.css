@@ -1,0 +1,79 @@
+﻿.navbar {
+    float: left;
+    width: 220px;
+    height: 100vh;
+    border-right: 1px solid #e5e5e5;
+}
+.navbar a{
+    text-decoration:none;
+    color:#000000;
+}
+.logo {
+    width: 100%;
+    height: 48px;
+}
+
+    .logo .logo-box {
+        display: flex;
+        position:absolute;
+        width:220px;
+        left:16px;
+        top:12px;
+        height:24px;
+    }
+
+        .logo .logo-box .toggle-icon {
+            width: 24px;
+            height: 100%;
+            background-image: url('/contents/images/toggle.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        .logo .logo-box .amis-logo {
+            width: 100%;
+            height:100%;
+            background-position:10px 0px;
+            background-image: url('../../contents/images/amis-logo.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+.menu-item {
+    width: 100%;
+    height: 44px;
+    display: flex;
+}
+.navbar a:hover{
+    background-color:#e5e5e5;
+    color:#000000;
+}
+    .menu-item .menu-item-icon {
+        width: 54px;
+        height: 44px;
+        background-image: url('/contents/images/iconMenu.png');
+        background-repeat: no-repeat;
+        filter: invert(60%);
+        align-self:center;
+    }
+    .menu-item .menu-item-text{
+        width:calc(100% - 54px);
+        line-height:44px;
+    }
+.edoc-icon {
+    background-position: 13px 8px;
+}
+.doc-icon {
+    background-position: 13px -447px;
+}
+.chart-icon {
+    background-position: 13px -71px;
+}
+.cone-icon {
+    background-position: 13px -184px;
+}
+.group-icon {
+    background-position: 13px -30px;
+}
+.setting-icon {
+    background-position: 13px -224px;
+}
