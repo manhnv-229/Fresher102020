@@ -122,14 +122,14 @@ namespace MISA.ApplicationCore.Entities
         /// <summary>
         /// Trạng thái
         /// </summary>
-        public int? WorkStatusId { get; set; }
+        public int? WorkStatus { get; set; }
         /// <summary>
         /// Trạng thái làm việc
         /// </summary>
         public string WorkStatusName {
             get
             {
-                switch (Gender)
+                switch (WorkStatus)
                 {
                     case 0:
                         {
