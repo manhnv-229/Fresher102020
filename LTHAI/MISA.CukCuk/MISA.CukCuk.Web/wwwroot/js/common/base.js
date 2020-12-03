@@ -1,4 +1,4 @@
-﻿/**
+﻿/**========================================================
  * Class chung để quản lý các sự kiện chung của chương trình
  * CreatedBy: LTHAI(12/11/2020)
  * */
@@ -10,23 +10,26 @@ class BaseJS {
         this.loadData();
         this.initEvents();
     }
-    /**
+    /**========================================================
      * Quy định dữ liệu được sử dụng để lấy dữ liệu
      * CreatedBy: LTHAI(12/11/2020)
      * */
     setApiRouter() {
 
     }
-    /**
+
+    /**========================================================
      * Khởi tạo các sự kiện được thực hiện trong trang
      * CreatedBy: LTHAI(1/12/2020)
      * */
     initEvents() {
+        // Khởi tạo con trỏ this của Employee
         let base = this;
         //Hiển thị dialog khi nhấn 1 lần vào từng dòng trong bảng
         $('table tbody').on('click', 'tr', function () {
             base.EventsWhenClickTr(this);
         })
+
         //Load lại dữ liệu
         $('#btn-refresh').click(this.EventsWhenClickLoadData.bind(this))
 
@@ -34,10 +37,12 @@ class BaseJS {
         $('input[required]').blur(function () {
             base.EventsValidateRequiredWhenInputBlur(this);
         })
+
          //Chuyển đổi kiểu
         $('input[Money]').blur(function () {
-            base.ConverToMoney(this);
+            base.ConvertToMoney(this);
         })
+
         //Kiểm tra định dạng của email
         $("input[type = 'email']").blur(function () {
             base.EventsValidateEmailWhenInputBlur(this);
@@ -50,7 +55,8 @@ class BaseJS {
         $('.pop-up-cancel').click(ClosePopUp)
         
     }
-    /**
+
+    /**========================================================
      * Thực hiện load dữ liệu
      * CreatedBy: LTHAI(12/11/2020)
      **/
@@ -67,8 +73,11 @@ class BaseJS {
                 url: this.host + this.apiRouter,
                 method: "GET"
             }).done(function (data) {
+                // Tắt icon load dữ liệu
+                $(".loader").css('display', "none");
+                // Hiển thị số bản ghi
+                $('#total').text(` 1-12/${data.length}`)
                 $.each(data, function (index, obj) {
-                    $(".loader").css('display', "none");
                     let tr = $(`<tr></tr>`);
                     $(tr).data("recordId", obj.EmployeeId);
 
@@ -119,14 +128,20 @@ class BaseJS {
             console.log(e);
         }
     }
-    /**
+
+    /**========================================================
     * Load lại dữ liệu
     * CreatedBy: LTHAI(1/12/2020)
     * */
     EventsWhenClickLoadData() {
+        $('#button-search-department').text('Tất cả phòng ban');
+        $('#button-search-department').append('<i class="fas fa-caret-down"></i>');
+        $('#button-search-position').text('Tất cả vị trí');
+        $('#button-search-position').append('<i class="fas fa-caret-down"></i>');
         this.loadData();
     }
-    /**
+
+    /** ========================================================
     * Hiển thị dialog khi nhấn 1 lần vào từng dòng trong bảng
     * @param {any} self đại diện cho đối tượng tr
     *  CreatedBy: LTHAI(1/12/2020)
@@ -142,7 +157,8 @@ class BaseJS {
             $('.icon-remove').find('button').data('recordId', $(self).data('recordId'));
         }
     }
-    /**
+
+    /**========================================================
      * Kiểm tra trường bắt buộc nhập
      * @param {any} seft dại diện cho đối tượng input,select
      * CreatedBy: LTHAI(1/12/2020)
@@ -181,7 +197,7 @@ class BaseJS {
      * @param {any} seft đại diện cho đối tượng input
      * CreatedBy: LTHAI(2/12/2020)
      */
-    ConverToMoney(seft) {
+    ConvertToMoney(seft) {
         let value = $(seft).val();
         let valueInt = parseInt(value);
         if (Number.isInteger(valueInt)) {

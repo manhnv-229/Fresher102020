@@ -31,6 +31,7 @@ function formatMoney(money) {
         return money.toFixed(0).replace(/(\d)(?=(\d{3})+\b)/g, '$1.');
     }
 }
+
 /**
  * Làm mới lại trang dialog
  * CreatedBy: LTHAI (15/11/2020)
@@ -48,7 +49,6 @@ function RefreshDialog() {
     
 }
 
-
 /**
 * Đưa ra cảnh báo cho những sự kiện cần xác nhận
 * @param {any} title Thông tin tiêu đề
@@ -62,24 +62,26 @@ function ShowPopUp(title, body) {
     $('.p-pop-up').css('display', 'block');
 }
 
-    /**
-    * Tắt pop-up
-    * CreatedBy: LTHAI(19/11/2020)
-    * */
+/**
+* Tắt pop-up
+* CreatedBy: LTHAI(19/11/2020)
+* */
 function ClosePopUp() {
     $('.p-pop-up').css('display', 'none');
     $('.pop-up-modal').css('display', 'none');
 }
-   /**
-    * Hiển thị thông báo
-    * CreatedBy: LTHAI(18/11/2020)
-    * */
+
+/**
+* Hiển thị thông báo
+* CreatedBy: LTHAI(18/11/2020)
+* */
 function ShowModal() {
     $("#staticBackdrop").modal({ backdrop: false });
     setTimeout(function () {
         $('#staticBackdrop').modal('hide');
     }, 1500);
 }
+
 /**
  * Tự tạo ra một mã mới
  * @param {any} code mã có giá trị lớn nhất trong dữ liệu
@@ -99,12 +101,12 @@ function InitCode(code) {
     code = codes.join('');
     return code
 }
+
 /**
 * chuyển đổi định dạng tiền sang int
 * @param {any} money số tiền 
 *  CreatedBy: LTHAI(2/12/2020)
 * */
-
 function ConvertMoneyToInt(money) {
     let int = money.replaceAll('.', '')
     return int;

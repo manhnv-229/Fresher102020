@@ -31,9 +31,9 @@ namespace MISA.Infrastructure.Repository
             var paramaters = new DynamicParameters();
             var input = (value != null) ? value : string.Empty;
             paramaters.Add(@"Value", input);
-            paramaters.Add(@"DepartmentId", positionId);
-            paramaters.Add(@"PositionId", departmentId);
-            var employees = dbConnection.Query<Employee>($"Proc_GetEmployeesByFilters", commandType: CommandType.StoredProcedure);
+            paramaters.Add(@"DepartmentId", departmentId);
+            paramaters.Add(@"PositionId", positionId);
+            var employees = dbConnection.Query<Employee>($"Proc_GetEmployeesByFilters", paramaters, commandType: CommandType.StoredProcedure);
             // Trả về
             return employees;
         }

@@ -25,6 +25,9 @@ class EmployeeJS extends BaseJS {
         this.initEventsOfEmployee();
         this.initValueDepartmentToolBar();
         this.initValuePositionToolBar();
+        this.value = "";
+        this.departmentId = "";
+        this.positionId = "";
     }
     /**===================================================================
      * Quy định đường dẫn được sử dụng để lấy dữ liệu ở trang quản lý nhân viên
@@ -34,6 +37,10 @@ class EmployeeJS extends BaseJS {
     setApiRouter() {
         this.apiRouter = "/api/v1/employees";
     }
+    /**
+     * Khởi tạo các sự kiện của trang nhân viên
+     * CreatedBy: LTHAI(2/12/2020)
+     * */
     initEventsOfEmployee() {
         let thisInit = this;
         // Xóa bản ghi khi click nút xóa 
@@ -58,18 +65,27 @@ class EmployeeJS extends BaseJS {
         //Thêm mới dữ liệu khi ấn nút lưu trong dialog
         $('#d-btn-save').click(this.SaveDataWhenClickButtonSave.bind(thisInit))
 
-         // Thay đổi text của nút khi chọn 
-        $('#data-position').on('click', 'a[filter="Position"]', function(){
-            thisInit.LoadDataByPosition(this);
+        // Thay đổi text của nút khi chọn 
+        $('#data-position').on('click', 'a[filter="Position"]', function () {
+            $('#button-search-position').text($(this).text());
+            $('#button-search-position').append('<i class="fas fa-caret-down"></i>');
+            thisInit.positionId = $(this).attr("data");
+            thisInit.LoadDataByFilters();
         })
         $('#data-department').on('click', 'a[filter="Department"]', function () {
-            thisInit.LoadDataByDepartment(this);
-        }) 
+            $('#button-search-department').text($(this).text());
+            $('#button-search-department').append('<i class="fas fa-caret-down"></i>');
+            thisInit.departmentId = $(this).attr("data");
+            thisInit.LoadDataByFilters();
+        })
+        // Lọc khi nhấn nút enter
         $('#filterDynamic').on('keydown', function (e) {
+            thisInit.value = $(this).val();
             if (e.which == 13) {
-                thisInit.FindDataByValueEnter(this);
+                thisInit.LoadDataByFilters();
             }
         });
+         
     }
     /**=====================================================
     * Sự kiện khi click vào nút xóa thông tin của nhân viên
@@ -200,6 +216,8 @@ class EmployeeJS extends BaseJS {
             let property = $(input).attr("bind-data");
             if ($(input).attr('dbType') == "date") {
                 $(input).datepicker('setDate', new Date(res[property]));;
+            } else if (property == "Salary") {
+                $(input).val(formatMoney(res[property]));
             }
             else {
                 $(input).val(res[property]);
@@ -398,42 +416,17 @@ class EmployeeJS extends BaseJS {
         }
 
     }
-    /**
-     * Lọc theo chức vụ
-     * @param {any} seft đối tượng button
-     * CreatedBy: LTHAI(2/12/2020)
-     */
-    LoadDataByPosition(self) {
-        $('#button-search-position').text($(self).text());
-        $('#button-search-position').append('<i class="fas fa-caret-down"></i>');
-        let value = $(self).attr("data");
-        this.apiRouter = `/api/v1/employees/filterPosition?positionId=${value}`;
+    /**===========================================================
+    * Lọc theo giá trị bất kì
+    * @param {any} self đối tượng button
+    * CreatedBy: LTHAI(2/12/2020)
+    */
+    LoadDataByFilters() {
+        this.apiRouter = `/api/v1/employees/filter?value=${this.value}&departmentid=${this.departmentId}&positionId=${this.positionId}`;
         this.loadData();
         this.setApiRouter();
     }
-    /**
-     * Lọc theo phòng ban
-     * @param {any} self đối tượng button
-     * CreatedBy: LTHAI(2/12/2020)
-     */
-    LoadDataByDepartment(self) {
-        $('#button-search-department').text($(self).text());
-        $('#button-search-department').append('<i class="fas fa-caret-down"></i>');
-        let value = $(self).attr("data");
-        this.apiRouter = `/api/v1/employees/filterDepartment?departmentId=${value}`;
-        this.loadData();
-        this.setApiRouter();
-    }
-    FindDataByValueEnter(self) {
-        let value = $(self).val();
-        if (value == '') {
-            this.loadData();
-        } else {
-            this.apiRouter = `/api/v1/employees/filter?Value=${value}`;
-            this.loadData();
-            this.setApiRouter();
-        }
-    }
+  
 }
 
 
