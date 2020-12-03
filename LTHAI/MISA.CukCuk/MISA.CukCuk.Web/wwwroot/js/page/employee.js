@@ -259,6 +259,7 @@ class EmployeeJS extends BaseJS {
      * */
     SaveDataWhenClickButtonSave() {
         let thisHere = this;
+        this.setApiRouter();
         // Validate dữ liệu
         let inputValidates = $('input[required], input[type ="email"]')
         $.each(inputValidates, function (index, input) {
@@ -291,7 +292,7 @@ class EmployeeJS extends BaseJS {
         let method = "POST";
         if (thisHere.FormMode == "Edit") {
             method = "PUT";
-            entity.EmployeeId = thisHere.recordId;
+            thisHere.apiRouter = `${thisHere.apiRouter}/${thisHere.recordId}`;
         }
 
         // Gọi service thực hiện lưu dữ liệu

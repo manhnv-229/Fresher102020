@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MISA.ApplicationCore.Entities;
 using MISA.ApplicationCore.Interface.ServiceInterface;
 
 namespace MISA.CukCuk.Web.Controllers
@@ -13,29 +14,18 @@ namespace MISA.CukCuk.Web.Controllers
     /// </summary>
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class PositionsController : ControllerBase
+    public class PositionsController : BaseController<Position>
     {
         #region Attribute
         private readonly IPositionService _positionService;
         #endregion
 
         #region Contructor
-        public PositionsController(IPositionService positionService)
+        public PositionsController(IPositionService positionService):base(positionService)
         {
             this._positionService = positionService;
         }
         #endregion
 
-        /// <summary>
-        /// Lấy toàn bộ thông tin chức vụ
-        /// </summary>
-        /// <returns>Danh sách chức vụ</returns>
-        /// CreatedBy: LTHAI(3/12/2020)
-        [HttpGet]
-        public IActionResult Get()
-        {
-            var positions = _positionService.Gets();
-            return Ok(positions);
-        }
     }
 }

@@ -78,7 +78,7 @@ class BaseJS {
 
                 // - Hiển thị số bản ghi
                 let length = data.length;
-                $('#total').text(`1-12/${length}`)
+                $('#total').text(`${length}`)
                 $.each(data, function (index, obj) {
                     let tr = $(`<tr></tr>`);
                     $(tr).data("recordId", obj.EmployeeId);
