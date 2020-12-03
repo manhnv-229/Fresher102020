@@ -27,7 +27,7 @@ namespace MISA.CukCuk.Web.Controllers
         #endregion
 
         /// <summary>
-        /// Lấy toàn bộ thôn tin chức vụ
+        /// Lấy toàn bộ thông tin chức vụ
         /// </summary>
         /// <returns>Danh sách chức vụ</returns>
         [HttpGet]
