@@ -10,13 +10,28 @@ namespace MISA.ApplicationCore.Entities
     /// CreatedBy: NTDong (26/11/2020)
     public class Employee : BaseEntity
     {
+        /// <summary>
+        /// Id Của Nhân Viên
+        /// </summary>
         public Guid EmployeeId { get; set; }
+        /// <summary>
+        /// Mã Nhân Viên
+        /// </summary>
         public string EmployeeCode { get; set; }
+        /// <summary>
+        /// Họ Tên Nhân Viên
+        /// </summary>
         public string FullName { get; set; }
+        /// <summary>
+        /// Ngày Sinh 
+        /// </summary>
         public DateTime? DateOfBirth { get; set; }
+        /// <summary>
+        /// Giới Tính
+        /// </summary>
         public int? Gender { get; set; }
         /// <summary>
-        /// Tên giới tính 
+        /// Hiển Thị Tên giới tính 
         /// </summary>
         public string GenderName
         {
@@ -32,12 +47,26 @@ namespace MISA.ApplicationCore.Entities
             }
 
         }
+        /// <summary>
+        /// Địa chỉ Email
+        /// </summary>
         public string Email { get; set; }
+        /// <summary>
+        /// Số Điện thoại
+        /// </summary>
         public string PhoneNumber { get; set; }
 
-
+        /// <summary>
+        /// Địa chỉ nhân viên
+        /// </summary>
         public string Address { get; set; }
+        /// <summary>
+        /// Số cmtnd / Thẻ căn cước 
+        /// </summary>
         public string IdentityNumber { get; set; }
+        /// <summary>
+        /// Ngày cấp
+        /// </summary>
         public DateTime? IdentityDate { get; set; }
         /// <summary>
         /// Nơi cấp chứng minh thư
@@ -51,8 +80,13 @@ namespace MISA.ApplicationCore.Entities
         /// Mã số thuế cá nhân
         /// </summary>
         public string PersonalTaxCode { get; set; }
-
+        /// <summary>
+        /// Tên phòng ban 
+        /// </summary>
         public string DepartmentName { get; set; }
+        /// <summary>
+        /// Mức lương cơ bản 
+        /// </summary>
         public double? Salary { get; set; }
 
         /// <summary>

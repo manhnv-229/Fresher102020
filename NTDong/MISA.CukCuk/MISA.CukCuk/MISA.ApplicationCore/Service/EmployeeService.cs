@@ -14,5 +14,9 @@ namespace MISA.ApplicationCore.Service
             _employeeRepository = employeeRepository;
         }
 
+        public List<Employee> GetEmployeesFilter(string specs, Guid? departmentId, Guid? positionId)
+        {
+            return _employeeRepository.GetEmployeesFilter(specs, departmentId, positionId);
+        }
     }
 }

@@ -37,50 +37,5 @@ namespace MISA.ApplicationCore.Enums
         Delete = 3,
     }
 
-    /// <summary>
-    /// Thông tin giới tính
-    /// </summary>
-    public enum Gender
-    {
-        /// <summary>
-        /// Nữ
-        /// </summary>
-        Female,
-
-        /// <summary>
-        /// Nam
-        /// </summary>
-        Male,
-
-        /// <summary>
-        /// Chưa xác định
-        /// </summary>
-        Other,
-    }
-
-    /// <summary>
-    /// Enum tình trạng công việc
-    /// </summary>
-    public enum WorkStatus
-    {
-        /// <summary>
-        /// Đã nghỉ việc
-        /// </summary>
-        Resign,
-
-        /// <summary>
-        /// Đang làm việc
-        /// </summary>
-        Working,
-
-        /// <summary>
-        /// Đang thử việc
-        /// </summary>
-        TrailWork,
-
-        /// <summary>
-        /// Đã nghỉ hưu
-        /// </summary>
-        Retired
-    }
+    
 }

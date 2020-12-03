@@ -49,10 +49,25 @@ namespace MISA.ApplicationCore.Entities
 
     public class BaseEntity
     {
+        /// <summary>
+        /// Trạng thái của Entity
+        /// </summary>
         public EntityState EntityState { get; set; } = EntityState.AddNew;
+        /// <summary>
+        /// Ngày giờ thêm bản ghi
+        /// </summary>
         public DateTime? CreatedDate { get; set; }
+        /// <summary>
+        /// Người thêm bản ghi
+        /// </summary>
         public string CreatedBy { get; set; }
+        /// <summary>
+        /// Ngày giờ sửa bản ghi
+        /// </summary>
         public DateTime? ModifiedDate { get; set; }
+        /// <summary>
+        /// Người sửa bản ghi 
+        /// </summary>
         public string ModifiedBy { get; set; }
     }
 }

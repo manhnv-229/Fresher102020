@@ -1,4 +1,12 @@
-﻿class BaseJS {
+﻿$(document).ready(function () {
+    datePickerDetail = $('.datepicker').datepicker({
+        dateFormat: 'dd/mm/yy'
+    });
+    datePickerDetail.datepicker('enable');
+})
+
+
+class BaseJS {
     constructor() {
         this.host = "https://localhost:44308";
         this.apiRouter = null;
@@ -6,6 +14,7 @@
         this.initEvents();
         this.initEventDelete();
         this.loadData();
+        // this.InitDepartments();
     }
 
     setApiRouter() {
@@ -33,6 +42,18 @@
             // Hiển thị dialog thông tin chi tiết:
             dialogDetail.dialog('close');
         })
+        // $("#search").keyup(function(event) {
+        //     if (event.keyCode === 13) {
+        //         $("#search").click();
+
+        //     }
+       
+        // $('#search').on('keydown', function (e) {
+        //     if (e.which == 13) {
+        //         alert('nguyen tien dong ');
+        //         me.SearchInput(this);
+        //     }
+        // });
 
         // Xử lý dữ liệu button [Lưu] trên form chi tiết:
         $('#btnSave').click(me.btnSaveOnClick.bind(me));
@@ -49,8 +70,8 @@
             try{
                  //load form
                 // load dữ liệu cho các combobox:
+                
                 var selects = $('select[fieldName]');
-                selects.empty();
                 $.each(selects, function (index, select) {
                     // lấy dữ liệu nhóm khách hàng:
                     var api = $(select).attr('api');
@@ -94,29 +115,28 @@
                     var inputs = $('input[fieldName], select[fieldName]');
                     var entity = {};
                     $.each(inputs, function (index, input) {
-                        var propertyName = $(this).attr('fieldName');
+                        var propertyName = $(input).attr('fieldName');
                         var value = res[propertyName];
+                        
+                        // Đối với hàm format money
+                        if ($(this).attr("typeName") == 'money') {
+                            var money = formatMoney(value);
+                            $(this).val(money);
+                        }
+                        
                         // Đối với dropdowlist (select option):
-                        if (this.tagName == "SELECT") {
+                        else if (this.tagName == "SELECT") {
                             var propValueName = $(this).attr('fieldValue');
                             value = res[propValueName];
                         }
-                        // Đối với các input là radio:
-                        if ($(this).attr('type') == "radio") {
-                            var inputValue = $(input).attr("genderValue");
-                            if (value == inputValue) {
-                                this.checked = true;
-                            } else {
-                                this.checked = false;
-                            }
-                        } else {
-                            $(this).val(value);
+                        else if ($(this).attr('type') == "date") {
+                            var date = formatDateForm(value);
+                            $(this).val(date);
+                        } 
+                        else {
+                            $(this).val(value).change();
                         }
-                        // binding dữ liệu kiểu date 
-                        if ($(this).attr('class') == "datepicker") {
-                                var date = formatDateForm(value);
-                                $(this).val(date);
-                        }
+                        debugger;
                     })
                 }).fail(function (res) {
                     console.log(res);
@@ -164,7 +184,6 @@
             }
         })
     }
-
     /**
      * Xử lý form xóa khách hàng
      * createdBy : NTDong(18/11/2020)
@@ -177,7 +196,13 @@
         })
         // Mở form xóa chi tiết 
         $('#btnDelete').click(function(){
-            dialogDelete.dialog('open');
+            var tr = $('tr.click-change-column');
+            var recordIds = $(tr).data('recordId');
+            if(recordIds != null){
+                dialogDelete.dialog('open');
+            }
+            debugger;
+            
         })        
         // click xóa để thực hiện xóa 1 bản ghi trong bảng khách hàng
         $('#d-delete').click(function(){
@@ -249,10 +274,41 @@
             }).fail(function (res) {
                 // $('.loading').hide();
             })
+
         } catch (e) {
             console.log(e);
         }
     }
+    // InitDepartments(){
+    //     try {
+    //         var me = this;
+    //         me.FormMode = 'Add';
+    //         // Hiển thị dialog thông tin chi tiết:
+    //         dialogDetail.dialog('open');
+    //         $('input').val(null);
+    //         // load dữ liệu cho các combobox:
+    //         var select = $('#Department-Search');
+    //         select.empty();
+    //         // lấy dữ liệu nhóm khách hàng:
+    //         $('.loading').show();
+    //         $.ajax({
+    //             url: me.host + "/api/v1/departments",
+    //             method: "GET"
+    //         }).done(function (res) {
+    //             if (res) {
+    //                 $.each(res, function (index, obj) {
+    //                     var option = $(`<option value="${obj.DepartmentId}">${obj.DepartmentName}</option>`);
+    //                     select.append(option);
+    //                 })
+    //             }
+    //             // $('.loading').hide();
+    //         }).fail(function (res) {
+    //             // $('.loading').hide();
+    //         })
+    //     } catch (e) {
+    //         console.log(e);
+    //     }
+    // }
 
     /** ------------------------
      * Hàm xử lý khi nhấn button thêm mới
@@ -336,6 +392,7 @@
                     var propertyName = $(this).attr('fieldValue');
                     entity[propertyName] = value;
                 }
+
                 // Check với trường hợp input là radio, thì chỉ lấy value của input có attribute là checked:
                 if ($(this).attr('type') == "radio") {
                     if ($(input).is(":checked")) {
@@ -347,6 +404,7 @@
                 }
 
             })
+            console.log(entity);
             var method = "POST";
             var urls = me.host+me.apiRouter;
             if (me.FormMode == 'Edit') {

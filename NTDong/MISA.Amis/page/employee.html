@@ -27,7 +27,7 @@
         <div class="logo-site">
             <div class="logo-box">
                 <div class="toggle-icon"></div>
-                <div class="amis-logo"></div>
+                <div class="cukcuk-logo"></div>
             </div>
         </div>
         <div class="navbar-content">
@@ -102,9 +102,34 @@
         </div>
         <div class="filter-bar">
             <div class="filter-left">
-                <input class="icon-search input-search" style="width: 200px" type="text" placeholder="Tìm kiếm theo mã , tên nhân viên" />
-                <div class="departments">Tất cả phòng ban </div>
-                <div class="positions">Tất cả vị trí </div>
+                <input id="search" class="icon-search input-search" style="width: 200px" type="text" placeholder="Tìm kiếm theo mã , tên nhân viên" />
+
+                <div>
+                    <select id="Department-Search" fieldName="DepartmentName" fieldValue="DepartmentId" api="/api/v1/departments" class="search-Department">
+                        <option value="3f8e6896-4c7d-15f5-a018-75d8bd200d7c">Tất cả các phòng</option>
+                        <option value="3f8e6896-4c7d-15f5-a018-75d8bd200d7c">Phòng Nhân Sự</option>
+                        <option value="45ac3d26-18f2-18a9-3031-644313fbb055">Phòng Đào Tạo</option>
+                        <option value="7c4f14d8-66fb-14ae-198f-6354f958f4c0">Phòng Công Nghệ</option>
+                    </select>
+                    <combobox id="Department-Search" fieldName ="" valueName="" api=""></combobox>
+                </div>
+                <!-- <div class="departments"></div> -->
+                
+
+
+
+                <div>
+                    <select id="Position-Search" fieldName="PositionName" fieldValue="PositionId" api="/api/v1/positions" class="search-Position">
+                        <option value="12b28924-2015-5d35-f1ff-0bf8e460a224">Tất cả các vị trí</option>
+                        <option value="12b28924-2015-5d35-f1ff-0bf8e460a224">Giám Đốc</option>
+                        <option value="1ddeb8b3-47c4-3566-f0ff-0bf8e460a224">Nhân Viên</option>
+                        <option value="28fac2a7-3b08-4b3b-d8b4-8d4600c9080b">Phó Trưởng Phòng</option>
+                        <option value="2d46bab3-4f6b-69a8-71b0-22cff29e2663">Phó Giám Đốc</option>
+                        <option value="4ac29d56-58aa-17b5-5865-a41d0e078d49">Trưởng Phòng</option>
+
+                    </select>
+                    <combobox id="Position-Search" fieldName ="" valueName="" api=""></combobox>
+                </div>
                 <!-- <select>
                     <option>Phòng đào tạo</option>
                     <option>Phòng Nhân sự</option>
@@ -125,11 +150,11 @@
                         <tr>
                             <th fieldName="EmployeeCode">Mã nhân viên</th>
                             <th fieldName="FullName">Họ và Tên</th>
-                            <th fieldName="GenderName">Giới tính</th>
+                            
                             <th fieldName="PhoneNumber">Điện thoại</th>
                             <th fieldName="DateOfBirth" formatType="ddmmyyyy">Ngày sinh</th>
                             <th fieldName="Email">Email</th>
-                            <th fieldName="Address">Địa chỉ</th>
+                            <th fieldName="GenderName">Giới tính</th>
                             <th fieldName="IdentityNumber">Số CMTND</th>
                             <th fieldName="PersonalTaxCode">Mã số thuế</th>
                             <th fieldName="Salary" formatType="Money">Mức lương hiện tại</th>
@@ -142,7 +167,7 @@
                 </table>
             </div>
         </div>
-        <div class="paging-bar">
+        <!-- <div class="paging-bar">
             <div class="paging-bar-left">
                 Hiển thị <b>01-20/123 </b> lao động 
             </div>
@@ -157,7 +182,7 @@
             <div class="paging-bar-right">
                 <b>20</b> lao động/trang
             </div>
-        </div>
+        </div> -->
     </div>
     <!-- dialog start -->
         <div class="e-dialog dialog-detail" title="Thông tin nhân viên">
@@ -181,11 +206,11 @@
                     <div class="dialog-row">
                         <div class="col-left">
                             <div class="name-input">Ngày sinh</div>
-                            <input class="datepicker" fieldName="DateOfBirth" type="text" name="">
+                            <input dbType="date"  fieldName="DateOfBirth" type="date" name="">
                         </div>
                         <div class="col-right">
                             <div class="name-input-right">Giới tính</div>
-                            <select  fieldName="GenderName" fieldValue="DepartmentId" class="select-Gender">
+                            <select id="cbxGender" fieldName="Gender" fieldValue="GenderName" class="select-Gender">
                                 <option value="0">Nữ</option>
                                 <option value="1">Nam</option>
                                 <option value="2">Khác</option>
@@ -199,7 +224,7 @@
                         </div>
                         <div class="col-right">
                             <div class="name-input-right">Ngày cấp</div>
-                            <input fieldName="IdentityDate" class="datepicker" placeholder="dd/mm/yyyy" type="text" name="">
+                            <input fieldName="IdentityDate"  type="date" name="">
                         </div>
                     </div>
                     <div class="dialog-row">
@@ -239,17 +264,25 @@
                         </div>
                         <div class="col-right">
                             <div class="name-input-right">Mức lương cơ bản </div>
-                            <input fieldName="Salary" type="text" name="">
+                            <div class="money-box">
+                                <input fieldName="Salary" style="margin-left: 0px !important;width: 180px;border: none;outline: none;text-align: right;padding-right: 10px;" typeName="money" style="text-align:right;" class="money" type="text" name="">
+                                <div class="money-text"><i>(VNĐ)</i></div>
+                            </div>
+                            
                         </div>
                     </div>
                     <div class="dialog-row">
                         <div class="col-left">
                             <div class="name-input">Ngày gia nhập công ty </div>
-                            <input fieldName="JoinDate" class="datepicker" placeholder="dd/mm/yyyy" type="text" name="">
+                            <input fieldName="JoinDate" type="date" name="">
                         </div>
                         <div class="col-right">
                             <div class="name-input-right">Tình trạng công việc </div>
-                            <input fieldName="WorkStatusName" type="text" name="">
+                            <select id="cbxWorkStatus" fieldName="WorkStatus" fieldValue="WorkStatusName" class="select-WorkStatus">
+                                <option value="0">Đã nghỉ việc</option>
+                                <option value="1">Đang thử việc</option>
+                                <option value="2">Đang làm việc</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -290,7 +323,9 @@
     <script type="text/javascript" src="../js/common/base.js"></script>
     <script type="text/javascript" src="../js/page/employee.js"></script>
     <script type="text/javascript" src="../js/common/alerts.js"></script>
-    <script type="text/javascript">
+    <script type="text/javascript" src="../js/common/money.js"></script>
+
+    <!-- <script type="text/javascript">
         $(document).ready(function(){
             
             $('.datepicker').datepicker({
@@ -299,6 +334,6 @@
                 changeYear: true
             })
         })
-    </script>
+    </script> -->
 </body>
 </html>

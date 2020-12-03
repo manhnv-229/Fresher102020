@@ -9,6 +9,9 @@ using MISA.ApplicationCore.Interfaces;
 
 namespace MISA.CukCuk.Web.Controllers
 {
+    /// <summary>
+    /// Api Danh mục các phòng ban 
+    /// </summary>
     [Route("api/v1/[controller]")]
     [ApiController]
     public class DepartmentsController : ControllerBase

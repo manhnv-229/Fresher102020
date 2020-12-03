@@ -25,7 +25,7 @@ namespace MISA.ApplicationCore.Service
             _serviceResult.Data = rowAffected;
             if (rowAffected == 0)
             {
-                _serviceResult.Messenger = "Không tìm thấy server";
+                _serviceResult.Messenger = "Không tìm thấy trên server";
                 _serviceResult.MISACode = Enums.MISACode.NotFound;
             }
             else
@@ -112,7 +112,7 @@ namespace MISA.ApplicationCore.Service
                     {
                         isValidate = false;
                         mesArrayError.Add($"Thông tin {displayName} không được phép để trống");
-                        _serviceResult.Messenger = Properties.Resources.Msg_IsNotValid;
+                        _serviceResult.Messenger = "Dữ liệu không hợp lệ";
                         _serviceResult.MISACode = Enums.MISACode.NotValid;
 
                     }
@@ -127,8 +127,8 @@ namespace MISA.ApplicationCore.Service
                     if (entityDuplicate != null)
                     {
                         isValidate = false;
-                        mesArrayError.Add($"Thông tin {displayName} đã có trên hệ thống");
-                        _serviceResult.Messenger = Properties.Resources.Msg_IsNotValid;
+                        mesArrayError.Add($"Thông tin {displayName} đã bị trùng");
+                        _serviceResult.Messenger = "Dữ liệu không hợp lệ";
                         _serviceResult.MISACode = Enums.MISACode.NotValid;
                     }
                 }

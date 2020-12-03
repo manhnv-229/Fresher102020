@@ -5,6 +5,9 @@ using System.Text;
 
 namespace MISA.ApplicationCore.Entities
 {
+    /// <summary>
+    /// Hiển thị các thông tin trả về 
+    /// </summary>
     public class ServiceResult
     {
         public object Data { get; set; }

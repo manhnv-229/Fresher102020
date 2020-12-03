@@ -9,6 +9,9 @@ using MISA.ApplicationCore.Interfaces;
 
 namespace MISA.CukCuk.Web.Controllers
 {
+    /// <summary>
+    /// Api danh mục các vị trí trong công ty
+    /// </summary>
     [Route("api/v1/[controller]")]
     [ApiController]
     public class PositionsController : BaseEntityController<Position> 

@@ -8,7 +8,7 @@ namespace MISA.ApplicationCore.Interfaces
     public interface ICustomerService:IBaseService<Employee>
     {
         /// <summary>
-        /// Lay du lieu phan trang 
+        /// Lấy dữ liệu phân trang 
         /// </summary>
         /// <param name="limit"></param>
         /// <param name="offset"></param>
@@ -16,9 +16,9 @@ namespace MISA.ApplicationCore.Interfaces
         /// CreatedBy: NTDong(26/11/2020)
         IEnumerable<Employee> GetCustomerPaging(int limit, int offset);
         /// <summary>
-        /// Lay danh sach khach hang theo nhom khach hang 
+        /// Lây danh sách khách hàng theo nhóm khách hàng 
         /// </summary>
-        /// <param name="groupId">id nhom khach hang</param>
+        /// <param name="groupId">id nhóm khách hàng</param>
         /// <returns></returns>
         /// CreatedBy: NTDong(26/11/2020)
         IEnumerable<Employee> GetCustomersByGroup(Guid groupId);

@@ -27,19 +27,13 @@ function formatDate(date) {
  */
 function formatDateForm(date) {
     var date = new Date(date);
-    if (Number.isNaN(date.getTime())) {
-        return "";
-    } else {
-        var day = date.getDate(),
-            month = date.getMonth() + 1,
-            year = date.getFullYear();
-        day = day < 10 ? '0' + day : day;
-        month = month < 10 ? '0' + month : month;
+    var day = ("0" + date.getDate()).slice(-2);
+    var month = ("0" + (date.getMonth() + 1)).slice(-2);
 
-        return year + '-' + month + '-' + day;
-    }
+    var dateString = date.getFullYear() + "-" + (month) + "-" + (day);
+
+    return dateString;
 }
-
 /** -------------------------------------
  * Hàm định dạng hiển thị tiền tệ
  * @param {Number} money Số tiền
@@ -47,7 +41,7 @@ function formatDateForm(date) {
  */
 function formatMoney(money) {
     if (money) {
-        return money.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+        return money.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
     }
     return "";
 }

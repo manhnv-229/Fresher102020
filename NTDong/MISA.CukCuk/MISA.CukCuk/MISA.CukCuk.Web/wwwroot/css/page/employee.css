@@ -136,6 +136,90 @@
     	background-color: #BBBBBB;
 
     }
+    .select-Gender{
+        height: 40px;
+        width: 241px;
+        margin-left: 5px;
+        border-radius: 4px;
+        border: 1px solid #bbbbbb;
+        padding-left: 16px;
+    }
+    .select-Gender:focus{
+        border: 1px solid green;
+    }
+    .select-Department{
+        height: 40px;
+        width: 241px;
+        margin-left: 5px;
+        border-radius: 4px;
+        border: 1px solid #bbbbbb;
+        padding-left: 16px;
+    }
+    .select-Department:focus{
+        border: 1px solid green;
+    }
+    .select-WorkStatus{
+        height: 40px;
+        width: 241px;
+        margin-left: 5px;
+        border-radius: 4px;
+        border: 1px solid #bbbbbb;
+        padding-left: 16px;
+    }
+    .select-WorkStatus:focus{
+        border: 1px solid green;
+    }
+    .select-Position{
+        height: 40px;
+        width: 241px;
+        border-radius: 4px;
+        border: 1px solid #bbbbbb;
+        padding-left: 16px;
+    }
+    .select-Position:focus{
+        border: 1px solid #019160;
+    }
+    .search-Department{
+        height: 40px;
+        width: 200px;
+        margin-left: 16px;
+        border-radius: 4px;
+        border: 1px solid #bbbbbb;
+        padding-left: 16px;
+    }
+    .search-Department:focus{
+        border: 1px solid #019160;
+    }
+    .search-Position{
+        height: 40px;
+        width: 202px;
+        margin-left: 16px;
+        border-radius: 4px;
+        border: 1px solid #bbbbbb;
+        padding-left: 16px;
+    }
+    .search-Position:focus{
+        border: 1px solid #019160;
+    }
+    .choose-department{
+        height: 40px;
+        width: 100%;
+        line-height: 40px;
+
+    }
+    .money-box{
+        display: flex;
+        margin-left: 5px;
+        height: 40px;
+        width: 239px;
+        border-radius: 4px;
+        border: 1px solid #bbbbbb;
+    }
+    .money-box .money-text{
+        float: right;
+        margin-right: 10px;
+        margin-top: 11px;
+    }
 /*.image-employee{
 	width: 150px;
 	height: 150px;
