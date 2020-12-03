@@ -24,5 +24,13 @@ namespace MISA.CukCuk.Web.Controllers
             _employeeService = employeeService;
         }
         #endregion
+
+        #region Method
+        [HttpGet("filter")]
+        public IActionResult GetEmployeeFilter([FromQuery] string specs, [FromQuery] Guid? departmentId, [FromQuery] Guid? positionId)
+        {
+            return Ok(_employeeService.GetEmployeesFilter(specs, departmentId, positionId));
+        }
+        #endregion
     }
 }

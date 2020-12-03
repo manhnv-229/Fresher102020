@@ -8,17 +8,13 @@ namespace MISA.ApplicationCore.Interfaces
    public interface IEmployeeService : IBaseService<Employee>
     {
         /// <summary>
-        /// Lấy danh sách nhân viên theo phòng ban
+        /// Lọc nhân viên theo tiêu chí
         /// </summary>
-        /// <param name="departmentId"></param>
-        /// <returns></returns>
-        IEnumerable<Employee> GetEmployeesByDepartment(Guid departmentId);
-
-        /// <summary>
-        /// Lấy danh sách nhân viên theo vị trí 
-        /// </summary>
-        /// <param name="positionId"></param>
-        /// <returns></returns>
-        IEnumerable<Employee> GetEmployeesByPosition(Guid positionId);
+        /// <param name="specs">Mã, tên hoặc số điện thoại</param>
+        /// <param name="departmentId">Mã phòng ban</param>
+        /// <param name="positionId">Mã vị trí</param>
+        /// <returns>Danh sách nhân viên thỏa mãn tiêu chí</returns>
+        /// CreatedBy: NTNghia (03/12/2020)
+        IEnumerable<Employee> GetEmployeesFilter(string specs, Guid? departmentId, Guid? positionId);
     }
 }

@@ -15,7 +15,6 @@ namespace MISA.ApplicationCore
         {
             _employeeRepository = employeeRepository;
         }
-
         #endregion
 
         #region Method
@@ -25,16 +24,10 @@ namespace MISA.ApplicationCore
             return true;
         }
 
-        public IEnumerable<Employee> GetEmployeesByDepartment(Guid departmentId)
+        public IEnumerable<Employee> GetEmployeesFilter(string specs, Guid? departmentId, Guid? positionId)
         {
-            throw new NotImplementedException();
+            return _employeeRepository.GetEmployeesFilter(specs, departmentId, positionId);
         }
-
-        public IEnumerable<Employee> GetEmployeesByPosition(Guid positionId)
-        {
-            throw new NotImplementedException();
-        }
-
         #endregion
     }
 }

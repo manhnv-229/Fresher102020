@@ -120,7 +120,7 @@
             </table>
             <div class="loader" id="loadingIcon"></div>
         </div>
-        <div class="content-footer">
+        <!--<div class="content-footer">
             <p>Hiển thị 1-10/1000 nhân viên</p>
             <div class="content-footer-page">
                 <img class="arrow-icon" src="../content/icon/double-left-arrows-symbol.svg" />
@@ -136,7 +136,7 @@
             </div>
             <p class="page-btn">10 nhân viên/trang</p>
 
-        </div>
+        </div>-->
     </div>
 
     <div class="dialog-modal">
@@ -164,11 +164,11 @@
 
                     <div class="double-input">
                         <div class="input-form">
-                            <label class="input-label" for="EmployeeCode">Mã nhân viên(*)</label>
+                            <label class="input-label" for="EmployeeCode">Mã nhân viên (<span>*</span>)</label>
                             <input class="input-required" id="EmployeeCode" autofocus />
                         </div>
                         <div class="input-form">
-                            <label class="input-label" for="FullName">Họ và tên(*)</label>
+                            <label class="input-label" for="FullName">Họ và tên (<span>*</span>)</label>
                             <input class="input-required" id="FullName" />
                         </div>
                     </div>
@@ -195,8 +195,8 @@
 
                     <div class="double-input">
                         <div class="input-form">
-                            <label class="input-label" for="IdentityNumber">Số CMTND/Căn cước(*)</label>
-                            <input class="input-required" id="IdentityNumber" type="number"/>
+                            <label class="input-label" for="IdentityNumber">Số CMTND/Căn cước (<span>*</span>)</label>
+                            <input class="input-required" id="IdentityNumber" type="number" />
                         </div>
                         <div class="input-form">
                             <label class="input-label" for="IdentityDate">Ngày cấp</label>
@@ -211,11 +211,11 @@
 
                     <div class="double-input">
                         <div class="input-form">
-                            <label class="input-label" for="Email">Email(*)</label>
+                            <label class="input-label" for="Email">Email (<span>*</span>)</label>
                             <input class="input-required" id="Email" type="email" />
                         </div>
                         <div class="input-form">
-                            <label class="input-label" for="PhoneNumber">Số điện thoại(*)</label>
+                            <label class="input-label" for="PhoneNumber">Số điện thoại (<span>*</span>)</label>
                             <input class="input-required" id="PhoneNumber" type="number" />
                         </div>
                     </div>
@@ -239,11 +239,11 @@
                     <div class="double-input">
                         <div class="input-form">
                             <label class="input-label" for="PersonalTaxCode">Mã số thuế cá nhân</label>
-                            <input id="PersonalTaxCode" type="number"/>
+                            <input id="PersonalTaxCode" type="number" />
                         </div>
                         <div class="input-form" style="position:relative">
                             <label class="input-label" for="Salary">Mức lương cơ bản</label>
-                            <input id="Salary" style="text-align: right; padding-right:50px; width:215px;"/>
+                            <input id="Salary" style="text-align: right; padding-right:50px; width:215px;" />
                             <p class="vnd">(VND)</p>
                         </div>
                     </div>
@@ -290,7 +290,7 @@
                 </div>
                 <p id="alertInfo" style="font-size:15px">Bạn có chắc chắn muốn xóa nhân viên này?</p>
             </div>
-            
+
 
             <div class="dialog-footer">
                 <button class="footer-button cancel-button" id="cancel">Hủy</button>
@@ -298,6 +298,8 @@
             </div>
         </div>
     </div>
+
+    <div id="snackbar">Some text some message..</div>
 
     <script src="/js/lib/jquery.js"></script>
     <script src="/js/common/common.js"></script>

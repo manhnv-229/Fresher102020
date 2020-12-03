@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Dapper;
+using Microsoft.Extensions.Configuration;
 using MISA.ApplicationCore.Entities;
 using MISA.ApplicationCore.Interfaces;
 using MySql.Data.MySqlClient;
@@ -18,14 +19,18 @@ namespace MISA.Infrastructure
         {
         }
 
-        public IEnumerable<Employee> GetEmployeesByDepartment(Guid departmentId)
+        public IEnumerable<Employee> GetEmployeesFilter(string specs, Guid? departmentId, Guid? positionId)
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Employee> GetEmployeesByPosition(Guid positionId)
-        {
-            throw new NotImplementedException();
+            //build tham số đầu vào cho store:
+            var input = specs != null ? specs : string.Empty;
+            var parameters = new DynamicParameters();
+            parameters.Add("@EmployeeCode", input, DbType.String);
+            parameters.Add("@FullName", input, DbType.String);
+            parameters.Add("@PhoneNumber", input, DbType.String);
+            parameters.Add("@DepartmentId", departmentId, DbType.String);
+            parameters.Add("@PositionId", positionId, DbType.String);
+            var employees = _dbConnection.Query<Employee>("Proc_GetEmployeeFilter", parameters,commandType: CommandType.StoredProcedure);
+            return employees;
         }
 
         #region Method
