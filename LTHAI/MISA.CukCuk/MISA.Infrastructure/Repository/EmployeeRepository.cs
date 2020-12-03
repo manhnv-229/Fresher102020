@@ -26,25 +26,16 @@ namespace MISA.Infrastructure.Repository
             return entities;
         }
 
-        public IEnumerable<Employee> GetEmployeesByDepartMentId(string departmentId)
+        public IEnumerable<Employee> GetEmployeesByFilters(string value, string positionId, string departmentId)
         {
-            var entities = dbConnection.Query<Employee>($"Proc_GetEmployeesByDepartmentId", new { DepartmentId  = departmentId}, commandType: CommandType.StoredProcedure);
+            var paramaters = new DynamicParameters();
+            var input = (value != null) ? value : string.Empty;
+            paramaters.Add(@"Value", input);
+            paramaters.Add(@"DepartmentId", positionId);
+            paramaters.Add(@"PositionId", departmentId);
+            var employees = dbConnection.Query<Employee>($"Proc_GetEmployeesByFilters", commandType: CommandType.StoredProcedure);
             // Trả về
-            return entities;
-        }
-
-        public IEnumerable<Employee> GetEmployeesByDynamicValue(string value)
-        {
-            var entities = dbConnection.Query<Employee>($"Proc_GetEmployeesByCodeOrNameOrPhoneNumber", new { Value = value }, commandType: CommandType.StoredProcedure);
-            // Trả về
-            return entities;
-        }
-
-        public IEnumerable<Employee> GetEmployeesByPositionId(string positionId)
-        {
-            var entities = dbConnection.Query<Employee>($"Proc_GetEmployeesByPositionId", new { PositionId = positionId },commandType: CommandType.StoredProcedure);
-            // Trả về
-            return entities;
+            return employees;
         }
     }
 }

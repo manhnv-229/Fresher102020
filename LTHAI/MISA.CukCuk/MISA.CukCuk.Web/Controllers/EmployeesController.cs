@@ -127,47 +127,15 @@ namespace MISA.CukCuk.Web.Controllers
             return BadRequest();
         }
         /// <summary>
-        /// Lấy danh sách nhân viên theo chức vụ
-        /// CreatedBy: LTHAI(1/12/2020)
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("filterPosition")]
-        public IActionResult GetEmployeesByPositionId([FromQuery]string positionId)
-        {
-            var employees = _employeeService.GetEmployeesByPositionId(positionId);
-            if (employees.Count() > 0)
-            {
-                return Ok(employees);
-            }
-            return BadRequest();
-        }
-        /// <summary>
-        /// Lấy danh sách nhân viên theo phòng ban
-        /// CreatedBy: LTHAI(2/12/2020)
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("filterDepartment")]
-        public IActionResult GetEmployeesByDepartmentId([FromQuery] string departmentId)
-        {
-            var employees = _employeeService.GetEmployeesByDepartMentId(departmentId);
-            if (employees.Count() > 0)
-            {
-                return Ok(employees);
-            }
-            return BadRequest();
-        }
-        /// <summary>
         /// Lấy danh sách nhân viên theo giá trị nhập
         /// CreatedBy: LTHAI(2/12/2020)
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         [Route("filter")]
-        public IActionResult GetEmployeesByDynamicValue([FromQuery] string value)
+        public IActionResult Gets([FromQuery] string value, [FromQuery] string positionId, [FromQuery] string departmentId)
         {
-            var employees = _employeeService.GetEmployeesByDynamicValue(value);
+            var employees = _employeeService.GetEmployeesByFilters(value, positionId, departmentId);
             if (employees.Count() > 0)
             {
                 return Ok(employees);

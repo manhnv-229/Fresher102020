@@ -64,20 +64,9 @@ namespace MISA.ApplicationCore.Service
         {
             return _employeeRepository.GetEmployeeCodeMax();
         }
-
-        public IEnumerable<Employee> GetEmployeesByDepartMentId(string departmentId)
+        public IEnumerable<Employee> GetEmployeesByFilters(string value, string positionId, string departmentId)
         {
-            return _employeeRepository.GetEmployeesByDepartMentId(departmentId);
-        }
-
-        public IEnumerable<Employee> GetEmployeesByPositionId(string positionId)
-        {
-            return _employeeRepository.GetEmployeesByPositionId(positionId);
-        }
-
-        public IEnumerable<Employee> GetEmployeesByDynamicValue(string value)
-        {
-            return _employeeRepository.GetEmployeesByDynamicValue(value);
+            return _employeeRepository.GetEmployeesByFilters(value, positionId, departmentId);
         }
         #endregion
         #region Hàm riêng cho employee

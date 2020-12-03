@@ -19,25 +19,12 @@ namespace MISA.ApplicationCore.Interface.RepositoryInterface
         /// CreatedBy: LTHAI(2/12/2020)
         public Employee GetEmployeeCodeMax();
         /// <summary>
-        /// Lấy nhân viên theo mã phòng ban
+        ///  Lấy danh sách nhân viên dựa theo bộ lọc
         /// </summary>
-        /// <param name="departmentId">Khóa chính phòng ban</param>
+        /// <param name="value">Giá trị tìm kiếm</param>
+        /// <param name="positionId">Mã chức vụ</param>
+        /// <param name="departmentId">Mã phòng ban</param>
         /// <returns>Danh sách nhân viên</returns>
-        ///  CreatedBy: LTHAI(2/12/2020)
-        public IEnumerable<Employee> GetEmployeesByDepartMentId(string departmentId);
-        /// <summary>
-        /// Lấy nhân viên theo mã chức vụ
-        /// </summary>
-        /// <param name="departmentId">Khóa chính chức vụ</param>
-        /// <returns>Danh sách nhân viên</returns>
-        ///  CreatedBy: LTHAI(2/12/2020)
-        public IEnumerable<Employee> GetEmployeesByPositionId(string positionId);
-        /// <summary>
-        /// Lấy danh sách nhân viên theo giá trị nhập vào
-        /// </summary>
-        /// <param name="value">giá trị tùy biến</param>
-        /// <returns>Danh sách nhân viên</returns>
-        /// CreatedBy:LTHAI(2/12/2020)
-        public IEnumerable<Employee> GetEmployeesByDynamicValue(string value);
+        public IEnumerable<Employee> GetEmployeesByFilters(string value, string positionId, string departmentId);
     }
 }
