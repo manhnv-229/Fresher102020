@@ -730,7 +730,7 @@
     formatSalary(money) {
         var format = parseInt(money.replace(/,/g, ""))
             .toString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         //$(this).val(format);
         return format;
     }

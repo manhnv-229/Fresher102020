@@ -36,7 +36,6 @@ namespace MISA.Infrastructure
         public IEnumerable<T> GetEntities()
         {
             // Khởi tạo các commandText:
-
             var entities = _dbConnection.Query<T>($"Proc_Get{_tableName}s", commandType: CommandType.StoredProcedure);
 
             // Trả về dữ liệu:

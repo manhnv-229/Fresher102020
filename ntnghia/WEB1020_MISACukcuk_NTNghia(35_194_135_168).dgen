@@ -263,28 +263,20 @@
         <Column Name="DepartmentName">
           <Checked>true</Checked>
           <DataType>VARCHAR</DataType>
-          <GeneratorOptions xsi:type="MySqlVarcharGeneratorOptions">
+          <GeneratorOptions xsi:type="MySqlRegularExpressionGeneratorOptions">
             <AllowEmptyStrings>false</AllowEmptyStrings>
             <EmptyStringProportion>10</EmptyStringProportion>
             <AllowNulls>false</AllowNulls>
             <NullProportion>0</NullProportion>
-            <Unique>false</Unique>
-            <IsAlwaysUnique>false</IsAlwaysUnique>
             <ValueDistributionMode>Seed</ValueDistributionMode>
-            <SeedValue>19</SeedValue>
-            <MinStringAllowedLenght>1</MinStringAllowedLenght>
-            <MaxStringAllowedLenght>255</MaxStringAllowedLenght>
-            <MinStringLenght>1</MinStringLenght>
-            <MaxStringLenght>30</MaxStringLenght>
-            <StartChar>97</StartChar>
-            <EndChar>122</EndChar>
-            <CodePage>20127</CodePage>
-            <UseDefault>false</UseDefault>
-            <DefaultValue />
+            <SeedValue>6</SeedValue>
+            <Unique>true</Unique>
+            <IsAlwaysUnique>false</IsAlwaysUnique>
+            <Expression>(($"Department.txt"))</Expression>
           </GeneratorOptions>
-          <GeneratorType>MySqlVarcharGenerator</GeneratorType>
-          <GeneratorName>string</GeneratorName>
-          <GeneratorDescription>fill with character string values</GeneratorDescription>
+          <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
+          <GeneratorName>Reg Exp</GeneratorName>
+          <GeneratorDescription>values based on a regular expression</GeneratorDescription>
           <Length>255</Length>
         </Column>
       </Columns>
@@ -323,28 +315,20 @@
         <Column Name="PositionName">
           <Checked>true</Checked>
           <DataType>VARCHAR</DataType>
-          <GeneratorOptions xsi:type="MySqlVarcharGeneratorOptions">
+          <GeneratorOptions xsi:type="MySqlRegularExpressionGeneratorOptions">
             <AllowEmptyStrings>false</AllowEmptyStrings>
             <EmptyStringProportion>10</EmptyStringProportion>
             <AllowNulls>false</AllowNulls>
             <NullProportion>0</NullProportion>
-            <Unique>false</Unique>
-            <IsAlwaysUnique>false</IsAlwaysUnique>
             <ValueDistributionMode>Seed</ValueDistributionMode>
-            <SeedValue>30</SeedValue>
-            <MinStringAllowedLenght>1</MinStringAllowedLenght>
-            <MaxStringAllowedLenght>255</MaxStringAllowedLenght>
-            <MinStringLenght>1</MinStringLenght>
-            <MaxStringLenght>30</MaxStringLenght>
-            <StartChar>97</StartChar>
-            <EndChar>122</EndChar>
-            <CodePage>20127</CodePage>
-            <UseDefault>false</UseDefault>
-            <DefaultValue />
+            <SeedValue>10</SeedValue>
+            <Unique>true</Unique>
+            <IsAlwaysUnique>false</IsAlwaysUnique>
+            <Expression>(($"Position.txt"))</Expression>
           </GeneratorOptions>
-          <GeneratorType>MySqlVarcharGenerator</GeneratorType>
-          <GeneratorName>string</GeneratorName>
-          <GeneratorDescription>fill with character string values</GeneratorDescription>
+          <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
+          <GeneratorName>Reg Exp</GeneratorName>
+          <GeneratorDescription>values based on a regular expression</GeneratorDescription>
           <Length>255</Length>
         </Column>
       </Columns>
@@ -974,6 +958,25 @@
           <GeneratorType>MySqlDateGenerator</GeneratorType>
           <GeneratorName>date</GeneratorName>
           <GeneratorDescription>fill with date values</GeneratorDescription>
+        </Column>
+        <Column Name="PersonalTaxCode">
+          <Checked>true</Checked>
+          <DataType>VARCHAR</DataType>
+          <GeneratorOptions xsi:type="MySqlRegularExpressionGeneratorOptions">
+            <AllowEmptyStrings>false</AllowEmptyStrings>
+            <EmptyStringProportion>10</EmptyStringProportion>
+            <AllowNulls>true</AllowNulls>
+            <NullProportion>10</NullProportion>
+            <ValueDistributionMode>Seed</ValueDistributionMode>
+            <SeedValue>8</SeedValue>
+            <Unique>false</Unique>
+            <IsAlwaysUnique>false</IsAlwaysUnique>
+            <Expression>[0-9]{8}</Expression>
+          </GeneratorOptions>
+          <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
+          <GeneratorName>Reg Exp</GeneratorName>
+          <GeneratorDescription>values based on a regular expression</GeneratorDescription>
+          <Length>25</Length>
         </Column>
         <Column Name="Salary">
           <Checked>true</Checked>
