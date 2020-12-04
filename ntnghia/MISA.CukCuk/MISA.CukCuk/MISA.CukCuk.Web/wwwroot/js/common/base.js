@@ -57,7 +57,7 @@
             $(document).find('td').removeClass('row-selected');
             me.recordId = null;
             me.recordCode = null;
-        }); 
+        });
 
         //hiển thị thông tin chi tiết khi nhấn đúp chọn 1 bản ghi trên ds dữ liệu
         $('table tbody').on('dblclick', 'tr', function (e) {
@@ -311,6 +311,8 @@
             $(this).removeClass('border-red');
         })
 
+        //Hiển thị dialog thêm nhân viên
+        $('.dialog-modal').css("display", "flex");
         $('#loadingDialog').show();
         $('#Gender').val("male");
         $('#WorkStatus').val("in");
@@ -318,8 +320,6 @@
         try {
             var me = this;
             me.FormMode = 'Add';
-            //Hiển thị dialog thêm nhân viên
-            $('.dialog-modal').css("display", "flex");
 
             //Tự động thêm mã nhân viên
             var maxCode = me.listEmployeeCode.reduce(function (a, b) {
@@ -398,6 +398,7 @@
             //thu thập dữ liệu được nhập -> build thành object
 
             var employee = {}
+
             //lấy tất cả control nhập liệu:
             var elements = $('.dialog-content input[id], select[id]');
             $.each(elements, function (index, input) {
@@ -431,6 +432,7 @@
                     employee[attr] = value;
                 }
             })
+ 
             console.log(employee);
 
             if (me.FormMode == 'Edit') {
@@ -508,7 +510,7 @@
     * */
     showDeleteDialog() {
         var me = this;
-        
+
         if (me.recordCode != null) {
             $('.modal-delete').css("display", "flex");
             $('#alertInfo').text(`Bạn có chắc chắn muốn xóa nhân viên ${me.recordCode}?`);
@@ -559,6 +561,7 @@
         $.each(elements, function (index, input) {
             $(this).removeClass('border-red');
         })
+        $('.dialog-modal').css("display", "flex");
         $('#loadingDialog').show();
         me.FormMode = 'Edit';
         try {
@@ -659,10 +662,10 @@
 
             })
 
-            $('.dialog-modal').css("display", "flex");
             $('#loadingDialog').hide();
         } catch (e) {
             console.log(e);
+            $('#loadingDialog').hide();
         }
     }
 
