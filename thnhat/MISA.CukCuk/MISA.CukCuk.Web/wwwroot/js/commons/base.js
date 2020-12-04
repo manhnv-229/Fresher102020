@@ -72,6 +72,12 @@ class BaseJs {
         // Click vào add button
         $('#btnAdd').click(this.addCustomer.bind(this));
 
+        $("input[data-type='currency']").on({
+            keyup: function () {
+                formatCurrency($(this));
+            }
+        });
+
         // Click vào cancel button trong dialog
         $('#btnCancel').click(this.closeDialog.bind(this));
 
@@ -126,10 +132,9 @@ class BaseJs {
             modal: true,
             autoOpen: false,
             fluid: true,
-            resizable: false,
+            resizable: true,
             minWidth: 800,
-            title: 'THÔNG TIN KHÁCH HÀNG',
-
+            title: 'THÔNG TIN NHÂN VIÊN',
         });
     }
 
@@ -254,28 +259,39 @@ class BaseJs {
         });
         if (this.formMode == 'PUT') {
             employee["EmployeeId"] = this.recordId;
-            this.endPoint = this.recordId;
+            this.endPoint ='/' + this.recordId;
         } else {
             this.endPoint = '';
         }
-        debugger;
         $.ajax({
-            url: this.Host + this.Router +'/'+ this.endPoint,
+            url: this.Host + this.Router + this.endPoint,
             method: this.formMode,
             data: JSON.stringify(employee),
             contentType: 'application/json'
         }).done(function (res) {
+            debugger;
+            if (res.MISACode == 100) {
+                if (this.formMode == 'PUT') {
+                    this.formNoti = { 'state': 'SUCCESS', 'message': 'Sửa thành công' };
+                } else {
+                    this.formNoti = { 'state': 'SUCCESS', 'message': 'Thêm thành công' };
+                }
+                this.showNoti();
+                // load lại data
+                this.endPoint = '';
+                this.loadTable();
+                // tắt dialog
+                this.closeDialog();
+            } else if (res.MISACode == 900) {
+                this.formNoti = { 'state': 'FAIL', 'message': res.Data };
+                this.showNoti();
+            }
             //Đưa thông báo thành công
-            this.formNoti = {'state':'SUCCESS','message':'Thêm thành công'};
-            this.showNoti();
-            // load lại data
-            this.endPoint = '';
-            this.loadTable();
-            // tắt dialog
-            this.closeDialog();
+            
         }.bind(this)).fail(function (res) {
-
-        });
+            this.formNoti = { 'state': 'FAIL', 'message': res.responseJSON.Data[0] };
+            this.showNoti();
+        }.bind(this));
         //gọi service tương ứng
 
     }
@@ -384,7 +400,11 @@ class BaseJs {
             url: '/api/v1/Employees/EmployeeCodeMax?',
             method: 'GET',
         }).done(function (res) {
-            $("#txtEmployeeCode").val('NV' +(Number(res.substring(2))+1));
+            var resString = String(Number(res.substring(2)) + 1);
+            while (resString.length < res.length - 2) {
+                resString = '0' + resString;
+            }
+            $("#txtEmployeeCode").val('NV' + resString);
         }).fail(function (res) {
 
         })
@@ -418,7 +438,7 @@ class BaseJs {
             method: 'GET',
         }).done(function (res) {
             let customerName = res["FullName"];
-            let customerCode = res["CustomerCode"];
+            let customerCode = res["EmployeeCode"];
             this.formNoti = { 'state': 'WARN', 'message': `Bạn có chắc muốn xóa khách hàng <span style="font-weight:bold">${customerName}</span>[<span style="font-weight:bold">${customerCode}</span>] không` };
             this.showNoti();
         }.bind(this)).fail(function (res) {

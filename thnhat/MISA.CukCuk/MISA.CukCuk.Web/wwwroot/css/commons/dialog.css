@@ -27,6 +27,12 @@ select {
     border: 1px solid #d2d2d2;
     border-radius: 4px;
 }
+input:focus {
+    border: 1px solid #019160;
+}
+select:focus {
+    border: 1px solid #019160;
+}
 .dialog input[type="text"], input[type="date"], input[type="email"] {
     margin-top: 4px;
     height: 38px;
@@ -121,6 +127,10 @@ form {
 }
 .second-title{
     margin-top:30px;
+}
+#txtSalary {
+    text-align: right;
+    padding: 0px 10px 0px 8px;
 }
 /*css định nghĩa lại thư viện jqueryUI*/
 .ui-corner-all,

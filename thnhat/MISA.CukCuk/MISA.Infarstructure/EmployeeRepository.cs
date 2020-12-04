@@ -34,7 +34,7 @@ namespace MISA.Infarstructure
             var parameters = new DynamicParameters();
             parameters.Add("EmployeeCode",input);
             parameters.Add("FullName", input);
-            parameters.Add("PhoneNumber", input);
+            parameters.Add("PhoneNumber", input);       
             parameters.Add("DepartmentId", DepartmentId, DbType.String);
             parameters.Add("PositionId", PositionId, DbType.String);
             var listEmployee = _dbConnection.Query<Employee>($"Proc_GetEmployeePaging", parameters, commandType: CommandType.StoredProcedure).ToList();

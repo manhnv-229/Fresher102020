@@ -10,7 +10,7 @@ namespace MISA.ApplicationCore.Entities
     /// </summary>
     public class ServiceResult
     {
-        #region Preperty
+        #region Property
 
         /// <summary>
         /// Nội dung kết quả

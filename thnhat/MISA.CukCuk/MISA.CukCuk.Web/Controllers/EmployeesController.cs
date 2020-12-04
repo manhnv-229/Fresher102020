@@ -46,8 +46,5 @@ namespace MISA.CukCuk.Web.Controllers
             return Ok(_employeeService.GetEmployeeCodeMax());
         }
         #endregion
-
-
-
     }
 }

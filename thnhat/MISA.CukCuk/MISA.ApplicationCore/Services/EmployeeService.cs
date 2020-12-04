@@ -38,10 +38,5 @@ namespace MISA.ApplicationCore.Services
             return _employeeRepository.GetEmployeePaging(specs, DepartmentId, PositionId);
         }
         #endregion
-
-
-
-
-
     }
 }

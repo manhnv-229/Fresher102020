@@ -32,3 +32,20 @@ function detailFormatDate(date) {
 function formatMoney(money) {
     if (money) return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
 }
+
+function formatNumber(n) {
+    // format number 1000000 to 1,234,567
+    return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+}
+function formatCurrency(input, blur) {
+    // get input value
+    var input_val = input.val();
+
+    // don't validate empty input
+    if (input_val === "") { return; }
+
+
+    input_val = formatNumber(input_val);
+
+    input.val(input_val);
+}

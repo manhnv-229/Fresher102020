@@ -32,9 +32,9 @@
 
         .logo .logo-box .amis-logo {
             width: 100%;
-            height:100%;
-            background-position:10px 0px;
-            background-image: url('../../contents/images/amis-logo.png');
+            height: 100%;
+            background-position: 10px 0px;
+            background-image: url('../../contents/images/cukcuk-logo.svg');
             background-repeat: no-repeat;
             background-size: contain;
         }

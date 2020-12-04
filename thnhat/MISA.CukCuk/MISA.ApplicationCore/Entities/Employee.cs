@@ -125,7 +125,7 @@ namespace MISA.ApplicationCore.Entities
         /// Mức lương cơ bản
         /// </summary>
         [DisplayName("Mức lương cơ bản")]
-        public decimal Salary { get; set; }
+        public decimal? Salary { get; set; }
 
         /// <summary>
         /// Ngày gia nhập công ty
