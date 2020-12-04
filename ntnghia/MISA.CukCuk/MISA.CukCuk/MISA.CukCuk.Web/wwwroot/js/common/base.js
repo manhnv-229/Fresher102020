@@ -53,11 +53,11 @@
         });
 
         //Bỏ chọn hàng trong bảng:
-        $('.navbar, .header, .content-header, .content-search').click(function () {
+        $('.navbar, .header, .content-header').click(function () {
             $(document).find('td').removeClass('row-selected');
             me.recordId = null;
             me.recordCode = null;
-        });
+        }); 
 
         //hiển thị thông tin chi tiết khi nhấn đúp chọn 1 bản ghi trên ds dữ liệu
         $('table tbody').on('dblclick', 'tr', function (e) {
