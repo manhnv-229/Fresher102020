@@ -12,7 +12,7 @@
     <link href="/css/commons/common.css" rel="stylesheet" />
     <link href="/css/commons/notification.css" rel="stylesheet" />
     <link href="/css/commons/dialog.css" rel="stylesheet" />
-    <link href="/css/pages/Employee.css" rel="stylesheet" />
+    <link href="/css/pages/employee.css" rel="stylesheet" />
 </head>
 <body>
     <!--left navbar-->
@@ -72,16 +72,12 @@
         </div>
         <div class="filter">
             <div class="filter-left">
-                <input type="text" class="search-type" placeholder="Tìm kiếm theo mã nhân viên, họ tên" />
-                <select class="department-popup">
-                    <option>Tất cả phòng ban</option>
-                    <option>Phòng nhân sự</option>
-                    <option>Phòng đào tạo</option>
-                    <option>Phòng công nghệ</option>
-                    <option>Phòng Marketting</option>
+                <input type="text" class="search-type" id="txtSearch" placeholder="Tìm kiếm theo mã nhân viên, họ tên" />
+                <select id="cxbDepartment">
+                    <option value>Tất cả phòng ban</option>
                 </select>
-                <select class="state-popup">
-                    <option>Tất cả vị trí</option>
+                <select id="cxbPosition">
+                    <option value>Tất cả vị trí</option>
                 </select>
             </div>
             <div id="btnRefresh" class="refresh-icon"></div>
@@ -97,26 +93,27 @@
                             <th fieldname="DateOfBirth" formatType="ddmmyyyy">Ngày sinh</th>
                             <th fieldname="PhoneNumber">Điện thoại</th>
                             <th fieldname="Email">Email</th>
-                            <th fieldname="MemberCardCode">Mã thẻ thành viên</th>
-                            <th fieldname="CompanyName">Tên công ty</th>
-                            <th fieldname="CompanyTaxCode">Mã số thuế</th>
-                            <th fieldname="Address">Địa chỉ</th>
-                            <th fieldname="EmployeeGroupName">Nhóm khách hàng</th>
+                            <th fieldname="PositionName">Chức vụ</th>
+                            <th fieldname="DepartmentName">Phòng ban</th>
+                            <th fieldname="Salary" formatType="money">Mức lương cơ bản</th>
+                            <th fieldname="StateName">Tình trạng công việc</th>
                         </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody>
+                    </tbody>
                 </table>
+                <div class="emptyBody">Không có dữ liệu phù hợp</div>
             </div>
             <div class="paging">
                 <div class="page-info">Hiển thị 1- 15/99 lao động</div>
-                <div class="pages">
+                <!--<div class="pages">
                     <button class="previous-page square"></button>
                     <button class="page-1 circle">1</button>
                     <button class="page-2 circle">2</button>
                     <button class="page-3 circle">3</button>
                     <button class="page-4 circle">4</button>
                     <button class="next-page square"></button>
-                </div>
+                </div>-->
                 <button class="total-page">15 trang</button>
             </div>
         </div>
@@ -164,14 +161,14 @@
                         </div>
                         <div class="right">
                             <label for="Gender">Giới tính</label>
-                            <select name="Gender" id="Gender" fieldname="Gender">
+                            <select name="Gender" id="Gender" fieldname="GenderId">
                             </select>
                         </div>
                     </div>
                     <div class="inline">
                         <div>
                             <label for="EmployeeIdentityCode">Số CMTND/ Căn cước(<span style="color:red">*</span>)</label>
-                            <input type="text" name="EmployeeIdentityCode" id="EmployeeIdentityCode" fieldname="EmployeeIdentityCode">
+                            <input type="text" name="EmployeeIdentityCode" id="EmployeeIdentityCode" fieldname="EmployeeIdentityCode" required>
                         </div>
                         <div class="right">
                             <label for="dtDateOfLicense">Ngày cấp</label>
@@ -199,12 +196,12 @@
                     <div class="inline">
                         <div>
                             <label for="dtPosition">Vị trí</label>
-                            <select name="Position" id="dtPosition" fieldname="Position">
+                            <select name="Position" id="dtPosition" fieldname="PositionId">
                             </select>
                         </div>
                         <div class="right">
                             <label for="dtDepartment">Phòng ban</label>
-                            <select name="Department" id="dtDepartment" fieldname="Department">
+                            <select name="Department" id="dtDepartment" fieldname="DepartmentId">
                             </select>
                         </div>
                     </div>
@@ -225,7 +222,7 @@
                         </div>
                         <div class="right">
                             <label for="dtDateJoin">Tình trạng công việc</label>
-                            <select name="Gender" id="dtDateJoin" fieldname="State">
+                            <select name="Gender" id="dtDateJoin" fieldname="StateId">
                             </select>
                         </div>
                     </div>

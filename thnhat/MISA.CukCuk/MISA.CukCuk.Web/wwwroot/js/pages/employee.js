@@ -11,7 +11,7 @@ class CustomerJs extends BaseJs {
     }
 
     setUrl() {
-        this.getUrl = '/api/v1/Customers';
+        this.Router = '/api/v1/Employees';
     }
 }
 

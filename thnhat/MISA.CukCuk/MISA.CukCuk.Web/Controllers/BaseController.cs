@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MISA.ApplicationCore.Entities;
+using MISA.ApplicationCore.Enums;
 using MISA.ApplicationCore.Interfaces;
-using MISA.Enums;
 using System;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,12 +11,25 @@ namespace MISA.CukCuk.Web.Controllers
     [ApiController]
     public class BaseController<TEntity> : ControllerBase
     {
+        #region Declare
         IBaseService<TEntity> _baseService;
+        #endregion
+
+        #region Constructor
         public BaseController(IBaseService<TEntity> baseService)
         {
             _baseService = baseService;
         }
-        // GET: api/<BaseController>
+        #endregion
+
+        #region Property
+        #endregion
+
+        #region Method
+        /// <summary>
+        /// Lấy tất cả danh sách đối tượng
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Get()
         {
@@ -41,6 +53,14 @@ namespace MISA.CukCuk.Web.Controllers
                 return NoContent();
         }
 
+        //[HttpPost]
+        //public IActionResult Copy([FromRoute] Guid id, [FromBody] TEntity entity)
+        //{
+        //    entity.GetType().GetProperty($"{typeof(TEntity).Name}Id").SetValue(entity, id);
+        //    var serviceResult = _baseService.Copy(entity);
+        //    return Ok(serviceResult);
+        //}
+
         // PUT api/<BaseController>/5
         [HttpPut("{id}")]
         public IActionResult Put([FromRoute] Guid id, [FromBody] TEntity entity)
@@ -57,5 +77,6 @@ namespace MISA.CukCuk.Web.Controllers
             var serviceResult = _baseService.Delete(id);
             return Ok(serviceResult);
         }
+        #endregion
     }
 }

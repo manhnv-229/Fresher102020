@@ -1,8 +1,8 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
 using MISA.ApplicationCore.Entities;
+using MISA.ApplicationCore.Enums;
 using MISA.ApplicationCore.Interfaces;
-using MISA.Enums;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -36,16 +36,8 @@ namespace MISA.Infarstructure
             _dbConnection.Open();
             using(var transaction = _dbConnection.BeginTransaction())
             {
-                try
-                {
                     rowsAffected = _dbConnection.Execute($"Proc_Insert{_tableName}", parameters, commandType: CommandType.StoredProcedure);
                     transaction.Commit();
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                }
-                
             }
             return rowsAffected;
         }

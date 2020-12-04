@@ -1,6 +1,6 @@
 ﻿using MISA.ApplicationCore.Entities;
+using MISA.ApplicationCore.Enums;
 using MISA.ApplicationCore.Interfaces;
-using MISA.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,14 +10,24 @@ namespace MISA.ApplicationCore.Services
 {
     public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : BaseEntity
     {
+        #region Declare
         IBaseRepository<TEntity> _baseRepository;
         ServiceResult _serviceResult;
+        #endregion
 
+        #region Construcor
         public BaseService(IBaseRepository<TEntity> baseRepository)
         {
             _baseRepository = baseRepository;
             _serviceResult = new ServiceResult() { MISACode = MISACode.Success };
         }
+        #endregion
+
+        #region Property
+
+        #endregion
+
+        #region Method
         public virtual ServiceResult Add(TEntity entity)
         {
             entity.EntityState = EntityState.AddNew;
@@ -78,7 +88,7 @@ namespace MISA.ApplicationCore.Services
                     {
                         isValidate = false;
                         _serviceResult.MISACode = MISACode.Notvalid;
-                        messageError.Add(string.Format(Properties.Resources.Msg_Duplicate,displayName));
+                        messageError.Add(string.Format(Properties.Resources.Msg_Duplicate, displayName));
                         _serviceResult.Messenger = Properties.Resources.Msg_IsNotValid;
                     }
 
@@ -109,7 +119,7 @@ namespace MISA.ApplicationCore.Services
                 }
             }
             _serviceResult.Data = messageError;
-            if (isValidate == true )
+            if (isValidate == true)
                 isValidate = CustomValidate(entity);
             return isValidate;
         }
@@ -117,5 +127,6 @@ namespace MISA.ApplicationCore.Services
         {
             return true;
         }
+        #endregion
     }
 }

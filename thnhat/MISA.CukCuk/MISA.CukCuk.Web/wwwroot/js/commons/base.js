@@ -1,9 +1,12 @@
 ﻿
 class BaseJs {
     constructor() {
-        this.getUrl = null;
+        this.Host = '';
+        this.endPoint = '';
+        this.Router = null;
         this.setUrl();
-        this.dataLoad();
+        this.loadTable();
+        this.loadFilter();
         this.initEvent();
         this.initForm();
     }
@@ -15,19 +18,20 @@ class BaseJs {
     * Load dữ liệu
     * CreateBy: THNhat (12/11/2020)
     * */
-    dataLoad() {
+    loadTable() {
         // Lấy thông tin các cột dữ liệu:
         $('table tbody').empty();
+        $('.emptyBody').hide();
         let columns = $('table thead th');
         $('.loading').show();
         $.ajax({
-            url: this.getUrl,
+            url: this.Host + this.Router + this.endPoint,
             method: 'GET',
         }).done(function (res) {
             // Lấy thông tin dữ liệu sẽ map tương ứng với các cột:
             $.each(res, function (index, obj) {
                 let tr = $(`<tr></tr>`);
-                $(tr).data('recordId', obj.CustomerId);
+                $(tr).data('recordId', obj.EmployeeId);
                 $.each(columns, function (index, item) {
                     let td = $(`<td><div><span></span></div></td>`);
                     let fieldName = $(item).attr('fieldname');
@@ -41,13 +45,6 @@ class BaseJs {
                             td.find('div').addClass("text-align-right");
                             value = formatMoney(value);
                             break;
-                        case "checkbox":
-                            if (value > 0) {
-                                value = `<input type="checkbox" checked>`;
-                            } else {
-                                value = `<input type="checkbox">`;
-                            }
-                            td.find('div').addClass("text-align-center");
                         default:
                             break;
                     }
@@ -55,13 +52,18 @@ class BaseJs {
                     tr.append(td);
                 })
                 $('table tbody').append(tr);
-                $('.loading').hide();
             })
+            $('.loading').hide();
+            if ($('table tbody').is(':empty')) $('.emptyBody').show();
         }).fail(function (res) {
             $('.loading').hide();
         })
     }
 
+    loadFilter() {
+        this.getDepartments('#cxbDepartment');
+        this.getPositions('#cxbPosition');
+    }
     /**-----------------------------
     * Bắt tất cá sự kiện
     * CreateBy: THNhat (19/11/2020)
@@ -74,7 +76,10 @@ class BaseJs {
         $('#btnCancel').click(this.closeDialog.bind(this));
 
         // click vào refresh button
-        $('#btnRefresh').click(this.dataLoad.bind(this));
+        $('#btnRefresh').click(function () {
+            this.endPoint = '';
+            this.loadTable();
+        }.bind(this));
 
         // click vào save button trong dialog
         $('#btnSave').click(this.editCustomer.bind(this));
@@ -86,13 +91,21 @@ class BaseJs {
             $("#confirmForm").hide();
         });
 
+        $('#cxbDepartment,#cxbPosition').change(this.filterTable.bind(this));
+
+        $("#txtSearch").keyup(function (event) {
+            if (event.keyCode === 13) {
+                this.filterTable();
+            }
+        }.bind(this));
+
         // click vào delete button trong warning form
         $('.btnDelete').click(this.deleteCustomer.bind(this));
 
         // Hiển thị thông tin chi tiết khi nhấn đúp chuột vào một dòng trong bảng
         $('table tbody').on('dblclick', 'tr', function (point) {
             $("#btnDelete").show();
-            this.detailCustomer(point);
+            this.showDetailCustomer(point);
         }.bind(this));
 
         /*
@@ -107,6 +120,7 @@ class BaseJs {
     * CreateBy: THNhat (19/11/2020)
     * */
     initForm() {
+        var me = this;
         // tạo form dialog bằng jquery ui
         this.CustomerFormDetail = $('.dialog').dialog({
             modal: true,
@@ -124,20 +138,68 @@ class BaseJs {
     * Author THNhat (18/11/2020)
     * */
     openDialog() {
-        // load nhóm khách hàng
+        this.getGenders('.dialog select[fieldname = "GenderId"]');
+        this.getDepartments('.dialog select[fieldname = "DepartmentId"]');
+        this.getPositions('.dialog select[fieldname = "PositionId"]');
+        this.getStates('.dialog select[fieldname = "StateId"]');
+        // mở dialog
+        this.CustomerFormDetail.dialog('open');
+    }
+
+    getGenders(selectName) {
         $.ajax({
-            url: 'http://api.manhnv.net/api/customergroups',
+            url: '/api/v1/Genders',
             method: 'GET',
         }).done(function (res) {
             $.each(res, function (index, item) {
-                var option = $(`<option value="${this["CustomerGroupId"]}">${this["CustomerGroupName"]}</option>`);
-                $('.dialog select').append(option);
+                var option = $(`<option value="${this["GenderId"]}">${this["GenderName"]}</option>`);
+                $(`${selectName}`).append(option);
             })
         }).fail(function (res) {
 
         })
-        // mở dialog
-        this.CustomerFormDetail.dialog('open');
+    }
+
+    getDepartments(selectName) {
+        $.ajax({
+            url: '/api/v1/Departments',
+            method: 'GET',
+        }).done(function (res) {
+            $.each(res, function (index, item) {
+                var option = $(`<option value="${this["DepartmentId"]}">${this["DepartmentName"]}</option>`);
+                $(`${selectName}`).append(option);
+            })
+        }).fail(function (res) {
+
+        })
+    }
+
+    getPositions(selectName) {
+        $.ajax({
+            url: '/api/v1/Positions',
+            method: 'GET',
+        }).done(function (res) {
+            $.each(res, function (index, item) {
+                var option = $(`<option value="${this["PositionId"]}">${this["PositionName"]}</option>`);
+                $(`${selectName}`).append(option);
+            })
+        }).fail(function (res) {
+
+        })
+    }
+
+    getStates(selectName) {
+        $.ajax({
+            url: '/api/v1/States',
+            method: 'GET',
+        }).done(function (res) {
+            $.each(res, function (index, item) {
+                var option = $(`<option value="${this["StateId"]}">${this["StateName"]}</option>`);
+                $(`${selectName}`).append(option);
+            })
+        }).fail(function (res) {
+
+        })
     }
 
     /**
@@ -180,28 +242,35 @@ class BaseJs {
 
         // Thu thập dữ liệu được nhập -> build thành project
         let inputs = $('.dialog input[fieldname]');
-        let customer = {};
+        let employee = {};
         $.each(inputs, function (index, item) {
             var fieldName = $(item).attr('fieldname');
-            customer[fieldName] = $(item).val();
+            employee[fieldName] = $(item).val();
         });
-        customer["CustomerGroupId"] = $('#CustomerGroupId option:selected').val();
-        customer["Gender"] = $("input[name='gender']:checked").val();
-
+        let selects = $('.dialog select');
+        $.each(selects, function (index, select) {
+            var fieldName = $(select).attr('fieldname');
+            employee[fieldName] = $(`select[fieldname = "${fieldName}"] option:selected`).val();
+        });
         if (this.formMode == 'PUT') {
-            customer["CustomerId"] = this.recordId;
+            employee["EmployeeId"] = this.recordId;
+            this.endPoint = this.recordId;
+        } else {
+            this.endPoint = '';
         }
+        debugger;
         $.ajax({
-            url: this.getUrl,
+            url: this.Host + this.Router +'/'+ this.endPoint,
             method: this.formMode,
-            data: JSON.stringify(customer),
+            data: JSON.stringify(employee),
             contentType: 'application/json'
         }).done(function (res) {
             //Đưa thông báo thành công
             this.formNoti = {'state':'SUCCESS','message':'Thêm thành công'};
             this.showNoti();
             // load lại data
-            this.dataLoad();
+            this.endPoint = '';
+            this.loadTable();
             // tắt dialog
             this.closeDialog();
         }.bind(this)).fail(function (res) {
@@ -252,19 +321,20 @@ class BaseJs {
      * Hàm xem chi tiết khách hàng
      * Author THNhat (18/11/2020)
      * */
-    detailCustomer(point) {
+    showDetailCustomer(point) {
+        this.endPoint = '';
         this.openDialog();
         let recordId = $(point.currentTarget).data('recordId');
         this.formMode = 'PUT';
         this.recordId = recordId;
         $.ajax({
-            url: this.getUrl + '/' + recordId,
+            url: this.Host + this.Router + '/' + recordId,
             method: 'GET',
         }).done(function (res) {
             let inputs = $('.dialog input[fieldname]');
             $.each(inputs, function (index, input) {
                 let fieldname = $(this).attr('fieldname');
-                if (fieldname == 'DateOfBirth') {
+                if (this.type == "date") {
                     let dateOfBirth = res[fieldname];
                     dateOfBirth = detailFormatDate(dateOfBirth);
                     $(this).val(dateOfBirth);
@@ -272,8 +342,14 @@ class BaseJs {
                     $(this).val(res[fieldname]);
                 }
             });
-            $(`option[text='${res["CustomerGroupName"]}']`).prop('selected', true);
-            $(`input[value='${res["Gender"]}']`).prop('checked', true);
+            let selects = $('.dialog select[fieldname]');
+            $.each(selects, function (index, select) {
+                let fieldname = $(this).attr('fieldname');
+                let datas = $('.dialog option');
+                $.each(datas, function (index, data) {
+                    if (data.value == res[fieldname]) $(data).prop('selected', true);
+                });
+            });
         }).fail(function (res) {
 
         })
@@ -285,7 +361,7 @@ class BaseJs {
      * */
     deleteCustomer() {
         $.ajax({
-            url: this.getUrl + '/' + this.recordId,
+            url: this.Host + this.Router + '/' + this.recordId,
             method: 'DELETE',
         }).done(function (res) {
             $("#confirmForm").hide();
@@ -293,7 +369,7 @@ class BaseJs {
             this.formNoti = { 'state': 'SUCCESS', 'message': 'Xóa thành công' };
             this.showNoti();
             // load lại data
-            this.dataLoad();
+            this.loadTable();
         }.bind(this)).fail(function (res) {
 
         })
@@ -304,6 +380,14 @@ class BaseJs {
     * Author THNhat (20/11/2020)
     * */
     addCustomer() {
+        $.ajax({
+            url: '/api/v1/Employees/EmployeeCodeMax?',
+            method: 'GET',
+        }).done(function (res) {
+            $("#txtEmployeeCode").val('NV' +(Number(res.substring(2))+1));
+        }).fail(function (res) {
+
+        })
         this.openDialog();
         this.formMode = 'POST';
     }
@@ -330,7 +414,7 @@ class BaseJs {
     }
     showConfirmForm() {
         $.ajax({
-            url: this.getUrl + '/' + this.recordId,
+            url: this.Host + this.Router + '/' + this.recordId,
             method: 'GET',
         }).done(function (res) {
             let customerName = res["FullName"];
@@ -340,6 +424,13 @@ class BaseJs {
         }.bind(this)).fail(function (res) {
 
         })
-        
+    }
+
+    filterTable() {
+        var specs = $('#txtSearch').val();
+        var departmentId = $('#cxbDepartment option:selected').val();
+        var PositionId = $('#cxbPosition option:selected').val();
+        this.endPoint = '/filter?specs=' + specs + '&DepartmentId=' + departmentId + '&PositionId=' + PositionId;
+        this.loadTable();
     }
 }

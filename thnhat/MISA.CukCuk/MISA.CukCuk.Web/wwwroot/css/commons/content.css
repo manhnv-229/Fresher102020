@@ -149,7 +149,7 @@
         line-height: 56px;
     }
 
-    .paging .pages {
+    /*.paging .pages {
         align-items: center;
         justify-content: center;
         width: calc(100% - 350px);
@@ -201,7 +201,7 @@
             background-repeat: no-repeat;
             background-position: center;
         }
-
+*/
     .paging .total-page {
         position: absolute;
         right: 0;

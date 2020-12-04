@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using MISA.ApplicationCore.Entities;
-using MISA.Enums;
+using MISA.ApplicationCore.Enums;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
