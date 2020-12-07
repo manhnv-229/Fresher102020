@@ -204,7 +204,8 @@ class AddOrder extends Base {
             // Nếu chưa có thông tin => Hiển thị thông báo Chưa có dữ liệu
             else {
                 $(`.empty-result`).removeClass("displayNone");
-                $(`.box-info`).addClass("displayNone");
+                $(`.box-info`).removeClass("displayNone");
+                $(`.box-info input[type=text]:first`).focus();
             }
         }
         catch (e) {

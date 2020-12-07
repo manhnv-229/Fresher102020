@@ -64,7 +64,7 @@ class Base {
             // TODO sự kiện khi nhập trường Tìm kiếm
 
             // TODO Sự kiện khi chọn filter
-            
+
             // format khi nhập liệu số tiền
             me.autoFormatMoney();
             // kiểm tra dữ liệu
@@ -621,13 +621,29 @@ class Base {
     * CreatedBy dtnga (21/11/2020)
     * */
     tr_onClick() {
-        $(`tbody tr`).removeClass("selected");
-        $(`tbody tr input[type="checkbox"]`).prop("checked", false);
-        $(this).addClass("selected");
-        $(this).find(`input[type="checkbox"]`).prop("checked", true);
-        // Bỏ check ở checkbox trên theader ( bỏ chọn all)
-        $(`table thead input[type="checkbox"]`).prop("checked", false);
-        //TODO set màu cho bản ghi được chọn khi hover
+        try {
+            var Allcheckbox = $(`table thead input[type="checkbox"]:checked`);
+            if (Allcheckbox.length > 0) {
+                $(`table thead input[type="checkbox"]:checked`).prop("checked", false);
+                $(`tbody input[type="checkbox"]`).prop("checked", false);
+                $(this).addClass("selected");
+                $(this).find(`input[type="checkbox"]`).prop("checked", true);
+            }
+            else {
+                var checkbox = $(this).find(`input[type="checkbox"]:checked`);
+                if (checkbox.length > 0) {
+                    $(this).removeClass("selected");
+                    $(this).find(`input[type="checkbox"]`).prop("checked", false);
+                    return;
+                }
+                else {
+                    $(this).addClass("selected");
+                    $(this).find(`input[type="checkbox"]`).prop("checked", true);
+                }
+            }
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     /**
@@ -663,7 +679,6 @@ class Base {
         else {
             $(`tbody input[type="checkbox"]`).prop("checked", false);
         }
-
     }
 
 
@@ -1423,7 +1438,7 @@ var listCustomer = [
         CreatedDate: "2/22/2020 2:31:23 AM",
         Address: "120, ngõ 322, đường Mỹ Đình",
         AdministrativeAreaCode: ""
-        
+
     },
     {
         ReceiverId: "1294ae7e-2858-2074-4429-0204eeb736fa",
@@ -1437,5 +1452,16 @@ var listCustomer = [
         District: "Nam Từ Liêm",
         Ward: "Trung Văn",
         Street: "Phùng Khoang"
+    },
+    {
+        ReceiverId: "126339f9-1e9c-7ed8-8a2a-acc8fc2f00ag",
+        FullName: "Đặng Thị Nga",
+        PhoneNumber: "0582296998",
+        SuccessOrderedAmount: "5",
+        OrderAmount: "5",
+        CreatedDate: "12/01/2020 2:31:23 AM",
+        Address: "xóm 7, xã Hải Đường, huyện Hải Hậu, tỉnh Nam Định",
+        AdministrativeAreaCode: "VN36"
+
     }
 ]
