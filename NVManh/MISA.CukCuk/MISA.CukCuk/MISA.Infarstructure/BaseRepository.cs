@@ -68,7 +68,7 @@ namespace MISA.Infarstructure
         {
             // Kết nối tới CSDL:
             // Khởi tạo các commandText:
-            var entities = _dbConnection.Query<TEntity>($"SELECT * FROM {_tableName}", commandType: CommandType.Text);
+            var entities = _dbConnection.Query<TEntity>($"SELECT * FROM {_tableName} LIMIT 10", commandType: CommandType.Text);
             // Trả về về dữ liệu:
             return entities;
         }

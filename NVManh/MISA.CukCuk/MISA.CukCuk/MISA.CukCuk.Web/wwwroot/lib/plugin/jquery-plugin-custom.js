@@ -63,12 +63,29 @@ class MPlugin {
             if (value && (value.length == 2 || value.length == 5)) {
                 value = value + '/';
             }
-            debugger
             $(this).val(value);
         })
 
+
+        $(document).on('keydown', '[control-type="combobox"] input.m-combobox-input', function (e) {
+            var keyCode = e.keyCode;
+            switch (keyCode) {
+                case 40:
+                    me.setFocusComboboxItem(this.parentElement, true);
+                    break;
+                case 38:
+                    me.setFocusComboboxItem(this.parentElement, false);
+                    break;
+                default:
+            }
+
+        })
+
+        /* -----------------------------------------------------
+         * Thực hiện auto complete - nhập liệu thì thực hiện tìm kiếm dữ liệu
+         * Author: NVMANH (07/12/2020)
+         */
         $(document).on('input', '[control-type="combobox"] input.m-combobox-input', function () {
-            debugger;
             var inputValue = this.value;
             var combobox = $(this).parent();
             var data = combobox.data('data');
@@ -115,7 +132,6 @@ class MPlugin {
             var value = this.getAttribute('value'),
                 text = this.firstElementChild.textContent;
             input.val(text);
-            debugger
             $(input.parent()).data("selected", { text: text, value: value });
             input.parent.data = { text: text, value: value };
             $(comboboxData).toggle();
@@ -140,12 +156,12 @@ class MPlugin {
                     method: 'GET',
                     url: apiGetUrl,
                 }).done(function (res) {
-                    me.buildHTMLCombobox(combobox, res).bind(me);
+                    me.buildHTMLCombobox(combobox, res);
                 }).fail(function () {
-                    me.buildHTMLCombobox(combobox, null).bind(me);
+                    me.buildHTMLCombobox(combobox, null);
                 })
             } else {
-                me.buildHTMLCombobox(combobox, null).bind(me);
+                me.buildHTMLCombobox(combobox, null);
             }
         })
     }
@@ -200,9 +216,44 @@ class MPlugin {
         $.each(data, function (index, item) {
             var text = item[fieldText],
                 value = item[fieldValue];
-            var itemHTML = `<div class="m-combobox-item" value="` + value + `"><span>` + text + `</span></div>`;
+            var itemHTML = `<a class="m-combobox-item" value="` + value + `"><span>` + text + `</span></a>`;
             comboboxDataEl.append(itemHTML);
         })
+    }
+
+    setFocusComboboxItem(combobox, isNext) {
+        var comboboxData = $(combobox).children('.m-combobox-data');
+        var childrenFirst = comboboxData.children().first();
+        var childrenLast = comboboxData.children().last();
+        var itemFocusCurrent = comboboxData.children('.mCombobox__item--focus').first();
+        var comboboxDataNotShow = (comboboxData.css('display') == 'none');
+       
+        comboboxData.show();
+        // Hiển thị các item lựa chọn:
+        if (comboboxDataNotShow && isNext || (isNext && !comboboxDataNotShow && itemFocusCurrent.length == 0)) {
+            childrenFirst.addClass('mCombobox__item--focus');
+        } else if (comboboxDataNotShow && !isNext || (!isNext && !comboboxDataNotShow && itemFocusCurrent.length == 0)) {
+            childrenLast.addClass('mCombobox__item--focus');
+        } else {
+            itemFocusCurrent.removeClass('mCombobox__item--focus');
+            /* - Chưa có item nào được focus thì focus luôn thằng đầu tiên
+               - Có thằng focus rồi thì thực hiện focus thằng tiếp theo: */
+            if (isNext) {
+                debugger
+                if (itemFocusCurrent.next().length > 0) {
+                    itemFocusCurrent.next().addClass('mCombobox__item--focus');
+                } else {
+                    childrenFirst.addClass('mCombobox__item--focus');
+                }
+                
+            } else {
+                if (itemFocusCurrent.prev().length > 0) {
+                    itemFocusCurrent.prev().addClass('mCombobox__item--focus');
+                } else {
+                    childrenLast.addClass('mCombobox__item--focus');
+                }
+            }
+        }
     }
 
     //TODO: build html date picker:
