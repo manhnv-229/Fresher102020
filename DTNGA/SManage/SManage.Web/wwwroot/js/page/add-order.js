@@ -7,6 +7,7 @@ class AddOrder extends Base {
         try {
             super();
             this.autoCompleteProduct();
+            this.autoCompleteProvince();
             this.initEventOrderAddPage();
         }
         catch (e) {
@@ -195,14 +196,17 @@ class AddOrder extends Base {
             var phoneNumber = $(tel).val();
             //TODO Lấy thông tin khách hàng bằng số điện thoại qua API
             var customer = listCustomer.find(c => phoneNumber == c["PhoneNumber"]);
+
             // Nếu có thông tin => tự động bind dữ liệu vào box-info
             if (customer) {
                 $(`.empty-result`).addClass("displayNone");
                 me.autoBindCustomer(customer);
                 $(`.box-info`).removeClass("displayNone");
+                $(tel).val('');
             }
             // Nếu chưa có thông tin => Hiển thị thông báo Chưa có dữ liệu
             else {
+                $(tel).focus();
                 $(`.empty-result`).removeClass("displayNone");
                 $(`.box-info`).addClass("displayNone");
             }
@@ -260,6 +264,7 @@ class AddOrder extends Base {
         totalMoney.attr("value", newTotal);
         // format khi nhập liệu số tiền
         me.autoFormatMoney();
+        me.autoFocusInput();
         // Sự kiện khi nhấn nút xóa tại mỗi dòng sản phẩm
         $(`.product-list .product-line button`).on("click", function () {
             me.onClick_deleteProduct(this);

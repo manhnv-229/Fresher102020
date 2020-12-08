@@ -7,6 +7,7 @@ class Base {
             me.loadAccount();
             me.loadShop();
             me.loadData();
+            me.autoCompleteTransportor();
             me.initEvent();
         }
         catch (e) {
@@ -51,6 +52,24 @@ class Base {
         }
     }
 
+    /** Tự động bind thông tin các đơn vị vận chuyển liên kết với cửa hàng
+     * CreatedBy dtnga (08/12/2020)
+     * */
+    autoCompleteTransportor() {
+        var me = this;
+        //TODO Lấy danh sách đơn vị vận chuyển qua API
+        me.Route = "";
+        $.ajax({
+            url: me.Host + me.Route + "",
+            method: "GET"
+        })
+            .done(function (res) {
+
+            })
+            .fail(function (res) {
+                console.log(res);
+            })
+    }
     /* Hàm thực hiện khởi tạo sự kiện
      * CreatedBy dtnga (21/11/2020)
      * */
@@ -64,13 +83,13 @@ class Base {
             // TODO sự kiện khi nhập trường Tìm kiếm
 
             // TODO Sự kiện khi chọn filter
-            
+
             // format khi nhập liệu số tiền
             me.autoFormatMoney();
             // kiểm tra dữ liệu
             me.checkRequired();
             me.validateEmail();
-
+            me.addFocusSupport();
             // Sự kiện khi thao tác với từng hàng dữ liệu trong bảng
             $(`table tbody`).on("click", "tr", me.tr_onClick);
             $(`table tbody`).on("dblclick", "tr", me.onDblClick_trow.bind(me));
@@ -99,27 +118,245 @@ class Base {
         }
     }
 
+    /** Thực hiện tự động bind dữ liệu tỉnh/thành
+     * CreatedBy dtnga (08/12/2020)
+     * */
+    autoCompleteProvince() {
+        var me = this;
+        var provinceField = $(`input[type="search"][fieldName="Province"]`);
+        // Lấy danh sách tỉnh/thành tại Việt Nam qua API
+        //me.Route = "/AdministrativeAreas/Code";
+        //$.ajax({
+        //    url: me.Host + me.Route + "?areaCode=&kind=1",
+        //    method: "GET"
+        //})
+        //.done(function (res) {
+
+        //})
+        //.fail(function (res) {
+        //    console.log(res);
+        //})
+
+        // start of ajax done function body
+        var res = resProvince;
+        // Tạo source data:
+        var listProvince = res.Data;
+        var source = [];
+        $.each(listProvince, function (index, province) {
+            var provinceName = province["AdministrativeAreaName"];
+            var provinceCode = province["AdministrativeAreaCode"];
+            source.push({
+                label: provinceName,
+                code: provinceCode
+            });
+        })
+        // Tạo autoComplete
+        $(provinceField).autocomplete({
+            source: source,
+            autoFocus: true,
+            focus: function (event, suggest) {
+                $(provinceField).val(suggest.item.label);
+            },
+            select: function (event, suggest) {
+                // bind tên tỉnh/thành lên input field
+                $(provinceField).val(suggest.item.label);
+                // Lưu mã tỉnh/thành và thực hiện complete danh sách quận/ huyện
+                var provinceCode = suggest.item.code;
+                $(provinceField).data("keyCode", provinceCode);
+                me.autoCompleteDistrict(provinceCode);
+            }
+        });
+        // End of ajax done function body
+    }
+
+    /**
+     *Thực hiện tự động bind dữ liệu quận/ huyện của tỉnh đã cho
+     * CreatedBy dtnga (08/12/2020)
+     * @param {string} provinceCode Mã tỉnh/ thành
+     */
+    autoCompleteDistrict(provinceCode) {
+        var me = this;
+        provinceCode = provinceCode.trim();
+        if (!provinceCode) {
+            provinceCode = $(`input[type="search][fieldName="Province"]`).data("keyCode");
+            if (!provinceCode) {
+                // Hiển thị popup yêu cầu nhập thông tin tỉnh thành
+                var popup = $(`.popup-notification`);
+                var popupBody = $(popup).find(`.popup-body`);
+                $(popupBody).children().remove();
+                var content = $(`<div class="popup-body-text">Thông tin tỉnh/thành không được bỏ trống. Vui lòng kiểm tra và nhập lại</div>`);
+                popupBody.append(content);
+                popup.show();
+                me.initEventPopup(popup);
+                return;
+            }
+        }
+        else {
+            // Lấy danh sách quận/ huyện theo mã tỉnh/ thành qua API
+            //me.Route = "/AdministrativeAreas/Code";
+            //$.ajax({
+            //    url: me.Host + me.Route + "?areaCode=" + provinceCode + "&kind=2",
+            //    method: "GET"
+            //})
+            //    .done(function (res) {
+                    
+            //    })
+            //    .fail(function (res) {
+            //        console.log(res);
+            //    })
+
+            // fake res
+            var res = resDistrict;
+            var listDistrict = res.Data;
+            // Tạo source data:
+            var source = [];
+            $.each(listDistrict, function (index, district) {
+                var districtName = district["AdministrativeAreaName"];
+                var districtCode = district["AdministrativeAreaCode"];
+                source.push({
+                    label: districtName,
+                    code: districtCode
+                });
+            })
+            // Tạo autoComplete
+            var districtField = $(`input[type="search"][fieldName="District"]`);
+            $(districtField).autocomplete({
+                source: source,
+                autoFocus: true,
+                focus: function (event, suggest) {
+                    $(districtField).val(suggest.item.label);
+                },
+                select: function (event, suggest) {
+                    // bind tên tỉnh/thành lên input field
+                    $(districtField).val(suggest.item.label);
+                    // Lưu mã tỉnh/thành và thực hiện complete danh sách quận/ huyện
+                    var districtCode = suggest.item.code;
+                    $(districtField).data("keyCode", districtCode);
+                    me.autoCompleteWard(districtCode);
+                }
+            });
+        }
+    }
+
+    /**
+     * Thực hiện bind dữ liệu phường/ xã tự động dựa theo mã quận/ huyện
+     * CreatedBy dtnga (08/12/2020)
+     * @param {string} districtCode Mã quận/ huyện
+     */
+    autoCompleteWard(districtCode) {
+        var me = this;
+        districtCode = districtCode.trim();
+        if (!districtCode) {
+            districtCode = $(`input[type="search][fieldName="District"]`).data("keyCode");
+            if (!districtCode) {
+                // Hiển thị popup yêu cầu nhập thông tin tỉnh thành
+                var popup = $(`.popup-notification`);
+                var popupBody = $(popup).find(`.popup-body`);
+                $(popupBody).children().remove();
+                var content = $(`<div class="popup-body-text">Thông tin quận/ huyện không được bỏ trống. Vui lòng kiểm tra và nhập lại</div>`);
+                popupBody.append(content);
+                popup.show();
+                me.initEventPopup(popup);
+                return;
+            }
+        }
+        else {
+            // Lấy danh sách xã/ phường theo mã quận/ huyện qua API
+            //me.Route = "/AdministrativeAreas/Code";
+            //$.ajax({
+            //    url: me.Host + me.Route + "?areaCode=" + districtCode + "&kind=3",
+            //    method: "GET"
+            //})
+            //    .done(function (res) {
+
+            //    })
+            //    .fail(function (res) {
+            //        console.log(res);
+            //    })
+
+            // fake res
+            var res = resWard;
+            var listWard = res.Data;
+            // Tạo source data:
+            var source = [];
+            $.each(listWard, function (index, ward) {
+                var wardName = ward["AdministrativeAreaName"];
+                var wardCode = ward["AdministrativeAreaCode"];
+                source.push({
+                    label: wardName,
+                    code: wardCode
+                });
+            })
+            // Tạo autoComplete
+            var wardField = $(`input[type="search"][fieldName="Ward"]`);
+            $(wardField).autocomplete({
+                source: source,
+                autoFocus: true,
+                focus: function (event, suggest) {
+                    $(wardField).val(suggest.item.label);
+                },
+                select: function (event, suggest) {
+                    // bind tên tỉnh/thành lên input field
+                    $(wardField).val(suggest.item.label);
+                    // Lưu mã tỉnh/thành và thực hiện complete danh sách quận/ huyện
+                    var wardCode = suggest.item.code;
+                    $(wardField).data("keyCode", wardCode);
+                }
+            });
+        }
+    }
+
+    
     /**
      *Thực hiện bind dữ liệu khách hàng tự động
      * CreatedBy dtnga (02/12/2020)
      * @param {object} customer Thông tin khách hàng
      */
     autoBindCustomer(customer) {
+        var me = this;
         if (!customer)
             return;
-        var customerName = customer["FullName"].trim();
-        var phoneNumber = customer["PhoneNumber"].trim();
-        var address = customer["Address"].trim();
-        var province = customer["Province"].trim();
-        var district = customer["District"].trim();
-        var ward = customer["Ward"].trim();
+        var customerName = !customer["FullName"] ? '' : customer["FullName"].trim();
+        var phoneNumber = !customer["PhoneNumber"] ? '' : customer["PhoneNumber"].trim();
+        var address = !customer["Address"] ? '' : customer["Address"].trim();
+        var areaCode = !customer["AdministrativeAreaCode"] ? "VN" : customer["AdministrativeAreaCode"];
+        if (areaCode.length > 2) {
+            //TODO Lấy dữ liệu từ API
+            //$.ajax({
+            //    url: me.Host + me.Route + "?areaCode=" + areaCode,
+            //    method: "GET"
+            //}).done(function (res) {
+            //    var fullArea = res.data;
+            //    var province = fullArea["Province"];
+            //    var district = fullArea["District"];
+            //    var ward = fullArea["Ward"];
+            //    $(`.box-info input[fieldName="Province"]`).val(province);
+            //    $(`.box-info input[fieldName="District"]`).val(district);
+            //    $(`.box-info input[fieldName="Ward"]`).val(ward);
+            //}).fail(function (res) {
+            //    console.log(res);
+            //})
+
+            //fakde data
+            var res = resFullArea;
+            var fullArea = res.Data;
+            var province = fullArea["Province"];
+            var district = fullArea["District"];
+            var ward = fullArea["Ward"];
+            $(`.box-info input[fieldName="Province"]`).val(province["AdministrativeAreaName"]);
+            $(`.box-info input[fieldName="Province"]`).data("keyCode", province["AdministrativeAreaCode"]);
+
+            $(`.box-info input[fieldName="District"]`).val(district["AdministrativeAreaName"]);
+            $(`.box-info input[fieldName="District"]`).data("keyCode", district["AdministrativeAreaCode"]);
+
+            $(`.box-info input[fieldName="Ward"]`).val(ward["AdministrativeAreaName"]);
+            $(`.box-info input[fieldName="Ward"]`).data("keyCode", ward["AdministrativeAreaCode"]);
+        }
         // Bind dữ liệu
         $(`.box-info input[fieldName="CustomerName"]`).val(customerName);
         $(`.box-info input[fieldName="PhoneNumber"]`).val(phoneNumber);
         $(`.box-info input[fieldName="Address"]`).val(address);
-        $(`.box-info input[fieldName="Province"]`).val(province);
-        $(`.box-info input[fieldName="District"]`).val(district);
-        $(`.box-info input[fieldName="Ward"]`).val(ward);
+
 
     }
 
@@ -129,10 +366,9 @@ class Base {
      * @param {object} product
      */
     addProductToCart(product) {
-
     }
 
-    /** TODO Thực hiện cập nhật tổng tiền của giỏ hàng khi thay đổi giá sản  phẩm
+    /**Thực hiện cập nhật tổng tiền của giỏ hàng khi thay đổi giá sản  phẩm
      * CreatedBy dtnga (01/12/2020)
      * */
     onChangeProductPrice(priceInput) {
@@ -178,7 +414,7 @@ class Base {
     }
 
     /**
-     *  Thực hiện cập nhật tổng tiền của giỏ hàng khi cập nhật số lượng sản phẩm
+     *  Thực hiện cập nhật tổng tiền sản phẩm khi cập nhật số lượng sản phẩm
      * CreatedBy dtnga (01/12/2020)
      * @param {any} quantity
      */
@@ -501,7 +737,7 @@ class Base {
             console.log(obj);
             if (me.formMode == "add") var method = "POST";
             else if (me.formMode == "edit") var method = "PUT";
-            // Gọi Api Lưu dữ liệu
+            //TODO Gọi Api Lưu dữ liệu
             //$.ajax({
             //    url: me.Host + me.apiRouter,
             //    method: method,
@@ -529,9 +765,12 @@ class Base {
      * */
     addFocusSupport() {
         try {
-            var inputs = $(`input[type="text"]`);
+            var inputs = $(`input, textarea`);
             // focus đến ô nhập liệu đầu tiên
             inputs[0].focus();
+            $(inputs).focus(function () {
+                $(this).select();
+            });
         }
         catch (e) {
             console.log(e);
@@ -1421,21 +1660,1303 @@ var listCustomer = [
         SuccessOrderedAmount: "2",
         OrderAmount: "3",
         CreatedDate: "2/22/2020 2:31:23 AM",
-        Address: "120, ngõ 322, đường Mỹ Đình",
-        AdministrativeAreaCode: ""
-        
+        Address: "Huyện Hoằng Hóa, tỉnh Thanh Hóa",
+        AdministrativeAreaCode: "VN38399"
+
     },
     {
         ReceiverId: "1294ae7e-2858-2074-4429-0204eeb736fa",
         FullName: "Hoàng Văn Phan ",
         PhoneNumber: "0916486170",
-        Address: "5, ngõ 67, đường Phùng Khoang",
+        Address: "",
         SuccessOrderedAmount: "2",
         OrderAmount: "3",
         CreatedDate: "2/22/2020 2:31:23 AM",
-        Province: "Hà Nội",
-        District: "Nam Từ Liêm",
-        Ward: "Trung Văn",
-        Street: "Phùng Khoang"
+        AdministrativeAreaCode: "VN0405301825"
+    },
+    {
+        ReceiverId: "76c04ee8-7a3c-4b3c-925a-f8217312a0bd",
+        FullName: "Đặng Thị Nga",
+        PhoneNumber: "0582296998",
+        Address: "",
+        SuccessOrderedAmount: "5",
+        OrderAmount: "6",
+        CreatedDate: "2/22/2020 2:31:23 AM",
+        AdministrativeAreaCode: "VN3636614260"
     }
 ]
+
+var resFullArea = {
+    "Success": true,
+    "Message": "Successfully.",
+    "MISACode": 200,
+    "Data": {
+        "Province": {
+            "EntityState": 0,
+            "AdministrativeAreaId": "9cdbafe0-d7c2-4b78-8725-b69a2b681d97",
+            "AdministrativeAreaCode": "VN36",
+            "AdministrativeAreaName": "Tỉnh Nam Định",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        "District": {
+            "EntityState": 0,
+            "AdministrativeAreaId": "4f688c6e-1cd2-4cab-9387-6a8b503a934b",
+            "AdministrativeAreaCode": "VN36366",
+            "AdministrativeAreaName": "Huyện Hải Hậu",
+            "Kind": 2,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        "Ward": {
+            "EntityState": 0,
+            "AdministrativeAreaId": "8ac015a4-9349-44e7-81ac-3b0104310c29",
+            "AdministrativeAreaCode": "VN3636614260",
+            "AdministrativeAreaName": "Xã Hải Đường",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        }
+    }
+}
+
+var resProvince = {
+    "Success": true,
+    "Message": "Successfully.",
+    "MISACode": 200,
+    "Data": [
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "3934d49c-fc28-44a8-b8d0-ed144f453627",
+            "AdministrativeAreaCode": "VN01",
+            "AdministrativeAreaName": "Thành phố Hà Nội",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "2c158f8e-77ba-4ecb-be17-9f9211966294",
+            "AdministrativeAreaCode": "VN02",
+            "AdministrativeAreaName": "Tỉnh Hà Giang",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "4fdf4cc4-f770-44de-a9d9-fdc89afd04e4",
+            "AdministrativeAreaCode": "VN04",
+            "AdministrativeAreaName": "Tỉnh Cao Bằng",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "7d84f348-f291-48ee-b075-2e44dd82be91",
+            "AdministrativeAreaCode": "VN06",
+            "AdministrativeAreaName": "Tỉnh Bắc Kạn",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "beb4daa4-83d3-47fd-9419-faafd3440257",
+            "AdministrativeAreaCode": "VN08",
+            "AdministrativeAreaName": "Tỉnh Tuyên Quang",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "4ce564d8-a8dd-432e-bd27-fb85c45c3b40",
+            "AdministrativeAreaCode": "VN10",
+            "AdministrativeAreaName": "Tỉnh Lào Cai",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "5e53129e-b6fc-4e8d-b44b-2fa9c3511cb8",
+            "AdministrativeAreaCode": "VN11",
+            "AdministrativeAreaName": "Tỉnh Điện Biên",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "3479c1d4-cf8e-4f2e-8a60-e5849f068e01",
+            "AdministrativeAreaCode": "VN12",
+            "AdministrativeAreaName": "Tỉnh Lai Châu",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "6a2919c8-7177-4a45-93f5-4c912e873e05",
+            "AdministrativeAreaCode": "VN14",
+            "AdministrativeAreaName": "Tỉnh Sơn La",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "8e462981-f6e1-4010-a986-4e624f3e4f85",
+            "AdministrativeAreaCode": "VN15",
+            "AdministrativeAreaName": "Tỉnh Yên Bái",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "666e3f7a-876e-4ffc-b6f2-d59307d9064d",
+            "AdministrativeAreaCode": "VN17",
+            "AdministrativeAreaName": "Tỉnh Hòa Bình",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "253bade9-b444-474c-a91e-9647e5d4435f",
+            "AdministrativeAreaCode": "VN19",
+            "AdministrativeAreaName": "Tỉnh Thái Nguyên",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "fe8ee65b-e1b5-4207-86ac-aced6cbdefa2",
+            "AdministrativeAreaCode": "VN20",
+            "AdministrativeAreaName": "Tỉnh Lạng Sơn",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "340b853b-1e7c-48ef-816e-e5e5049e6d8a",
+            "AdministrativeAreaCode": "VN22",
+            "AdministrativeAreaName": "Tỉnh Quảng Ninh",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "10a2e2bc-29a9-4a12-acf6-523f253d84b0",
+            "AdministrativeAreaCode": "VN24",
+            "AdministrativeAreaName": "Tỉnh Bắc Giang",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "630e44bd-102f-49b9-beba-6b6dfbc7c5bd",
+            "AdministrativeAreaCode": "VN25",
+            "AdministrativeAreaName": "Tỉnh Phú Thọ",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "77c879fd-ce2d-4efb-b4d0-0b77686b915d",
+            "AdministrativeAreaCode": "VN26",
+            "AdministrativeAreaName": "Tỉnh Vĩnh Phúc",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "55c92793-d7bd-4d37-85b3-eeb16eb67950",
+            "AdministrativeAreaCode": "VN27",
+            "AdministrativeAreaName": "Tỉnh Bắc Ninh",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "d79ebe24-b06d-4bb4-8f35-0c388c9ad234",
+            "AdministrativeAreaCode": "VN30",
+            "AdministrativeAreaName": "Tỉnh Hải Dương",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "3f9d660f-7215-4411-9982-5279408e0e17",
+            "AdministrativeAreaCode": "VN31",
+            "AdministrativeAreaName": "Thành phố Hải Phòng",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "2c6a31c4-1674-4c62-8f39-ba90c57e605e",
+            "AdministrativeAreaCode": "VN33",
+            "AdministrativeAreaName": "Tỉnh Hưng Yên",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "ebee60e3-92c6-41f1-a816-820c20475960",
+            "AdministrativeAreaCode": "VN34",
+            "AdministrativeAreaName": "Tỉnh Thái Bình",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "1db366a1-3a50-4bfe-a692-b0bfb87261ee",
+            "AdministrativeAreaCode": "VN35",
+            "AdministrativeAreaName": "Tỉnh Hà Nam",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "9cdbafe0-d7c2-4b78-8725-b69a2b681d97",
+            "AdministrativeAreaCode": "VN36",
+            "AdministrativeAreaName": "Tỉnh Nam Định",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "66ee343c-63c0-4a44-aa48-ec04658bbb9e",
+            "AdministrativeAreaCode": "VN37",
+            "AdministrativeAreaName": "Tỉnh Ninh Bình",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "58ac8b3f-26c5-41be-98a8-9e9ed9ca7cf1",
+            "AdministrativeAreaCode": "VN38",
+            "AdministrativeAreaName": "Tỉnh Thanh Hóa",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "9407b8a3-6dad-44fc-a131-408d7912e8f4",
+            "AdministrativeAreaCode": "VN40",
+            "AdministrativeAreaName": "Tỉnh Nghệ An",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "e5166547-4a4f-4290-8cb9-2d2eb19d1ee6",
+            "AdministrativeAreaCode": "VN42",
+            "AdministrativeAreaName": "Tỉnh Hà Tĩnh",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "ae918275-162e-4be5-8e96-91c76205759c",
+            "AdministrativeAreaCode": "VN44",
+            "AdministrativeAreaName": "Tỉnh Quảng Bình",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "dbd18a7b-fa01-4729-85dc-2181529a4234",
+            "AdministrativeAreaCode": "VN45",
+            "AdministrativeAreaName": "Tỉnh Quảng Trị",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "6dcf8a27-5b7c-418e-8240-65b596ba3c66",
+            "AdministrativeAreaCode": "VN46",
+            "AdministrativeAreaName": "Tỉnh Thừa Thiên Huế",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "ec14ad74-ae00-499f-8d12-60d29693313c",
+            "AdministrativeAreaCode": "VN48",
+            "AdministrativeAreaName": "Thành phố Đà Nẵng",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "9c69da6d-0d7e-467f-b123-847b61cad6ce",
+            "AdministrativeAreaCode": "VN49",
+            "AdministrativeAreaName": "Tỉnh Quảng Nam",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "5b451d42-2b8e-448c-8e4b-ea9ef6b550a5",
+            "AdministrativeAreaCode": "VN51",
+            "AdministrativeAreaName": "Tỉnh Quảng Ngãi",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "62a1a44e-652b-4a32-9d31-00922c038157",
+            "AdministrativeAreaCode": "VN52",
+            "AdministrativeAreaName": "Tỉnh Bình Định",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "a09f98c5-3d73-42bd-ad5d-30e335379573",
+            "AdministrativeAreaCode": "VN54",
+            "AdministrativeAreaName": "Tỉnh Phú Yên",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "64e7c395-58ab-4ea8-922e-65f370fd116d",
+            "AdministrativeAreaCode": "VN56",
+            "AdministrativeAreaName": "Tỉnh Khánh Hòa",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "8ae704ad-4d16-483a-81e5-92e4b21a007f",
+            "AdministrativeAreaCode": "VN58",
+            "AdministrativeAreaName": "Tỉnh Ninh Thuận",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "07f54d91-20b4-4d55-8efc-d7f1fae0abc4",
+            "AdministrativeAreaCode": "VN60",
+            "AdministrativeAreaName": "Tỉnh Bình Thuận",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "121de244-e3ae-4f0c-adca-aef40a8bece2",
+            "AdministrativeAreaCode": "VN62",
+            "AdministrativeAreaName": "Tỉnh Kon Tum",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "e338e078-fb67-4a8f-b44a-29cc65301f2b",
+            "AdministrativeAreaCode": "VN64",
+            "AdministrativeAreaName": "Tỉnh Gia Lai",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "ae0cd22c-ba79-47fb-8572-1f89a81856b5",
+            "AdministrativeAreaCode": "VN66",
+            "AdministrativeAreaName": "Tỉnh Đắk Lắk",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "8755fb43-f7bd-48c7-acd3-aa005f9e8875",
+            "AdministrativeAreaCode": "VN67",
+            "AdministrativeAreaName": "Tỉnh Đắk Nông",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "e0721e4e-b153-43af-8c3e-95d140548487",
+            "AdministrativeAreaCode": "VN68",
+            "AdministrativeAreaName": "Tỉnh Lâm Đồng",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "4c372074-c787-4518-9a1c-86e70ce38388",
+            "AdministrativeAreaCode": "VN70",
+            "AdministrativeAreaName": "Tỉnh Bình Phước",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "7d74721c-d767-4a7c-a933-ac83379c6661",
+            "AdministrativeAreaCode": "VN72",
+            "AdministrativeAreaName": "Tỉnh Tây Ninh",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "6a0b3872-b46b-459b-9ea4-bef245a853b4",
+            "AdministrativeAreaCode": "VN74",
+            "AdministrativeAreaName": "Tỉnh Bình Dương",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "20ed4fb0-1b9a-4620-ad94-e0d4d3eeb050",
+            "AdministrativeAreaCode": "VN75",
+            "AdministrativeAreaName": "Tỉnh Đồng Nai",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "99f1ad9d-655c-4c0b-934e-e7e8dc3bb321",
+            "AdministrativeAreaCode": "VN77",
+            "AdministrativeAreaName": "Tỉnh Bà Rịa - Vũng Tàu",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "32b6c785-e26a-4a47-a990-de7632c223cb",
+            "AdministrativeAreaCode": "VN79",
+            "AdministrativeAreaName": "Thành phố Hồ Chí Minh",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "ad988d74-ea39-4340-b7d0-e87e956dae27",
+            "AdministrativeAreaCode": "VN80",
+            "AdministrativeAreaName": "Tỉnh Long An",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "61b10929-bbfc-4f20-8cc5-155bccd8965b",
+            "AdministrativeAreaCode": "VN82",
+            "AdministrativeAreaName": "Tỉnh Tiền Giang",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "5c9ef430-b15d-4610-8cd1-0098d4ea0c1a",
+            "AdministrativeAreaCode": "VN83",
+            "AdministrativeAreaName": "Tỉnh Bến Tre",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "01c42952-29c2-4ccc-b71a-8341131bce45",
+            "AdministrativeAreaCode": "VN84",
+            "AdministrativeAreaName": "Tỉnh Trà Vinh",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "39738d97-489c-49dd-ada1-573725ed91f4",
+            "AdministrativeAreaCode": "VN86",
+            "AdministrativeAreaName": "Tỉnh Vĩnh Long",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "130033e9-7c58-44ca-b297-92f39471d67c",
+            "AdministrativeAreaCode": "VN87",
+            "AdministrativeAreaName": "Tỉnh Đồng Tháp",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "6d0f752e-fcb4-48bc-a6d7-c3cd3c6fedd4",
+            "AdministrativeAreaCode": "VN89",
+            "AdministrativeAreaName": "Tỉnh An Giang",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "9c5252c8-584f-4b38-9666-b2a1606c3951",
+            "AdministrativeAreaCode": "VN91",
+            "AdministrativeAreaName": "Tỉnh Kiên Giang",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "a07df073-6449-4529-b818-fc1b98fe7362",
+            "AdministrativeAreaCode": "VN92",
+            "AdministrativeAreaName": "Thành phố Cần Thơ",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "15c538b2-288e-42b2-9f63-4b65953d5934",
+            "AdministrativeAreaCode": "VN93",
+            "AdministrativeAreaName": "Tỉnh Hậu Giang",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "b7cb42af-735c-43b1-868d-802b59aed121",
+            "AdministrativeAreaCode": "VN94",
+            "AdministrativeAreaName": "Tỉnh Sóc Trăng",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "5d0cd94c-4dcb-4f00-98a1-1a97891dd22b",
+            "AdministrativeAreaCode": "VN95",
+            "AdministrativeAreaName": "Tỉnh Bạc Liêu",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "b5cb380d-2486-41dd-8c1f-21cd54ec222d",
+            "AdministrativeAreaCode": "VN96",
+            "AdministrativeAreaName": "Tỉnh Cà Mau",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "b98a989a-f933-4475-9a10-58ee6078b04a",
+            "AdministrativeAreaCode": "VN97",
+            "AdministrativeAreaName": "Bộ Quốc Phòng",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "0c0e8d08-d232-4bca-af0f-35adacfebd28",
+            "AdministrativeAreaCode": "VN98",
+            "AdministrativeAreaName": "Bộ Công An",
+            "Kind": 1,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        }
+    ]
+}
+
+var resDistrict = {
+    "Success": true,
+    "Message": "Successfully.",
+    "MISACode": 200,
+    "Data": [
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "acf3966b-b5c3-46e5-bdf3-6313cfb6fe53",
+            "AdministrativeAreaCode": "VN36356",
+            "AdministrativeAreaName": "Thành phố Nam Định",
+            "Kind": 2,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "8c7b0ddb-6fb8-46f2-8879-f542b006f47b",
+            "AdministrativeAreaCode": "VN36358",
+            "AdministrativeAreaName": "Huyện Mỹ Lộc",
+            "Kind": 2,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "e6b2f068-dca4-4ca4-871b-82938ac41e58",
+            "AdministrativeAreaCode": "VN36359",
+            "AdministrativeAreaName": "Huyện Vụ Bản",
+            "Kind": 2,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "069ec0f4-be7c-44a2-9d74-347f3a2ec607",
+            "AdministrativeAreaCode": "VN36360",
+            "AdministrativeAreaName": "Huyện Ý Yên",
+            "Kind": 2,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "8a70805a-efa6-413e-a027-f07612441b69",
+            "AdministrativeAreaCode": "VN36361",
+            "AdministrativeAreaName": "Huyện Nghĩa Hưng",
+            "Kind": 2,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "21ec7d92-91cb-4f91-85fc-431d0b7e7491",
+            "AdministrativeAreaCode": "VN36362",
+            "AdministrativeAreaName": "Huyện Nam Trực",
+            "Kind": 2,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "1f4ff193-c31a-440e-859d-5e5f302fccb1",
+            "AdministrativeAreaCode": "VN36363",
+            "AdministrativeAreaName": "Huyện Trực Ninh",
+            "Kind": 2,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "71d1b41d-0c3d-4615-b7a5-1dcb4802074b",
+            "AdministrativeAreaCode": "VN36364",
+            "AdministrativeAreaName": "Huyện Xuân Trường",
+            "Kind": 2,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "790cf9b1-2c8b-4d6f-9876-0c0b3f33bb8b",
+            "AdministrativeAreaCode": "VN36365",
+            "AdministrativeAreaName": "Huyện Giao Thủy",
+            "Kind": 2,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "4f688c6e-1cd2-4cab-9387-6a8b503a934b",
+            "AdministrativeAreaCode": "VN36366",
+            "AdministrativeAreaName": "Huyện Hải Hậu",
+            "Kind": 2,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        }
+    ]
+}
+
+var resWard = {
+    "Success": true,
+    "Message": "Successfully.",
+    "MISACode": 200,
+    "Data": [
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "9baba46d-d387-4c64-acce-2a34b18e2d54",
+            "AdministrativeAreaCode": "VN3636614215",
+            "AdministrativeAreaName": "Thị trấn Yên Định",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "a84def4e-bb5f-48b2-9517-d6d3901b4f73",
+            "AdministrativeAreaCode": "VN3636614218",
+            "AdministrativeAreaName": "Thị trấn Cồn",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "575fb69d-169f-462a-9e31-1d224e218793",
+            "AdministrativeAreaCode": "VN3636614221",
+            "AdministrativeAreaName": "Thị trấn Thịnh Long",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "0d2b3cd6-cf04-4434-9001-ab222c8f84b3",
+            "AdministrativeAreaCode": "VN3636614224",
+            "AdministrativeAreaName": "Xã Hải Nam",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "a4b9f5b3-881d-40b7-afc0-e768c208305b",
+            "AdministrativeAreaCode": "VN3636614227",
+            "AdministrativeAreaName": "Xã Hải Trung",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "339e7407-415c-4f9b-a15e-1134a073f180",
+            "AdministrativeAreaCode": "VN3636614230",
+            "AdministrativeAreaName": "Xã Hải Vân",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "929f4ad2-f936-4e54-81d8-989129ca73ce",
+            "AdministrativeAreaCode": "VN3636614233",
+            "AdministrativeAreaName": "Xã Hải Minh",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "4620c852-199f-4b5a-a744-87f219098adb",
+            "AdministrativeAreaCode": "VN3636614236",
+            "AdministrativeAreaName": "Xã Hải Anh",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "2114f13a-4db0-41e3-b192-72bde877a3f8",
+            "AdministrativeAreaCode": "VN3636614239",
+            "AdministrativeAreaName": "Xã Hải Hưng",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "e2c960e0-4542-4433-9a5b-dd503f8f974d",
+            "AdministrativeAreaCode": "VN3636614242",
+            "AdministrativeAreaName": "Xã Hải Bắc",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "999beb11-13e1-45cb-96e6-4978760daedb",
+            "AdministrativeAreaCode": "VN3636614245",
+            "AdministrativeAreaName": "Xã Hải Phúc",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "ac7780d3-a977-48f6-a82a-d3c33741ca26",
+            "AdministrativeAreaCode": "VN3636614248",
+            "AdministrativeAreaName": "Xã Hải Thanh",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "93e9bdb5-9146-4ff7-bd2a-587f23c19f2f",
+            "AdministrativeAreaCode": "VN3636614251",
+            "AdministrativeAreaName": "Xã Hải Hà",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "daec93bb-cf37-4d00-be43-3719a8d28eed",
+            "AdministrativeAreaCode": "VN3636614254",
+            "AdministrativeAreaName": "Xã Hải Long",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "434d9d14-ee7f-4001-8410-4ccb2c24fbbc",
+            "AdministrativeAreaCode": "VN3636614257",
+            "AdministrativeAreaName": "Xã Hải Phương",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "8ac015a4-9349-44e7-81ac-3b0104310c29",
+            "AdministrativeAreaCode": "VN3636614260",
+            "AdministrativeAreaName": "Xã Hải Đường",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "47a15a75-f3fe-4e02-a2d9-f9a74b85a178",
+            "AdministrativeAreaCode": "VN3636614263",
+            "AdministrativeAreaName": "Xã Hải Lộc",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "f3283d23-eb76-48a4-a645-c0d172b8ae19",
+            "AdministrativeAreaCode": "VN3636614266",
+            "AdministrativeAreaName": "Xã Hải Quang",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "e26ef3f9-d907-435a-a09b-a759ff2ed0a5",
+            "AdministrativeAreaCode": "VN3636614269",
+            "AdministrativeAreaName": "Xã Hải Đông",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "0170c78b-f46e-4797-be94-fcbb01067b93",
+            "AdministrativeAreaCode": "VN3636614272",
+            "AdministrativeAreaName": "Xã Hải Sơn",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "dd3d9888-54fc-4cd1-afeb-5a520d1b0b3d",
+            "AdministrativeAreaCode": "VN3636614275",
+            "AdministrativeAreaName": "Xã Hải Tân",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "0bb88534-abfe-45af-9159-b0e062862779",
+            "AdministrativeAreaCode": "VN3636614278",
+            "AdministrativeAreaName": "Xã Hải Toàn",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "3d96a8bb-0e6f-47a9-9fd8-4c882d533593",
+            "AdministrativeAreaCode": "VN3636614281",
+            "AdministrativeAreaName": "Xã Hải Phong",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "f3805b63-3c95-4043-a132-c210887c2944",
+            "AdministrativeAreaCode": "VN3636614284",
+            "AdministrativeAreaName": "Xã Hải An",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "5cf94a85-f26c-4cf1-bf0c-09152a1cf991",
+            "AdministrativeAreaCode": "VN3636614287",
+            "AdministrativeAreaName": "Xã Hải Tây",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "99103f9b-9c4a-4e9f-868d-0164c80d0382",
+            "AdministrativeAreaCode": "VN3636614290",
+            "AdministrativeAreaName": "Xã Hải Lý",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "880f6e8d-46d5-4246-8e5f-68fa89b0196b",
+            "AdministrativeAreaCode": "VN3636614293",
+            "AdministrativeAreaName": "Xã Hải Phú",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "c641916c-29af-4082-8f7f-d045e207ffbf",
+            "AdministrativeAreaCode": "VN3636614296",
+            "AdministrativeAreaName": "Xã Hải Giang",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "1f509ef4-712a-4344-9807-46dcaba9252d",
+            "AdministrativeAreaCode": "VN3636614299",
+            "AdministrativeAreaName": "Xã Hải Cường",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "701ead54-906f-42f2-97b6-b01ac61ba51a",
+            "AdministrativeAreaCode": "VN3636614302",
+            "AdministrativeAreaName": "Xã Hải Ninh",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "0fa59e05-f9b6-43f6-8c0e-33bb1537b3e3",
+            "AdministrativeAreaCode": "VN3636614305",
+            "AdministrativeAreaName": "Xã Hải Chính",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "d3ec5a4a-7143-441b-b226-8ce6ac66c8d4",
+            "AdministrativeAreaCode": "VN3636614308",
+            "AdministrativeAreaName": "Xã Hải Xuân",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "005e95bc-99dd-4db0-8434-091fa37d1d23",
+            "AdministrativeAreaCode": "VN3636614311",
+            "AdministrativeAreaName": "Xã Hải Châu",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "5e78f653-7868-40d7-b6b1-8d6efb49c622",
+            "AdministrativeAreaCode": "VN3636614314",
+            "AdministrativeAreaName": "Xã Hải Triều",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        },
+        {
+            "EntityState": 0,
+            "AdministrativeAreaId": "9021d4fe-53ad-41a3-b42c-a37933d7477d",
+            "AdministrativeAreaCode": "VN3636614317",
+            "AdministrativeAreaName": "Xã Hải Hòa",
+            "Kind": 3,
+            "CreatedDate": null,
+            "CreatedBy": null,
+            "ModifiedDate": null,
+            "ModifiedBy": null
+        }
+    ]
+}

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SManage.Web", "SManage.Web\SManage.Web.csproj", "{9B12F0ED-8C18-49D5-8144-DB127BD91BCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SManage.Web", "SManage.Web\SManage.Web.csproj", "{9B12F0ED-8C18-49D5-8144-DB127BD91BCE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
