@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SManage.ApplicationCore;
 using SManage.ApplicationCore.Entities;
+using SManage.ApplicationCore.Entities.Models;
 using SManage.ApplicationCore.Enums;
 using SManage.ApplicationCore.Properties;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -60,5 +61,32 @@ namespace SManage.API.Controllers
             return response;
         }
 
+        /// <summary>
+        /// Lấy ra dữ liệu đầy đủ theo mã xã/phường
+        /// </summary>
+        /// <param name="areaCode">Mã xã/phường</param>
+        /// <returns></returns>
+        /// CreatedBy dtnga(08/12/2020)
+        [HttpGet("FullAddress")]
+        public ActionServiceResult GetFullAddressByAreaCode([FromQuery] string areaCode)
+        {
+            var response = new ActionServiceResult();
+            if (String.IsNullOrEmpty(areaCode))
+            {
+                response.Message = ApplicationCore.Properties.Resources.Value_Empty;
+                response.MISACode = MISACode.NotFound;
+                return response;
+            }
+            var fullArea = new FullArea();
+            areaCode = areaCode.Trim();
+            var provinceCode = areaCode.Substring(0, 4);
+            var districtCode = areaCode.Substring(0, 7);
+            var wardCode = areaCode;
+            fullArea.Province = AdministrativeAreas.Where<AdministrativeArea>(a => a.AdministrativeAreaCode == provinceCode).FirstOrDefault();
+            fullArea.District = AdministrativeAreas.Where<AdministrativeArea>(a => a.AdministrativeAreaCode == districtCode).FirstOrDefault();
+            fullArea.Ward = AdministrativeAreas.Where<AdministrativeArea>(a => a.AdministrativeAreaCode == wardCode).FirstOrDefault();
+            response.Data = fullArea;
+            return response;
+        }
     }
 }
