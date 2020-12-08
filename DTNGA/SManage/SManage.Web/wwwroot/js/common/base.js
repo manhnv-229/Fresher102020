@@ -83,7 +83,7 @@ class Base {
             // TODO sự kiện khi nhập trường Tìm kiếm
 
             // TODO Sự kiện khi chọn filter
-
+            
             // format khi nhập liệu số tiền
             me.autoFormatMoney();
             // kiểm tra dữ liệu
