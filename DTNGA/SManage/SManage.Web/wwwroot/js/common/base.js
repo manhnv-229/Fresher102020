@@ -95,10 +95,10 @@ class Base {
             $(`table tbody`).on("dblclick", "tr", me.onDblClick_trow.bind(me));
             // sự kiện khi tick vào checkbox/ nhiều checkbox
             $(`table thead input[type="checkbox"]`).on("click", me.onClickCheckAll.bind(me));
+        //    $(`table tbody input[type="checkbox"]`).on("click", me.onClickCheckBox);
+
             // Sự kiện tự động thêm sản phẩm vào giỏ khi click nút Thêm vào giỏ
             $(`#btn-addToShoppingCard`).on("click", me.onClick_addToShoppingCard.bind(me));
-            // TODO Sự kiện khi focus vào ô nhập liệu
-            $(`input`).focus(function () { });
 
             $('.nav-item').on('click', function () {
                 $('.nav-item').removeClass('select-menu-item');
@@ -199,7 +199,7 @@ class Base {
             //    method: "GET"
             //})
             //    .done(function (res) {
-                    
+
             //    })
             //    .fail(function (res) {
             //        console.log(res);
@@ -306,7 +306,7 @@ class Base {
         }
     }
 
-    
+
     /**
      *Thực hiện bind dữ liệu khách hàng tự động
      * CreatedBy dtnga (02/12/2020)
@@ -860,28 +860,17 @@ class Base {
     * CreatedBy dtnga (21/11/2020)
     * */
     tr_onClick() {
-        try {
-            var Allcheckbox = $(`table thead input[type="checkbox"]:checked`);
-            if (Allcheckbox.length > 0) {
-                $(`table thead input[type="checkbox"]:checked`).prop("checked", false);
-                $(`tbody input[type="checkbox"]`).prop("checked", false);
-                $(this).addClass("selected");
-                $(this).find(`input[type="checkbox"]`).prop("checked", true);
-            }
-            else {
-                var checkbox = $(this).find(`input[type="checkbox"]:checked`);
-                if (checkbox.length > 0) {
-                    $(this).removeClass("selected");
-                    $(this).find(`input[type="checkbox"]`).prop("checked", false);
-                    return;
-                }
-                else {
-                    $(this).addClass("selected");
-                    $(this).find(`input[type="checkbox"]`).prop("checked", true);
-                }
-            }
-        } catch (e) {
-            console.log(e);
+        if ($(`thead input[type="checkbox"]`).is(":checked")) {
+            $(`thead input[type="checkbox"]`).prop("checked", false);
+            $(`tbody input[type="checkbox"]`).prop("checked", false);
+            $(`tbody tr`).removeClass("selected");
+            $(this).addClass("selected");
+            $(this).find(`input[type="checkbox"]`).prop("checked", true);
+            return;
+        }
+        else {
+            $(this).addClass("selected");
+            $(this).find(`input[type="checkbox"]`).prop("checked", true);
         }
     }
 
@@ -914,13 +903,28 @@ class Base {
         var Allcheckbox = $(`table thead input[type="checkbox"]:checked`);
         if (Allcheckbox.length > 0) {
             $(`tbody input[type="checkbox"]`).prop("checked", true);
+            $(`tbody tr`).addClass("selected");
         }
         else {
             $(`tbody input[type="checkbox"]`).prop("checked", false);
+            $(`tbody tr`).removeClass("selected");
         }
     }
 
-
+    /** Thực hiện select tại dòng có checkbox selected
+     *CreatedBy dtnga (08/12/2020) 
+     **/
+    onClickCheckBox() {
+        var checkbox = this;
+        if ($(this).is(":checked")) {
+            $(this).prop("checked", false);
+            var trow = $(checkbox).closest(`tr`);
+            $(trow).removeClass("selected");
+            return; 
+        }
+        var trow = $(checkbox).closest(`tr`);
+        $(trow).addClass("selected");
+    }
     /** Hàm base thực hiện load dữ liệu lên table
      *  Created By dtnga (21/11/2020)
      * */
