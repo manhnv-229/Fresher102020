@@ -67,9 +67,12 @@ class MPlugin {
         })
 
 
-        $(document).on('keydown', '[control-type="combobox"] input.m-combobox-input', function (e) {
+        $(document).on('keydown', '[control-type="combobox"] input.m-combobox-input,.m-combobox button.m-combobox-trigger', function (e) {
             var keyCode = e.keyCode;
             switch (keyCode) {
+                case 13:
+                    me.selectItemOnEnter(this.parentElement);
+                    break;
                 case 40:
                     me.setFocusComboboxItem(this.parentElement, true);
                     break;
@@ -77,6 +80,7 @@ class MPlugin {
                     me.setFocusComboboxItem(this.parentElement, false);
                     break;
                 default:
+                    break;
             }
 
         })
@@ -90,13 +94,58 @@ class MPlugin {
             var combobox = $(this).parent();
             var data = combobox.data('data');
             var entity = combobox.data('entity');
+            var dataFilter = me.getDataMathComboboxInputText(combobox, inputValue);
             var dataFilter = $.grep(data, function (item) {
                 return item[entity.FieldText].toLowerCase().includes(inputValue.toLowerCase()) == true;
             })
+
             me.buildHTMLComboboxData(combobox, dataFilter, entity.FieldText, entity.FieldValue);
             combobox.data('areFiltering', true);
             combobox.data('selected', null);
-            $(this).siblings('.m-combobox-data').show();
+            if (dataFilter && dataFilter.length > 0) {
+                console.log('input event');
+                $(this).siblings('.m-combobox-data').show();
+            } else {
+                $(this).siblings('.m-combobox-data').hide();
+            }
+        })
+
+
+        $(document).on('blur', '[control-type="combobox"] input.m-combobox-input, [control-type="combobox"] button', function (e) {
+            console.log(e);
+            var combobox = this.parentElement;
+            var inputCombobox = $(combobox).children('input.m-combobox-input');
+            var inputText = inputCombobox.val();
+            var entity = $(combobox).data('entity')
+            var dataMatch = me.getDataMathComboboxInputText(combobox, inputText);
+            console.log(dataMatch);
+
+            // Có nhập liệu nhưng không có data phù hợp:
+            if (dataMatch && dataMatch.length == 0 && inputText.trim() != '') {
+                $(inputCombobox).addClass('border-red');
+                $(inputCombobox).attr('title', 'Dữ liệu không tồn tại trong hệ thống.');
+
+            }// có nhập liệu và tìm được data phù hợp
+            else if (dataMatch.length > 0 && inputText.trim() != '') {
+                $(inputCombobox).removeClass('border-red');
+                $(inputCombobox).removeAttr('title');
+                var itemSelected = dataMatch[0]; // chỉ lấy phần tử đầu tiên.
+                inputCombobox.val(itemSelected[entity["FieldText"]]);
+                $(combobox).data('selected', itemSelected);
+            } else {
+                $(inputCombobox).removeClass('border-red');
+                $(inputCombobox).removeAttr('title');
+            }
+            setTimeout(function () {
+                $(inputCombobox).siblings('.m-combobox-data').hide();
+            }, 100)
+
+            //if ($(combobox).has(e.relatedTarget).length == 0) {
+            //    // Check dữ liệu có hợp lệ hay không
+
+            //    // Focus ra ngoài combobox thì ẩn box chọn data đi:
+            //    $(this).siblings('.m-combobox-data').hide();
+            //}
         })
 
         //TODO: Chọn item trong combobox:
@@ -116,24 +165,25 @@ class MPlugin {
             }
 
             // Hiển thị màu sắc item được chọn có trong danh sách:
-            var itemSelected = $(combobox).data('selected');
-            comboboxData.children().removeClass('mCombobox__item--selected');
-            if (itemSelected && itemSelected.value) {
-                var value = itemSelected.value;
-                comboboxData.children("[value='" + value + "']").addClass('mCombobox__item--selected');
-            }
+            me.setStyleItemSelected(combobox);
+            //var itemSelected = $(combobox).data('selected');
+            //comboboxData.children().removeClass('mCombobox__item--selected');
+            //if (itemSelected && itemSelected.value) {
+            //    var value = itemSelected.value;
+            //    comboboxData.children("[value='" + value + "']").addClass('mCombobox__item--selected');
+            //}
             comboboxData.toggle();
         })
 
         //TODO: xây dựng combobox động
         $(document).on('click', '.m-combobox .m-combobox-item', function () {
+            debugger;
             var comboboxData = this.parentElement;
             var input = $(comboboxData).siblings('input');
             var value = this.getAttribute('value'),
                 text = this.firstElementChild.textContent;
             input.val(text);
             $(input.parent()).data("selected", { text: text, value: value });
-            input.parent.data = { text: text, value: value };
             $(comboboxData).toggle();
         })
     }
@@ -183,12 +233,6 @@ class MPlugin {
                                 </div>`);
         if (data) {
             this.buildHTMLComboboxData(controlHtml, data, fieldText, fieldValue);
-            //$.each(data, function (index, item) {
-            //    var text = item[fieldText],
-            //        value = item[fieldValue];
-            //    var itemHTML = `<div class="m-combobox-item" value="` + value + `"><span>` + text + `</span></div>`;
-            //    controlHtml.find('.m-combobox-data').append(itemHTML);
-            //})
         }
 
         // Lưu trữ dữ liệu của combobox
@@ -203,7 +247,7 @@ class MPlugin {
         $(combobox).replaceWith(controlHtml);
     }
 
-    /** ---------------------------------------------------------------
+    /** ----------------------------------------------------------------
      * Thực hiện buil các item html cho element chứa dữ liệu cho combobox
      * @param {HTMLElement} comboboxHTML HTML của combobox
      * @param {Array} data mảng dữ liệu truyền vào
@@ -222,12 +266,13 @@ class MPlugin {
     }
 
     setFocusComboboxItem(combobox, isNext) {
+        console.log('setFocusComboboxItem');
         var comboboxData = $(combobox).children('.m-combobox-data');
         var childrenFirst = comboboxData.children().first();
         var childrenLast = comboboxData.children().last();
         var itemFocusCurrent = comboboxData.children('.mCombobox__item--focus').first();
         var comboboxDataNotShow = (comboboxData.css('display') == 'none');
-       
+        
         comboboxData.show();
         // Hiển thị các item lựa chọn:
         if (comboboxDataNotShow && isNext || (isNext && !comboboxDataNotShow && itemFocusCurrent.length == 0)) {
@@ -239,13 +284,12 @@ class MPlugin {
             /* - Chưa có item nào được focus thì focus luôn thằng đầu tiên
                - Có thằng focus rồi thì thực hiện focus thằng tiếp theo: */
             if (isNext) {
-                debugger
                 if (itemFocusCurrent.next().length > 0) {
                     itemFocusCurrent.next().addClass('mCombobox__item--focus');
                 } else {
                     childrenFirst.addClass('mCombobox__item--focus');
                 }
-                
+
             } else {
                 if (itemFocusCurrent.prev().length > 0) {
                     itemFocusCurrent.prev().addClass('mCombobox__item--focus');
@@ -254,6 +298,52 @@ class MPlugin {
                 }
             }
         }
+    }
+
+    setStyleItemSelected(combobox) {
+        // Hiển thị màu sắc item được chọn có trong danh sách:
+        var comboboxData = $(combobox).children('.m-combobox-data');
+        var itemSelected = $(combobox).data('selected');
+        comboboxData.children().removeClass('mCombobox__item--selected');
+        if (itemSelected && itemSelected.value) {
+            var value = itemSelected.value;
+            comboboxData.children("[value='" + value + "']").addClass('mCombobox__item--selected');
+        }
+    }
+
+    /** -----------------------------------------------------------------
+     * Thực hiện nhấn enter trong input có thể lựa chọn các item:
+     * @param {any} combobox
+     * CreatedBy : NVMANH (09/12/2020)
+     */
+    selectItemOnEnter(combobox) {
+        var comboboxData = $(combobox).children('.m-combobox-data');
+        // Kiểm tra xem box data có hiển thị không, 
+        // nếu không thì hiển thị, hiển thị rồi thì thực hiện select luôn item đang focus:
+        if (comboboxData.css('display') == 'none') {
+            console.log('selectItemOnEnter');
+            comboboxData.show();
+        } else {
+            var itemSelected = comboboxData.children('a.mCombobox__item--focus');
+            itemSelected.trigger('click');
+            comboboxData.hide();
+        }
+        debugger;
+    }
+
+    /**
+     * Lấy dữ liệu có text hiển thị trùng với text nhập từ input
+     * @param {Element} combobox element combobox
+     * @param {string} inputText text nhập trong input
+     * Author: NVMANH(09/12/2020)
+     */
+    getDataMathComboboxInputText(combobox, inputText) {
+        var entity = $(combobox).data('entity'),
+            data = $(combobox).data('data');
+        var dataMatch = $.grep(data, function (item) {
+            return item[entity.FieldText].toLowerCase() == (inputText.toLowerCase()) == true;
+        })
+        return dataMatch;
     }
 
     //TODO: build html date picker:
