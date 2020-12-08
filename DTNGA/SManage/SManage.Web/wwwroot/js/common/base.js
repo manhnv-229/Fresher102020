@@ -83,7 +83,7 @@ class Base {
             // TODO sự kiện khi nhập trường Tìm kiếm
 
             // TODO Sự kiện khi chọn filter
-            
+
             // format khi nhập liệu số tiền
             me.autoFormatMoney();
             // kiểm tra dữ liệu
@@ -860,13 +860,29 @@ class Base {
     * CreatedBy dtnga (21/11/2020)
     * */
     tr_onClick() {
-        $(`tbody tr`).removeClass("selected");
-        $(`tbody tr input[type="checkbox"]`).prop("checked", false);
-        $(this).addClass("selected");
-        $(this).find(`input[type="checkbox"]`).prop("checked", true);
-        // Bỏ check ở checkbox trên theader ( bỏ chọn all)
-        $(`table thead input[type="checkbox"]`).prop("checked", false);
-        //TODO set màu cho bản ghi được chọn khi hover
+        try {
+            var Allcheckbox = $(`table thead input[type="checkbox"]:checked`);
+            if (Allcheckbox.length > 0) {
+                $(`table thead input[type="checkbox"]:checked`).prop("checked", false);
+                $(`tbody input[type="checkbox"]`).prop("checked", false);
+                $(this).addClass("selected");
+                $(this).find(`input[type="checkbox"]`).prop("checked", true);
+            }
+            else {
+                var checkbox = $(this).find(`input[type="checkbox"]:checked`);
+                if (checkbox.length > 0) {
+                    $(this).removeClass("selected");
+                    $(this).find(`input[type="checkbox"]`).prop("checked", false);
+                    return;
+                }
+                else {
+                    $(this).addClass("selected");
+                    $(this).find(`input[type="checkbox"]`).prop("checked", true);
+                }
+            }
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     /**
@@ -902,7 +918,6 @@ class Base {
         else {
             $(`tbody input[type="checkbox"]`).prop("checked", false);
         }
-
     }
 
 
