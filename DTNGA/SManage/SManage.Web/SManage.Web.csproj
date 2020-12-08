@@ -10,4 +10,8 @@
     <Folder Include="wwwroot\view\saler\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\favicon.ico" />
+  </ItemGroup>
+
 </Project>
