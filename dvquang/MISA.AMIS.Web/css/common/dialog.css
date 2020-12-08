@@ -81,8 +81,27 @@
 .dialog-footer button{
     margin-left:16px;
 }
-.confirm-delete-content {
+.confirm-delete-content, .confirm-sucsess-content {
     display: flex;
     align-items: center;
     padding: 24px;
 }
+/*.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+    .tooltip .tootip-text {
+        visibility: hidden;
+        width: 120px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+    }
+    .tooltip:hover .tootip-text {
+        visibility: visible;
+    }*/

@@ -134,6 +134,22 @@ namespace MISA.ApplicationCore.Services
                     }
                     
                 }
+                //if (property.IsDefined(typeof(Email), false))
+                //{
+                //    Employee em = new Employee();
+                //    string email = em.Email;
+                //    var atposition = email.IndexOf('@');
+                //    var dotposition = email.LastIndexOf(".");
+                //    if (atposition < 1 || dotposition < (atposition + 2) || (dotposition + 2) > email.Length)
+                //    {
+                //        isValid = false;
+                //        mesArrayErro.Add(string.Format(Properties.Resources.Msg_Duplicate, displayName));
+                //        _serviceResult.MISACode = Enums.MISACode.NotValid;
+                //        _serviceResult.Messenger = Properties.Resources.Msg_isNotValid;
+                //    }
+                    
+
+                //}
             }
             _serviceResult.Data = mesArrayErro;
             return isValid;

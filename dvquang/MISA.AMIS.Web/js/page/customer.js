@@ -22,7 +22,7 @@ class CustomerJS extends BaseJS {
     }
 
     setApiRouter() {
-        this.apiRouter = "/api/customers";
+        this.apiRouter = "/api/v1/customers";
     }
 }
 

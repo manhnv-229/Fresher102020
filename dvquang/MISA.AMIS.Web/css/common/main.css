@@ -9,8 +9,10 @@
 @import url('/css/common/header.css');
 @import url('/css/common/navbar.css');
 @import url('/css/common/content.css');
-@import url('ui-custom.css');
-@import url('radio.css');
+@import url('/css/common/ui-custom.css');
+@import url('/css/common/radio.css');
+@import url('/css/common/messenger.css');
+
 
 body {
     margin: 0;

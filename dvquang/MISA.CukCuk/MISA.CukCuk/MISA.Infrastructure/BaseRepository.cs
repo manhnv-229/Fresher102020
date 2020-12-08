@@ -20,6 +20,7 @@ namespace MISA.Infrastructure
         string _connectionString = string.Empty;
         protected IDbConnection _dbConnection = null;
         protected string _tableName = null;
+        string _entityName = null;
         #endregion
         #region Constructor
         public BaseRepository(IConfiguration configuration)
@@ -28,6 +29,7 @@ namespace MISA.Infrastructure
             _connectionString = _configuration.GetConnectionString("MISACukCukConnectionString");
             _dbConnection = new MySqlConnection(_connectionString);
             _tableName = typeof(TEntity).Name;
+            _entityName = _tableName + "Id";
         }
 
         #endregion
@@ -42,9 +44,9 @@ namespace MISA.Infrastructure
                     var parameters = MappingDbType(entity);
 
                     // thực thi câu kệnh thêm mới khách
-                    var row = _dbConnection.Execute($"Proc_Insert{_tableName}", parameters, commandType: CommandType.StoredProcedure);
+                    rowAffects = _dbConnection.Execute($"Proc_Insert{_tableName}", parameters, commandType: CommandType.StoredProcedure);
                     transaction.Commit();
-                }
+               }
                 catch (Exception)
                 {
 
@@ -57,15 +59,32 @@ namespace MISA.Infrastructure
             return rowAffects;
         }
 
-        public int Delete(Guid customerId)
+        public int Delete(Guid employeeId)
         {
-            var res = _dbConnection.Execute($"Proc_Delete{_tableName}ById", new { CustomerId = customerId.ToString() }, commandType: CommandType.StoredProcedure);
+            var res = 1;
+            _dbConnection.Open();
+            using (var transaction = _dbConnection.BeginTransaction())
+            {
+                try
+                {
+                    res = _dbConnection.Execute($"Proc_Delete{_tableName}ById", new { EmployeeId = employeeId.ToString() }, commandType: CommandType.StoredProcedure);
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+
+                    transaction.Rollback();
+                }
+            }
             return res;
         }
 
-        public TEntity GetEntityById(Guid customerId)
+        public TEntity GetEntityById(Guid entityId)
         {
-            var res = _dbConnection.Query<TEntity>($"Proc_Get{_tableName}ById", new { CustomerId = customerId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            var para = new DynamicParameters();
+            para.Add($"@{_entityName}", entityId, DbType.String);
+
+            var res = _dbConnection.Query<TEntity>($"Proc_Get{_tableName}ById",para, commandType: CommandType.StoredProcedure).FirstOrDefault();
             return res;
         }
 

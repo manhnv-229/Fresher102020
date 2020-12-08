@@ -13,6 +13,6 @@ namespace MISA.ApplicationCore.interfaces
     public interface ICustomerService:IBaseService<Customer>
     {
         IEnumerable<Customer> GetCustomerPading(int limit, int offset);
-        IEnumerable<Customer> GetCustomerByDepartment(Guid departmentId);
+        
     }
 }

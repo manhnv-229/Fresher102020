@@ -11,11 +11,22 @@
         modal: true,
     });
     dialogConfirmDelete = $(".dialog-confirm-delete").dialog({
-        autoOpen: true,
+        autoOpen: false,
         fluid: true,
         //height: 400,
         //width: '700px',
         minWidth: 400,
+        resizable: true,
+        position: ({ my: "center", at: "center", of: window }),
+        modal: true,
+    });
+    dialogSucsess = $('.dialog-sucsess').dialog({
+        autoOpen: false,
+        fluid: true,
+        //height: 400,
+        //width: '700px',
+        minWidth: 300,
+        height:200,
         resizable: true,
         position: ({ my: "center", at: "center", of: window }),
         modal: true,
@@ -35,8 +46,10 @@ class EmployeeJS extends BaseJS{
 
 
     setApiRouter() {
-        this.apiRouter = "/api/employees";
+        this.apiRouter = "/api/v1/employees";
     }
-    
+    setObjectName() {
+        this.objectName = "EmployeeId"
+    }
 
 }

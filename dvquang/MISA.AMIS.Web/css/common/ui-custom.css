@@ -19,6 +19,7 @@
         font-weight: bold;
         background-color: #ffffff;
         border: none;
+        margin-bottom: 16px;
     }
 
     .ui-dialog .ui-dialog-titlebar-close {

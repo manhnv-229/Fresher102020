@@ -18,24 +18,7 @@ namespace MISA.ApplicationCore.Services
             _customerRepository = customerRepository;
             
         }
-        //public override int Add(Customer entityId)
-        //{
-        //    var isValid = true;
-        //    var customerDuplicate = _customerRepository.GetCustomerByCode(entityId.CustomerCode);
-        //    if(customerDuplicate != null)
-        //    {
-        //        isValid = false;
-        //    }
-        //    if(isValid == true)
-        //    {
-        //        var res = base.Add(entityId);
-        //        return res;
-        //    }
-        //    else
-        //    {
-        //        return 0;
-        //    }
-        //}
+  
 
         public IEnumerable<Customer> GetCustomerByDepartment(Guid departmentId)
         {

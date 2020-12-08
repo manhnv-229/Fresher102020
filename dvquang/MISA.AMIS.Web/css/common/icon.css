@@ -29,3 +29,13 @@
     margin-right: 10px;
     background-repeat: no-repeat;
 }
+.icon-sucsess {
+    background-image: url('/content/icon/check.svg');
+    margin-right: 10px;
+    background-size: contain;
+    height: 24px;
+    width: 40px;
+    align-items: center;
+    margin-right: 10px;
+    background-repeat: no-repeat;
+}
