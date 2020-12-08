@@ -30,6 +30,10 @@ class AddOrder extends Base {
                     me.checkCustomer(this);
                 }
             })
+            // check trường bắt buộc nhập trước
+            $(`#order-add input[type="search"][fieldName="District"]`).focus(me.onFocus_inputField);
+            
+
         }
         catch (e) {
             console.log(e);

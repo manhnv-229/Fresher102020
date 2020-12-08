@@ -9,6 +9,7 @@ class Base {
             me.loadData();
             me.autoCompleteTransportor();
             me.initEvent();
+            
         }
         catch (e) {
             console.log(e);
@@ -87,7 +88,7 @@ class Base {
             // format khi nhập liệu số tiền
             me.autoFormatMoney();
             // kiểm tra dữ liệu
-            me.checkRequired();
+        //    me.checkRequired();
             me.validateEmail();
             me.addFocusSupport();
             // Sự kiện khi thao tác với từng hàng dữ liệu trong bảng
@@ -95,11 +96,12 @@ class Base {
             $(`table tbody`).on("dblclick", "tr", me.onDblClick_trow.bind(me));
             // sự kiện khi tick vào checkbox/ nhiều checkbox
             $(`table thead input[type="checkbox"]`).on("click", me.onClickCheckAll.bind(me));
-        //    $(`table tbody input[type="checkbox"]`).on("click", me.onClickCheckBox);
-
             // Sự kiện tự động thêm sản phẩm vào giỏ khi click nút Thêm vào giỏ
             $(`#btn-addToShoppingCard`).on("click", me.onClick_addToShoppingCard.bind(me));
-
+            // sự kiện khi blur các trường input
+            $(`input`).blur(me.onBlur_inputField);
+            
+            // Sự kiện khi click navitem
             $('.nav-item').on('click', function () {
                 $('.nav-item').removeClass('select-menu-item');
                 $(this).addClass('select-menu-item');
@@ -777,6 +779,47 @@ class Base {
         }
     }
 
+    /** Kiểm tra input /ó hợp lệ không 
+    * CreatedBy dtnga (08/12/2020)
+     */
+    onBlur_inputField() {
+        var input = this;
+        if ($(input).is(":required")) {
+            var value = $(input).val();
+            if (!value || !value.trim()) {
+                $(input).addClass("m-input-warning");
+                $(input).attr('validate', 'fasle');
+                $(input).attr('title', "Trường này không được để trống");
+            }
+            else {
+                $(input).removeAttr('validate');
+                $(input).removeClass("m-input-warning");
+            }
+        }
+    }
+    /** 
+     * TODO bị lặp/ Kiểm tra trường bắt buộc nhập trước
+     * CreatedBy dtnga(08/12/2020)
+     * */
+    onFocus_inputField() {
+        var input = this;
+        var requiedField = $(input).attr("requiredField");
+        if (requiedField){
+            var contentBox = $(this).closest(".content-box");
+            var requiredInput = $(contentBox).find(`input[fieldName=` + requiedField + `]`);
+            var requiredValue = $(requiredInput).val();
+            if (!requiredValue){
+                var popup = $(`.popup-notification`);
+                var popupBody = $(popup).find(`.popup-body`);
+                $(popupBody).children().remove();
+                var content = $(`<div class="popup-body-text">Vui lòng chọn thông tin tỉnh/thành trước</div>`);
+                popupBody.append(content);
+                popup.show();
+                me.initEventPopup(popup);
+                return;
+            }
+        }
+    }
     /**Kiểm tra dữ liệu, nếu trống thì cảnh báo
      * Createdby dtnga (14/11/2020)
      * */

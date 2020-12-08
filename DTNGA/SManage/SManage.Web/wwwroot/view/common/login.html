@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="/css/common/main.css" rel="stylesheet" />
+    <link href="/css/page/login.css" rel="stylesheet" />
+</head>
+<body>
+   
+    <div id="smange-login" style="">
+        <div class="limiter">
+            <div class="container-login" view="login">
+                <div class="wrap-login">
+                    <div class="login-form validate-form">
+                        <span class="login-form-logo"></span>
+                        <span objname="jTitle" class="login-form-title" res-key="FormLogin_Title">Đăng nhập SManage</span>
+                        <span objname="jSubTitle" class="login-form-subtitle" style="display:none"></span>
+                        <div class="wrap-input username-wrap validate-input">
+                            <input objname="jUserName" class="m-input ap-lg-input" type="text" name="username" placeholder-key="FormLogin_UserPlaceholder" placeholder="Nhập số điện thoại/email">
+                            <span class="error-info displayNone" res-key="FormLogin_UserNotEmpty">Tên đăng nhập không được để trống</span>
+                        </div>
+                        <div class="wrap-input pass-wrap validate-input">
+                            <input objname="jPassword" class="m-input ap-lg-input" type="password" name="pass" placeholder-key="FormLogin_PasswordPlaceholder" placeholder="Nhập mật khẩu">
+                            <span class="error-info displayNone" res-key="FormLogin_PasswordNotEmpty">Mật khẩu không được để trống</span>
+                            <i objname="jBntShowPass" class="btn-show-pass"></i>
+                        </div>
+                        <div objname="jCaptcha" class="captcha-container" style="display:none">
+                            <div class="wrap-input captcha-wrap validate-input ">
+                                <div class="captcha-box">
+                                    <input objname="jCaptchaInput" class="input ap-lg-input" type="text" name="captcha" placeholder-key="FormLogin_CaptchaPlaceholder" placeholder="Mã xác nhận">
+                                    <img objname="jCaptchaImage">
+                                    <i objname="jBntCaptchaReload" class="btn-captcha-reload" title-key="FormLogin_CaptchaReloadTitle" title="Lấy mã khác"></i>
+                                </div>
+                                <span class="error-info displayNone" res-key="FormLogin_CaptchaNotEmpty">Mã xác nhận không được để trống</span>
+                            </div>
+                        </div>
+                        <div objname="jTextLoginFail" class="text-login-fail displayNone" res-key="FormLogin_LoginFail">Tên đăng nhập hoặc mật khẩu không đúng</div>
+                        
+                        <div class="container-login-form-btn">
+                            <div objname="jBtnLogin" class="login-form-btn" res-key="FormLogin_LoginButton" id="btn-login">Đăng nhập</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/lib/jquery-3.5.1.min.js"></script>
+    <script src="/js/page/login.js"></script>
+</body>
+</html>
