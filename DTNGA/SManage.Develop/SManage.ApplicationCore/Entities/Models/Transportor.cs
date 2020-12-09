@@ -15,8 +15,8 @@ namespace SManage.ApplicationCore.Entities
         public Guid TransportorId { get; set; }
         public string TransportorCode { get; set; }
         public string TransportorName { get; set; }
-        public decimal InnerFee { get; set; }
-        public decimal OutsideFee { get; set; }
+        public double InnerFee { get; set; }
+        public double OutsideFee { get; set; }
         public int InnerDeliveryTime { get; set; }
         public int OutsideDeliveryTime { get; set; }
 

@@ -4,6 +4,10 @@ class Base {
         try {
             var me = this;
             me.ObjectName = "Order";
+            me.Host = "";
+            me.Route = "";
+            me.ShopId = "";
+            me.UserId = "";
             me.loadAccount();
             me.loadShop();
             me.loadData();
@@ -59,12 +63,15 @@ class Base {
     autoCompleteTransportor() {
         var me = this;
         //TODO Lấy danh sách đơn vị vận chuyển qua API
-        me.Route = "";
+        me.Route = "/api/v1/Transportors";
+        me.ShopId = "1863f692-73f4-472d-09d9-225ba613d98b";
         $.ajax({
-            url: me.Host + me.Route + "",
+            url: me.Host + me.Route + "/" + me.ShopId,
             method: "GET"
         })
             .done(function (res) {
+                res = resTransport;
+                var transportors = res.Data;
 
             })
             .fail(function (res) {
@@ -100,6 +107,13 @@ class Base {
             $(`#btn-addToShoppingCard`).on("click", me.onClick_addToShoppingCard.bind(me));
             // sự kiện khi blur các trường input
             $(`input`).blur(me.onBlur_inputField);
+
+            // Sự kiện khi focus vào combobox
+            $(`.m-combobox input`).focus(function () {
+                $(this).closest(`m-combobox`).addClass("green-border");
+            })
+            // Sự kiện khi click arrow icon tại combo box
+            $(`.m-combobox .arrow-button`).on("click", me.onClick_btnComboBoxIcon.bind(me));
             
             // Sự kiện khi click navitem
             $('.nav-item').on('click', function () {
@@ -118,6 +132,42 @@ class Base {
         catch (e) {
             console.log(e);
         }
+    }
+
+    /** Sự kiện khi click button tại combobox
+     * CreatedBy dtnga (10/12/2020)
+     * */
+    onClick_btnComboBoxIcon() {
+        var me = this;
+        var comboItemBox = $(`.m-combobox .combo-item-box`);
+        if ($(comboItemBox).hasClass("displayNone"))
+            $(comboItemBox).removeClass("displayNone");
+        // sự kiện khi click ra ngoài => đóng comboItemBox
+        me.detectClickOutside(comboItemBox);
+        // sự kiện khi click chọn combo item
+        $(`.m-combobox .combo-item-box .combo-item`).on("click", me.onClick_comboItem);
+    }
+
+    /** TODO Sự kiện khi click chọn combo item
+     * CreatedBy dtnga(10/12/2020)
+     * */
+    onClick_comboItem() {
+        var item = this;
+
+    }
+
+    /**
+     * Ẩn container nếu click ra ngoài container
+     * CreatedBy dtnga (10/12/2020)
+     * @param {Element} container
+     */
+    detectClickOutside(container) {
+        $(document).mouseup(function (e) {
+            // If the target of the click isn't the container
+            if (!container.is(e.target) && container.has(e.target).length === 0) {
+                $(container).addClass("displayNone");
+            }
+        });
     }
 
     /** Thực hiện tự động bind dữ liệu tỉnh/thành
@@ -3019,6 +3069,43 @@ var resWard = {
             "CreatedBy": null,
             "ModifiedDate": null,
             "ModifiedBy": null
+        }
+    ]
+}
+var resTransport = {
+    "Success": true,
+    "Message": "Thành công.",
+    "MISACode": 200,
+    "Data": [
+        {
+            "TransportorId": "35251a6d-3944-4983-ba47-901f27b89d18",
+            "TransportorCode": "VC03",
+            "TransportorName": " Fast Shipping",
+            "InnerFee": 15000.0,
+            "OutsideFee": 20000.0,
+            "InnerDeliveryTime": 2,
+            "OutsideDeliveryTime": 4,
+            "ShopTransportors": []
+        },
+        {
+            "TransportorId": "5017b949-77c1-2758-e5f2-17995bf2968c",
+            "TransportorCode": "VC02",
+            "TransportorName": "Viettel Post",
+            "InnerFee": 18000.0,
+            "OutsideFee": 23000.0,
+            "InnerDeliveryTime": 3,
+            "OutsideDeliveryTime": 5,
+            "ShopTransportors": []
+        },
+        {
+            "TransportorId": "592b006d-6335-6101-edf6-092cdb0ab5e8",
+            "TransportorCode": "VC09",
+            "TransportorName": "Ninja Van",
+            "InnerFee": 19000.0,
+            "OutsideFee": 24000.0,
+            "InnerDeliveryTime": 2,
+            "OutsideDeliveryTime": 5,
+            "ShopTransportors": []
         }
     ]
 }
