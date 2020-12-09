@@ -49,7 +49,7 @@ body {
 
 .login-form-logo {
     font-size: 60px;
-    background-image: url('/content/image/page/icon-amis-platform.svg');
+    background-image: url('/favicon.ico');
     background-size: contain;
     display: block;
     display: -moz-box;
@@ -99,7 +99,7 @@ span.error-info {
     display: block;
     position: absolute;
     right: 8px;
-    top: 16px;
+    top: 12px;
     width: 16px;
     height: 16px;
     background-image: url('/content/icon/common/whiteIcon/icon-hide-pass.svg');
@@ -121,15 +121,17 @@ span.error-info {
     text-align: center;
     cursor: pointer;
     height: 48px;
-    border-radius: 3px;
-    background: #0073e6;
+    border-radius: 4px;
+    background: #019160;
     -o-transition: all .4s;
     -moz-transition: all .4s;
 }
-
-.text-login-fail.show {
-    display: block;
-}
+    .login-form-btn:hover {
+        background: #2FBE8E;
+    }
+    .text-login-fail.show {
+        display: block;
+    }
 
 .text-login-fail {
     height: 24px;

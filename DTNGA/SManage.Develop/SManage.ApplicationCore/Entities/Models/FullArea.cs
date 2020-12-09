@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SManage.ApplicationCore.Entities.Models
+namespace SManage.ApplicationCore.Entities
 {
     public class FullArea
     {

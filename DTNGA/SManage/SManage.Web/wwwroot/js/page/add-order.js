@@ -269,7 +269,7 @@ class AddOrder extends Base {
         totalMoney.attr("value", newTotal);
         // format khi nhập liệu số tiền
         me.autoFormatMoney();
-        me.autoFocusInput();
+        me.addFocusSupport();
         // Sự kiện khi nhấn nút xóa tại mỗi dòng sản phẩm
         $(`.product-list .product-line button`).on("click", function () {
             me.onClick_deleteProduct(this);

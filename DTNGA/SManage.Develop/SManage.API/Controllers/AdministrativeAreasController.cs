@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SManage.ApplicationCore;
 using SManage.ApplicationCore.Entities;
-using SManage.ApplicationCore.Entities.Models;
 using SManage.ApplicationCore.Enums;
 using SManage.ApplicationCore.Properties;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
