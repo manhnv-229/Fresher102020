@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MySql.Data.MySqlClient;
+using Newtonsoft.Json.Serialization;
 using SManage.ApplicationCore;
 using SManage.ApplicationCore.Enums;
 using SManage.ApplicationCore.Interfaces.Service;
@@ -39,7 +40,10 @@ namespace SManage.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SManage.API", Version = "v1" });
                 var xmlFile = Path.ChangeExtension(typeof(Startup).Assembly.Location, ".xml");
             });
-
+            services.AddControllers().AddNewtonsoftJson(Options =>
+            {
+                Options.SerializerSettings.ContractResolver = new DefaultContractResolver(); Options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
             services.AddMemoryCache();
             //Khởi tạo kết nối tới MariaDB:
             services.AddScoped<IDbConnection>(_ => new MySqlConnection(Configuration["ConnectionStrings:SManageMariaDB"]));

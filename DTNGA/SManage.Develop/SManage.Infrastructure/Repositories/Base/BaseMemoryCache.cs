@@ -16,12 +16,17 @@ namespace SManage.Infrastructure
         readonly IDbConnection _dbConnection;
         protected readonly IMemoryCache _importMemoryCache;
         protected List<AdministrativeArea> AdministrativeAreas;
+        protected List<ShopTransportor> ShopTransportors;
+        protected List<Transportor> Transportors;
         public BaseMemoryCache(IDbConnection dbConnection, IMemoryCache importMemoryCache)
         {
             _dbConnection = dbConnection ?? throw new ArgumentNullException(nameof(MySqlConnection));
             _importMemoryCache = importMemoryCache;
             // Lấy dữ liệu:
             AdministrativeAreas = _dbConnection.Query<AdministrativeArea>("Proc_GetAdministrativeArea",commandType: CommandType.StoredProcedure).ToList();
+            ShopTransportors = _dbConnection.Query<ShopTransportor>("Proc_GetShopTransportor", commandType: CommandType.StoredProcedure).ToList();
+            Transportors = _dbConnection.Query<Transportor>("Proc_GetTransportor", commandType: CommandType.StoredProcedure).ToList();
+
             // Cache lại:
             CacheGetOrCreate();
         }
@@ -32,6 +37,8 @@ namespace SManage.Infrastructure
         public void CacheGetOrCreate()
         {
             SetCache("AdministrativeAreas", AdministrativeAreas);
+            SetCache("ShopTransportors", ShopTransportors);
+            SetCache("Transportors", Transportors);
         }
 
 
