@@ -90,6 +90,7 @@ class MPlugin {
          * Author: NVMANH (07/12/2020)
          */
         $(document).on('input', '[control-type="combobox"] input.m-combobox-input', function () {
+            console.log('input');
             var inputValue = this.value;
             var combobox = $(this).parent();
             var data = combobox.data('data');
@@ -104,8 +105,12 @@ class MPlugin {
             combobox.data('selected', null);
             if (dataFilter && dataFilter.length > 0) {
                 console.log('input event');
-                $(this).siblings('.m-combobox-data').show();
+                var comboboxData = $(this).siblings('.m-combobox-data');
+                // mặc định focus luôn vào item đầu tiên:
+                comboboxData.children().first().addClass('mCombobox__item--focus');
+                comboboxData.show();
             } else {
+                console.log('hide data on input: ' + combobox);
                 $(this).siblings('.m-combobox-data').hide();
             }
         })
@@ -136,9 +141,12 @@ class MPlugin {
                 $(inputCombobox).removeClass('border-red');
                 $(inputCombobox).removeAttr('title');
             }
-            setTimeout(function () {
-                $(inputCombobox).siblings('.m-combobox-data').hide();
-            }, 100)
+            console.log('----hide when blur-----')
+            $(inputCombobox).siblings('.m-combobox-data').hide();
+            //setTimeout(function () {
+            //    console.log('hide data on blur: ' + combobox);
+            //    $(inputCombobox).siblings('.m-combobox-data').hide();
+            //}, 1)
 
             //if ($(combobox).has(e.relatedTarget).length == 0) {
             //    // Check dữ liệu có hợp lệ hay không
@@ -177,13 +185,13 @@ class MPlugin {
 
         //TODO: xây dựng combobox động
         $(document).on('click', '.m-combobox .m-combobox-item', function () {
-            debugger;
             var comboboxData = this.parentElement;
             var input = $(comboboxData).siblings('input');
             var value = this.getAttribute('value'),
                 text = this.firstElementChild.textContent;
             input.val(text);
             $(input.parent()).data("selected", { text: text, value: value });
+            console.log('toggle combobox when click item');
             $(comboboxData).toggle();
         })
     }
@@ -231,10 +239,6 @@ class MPlugin {
                                     <div class="m-combobox-data">
                                     </div>
                                 </div>`);
-        if (data) {
-            this.buildHTMLComboboxData(controlHtml, data, fieldText, fieldValue);
-        }
-
         // Lưu trữ dữ liệu của combobox
         $(controlHtml).data('data', data);
 
@@ -244,6 +248,9 @@ class MPlugin {
             FieldText: fieldText,
             FieldValue: fieldValue
         });
+        if (data) {
+            this.buildHTMLComboboxData(controlHtml, data, fieldText, fieldValue);
+        }
         $(combobox).replaceWith(controlHtml);
     }
 
@@ -254,9 +261,19 @@ class MPlugin {
      * CreatedBy: NVMANH (03/12/2020)
      */
     buildHTMLComboboxData(comboboxHTML, data, fieldText, fieldValue) {
-        var comboboxDataEl = comboboxHTML.find('.m-combobox-data');
+        var comboboxDataEl = $(comboboxHTML).find('.m-combobox-data');
         // clear toàn bộ dữ liệu cũ:
         $(comboboxDataEl).empty();
+        // Không có data thì lấy ở .data()
+        if (!data) {
+            data = $(comboboxHTML).data('data');
+        }
+        // Không có thông tin text và value thì lấy ở .data()
+        if (!fieldText && !fieldValue) {
+            var entityInfo = $(comboboxHTML).data('entity');
+            fieldText = entityInfo['FieldText'];
+            fieldValue = entityInfo['FieldValue'];
+        }
         $.each(data, function (index, item) {
             var text = item[fieldText],
                 value = item[fieldValue];
@@ -272,6 +289,7 @@ class MPlugin {
         var childrenLast = comboboxData.children().last();
         var itemFocusCurrent = comboboxData.children('.mCombobox__item--focus').first();
         var comboboxDataNotShow = (comboboxData.css('display') == 'none');
+
         
         comboboxData.show();
         // Hiển thị các item lựa chọn:
@@ -313,7 +331,7 @@ class MPlugin {
 
     /** -----------------------------------------------------------------
      * Thực hiện nhấn enter trong input có thể lựa chọn các item:
-     * @param {any} combobox
+     * @param {HTMLElement} combobox
      * CreatedBy : NVMANH (09/12/2020)
      */
     selectItemOnEnter(combobox) {
@@ -321,14 +339,22 @@ class MPlugin {
         // Kiểm tra xem box data có hiển thị không, 
         // nếu không thì hiển thị, hiển thị rồi thì thực hiện select luôn item đang focus:
         if (comboboxData.css('display') == 'none') {
-            console.log('selectItemOnEnter');
+            console.log('show data when select item on ENTER: ' + combobox);
+            console.log(comboboxData);
             comboboxData.show();
+            //setTimeout(function () {
+            //    comboboxData.show();
+            //}, 1)
+            
         } else {
             var itemSelected = comboboxData.children('a.mCombobox__item--focus');
             itemSelected.trigger('click');
+            console.log('hide data selectItemOnEnter: ' + combobox);
             comboboxData.hide();
+            //setTimeout(function () {
+            //    comboboxData.hide();
+            //}, 1)
         }
-        debugger;
     }
 
     /**
