@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-   
+
 })
 /**
  * Format dữ liệu ngày tháng sang ngày/tháng/năm
@@ -28,13 +28,7 @@ function formatDate(date) {
  */
 function formatMoney(money) {
     if (money) {
-        //var salary = parseFloat(money.toFixed(0).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."));
         var salary = parseFloat(money).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        //var salary = money;
-        //this.salary = parseFloat(this.salary.replace(/,/g, ""))
-        //    .toFixed(0)
-        //    .toString()
-        //    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         return salary;
     }
     else {
@@ -65,13 +59,17 @@ function formatDateDoubleClick(date) {
  * CreatedBy: DVQuang (04/12/2020)
  * */
 function showSuccessMessenger() {
-    var html = `<div class="box-toast-msg">Thành công</div>`;
-    if ($('body').find('.box-toast-msg').length == 0) {
-        $('body').append(html);
-    }
-    $('.box-toast-msg').toggle();
+    var html = `<div class="box-toast-msg">
+                <div class="icon-sucsess-toast"></div>
+                <div class="mess-sucsess">Thành công</div>
+                </div>`;
+    //if ($('body').find('.box-toast-msg').length == 0) {
+    $('body').append(html);
+    //}
+    //$('.box-toast-msg').toggle();
     setTimeout(function () {
-        $('.box-toast-msg').toggle();
+        //$('.box-toast-msg').toggle();
+        $('.box-toast-msg').remove();
     }, 2000)
-
 }
+

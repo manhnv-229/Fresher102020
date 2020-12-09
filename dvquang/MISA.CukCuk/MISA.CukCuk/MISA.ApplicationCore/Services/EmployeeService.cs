@@ -27,5 +27,10 @@ namespace MISA.ApplicationCore.Services
         {
             throw new NotImplementedException();
         }
+
+        public List<Employee> GetEmployeesFilter(string specs, Guid? departmentId, Guid? positionId)
+        {
+            return _employeeRepository.GetEmployeesFilter(specs, departmentId, positionId);
+        }
     }
 }

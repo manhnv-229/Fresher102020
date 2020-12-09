@@ -76,20 +76,14 @@
                     <input class="icon-search input-search" type="text" style="width: 300px" placeholder="Tìm kiếm theo Mã, Tên hoặc Số điện thoại" />
                 </div>
                 <div class="department-list">
-                    <select>
-                        <option>Tất cả phòng ban</option>
-                        <option>Phòng kế toán</option>
-                        <option>Phòng lễ tân</option>
-                        <option>Phòng nhân sự</option>
+                    <select fieldName="DepartmentId" filedValue="DepartmentName" selectName="DepartmentId" selectValue="DepartmentName" api="/api/v1/departments">
+                        
                     </select>
 
                 </div>
                 <div class="position-list">
-                    <select>
-                        <option>Tất cả vị trí</option>
-                        <option>Giám đốc</option>
-                        <option>Lễ tân</option>
-                        <option>Kế toán</option>
+                    <select selectName="PositionId" filedValue="PositionName" fieldName="PositionId" selectValue="PositionName" api="/api/v1/positions">
+               
                     </select>
 
                 </div>
@@ -117,6 +111,8 @@
                         <th colspan="1" rowspan="1" class="el-table_30_column_116 is-leaf" formatType="locate" fieldName="Address"><div class="cell">Địa chỉ</div></th>
                         <th colspan="1" rowspan="1" class="el-table_30_column_116 is-leaf" fieldName="IdentityNumber"><div class="cell">Số CMTND/CCCD</div></th>
                         <th colspan="1" rowspan="1" class="el-table_30_column_116 is-leaf" fieldName="WorkStatusName"><div class="cell">Tình trạng công việc</div></th>
+                        <th colspan="1" rowspan="1" class="el-table_30_column_116 is-leaf" fieldName="PositionName"><div class="cell">Vị trí làm việc</div></th>
+                        <th colspan="1" rowspan="1" class="el-table_30_column_116 is-leaf" fieldName="DepartmentName"><div class="cell">Phòng ban</div></th>
                         <th class="gutter" style="width: 6px;"></th>
                     </tr>
                 </thead>
@@ -253,7 +249,7 @@
 
                             <div class="m-flex-1">
                                 <div clas="m-label" style="margin-bottom:4px">Vị trí</div>
-                                <select id="cbxPosition" selectName="PositionId" filedValue="DepartmentName" fieldName="PositionId" selectValue="PositionName" api="/api/v1/positions" class="m-control">
+                                <select id="cbxPosition" selectName="PositionId" filedValue="PositionName" fieldName="PositionId" selectValue="PositionName" api="/api/v1/positions" class="m-control">
                                 </select>
 
                             </div>

@@ -94,10 +94,12 @@ namespace MISA.ApplicationCore.Entities
         /// <summary>
         /// id phòng ban làm việc
         /// </summary>
+        public string PositionName { get; set; }
         public Guid? DepartmentId { get; set; }
         /// <summary>
         /// mã số thuế cá nhân
         /// </summary>
+        public string DepartmentName { get; set; }
         public string PersonalTaxCode { get; set; }
         /// <summary>
         /// mức lương

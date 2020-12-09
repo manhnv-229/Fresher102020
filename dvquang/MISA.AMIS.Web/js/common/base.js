@@ -122,6 +122,7 @@ class BaseJS {
     loadData() {
         var me = this;
         try {
+            this.loadComboBox();
             $('table tbody').empty();
             // Lấy thông tin các cột dữ liệu:
             var columns = $('table thead th');
@@ -263,9 +264,9 @@ class BaseJS {
                 $(this).val(money);
             }
 
-            if (this.tagname == "select") {
-                var propertyname = $(this).attr('fieldname');
-                entity[propertyname] = value;
+            if (this.tagName == "SELECT") {
+                var propertyName = $(this).attr('fieldName');
+                entity[propertyName] = value;
             }
         })
         var method = "POST";
@@ -316,36 +317,7 @@ class BaseJS {
         try {
             var me = this;
             // load dữ liệu cho các combobox:
-            var selects = $('select[selectName]');
-            var api = selects.attr("api");
-            selects.empty();
-            $.each(selects, function (index, select) {
-                // lấy dữ liệu nhóm khách hàng:
-                var api = $(select).attr('api');
-                var fieldName = $(select).attr('selectName');
-                var fieldValue = $(select).attr('selectValue');
-                $('.loading').show();
-                //console.log(api);
-                $.ajax({
-                    url: me.host + api,
-                    method: "GET",
-
-                }).done(function (res) {
-                    if (res) {
-                        //console.log(res);
-                        //console.log(me.host);
-                        $.each(res, function (index, obj) {
-                            var option = $(`<option value="${obj[fieldName]}">${obj[fieldValue]}</option>`);
-                            //console.log(select);
-                            $(select).append(option);
-                            //console.log(option);
-                        })
-                    }
-                    $('.loading').hide();
-                }).fail(function (res) {
-                    $('.loading').hide();
-                })
-            })
+            me.loadComboBox();
 
             me.FormMode = 'Edit';
             var tr = $("table tbody tr.row-select");
@@ -386,7 +358,6 @@ class BaseJS {
                     }
                     else if ($(this).attr("typename") == 'money') {
                         var money = formatMoney(value);
-                        //var money = value;
                         $(this).val(money);
                     }
 
@@ -472,13 +443,15 @@ class BaseJS {
                 contenttype: "application/json",
             }).done(function (res) {
                 // đóng dialog xác nhận xóa và load lại dữ liệu
-                showSuccessMessenger();
+                
                 dialogConfirmDelete.dialog('close');
+                showSuccessMessenger();
                 //$('.content-sucsess').text('Thành công');
                 //$("span.ui-dialog-title").text('CẢNH BÁO');
                 //dialogSucsess.dialog('open');
 
                 me.loadData();
+                
                 //console.log(url);
             }).fail(function (res) {
 
@@ -492,4 +465,47 @@ class BaseJS {
     //    $("span.ui-dialog-title").text('CẢNH BÁO');
     //    dialogSucsess.dialog('open');
     //}
+    /**
+     * load dữ liệu cho các combobox
+     * CreatedBy: DVQuang (09/12/2020)
+     * */
+    loadComboBox() {
+        try {
+            var me = this;
+            // load dữ liệu cho các combobox:
+            var selects = $('select[selectName]');
+            //var api = selects.attr("api");
+            selects.empty();
+            $.each(selects, function (index, select) {
+                // lấy dữ liệu nhóm khách hàng:
+                var api = $(select).attr('api');
+                var fieldName = $(select).attr('selectName');
+                var fieldValue = $(select).attr('selectValue');
+                $('.loading').show();
+                //console.log(api);
+                $.ajax({
+                    url: me.host + api,
+                    method: "GET",
+
+                }).done(function (res) {
+                    if (res) {
+                        //console.log(res);
+                        //console.log(me.host);
+                        $.each(res, function (index, obj) {
+                            var option = $(`<option value="${obj[fieldName]}">${obj[fieldValue]}</option>`);
+                            //console.log(select);
+                            $(select).append(option);
+                            //console.log(option);
+                        })
+                    }
+                    $('.loading').hide();
+                }).fail(function (res) {
+                    $('.loading').hide();
+                })
+            })
+            
+        } catch (e) {
+
+        }
+    }
 }

@@ -138,10 +138,10 @@ input.border-red{
 }
 
 .box-toast-msg {
-    display: none;
+    display: flex;
     position: fixed;
     background-color: #ffffff;
-    padding: 24px;
+    padding: 8px 16px 8px 16px;
     color: #019160;
     font-size: 20px;
     bottom: 24px;
@@ -149,6 +149,14 @@ input.border-red{
     right: 24px;
     border: 1px solid #ccc;
 }
-.note-avatar {
-    text-align: center;
-}
+    .box-toast-msg .icon-sucsess-toast {
+        background-image: url('/content/icon/check.svg');
+        margin-right: 15px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 24px;
+        height: 24px;
+    }
+    .note-avatar {
+        text-align: center;
+    }

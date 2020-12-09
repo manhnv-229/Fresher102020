@@ -28,6 +28,18 @@ namespace MISA.Infrastructure
             throw new NotImplementedException();
         }
 
-
+        public List<Employee> GetEmployeesFilter(string specs, Guid? departmentId, Guid? positionId)
+        {
+            // tạo tham số đầu vào cho store
+            var parameters = new DynamicParameters();
+            var input = specs != null ? specs : string.Empty;
+            parameters.Add("@EmployeeCode", input, DbType.String);
+            parameters.Add("@FullName", input, DbType.String);
+            parameters.Add("@PhoneNumber", input, DbType.String);
+            parameters.Add("@DepartmentId", departmentId, DbType.String);
+            parameters.Add("@PositionId", positionId, DbType.String);
+            var employees = _dbConnection.Query<Employee>("Proc_GetEmployeeFilter", parameters, commandType: CommandType.StoredProcedure).ToList();
+            return employees;
+        }
     }
 }
