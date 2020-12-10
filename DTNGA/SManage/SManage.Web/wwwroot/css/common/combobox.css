@@ -1,15 +1,69 @@
 ﻿/* style cho Combobox dùng chung*/
 
 .m-combobox {
-    height: 40px;
-    border: 1px solid #BBBBBB;
-    border-radius: 4px;
+    width: 100%;
+    position: relative;
+}
+.green-border {
+    border: 1px solid #019160;
+}
+.m-combobox:focus {
+    border: 1px solid #019160;
 }
 
-    .m-combobox:focus {
-        border: 1px solid #019160;
+    .m-combobox .selected-box {
+        display:flex;
+        position: relative;
     }
-
     /* khung nhập bên trong combo box*/
-
+        .m-combobox .selected-box input {
+            width: calc(100% - 40px);
+            border-radius: 4px 0 0 4px;
+            margin-top: 0;
+            border: none;
+            outline: none;
+            padding: 0;
+        }
     /* icon trong combo box*/
+.arrow-button {
+    width: 40px;
+    height: 100%;
+    padding: 12px;
+    align-items: center;
+    border-left: 1px solid #bbbbbb;
+}
+.m-combobox .selected-box .arrow-icon {
+    background-image: url('/content/icon/common/BlackIcon/chevron-down.svg');
+}
+     /*items box*/
+.combo-item-box{
+    width: 100%;
+    position: absolute;
+    margin-top: 4px;
+}
+.combo-item {
+    height: 40px;
+    color: #000000;
+    font-size: 13px;
+    background-color: #ffffff;
+    display: flex;
+    background: #019160;
+}
+.combo-item:hover{
+    background-color: #E9EBEE;
+}
+    .combo-item::selection {
+        background-color: #019160;
+        color: #ffffff;
+    }
+.combo-item .option-icon {
+    width: 36px;
+    height: 36px;
+    padding: 10px;
+}
+    .combo-item .check-icon {
+        background-image: url('/content/icon/common/whiteIcon/check.svg');
+    }
+    .combo-item .option-text {
+        line-height: 40px;
+    }
