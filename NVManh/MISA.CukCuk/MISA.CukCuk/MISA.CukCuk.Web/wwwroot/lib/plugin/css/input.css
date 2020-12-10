@@ -72,24 +72,46 @@
         z-index: 1;
     }
 
-    .m-combobox button {
+        .m-combobox input:focus + a.m-combobox-trigger {
+            border-color: #019160;
+            color: #019160;
+        }
+
+            .m-combobox input:focus + a.m-combobox-trigger:hover {
+                border-color: #019160;
+                color: #019160;
+            }
+
+    .m-combobox a.m-combobox-trigger {
         position: absolute;
         right: 0;
         width: 40px;
         height: 40px;
         border: 0;
-        border-left: 1px solid #bbbbbb;
         background-color: rgba(0, 0, 170, 0.00);
         outline: none;
         cursor: pointer !important;
         z-index: 999;
+        text-align: center;
+        line-height: 40px;
+        box-sizing: border-box;
+        border-radius: 0 4px 4px 0;
+        border-left: 1px solid #bbbbbb;
+        border-top: 1px solid rgba(0, 0, 0, 0.00);
+        border-right: 1px solid rgba(0, 0, 0, 0.00);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.00);
     }
 
-        .m-combobox button:focus {
+        .m-combobox a.m-combobox-trigger:hover {
             background-color: #E9EBEE;
             border: 1px solid #bbbbbb;
-            border-radius: 0 4px 4px 0;
         }
+
+    .m-combobox a:focus {
+        background-color: #E9EBEE;
+        border: 1px solid #bbbbbb;
+        border-radius: 0 4px 4px 0;
+    }
 
     .m-combobox .m-combobox-data {
         display: none;
@@ -138,12 +160,18 @@
 
         .m-combobox .m-combobox-data .mCombobox__item--focus {
             background-color: #E9EBEE;
+            cursor: pointer;
         }
 
         .m-combobox .m-combobox-data .mCombobox__item--selected {
-            background-color: #019160 !important;
+            background-color: #019160;
             color: #ffffff;
+            cursor: pointer;
         }
+            .m-combobox .m-combobox-data .mCombobox__item--selected:hover,
+            .m-combobox .m-combobox-data .mCombobox__item--selected.mCombobox__item--focus {
+                background-color: #2FBE8E;
+            }
 
             .m-combobox .m-combobox-data .mCombobox__item--selected::before {
                 font-family: 'Font Awesome 5 Pro';

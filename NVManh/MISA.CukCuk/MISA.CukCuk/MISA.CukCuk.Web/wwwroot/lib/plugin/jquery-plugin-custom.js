@@ -67,7 +67,7 @@ class MPlugin {
         })
 
 
-        $(document).on('keydown', '[control-type="combobox"] input.m-combobox-input,.m-combobox button.m-combobox-trigger', function (e) {
+        $(document).on('keydown', '[control-type="combobox"] input.m-combobox-input,[control-type="combobox"] a.m-combobox-trigger', function (e) {
             var keyCode = e.keyCode;
             switch (keyCode) {
                 case 13:
@@ -90,6 +90,7 @@ class MPlugin {
          * Author: NVMANH (07/12/2020)
          */
         $(document).on('input', '[control-type="combobox"] input.m-combobox-input', function () {
+            debugger
             console.log('input');
             var inputValue = this.value;
             var combobox = $(this).parent();
@@ -116,7 +117,7 @@ class MPlugin {
         })
 
 
-        $(document).on('blur', '[control-type="combobox"] input.m-combobox-input, [control-type="combobox"] button', function (e) {
+        $(document).on('blur', '[control-type="combobox"] input.m-combobox-input, [control-type="combobox"] a', function (e) {
             console.log(e);
             var combobox = this.parentElement;
             var inputCombobox = $(combobox).children('input.m-combobox-input');
@@ -157,7 +158,7 @@ class MPlugin {
         })
 
         //TODO: Chọn item trong combobox:
-        $(document).on('click', '.m-combobox button.m-combobox-trigger', function () {
+        $(document).on('click', '.m-combobox a.m-combobox-trigger', function () {
             var comboboxData = $(this).siblings('.m-combobox-data');
             var combobox = comboboxData.parent();
 
@@ -181,10 +182,17 @@ class MPlugin {
             //    comboboxData.children("[value='" + value + "']").addClass('mCombobox__item--selected');
             //}
             comboboxData.toggle();
+            $(this).siblings('input').focus();
         })
 
         //TODO: xây dựng combobox động
-        $(document).on('click', '.m-combobox .m-combobox-item', function () {
+        /* -------------------------------------
+         * Khi thực hiện nhấn chuột chọn 1 item
+         * Author: NVMANH (09/12/2020)
+         */
+        $(document).on('mousedown', '.m-combobox .m-combobox-item', function (sender) {
+            console.log(sender);
+            event.preventDefault();
             var comboboxData = this.parentElement;
             var input = $(comboboxData).siblings('input');
             var value = this.getAttribute('value'),
@@ -193,6 +201,8 @@ class MPlugin {
             $(input.parent()).data("selected", { text: text, value: value });
             console.log('toggle combobox when click item');
             $(comboboxData).toggle();
+            input.removeClass('border-red');
+            event.stopPropagation();
         })
     }
 
@@ -235,7 +245,7 @@ class MPlugin {
         var controlHtml = $(`<div id="` + id + `" class="m-combobox" control-type="combobox">
                                     <div class="m-label `+ labelCls + `">` + label + `</div>
                                     <input class="m-combobox-input `+ controlCls + `" type="text" autocomplete="off" />
-                                    <button class="m-combobox-trigger"><i class="fas fa-chevron-down"></i></button>
+                                    <a class="m-combobox-trigger" title="Hiển thị tất cả ${label}"><i class="fas fa-chevron-down"></i></a>
                                     <div class="m-combobox-data">
                                     </div>
                                 </div>`);
@@ -282,20 +292,28 @@ class MPlugin {
         })
     }
 
+    //TODO: đang lỗi không set được focus
     setFocusComboboxItem(combobox, isNext) {
         console.log('setFocusComboboxItem');
+        this.setStyleItemSelected(combobox);
         var comboboxData = $(combobox).children('.m-combobox-data');
         var childrenFirst = comboboxData.children().first();
         var childrenLast = comboboxData.children().last();
+        var childrenSelected = comboboxData.children('.mCombobox__item--selected');
         var itemFocusCurrent = comboboxData.children('.mCombobox__item--focus').first();
         var comboboxDataNotShow = (comboboxData.css('display') == 'none');
-
-        
         comboboxData.show();
+        
         // Hiển thị các item lựa chọn:
         if (comboboxDataNotShow && isNext || (isNext && !comboboxDataNotShow && itemFocusCurrent.length == 0)) {
+            if (childrenSelected.length > 0) {
+                return;
+            }
             childrenFirst.addClass('mCombobox__item--focus');
         } else if (comboboxDataNotShow && !isNext || (!isNext && !comboboxDataNotShow && itemFocusCurrent.length == 0)) {
+            if (childrenSelected.length > 0) {
+                return;
+            }
             childrenLast.addClass('mCombobox__item--focus');
         } else {
             itemFocusCurrent.removeClass('mCombobox__item--focus');
@@ -305,6 +323,9 @@ class MPlugin {
                 if (itemFocusCurrent.next().length > 0) {
                     itemFocusCurrent.next().addClass('mCombobox__item--focus');
                 } else {
+                    if (childrenSelected.length > 0) {
+                        return;
+                    }
                     childrenFirst.addClass('mCombobox__item--focus');
                 }
 
@@ -312,6 +333,9 @@ class MPlugin {
                 if (itemFocusCurrent.prev().length > 0) {
                     itemFocusCurrent.prev().addClass('mCombobox__item--focus');
                 } else {
+                    if (childrenSelected.length > 0) {
+                        return;
+                    }
                     childrenLast.addClass('mCombobox__item--focus');
                 }
             }
@@ -323,7 +347,7 @@ class MPlugin {
         var comboboxData = $(combobox).children('.m-combobox-data');
         var itemSelected = $(combobox).data('selected');
         comboboxData.children().removeClass('mCombobox__item--selected');
-        if (itemSelected && itemSelected.value) {
+        if (itemSelected && itemSelected.value != null && itemSelected.value != undefined) {
             var value = itemSelected.value;
             comboboxData.children("[value='" + value + "']").addClass('mCombobox__item--selected');
         }
@@ -348,7 +372,7 @@ class MPlugin {
             
         } else {
             var itemSelected = comboboxData.children('a.mCombobox__item--focus');
-            itemSelected.trigger('click');
+            itemSelected.trigger('mousedown');
             console.log('hide data selectItemOnEnter: ' + combobox);
             comboboxData.hide();
             //setTimeout(function () {

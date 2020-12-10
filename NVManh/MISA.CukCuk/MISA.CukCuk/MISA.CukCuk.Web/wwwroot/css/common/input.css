@@ -62,7 +62,7 @@
 
 
 /* Combobox */
-.m-combobox {
+/*.m-combobox {
     position: relative;
     display: block;
 }
@@ -103,9 +103,9 @@
 
         .m-combobox .m-combobox-data .m-combobox-item {
             display: flex;
-            height: 40px;
+            height: 40px;*/
             /*border-bottom: 1px solid #bbbbbb;*/
-            border-top: none;
+            /*border-top: none;
             line-height: 40px;
             padding: 0 16px;
         }
@@ -122,4 +122,4 @@
         .m-combobox .m-combobox-data .mCombobox__item--selected {
             background-color: #019160 !important;
             color: #ffffff;
-        }
+        }*/
