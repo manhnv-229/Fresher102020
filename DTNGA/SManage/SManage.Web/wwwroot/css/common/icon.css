@@ -99,3 +99,11 @@
     background-image: url('/content/icon/common/BlackIcon/x.svg');
     background-size: 12px;
 }
+/* areow icon */
+.arrow-icon {
+    background-image: url('/content/icon/common/BlackIcon/chevron-down.svg');
+}
+/* quay ngược icon*/
+.rotate {
+    transform: rotateX(180deg);
+}

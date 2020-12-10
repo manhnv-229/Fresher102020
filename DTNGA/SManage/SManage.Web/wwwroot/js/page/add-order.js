@@ -9,6 +9,8 @@ class AddOrder extends Base {
             this.autoCompleteProduct();
             this.autoCompleteProvince();
             this.initEventOrderAddPage();
+            var cbTrans = `#order-add #cb-transportor`;
+            this.autoCompleteTransportor(cbTrans);
         }
         catch (e) {
             console.log(e);
@@ -30,14 +32,31 @@ class AddOrder extends Base {
                     me.checkCustomer(this);
                 }
             })
-            // check trường bắt buộc nhập trước
+            //TODO lỗi lặp check trường bắt buộc nhập trước
             $(`#order-add input[type="search"][fieldName="District"]`).focus(me.onFocus_inputField);
-            
+            //TODO cập nhật lại thông tin vận chuyển khi combobox transport thay đổi giá trị
+            $(`#cb-transportor`).on("change", function () {
+                me.onChange_comboBoxTransportor(this);
+            });
 
         }
         catch (e) {
             console.log(e);
         }
+    }
+
+    /**
+     * Cập nhật thông tin vận chuyển khi thay đổi giá trị của combobox Transportor
+     * CreatedBy dtnga (10/12/2020)
+     * @param {Element} comboBoxTrans comboBox đơn vị vận chuyển
+     */
+    onChange_comboBoxTransportor(comboBoxTrans) {
+        var me = this;
+        alert("transportor on change");
+        var transportorId = $(comboBoxTrans).data("keyId");
+        var shopAreaCode = $(`.header .m-combobox`).data("keyId");
+        var CustomerAreaCode = $(document).find(`input[type="search"][fieldName="Ward"]`).data("keyCode");
+        // gọi api tính chi phí vận chuyển + thời gian giao hàng dự kiến
     }
 
     /** Thực hiện bind dữ liệu gợi ý cho trường Tìm kiếm

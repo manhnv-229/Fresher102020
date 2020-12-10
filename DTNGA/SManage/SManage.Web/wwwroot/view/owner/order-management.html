@@ -49,7 +49,9 @@
 
     <!-- Header -->
     <div class="header">
-        <div class="header-left"></div>
+        <div class="header-left">
+            <div class="m-combobox" fieldName="Shop" id="cb-Shop"></div>
+        </div>
         <div class="header-right">
             <div class="header-right-box">
                 <div class="avatar"></div>
@@ -317,34 +319,7 @@
                                 <div class="input-line">
                                     <div class="input-box input-box-small">
                                         <div class="input-title">Đơn vị vận chuyển (<span>*</span>)</div>
-                                        <div class="m-combobox" fieldName="TransportorId" validate="false">
-                                                <div class="m-input selected-box">
-                                                    <input class="" type="text" fieldName="TransportorName"/>
-                                                    <div class="arrow-button">
-                                                        <div class="m-icon arrow-icon"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="combo-item-box displayNone">
-                                                    <div class="combo-item">
-                                                        <div class="option-icon">
-                                                            <div class="displayNone m-icon check-icon"></div>
-                                                        </div>
-                                                        <div class="option-text">Option 1</div>
-                                                    </div>
-                                                    <div class="combo-item">
-                                                        <div class="option-icon">
-                                                            <div class="displayNone m-icon check-icon"></div>
-                                                        </div>
-                                                        <div class="option-text">Option 2</div>
-                                                    </div>
-                                                    <div class="combo-item">
-                                                        <div class="option-icon">
-                                                            <div class="displayNone m-icon check-icon"></div>
-                                                        </div>
-                                                        <div class="option-text">Option 3</div>
-                                                    </div>
-                                                </div>
-                                        </div>
+                                        <div class="m-combobox" id="cb-transportor" fieldName="Transportor" validate="false"></div>
                                     </div>
                                 </div>
                                 <div class="input-line">

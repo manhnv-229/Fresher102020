@@ -40,7 +40,6 @@ namespace SManage.Infrastructure.DatabaseContext.DbContext
         public async Task<T> GetAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
             var result = await _dbConnection.QueryFirstOrDefaultAsync<T>(sp, parms, commandType: commandType);
-
             return result;
         }
 

@@ -6,5 +6,6 @@
 class OrderManagement extends Base {
     constructor() {
         super();
+        this.loadShop();
     }
 }
