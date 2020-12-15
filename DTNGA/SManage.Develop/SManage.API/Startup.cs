@@ -63,8 +63,6 @@ namespace SManage.API
             services.AddScoped<IBaseRepository, BaseRepository>();
             services.AddScoped<IBaseService, BaseService>();
 
-            services.AddScoped<ITransportorService, TransportorService>();
-            services.AddScoped<IShopService, ShopService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

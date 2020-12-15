@@ -33,11 +33,7 @@ namespace SManage.ApplicationCore.Enums
         /// <summary>
         /// Xóa dữ liệu
         /// </summary>
-        Delete,
-        /// <summary>
-        /// Lấy dữ liệu theo ID đơn vị chủ quản
-        /// </summary>
-        GetByParentId
+        Delete
     }
 
     /// <summary>
@@ -127,10 +123,12 @@ namespace SManage.ApplicationCore.Enums
         /// Lỗi xóa entity
         /// </summary>
         ErrorDeleteEntity = 604,
+
         /// <summary>
         /// Lỗi cập nhật entity
         /// </summary>
         ErrorUpdateEntity = 605,
+
     }
     
     /// <summary>

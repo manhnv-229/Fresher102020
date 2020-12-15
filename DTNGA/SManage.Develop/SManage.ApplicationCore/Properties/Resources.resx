@@ -120,6 +120,9 @@
   <data name="Duplicate" xml:space="preserve">
     <value>Thông tin {0} đã tồn tại trên hệ thống</value>
   </data>
+  <data name="Empty_Entity" xml:space="preserve">
+    <value>Không có dữ liệu trên hệ thống</value>
+  </data>
   <data name="ErrorAddEntity" xml:space="preserve">
     <value>Lỗi thêm mới dữ liệu.</value>
   </data>

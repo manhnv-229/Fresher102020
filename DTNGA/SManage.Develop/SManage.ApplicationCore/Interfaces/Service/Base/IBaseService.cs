@@ -12,13 +12,14 @@ namespace SManage.ApplicationCore.Interfaces.Service.Base
         #region Delete
         /// <summary>
         /// Xóa 1 bản ghi bất đồng bộ
+        /// CreatedBy dtnga (11/11/2020)
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="sp">Chuỗi truy vấn/ Tên procedure</param>
         /// <param name="parms">Bộ tham số</param>
         /// <param name="commandType">Loại truy vấn</param>
         /// <returns>Bản ghi xóa thành công</returns>
-        /// CreatedBy dtnga (11/11/2020)
+        
         Task<T> DeleteAsync<T>(T entity);
         /// <summary>
         /// Xóa nhiều bản ghi bất đồng bộ
@@ -57,15 +58,15 @@ namespace SManage.ApplicationCore.Interfaces.Service.Base
         /// CreatedBy dtnga (11/11/2020)
         Task<List<T>> GetAllAsync<T>();
         /// <summary>
-        /// Lấy 1 bản ghi dựa theo tham số đầu vào
+        /// /// <summary>
+        /// Lấy 1 bản ghi dựa theo 1 thuộc tính
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="sp">Chuỗi truy vấn/ Tên procedure</param>
-        /// <param name="parms">Bộ tham số</param>
-        /// <param name="commandType">Loại truy vấn</param>
-        /// <returns>Đối tượng chứa dữ liệu đọc từ DB</returns>
+        /// <param name="propName">Tên thuộc tính</param>
+        /// <param name="propValue">Giá trị thuộc tính</param>
+        /// <returns></returns>
         /// CreatedBy dtnga (11/11/2020)
-        Task<T> GetByPropertyAsync<T>(string propName, T entity);
+        Task<T> GetByPropertyAsync<T>(string propName, object propValue);
         /// <summary>
         /// Lấy 1 bản ghi dựa theo Id
         /// </summary>

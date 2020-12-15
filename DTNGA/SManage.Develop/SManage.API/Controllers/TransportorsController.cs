@@ -6,11 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using SManage.ApplicationCore;
 using SManage.ApplicationCore.Entities;
 using SManage.ApplicationCore.Enums;
-using SManage.ApplicationCore.Interfaces.Repositories;
-using SManage.ApplicationCore.Interfaces.Service;
 using SManage.ApplicationCore.Interfaces.Service.Base;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace SManage.API.Controllers
 {
@@ -30,12 +27,13 @@ namespace SManage.API.Controllers
             Transportors= (List<Transportor>)_baseMemoryCache.GetCache("Transportors");
         }
 
-        
+
         /// <summary>
         /// Lấy danh sách đơn vị vận chuyển liên kết với cửa hàng
         /// </summary>
         /// <param name="shopId">Id cửa hàng</param>
         /// <returns></returns>
+        /// CreatedBy dtnga /(13/12/2020)
         // GET api/<TransportorsController>/5
         [HttpGet("{shopId}")]
         public ActionServiceResult Get([FromRoute] Guid shopId)
@@ -69,21 +67,27 @@ namespace SManage.API.Controllers
             response.Message = ApplicationCore.Properties.Resources.Success;
             return response;
         }
+
+        /// <summary>
+        /// Thực hiện tính chi phí vận chuyển
+        /// </summary>
+        /// <param name="transportorId">Id đơn vị vận chuyển</param>
+        /// <param name="shopId">Id cửa hàng</param>
+        /// <param name="customerAreaCode">Mã đơn vị hành chính của người nhận</param>
+        /// <returns>Chi phí vận chuyển</returns>
+        /// CreatedBy dtnga /(14/12/2020)
         [HttpGet("Fee")]
         public async Task<ActionServiceResult> CalculateShippingFeeAsync([FromQuery] Guid transportorId, [FromQuery] Guid shopId, [FromQuery] string customerAreaCode)
         {
             var response = new ActionServiceResult();
             if (transportorId == null || shopId == null || customerAreaCode == null)
             {
+                response.Success = false;
                 response.MISACode = MISACode.NotFound;
                 response.Message = ApplicationCore.Properties.Resources.NotFound;
                 return response;
             }
-            else
-            {
-                response.MISACode = MISACode.Success;
-                response.Message = ApplicationCore.Properties.Resources.Success;
-            }
+            
             // Lấy thông tin chi tiết của đơn vị vận chuyển
             var trans = await _baseService.GetByIdAsync<Transportor>(transportorId);
             // Lấy thông tin mã địa bàn hành chính của cửa hàng
@@ -98,20 +102,24 @@ namespace SManage.API.Controllers
             return response;
         }
 
+        /// <summary>
+        /// Thực hiện tính ngày nhận hàng dự kiến
+        /// </summary>
+        /// <param name="transportorId">Id đơn vị vận chuyển</param>
+        /// <param name="shopId">Id cửa hàng</param>
+        /// <param name="customerAreaCode">Mã đơn vị hành chính của người nhận</param>
+        /// <returns>Chi phí vận chuyển</returns>
+        /// CreatedBy dtnga /(14/12/2020)
         [HttpGet("ExpectedDeliveryDate")]
         public async Task<ActionServiceResult> CalcExpectedDeliveryDateAsync([FromQuery] Guid transportorId, [FromQuery] Guid shopId, [FromQuery] string customerAreaCode)
         {
             var response = new ActionServiceResult();
             if (transportorId == null || shopId == null || customerAreaCode == null)
             {
+                response.Success = false;
                 response.MISACode = MISACode.NotFound;
                 response.Message = ApplicationCore.Properties.Resources.NotFound;
                 return response;
-            }
-            else
-            {
-                response.MISACode = MISACode.Success;
-                response.Message = ApplicationCore.Properties.Resources.Success;
             }
             // Lấy thông tin chi tiết của đơn vị vận chuyển
             var trans = await _baseService.GetByIdAsync<Transportor>(transportorId);

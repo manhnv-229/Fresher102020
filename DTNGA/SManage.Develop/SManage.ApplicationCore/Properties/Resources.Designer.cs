@@ -70,6 +70,15 @@ namespace SManage.ApplicationCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Không có dữ liệu trên hệ thống.
+        /// </summary>
+        public static string Empty_Entity {
+            get {
+                return ResourceManager.GetString("Empty_Entity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dữ liệu tỉnh thành hoặc quận huyện không chính xác..
         /// </summary>
         public static string Error_Area {

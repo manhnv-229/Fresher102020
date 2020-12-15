@@ -49,15 +49,16 @@ namespace SManage.ApplicationCore.Services
         public async Task<List<T>> GetAllAsync<T>()
         {
             var entityName = typeof(T).Name;
-            var sp = $"Proc_Get{entityName}";
+            var sp = $"Proc_GetAll{entityName}";
             return await _baseRepository.GetAllAsync<T>(sp);
         }
 
-        public async Task<T> GetByPropertyAsync<T>(string propName, T entity)
+        public async Task<T> GetByPropertyAsync<T>(string propName, object propValue)
         {
-            var propValue = entity.GetType().GetProperty(propName);
-            var sp = $"Proc_Get{entity.GetType().Name}By{propName}";
-            var parms = MappingDataType<T>(entity);
+            var entityName = typeof(T).Name;
+            var sp = $"Proc_Get{entityName}By{propName}";
+            var parms = new DynamicParameters();
+            parms.Add($"{propName}", propValue);
             return await _baseRepository.GetAsync<T>(sp, parms);
         }
 

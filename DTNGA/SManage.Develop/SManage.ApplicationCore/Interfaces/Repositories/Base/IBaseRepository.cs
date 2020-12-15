@@ -21,6 +21,7 @@ namespace SManage.ApplicationCore.Interfaces.Repositories
         /// <param name="parms">Bộ tham số</param>
         /// <param name="commandType">Loại truy vấn</param>
         /// <returns>Số bản ghi bị ảnh hưởng</returns>
+        /// CreatedBy dtnga (11/11/2020)
         Task<int> ExecuteAsync(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
         #endregion
 
@@ -56,6 +57,7 @@ namespace SManage.ApplicationCore.Interfaces.Repositories
         /// <param name="parms">Bộ tham số</param>
         /// <param name="commandType">Loại truy vấn</param>
         /// <returns>Danh sách đối tượng chứa dữ liệu đọc từ DB</returns>
+        /// CreatedBy dtnga (11/11/2020)
         Task<List<T>> GetAllAsync<T>(string sp, CommandType commandType = CommandType.StoredProcedure);
         /// <summary>
         /// Lấy 1 bản ghi
@@ -65,6 +67,7 @@ namespace SManage.ApplicationCore.Interfaces.Repositories
         /// <param name="parms">Bộ tham số</param>
         /// <param name="commandType">Loại truy vấn</param>
         /// <returns>Đối tượng chứa dữ liệu đọc từ DB</returns>
+        /// CreatedBy dtnga (11/11/2020)
         Task<T> GetAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
         /// <summary>
         /// Lấy 1 bản ghi dựa theo Id
@@ -74,6 +77,7 @@ namespace SManage.ApplicationCore.Interfaces.Repositories
         /// <param name="parms">Bộ tham số</param>
         /// <param name="commandType">Loại truy vấn</param>
         /// <returns>Đối tượng có Id theo mô tả</returns>
+        /// CreatedBy dtnga (11/11/2020)
         Task<T> GetByIdAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
         #endregion
 
@@ -86,6 +90,7 @@ namespace SManage.ApplicationCore.Interfaces.Repositories
         /// <param name="parms">Bộ tham số</param>
         /// <param name="commandType">Loại truy vấn</param>
         /// <returns>Đối tượng được thêm thành công</returns>
+        /// CreatedBy dtnga (11/11/2020)
         Task<T> InsertAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
         /// <summary>
         /// Thêm 1 bản ghi vào DB
@@ -95,6 +100,7 @@ namespace SManage.ApplicationCore.Interfaces.Repositories
         /// <param name="entities">Danh sách đối tượng cần thêm</param>
         /// <param name="commandType">Loại truy vấn</param>
         /// <returns>Đối tượng được thêm thành công</returns>
+        /// CreatedBy dtnga (11/11/2020)
         Task<int> InsertRangeAsync<T>(string sp, List<object> entities, CommandType commandType = CommandType.Text);
         #endregion
 
@@ -107,6 +113,7 @@ namespace SManage.ApplicationCore.Interfaces.Repositories
         /// <param name="parms">Bộ tham số</param>
         /// <param name="commandType">Loại truy vấn</param>
         /// <returns>Đối tượng được cập nhật thành công</returns>
+        /// CreatedBy dtnga (11/11/2020)
         Task<T> UpdateAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
         /// <summary>
         /// Cập nhật dữ liệu bất đồng bộ
