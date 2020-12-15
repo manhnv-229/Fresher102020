@@ -34,11 +34,24 @@ class AddOrder extends Base {
             })
             //TODO lỗi lặp check trường bắt buộc nhập trước
             $(`#order-add input[type="search"][fieldName="District"]`).focus(me.onFocus_inputField);
-            //TODO cập nhật lại thông tin vận chuyển khi combobox transport thay đổi giá trị
-            $(`#cb-transportor`).on("change", function () {
-                me.onChange_comboBoxTransportor(this);
-            });
 
+
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    /**
+     * Custome
+     * CreatedBy dtnga (12/12/2020)
+     * @param {any} option
+     */
+    doSomethingWhenItemSelected(option) {
+        try {
+            var me = this;
+            var cbTrans = $(option).closest(`.m-box`);
+            me.updateTransportorInfo(cbTrans);
         }
         catch (e) {
             console.log(e);
@@ -50,13 +63,39 @@ class AddOrder extends Base {
      * CreatedBy dtnga (10/12/2020)
      * @param {Element} comboBoxTrans comboBox đơn vị vận chuyển
      */
-    onChange_comboBoxTransportor(comboBoxTrans) {
-        var me = this;
-        alert("transportor on change");
-        var transportorId = $(comboBoxTrans).data("keyId");
-        var shopAreaCode = $(`.header .m-combobox`).data("keyId");
-        var CustomerAreaCode = $(document).find(`input[type="search"][fieldName="Ward"]`).data("keyCode");
-        // gọi api tính chi phí vận chuyển + thời gian giao hàng dự kiến
+    updateTransportorInfo(comboBoxTrans) {
+        try {
+            var me = this;
+            var transportorId = $(comboBoxTrans).data("keyId");
+            var shopId= $(`.header .m-box`).data("keyId");
+            var customerAreaCode = $(document).find(`input[type="search"][fieldName="Ward"]`).data("keyCode");
+            // gọi api tính chi phí vận chuyển + thời gian giao hàng dự kiến
+            var fee = formatMoney(15000);
+            var expectedDeliveryDate = formatDate("12/12/2020", "dd/mm/yyyy");
+            $.ajax({
+                url: me.Host + me.Route + "?transportorId=" + transportorId + "?shopId=" + shopId + "?customerAreaCode=" + customerAreaCode,
+                method: "GET"
+            })
+                .done(function (res) {
+                    var data = res.Data;
+                    fee = formatMoney(data.Fee);
+                    expectedDeliveryDate = formatDate(data.ExpectedDeliveryDate, "dd/mm/yyyy");
+                })
+                .fail(function (res) {
+                    console.log(res);
+                })
+            // bind dữ liệu và hiển thị thông tin vận chuyển
+            var contentBox = $(comboBoxTrans).closest(`.content-box`);
+            var feeField = $(contentBox).find(`input[fieldName="Fee"]`);
+            $(feeField).val(fee);
+            $(feeField).removeClass("m-input-warning");
+            var extraInfo = $(contentBox).find(`.extra-info`);
+            $(extraInfo).find(`span`).text(expectedDeliveryDate);
+            $(extraInfo).removeClass("displayNone");
+        } catch (e) {
+            console.log(e);
+        }
+
     }
 
     /** Thực hiện bind dữ liệu gợi ý cho trường Tìm kiếm

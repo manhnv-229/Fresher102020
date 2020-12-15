@@ -97,7 +97,11 @@
 
 .delete-icon {
     background-image: url('/content/icon/common/BlackIcon/x.svg');
-    background-size: 12px;
+    background-size: 10px;
+    opacity: 1;
+    align-self: center;
+    border: none;
+    outline: none;
 }
 /* areow icon */
 .arrow-icon {

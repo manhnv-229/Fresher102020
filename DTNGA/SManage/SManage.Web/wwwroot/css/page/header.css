@@ -5,15 +5,19 @@
     display: flex;
 }
 
-.header .header-left .m-combobox {
+.header .header-left .m-box {
     width: 30%;
     margin-left: 16px;
     border: none;
     align-self: center;
-    font-family: GoogleSans-Bold;
+    font-family: GoogleSans-Medium;
     font-size: 15px;
 }
-    .header .header-left .m-combobox .arrow-button{
+    .header .header-left .m-box input {
+        font-family: GoogleSans-Medium;
+        font-size: 15px;
+    }
+    .header .header-left .m-combobox .arrow-button {
         border: none;
     }
     /*header right*/

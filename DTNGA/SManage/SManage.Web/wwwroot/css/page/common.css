@@ -12,10 +12,30 @@
     border-right: 1px solid #E5E5E5;
     height: 100vh;
 }
+/* phần body bên phải*/
+.body-right{
+    min-width: 700px;
+    overflow-x: scroll;
+}
+    .body-right::-webkit-scrollbar {
+        height: 5px;
+    }
+
+    .body-right::-webkit-scrollbar-track {
+        background: #E9EBEE;
+    }
+
+    .body-right::-webkit-scrollbar-thumb {
+        background: #bbbbbb;
+        border-radius: 10px;
+    }
+
+    .body-right::-webkit-scrollbar-corner {
+        background: #E9EBEE;
+    }
 
 /*----------------------------*/
 /* Header */
-
 .header {
     float: left;
     width: calc(100% - 221px);

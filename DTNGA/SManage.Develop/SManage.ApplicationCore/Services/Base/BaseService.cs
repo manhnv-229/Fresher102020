@@ -48,7 +48,7 @@ namespace SManage.ApplicationCore.Services
         #region Get
         public async Task<List<T>> GetAllAsync<T>()
         {
-            var entityName = typeof(T).GetType().Name;
+            var entityName = typeof(T).Name;
             var sp = $"Proc_Get{entityName}";
             return await _baseRepository.GetAllAsync<T>(sp);
         }
@@ -61,11 +61,12 @@ namespace SManage.ApplicationCore.Services
             return await _baseRepository.GetAsync<T>(sp, parms);
         }
 
-        public async Task<T> GetByIdAsync<T>(T entity)
+        public async Task<T> GetByIdAsync<T>(Guid id)
         {
-            var entityName = entity.GetType().Name;
+            var entityName = typeof(T).Name;
             var sp = $"Proc_Get{entityName}By{entityName}Id";
-            var parms = MappingDataType<T>(entity);
+            var parms = new DynamicParameters();
+            parms.Add($"{entityName}" + "Id", id, DbType.String);
             return await _baseRepository.GetByIdAsync<T>(sp, parms);
         }
         #endregion

@@ -74,13 +74,14 @@ class Base {
             var me = this;
             var fieldName = $(targetCombo).attr("fieldName");
             var comboSelectBox = $(`<div class="m-input selected-box">
-                                       <input class="" type="text" fieldName="TransportorName"/>
+                                       <input class="" type="search"/>
                                        <div class="arrow-button">
                                             <div class="m-icon arrow-icon"></div>
                                        </div>
                                      </div>`);
             targetCombo.append(comboSelectBox);
-            var comboItemBox = $(`<div class="wraper combo-item-box displayNone"> </div>`);
+            var wrapper = $(`<div class="wrapper displayNone"> </div>`);
+            var comboItemBox = $(`<div class="inner-wrapper combo-item-box "> </div>`);
             var optionIcon = `<div class="option-icon">
                                    <div class="displayNone m-icon check-icon"></div>
                                </div>`;
@@ -90,14 +91,19 @@ class Base {
                 var optionName = item[namePropname];
                 var optionId = item[idPropName];
                 var optionText = `<div class="option-text">` + optionName + `</div>`;
-                var option = $(`<div class="combo-item item"></div>`);
+                var option = $(`<div class="item combo-item "></div>`);
                 $(option).data("keyId", optionId);
                 var comboItem = $(optionIcon + optionText);
                 option.append(comboItem);
                 comboItemBox.append(option);
             })
-            targetCombo.append(comboItemBox);
+            wrapper.append(comboItemBox);
+            targetCombo.append(wrapper);
 
+            // sự kiện khi click ra ngoài combo-item-box => đóng comboItemBox
+            me.detectClickOutside(wrapper);
+            // Focus vào item đầu tiên
+            $(comboItemBox).find(`.item:first-child`).addClass("item-hover");
             // Khởi tạo sự kiện cho từng thành phần
             var comboInputField = $(targetCombo).find(`.selected-box input`);
             var comboButton = $(targetCombo).find(`.arrow-button`);
@@ -109,19 +115,16 @@ class Base {
             $(comboInputField).blur(function () {
                 $(targetCombo).removeClass("green-border");
             })
-            me.detectKeyCode_UpDown(comboInputField);
-            me.detectKeyCode_Enter(comboInputField);
-            // Sự kiện khi click outside
-            $(document).mouseup(function (e) {
-                if ((!comboInputField.is(e.target) && comboInputField.has(e.target).length === 0)) {
-                    $(targetCombo).removeClass("green-border");
-                }
+            me.detectKeyCode(comboInputField);
+
+            // sự kiện khi click chọn combo item
+            $(comboItemBox).find(`.item`).on("click", function () {
+                me.onSelect_comboItem(this);
             });
             // Sự kiện khi click arrow icon tại combo box
             $(comboButton).on("click", function () {
                 me.onClick_btnComboBoxButton(comboButton);
             });
-
         }
         catch (e) {
             console.log(e);
@@ -180,28 +183,33 @@ class Base {
      * */
     onClick_btnComboBoxButton(comboButton) {
         var me = this;
-        var comboBoxIcon = comboButton;
-        $(comboButton).addClass(`arrow-button-clicked`);
-        var comboBox = $(comboBoxIcon).closest(`.m-combobox`);
-        $(comboBox).addClass("green-border");
-        // quay ngược arrow icon
-        $(comboButton).addClass("rotate");
-        var comboItemBox = $(comboBox).find(`.combo-item-box`);
-        if ($(comboItemBox).hasClass("displayNone")) {
-            $(comboItemBox).removeClass("displayNone");
-            // focus item đầu tiên
-            $(comboItemBox).find(`.combo-item:first`).addClass("item-hover");
-            // sự kiện khi click ra ngoài => đóng comboItemBox
-            me.detectClickOutside(comboItemBox);
-            var inputField = $(comboBox).find(`input`).focus();
+        if (!$(comboButton).hasClass("arrow-button-clicked")) {
+            // quay ngược arrow icon
+            $(comboButton).addClass("rotate");
+            $(comboButton).addClass(`arrow-button-clicked`);
+            // combobox
+            var comboBox = $(comboButton).closest(`.m-box`);
+            $(comboBox).addClass("green-border");
 
-            // sự kiện khi click chọn combo item
-            $(`.m-combobox .combo-item-box .combo-item`).on("click", function () {
-                me.onSelect_comboItem(this);
-            });
-                
+            var comboItemBox = $(comboBox).find(`.wrapper`);
+            if ($(comboItemBox).hasClass("displayNone")) {
+                $(comboItemBox).removeClass("displayNone");
+                $(comboBox).find(`input`).focus();
+            }
+            return;
         }
-
+        //else {
+        //    alert("sdsd");
+        //    // quay ngược arrow icon
+        //    $(comboButton).removeClass("rotate");
+        //    $(comboButton).removeClass("arrow-button-clicked");
+        //    // combobox
+        //    var comboBox = $(comboButton).closest(`.m-box`);
+        //    $(comboBox).removeClass("green-border");
+        //    // box chứa các option
+        //    var comboItemBox = $(comboBox).find(`.wrapper`);
+        //    $(comboItemBox).addClass("displayNone");
+        //}
     }
 
     /**
@@ -212,28 +220,45 @@ class Base {
     onSelect_comboItem(selectedItem) {
         var me = this;
         var item = selectedItem;
-        var comboBox = $(item).closest(`.m-combobox`);
+        // combobox
+        var comboBox = $(item).closest(`.m-box`);
         $(comboBox).removeClass("green-border");
+        // Arrow-button
         $(comboBox).find(`.arrow-button`).removeClass("rotate");
         $(comboBox).find(`.arrow-button`).removeClass("arrow-button-clicked");
-        var comboItemBox = $(item).closest(".combo-item-box");
-        var items = $(comboItemBox).find(`.combo-item`);
+        // inner-wrapper, các item còn lại
+        var comboItemBox = $(item).closest(".inner-wrapper");
+        var items = $(comboItemBox).find(`.item`);
         $.each(items, function (index, item) {
             $(item).removeClass("selected");
             $(item).find(`.option-icon .check-icon`).addClass("displayNone");
         })
+        // item được chọn
         $(item).addClass("selected");
         $(item).find(`.option-icon .check-icon`).removeClass("displayNone");
-        // ẩn option box đi
-        $(comboItemBox).addClass("displayNone");
+        // ẩn option box 
+        $(comboItemBox).parent().addClass("displayNone");
         // đổ dữ liệu lên input field
         var optionText = $(item).find(`.option-text`);
         var optionText = $(optionText).text();
         var inputField = $(comboBox).find(`input`);
         $(inputField).val(optionText);
-        // set lại value cho combobox
+        // hiện delete-icon
+
+        // Lưu id của item vào combobox
         var id = $(item).data("keyId");
         $(comboBox).data("keyId", id);
+
+        me.doSomethingWhenItemSelected(item);
+    }
+
+    /**
+     *  Thực hiện hành động sau khi chọn option tại comboBox/ Dropdown
+     *  CreatedBy dtnga (12/12/2020)
+     * @param {Element} option
+     */
+    doSomethingWhenItemSelected(option) {
+
     }
 
     /**
@@ -244,32 +269,61 @@ class Base {
     detectClickOutside(container) {
         var parent = $(container).parent();
         $(document).mouseup(function (e) {
-            // If the target of the click isn't the container
-            if (!container.is(e.target) && container.has(e.target).length === 0) {
-                $(container).addClass("displayNone");
-                $(container).children().removeClass("item-hover");
-                $(parent).find(`.arrow-button`).removeClass("rotate");
-                $(parent).find(`.arrow-button`).removeClass("arrow-button-clicked");
-                $(parent).removeClass("green-border");
+            // Nếu container đang mở
+            if (!$(container).hasClass("displayNone")) {
+                // Nếu target không phải container
+                if (!container.is(e.target) && container.has(e.target).length === 0) {
+                    $(container).addClass("displayNone");
+                    $(container).children().removeClass("item-hover");
+                    $(container).find(`.item:first-child`).addClass("item-hover");
+                    $(parent).find(`.arrow-button`).removeClass("rotate");
+                    $(parent).find(`.arrow-button`).removeClass("arrow-button-clicked");
+                    $(parent).removeClass("green-border");
+                }
             }
+
         });
     }
 
     /**
-     * Sự kiện khi ấn lên/xuống từ bàn phím
+     * Sự kiện khi ấn phím tại trường nhập liệu của combobox/Dropdown
      * CreatedBy dtnga (10/12/2020)
-     * @param {element} element trường nhập liệu tại combobox
+     * @param {element} element trường nhập liệu tại combobox/Dropdown
      */
-    detectKeyCode_UpDown(element) {
+    detectKeyCode(element) {
+        var me = this;
+        var parent = $(element).closest(".m-box");
+        var wrapper = $(parent).find(`.wrapper`);
+        var innerWrapper = $(parent).find(".inner-wrapper");
+
         $(element).on("keyup", function (e) {
-            $(`.wraper`).show();
-            if (e.which == 40) {
-                $('.wraper .item:not(:last-child).item-hover').removeClass('item-hover').next().addClass('item-hover');
-            } else if (e.which == 38) {
-                $('.wraper .item:not(:first-child).item-hover').removeClass('item-hover').prev().addClass('item-hover');
+            if (e.which == 13) {
+                if ($(wrapper).hasClass(".displayNone")) {
+                }
+                else {
+                    var hoverdItem = $(innerWrapper).find('.item-hover');
+                    me.onSelect_comboItem(hoverdItem);
+                }
+                return;
             }
-            //$(".wrapper .inner_div").scrollTop(0);//set to top
-            //$(".wrapper .inner_div").scrollTop($('.element-hover:first').offset().top - $(".wrapper .inner_div").height());
+            $(wrapper).removeClass("displayNone");
+            $(parent).find(".arrow-button").addClass("rotate");
+            $(parent).find(".arrow-button").addClass(`arrow-button-clicked`);
+            if (e.which == 40) {
+                $(innerWrapper).find('.item:not(:last-child).item-hover').removeClass('item-hover').next().addClass('item-hover');
+                
+            } else if (e.which == 38) {
+                $(innerWrapper).find('.item:not(:first-child).item-hover').removeClass('item-hover').prev().addClass('item-hover');
+            }
+            $(wrapper).scrollTop(0);//set to top
+            
+            var itemOffsetTop = $('.item-hover:first').offset().top;
+            $(wrapper).scrollTop(itemOffsetTop);
+            var wrapperHeight = $(wrapper).offset().top;
+            if (itemOffsetTop >= wrapperHeight )
+                $(wrapper).scrollTop(itemOffsetTop);
+            else
+                $(wrapper).scrollTop(itemOffsetTop);
         });
     }
 
@@ -280,14 +334,15 @@ class Base {
      */
     detectKeyCode_Enter(element) {
         var me = this;
+        var parent = $(element).closest(".m-box");
+        var wrapper = $(parent).find(".wrapper");
         $(element).on("keyup", function (e) {
             if (e.which == 13) {
-                var wrapper = $('.wraper');
                 if ($(wrapper).hasClass(".displayNone")) {
 
                 }
                 else {
-                    var hoverdItem = $('.wraper .item-hover');
+                    var hoverdItem = $(wrapper).find('.item-hover');
                     me.onSelect_comboItem(hoverdItem);
                 }
             }
@@ -774,6 +829,9 @@ class Base {
         // Cập nhật tổng giá trị giỏ hàng
         $(`.total-money`).text(0);
         $(`.total-money`).attr("value", 0);
+        //Ẩn các box thông báo/ thông tin thêm
+        $(`.empty-result`).addClass("displayNone");
+        $(`.extra-info`).addClass("displayNone");
     }
 
     /**TODO Hàm thực hiện thêm đơn hàng

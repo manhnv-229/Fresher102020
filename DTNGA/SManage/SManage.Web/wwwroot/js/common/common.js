@@ -11,16 +11,18 @@ function formatDate(date, format) {
         return ""
     else {
 
-        var date = new Date(date);
+        var date = new Date(Date.parse(date));
         var day = ("0" + date.getDate()).slice(-2);
         var month = ("0" + (date.getMonth() + 1)).slice(-2);
         var year = date.getFullYear();
         var hour = ("0" + date.getHours()).slice(-2);
         var minute = ("0" + date.getMinutes()).slice(-2);
         if (format.trim() == "dd/mm/yyyy")
-            return hour + ":" + minute +" "+ day + "/" + month + "/" + year;
+            return day + "/" + month + "/" + year;
         else if (format.trim() == "yyyy-mm-dd")
             return hour + ":" + minute + " " + year + "-" + month + "-" + day;
+        else if (format.trim() == "hh:mm dd/mm/yyyy")
+            return hour + ":" + minute + " " + day + "/" + month + "/" + year;
     }
 }
 

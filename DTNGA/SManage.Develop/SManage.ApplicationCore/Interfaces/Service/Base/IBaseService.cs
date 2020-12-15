@@ -75,7 +75,7 @@ namespace SManage.ApplicationCore.Interfaces.Service.Base
         /// <param name="commandType">Loại truy vấn</param>
         /// <returns>Đối tượng có Id theo mô tả</returns>
         /// CreatedBy dtnga (11/11/2020)
-        Task<T> GetByIdAsync<T>(T entity);
+        Task<T> GetByIdAsync<T>(Guid entityId);
         #endregion
 
         #region Insert

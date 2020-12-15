@@ -17,8 +17,14 @@ using MySql.Data.MySqlClient;
 using Newtonsoft.Json.Serialization;
 using SManage.ApplicationCore;
 using SManage.ApplicationCore.Enums;
+using SManage.ApplicationCore.Interfaces.DatabaseContext;
+using SManage.ApplicationCore.Interfaces.Repositories;
 using SManage.ApplicationCore.Interfaces.Service;
+using SManage.ApplicationCore.Interfaces.Service.Base;
+using SManage.ApplicationCore.Services;
 using SManage.Infrastructure;
+using SManage.Infrastructure.DatabaseContext.DbContext;
+using SManage.Infrastructure.Repositories.Base;
 
 namespace SManage.API
 {
@@ -51,6 +57,14 @@ namespace SManage.API
             // DI
             services.AddScoped<IEnumUtility, EnumUtility>();
             services.AddScoped<IBaseMemoryCache, BaseMemoryCache>();
+            // DBContext
+            services.AddScoped<IDatabaseContext, MariaDbContext>();
+            // Base
+            services.AddScoped<IBaseRepository, BaseRepository>();
+            services.AddScoped<IBaseService, BaseService>();
+
+            services.AddScoped<ITransportorService, TransportorService>();
+            services.AddScoped<IShopService, ShopService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
