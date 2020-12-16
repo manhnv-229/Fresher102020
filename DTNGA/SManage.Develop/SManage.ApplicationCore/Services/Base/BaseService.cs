@@ -57,8 +57,7 @@ namespace SManage.ApplicationCore.Services
         {
             var entityName = typeof(T).Name;
             var sp = $"Proc_Get{entityName}By{propName}";
-            var parms = new DynamicParameters();
-            parms.Add($"{propName}", propValue);
+            var parms = MappingDataTypeForOne(propName, propValue);
             return await _baseRepository.GetAsync<T>(sp, parms);
         }
 
@@ -66,8 +65,7 @@ namespace SManage.ApplicationCore.Services
         {
             var entityName = typeof(T).Name;
             var sp = $"Proc_Get{entityName}By{entityName}Id";
-            var parms = new DynamicParameters();
-            parms.Add($"{entityName}" + "Id", id, DbType.String);
+            var parms = MappingDataTypeForOne(entityName + "Id", id);
             return await _baseRepository.GetByIdAsync<T>(sp, parms);
         }
         #endregion
@@ -210,6 +208,23 @@ namespace SManage.ApplicationCore.Services
                     parameters.Add($"@{propertyName}", propertyValue);
             }
             return parameters;
+        }
+
+        /// <summary>
+        /// Thực hiện mapping kiểu dữ liệu cho 1 property
+        /// </summary>
+        /// <param name="propName"></param>
+        /// <param name="propValue"></param>
+        /// <returns></returns>
+        /// CreatedBy dtnga (04/12/2020)
+        protected DynamicParameters MappingDataTypeForOne(string propName, object propValue)
+        {
+            var parms = new DynamicParameters();
+            if(typeof(object)== typeof(Guid))
+                parms.Add($"{propName}", propValue, DbType.String);
+            else
+                parms.Add($"{propName}", propValue);
+            return parms;
         }
 
         public async Task<bool> CustomeValidateAsync<T>(T entity)
