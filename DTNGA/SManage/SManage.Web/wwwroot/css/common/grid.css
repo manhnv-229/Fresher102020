@@ -26,8 +26,9 @@
 
 /* table */
     .grid table {
-        border-collapse: collapse;
+        border-collapse: separate;
         background-color: #ffffff;
+        border-spacing:0;
     }
 
     /* thead */
@@ -73,22 +74,34 @@
     /* tbody */
     .grid table tbody tr {
         height: 48px;
-        border-top: 1px solid #e5e5e5;
+        padding:0;
     }
 
         .grid table tbody tr:hover {
             background-color: #e9ebee !important;
         }
-/* row khi được chọn */
-.selected {
-    background-color: #e3f3ee;
-}
+        .grid table tbody tr td{
+            height: 100%;
+        }
+        /* row khi được chọn */
+        .selected {
+            background-color: #e3f3ee;
+        }
 
 .grid table tbody td div {
+    height: 100%;
     background-color: none;
     padding: 10px;
     max-width: 200px;
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
+    border-top: 1px solid #e5e5e5;
+    margin-right: -10px;
+}
+.grid table tr td:first-child {
+    padding-left: 16px;
+}
+.grid table tr td:last-child {
+    padding-right: 16px;
 }
