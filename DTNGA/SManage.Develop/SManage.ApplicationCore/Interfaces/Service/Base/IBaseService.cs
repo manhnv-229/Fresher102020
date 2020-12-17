@@ -9,18 +9,15 @@ namespace SManage.ApplicationCore.Interfaces.Service.Base
 {
     public interface IBaseService
     {
-        #region Delete
+        #region Delete        
         /// <summary>
         /// Xóa 1 bản ghi bất đồng bộ
         /// CreatedBy dtnga (11/11/2020)
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="sp">Chuỗi truy vấn/ Tên procedure</param>
-        /// <param name="parms">Bộ tham số</param>
-        /// <param name="commandType">Loại truy vấn</param>
+        /// <param name="entityId">Id bản ghi cần xóa</param>
         /// <returns>Bản ghi xóa thành công</returns>
-        
-        Task<T> DeleteAsync<T>(T entity);
+        Task<ActionServiceResult> DeleteAsync<T>(Guid entityId);
         /// <summary>
         /// Xóa nhiều bản ghi bất đồng bộ
         /// </summary>
@@ -112,7 +109,7 @@ namespace SManage.ApplicationCore.Interfaces.Service.Base
         /// <param name="commandType">Loại truy vấn</param>
         /// <returns>Đối tượng được cập nhật thành công</returns>
         /// CreatedBy dtnga (11/11/2020)
-        Task<T> UpdateAsync<T>(T entity);
+        Task<ActionServiceResult> UpdateAsync<T>(T entity);
         /// <summary>
         /// Cập nhật dữ liệu bất đồng bộ
         /// </summary>

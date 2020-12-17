@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using SManage.ApplicationCore.Entities.Base;
+using SManage.ApplicationCore.Enums;
 using SManage.ApplicationCore.Interfaces.Repositories;
 using SManage.ApplicationCore.Interfaces.Service.Base;
 using System;
@@ -22,12 +23,25 @@ namespace SManage.ApplicationCore.Services
         }
 
         #region Delete
-        public async Task<T> DeleteAsync<T>(T entity)
+        public async Task<ActionServiceResult> DeleteAsync<T>(Guid entityId)
         {
-            var entityName = entity.GetType().Name;
-            var sp = $"Proc_Delete{entityName}By{entityName}Id";
-            var parms = MappingDataType<T>(entity);
-            return await _baseRepository.DeleteAsync<T>(sp, parms);
+            var entityName = typeof(T).Name;
+            // Kiểm tra tồn tại trên hệ thống hay không
+            var existed = await CheckExist<T>(entityId);
+            if (existed)
+            {
+                var sp = $"Proc_Delete{entityName}By{entityName}Id";
+                var parms = MappingDataTypeForOne(entityName + "Id", entityId);
+                var result = await _baseRepository.DeleteAsync<T>(sp, parms);
+                if (result == null)
+                {
+                    _actionServiceResult.MISACode = MISACode.ErrorDeleteEntity;
+                    _actionServiceResult.Message = ApplicationCore.Properties.Resources.ErrorDeleteEntity;
+                    return _actionServiceResult;
+                }
+                _actionServiceResult.Data = result;
+            }
+            return _actionServiceResult;
         }
 
         public async Task<int> DeleteRangeAsync<T>(List<object> entities)
@@ -84,11 +98,13 @@ namespace SManage.ApplicationCore.Services
                 var sp = $"Proc_Insert{entityName}";
                 var parms = MappingDataType<T>(entity);
                 var result= await _baseRepository.InsertAsync<T>(sp, parms);
-                if( result != null)
+                if (result == null)
                 {
-                    _actionServiceResult.Data = result;
-                    _actionServiceResult.Message = Properties.Resources.Success;
+                    _actionServiceResult.MISACode = MISACode.ErrorAddEntity;
+                    _actionServiceResult.Message = ApplicationCore.Properties.Resources.ErrorAddEntity;
+                    return _actionServiceResult;
                 }
+                _actionServiceResult.Data = result;
                 return _actionServiceResult;
             }
 
@@ -104,13 +120,21 @@ namespace SManage.ApplicationCore.Services
         #endregion
 
         #region Update
-        public async Task<T> UpdateAsync<T>(T entity)
+        public async Task<ActionServiceResult> UpdateAsync<T>(T entity)
         {
             var entityName = entity.GetType().Name;
             var sp = $"Proc_Update{entityName}";
             var parms = MappingDataType<T>(entity);
-            return await _baseRepository.UpdateAsync<T>(sp, parms);
+            var updatedEntity = await _baseRepository.UpdateAsync<T>(sp, parms);
+            if (updatedEntity == null)
+            {
+                _actionServiceResult.MISACode = MISACode.ErrorDeleteEntity;
+                _actionServiceResult.Message = ApplicationCore.Properties.Resources.ErrorDeleteEntity;
+            }
+            _actionServiceResult.Data = updatedEntity;
+            return _actionServiceResult;
         }
+
 
         //TODO Update list object
         public async Task<int> UpdateRangeAsync<T>(List<object> entities)
@@ -121,6 +145,7 @@ namespace SManage.ApplicationCore.Services
         }
         #endregion
 
+        #region Validate
         /// <summary>
         /// Thực hiện validate dữ liệu trước khi thêm, sửa trong DB
         /// </summary>
@@ -133,9 +158,9 @@ namespace SManage.ApplicationCore.Services
             var isValid = true;
             // Đọc các propperty
             var properties = entity.GetType().GetProperties();
+            var errorMsg = new List<string>();
             foreach (var prop in properties)
             {
-                var errorMsg = new List<string>();
                 // Lấy tên hiển thị của property
                 var displayNameAttribute = prop.GetCustomAttributes(typeof(DisplayName), true)[0];
                 var displayName = (displayNameAttribute as DisplayName).name;
@@ -157,7 +182,7 @@ namespace SManage.ApplicationCore.Services
                 {
                     // Check trùng lặp
                     // Lấy entity 
-                    var entityDuplicate = await GetByPropertyAsync<T>(propName, entity);
+                    var entityDuplicate = await GetByPropertyAsync<T>(propName, propValue);
                     if (entityDuplicate != null)
                     {
                         isValid = false;
@@ -181,11 +206,45 @@ namespace SManage.ApplicationCore.Services
                         _actionServiceResult.Message = Properties.Resources.ValidateEntity;
                     }
                 }
-                _actionServiceResult.Data = errorMsg;
             }
+            _actionServiceResult.Data = errorMsg;
             return isValid;
         }
 
+        /// <summary>
+        /// Custome Validate
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        ///  CreatedBy dtnga (04/12/2020)
+        public async Task<bool> CustomeValidateAsync<T>(T entity)
+        {
+            return await ValidateAsync<T>(entity);
+        }
+
+        /// <summary>
+        /// Kiểm tra entity có tồn tại trên hệ thống hay chưa
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entityId"></param>
+        /// <returns>true nếu đã tồn tại, false nếu không tồn tại</returns>
+        /// CreatedBy dtnga (17/12/2020)
+        public async Task<bool> CheckExist<T>(Guid entityId)
+        {
+            var result = true;
+            var entity = await GetByIdAsync<T>(entityId);
+            if (entity == null)
+            {
+                _actionServiceResult.MISACode = MISACode.ValidateEntity;
+                _actionServiceResult.Message = ApplicationCore.Properties.Resources.ValueEntity;
+                result = false;
+            }
+            return result;
+        }
+        #endregion
+
+        #region Mapping dataType
         /// <summary>
         /// Thực hiện mapping kiểu dữ liệu
         /// </summary>
@@ -226,10 +285,6 @@ namespace SManage.ApplicationCore.Services
                 parms.Add($"{propName}", propValue);
             return parms;
         }
-
-        public async Task<bool> CustomeValidateAsync<T>(T entity)
-        {
-            return await ValidateAsync<T>(entity);
-        }
+        #endregion
     }
 }

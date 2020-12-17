@@ -24,8 +24,8 @@ namespace SManage.Infrastructure
             _importMemoryCache = importMemoryCache;
             // Lấy dữ liệu:
             AdministrativeAreas = _dbConnection.Query<AdministrativeArea>("Proc_GetAdministrativeArea",commandType: CommandType.StoredProcedure).ToList();
-            ShopTransportors = _dbConnection.Query<ShopTransportor>("Proc_GetShopTransportor", commandType: CommandType.StoredProcedure).ToList();
-            Transportors = _dbConnection.Query<Transportor>("Proc_GetTransportor", commandType: CommandType.StoredProcedure).ToList();
+            ShopTransportors = _dbConnection.Query<ShopTransportor>("Proc_GetAllShopTransportor", commandType: CommandType.StoredProcedure).ToList();
+            Transportors = _dbConnection.Query<Transportor>("Proc_GetAllTransportor", commandType: CommandType.StoredProcedure).ToList();
 
             // Cache lại:
             CacheGetOrCreate();

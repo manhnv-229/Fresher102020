@@ -232,16 +232,18 @@ namespace SManage.Infrastructure.DatabaseContext.DbContext
             {
                 if (_dbConnection.State == ConnectionState.Closed)
                     _dbConnection.Open();
-                var trans = _dbConnection.BeginTransaction();
-                try
+                using (var tran = _dbConnection.BeginTransaction())
                 {
-                    result = (await _dbConnection.QueryAsync<T>(sp, parms, commandType: commandType)).FirstOrDefault();
-                    trans.Commit();
-                }
-                catch (Exception e)
-                {
-                    trans.Rollback();
-                    throw (e);
+                    try
+                    {
+                        result = (await _dbConnection.QueryAsync<T>(sp, parms, commandType: commandType, transaction: tran)).FirstOrDefault();
+                        tran.Commit();
+                    }
+                    catch (Exception e)
+                    {
+                        tran.Rollback();
+                        throw (e);
+                    }
                 }
             }
             catch (Exception e)
@@ -264,16 +266,18 @@ namespace SManage.Infrastructure.DatabaseContext.DbContext
             {
                 if (_dbConnection.State == ConnectionState.Closed)
                     _dbConnection.Open();
-                var trans = _dbConnection.BeginTransaction();
-                try
+                using (var tran = _dbConnection.BeginTransaction())
                 {
-                    result = await _dbConnection.ExecuteAsync(sp, entities, transaction: trans);
-                    trans.Commit();
-                }
-                catch (Exception e)
-                {
-                    trans.Rollback();
-                    throw (e);
+                    try
+                    {
+                        result = await _dbConnection.ExecuteAsync(sp, entities, transaction: tran);
+                        tran.Commit();
+                    }
+                    catch (Exception e)
+                    {
+                        tran.Rollback();
+                        throw (e);
+                    }
                 }
             }
             catch (Exception e)
@@ -288,11 +292,9 @@ namespace SManage.Infrastructure.DatabaseContext.DbContext
             return result;
         }
         #endregion
+
         public void Dispose()
         {
-
         }
-
-
     }
 }
