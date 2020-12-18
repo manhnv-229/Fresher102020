@@ -432,7 +432,7 @@
                     employee[attr] = value;
                 }
             })
- 
+
             console.log(employee);
 
             if (me.FormMode == 'Edit') {
