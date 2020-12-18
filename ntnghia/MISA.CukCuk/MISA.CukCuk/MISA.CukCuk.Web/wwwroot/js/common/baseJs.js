@@ -439,9 +439,11 @@
     * */
     btnSaveOnClick() {
         var me = this;
+        document.getElementById('iconSave').style.display = 'none';
+        document.getElementById('pSave').style.display = 'none';
+        document.getElementById('loadingIconSave').style.display = 'block';
         try {
             //thu thập dữ liệu được nhập -> build thành object
-
             var employee = {}
 
             //lấy tất cả control nhập liệu:
@@ -503,6 +505,9 @@
                     var DONE = 4; // readyState 4 means the request is done.
                     var OK = 200; // status 200 is a successful return.
                     if (xhr.readyState === DONE) {
+                        document.getElementById('iconSave').style.display = 'block';
+                        document.getElementById('pSave').style.display = 'block';
+                        document.getElementById('loadingIconSave').style.display = 'none';
                         if (xhr.status === OK) {
                             document.getElementsByClassName('dialog-modal')[0].style.display = "none";
                             document.getElementById('snackbar').innerHTML = "Sửa thành công!";
@@ -531,6 +536,9 @@
                     var DONE = 4; // readyState 4 means the request is done.
                     var OK = 200; // status 200 is a successful return.
                     if (xhr.readyState === DONE) {
+                        document.getElementById('iconSave').style.display = 'block';
+                        document.getElementById('pSave').style.display = 'block';
+                        document.getElementById('loadingIconSave').style.display = 'none';
                         if (xhr.status === OK) {
                             document.getElementsByClassName('dialog-modal')[0].style.display = "none";
                             document.getElementById('snackbar').innerHTML = "Thêm thành công!";
@@ -596,6 +604,8 @@
     * */
     btnDeleteOnClick() {
         var me = this;
+        document.getElementById('pDelete').textContent = '';
+        document.getElementById('loadingIconDelete').style.display = 'block';
         try {
             //Gọi service lấy thông tin chi tiết qua id
             var xhr = new XMLHttpRequest();
@@ -609,6 +619,8 @@
                 var DONE = 4; // readyState 4 means the request is done.
                 var OK = 200; // status 200 is a successful return.
                 if (xhr.readyState === DONE) {
+                    document.getElementById('pDelete').textContent = 'Đồng ý';
+                    document.getElementById('loadingIconDelete').style.display = 'none';
                     if (xhr.status === OK) {
                         document.getElementsByClassName('modal-delete')[0].style.display = "none";
                         document.getElementById('snackbar').innerHTML = 'Xóa thành công!';

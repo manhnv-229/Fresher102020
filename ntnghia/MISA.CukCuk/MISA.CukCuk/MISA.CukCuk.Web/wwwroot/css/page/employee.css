@@ -148,7 +148,7 @@ p, h2 {
 
 .table-container {
     position: relative;
-    height: calc(100% - 170px);
+    height: calc(100% - 180px);
     overflow: auto;
     margin-top: 20px;
 }
@@ -236,8 +236,7 @@ p, h2 {
             justify-content: space-between;
             width: calc(100% - 40px);
             align-items: center;
-            margin-top: 10px;
-            padding: 0 20px;
+            padding: 10px 20px;
         }
 
         .content .content-footer .content-footer-page {

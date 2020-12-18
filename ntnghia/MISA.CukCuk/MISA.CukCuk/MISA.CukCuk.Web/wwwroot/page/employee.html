@@ -55,7 +55,7 @@
     </div>
 
     <div class="header">
-        <p class="left-header">Công ty cổ phần MISA</p>
+        <p class="left-header">Đại học Bách Khoa Hà Nội</p>
         <i class="fas fa-angle-down"></i>
         <div class="right-header">
             <div class="avatar"></div>
@@ -120,7 +120,7 @@
             </table>
             <div class="loader" id="loadingIcon"></div>
         </div>
-        <!--<div class="content-footer">
+        <div class="content-footer">
             <p>Hiển thị 1-10/1000 nhân viên</p>
             <div class="content-footer-page">
                 <img class="arrow-icon" src="../content/icon/double-left-arrows-symbol.svg" />
@@ -136,7 +136,7 @@
             </div>
             <p class="page-btn">10 nhân viên/trang</p>
 
-        </div>-->
+        </div>
     </div>
 
     <div class="dialog-modal">
@@ -270,9 +270,11 @@
             <div class="dialog-footer">
                 <button class="footer-button cancel-button" id="cancel">Hủy</button>
                 <button class="footer-button save-button">
-                    <i class="far fa-save"></i>
-                    <p style="margin-left: 8px;">Lưu</p>
+                    <i id="iconSave" class="far fa-save"></i>
+                    <p id="pSave" style="margin-left: 8px;">Lưu</p>
+                    <div class="loader-button" id="loadingIconSave"></div>
                 </button>
+                
             </div>
         </div>
     </div>
@@ -291,10 +293,13 @@
                 <p id="alertInfo" style="font-size:15px">Bạn có chắc chắn muốn xóa nhân viên này?</p>
             </div>
 
-
             <div class="dialog-footer">
                 <button class="footer-button cancel-button" id="cancel">Hủy</button>
-                <button class="footer-button delete-button" id="delete">Đồng ý</button>
+                <button class="footer-button delete-button" id="delete">
+                    <p id="pDelete">Đồng ý</p>
+                    <div class="loader-delete" id="loadingIconDelete"></div>
+                </button>
+                <
             </div>
         </div>
     </div>

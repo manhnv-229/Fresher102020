@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     navbarItemSelect();
-    //footerItemSelect();
+    footerItemSelect();
 });
 
 /**
@@ -145,18 +145,18 @@ function navbarItemSelect() {
  * Bắt sự kiện chọn trang ở footer, trang được chọn chuyển màu xanh
  * Author:Nguyễn Trung Nghĩa(10/11/2020)
  */
-//function footerItemSelect() {
-//    var pageBar = document.getElementsByClassName("page-number-container")[0];
-//    let pageBarChoose = 0;
-//    pageBar.children[pageBarChoose].style.backgroundColor = "#019160";
-//    pageBar.children[pageBarChoose].style.color = "#fff";
-//    for (let i = 0; i < pageBar.childElementCount; i++) {
-//        pageBar.children[i].addEventListener("click", () => {
-//            pageBar.children[pageBarChoose].style.backgroundColor = "transparent";
-//            pageBar.children[pageBarChoose].style.color = "#000";
-//            pageBarChoose = i;
-//            pageBar.children[i].style.backgroundColor = "#019160";
-//            pageBar.children[i].style.color = "#fff";
-//        });
-//    }
-//}
+function footerItemSelect() {
+    var pageBar = document.getElementsByClassName("page-number-container")[0];
+    let pageBarChoose = 0;
+    pageBar.children[pageBarChoose].style.backgroundColor = "#019160";
+    pageBar.children[pageBarChoose].style.color = "#fff";
+    for (let i = 0; i < pageBar.childElementCount; i++) {
+        pageBar.children[i].addEventListener("click", () => {
+            pageBar.children[pageBarChoose].style.backgroundColor = "transparent";
+            pageBar.children[pageBarChoose].style.color = "#000";
+            pageBarChoose = i;
+            pageBar.children[i].style.backgroundColor = "#019160";
+            pageBar.children[i].style.color = "#fff";
+        });
+    }
+}
