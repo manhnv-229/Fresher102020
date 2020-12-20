@@ -13,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 using Newtonsoft.Json.Serialization;
 using SManage.ApplicationCore;
 using SManage.ApplicationCore.Enums;
@@ -62,6 +62,8 @@ namespace SManage.API
             // Base
             services.AddScoped<IBaseRepository, BaseRepository>();
             services.AddScoped<IBaseService, BaseService>();
+
+            services.AddScoped<IOrderService, OrderService>();
 
         }
 

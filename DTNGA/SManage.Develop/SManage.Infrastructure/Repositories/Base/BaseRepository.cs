@@ -40,26 +40,25 @@ namespace SManage.Infrastructure.Repositories.Base
         #endregion
 
         #region Execute
-        public Task<int> ExecuteAsync(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
+        public async Task<int> ExecuteAsync(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
-            return _databaseContext.ExecuteAsync(sp, parms);
+            return await _databaseContext.ExecuteAsync(sp, parms);
         }
         #endregion
 
         #region Get
-        public Task<List<T>> GetAllAsync<T>(string queryCommand, CommandType commandType = CommandType.StoredProcedure)
+        public List<T> Get<T>(string queryCommand, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure)
         {
-            return _databaseContext.GetAllAsync<T>(queryCommand);
+            return _databaseContext.Get<T>(queryCommand);
+        }
+        public async Task<List<T>> GetAsync<T>(string queryCommand, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure)
+        {
+            return await _databaseContext.GetAsync<T>(queryCommand, parms);
         }
 
-        public Task<T> GetAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
+        public async Task<T> GetByIdAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
-            return _databaseContext.GetAsync<T>(sp, parms);
-        }
-
-        public Task<T> GetByIdAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
-        {
-            return _databaseContext.GetByIdAsync<T>(sp, parms);
+            return await _databaseContext.GetByIdAsync<T>(sp, parms);
         }
         #endregion
 
@@ -76,14 +75,14 @@ namespace SManage.Infrastructure.Repositories.Base
         #endregion
 
         #region Update
-        public Task<T> UpdateAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
+        public async Task<T> UpdateAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
-            return _databaseContext.UpdateAsync<T>(sp, parms);
+            return await _databaseContext.UpdateAsync<T>(sp, parms);
         }
 
-        public Task<int> UpdateRangeAsync<T>(string sp, List<object> entities, CommandType commandType = CommandType.Text)
+        public async Task<int> UpdateRangeAsync<T>(string sp, List<object> entities, CommandType commandType = CommandType.Text)
         {
-            return _databaseContext.UpdateRangeAsync<T>(sp, entities);
+            return await _databaseContext.UpdateRangeAsync<T>(sp, entities);
         }
         #endregion
         public void Dispose()

@@ -23,17 +23,27 @@ namespace SManage.ApplicationCore.Interfaces.DatabaseContext
         /// <param name="commandType">Loại truy vẫn</param>
         /// <returns>Số lượng bản ghi bị ảnh hưởng</returns>
         Task<int> ExecuteAsync(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
-        
+
         #region GET
         /// <summary>
-        /// Lấy thông tin 1 đối tượng 
+        /// Lấy nhiều bản ghi
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="queryCommand"></param>
+        /// <param name="parms"> Bộ tham số dùng để truy vấn </param>
+        /// <param name="commandType"></param>
+        /// <returns></returns>
+        /// CreatedBy dtnga (16/12/2020)
+        List<T> Get<T>(string queryCommand, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure);
+        /// <summary>
+        /// Lấy thông tin nhiều đối tượng
         /// </summary>
         /// <typeparam name="T">Kiếu đối tượng chứa thông tin được đọc</typeparam>
         /// <param name="sp">Chuỗi truy vấn/ Tên Procedure</param>
         /// <param name="parms"> Bộ tham số dùng để truy vấn </param>
         /// <param name="commandType">Loại truy vẫn</param>
         /// <returns>1 đối tượng kiểu T</returns>
-        Task<T> GetAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
+        Task<List<T>> GetAsync<T>(string sp, DynamicParameters parms= null, CommandType commandType = CommandType.StoredProcedure);
         /// <summary>
         /// Lấy thông tin đối tượng dựa theo Id
         /// </summary>
@@ -43,15 +53,6 @@ namespace SManage.ApplicationCore.Interfaces.DatabaseContext
         /// <param name="commandType">Loại truy vẫn</param>
         /// <returns>1 đối tượng kiểu T</returns>
         Task<T> GetByIdAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
-        /// <summary>
-        /// Lấy tất cả đối tượng chứa thông tin được mô tả trong bộ tham số truyền vào
-        /// </summary>
-        /// <typeparam name="T">Kiếu đối tượng chứa thông tin được đọc</typeparam>
-        /// <param name="sp">Chuỗi truy vấn/ Tên Procedure</param>
-        /// <param name="parms"> Bộ tham số dùng để truy vấn </param>
-        /// <param name="commandType">Loại truy vẫn</param>
-        /// <returns>Danh sách đối tượng kiểu T</returns>
-        Task<List<T>> GetAllAsync<T>(string queryCommand, CommandType commandType = CommandType.StoredProcedure);
         #endregion
 
         #region INSERT

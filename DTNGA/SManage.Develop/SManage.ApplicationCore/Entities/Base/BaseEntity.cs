@@ -8,10 +8,26 @@ namespace SManage.ApplicationCore.Entities.Base
     public class BaseEntity
     {
         public EntityState EntityState = EntityState.GET;
+        // trạng thái entity (hợp lệ hay không)
+        public ValidState ValidState = ValidState.Valid;
+        // danh sách thông báo lỗi
+        public List<string> InvalidError = new List<string>();
+        /// <summary>
+        /// Ngày tạo
+        /// </summary>
         public DateTime? CreatedDate { get; set; }
-        public string CreatedBy { get; set; }
+        /// <summary>
+        /// Người tạo
+        /// </summary>
+        public Guid? CreatedBy { get; set; }
+        /// <summary>
+        /// Ngày chỉnh sửa
+        /// </summary>
         public DateTime? ModifiedDate { get; set; }
-        public string ModifiedBy { get; set; }
+        /// <summary>
+        /// Người chỉnh sửa
+        /// </summary>
+        public Guid? ModifiedBy { get; set; }
 
     }
 
@@ -54,6 +70,15 @@ namespace SManage.ApplicationCore.Entities.Base
             this.maxLength = maxLength;
             this.errorMsg = errorMsg;
         }
+    }
+
+    /// <summary>
+    /// Bắt buộc phải có trên Hệ thống
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
+    public class MustExist : Attribute
+    {
+
     }
 
 }

@@ -1,6 +1,6 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Caching.Memory;
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 using SManage.ApplicationCore;
 using SManage.ApplicationCore.Entities;
 using System;

@@ -13,17 +13,19 @@ namespace SManage.ApplicationCore.Services
 {
     public class BaseService : IBaseService
     {
-        private readonly IBaseRepository _baseRepository;
-        ActionServiceResult _actionServiceResult;
-        public BaseService(IBaseRepository baseRepository)
+        protected readonly IBaseMemoryCache _baseMemoryCache;
+        protected readonly IBaseRepository _baseRepository;
+        protected ActionServiceResult _actionServiceResult;
+        public BaseService(IBaseMemoryCache baseMemoryCache, IBaseRepository baseRepository)
         {
+            _baseMemoryCache = baseMemoryCache;
             _baseRepository = baseRepository;
             _actionServiceResult = new ActionServiceResult();
             _actionServiceResult.MISACode = Enums.MISACode.Success;
         }
 
         #region Delete
-        public async Task<ActionServiceResult> DeleteAsync<T>(Guid entityId)
+        public async Task<ActionServiceResult> DeleteAsync<T>(Guid entityId) 
         {
             var entityName = typeof(T).Name;
             // Kiểm tra tồn tại trên hệ thống hay không
@@ -60,33 +62,129 @@ namespace SManage.ApplicationCore.Services
         #endregion
 
         #region Get
-        public async Task<List<T>> GetAllAsync<T>()
+        public ActionServiceResult GetAll<T>()
         {
+            _actionServiceResult = new ActionServiceResult();
             var entityName = typeof(T).Name;
             var sp = $"Proc_GetAll{entityName}";
-            return await _baseRepository.GetAllAsync<T>(sp);
+            var result = _baseRepository.Get<T>(sp);
+            if (result == null)
+            {
+                _actionServiceResult.Success = false;
+                _actionServiceResult.MISACode = MISACode.NotFound;
+                _actionServiceResult.Message = ApplicationCore.Properties.Resources.NotFound;
+                return _actionServiceResult;
+            }
+            _actionServiceResult.Data = result;
+            return _actionServiceResult;
+        }
+        public async Task<ActionServiceResult> GetAllAsync<T>()
+        {
+            _actionServiceResult = new ActionServiceResult();
+            var entityName = typeof(T).Name;
+            var sp = $"Proc_GetAll{entityName}";
+            var result = await _baseRepository.GetAsync<T>(sp);
+            if (result == null)
+            {
+                _actionServiceResult.Success = false;
+                _actionServiceResult.MISACode = MISACode.NotFound;
+                _actionServiceResult.Message = ApplicationCore.Properties.Resources.NotFound;
+                return _actionServiceResult;
+            }
+            _actionServiceResult.Data = result;
+            return _actionServiceResult;
         }
 
-        public async Task<T> GetByPropertyAsync<T>(string propName, object propValue)
+        public async Task<ActionServiceResult> GetByPropertyAsync<T>(string propName, object propValue)
         {
+            _actionServiceResult = new ActionServiceResult();
             var entityName = typeof(T).Name;
             var sp = $"Proc_Get{entityName}By{propName}";
             var parms = MappingDataTypeForOne(propName, propValue);
-            return await _baseRepository.GetAsync<T>(sp, parms);
+            var result= await _baseRepository.GetAsync<T>(sp, parms);
+            if (result == null)
+            {
+                _actionServiceResult.Success = false;
+                _actionServiceResult.MISACode = MISACode.NotFound;
+                _actionServiceResult.Message = ApplicationCore.Properties.Resources.NotFound;
+                return _actionServiceResult;
+            }
+            _actionServiceResult.Data = result;
+            return _actionServiceResult;
         }
 
-        public async Task<T> GetByIdAsync<T>(Guid id)
+        public async Task<ActionServiceResult> GetByIdAsync<T>(Guid id)
         {
+            _actionServiceResult = new ActionServiceResult();
+            if (id == null)
+            {
+                _actionServiceResult.Success = false;
+                _actionServiceResult.MISACode = MISACode.NotFound;
+                _actionServiceResult.Message = Properties.Resources.NotFound;
+                return _actionServiceResult;
+            }
             var entityName = typeof(T).Name;
             var sp = $"Proc_Get{entityName}By{entityName}Id";
             var parms = MappingDataTypeForOne(entityName + "Id", id);
-            return await _baseRepository.GetByIdAsync<T>(sp, parms);
+            var result = await _baseRepository.GetByIdAsync<T>(sp, parms);
+            if (result == null)
+            {
+                _actionServiceResult.Success = false;
+                _actionServiceResult.MISACode = MISACode.NotFound;
+                _actionServiceResult.Message = ApplicationCore.Properties.Resources.NotFound;
+                return _actionServiceResult;
+            }
+            _actionServiceResult.Data = result;
+            return _actionServiceResult;
+        }
+        public virtual async Task<ActionServiceResult> GetByPagingAsync<T>(int limit, int offset)
+        {
+            _actionServiceResult = new ActionServiceResult();
+            var entityName = typeof(T).Name;
+            var sp = $"Proc_Get" + entityName + "ByPaging";
+            var parms = new DynamicParameters();
+            parms.Add("PageIndex", offset);
+            parms.Add("PageSize", limit);
+            var result = await _baseRepository.GetAsync<T>(sp, parms);
+            if (result == null)
+            {
+                _actionServiceResult.Success = false;
+                _actionServiceResult.MISACode = MISACode.NotFound;
+                _actionServiceResult.Message = ApplicationCore.Properties.Resources.NotFound;
+                return _actionServiceResult;
+            }
+            _actionServiceResult.Data = result;
+            return _actionServiceResult;
+        }
+
+        public virtual async Task<ActionServiceResult> GetByFilterAsync<T>(string propName, object propValue)
+        {
+            _actionServiceResult = new ActionServiceResult();
+            var entityName = typeof(T).Name;
+            var sp = $"Proc_Get" + entityName + "ByFilter";
+            var parms = new DynamicParameters();
+            parms.Add($"{propName}", propValue);
+            var result = await _baseRepository.GetAsync<T>(sp, parms);
+            if (result == null)
+            {
+                _actionServiceResult.Success = false;
+                _actionServiceResult.MISACode = MISACode.NotFound;
+                _actionServiceResult.Message = ApplicationCore.Properties.Resources.NotFound;
+                return _actionServiceResult;
+            }
+            _actionServiceResult.Data = result;
+            return _actionServiceResult;
         }
         #endregion
 
         #region Insert
-        public async Task<ActionServiceResult> InsertAsync<T>(T entity)
+        public async Task<ActionServiceResult> InsertAsync<T>(T entity) where T:BaseEntity
         {
+            // Tạo Id mới
+            var entityName = entity.GetType().Name;
+            var idProp = entity.GetType().GetProperty(entityName + "Id");
+            idProp.SetValue(Guid.NewGuid(), entity);
+            // Kiểm tra hợp lệ
             var isValid = await ValidateAsync<T>(entity);
             if (isValid==false)
             {
@@ -94,12 +192,12 @@ namespace SManage.ApplicationCore.Services
             }
             else
             {
-                var entityName = entity.GetType().Name;
                 var sp = $"Proc_Insert{entityName}";
                 var parms = MappingDataType<T>(entity);
                 var result= await _baseRepository.InsertAsync<T>(sp, parms);
                 if (result == null)
                 {
+                    _actionServiceResult.Success = false;
                     _actionServiceResult.MISACode = MISACode.ErrorAddEntity;
                     _actionServiceResult.Message = ApplicationCore.Properties.Resources.ErrorAddEntity;
                     return _actionServiceResult;
@@ -120,7 +218,7 @@ namespace SManage.ApplicationCore.Services
         #endregion
 
         #region Update
-        public async Task<ActionServiceResult> UpdateAsync<T>(T entity)
+        public async Task<ActionServiceResult> UpdateAsync<T>(T entity) where T : BaseEntity
         {
             var entityName = entity.GetType().Name;
             var sp = $"Proc_Update{entityName}";
@@ -128,6 +226,7 @@ namespace SManage.ApplicationCore.Services
             var updatedEntity = await _baseRepository.UpdateAsync<T>(sp, parms);
             if (updatedEntity == null)
             {
+                _actionServiceResult.Success = false;
                 _actionServiceResult.MISACode = MISACode.ErrorDeleteEntity;
                 _actionServiceResult.Message = ApplicationCore.Properties.Resources.ErrorDeleteEntity;
             }
@@ -153,7 +252,7 @@ namespace SManage.ApplicationCore.Services
         /// <param name="entity"></param>
         /// <returns></returns>
         /// CreatedBy dtnga (04/12/2020)
-        protected async Task<bool> ValidateAsync<T>(T entity)
+        protected virtual async Task<bool> ValidateAsync<T>(T entity) where T:BaseEntity
         {
             var isValid = true;
             // Đọc các propperty
@@ -174,8 +273,10 @@ namespace SManage.ApplicationCore.Services
                     {
                         isValid = false;
                         errorMsg.Add(string.Format(Properties.Resources.Required, displayName));
-                        _actionServiceResult.MISACode = Enums.MISACode.ValidateEntity;
-                        _actionServiceResult.Message = Properties.Resources.ValidateEntity;
+                        entity.ValidState = ValidState.Invalid;
+                        _actionServiceResult.MISACode = MISACode.Validate;
+                        _actionServiceResult.Message = Properties.Resources.Validate;
+                        _actionServiceResult.Success = false;
                     }
                 }
                 if (prop.IsDefined(typeof(Unduplicated), false))
@@ -187,8 +288,10 @@ namespace SManage.ApplicationCore.Services
                     {
                         isValid = false;
                         errorMsg.Add(string.Format(Properties.Resources.Duplicate, displayName));
-                        _actionServiceResult.MISACode = Enums.MISACode.ValidateEntity;
-                        _actionServiceResult.Message = Properties.Resources.ValidateEntity;
+                        entity.ValidState = ValidState.Invalid;
+                        _actionServiceResult.MISACode = MISACode.Validate;
+                        _actionServiceResult.Message = Properties.Resources.Validate;
+                        _actionServiceResult.Success = false;
                     }
                 }
                 if (prop.IsDefined(typeof(MaxLength), false))
@@ -202,12 +305,14 @@ namespace SManage.ApplicationCore.Services
                         isValid = false;
                         if (msg == null) errorMsg.Add(string.Format(Properties.Resources.MaxLength, displayName, maxLength));
                         errorMsg.Add(msg);
-                        _actionServiceResult.MISACode = Enums.MISACode.ValidateEntity;
-                        _actionServiceResult.Message = Properties.Resources.ValidateEntity;
+                        entity.ValidState = ValidState.Invalid;
+                        _actionServiceResult.MISACode = MISACode.Validate;
+                        _actionServiceResult.Message = Properties.Resources.Validate;
+                        _actionServiceResult.Success = false;
                     }
                 }
             }
-            _actionServiceResult.Data = errorMsg;
+            entity.InvalidError = errorMsg;
             return isValid;
         }
 
@@ -218,7 +323,7 @@ namespace SManage.ApplicationCore.Services
         /// <param name="entity"></param>
         /// <returns></returns>
         ///  CreatedBy dtnga (04/12/2020)
-        public async Task<bool> CustomeValidateAsync<T>(T entity)
+        public virtual async Task<bool> CustomeValidateAsync<T>(T entity) where T : BaseEntity
         {
             return await ValidateAsync<T>(entity);
         }

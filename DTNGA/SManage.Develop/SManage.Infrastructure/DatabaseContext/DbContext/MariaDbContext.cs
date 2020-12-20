@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 using SManage.ApplicationCore.Interfaces.DatabaseContext;
 using System;
 using System.Collections.Generic;
@@ -37,19 +37,18 @@ namespace SManage.Infrastructure.DatabaseContext.DbContext
         #endregion
 
         #region GET
-        public async Task<T> GetAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
+        public List<T> Get<T>(string queryCommand, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure)
         {
-            var result = await _dbConnection.QueryFirstOrDefaultAsync<T>(sp, parms, commandType: commandType);
-            return result;
+            return _dbConnection.Query<T>(queryCommand, commandType: commandType).ToList();
         }
-
+ 
         public async Task<T> GetByIdAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
             var result = await _dbConnection.QueryFirstOrDefaultAsync<T>(sp, parms, commandType: commandType);
             return result;
         }
 
-        public async Task<List<T>> GetAllAsync<T>(string queryCommand, CommandType commandType = CommandType.StoredProcedure)
+        public async Task<List<T>> GetAsync<T>(string queryCommand, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure)
         {
             List<T> result;
             try
@@ -60,7 +59,7 @@ namespace SManage.Infrastructure.DatabaseContext.DbContext
                 {
                     try
                     {
-                        result = (await _dbConnection.QueryAsync<T>(queryCommand, commandType: commandType, transaction: tran)).ToList();
+                        result = (await _dbConnection.QueryAsync<T>(queryCommand,param:parms, commandType:commandType, transaction: tran)).ToList();
                         tran.Commit();
                     }
                     catch (Exception ex)

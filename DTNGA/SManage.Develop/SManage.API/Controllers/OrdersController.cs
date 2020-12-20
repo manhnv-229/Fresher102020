@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SManage.ApplicationCore;
 using SManage.ApplicationCore.Entities;
+using SManage.ApplicationCore.Interfaces.Service;
+using SManage.ApplicationCore.Interfaces.Service.Base;
 
 namespace SManage.API.Controllers
 {
@@ -12,20 +14,29 @@ namespace SManage.API.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        
+        private readonly IBaseMemoryCache _baseMemoryCache;
+        private readonly IOrderService _baseService;
+
+        public OrdersController(IBaseMemoryCache baseMemoryCache, IOrderService baseService)
+        {
+            _baseMemoryCache = baseMemoryCache;
+            _baseService = baseService;
+        }
+
+
+
         /// <summary>
         /// Lấy thông tin đơn hàng theo phân trang
         /// </summary>
+        /// <param name="shopId">Id cửa hàng</param>
         /// <param name="pageIndex">Số thứ tự trang</param>
         /// <param name="pageSize">Số bản ghi trên 1 trang</param>
         /// <returns></returns>
-        /// CreatedBy dtnga(16/12/2020)
-        [HttpGet("Paging")]
-        public async Task<ActionServiceResult> GetOrderByPaging([FromQuery] int pageIndex, [FromQuery] int pageSize)
+        [HttpGet("Paging/{shopId}")]
+        public async Task<ActionServiceResult> GetOrderByPaging([FromRoute] Guid shopId, [FromQuery] int pageIndex, [FromQuery] int pageSize)
         {
-            var response = new ActionServiceResult();
-
-            return response;
+            _baseMemoryCache.SetCache("ShopId", shopId);
+            return await _baseService.GetByPagingAsync<Order>(pageSize, pageIndex);
         }
 
         /// <summary>
@@ -35,12 +46,11 @@ namespace SManage.API.Controllers
         /// <param name="filterValue"></param>
         /// <returns></returns>
         /// CreatedBy dtnga(16/12/2020)
-        [HttpGet("Filter")]
-        public async Task<ActionServiceResult> GetOrderByFilter([FromQuery] string filterType, [FromQuery] string filterValue)
+        [HttpGet("Filter/{shopId}")]
+        public async Task<ActionServiceResult> GetOrderByFilter([FromRoute] Guid shopId, [FromQuery] string filterType, [FromQuery] string filterValue)
         {
-            var response = new ActionServiceResult();
-
-            return response;
+            _baseMemoryCache.SetCache("ShopId", shopId);
+            return await _baseService.GetByFilterAsync<Order>(filterType, filterValue);
         }
         /// <summary>
         /// Lấy thông tin đơn hàng theo Id
@@ -52,8 +62,9 @@ namespace SManage.API.Controllers
         public async Task<ActionServiceResult> GetOrderById([FromRoute] Guid orderId)
         {
             var response = new ActionServiceResult();
+            var order= (Order) (await _baseService.GetByIdAsync<Order>(orderId)).Data;
+            return await _baseService.ProcessingOrder(order);
 
-            return response;
         }
 
         /// <summary>
@@ -65,9 +76,7 @@ namespace SManage.API.Controllers
         [HttpPost]
         public async Task<ActionServiceResult> CreatOrder([FromBody] Order order)
         {
-            var response = new ActionServiceResult();
-
-            return response;
+            return await _baseService.InsertAsync<Order>(order);
         }
 
         /// <summary>
@@ -78,11 +87,9 @@ namespace SManage.API.Controllers
         /// <returns></returns>
         /// CreatedBy dtnga(16/12/2020)
         [HttpPut("{orderId}")]
-        public async Task<ActionServiceResult> UpdateOrder([FromQuery] Guid orderId, [FromBody] Order order)
+        public async Task<ActionServiceResult> UpdateOrder([FromBody] Order order)
         {
-            var response = new ActionServiceResult();
-
-            return response;
+            return await _baseService.UpdateAsync<Order>(order);
         }
 
         /// <summary>
@@ -92,11 +99,9 @@ namespace SManage.API.Controllers
         /// <returns></returns>
         /// CreatedBy dtnga(16/12/2020)
         [HttpDelete("{orderId}")]
-        public async Task<ActionServiceResult> DeleteOrder([FromQuery] Guid orderId)
+        public async Task<ActionServiceResult> DeleteOrder([FromRoute] Guid orderId)
         {
-            var response = new ActionServiceResult();
-
-            return response;
+            return await _baseService.DeleteAsync<Order>(orderId);
         }
     }
 }

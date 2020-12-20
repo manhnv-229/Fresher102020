@@ -50,6 +50,15 @@ namespace SManage.ApplicationCore.Interfaces.Repositories
 
         #region Get
         /// <summary>
+        /// Lấy nhiều bản ghi
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sp"></param>
+        /// <param name="commandType"></param>
+        /// <returns></returns>
+        /// CreatedBy dtnga (16/12/2020)
+        List<T> Get<T>(string sp, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure);
+        /// <summary>
         /// Lấy tất cả bản ghi
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -58,17 +67,7 @@ namespace SManage.ApplicationCore.Interfaces.Repositories
         /// <param name="commandType">Loại truy vấn</param>
         /// <returns>Danh sách đối tượng chứa dữ liệu đọc từ DB</returns>
         /// CreatedBy dtnga (11/11/2020)
-        Task<List<T>> GetAllAsync<T>(string sp, CommandType commandType = CommandType.StoredProcedure);
-        /// <summary>
-        /// Lấy 1 bản ghi
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="sp">Chuỗi truy vấn/ Tên procedure</param>
-        /// <param name="parms">Bộ tham số</param>
-        /// <param name="commandType">Loại truy vấn</param>
-        /// <returns>Đối tượng chứa dữ liệu đọc từ DB</returns>
-        /// CreatedBy dtnga (11/11/2020)
-        Task<T> GetAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
+        Task<List<T>> GetAsync<T>(string sp, DynamicParameters parms=null, CommandType commandType = CommandType.StoredProcedure);
         /// <summary>
         /// Lấy 1 bản ghi dựa theo Id
         /// </summary>

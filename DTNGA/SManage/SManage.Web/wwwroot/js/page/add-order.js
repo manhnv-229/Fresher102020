@@ -270,6 +270,7 @@ class AddOrder extends Base {
             else {
                 $(tel).focus();
                 $(`.empty-result`).removeClass("displayNone");
+                $(`.box-info input`).val("");
                 $(`.box-info`).removeClass("displayNone");
                 $(`.box-info input[type=text]:first`).focus();
             }

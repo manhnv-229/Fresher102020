@@ -6,6 +6,10 @@
 class OrderManagement extends Base {
     constructor() {
         super();
-        this.loadShop();
+        var me = this;
+        me.loadShop();
+        me.loadAccount();
+        me.loadData();
+        me.initEvent();
     }
 }

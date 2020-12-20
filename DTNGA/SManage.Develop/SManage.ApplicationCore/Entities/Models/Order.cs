@@ -35,14 +35,21 @@ namespace SManage.ApplicationCore.Entities
         public string OrderNote { get; set; }
 
         [Required]
+        [MustExist]
         [DisplayName("Id tài khoản tạo đơn")]
-        public Guid AccountId { get; set; }
+        public new Guid CreatedBy { get; set; }
+
+        [Required]
+        [MustExist]
+        [DisplayName("Id tài khoản xử lý đơn")]
+        public new Guid ModifiedBy { get; set; }
 
         [Required]
         [DisplayName("Id khách hàng")]
         public Guid CustomerId { get; set; }
 
         [Required]
+        [MustExist]
         [DisplayName("Id đơn vị vận chuyển")]
         public Guid ShopTransportorId { get; set; }
 
@@ -64,13 +71,15 @@ namespace SManage.ApplicationCore.Entities
         //public DateTime CreatedDate { get; set; }
         //public DateTime? ModifiedDate { get; set; }
 
-        [DisplayName("")]
-        public virtual Account Account { get; set; }
-        [DisplayName("")]
+        [DisplayName("Người tạo")]
+        public virtual UserInfo Creater { get; set; }
+        [DisplayName("Người chỉnh sửa")]
+        public virtual UserInfo Modifier { get; set; }
+        [DisplayName("Khách hàng")]
         public virtual Customer Customer { get; set; }
-        [DisplayName("")]
+        [DisplayName("Đơn vị vận chuyển")]
         public virtual ShopTransportor ShopTransportor { get; set; }
-        [DisplayName("")]
+        [DisplayName("Danh sách chi tiết đơn hàng")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

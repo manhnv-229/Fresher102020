@@ -4,6 +4,13 @@ using System.Text;
 
 namespace SManage.ApplicationCore.Enums
 {
+
+    public enum ValidState
+    {
+        Valid = 1,
+        Invalid = 0
+    }
+
     /// <summary>
     /// Tên kiểu store sẽ thực thi
     /// </summary>

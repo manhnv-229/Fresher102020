@@ -25,8 +25,29 @@ namespace SManage.API.Controllers
             _baseService = baseService;
             ShopTransportors = (List<ShopTransportor>)_baseMemoryCache.GetCache("ShopTransportors");
             Transportors= (List<Transportor>)_baseMemoryCache.GetCache("Transportors");
+            if (ShopTransportors.Count == 0)
+            {
+                ShopTransportors = (List<ShopTransportor>)_baseService.GetAll<ShopTransportor>().Data;
+                _baseMemoryCache.SetCache("ShopTransportors", ShopTransportors);
+            }
+            if (Transportors.Count == 0)
+            {
+                Transportors = (List<Transportor>)_baseService.GetAll<Transportor>().Data;
+                _baseMemoryCache.SetCache("Transportors", Transportors);
+            }
         }
 
+        /// <summary>
+        /// Lấy tất cả đơn vị vận chuyển trên hệ thống
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionServiceResult GetAll()
+        {
+            var response = new ActionServiceResult();
+            response.Data = Transportors;
+            return response;
+        }
 
         /// <summary>
         /// Lấy danh sách đơn vị vận chuyển liên kết với cửa hàng
@@ -36,7 +57,7 @@ namespace SManage.API.Controllers
         /// CreatedBy dtnga /(13/12/2020)
         // GET api/<TransportorsController>/5
         [HttpGet("{shopId}")]
-        public ActionServiceResult Get([FromRoute] Guid shopId)
+        public ActionServiceResult GetTransportorByShopId([FromRoute] Guid shopId)
         {
             var response = new ActionServiceResult();
             if (shopId == null)
@@ -89,9 +110,9 @@ namespace SManage.API.Controllers
             }
             
             // Lấy thông tin chi tiết của đơn vị vận chuyển
-            var trans = await _baseService.GetByIdAsync<Transportor>(transportorId);
+            var trans = (Transportor) (await _baseService.GetByIdAsync<Transportor>(transportorId)).Data;
             // Lấy thông tin mã địa bàn hành chính của cửa hàng
-            var shop = await _baseService.GetByIdAsync<Shop>(shopId);
+            var shop = (Shop) (await _baseService.GetByIdAsync<Shop>(shopId)).Data;
             var shopAreaCode = shop.AdministrativeAreaCode;
             double fee = 0;
             if(shopAreaCode.Substring(0, 4) == customerAreaCode.Substring(0, 4))
@@ -122,9 +143,9 @@ namespace SManage.API.Controllers
                 return response;
             }
             // Lấy thông tin chi tiết của đơn vị vận chuyển
-            var trans = await _baseService.GetByIdAsync<Transportor>(transportorId);
+            var trans =(Transportor) (await _baseService.GetByIdAsync<Transportor>(transportorId)).Data;
             // Lấy thông tin mã địa bàn hành chính của cửa hàng
-            var shop = await _baseService.GetByIdAsync<Shop>(shopId);
+            var shop = (Shop)(await _baseService.GetByIdAsync<Shop>(shopId)).Data;
             var shopAreaCode = shop.AdministrativeAreaCode;
             var expectedDeliveryDate = DateTime.Now;
             if (shopAreaCode.Substring(0, 4) == customerAreaCode.Substring(0, 4))

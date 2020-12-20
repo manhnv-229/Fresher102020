@@ -7,9 +7,6 @@ class Base {
         me.Route = "";
         me.ShopId = "";
         me.UserId = "";
-        me.loadAccount();
-        me.loadData();
-        me.initEvent();
     }
 
 
@@ -21,6 +18,7 @@ class Base {
         var user = userInfo;
         var fullName = user["FullName"];
         $(`.header .username`).text(fullName);
+        $(`.header .username`).data("keyId", user["UserId"]);
     }
 
     /** Thực hiện load thông tin cửa hàng do user làm chủ
@@ -288,7 +286,7 @@ class Base {
     /**
      * Sự kiện khi ấn phím tại trường nhập liệu của combobox/Dropdown
      * CreatedBy dtnga (10/12/2020)
-     * @param {element} element trường nhập liệu tại combobox/Dropdown
+     * @param {Element} element trường nhập liệu tại combobox/Dropdown
      */
     detectKeyCode(element) {
         var me = this;
@@ -348,6 +346,7 @@ class Base {
             }
         });
     }
+
     /** Thực hiện tự động bind dữ liệu tỉnh/thành
      * CreatedBy dtnga (08/12/2020)
      * */

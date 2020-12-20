@@ -70,7 +70,7 @@ namespace SManage.ApplicationCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Không có dữ liệu trên hệ thống.
+        ///   Looks up a localized string similar to Không có dữ liệu {0} trên hệ thống.
         /// </summary>
         public static string Empty_Entity {
             get {
@@ -124,6 +124,15 @@ namespace SManage.ApplicationCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thông tin {0} không chính xác.
+        /// </summary>
+        public static string Invalid_Data {
+            get {
+                return ResourceManager.GetString("Invalid_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Thông tin {0} không được vượt quá {1} kí tự.
         /// </summary>
         public static string MaxLength {
@@ -138,15 +147,6 @@ namespace SManage.ApplicationCore.Properties {
         public static string NotFound {
             get {
                 return ResourceManager.GetString("NotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tỉnh.
-        /// </summary>
-        public static string Province {
-            get {
-                return ResourceManager.GetString("Province", resourceCulture);
             }
         }
         
