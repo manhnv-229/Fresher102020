@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace MISA_Dictionary_GoodsService.ApplicationCore
 {
-    public partial class Product
+    public partial class Product : BaseEntity
     {
         /// <summary>
         /// Id sản phẩm
@@ -52,30 +52,6 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         public string ProductDescription { get; set; }
 
         /// <summary>
-        /// Tạo bởi
-        /// </summary>
-        [DisplayName("Người tạo")]
-        public string CreatedBy { get; set; }
-
-        /// <summary>
-        /// Ngày tạo
-        /// </summary>
-        [DisplayName("Ngày tạo")]
-        public DateTime CreatedDate { get; set; }
-
-        /// <summary>
-        /// Chỉnh sửa bởi
-        /// </summary>
-        [DisplayName("Người chỉnh sửa")]
-        public string ModifiedBy { get; set; }
-
-        /// <summary>
-        /// Ngày chỉnh sửa
-        /// </summary>
-        [DisplayName("Ngày chỉnh sửa")]
-        public DateTime? ModifiedDate { get; set; }
-
-        /// <summary>
         /// Id danh mục sản phẩm
         /// </summary>
         [DisplayName("Id danh mục sản phẩm")]
@@ -87,7 +63,9 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         [DisplayName("Id thương hiệu")]
         public Guid? BrandId { get; set; }
 
+        [DisplayName("Thương hiệu")]
         public virtual Brand Brand { get; set; }
+        [DisplayName("Danh mục")]
         public virtual Category Category { get; set; }
     }
 }

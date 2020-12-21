@@ -17,7 +17,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         /// <param name="key">Khóa để lấy dữ liệu</param>
         /// <returns>Đối tượng chứa dữ liệu có khóa được mô tả</returns>
         /// CreatedBy dtnga (11/11/2020)
-        object GetCache(string key);
+        List<T> GetCache<T>(string key);
 
         /// <summary>
         /// Thực hiện thêm dữ liệu vào cache theo key

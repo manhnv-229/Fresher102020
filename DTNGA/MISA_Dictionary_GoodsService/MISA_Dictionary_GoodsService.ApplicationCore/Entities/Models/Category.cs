@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 namespace MISA_Dictionary_GoodsService.ApplicationCore
 {
-    public partial class Category
+    public partial class Category : BaseEntity
     {
-        //public Category()
-        //{
-        //    Products = new HashSet<Product>();
-        //}
+        public Category()
+        {
+            Products = new HashSet<Product>();
+        }
 
         /// <summary>
         /// Id danh mục
@@ -54,30 +54,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         [DisplayName("Mô tả danh mục")]
         public string CategoryDescription { get; set; }
 
-        /// <summary>
-        /// Tạo bởi
-        /// </summary>
-        [DisplayName("Người tạo")]
-        public string CreatedBy { get; set; }
-
-        /// <summary>
-        /// Ngày tạo
-        /// </summary>
-        [DisplayName("Ngày tạo")]
-        public DateTime CreatedDate { get; set; }
-
-        /// <summary>
-        /// Chỉnh sửa bởi
-        /// </summary>
-        [DisplayName("Người chỉnh sửa")]
-        public string ModifiedBy { get; set; }
-
-        /// <summary>
-        /// Ngày chỉnh sửa
-        /// </summary>
-        [DisplayName("Ngày chỉnh sửa")]
-        public DateTime? ModifiedDate { get; set; }
-
+        [DisplayName("Sản phẩm")]
         public virtual ICollection<Product> Products { get; set; }
     }
 }

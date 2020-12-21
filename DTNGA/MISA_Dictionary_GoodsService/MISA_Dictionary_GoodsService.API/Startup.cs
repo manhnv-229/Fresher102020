@@ -16,6 +16,7 @@ using Microsoft.OpenApi.Models;
 using MISA_Dictionary_GoodsService.ApplicationCore;
 using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.DatabaseContext;
 using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Repositories;
+using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service;
 using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service.Base;
 using MISA_Dictionary_GoodsService.ApplicationCore.Services;
 using MISA_Dictionary_GoodsService.Infrastructure;
@@ -56,6 +57,8 @@ namespace MISA_Dictionary_GoodsService.API
             services.AddScoped<IBaseMemoryCache, BaseMemoryCache>();
             services.AddScoped<IBaseService, BaseService>();
             services.AddScoped<IBaseRepository, BaseRepository>();
+
+            services.AddScoped<IProductService, ProductService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

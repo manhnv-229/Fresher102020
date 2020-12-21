@@ -11,13 +11,18 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
 {
     public class BaseService : IBaseService
     {
+        protected readonly IBaseMemoryCache _baseMemoryCache;
         private readonly IBaseRepository _baseRepository;
-        ActionServiceResult _actionServiceResult;
-        public BaseService(IBaseRepository baseRepository)
+        readonly ActionServiceResult _actionServiceResult;
+        public BaseService(IBaseMemoryCache baseMemoryCache, IBaseRepository baseRepository)
         {
+            _baseMemoryCache = baseMemoryCache;
             _baseRepository = baseRepository;
-            _actionServiceResult = new ActionServiceResult();
-            _actionServiceResult.MISACode = MISACode.Success;
+            _actionServiceResult = new ActionServiceResult
+            {
+                MISACode = MISACode.Success
+            };
+
         }
 
         #region Delete
@@ -33,6 +38,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
                 var result = await _baseRepository.DeleteAsync<T>(sp, parms);
                 if (result == null)
                 {
+                    _actionServiceResult.Success = false;
                     _actionServiceResult.MISACode = MISACode.ErrorDeleteEntity;
                     _actionServiceResult.Message = ApplicationCore.Properties.Resources.ErrorDeleteEntity;
                     return _actionServiceResult;
@@ -105,6 +111,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
                 var result = await _baseRepository.InsertAsync<T>(sp, parms);
                 if (result == null)
                 {
+                    _actionServiceResult.Success = false;
                     _actionServiceResult.MISACode = MISACode.ErrorAddEntity;
                     _actionServiceResult.Message = ApplicationCore.Properties.Resources.ErrorAddEntity;
                     return _actionServiceResult;
@@ -132,6 +139,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
             var updatedEntity = await _baseRepository.UpdateAsync<T>(sp, parms);
             if (updatedEntity == null)
             {
+                _actionServiceResult.Success = false;
                 _actionServiceResult.MISACode = MISACode.ErrorDeleteEntity;
                 _actionServiceResult.Message = ApplicationCore.Properties.Resources.ErrorDeleteEntity;
             }

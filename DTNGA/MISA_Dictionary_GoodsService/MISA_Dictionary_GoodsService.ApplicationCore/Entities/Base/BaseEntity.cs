@@ -18,18 +18,22 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         /// <summary>
         /// Ngày tạo
         /// </summary>
+        [DisplayName("Ngày tạo")]
         public DateTime? CreatedDate { get; set; }
         /// <summary>
         /// Tạo bởi
         /// </summary>
+        [DisplayName("Người tạo")]
         public string CreatedBy { get; set; }
         /// <summary>
         /// Ngày chỉnh sửa
         /// </summary>
+        [DisplayName("Ngày chỉnh sửa")]
         public DateTime? ModifiedDate { get; set; }
         /// <summary>
         /// Chỉnh sửa bởi
         /// </summary>
+        [DisplayName("Người chỉnh sửa")]
         public string ModifiedBy { get; set; }
 
     }

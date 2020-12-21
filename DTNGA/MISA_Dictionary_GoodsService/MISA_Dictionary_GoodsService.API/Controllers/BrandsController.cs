@@ -10,7 +10,7 @@ using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service.Base;
 
 namespace MISA_Dictionary_GoodsService.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class BrandsController : ControllerBase
     {
@@ -21,12 +21,8 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         {
             _baseMemoryCache = baseMemoryCache;
             _baseService = baseService;
-            brands = (List<Brand>)_baseMemoryCache.GetCache("Brands");
-            if (brands.Count == 0)
-            {
-                brands = _baseService.GetAll<Brand>();
-                _baseMemoryCache.SetCache("Brands", brands);
-            }
+            brands = (List<Brand>)_baseMemoryCache.GetCache<Brand>("Brands");
+            
         }
 
         /// <summary>
@@ -38,6 +34,10 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         public ActionServiceResult GetAllBrand()
         {
             var response = new ActionServiceResult();
+            if (brands.Count == 0)
+            {
+                brands = _baseMemoryCache.GetCache<Brand>("Brands");
+            }
             response.Data = brands;
             return response;
         }
@@ -51,7 +51,11 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         public ActionServiceResult GetBrandById([FromRoute] Guid brandId)
         {
             var response = new ActionServiceResult();
-            response.Data = brands.Where<Brand>(b => b.BrandId==brandId).FirstOrDefault();
+            if (brands.Count == 0)
+            {
+                brands = _baseMemoryCache.GetCache<Brand>("Brands");
+            }
+            response.Data = brands.Where<Brand>(b => b.BrandId == brandId).FirstOrDefault();
             return response;
         }
 
@@ -64,33 +68,33 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         public async Task<ActionServiceResult> AddNewBrandAsync([FromBody] Brand newBrand)
         {
             var response = await _baseService.InsertAsync<Brand>(newBrand);
+            if (response.MISACode == MISACode.Success && brands.Count > 0)
+            {
+                // Cập nhật lại cache
+                brands.Add(newBrand);
+                _baseMemoryCache.SetCache("Brands", brands);
+            }
             return response;
         }
 
-        /// <summary>
-        /// Thêm thương hiệu mới, dữ liệu đọc từ file
-        /// </summary>
-        /// <param name="file">File chứa thông tin thương hiệu</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// CreatedBy dtnga (17/12/2020)
-        [HttpPost("FromFile")]
-        public async Task<ActionServiceResult> AddBrandsFromFileAsync(IFormFile file, CancellationToken cancellationToken)
-        {
-            var response = new ActionServiceResult();
-            return response;
-        }
-
+        
         /// <summary>
         /// Cập nhật thông tin thương hiệu
         /// </summary>
         /// <param name="newBrand"></param>
         /// <returns></returns>
         /// CreatedBy dtnga (17/12/2020)
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<ActionServiceResult> UpdateBrandAsync([FromBody] Brand newBrand)
         {
             var response = await _baseService.UpdateAsync<Brand>(newBrand);
+            if (response.MISACode == MISACode.Success && brands.Count > 0)
+            {
+                // Cập nhật lại cache
+                brands.Remove(brands.Where<Brand>(p => p.BrandId == newBrand.BrandId).FirstOrDefault());
+                brands.Add(newBrand);
+                _baseMemoryCache.SetCache("Brands", brands);
+            }
             return response;
         }
 
@@ -104,6 +108,12 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         public async Task<ActionServiceResult> DeleteBrandAsync([FromRoute] Guid brandId)
         {
             var response = await _baseService.DeleteAsync<Brand>(brandId);
+            if (response.MISACode == MISACode.Success && brands.Count > 0)
+            {
+                // Cập nhật lại cache
+                brands.Remove(brands.Where<Brand>(p => p.BrandId == brandId).FirstOrDefault());
+                _baseMemoryCache.SetCache("Brands", brands);
+            }
             return response;
         }
     }

@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Caching.Memory;
 using MISA_Dictionary_GoodsService.ApplicationCore;
+using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service.Base;
 using MySqlConnector;
 using System;
 using System.Collections.Generic;
@@ -13,15 +14,15 @@ namespace MISA_Dictionary_GoodsService.Infrastructure
     public class BaseMemoryCache : IBaseMemoryCache
     {
         readonly IDbConnection _dbConnection;
-        protected readonly IMemoryCache _importMemoryCache;
+        protected readonly IMemoryCache _memoryCache;
         protected List<Brand> brands;
         protected List<Category> categories;
         protected List<Product> products;
         public BaseMemoryCache(IDbConnection dbConnection, IMemoryCache importMemoryCache)
         {
             _dbConnection = dbConnection ?? throw new ArgumentNullException(nameof(MySqlConnection));
-            _importMemoryCache = importMemoryCache;
-            //TODO Lấy dữ liệu:
+            _memoryCache = importMemoryCache;
+            //Lấy dữ liệu:
             brands = _dbConnection.Query<Brand>("Proc_GetAllBrand", commandType: CommandType.StoredProcedure).ToList();
             categories = _dbConnection.Query<Category>("Proc_GetAllCategory", commandType: CommandType.StoredProcedure).ToList();
             products = _dbConnection.Query<Product>("Proc_GetAllProduct", commandType: CommandType.StoredProcedure).ToList();
@@ -48,7 +49,7 @@ namespace MISA_Dictionary_GoodsService.Infrastructure
         /// CreatedBy dtnga (11/11/2020)
         public void SetCache(string key, object data)
         {
-            _importMemoryCache.GetOrCreate(key, entry =>
+            _memoryCache.GetOrCreate(key, entry =>
             {
                 entry.SlidingExpiration = TimeSpan.FromMinutes(5);
                 return data;
@@ -63,7 +64,7 @@ namespace MISA_Dictionary_GoodsService.Infrastructure
         /// CreatedBy dtnga (11/11/2020)
         public void SetCacheModify(string key, object data)
         {
-            _importMemoryCache.GetOrCreate(key, entry =>
+            _memoryCache.GetOrCreate(key, entry =>
             {
                 entry.SlidingExpiration = TimeSpan.FromSeconds(8);
                 return data;
@@ -71,14 +72,21 @@ namespace MISA_Dictionary_GoodsService.Infrastructure
         }
 
         /// <summary>
-        /// Lấy dữu liệu từ cache theo key
+        /// Lấy dữ liệu từ cache theo key
         /// </summary>
         /// <param name="key">Key</param>
         /// <returns></returns>
         /// CreatedBy dtnga (11/11/2020)
-        public object GetCache(string key)
+        public List<T> GetCache<T>(string key)
         {
-            var cacheEntry = _importMemoryCache.Get<object>(key);
+            var cacheEntry = _memoryCache.Get<List<T>>(key);
+            if (cacheEntry.Count == 0)
+            {
+                var typeName = typeof(T).Name;
+                var sp = "Proc_GetAll" + typeName;
+                cacheEntry =  _dbConnection.Query<T>(sp, commandType: CommandType.StoredProcedure).ToList();
+                SetCache(key, cacheEntry);
+            }
             return cacheEntry;
         }
     }

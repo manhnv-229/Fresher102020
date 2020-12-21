@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace MISA_Dictionary_GoodsService.ApplicationCore
 {
-    public partial class Brand
+    public partial class Brand : BaseEntity
     {
         public Brand()
         {
