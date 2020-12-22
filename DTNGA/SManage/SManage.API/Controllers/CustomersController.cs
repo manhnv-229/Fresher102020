@@ -43,24 +43,7 @@ namespace SManage.API.Controllers
         [HttpGet("{customerId}")]
         public async Task<ActionServiceResult> GetCustomerByIdAsync([FromRoute] Guid customerId)
         {
-            _actionServiceResult = new ActionServiceResult();
-            if (customerId == null)
-            {
-                _actionServiceResult.Success = false;
-                _actionServiceResult.MISACode = MISACode.NotFound;
-                _actionServiceResult.Message = ApplicationCore.Properties.Resources.NotFound;
-                return _actionServiceResult;
-            }
-            var customer = await _baseService.GetByIdAsync<Customer>(customerId);
-            if (customer == null)
-            {
-                _actionServiceResult.Success = false;
-                _actionServiceResult.MISACode = MISACode.NotFound;
-                _actionServiceResult.Message = ApplicationCore.Properties.Resources.Empty_Entity;
-                return _actionServiceResult;
-            }
-            _actionServiceResult.Data = customer;
-            return _actionServiceResult;
+            return await _baseService.GetByIdAsync<Customer>(customerId);
         }
 
         /// <summary>
@@ -72,24 +55,7 @@ namespace SManage.API.Controllers
         [HttpGet("PhoneNumber")]
         public async Task<ActionServiceResult> GetCustomerByPhoneNumber ([FromQuery] string phoneNumber)
         {
-            _actionServiceResult = new ActionServiceResult();
-            if (string.IsNullOrWhiteSpace(phoneNumber))
-            {
-                _actionServiceResult.Success = false;
-                _actionServiceResult.MISACode = MISACode.NotFound;
-                _actionServiceResult.Message = ApplicationCore.Properties.Resources.NotFound;
-                return _actionServiceResult;
-            }
-            var customer = await  _baseService.GetByPropertyAsync<Customer>("PhoneNumber", phoneNumber);
-            if (customer == null)
-            {
-                _actionServiceResult.Success = false;
-                _actionServiceResult.MISACode = MISACode.NotFound;
-                _actionServiceResult.Message = ApplicationCore.Properties.Resources.Empty_Entity;
-                return _actionServiceResult;
-            }
-            _actionServiceResult.Data = customer;
-            return _actionServiceResult;
+            return await  _baseService.GetByPropertyAsync<Customer>("PhoneNumber", phoneNumber);
         }
 
     }

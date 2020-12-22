@@ -37,6 +37,13 @@ namespace SManage.API
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options => options.AddPolicy("AllowAll", builder =>
+            {
+                builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            }));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -80,7 +87,7 @@ namespace SManage.API
             });
 
             app.UseHttpsRedirection();
-
+            app.UseCors("AllowAll");
             app.UseRouting();
 
             app.UseAuthorization();

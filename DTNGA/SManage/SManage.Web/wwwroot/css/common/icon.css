@@ -9,7 +9,7 @@
     opacity: 0.7;
 }
 
-.round-icon{
+.round-icon {
     border-radius: 50%;
 }
 /*----------------------*/
@@ -20,31 +20,52 @@
     height: 24px;
     background-image: url('/content/icon/common/BlackIcon/toggle.png');
 }
+
 .logo-image {
     width: 100%;
     height: 100%;
     background-repeat: no-repeat;
     background-size: 80px;
     background-image: url('/content/image/logo_horizontal_on_white_by_logaster.png');
-    background-position-y:center;
+    background-position-y: center;
     margin-left: 10px;
 }
+
 .create-order-icon {
     background-image: url('/content/icon/common/BlackIcon/file-plus.svg');
 }
+
+    .create-order-icon.active {
+        background-image: url('/content/icon/common/whiteIcon/file-plus.svg');
+        opacity: 1;
+    }
 
 .orders-list-icon {
     background-image: url('/content/icon/common/BlackIcon/list.svg');
 }
 
+    .orders-list-icon.active {
+        background-image: url('/content/icon/common/whiteIcon/list.svg');
+        opacity: 1;
+    }
+
 .shipping-icon {
     background-image: url('/content/icon/common/BlackIcon/truck.svg');
 }
+
+    .shipping-icon.active {
+        background-image: url('/content/icon/common/whiteIcon/truck.svg');
+        opacity: 1;
+    }
 
 .setting-icon {
     background-image: url('/content/icon/common/BlackIcon/settings.svg');
 }
 
+    .setting-icon.active {
+        background-image: url('/content/icon/common/whiteIcon/settings.svg');
+        opacity: 1;
+    }
 /*header*/
 .setting-more-icon {
     background-image: url('/content/icon/common/BlackIcon/more-horizontal.svg');
@@ -67,7 +88,7 @@
 
 .save-icon {
     background-image: url('/content/icon/common/whiteIcon/save-icon-white.png');
-    opacity:1;
+    opacity: 1;
 }
 /*grid*/
 
@@ -79,9 +100,11 @@
 .chevrons-left-icon {
     background-image: url('/content/icon/common/BlackIcon/chevrons-left.svg');
 }
+
 .chevrons-right-icon {
     background-image: url('/content/icon/common/BlackIcon/chevrons-right.svg');
 }
+
 .chevron-left-icon {
     background-image: url('/content/icon/common/BlackIcon/chevron-left.svg');
 }

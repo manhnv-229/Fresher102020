@@ -2,39 +2,14 @@
 class Base {
     constructor() {
         var me = this;
-        me.ObjectName = "Order";
-        me.Host = "";
+        me.Host = "https://localhost:44394";
         me.Route = "";
+        me.AccountId = "76a97258-2588-4dcb-809f-46e6c1dc39a8";
         me.ShopId = "";
         me.UserId = "";
     }
 
 
-    /** Thực hiện lấy thông tin người dùng sau khi đăng nhập
-     * CreatedBy dtnga (26/11/2020)
-     * */
-    loadAccount() {
-        // TODO lấy thông tin người dùng từ API
-        var user = userInfo;
-        var fullName = user["FullName"];
-        $(`.header .username`).text(fullName);
-        $(`.header .username`).data("keyId", user["UserId"]);
-    }
-
-    /** Thực hiện load thông tin cửa hàng do user làm chủ
-     * CreatedBy dtnga (27/11/2020)
-     * */
-    loadShop() {
-        try {
-            // TODO lấy danh sách cửa hàng theo UserId từ API
-            var shops = listShop;
-            var comboBoxShop = $(`#cb-Shop`);
-            this.createComboBox(shops, comboBoxShop);
-        }
-        catch (e) {
-            console.log(e);
-        }
-    }
 
     /** Tự động bind thông tin các đơn vị vận chuyển liên kết với cửa hàng
      * CreatedBy dtnga (08/12/2020)
@@ -161,7 +136,9 @@ class Base {
             // Sự kiện khi click navitem
             $('.nav-item').on('click', function () {
                 $('.nav-item').removeClass('select-menu-item');
+                $('.nav-item .nav-item-icon').removeClass('active');
                 $(this).addClass('select-menu-item');
+                $(this).find(`.nav-item-icon`).addClass("active");
                 // Ẩn các content
                 $(`.content-body`).addClass("displayNone");
                 // Hiển thị content tương ứng
