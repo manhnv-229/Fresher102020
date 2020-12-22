@@ -91,21 +91,30 @@
         .selected {
             background-color: #e3f3ee;
         }
-
+.grid table tbody td {
+    padding:0;
+    border-top: 1px solid #e5e5e5;
+}
 .grid table tbody td div {
     height: 100%;
+    width: 100%;
     background-color: none;
     padding: 10px;
     max-width: 200px;
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
-    border-top: 1px solid #e5e5e5;
     margin-right: -10px;
 }
 .grid table tr td:first-child {
     padding-left: 16px;
+    border: none;
 }
+    .grid table tr td:first-child div {
+        border-top: 1px solid #e5e5e5;
+    }
+
 .grid table tr td:last-child {
     padding-right: 16px;
+    border: none;
 }

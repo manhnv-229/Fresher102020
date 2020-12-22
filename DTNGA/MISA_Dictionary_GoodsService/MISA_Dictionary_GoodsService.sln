@@ -3,18 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MISA_Dictionary_GoodsService.API", "MISA_Dictionary_GoodsService.API\MISA_Dictionary_GoodsService.API.csproj", "{3DD690A7-DB63-48FE-8263-3A5D075A0C1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MISA_Dictionary_GoodsService.API", "MISA_Dictionary_GoodsService.API\MISA_Dictionary_GoodsService.API.csproj", "{3DD690A7-DB63-48FE-8263-3A5D075A0C1F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0A625FCD-A4C3-4A17-A639-066DC7F0CE49} = {0A625FCD-A4C3-4A17-A639-066DC7F0CE49}
 		{DB43B9D6-51D0-4942-B85F-68C77640870C} = {DB43B9D6-51D0-4942-B85F-68C77640870C}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MISA_Dictionary_GoodsService.ApplicationCore", "MISA_Dictionary_GoodsService.ApplicationCore\MISA_Dictionary_GoodsService.ApplicationCore.csproj", "{DB43B9D6-51D0-4942-B85F-68C77640870C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MISA_Dictionary_GoodsService.ApplicationCore", "MISA_Dictionary_GoodsService.ApplicationCore\MISA_Dictionary_GoodsService.ApplicationCore.csproj", "{DB43B9D6-51D0-4942-B85F-68C77640870C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MISA_Dictionary_GoodsService.Infrastructure", "MISA_Dictionary_GoodsService.Infrastructure\MISA_Dictionary_GoodsService.Infrastructure.csproj", "{0A625FCD-A4C3-4A17-A639-066DC7F0CE49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MISA_Dictionary_GoodsService.Infrastructure", "MISA_Dictionary_GoodsService.Infrastructure\MISA_Dictionary_GoodsService.Infrastructure.csproj", "{0A625FCD-A4C3-4A17-A639-066DC7F0CE49}"
 	ProjectSection(ProjectDependencies) = postProject
 		{DB43B9D6-51D0-4942-B85F-68C77640870C} = {DB43B9D6-51D0-4942-B85F-68C77640870C}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MISA_Dictionary_GoodsService.UI", "MISA_Dictionary_GoodsService.UI\MISA_Dictionary_GoodsService.UI.csproj", "{B354B67E-4B1A-47C6-9BAF-0FEB889DE2CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,6 +36,10 @@ Global
 		{0A625FCD-A4C3-4A17-A639-066DC7F0CE49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A625FCD-A4C3-4A17-A639-066DC7F0CE49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A625FCD-A4C3-4A17-A639-066DC7F0CE49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B354B67E-4B1A-47C6-9BAF-0FEB889DE2CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B354B67E-4B1A-47C6-9BAF-0FEB889DE2CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B354B67E-4B1A-47C6-9BAF-0FEB889DE2CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B354B67E-4B1A-47C6-9BAF-0FEB889DE2CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

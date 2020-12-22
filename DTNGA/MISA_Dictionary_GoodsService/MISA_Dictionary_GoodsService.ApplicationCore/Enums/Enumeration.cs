@@ -71,7 +71,14 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
     /// </summary>
     public enum MISACode
     {
+        /// <summary>
+        /// Thành công
+        /// </summary>
         Success = 200,
+        /// <summary>
+        /// Thêm thành công
+        /// </summary>
+        Created = 201,
 
         /// <summary>
         /// Lỗi validate dữ liệu chung

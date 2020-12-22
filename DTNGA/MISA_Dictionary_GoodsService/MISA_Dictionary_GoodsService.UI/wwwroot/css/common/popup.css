@@ -1,0 +1,93 @@
+﻿/* style Popup dùng chung */
+
+.popup-body-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #E9EBEE;
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position: center;
+}
+
+.m-popup {
+    width: 100%;
+    height: 100vh;
+    display: none;
+}
+
+.popup {
+    top: calc(50% - 150px);
+    left: calc(50% - 250px);
+    z-index: 999;
+    position: fixed;
+    background-color: #ffffff;
+    border-radius: 5px;
+}
+    /**Phần header*/
+    .popup .popup-header {
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .popup .popup-header .popup-header-text {
+            padding: 24px 24px 0 24px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .popup .popup-header .btn-exit {
+            margin-top: 0;
+        }
+    /**Phần body*/
+    .popup .popup-body {
+        display: flex;
+        padding: 24px;
+        align-items: center;
+    }
+
+        .popup .popup-body .warning-icon {
+            background-image: url('/content/icon/common/red-warning.png');
+        }
+
+        .popup .popup-body .popup-body-text {
+            width: 350px;
+            margin-left: 10px;
+            white-space: normal;
+        }
+
+            .popup .popup-body .popup-body-text span {
+                font-weight: bold;
+            }
+    /* Phần footer*/
+    .popup .popup-footer {
+        width: 100%;
+        height: 60px;
+        padding: 10px 24px;
+        display: flex;
+        justify-content: flex-end;
+        background-color: #E9EBEE;
+        border-radius: 0 0 5px 5px;
+    }
+
+        .popup .popup-footer button {
+            margin-left: 16px;
+        }
+
+        .popup .popup-footer .btn-cancel {
+            color: #000000;
+            background-color: #E9EBEE;
+        }
+
+            .popup .popup-footer .btn-cancel:hover {
+                background-color: #BBBBBB;
+            }
+
+        .popup .popup-footer .btn-delete {
+            background-color: #F65454;
+        }
+
+/* Popup thông báo */
+.popup-notification{
+
+}

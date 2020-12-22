@@ -1,0 +1,80 @@
+﻿/*Phân chia bố cục chung cho các page*/
+@import url('navbar.css');
+@import url('header.css');
+@import url('content.css');
+
+/*----------------------------*/
+/* navbar bên trái */
+.navbar {
+    float: left;
+    width: 220px;
+    background-color: #FFFFFF;
+    border-right: 1px solid #E5E5E5;
+    height: 100vh;
+}
+/* phần body bên phải*/
+.body-right{
+    min-width: 700px;
+    overflow-x: scroll;
+}
+    .body-right::-webkit-scrollbar {
+        height: 5px;
+    }
+
+    .body-right::-webkit-scrollbar-track {
+        background: #E9EBEE;
+    }
+
+    .body-right::-webkit-scrollbar-thumb {
+        background: #bbbbbb;
+        border-radius: 10px;
+    }
+
+    .body-right::-webkit-scrollbar-corner {
+        background: #E9EBEE;
+    }
+
+/*----------------------------*/
+/* Header */
+.header {
+    float: left;
+    width: calc(100% - 221px);
+    height: 48px;
+    border-bottom: 1px solid #e5e5e5;
+    display: flex;
+}
+
+/*----------------------------*/
+/* Content */
+
+.content {
+    position: absolute;
+    top: 49px;
+    left: 221px;
+    width: calc( 100% - 221px);
+    height: calc( 100vh - 49px);
+    padding: 0 16px;
+}
+
+/* Style Thông tin cung cấp thêm*/
+.extra-info {
+    width: 100%;
+    padding: 16px;
+    background-color: #e3f3ee;
+    margin-bottom: 16px;
+}
+
+    .extra-info span {
+        font-weight: bold;
+    }
+
+/* Style Thông báo không có dữ liệu trên hệ thống*/
+.empty-result {
+    padding: 16px;
+    width: 100%;
+    background-color: #FFF3EB;
+    margin-bottom: 16px
+}
+    .empty-result span {
+        font-weight: bold;
+    }

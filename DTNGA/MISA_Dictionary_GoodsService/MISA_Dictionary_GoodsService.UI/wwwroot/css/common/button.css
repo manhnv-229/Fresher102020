@@ -1,0 +1,125 @@
+﻿/* style button dùng chung*/
+
+/*button chỉ có icon*/
+.m-button-icon {
+    width: 40px;
+    height: 40px;
+    padding: 12px;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    background-color: #ffffff;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+    .m-button-icon:hover {
+        border: none;
+        outline: none;
+        background-color: #E9EBEE;
+    }
+
+    .m-button-icon:focus {
+        border: none;
+        outline: none;
+        background-color: #01B075;
+    }
+
+    /* button tròn */
+.m-button-round {
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    padding: 8px;
+    border: 1px solid #e5e5e5;
+    background-color: #ffffff;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+    .m-button-round:hover {
+        border: none;
+        outline: none;
+        background-color: #e5e5e5;
+    }
+
+    .m-button-round:focus {
+        border: none;
+        outline: none;
+        background-color: #01B075;
+        color: #ffffff;
+    }
+
+/*------------------------*/
+/* button chỉ chứa text */
+/* button với content có 1-2 từ*/
+.m-button-short {
+    width: 100px;
+    text-align: center;
+}
+/*button với content có trên 2 từ*/
+.m-button-long {
+    padding: 0 24px;
+    text-align: center;
+}
+
+/*------------------------*/
+/*button chứa text và icon*/
+.m-button {
+    background-color: #019160;
+    border-radius: 5px;
+    height: 40px;
+    color: #ffffff;
+    font-size: 13px;
+    font-family: GoogleSans-Regular;
+    padding-left: 16px;
+    padding-right: 16px;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    outline: none;
+    display: flex;
+}
+
+    .m-button:hover {
+        background-color: #2FBE8E;
+    }
+
+    .m-button:focus {
+        background-color: #01B075;
+    }
+
+    .m-button .m-btn-icon {
+        background-position: center;
+        width: 16px;
+        height: 16px;
+    }
+
+    .m-button .btn-text {
+        margin-left: 8px;
+        background-color: none;
+    }
+
+
+/*---------------------------------*/
+/*Button tại các page*/
+/*button exit*/
+.btn-exit {
+    width: 40px;
+    height: 40px;
+    border: none;
+    outline: none;
+    border-radius: 0 5px 0 5px;
+    background-image: url('/content/icon/common/BlackIcon/x.svg');
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position: center;
+    background-color: #ffffff;
+    opacity: 0.7;
+    cursor: pointer;
+    margin-top: -20px;
+}
+
+    .btn-exit:hover {
+        background-color: #bbbbbb;
+    }

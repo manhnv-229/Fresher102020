@@ -1,0 +1,135 @@
+﻿/* Style phần content dùng chung*/
+
+/* content header*/
+.content .content-header {
+    width: 100%;
+    height: 50px;
+    display: flex;
+}
+    /* header-left (title)*/
+    .content .content-header .content-header-title {
+        width: 30%;
+        align-self: center;
+        font-family: GoogleSans-Bold;
+        font-size: 24px;
+        align-self: center;
+    }
+    /* content- header-right*/
+    .content .content-header .content-header-right {
+        width: 100%;
+        display: flex;
+    }
+
+/* content filter*/
+.content .content-filter {
+    margin: 16px 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+/*Filter left*/
+.content-filter .content-filter-left {
+    display: flex;
+}
+
+    .content-filter .content-filter-left .m-input {
+        margin-top: 0;
+    }
+
+
+        /* hint */
+        .content-filter .content-filter-left .search-field::-webkit-input-placeholder {
+            font-size: 12px;
+            color: #bbbbbb;
+            font-family: GoogleSans-Regular;
+        }
+
+    .content-filter .content-filter-left .state-box {
+        width: 150px;
+        margin-left: 16px;
+        line-height: 40px;
+    }
+
+        .content-filter .content-filter-left .state-box select {
+            border: none;
+            outline: none;
+        }
+/* Filter right*/
+.content-filter .content-filter-right {
+    width: auto;
+    margin-left: auto;
+    margin-right: 0px;
+    display: flex;
+}
+
+.content-filter-right button {
+    margin-right: 0px;
+    margin-left: 16px;
+}
+
+/* content grid ( chứa bảng dữ liệu) => grid.css*/
+.content .content-body {
+    height: calc(100% - 50px);
+}
+/* paging (phần phân trang) */
+.content .paging {
+    width: 100%;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/*Left paging */
+.paging .paging-left{
+
+}
+
+    .paging .paging-left span{
+        font-weight: bold;
+    }
+    /* middle paging */
+    .paging .paging-mid {
+        display: flex;
+    }
+
+    .paging .paging-mid .m-button-icon {
+        width: 32px;
+        height: 32px;
+        padding: 8px;
+    }
+
+        .paging .paging-mid .m-button-icon:hover {
+        }
+
+        .paging .paging-mid .m-button-icon:focus {
+            background-color: none;
+        }
+
+    .paging .paging-mid .chevron-left {
+        margin-left: 24px;
+        margin-right: 10px;
+    }
+    /* Phần chứa số thứ tự trang */
+    .paging .paging-mid .paging-numbber {
+        display: flex;
+    }
+
+        .paging .paging-mid .paging-numbber .m-button-round {
+            margin-right: 10px;
+        }
+
+            .paging .paging-mid .paging-numbber .m-button-round:last-child {
+                margin-right: 0;
+            }
+
+    .paging .paging-mid .chevron-right {
+        margin-right: 24px;
+        margin-left: 10px;
+    }
+
+/*Right paging*/
+.paging .paging-right{
+
+}

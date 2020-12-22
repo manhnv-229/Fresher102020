@@ -1,0 +1,53 @@
+﻿/* Style phần header dùng chung*/
+/* header left*/
+.header .header-left {
+    width: 50%;
+    display: flex;
+}
+
+.header .header-left .m-box {
+    width: 30%;
+    margin-left: 16px;
+    border: none;
+    align-self: center;
+    font-family: GoogleSans-Medium;
+    font-size: 15px;
+}
+    .header .header-left .m-box input {
+        font-family: GoogleSans-Medium;
+        font-size: 15px;
+    }
+    .header .header-left .m-combobox .arrow-button {
+        border: none;
+    }
+    /*header right*/
+    .header .header-right {
+        width: 50%;
+        display: flex;
+    }
+
+    .header .header-right .header-right-box {
+        display: flex;
+        width: auto;
+        margin-right: 0px;
+        margin-left: auto;
+        padding-right: 16px;
+    }
+    .header .header-right .avatar {
+        height: 35px;
+        width: 35px;
+        background-image: url('/content/image/female-profile.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        align-self: center;
+        margin-left: 16px;
+    }
+    .header .header-right .username {
+        width: auto;
+        margin-left: 16px;
+        margin-right: 16px;
+        align-self: center;
+    }
+    .header .header-right .setting-more-icon {
+        align-self: center;
+    }

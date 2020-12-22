@@ -1,4 +1,5 @@
-﻿using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Repositories;
+﻿using Dapper;
+using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Repositories;
 using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,14 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
             
         }
 
+        public async Task<List<Product>> GetByFilterAsync(Guid? brandId, Guid? categoryId)
+        {
+            var parms = new DynamicParameters();
+            parms.Add("brandId", brandId);
+            parms.Add("categoryId", categoryId);
+            var sp = "Proc_GetProductByFilter";
+            return await _baseRepository.GetAsync<Product>(sp, parms);
+        }
 
         public  Product ProcessingProduct(Product product)
         {

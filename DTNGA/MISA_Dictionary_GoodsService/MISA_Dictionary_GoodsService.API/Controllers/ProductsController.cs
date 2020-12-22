@@ -28,6 +28,58 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         }
 
         /// <summary>
+        /// Lấy thông tin theo phân trang
+        /// </summary>
+        /// <param name="limit">Số bản ghi trên 1 trang</param>
+        /// <param name="offset">số thứ thự trang</param>
+        /// <returns></returns>
+        /// CreatedBy dtnga (22/12/2020)
+        [HttpGet("paging")]
+        public async Task<ActionServiceResult> GetByPagingAsync([FromQuery] int limit, [FromQuery] int offset)
+        {
+            var _actionServiceResult = new ActionServiceResult();
+            var products = await _productService.GetByPaging<Product>(limit, offset);
+            products.ForEach(p =>
+            {
+                p = _productService.ProcessingProduct(p);
+            });
+            _actionServiceResult.Data = products;
+            return _actionServiceResult;
+        }
+
+        /// <summary>
+        /// Lấy thông tin theo key tìm kiếm
+        /// </summary>
+        /// <param name="q">key tìm kiếm</param>
+        /// <returns></returns>
+        /// CreatedBy dtnga (22/12/2020)
+        [HttpGet("search")]
+        public async Task<ActionServiceResult> GetBySearchingAsync([FromQuery] string q)
+        {
+            var _actionServiceResult = new ActionServiceResult
+            {
+                Data = await _productService.GetBySearching<Product>(q)
+            };
+            return _actionServiceResult;
+        }
+
+        /// <summary>
+        /// Lấy thông tin sản phẩm theo thương hiệu và danh mục, nếu tham số null thì lấy toàn bộ
+        /// </summary>
+        /// <param name="brandId">Id thương hiệu</param>
+        /// <param name="categoryId">Id danh mục</param>
+        /// <returns></returns>
+        [HttpGet("filter")]
+        public async Task<ActionServiceResult> GetByFilterAsync([FromQuery] Guid? brandId, [FromQuery] Guid? categoryId)
+        {
+            var _actionServiceResult = new ActionServiceResult
+            {
+                Data = await _productService.GetByFilterAsync(brandId, categoryId)
+            };
+            return _actionServiceResult;
+        }
+
+        /// <summary>
         /// Lấy tất cả sản phẩm
         /// </summary>
         /// <returns></returns>

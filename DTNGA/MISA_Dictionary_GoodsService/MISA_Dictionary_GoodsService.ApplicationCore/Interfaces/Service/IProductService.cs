@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service
 {
@@ -15,5 +16,14 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service
         /// <returns></returns>
         /// CreatedBy dtnga (21/12/2020)
         Product ProcessingProduct(Product product);
+
+        /// <summary>
+        /// Lấy thông tin sản phẩm theo thương hiệu và danh mục
+        /// </summary>
+        /// <param name="brandId">Id thương hiệu</param>
+        /// <param name="categoryId">Id danh mục</param>
+        /// <returns></returns>
+        /// CreatedBy dtnga (22/12/2020)
+        Task<List<Product>> GetByFilterAsync(Guid? brandId, Guid? categoryId);
     }
 }

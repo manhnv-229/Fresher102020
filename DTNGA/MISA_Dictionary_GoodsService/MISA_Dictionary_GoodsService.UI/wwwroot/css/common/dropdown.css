@@ -1,0 +1,9 @@
+﻿/* style cho menu dropdown dùng chung*/
+.m-dropdown {
+    height: 40px;
+    border: 1px solid #BBBBBB;
+    border-radius: 4px;
+}
+    .m-dropdown:focus {
+        border: 1px solid #019160;
+    }

@@ -12,7 +12,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
     public class BaseService : IBaseService
     {
         protected readonly IBaseMemoryCache _baseMemoryCache;
-        private readonly IBaseRepository _baseRepository;
+        protected readonly IBaseRepository _baseRepository;
         readonly ActionServiceResult _actionServiceResult;
         public BaseService(IBaseMemoryCache baseMemoryCache, IBaseRepository baseRepository)
         {
@@ -68,17 +68,17 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
         {
             var entityName = typeof(T).Name;
             var sp = $"Proc_GetAll{entityName}";
-            return _baseRepository.GetAll<T>(sp);
+            return _baseRepository.Get<T>(sp);
         }
 
         public async Task<List<T>> GetAllAsync<T>()
         {
             var entityName = typeof(T).Name;
             var sp = $"Proc_GetAll{entityName}";
-            return await _baseRepository.GetAllAsync<T>(sp);
+            return await _baseRepository.GetAsync<T>(sp);
         }
 
-        public async Task<T> GetByPropertyAsync<T>(string propName, object propValue)
+        public async Task<List<T>> GetByPropertyAsync<T>(string propName, object propValue)
         {
             var entityName = typeof(T).Name;
             var sp = $"Proc_Get{entityName}By{propName}";
@@ -92,6 +92,25 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
             var sp = $"Proc_Get{entityName}By{entityName}Id";
             var parms = MappingDataTypeForOne(entityName + "Id", id);
             return await _baseRepository.GetByIdAsync<T>(sp, parms);
+        }
+
+        public async Task<List<T>> GetByPaging<T>(int limit, int offset)
+        {
+            var entityName = typeof(T).Name;
+            var sp = $"Proc_Get" + entityName + "ByPaging";
+            var parms = new DynamicParameters();
+            parms.Add("pageSize", limit);
+            parms.Add("pageIndex", offset);
+            return await _baseRepository.GetAsync<T>(sp, parms);
+        }
+
+        public async Task<List<T>> GetBySearching<T>(string keySearch)
+        {
+            var entityName = typeof(T).Name;
+            var sp = $"Proc_Get" + entityName + "BySearching";
+            var parms = new DynamicParameters();
+            parms.Add("keySearch", keySearch);
+            return await _baseRepository.GetAsync<T>(sp, parms);
         }
         #endregion
 
@@ -116,6 +135,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
                     _actionServiceResult.Message = ApplicationCore.Properties.Resources.ErrorAddEntity;
                     return _actionServiceResult;
                 }
+                _actionServiceResult.MISACode = MISACode.Created;
                 _actionServiceResult.Data = result;
                 return _actionServiceResult;
             }

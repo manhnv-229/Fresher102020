@@ -37,10 +37,9 @@ namespace MISA_Dictionary_GoodsService.Infrastructure.DatabaseContext.DbContext
         #endregion
 
         #region GET
-        public async Task<T> GetAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
+        public List<T> Get<T>(string queryCommand, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure)
         {
-            var result = await _dbConnection.QueryFirstOrDefaultAsync<T>(sp, parms, commandType: commandType);
-            return result;
+            return _dbConnection.Query<T>(queryCommand, commandType: commandType).ToList();
         }
 
         public async Task<T> GetByIdAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
@@ -49,7 +48,7 @@ namespace MISA_Dictionary_GoodsService.Infrastructure.DatabaseContext.DbContext
             return result;
         }
 
-        public async Task<List<T>> GetAllAsync<T>(string queryCommand, CommandType commandType = CommandType.StoredProcedure)
+        public async Task<List<T>> GetAsync<T>(string queryCommand, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure)
         {
             List<T> result;
             try
@@ -60,7 +59,7 @@ namespace MISA_Dictionary_GoodsService.Infrastructure.DatabaseContext.DbContext
                 {
                     try
                     {
-                        result = (await _dbConnection.QueryAsync<T>(queryCommand, commandType: commandType, transaction: tran)).ToList();
+                        result = (await _dbConnection.QueryAsync<T>(queryCommand, param: parms, commandType: commandType, transaction: tran)).ToList();
                         tran.Commit();
                     }
                     catch (Exception ex)
@@ -81,10 +80,7 @@ namespace MISA_Dictionary_GoodsService.Infrastructure.DatabaseContext.DbContext
             }
             return result;
         }
-        public List<T> GetAll<T>(string queryCommand, CommandType commandType = CommandType.StoredProcedure)
-        {
-            return (List<T>)_dbConnection.Query<T>(queryCommand, commandType);
-        }
+
         #endregion
 
         #region INSERT 

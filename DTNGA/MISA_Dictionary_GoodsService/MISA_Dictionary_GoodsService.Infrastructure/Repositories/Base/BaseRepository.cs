@@ -47,23 +47,18 @@ namespace SManage.Infrastructure.Repositories.Base
         #endregion
 
         #region Get
-        public List<T> GetAll<T>(string queryCommand, CommandType commandType = CommandType.StoredProcedure)
+        public List<T> Get<T>(string queryCommand, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure)
         {
-            return _databaseContext.GetAll<T>(queryCommand);
+            return _databaseContext.Get<T>(queryCommand);
         }
-        public Task<List<T>> GetAllAsync<T>(string queryCommand, CommandType commandType = CommandType.StoredProcedure)
+        public async Task<List<T>> GetAsync<T>(string queryCommand, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure)
         {
-            return _databaseContext.GetAllAsync<T>(queryCommand);
-        }
-
-        public Task<T> GetAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
-        {
-            return _databaseContext.GetAsync<T>(sp, parms);
+            return await _databaseContext.GetAsync<T>(queryCommand, parms);
         }
 
-        public Task<T> GetByIdAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
+        public async Task<T> GetByIdAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
-            return _databaseContext.GetByIdAsync<T>(sp, parms);
+            return await _databaseContext.GetByIdAsync<T>(sp, parms);
         }
         #endregion
 

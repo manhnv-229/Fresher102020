@@ -26,6 +26,40 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         }
 
         /// <summary>
+        /// Lấy thông tin theo phân trang
+        /// </summary>
+        /// <param name="limit">Số bản ghi trên 1 trang</param>
+        /// <param name="offset">số thứ thự trang</param>
+        /// <returns></returns>
+        /// CreatedBy dtnga (22/12/2020)
+        [HttpGet("paging")]
+        public async Task<ActionServiceResult> GetByPagingAsync([FromQuery] int limit, [FromQuery] int offset)
+        {
+            var _actionServiceResult = new ActionServiceResult
+            {
+                Data = await _baseService.GetByPaging<Brand>(limit, offset)
+            };
+            return _actionServiceResult;
+        }
+
+        /// <summary>
+        /// Lấy thông tin theo key tìm kiếm
+        /// </summary>
+        /// <param name="q">key tìm kiếm</param>
+        /// <returns></returns>
+        /// CreatedBy dtnga (22/12/2020)
+        [HttpGet("search")]
+        public async Task<ActionServiceResult> GetBySearchingAsync([FromQuery] string q)
+        {
+            var _actionServiceResult = new ActionServiceResult
+            {
+                Data = await _baseService.GetBySearching<Brand>(q)
+            };
+            return _actionServiceResult;
+        }
+
+
+        /// <summary>
         /// Lấy tất cả thương hiệu
         /// </summary>
         /// <returns></returns>
