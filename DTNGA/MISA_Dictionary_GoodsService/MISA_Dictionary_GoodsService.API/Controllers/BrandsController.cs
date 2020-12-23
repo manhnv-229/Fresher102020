@@ -150,5 +150,27 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
             }
             return response;
         }
+
+        /// <summary>
+        /// Thực hiện xóa nhiều thương hiệu
+        /// </summary>
+        /// <param name="range">danh sách chứa Id các thương hiệu cần xóa</param>
+        /// <returns></returns>
+        /// CreatedBy dtnga (23/12/2020)
+        [HttpDelete("range")]
+        public async Task<ActionServiceResult> DeleteRangeAsync([FromBody] List<Guid> range)
+        {
+            var response = await _baseService.DeleteRangeAsync<Brand>(range);
+            if (response.MISACode == MISACode.Success && brands.Count > 0)
+            {
+                // Xóa cả trong cache
+                range.ForEach(itemId =>
+                {
+                    brands.Remove(brands.Where<Brand>(p => p.BrandId == itemId).FirstOrDefault());
+                });
+                _baseMemoryCache.SetCache("Brands", brands);
+            }
+            return response;
+        }
     }
 }

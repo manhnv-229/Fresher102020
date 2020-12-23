@@ -112,7 +112,6 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
             return response;
         }
 
-        
 
         /// <summary>
         /// Cập nhật thông tin danh mục
@@ -148,6 +147,28 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
             {
                 // Cập nhật lại cache
                 categories.Remove(categories.Where<Category>(p => p.CategoryId == categoryId).FirstOrDefault());
+                _baseMemoryCache.SetCache("Categories", categories);
+            }
+            return response;
+        }
+
+        /// <summary>
+        /// Thực hiện xóa nhiều danh mục
+        /// </summary>
+        /// <param name="range">danh sách chứa Id các danh mục cần xóa</param>
+        /// <returns></returns>
+        /// CreatedBy dtnga (23/12/2020)
+        [HttpDelete("range")]
+        public async Task<ActionServiceResult> DeleteRangeAsync([FromBody] List<Guid> range)
+        {
+            var response = await _baseService.DeleteRangeAsync<Category>(range);
+            if (response.MISACode == MISACode.Success && categories.Count > 0)
+            {
+                // Xóa cả trong cache
+                range.ForEach(itemId =>
+                {
+                    categories.Remove(categories.Where<Category>(p => p.CategoryId == itemId).FirstOrDefault());
+                });
                 _baseMemoryCache.SetCache("Categories", categories);
             }
             return response;

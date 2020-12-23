@@ -1,31 +1,34 @@
 ﻿/* style cho dialog dùng chung */
 
 .m-dialog {
-    position: relative;
-    display: none;
+    position: fixed;
+    top:0;
     z-index: 999;
 }
 /*-------------------------*/
 /*Màn mờ phía sau dialog*/
 .modal {
-    width: 100%;
+    width: 100vw;
     height: 100vh;
-    margin: 0px;
+    position: fixed;
+    left: 0;
     background-color: #000000;
     opacity: 0.5;
+    z-index: 2;
 }
 
 /*-------------------------*/
 /*dialog*/
 .dialog-detail {
     width: 1000px;
-    height: calc(100vh - 48px);
     border-radius: 4px;
-    top: 24px;
-    left: calc(50% - 500px);
     position: fixed;
     z-index: 1;
     background-color: #ffffff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -65%);
+    z-index: 3;
 }
     /*header của dialog*/
     .dialog-detail .dialog-header {
@@ -47,10 +50,8 @@
     .dialog-detail .dialog-body {
         width: calc(100% - 48px);
         margin: 0 24px;
-        height: calc(100% - 120px);
         display: flex;
         justify-content: space-between;
-        overflow: scroll;
     }
 
         .dialog-detail .dialog-body::-webkit-scrollbar {
@@ -229,6 +230,7 @@
 .dialog-detail .dialog-footer {
     width: 100%;
     height: 60px;
+    margin-top: 24px;
     display: flex;
     background-color: #E9EBEE;
     align-items: center;

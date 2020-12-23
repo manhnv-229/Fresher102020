@@ -13,7 +13,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
     {
         protected readonly IBaseMemoryCache _baseMemoryCache;
         protected readonly IBaseRepository _baseRepository;
-        readonly ActionServiceResult _actionServiceResult;
+        protected ActionServiceResult _actionServiceResult;
         public BaseService(IBaseMemoryCache baseMemoryCache, IBaseRepository baseRepository)
         {
             _baseMemoryCache = baseMemoryCache;
@@ -48,11 +48,28 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
             return _actionServiceResult;
         }
 
-        public async Task<int> DeleteRangeAsync<T>(List<object> entities)
+        public async Task<ActionServiceResult> DeleteRangeAsync<T>(List<Guid> entities)
         {
-            var entityName = typeof(T).GetType().Name;
+            _actionServiceResult = new ActionServiceResult();
+            var entityName = typeof(T).Name;
             var sp = $"Proc_Delete{entityName}By{entityName}Id";
-            return await _baseRepository.DeleteRangeAsync<T>(sp, entities);
+            var listDeleted = new List<T>();
+            for( var i=0; i<entities.Count; i++)
+            {
+                var entityId = entities[i];
+                var parms = MappingDataTypeForOne($"{entityName}Id", entityId);
+                var result = await _baseRepository.DeleteAsync<T>(sp, parms);
+                if (result == null)
+                {
+                    _actionServiceResult.Success = false;
+                    _actionServiceResult.MISACode = MISACode.ErrorDeleteEntity;
+                    _actionServiceResult.Message = Properties.Resources.ErrorDeleteEntity;
+                    return _actionServiceResult;
+                }
+                listDeleted.Add(result);
+            }
+            _actionServiceResult.Data = listDeleted;
+            return _actionServiceResult;
         }
         #endregion
 

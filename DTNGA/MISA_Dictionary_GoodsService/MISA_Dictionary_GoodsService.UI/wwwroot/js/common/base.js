@@ -4,10 +4,68 @@ class Base {
         var me = this;
         me.Host = "https://localhost:44323";
         me.Route = "";
-        me.initEvent();
+        me.ObjectName = "";
     }
 
+    getRoute() {
+        var me = this;
+        me.ObjectName = $(`.content-body:visible`).attr("fieldName");
+        me.Route = "/api/v1/" + me.ObjectName + "s";
+        return me.Route;
+    }
 
+    
+    /* Hàm thực hiện khởi tạo sự kiện
+     * CreatedBy dtnga (21/11/2020)
+     * */
+    initEvent() {
+        try {
+            var me = this;
+            $(`.content-body:visible`).find(`#btn-add`).on("click", function () {
+                me.onClick_btnAdd(this);
+            });
+            $(`.content-body:visible`).find(`#btn-delete`).on("click", function () {
+                me.onClick_btnDelete(this);
+            });
+            $(`.content-body:visible`).find(`#btn-refresh`).on("click", me.onClick_btnRefresh.bind(me));
+            $(`#btn-create`).on("click", me.onClick_btnCreate.bind(me));
+            $(`#btn-clear`).on("click", me.onClick_btnClear.bind(me));
+            // TODO sự kiện khi nhập trường Tìm kiếm
+
+            // TODO Sự kiện khi chọn filter
+
+            // format khi nhập liệu số tiền
+            me.autoFormatMoney();
+            me.addFocusSupport();
+            // Sự kiện khi thao tác với từng hàng dữ liệu trong bảng
+            $(`table tbody`).on("click", "tr", me.tr_onClick);
+            $(`table tbody`).on("dblclick", "tr", function () {
+                me.onDblClick_trow(this);
+            });
+            // sự kiện khi tick vào checkbox/ nhiều checkbox
+            $(`table thead input[type="checkbox"]`).on("click", me.onClickCheckAll);
+            // sự kiện khi blur các trường input
+            $(`input`).blur(me.onBlur_inputField);
+
+            // Sự kiện khi click navitem
+            $('.nav-item').on('click', function () {
+                $('.nav-item').removeClass('select-menu-item');
+                $('.nav-item .nav-item-icon ').removeClass('active');
+                $(this).addClass('select-menu-item');
+                $(this).find(`.nav-item-icon`).addClass("active");
+                // Ẩn các content
+                $(`.content-body`).addClass("displayNone");
+                // Hiển thị content tương ứng
+                var fieldName = $(this).attr("fieldName");
+                var content = $(`.content-body[fieldName="` + fieldName + `"]`);
+                $(content).removeClass("displayNone");
+                $(`.content-header-title`).text(content.attr("titleName"));
+            })
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
 
     /**
      * Sinh combobox với danh sách option cho trước
@@ -18,6 +76,7 @@ class Base {
     createComboBox(data, targetCombo) {
         try {
             var me = this;
+            var targetCombo = $(targetCombo);
             var fieldName = $(targetCombo).attr("fieldName");
             var comboSelectBox = $(`<div class="m-input selected-box">
                                        <input class="" type="search"/>
@@ -71,51 +130,6 @@ class Base {
             $(comboButton).on("click", function () {
                 me.onClick_btnComboBoxButton(comboButton);
             });
-        }
-        catch (e) {
-            console.log(e);
-        }
-    }
-
-    /* Hàm thực hiện khởi tạo sự kiện
-     * CreatedBy dtnga (21/11/2020)
-     * */
-    initEvent() {
-        try {
-            var me = this;
-            $(`#btn-addOrder`).on("click", me.onClick_btnAdd.bind(me));
-            $(`#btn-refresh`).on("click", me.onClick_btnRefresh.bind(me));
-            $(`#btn-create`).on("click", me.onClick_btnCreate.bind(me));
-            $(`#btn-clear`).on("click", me.onClick_btnClear.bind(me));
-            // TODO sự kiện khi nhập trường Tìm kiếm
-
-            // TODO Sự kiện khi chọn filter
-
-            // format khi nhập liệu số tiền
-            me.autoFormatMoney();
-            me.addFocusSupport();
-            // Sự kiện khi thao tác với từng hàng dữ liệu trong bảng
-            $(`table tbody`).on("click", "tr", me.tr_onClick);
-            $(`table tbody`).on("dblclick", "tr", me.onDblClick_trow.bind(me));
-            // sự kiện khi tick vào checkbox/ nhiều checkbox
-            $(`table thead input[type="checkbox"]`).on("click", me.onClickCheckAll.bind(me));
-            // sự kiện khi blur các trường input
-            $(`input`).blur(me.onBlur_inputField);
-
-            // Sự kiện khi click navitem
-            $('.nav-item').on('click', function () {
-                $('.nav-item').removeClass('select-menu-item');
-                $('.nav-item .nav-item-icon ').removeClass('active');
-                $(this).addClass('select-menu-item');
-                $(this).find(`.nav-item-icon`).addClass("active");
-                // Ẩn các content
-                $(`.content-body`).addClass("displayNone");
-                // Hiển thị content tương ứng
-                var fieldName = $(this).attr("fieldName");
-                var content = $(`.content-body[fieldName="` + fieldName + `"]`);
-                $(content).removeClass("displayNone");
-                $(`.content-header-title`).text(content.attr("titleName"));
-            })
         }
         catch (e) {
             console.log(e);
@@ -271,425 +285,6 @@ class Base {
         });
     }
 
-    /**
-     * Sự kiện khi ấn lên/xuống từ bàn phím
-     * CreatedBy dtnga (10/12/2020)
-     * @param {element} element trường nhập liệu tại combobox
-     */
-    detectKeyCode_Enter(element) {
-        var me = this;
-        var parent = $(element).closest(".m-box");
-        var wrapper = $(parent).find(".wrapper");
-        $(element).on("keyup", function (e) {
-            if (e.which == 13) {
-                if ($(wrapper).hasClass(".displayNone")) {
-
-                }
-                else {
-                    var hoverdItem = $(wrapper).find('.item-hover');
-                    me.onSelect_comboItem(hoverdItem);
-                }
-            }
-        });
-    }
-
-    /** Thực hiện tự động bind dữ liệu tỉnh/thành
-     * CreatedBy dtnga (08/12/2020)
-     * */
-    autoCompleteProvince() {
-        var me = this;
-        var provinceField = $(`input[type="search"][fieldName="Province"]`);
-        // Lấy danh sách tỉnh/thành tại Việt Nam qua API
-        //me.Route = "/AdministrativeAreas/Code";
-        //$.ajax({
-        //    url: me.Host + me.Route + "?areaCode=&kind=1",
-        //    method: "GET"
-        //})
-        //.done(function (res) {
-
-        //})
-        //.fail(function (res) {
-        //    console.log(res);
-        //})
-
-        // start of ajax done function body
-        var res = resProvince;
-        // Tạo source data:
-        var listProvince = res.Data;
-        var source = [];
-        $.each(listProvince, function (index, province) {
-            var provinceName = province["AdministrativeAreaName"];
-            var provinceCode = province["AdministrativeAreaCode"];
-            source.push({
-                label: provinceName,
-                code: provinceCode
-            });
-        })
-        // Tạo autoComplete
-        $(provinceField).autocomplete({
-            source: source,
-            autoFocus: true,
-            focus: function (event, suggest) {
-                $(provinceField).val(suggest.item.label);
-            },
-            select: function (event, suggest) {
-                // bind tên tỉnh/thành lên input field
-                $(provinceField).val(suggest.item.label);
-                // Lưu mã tỉnh/thành và thực hiện complete danh sách quận/ huyện
-                var provinceCode = suggest.item.code;
-                $(provinceField).data("keyCode", provinceCode);
-                me.autoCompleteDistrict(provinceCode);
-            }
-        });
-        // End of ajax done function body
-    }
-
-    /**
-     *Thực hiện tự động bind dữ liệu quận/ huyện của tỉnh đã cho
-     * CreatedBy dtnga (08/12/2020)
-     * @param {string} provinceCode Mã tỉnh/ thành
-     */
-    autoCompleteDistrict(provinceCode) {
-        var me = this;
-        provinceCode = provinceCode.trim();
-        if (!provinceCode) {
-            provinceCode = $(`input[type="search][fieldName="Province"]`).data("keyCode");
-            if (!provinceCode) {
-                // Hiển thị popup yêu cầu nhập thông tin tỉnh thành
-                var popup = $(`.popup-notification`);
-                var popupBody = $(popup).find(`.popup-body`);
-                $(popupBody).children().remove();
-                var content = $(`<div class="popup-body-text">Thông tin tỉnh/thành không được bỏ trống. Vui lòng kiểm tra và nhập lại</div>`);
-                popupBody.append(content);
-                popup.show();
-                me.initEventPopup(popup);
-                return;
-            }
-        }
-        else {
-            // Lấy danh sách quận/ huyện theo mã tỉnh/ thành qua API
-            //me.Route = "/AdministrativeAreas/Code";
-            //$.ajax({
-            //    url: me.Host + me.Route + "?areaCode=" + provinceCode + "&kind=2",
-            //    method: "GET"
-            //})
-            //    .done(function (res) {
-
-            //    })
-            //    .fail(function (res) {
-            //        console.log(res);
-            //    })
-
-            // fake res
-            var res = resDistrict;
-            var listDistrict = res.Data;
-            // Tạo source data:
-            var source = [];
-            $.each(listDistrict, function (index, district) {
-                var districtName = district["AdministrativeAreaName"];
-                var districtCode = district["AdministrativeAreaCode"];
-                source.push({
-                    label: districtName,
-                    code: districtCode
-                });
-            })
-            // Tạo autoComplete
-            var districtField = $(`input[type="search"][fieldName="District"]`);
-            $(districtField).autocomplete({
-                source: source,
-                autoFocus: true,
-                focus: function (event, suggest) {
-                    $(districtField).val(suggest.item.label);
-                },
-                select: function (event, suggest) {
-                    // bind tên tỉnh/thành lên input field
-                    $(districtField).val(suggest.item.label);
-                    // Lưu mã tỉnh/thành và thực hiện complete danh sách quận/ huyện
-                    var districtCode = suggest.item.code;
-                    $(districtField).data("keyCode", districtCode);
-                    me.autoCompleteWard(districtCode);
-                }
-            });
-        }
-    }
-
-    /**
-     * Thực hiện bind dữ liệu phường/ xã tự động dựa theo mã quận/ huyện
-     * CreatedBy dtnga (08/12/2020)
-     * @param {string} districtCode Mã quận/ huyện
-     */
-    autoCompleteWard(districtCode) {
-        var me = this;
-        districtCode = districtCode.trim();
-        if (!districtCode) {
-            districtCode = $(`input[type="search][fieldName="District"]`).data("keyCode");
-            if (!districtCode) {
-                // Hiển thị popup yêu cầu nhập thông tin tỉnh thành
-                var popup = $(`.popup-notification`);
-                var popupBody = $(popup).find(`.popup-body`);
-                $(popupBody).children().remove();
-                var content = $(`<div class="popup-body-text">Thông tin quận/ huyện không được bỏ trống. Vui lòng kiểm tra và nhập lại</div>`);
-                popupBody.append(content);
-                popup.show();
-                me.initEventPopup(popup);
-                return;
-            }
-        }
-        else {
-            // Lấy danh sách xã/ phường theo mã quận/ huyện qua API
-            //me.Route = "/AdministrativeAreas/Code";
-            //$.ajax({
-            //    url: me.Host + me.Route + "?areaCode=" + districtCode + "&kind=3",
-            //    method: "GET"
-            //})
-            //    .done(function (res) {
-
-            //    })
-            //    .fail(function (res) {
-            //        console.log(res);
-            //    })
-
-            // fake res
-            var res = resWard;
-            var listWard = res.Data;
-            // Tạo source data:
-            var source = [];
-            $.each(listWard, function (index, ward) {
-                var wardName = ward["AdministrativeAreaName"];
-                var wardCode = ward["AdministrativeAreaCode"];
-                source.push({
-                    label: wardName,
-                    code: wardCode
-                });
-            })
-            // Tạo autoComplete
-            var wardField = $(`input[type="search"][fieldName="Ward"]`);
-            $(wardField).autocomplete({
-                source: source,
-                autoFocus: true,
-                focus: function (event, suggest) {
-                    $(wardField).val(suggest.item.label);
-                },
-                select: function (event, suggest) {
-                    // bind tên tỉnh/thành lên input field
-                    $(wardField).val(suggest.item.label);
-                    // Lưu mã tỉnh/thành và thực hiện complete danh sách quận/ huyện
-                    var wardCode = suggest.item.code;
-                    $(wardField).data("keyCode", wardCode);
-                }
-            });
-        }
-    }
-
-
-    /**
-     *Thực hiện bind dữ liệu khách hàng tự động
-     * CreatedBy dtnga (02/12/2020)
-     * @param {object} customer Thông tin khách hàng
-     */
-    autoBindCustomer(customer) {
-        var me = this;
-        if (!customer)
-            return;
-        var customerName = !customer["FullName"] ? '' : customer["FullName"].trim();
-        var phoneNumber = !customer["PhoneNumber"] ? '' : customer["PhoneNumber"].trim();
-        var address = !customer["Address"] ? '' : customer["Address"].trim();
-        var areaCode = !customer["AdministrativeAreaCode"] ? "VN" : customer["AdministrativeAreaCode"];
-        if (areaCode.length > 2) {
-            //TODO Lấy dữ liệu từ API
-            //$.ajax({
-            //    url: me.Host + me.Route + "?areaCode=" + areaCode,
-            //    method: "GET"
-            //}).done(function (res) {
-            //    var fullArea = res.data;
-            //    var province = fullArea["Province"];
-            //    var district = fullArea["District"];
-            //    var ward = fullArea["Ward"];
-            //    $(`.box-info input[fieldName="Province"]`).val(province);
-            //    $(`.box-info input[fieldName="District"]`).val(district);
-            //    $(`.box-info input[fieldName="Ward"]`).val(ward);
-            //}).fail(function (res) {
-            //    console.log(res);
-            //})
-
-            //fakde data
-            var res = resFullArea;
-            var fullArea = res.Data;
-            var province = fullArea["Province"];
-            var district = fullArea["District"];
-            var ward = fullArea["Ward"];
-            $(`.box-info input[fieldName="Province"]`).val(province["AdministrativeAreaName"]);
-            $(`.box-info input[fieldName="Province"]`).data("keyCode", province["AdministrativeAreaCode"]);
-
-            $(`.box-info input[fieldName="District"]`).val(district["AdministrativeAreaName"]);
-            $(`.box-info input[fieldName="District"]`).data("keyCode", district["AdministrativeAreaCode"]);
-
-            $(`.box-info input[fieldName="Ward"]`).val(ward["AdministrativeAreaName"]);
-            $(`.box-info input[fieldName="Ward"]`).data("keyCode", ward["AdministrativeAreaCode"]);
-        }
-        // Bind dữ liệu
-        $(`.box-info input[fieldName="CustomerName"]`).val(customerName);
-        $(`.box-info input[fieldName="PhoneNumber"]`).val(phoneNumber);
-        $(`.box-info input[fieldName="Address"]`).val(address);
-
-
-    }
-
-    /**
-     * Thực hiện gen và thêm sản phẩm mới vào giỏ hàng
-     * CreatedBy dtnga (01/12/2020)
-     * @param {object} product
-     */
-    addProductToCart(product) {
-    }
-
-    /**Thực hiện cập nhật tổng tiền của giỏ hàng khi thay đổi giá sản  phẩm
-     * CreatedBy dtnga (01/12/2020)
-     * */
-    onChangeProductPrice(priceInput) {
-        try {
-            var newPrice = convertInt($(priceInput).attr("value"));
-            var currentProduct = $(priceInput).closest('.product-detail');
-            var quantity = convertInt($(currentProduct).find(`input[type="number"]`).val());
-            var newCost = quantity * newPrice;
-            // Cập nhật tổng tiền sản phẩm
-            $(currentProduct).find(`.cost`).text(formatMoney(newCost));
-            $(currentProduct).find(`.cost`).attr("value", newCost);
-        }
-        catch (e) {
-            console.log(e);
-        }
-    }
-
-    /** Thực hiện lại tổng số lượng và số tiền các sản phẩm trong giỏ hàng 
-     * CreatedBy dtnga (02/12/2020)
-     */
-    calcculateTotal() {
-        try {
-            //Cập nhật tổng số lượng sản phẩm trong giỏ hàng
-            var totalQuantity = $(`#order-add .product-list`).children().length - 1; // trừ empty mark đi
-            $(`.total-quantity span`).text(totalQuantity);
-            // Nếu trống thì hiển thị empty mark
-            if (totalQuantity <= 0) {
-                var emptyMark = $(`.product-list .empty-mark`);
-                $(emptyMark).removeClass(`displayNone`);
-            }
-            // Cập nhật tổng số tiền giỏ hàng
-            var productList = $(`#order-add .product-list .product-detail`);
-            var newTotal = 0;
-            $.each(productList, function (index, item) {
-                var cost = convertInt($(item).find(`.cost`).attr("value"));
-                newTotal = newTotal + cost;
-            });
-            $(`#order-add .total-money`).text(formatMoney(newTotal));
-            $(`#order-add .total-money`).attr("value", newTotal);
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-    /**
-     *  Thực hiện cập nhật tổng tiền sản phẩm khi cập nhật số lượng sản phẩm
-     * CreatedBy dtnga (01/12/2020)
-     * @param {any} quantity
-     */
-    onChangeAmount(quantity) {
-        try {
-            var newQuantity = convertInt($(quantity).val());
-            var currentProduct = $(quantity).closest('.product-detail');
-            var currentPrice = convertInt($(currentProduct).find(`input[typeFormat="money"]`).attr("value"));
-            var newCost = currentPrice * newQuantity;
-            // Cập nhật tổng tiền sản phẩm
-            $(currentProduct).find(`.cost`).text(formatMoney(newCost));
-            $(currentProduct).find(`.cost`).attr("value", newCost);
-        }
-        catch (e) {
-            console.log(e);
-        }
-    }
-
-    /** Thực hiện thêm sản phẩm vào giỏ hàng
-     * CreatedBy dtnga (29/11/2020)
-     * */
-    onClick_addToShoppingCard() {
-        try {
-            var me = this;
-            //Lấy thông tin sản phẩm
-            var productCodeField = $(`#order-add input[type="search"][fieldName="ProductCode"]`);
-            var productCode = productCodeField.val().trim();
-
-            // Hoặc lấy qua API bằng ProductCode
-            //$.ajax({
-            //    url: "" + "/" + productCode,
-            //    method: "GET",
-            //}).done(function (data) {
-
-            //}).fail(function (res) {
-            //    console.log(res);
-            //});
-            var product = listProduct.find(p => p["ProductCode"] == productCode);
-            // Đưa ra thông báo sản phẩm không tồn tại
-            if (!product) {
-                var popup = $(`.popup-notification`);
-                var popupBody = $(popup).find(`.popup-body`);
-                $(popupBody).children().remove();
-                var content = $(`<div class="popup-body-text">Sản phẩm mã <span> ` + productCode + ` </span> không tồn tại. Vui lòng kiểm tra và nhập lại</div>`);
-                popupBody.append(content);
-                popup.show();
-                me.initEventPopup(popup);
-                return;
-            }
-            // Đưa ra thông báo sản phẩm đã hết
-            else if (product["Amount"] <= 0) {
-                var popup = $(`.popup-notification`);
-                var popupBody = $(popup).find(`.popup-body`);
-                $(popupBody).children().remove();
-                var content = $(`<div class="popup-body-text">Sản phẩm mã <span> ` + productCode + ` </span> hiện đã hết. Vui lòng kiểm tra và nhập lại</div>`);
-                popupBody.append(content);
-                popup.show();
-                me.initEventPopup(popup);
-                return;
-            }
-            else {
-                // Thêm sản phẩm vào giỏ hàng
-                // Nếu sản phẩm đã có trong giỏ hàng => số lượng + 1 và tăng tổng tiền
-                var existProducts = $(`.product-list .product-detail`);
-                var addNew = 1;
-                // Nếu đã tồn tại trong giỏ hàng => cập nhật số lượng + số tiền 
-                if (existProducts) {
-                    $.each(existProducts, function (index, item) {
-                        var code = $(item).find(`.product-code`).text().trim();
-                        if (code == productCode) {
-                            $(item).find(`.quantity`).val(function (i, oldval) {
-                                return ++oldval;
-                            })
-                            var productPrice = convertInt(product["CurrentPrice"]);
-                            var oldCost = $(item).find(`.cost`).attr("value");
-                            var newCost = convertInt(oldCost) + productPrice;
-                            $(item).find(`.cost`).text(formatMoney(newCost));
-                            $(item).find(`.cost`).attr("value", newCost);
-                            addNew = 0;
-                            // Cập nhật tổng giá trị giỏ hàng
-                            var oldTotal = convertInt($(`.total-money`).attr("value"));
-                            var newTotal = oldTotal + productPrice;
-                            $(`.total-money`).text(formatMoney(newTotal));
-                            $(`.total-money`).attr("value", newTotal);
-                        }
-                    })
-                }
-                // Nếu chưa tồn tại trong giỏ hàng => thêm mới
-                if (addNew == 1) {
-                    // Ẩn Empty mark 
-                    var emptyMark = $(`.product-list .empty-mark`);
-                    $(emptyMark).addClass(`displayNone`);
-                    me.addProductToCart(product);
-                }
-            }
-        }
-        catch (e) {
-            console.log(e);
-        }
-    }
 
     /**
      * Hàm thực hiện khởi tạo sự kiện trên popup
@@ -698,32 +293,17 @@ class Base {
      */
     initEventPopup(popup) {
         $(`.m-popup #btn-exit-popup`).on("click", function () {
-            $(popup).hide();
+            $(popup).addClass("displayNone");
         });
-        $(`.m-popup #btn-close`).on("click", function () {
-            $(popup).hide();
+        $(`.m-popup #btn-cancel-popup`).on("click", function () {
+            $(popup).addClass("displayNone");
         });
         $('body').on("keydown", function (e) {
             if (e.which === 27)
-                $(popup).hide();
+                $(popup).addClass("displayNone");
         });
     }
 
-    /**
-     * Thực hiện xóa một sản phẩm trong giỏ hàng
-     * ModifiedBy dtnga (02/12/2020)
-     * @param {Element} button button xóa tại mỗi dòng sản phẩm
-     */
-    onClick_deleteProduct(button) {
-        try {
-            var productdetail = $(button).closest(".product-detail");
-            // Xóa dòng chứa thông tin sản phẩm
-            $(productdetail).remove();
-        }
-        catch (e) {
-            console.log(e);
-        }
-    }
 
     /** Hàm thực hiện set AutoComplete cho các trường yêu cầu AutoComplete
      * CreatedBy dtnga (28/11/200)
@@ -830,30 +410,140 @@ class Base {
     /** Hàm thực hiện thêm dữ liệu mới
      * Created By dtnga (21/11/2020)
      * */
-    onClick_btnAdd() {
+    onClick_btnAdd(buttonAdd) {
         try {
             var me = this;
             me.formMode = "add";
-            me.showDialog();
+            var dialog = $(buttonAdd).closest(`.content-body`).find(`.m-dialog`);
+            me.showDialog(dialog);
         } catch (e) {
             console.log(e);
         }
     }
 
-    /** Thực hiện hiển thị dialog và khởi tạo các sự kiện liên quan
+    /**
+     *  thực hiện xóa bản ghi được chọn khi click button Xóa
+     *  CreatedBy dtnga (23/12/2020)
+     * @param {any} buttonDelte
+     */
+    onClick_btnDelete(buttonDelete) {
+        try {
+            var me = this;
+            var button = $(buttonDelete);
+            // Hiện Popup Xóa
+            var popup = $(`#popup-delete`);
+            var bodyPopupText = $(popup).find(`.popup-body-text`);
+
+            $(popup).removeClass("displayNone");
+            me.initEventPopup(popup);
+            // Sự kiện khi click button Xóa
+            $(popup).find(`.btn-delete`).on("click", function () {
+                var parentBody = $(button).closest(`.content-body`);
+                var selectedRows = $(parentBody).find(`table tr.selected`);
+                var data = [];
+                $.each(selectedRows, function (index, item) {
+                    data.push($(item).data("keyId"));
+                })
+
+                me.Route = me.getRoute();
+                $.ajax({
+                    url: me.Host + me.Route + "/range",
+                    method: "DELETE",
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    dataType: "json",
+                })
+                    .done(function (res) {
+                        // Ẩn popup
+                        $(popup).addClass("displayNone");
+                        //Lấy row ngay sau row được chọn và chuyển nó sang trạng thái selected
+                        var nextRow = $(selectedRows).last().next();
+                        nextRow.addClass("selected");
+                        $(nextRow).find(`input[type=checkbox]`).prop("checked", true);
+                        // Remove rows được chọn hiện tại
+                        $(selectedRows).remove();
+                        // Hiển thị toast thông báo thành công
+                        me.showToastMesseger("Xóa thành công", "success");
+                    })
+                    .fail(function (res) {
+                        console.log(res);
+                        // Ẩn popup
+                        $(popup).addClass("displayNone");
+                        // Hiển thị toast thông báo lỗi
+                        me.showToastMesseger("Xóa không thành công", "fail");
+                    })
+            });
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    /**
+     * Hiển thị Toast messeger thông báo
+     * @param {string} mes Câu thông báo
+     * @param {string} state Trạng thái thông báo (success/fail)
+     */
+    showToastMesseger(mes, state) {
+        try {
+            var me = this;
+            if (state.toLowerCase() == "success") {
+                // Hiển thị thông báo thành công
+                var toastMes = $(`#success-messeger`);
+                $(toastMes).find(`.messeger`).text(mes);
+                $(toastMes).show();
+                me.initEventToastMesseger(toastMes);
+            }
+            if (state.toLowerCase()=="fail"){
+                // Hiển thị thông báo thất bại
+                var toastMes = $(`#fail-messeger`);
+                $(toastMes).find(`.messeger`).text(mes);
+                $(toastMes).show();
+                me.initEventToastMesseger(toastMes);
+            }
+            //Set timeout, popup tự đóng sau 3s
+            setTimeout(function () {
+                $(`.m-toast-messeger`).hide();
+            }, 2000);
+
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    /**
+     * Sự kiện trên Toast thông báo
+     * CreatedBy dtnga (23/12/2020)
+     * @param {Element} toastMes ToastMessger
+     */
+    initEventToastMesseger(toastMes) {
+        var toastMessger = $(toastMes);
+        $(toastMessger).find(`.btn-exit-messeger`).on("click", function () {
+            $(toastMessger).hide();
+        });
+    }
+    /**
+     * Thực hiện hiển thị dialog và khởi tạo các sự kiện liên quan
      * CreatedBy dtnga (26/11/2020)
-     * */
-    showDialog() {
+     * @param {Element} dialog dialog cần hiển thị
+     */
+    showDialog(dialog) {
         var me = this;
-        var dialog = $(`.m-dialog`);
+        var dialog = $(dialog);
         dialog.show();
         // đóng form khi nhấn ESC
-        $('body').on("keydown", me.onClick_ESC.bind(dialog));
+        $('body').on("keydown", function (e) {
+            if (e.which === 27)
+                $(dialog).addClass("displayNone");
+        });
         $(`#btn-exit`).on("click", me.onClick_Exit_Dialog.bind(me));
         $(`#btn-cancel`).on("click", me.onClick_Exit_Dialog.bind(me));
         $(`#btn-save`).on("click", me.onClick_btnSave.bind(me));
         //$(`#btn-saveAdd`).on("click", me.onClick_btnSaveAdd.bind(me));
     }
+
+    
 
     /** Tự động format các trường input số tiền 
     * CreatedBy dtnga (26/11/2020) 
@@ -955,7 +645,7 @@ class Base {
         }
     }
 
-    /** Kiểm tra input /ó hợp lệ không 
+    /** Kiểm tra input có hợp lệ không 
     * CreatedBy dtnga (08/12/2020)
      */
     onBlur_inputField() {
@@ -973,29 +663,7 @@ class Base {
             }
         }
     }
-    /** 
-     * TODO bị lặp/ Kiểm tra trường bắt buộc nhập trước
-     * CreatedBy dtnga(08/12/2020)
-     * */
-    onFocus_inputField() {
-        var input = this;
-        var requiedField = $(input).attr("requiredField");
-        if (requiedField) {
-            var contentBox = $(this).closest(".content-box");
-            var requiredInput = $(contentBox).find(`input[fieldName=` + requiedField + `]`);
-            var requiredValue = $(requiredInput).val();
-            if (!requiredValue) {
-                var popup = $(`.popup-notification`);
-                var popupBody = $(popup).find(`.popup-body`);
-                $(popupBody).children().remove();
-                var content = $(`<div class="popup-body-text">Vui lòng chọn thông tin tỉnh/thành trước</div>`);
-                popupBody.append(content);
-                popup.show();
-                me.initEventPopup(popup);
-                return;
-            }
-        }
-    }
+   
     /**Kiểm tra dữ liệu, nếu trống thì cảnh báo
      * Createdby dtnga (14/11/2020)
      * */
@@ -1042,17 +710,6 @@ class Base {
         dialog.hide();
     }
 
-    /** Hàm thực hiện đóng form khi người dùng nhấn ESC
-     * CreatedBy dtnga (26/11/2020)
-     * */
-    onClick_ESC() {
-        var me = this;
-        me.on("keydown", function (e) {
-            if (e.which === 27) {
-                me.hide();
-            }
-        });
-    }
     /** Thực hiện clear dữ liệu và cảnh báo trên object truyền vào hàm
     * CreatedBy dtnga (17/11/2020) 
     */
@@ -1079,54 +736,79 @@ class Base {
     * CreatedBy dtnga (21/11/2020)
     * */
     tr_onClick() {
-        if ($(`thead input[type="checkbox"]`).is(":checked")) {
-            $(`thead input[type="checkbox"]`).prop("checked", false);
-            $(`tbody input[type="checkbox"]`).prop("checked", false);
-            $(`tbody tr`).removeClass("selected");
+        try {
+            if ($(`thead input[type="checkbox"]`).is(":checked")) {
+                $(`thead input[type="checkbox"]`).prop("checked", false);
+                $(`tbody input[type="checkbox"]`).prop("checked", false);
+                $(`tbody tr`).removeClass("selected");
+                $(this).addClass("selected");
+                $(this).find(`input[type="checkbox"]`).prop("checked", true);
+                return;
+            }
+            if ($(this).hasClass("selected")) {
+                $(this).removeClass("selected");
+                $(this).find(`input[type="checkbox"]`).prop("checked", false);
+                return;
+            }
             $(this).addClass("selected");
             $(this).find(`input[type="checkbox"]`).prop("checked", true);
-            return;
+            var deleleteBtn = $(this).closest(`.content-body`).find(`#btn-delete`);
+            deleleteBtn.prop("disabled", false);
         }
-        else {
-            $(this).addClass("selected");
-            $(this).find(`input[type="checkbox"]`).prop("checked", true);
+        catch (e) {
+            console.log(e);
         }
     }
+
 
     /**
      * Hiển thị form Sửa thông tin khi double click vào 1 bản ghi
      * CreatedBy dtnga (21/11/2020)
-     * */
-    onDblClick_trow() {
-        var me = this;
-        me.formMode = "edit";
-        //Đổi màu hàng dữ liệu
-        var selected = $(`tbody`).find(`tr.selected`);
-        $(`tbody tr`).removeClass("selected");
-        $(selected).addClass("selected");
-        //Show form cập nhật đơn hàng
-        $(`.m-dialog .header-text`).text("Cập nhật đơn hàng");
-        // Hiển thị dialog
-        me.showDialog();
-        //TODO  bind dữ liệu hàng được chọn lên form
-        var id = selected.data('keyId');
-        // Lấy thông tin từ api bằng id tương ứng
+     * @param {Element} row Row được click
+     */
+    onDblClick_trow(row) {
+        try {
+            var me = this;
+            me.formMode = "edit";
+            //Đổi màu hàng dữ liệu
+            var selected = $(row);
+            $(row).closest(`tbody`).find(`tr`).removeClass("selected");
+            $(selected).addClass("selected");
+            //Show form cập nhật đơn hàng
+            var dialog = $(selected).closest(`.content-body`).find(`.m-dialog`);
+            $(dialog).find(`.header-text`).text("CẬP NHẬT");
+            // Hiển thị dialog
+            me.showDialog(dialog);
+            //TODO  bind dữ liệu hàng được chọn lên form
+            var id = selected.data('keyId');
+            // Lấy thông tin từ api bằng id tương ứng
 
 
+
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
 
     /** Thực hiện chọn tất cả bản ghi
     * CreatedBy dtnga (21/11/2020)
      */
     onClickCheckAll() {
-        var Allcheckbox = $(`table thead input[type="checkbox"]:checked`);
-        if (Allcheckbox.length > 0) {
-            $(`tbody input[type="checkbox"]`).prop("checked", true);
-            $(`tbody tr`).addClass("selected");
+        try {
+            var checkboxAll = this;
+            var parentTable = $(this).closest(`table`);
+            if ($(checkboxAll).is(":checked")) {
+                $(parentTable).find(`tbody input[type="checkbox"]`).prop("checked", true);
+                $(parentTable).find(`tbody tr`).addClass("selected");
+            }
+            else {
+                $(parentTable).find(`tbody input[type="checkbox"]`).prop("checked", false);
+                $(parentTable).find(`tbody tr`).removeClass("selected");
+            }
         }
-        else {
-            $(`tbody input[type="checkbox"]`).prop("checked", false);
-            $(`tbody tr`).removeClass("selected");
+        catch (e) {
+            console.log(e);
         }
     }
 
@@ -1134,15 +816,23 @@ class Base {
      *CreatedBy dtnga (08/12/2020) 
      **/
     onClickCheckBox() {
-        var checkbox = this;
-        if ($(this).is(":checked")) {
-            $(this).prop("checked", false);
+        try {
+            var checkbox = this;
+            if ($(this).is(":checked")) {
+                $(this).prop("checked", false);
+                var trow = $(checkbox).closest(`tr`);
+                $(trow).removeClass("selected");
+                return;
+            }
+
             var trow = $(checkbox).closest(`tr`);
-            $(trow).removeClass("selected");
-            return;
+            $(trow).addClass("selected");
+            var deleleteBtn = $(this).closest(`.content-body`).find(`#btn-delete`);
+            deleleteBtn.prop("disabled", false);
         }
-        var trow = $(checkbox).closest(`tr`);
-        $(trow).addClass("selected");
+        catch (e) {
+            console.log(e);
+        }
     }
 
     /**
@@ -1180,7 +870,7 @@ class Base {
                             var fieldName = $(th).attr('fieldName');
                             if (fieldName == "Checkbox") {
                                 var checkbox = $(`<div><label class="m-checkbox">
-                                                <input class="checkbox" type="checkbox" name="order" />
+                                                <input class="checkbox" type="checkbox" name="row" />
                                                 <span class="checkmark"></span>
                                       </label></div>`);
                                 td.append(checkbox);
@@ -1218,9 +908,10 @@ class Base {
                         tr.data('keyId', obj[keyIdName]);
                     })
                     // Mặc định chọn row đầu tiên
-                    $(`tbody tr:first`).select();
-                    $(`tbody tr:first`).addClass("selected");
-                    $(`tbody tr:first input[type="checkbox"]`).prop("checked", true);
+                    $(table).find(`tbody tr:first`).select();
+                    $(table).find(`tbody tr:first`).addClass("selected");
+                    $(table).find(`tbody tr:first input[type="checkbox"]`).prop("checked", true);
+                    $(table).closest(`.content-body`).find(`#btn-delete`).prop("disabled", false);
                 })
                 .fail(function (res) {
                     console.log(res);

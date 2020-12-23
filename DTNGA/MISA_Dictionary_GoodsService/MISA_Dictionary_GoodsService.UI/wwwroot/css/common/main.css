@@ -75,6 +75,11 @@ a {
 .flex-end {
     align-self: flex-end;
 }
+
+/**/
+.displayNone{
+    display:none;
+}
 /*----------------------------*/
 /* font */
 @font-face {

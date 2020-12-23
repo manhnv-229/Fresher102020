@@ -1,6 +1,6 @@
-﻿/* style cho Combobox dùng chung*/
+﻿/* style cho box dùng chung*/
 
-.m-combobox {
+.m-box {
     height: 40px;
     width: 100%;
     min-width: 150px;
@@ -13,11 +13,11 @@
     border: 1px solid #019160;
 }
 
-.m-combobox:focus {
+.m-box:focus {
     border: 1px solid #019160;
 }
 
-.m-combobox .selected-box {
+.m-box .selected-box {
     width: 100%;
     height: 100%;
     display: flex;
@@ -26,7 +26,7 @@
     border: none;
 }
     /* khung nhập bên trong combo box*/
-    .m-combobox .selected-box input {
+    .m-box .selected-box input {
         width: calc(100% - 40px);
         margin-top: 0;
         border: none;

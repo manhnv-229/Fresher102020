@@ -32,7 +32,9 @@
 .content-filter .content-filter-left {
     display: flex;
 }
-
+    .content-filter .content-filter-left div{
+        margin-right: 16px;
+    }
     .content-filter .content-filter-left .m-input {
         margin-top: 0;
     }
@@ -67,7 +69,9 @@
     margin-right: 0px;
     margin-left: 16px;
 }
-
+.content-filter-right .delete-icon{
+    background-size: contain;
+}
 /* content grid ( chứa bảng dữ liệu) => grid.css*/
 .content .content-body {
     height: calc(100% - 50px);
@@ -132,4 +136,9 @@
 /*Right paging*/
 .paging .paging-right{
 
+}
+
+/* Style riêng cho từng content-body*/
+#product .m-dialog .dialog-col{
+    width: 50%;
 }

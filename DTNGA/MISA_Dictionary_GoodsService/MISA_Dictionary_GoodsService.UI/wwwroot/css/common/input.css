@@ -171,6 +171,7 @@ input[typeFormat="money"], input[type="number"] {
     overflow: hidden;
     text-overflow: ellipsis;
     resize: vertical;
+    max-height: 200px;
 }
 
 /* Input Search field*/

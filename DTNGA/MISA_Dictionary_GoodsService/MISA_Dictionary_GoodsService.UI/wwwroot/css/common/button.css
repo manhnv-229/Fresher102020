@@ -25,18 +25,27 @@
         background-color: #01B075;
     }
 
-    /* button tròn */
-.m-button-round {
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    padding: 8px;
-    border: 1px solid #e5e5e5;
-    background-color: #ffffff;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
+button:disabled,
+button[disabled] {
+    background-color: #e5e5e5;
+    opacity: 0.5;
 }
+    button:disabled,
+    button[disabled] ~ .m-icon{
+        opacity : 0.5;
+    }
+    /* button tròn */
+    .m-button-round {
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        padding: 8px;
+        border: 1px solid #e5e5e5;
+        background-color: #ffffff;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+    }
     .m-button-round:hover {
         border: none;
         outline: none;

@@ -27,7 +27,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service.Base
         /// <param name="commandType">Loại truy vấn</param>
         /// <returns>Số bản ghi xóa thành công</returns>
         /// CreatedBy dtnga (11/11/2020)
-        Task<int> DeleteRangeAsync<T>(List<object> entities);
+        Task<ActionServiceResult> DeleteRangeAsync<T>(List<Guid> entities);
 
         #endregion
 
