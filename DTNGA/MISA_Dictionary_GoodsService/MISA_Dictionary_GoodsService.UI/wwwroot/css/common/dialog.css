@@ -20,7 +20,8 @@
 /*-------------------------*/
 /*dialog*/
 .dialog-detail {
-    width: 1000px;
+    width: 60%;
+    min-width: 500px;
     border-radius: 4px;
     position: fixed;
     z-index: 1;
@@ -73,7 +74,7 @@
         }
 
         .dialog-detail .dialog-body .dialog-col {
-            margin-right: 48px;
+            margin-right: 24px;
         }
 
             .dialog-detail .dialog-body .dialog-col:last-child {

@@ -14,7 +14,7 @@ class Base {
         return me.Route;
     }
 
-    
+
     /* Hàm thực hiện khởi tạo sự kiện
      * CreatedBy dtnga (21/11/2020)
      * */
@@ -104,7 +104,6 @@ class Base {
             })
             wrapper.append(comboItemBox);
             targetCombo.append(wrapper);
-
             // sự kiện khi click ra ngoài combo-item-box => đóng comboItemBox
             me.detectClickOutside(wrapper);
             // Focus vào item đầu tiên
@@ -121,7 +120,10 @@ class Base {
                 $(targetCombo).removeClass("green-border");
             })
             me.detectKeyCode(comboInputField);
-
+            // Sự kiện khi click erase icon trong input search
+            $(comboInputField).on("search", function () {
+                $(targetCombo).data("keyId", null);
+            });
             // sự kiện khi click chọn combo item
             $(comboItemBox).find(`.item`).on("click", function () {
                 me.onSelect_comboItem(this);
@@ -192,9 +194,11 @@ class Base {
             $(item).find(`.option-icon .check-icon`).addClass("displayNone");
         })
         // item được chọn
+        $(item).removeClass("item-hover");
         $(item).addClass("selected");
         $(item).find(`.option-icon .check-icon`).removeClass("displayNone");
         // ẩn option box 
+        $(comboItemBox).find(`.item:first-child`).addClass("item-hover");
         $(comboItemBox).parent().addClass("displayNone");
         // đổ dữ liệu lên input field
         var optionText = $(item).find(`.option-text`);
@@ -232,7 +236,7 @@ class Base {
                 // Nếu target không phải container
                 if (!container.is(e.target) && container.has(e.target).length === 0) {
                     $(container).addClass("displayNone");
-                    $(container).children().removeClass("item-hover");
+                    $(container).find(`.item`).removeClass("item-hover");
                     $(container).find(`.item:first-child`).addClass("item-hover");
                     $(parent).find(`.arrow-button`).removeClass("rotate");
                     $(parent).find(`.arrow-button`).removeClass("arrow-button-clicked");
@@ -273,18 +277,24 @@ class Base {
             } else if (e.which == 38) {
                 $(innerWrapper).find('.item:not(:first-child).item-hover').removeClass('item-hover').prev().addClass('item-hover');
             }
-            $(wrapper).scrollTop(0);//set to top
-
-            var itemOffsetTop = $('.item-hover:first').offset().top;
-            $(wrapper).scrollTop(itemOffsetTop);
-            var wrapperHeight = $(wrapper).offset().top;
-            if (itemOffsetTop >= wrapperHeight)
-                $(wrapper).scrollTop(itemOffsetTop);
-            else
-                $(wrapper).scrollTop(itemOffsetTop);
+            me.centerItFixedHeight($(wrapper).find('.item-hover'), wrapper);
         });
     }
 
+    /**
+     * Thực hiện đưa target vào giữa của outer (theo chiều dọc)
+     * CreatedBy dtnga (23/12/2020)
+     * @param {any} target item cần đưa vào giữa
+     * @param {any} outer  thành phần scroll chứa các item
+     */
+    centerItFixedHeight(target, outer) {
+        var out = $(outer);
+        var tar = $(target);
+        var x = out.height();
+        var y = tar.outerHeight(true);
+        var z = tar.index();
+        out.scrollTop(Math.max(0, (y * z) - (x - y) / 2));
+    }
 
     /**
      * Hàm thực hiện khởi tạo sự kiện trên popup
@@ -494,7 +504,7 @@ class Base {
                 $(toastMes).show();
                 me.initEventToastMesseger(toastMes);
             }
-            if (state.toLowerCase()=="fail"){
+            if (state.toLowerCase() == "fail") {
                 // Hiển thị thông báo thất bại
                 var toastMes = $(`#fail-messeger`);
                 $(toastMes).find(`.messeger`).text(mes);
@@ -543,7 +553,7 @@ class Base {
         //$(`#btn-saveAdd`).on("click", me.onClick_btnSaveAdd.bind(me));
     }
 
-    
+
 
     /** Tự động format các trường input số tiền 
     * CreatedBy dtnga (26/11/2020) 
@@ -663,7 +673,7 @@ class Base {
             }
         }
     }
-   
+
     /**Kiểm tra dữ liệu, nếu trống thì cảnh báo
      * Createdby dtnga (14/11/2020)
      * */

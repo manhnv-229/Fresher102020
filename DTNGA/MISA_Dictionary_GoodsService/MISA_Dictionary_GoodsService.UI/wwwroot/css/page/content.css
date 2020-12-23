@@ -32,7 +32,7 @@
 .content-filter .content-filter-left {
     display: flex;
 }
-    .content-filter .content-filter-left div{
+    .content-filter .content-filter-left > *{
         margin-right: 16px;
     }
     .content-filter .content-filter-left .m-input {

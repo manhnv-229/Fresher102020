@@ -7,7 +7,6 @@
     border: 1px solid #bbbbbb;
     border-radius: 5px;
     outline: none;
-    margin-top: 4px;
     padding-left: 16px;
     display: flex;
 }
@@ -56,6 +55,7 @@
 /* * đỏ thể hiện trường bắt buộc nhập */
 .input-box .input-title {
     font-family: GoogleSans-Bold;
+    margin-bottom: 4px;
 }
 .input-box .input-title span {
     color: #FF4747;
