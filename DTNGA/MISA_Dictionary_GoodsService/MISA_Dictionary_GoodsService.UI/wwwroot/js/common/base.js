@@ -258,7 +258,7 @@ class Base {
         var wrapper = $(parent).find(`.wrapper`);
         var innerWrapper = $(parent).find(".inner-wrapper");
 
-        $(element).on("keyup", function (e) {
+        $(element).on("keydown", function (e) {
             if (e.which == 13) {
                 if ($(wrapper).hasClass(".displayNone")) {
                 }
@@ -497,25 +497,32 @@ class Base {
     showToastMesseger(mes, state) {
         try {
             var me = this;
-            if (state.toLowerCase() == "success") {
-                // Hiển thị thông báo thành công
-                var toastMes = $(`#success-messeger`);
+            if (mes && state) {
+                var toastMes = $(`.m-toast-messeger`);
                 $(toastMes).find(`.messeger`).text(mes);
+                var iconMes = $(toastMes).find(`.content-icon`);
+                var iconExit = $(toastMes).find(`.btn-exit-messeger`);
+                if (state.toLowerCase() == "success") {
+                    // Hiển thị thông báo thành công
+                    $(iconMes).removeClass("fail");
+                    $(iconExit).removeClass("fail");
+                    $(iconMes).addClass("success");
+                    $(iconExit).addClass("success");
+                }
+                if (state.toLowerCase() == "fail") {
+                    // Hiển thị thông báo thất bại
+                    $(iconMes).removeClass("success");
+                    $(iconExit).removeClass("success");
+                    $(iconMes).addClass("fail");
+                    $(iconExit).addClass("fail");
+                }
                 $(toastMes).show();
                 me.initEventToastMesseger(toastMes);
+                //Set timeout, popup tự đóng sau 3s
+                setTimeout(function () {
+                    $(`.m-toast-messeger`).hide();
+                }, 2000);
             }
-            if (state.toLowerCase() == "fail") {
-                // Hiển thị thông báo thất bại
-                var toastMes = $(`#fail-messeger`);
-                $(toastMes).find(`.messeger`).text(mes);
-                $(toastMes).show();
-                me.initEventToastMesseger(toastMes);
-            }
-            //Set timeout, popup tự đóng sau 3s
-            setTimeout(function () {
-                $(`.m-toast-messeger`).hide();
-            }, 2000);
-
         }
         catch (e) {
             console.log(e);
@@ -533,6 +540,7 @@ class Base {
             $(toastMessger).hide();
         });
     }
+
     /**
      * Thực hiện hiển thị dialog và khởi tạo các sự kiện liên quan
      * CreatedBy dtnga (26/11/2020)
@@ -552,8 +560,6 @@ class Base {
         $(`#btn-save`).on("click", me.onClick_btnSave.bind(me));
         //$(`#btn-saveAdd`).on("click", me.onClick_btnSaveAdd.bind(me));
     }
-
-
 
     /** Tự động format các trường input số tiền 
     * CreatedBy dtnga (26/11/2020) 

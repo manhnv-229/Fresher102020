@@ -26,29 +26,29 @@
         margin: 16px;
     }
 /* Messeger thông báo thành công*/
-#success-messeger .toast-messeger .messeger-icon {
-    border-radius: 50%;
-    background-image: url('/content/icon/common/complete.png');
-}
+    .toast-messeger .content-icon.success {
+        border-radius: 50%;
+        background-image: url('/content/icon/common/complete.png');
+    }
+
+        .toast-messeger .btn-exit-messeger.success {
+            background-image: url('/content/icon/common/exitgreen.png');
+            background-size: 16px;
+            background-color: #ffffff;
+            border: none;
+            outline: none;
+        }
 
 /* Messeger thông báo thất bại*/
-#success-messeger .toast-messeger .btn-exit-messeger {
-    background-image: url('/content/icon/common/exitgreen.png');
-    background-size: 16px;
-    background-color: #ffffff;
-    border: none;
-    outline: none;
-}
+        .toast-messeger .content-icon.fail {
+            border-radius: 50%;
+            background-image: url('/content/icon/common/red-warning.png');
+        }
 
-#fail-messeger .toast-messeger .messeger-icon {
-    border-radius: 50%;
-    background-image: url('/content/icon/common/red-warning.png');
-}
-
-#fail-messeger .toast-messeger .btn-exit-messeger {
-    background-image: url('/content/icon/common/exit-red.png');
-    background-size: 16px;
-    background-color: #ffffff;
-    border: none;
-    outline: none;
-}
+        .toast-messeger .btn-exit-messeger.fail {
+            background-image: url('/content/icon/common/exit-red.png');
+            background-size: 16px;
+            background-color: #ffffff;
+            border: none;
+            outline: none;
+        }
