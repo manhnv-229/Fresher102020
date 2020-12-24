@@ -18,12 +18,16 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service
         Product ProcessingProduct(Product product);
 
         /// <summary>
-        /// Lấy thông tin sản phẩm theo thương hiệu và danh mục
+        /// Lấy thông tin sản phẩm theo bộ lọc và tìm kiếm (có paging)
         /// </summary>
+        /// <param name="limit">Số bản ghi trên 1 trang</param>
+        /// <param name="offset">số thứ tự trang cần lấy</param>
+        /// <param name="keySearch">khóa tìm kiếm</param>
         /// <param name="brandId">Id thương hiệu</param>
         /// <param name="categoryId">Id danh mục</param>
         /// <returns></returns>
         /// CreatedBy dtnga (22/12/2020)
-        Task<List<Product>> GetByFilterAsync(Guid? brandId, Guid? categoryId);
+        Task<List<Product>> GetByFilterAsync(int limit, int offset, string keySearch=null, Guid? brandId=null, Guid? categoryId=null);
+
     }
 }

@@ -62,13 +62,13 @@
                     <div class="m-box m-dropdown" id="category-list" name="Category" fieldName="Category"></div>
                 </div>
                 <div class="content-filter-right">
-                    <button class="m-button-icon" id="btn-delete" disabled>
+                    <button class="m-button-icon" id="btnDelete" disabled title="Xóa">
                         <div class="m-icon delete-icon"></div>
                     </button>
-                    <button class="m-button-icon" id="btn-add">
+                    <button class="m-button-icon" id="btn-add" title="Thêm">
                         <div class="m-icon add-icon"></div>
                     </button>
-                    <button class="m-button-icon" id="btn-refresh">
+                    <button class="m-button-icon" id="btn-refresh" title="Làm mới">
                         <div class="m-icon refresh-icon"></div>
                     </button>
                 </div>
@@ -118,6 +118,18 @@
                             <th fieldName="ProductDescription">
                                 <div class="thead-box">
                                     <div class="thead-text">Mô tả</div>
+                                    <div class="m-icon sort-icon"></div>
+                                </div>
+                            </th>
+                            <th fieldName="CreatedDate" formatType="dd/mm/yyyy">
+                                <div class="thead-box">
+                                    <div class="thead-text">Ngày tạo</div>
+                                    <div class="m-icon sort-icon"></div>
+                                </div>
+                            </th>
+                            <th fieldName="ModifiedDate" formatType="dd/mm/yyyy">
+                                <div class="thead-box">
+                                    <div class="thead-text">Ngày chỉnh sửa</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>

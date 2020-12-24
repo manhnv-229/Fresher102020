@@ -5,9 +5,9 @@
 
 .toast-messeger {
     height: 48px;
-    bottom: 50px;
-    top: auto;
-    left: calc( 50% - 150px);
+    top: 57px;
+    left: auto;
+    right: 16px;
     display: flex !important;
     background-color: #ffffff;
     z-index: 1;

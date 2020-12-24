@@ -24,43 +24,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
             _baseMemoryCache = baseMemoryCache;
             _productService = productService;
             products = _baseMemoryCache.GetCache<Product>("Products");
-            
-        }
 
-        /// <summary>
-        /// Lấy thông tin theo phân trang
-        /// </summary>
-        /// <param name="limit">Số bản ghi trên 1 trang</param>
-        /// <param name="offset">số thứ thự trang</param>
-        /// <returns></returns>
-        /// CreatedBy dtnga (22/12/2020)
-        [HttpGet("paging")]
-        public async Task<ActionServiceResult> GetByPagingAsync([FromQuery] int limit, [FromQuery] int offset)
-        {
-            var _actionServiceResult = new ActionServiceResult();
-            var products = await _productService.GetByPaging<Product>(limit, offset);
-            products.ForEach(p =>
-            {
-                p = _productService.ProcessingProduct(p);
-            });
-            _actionServiceResult.Data = products;
-            return _actionServiceResult;
-        }
-
-        /// <summary>
-        /// Lấy thông tin theo key tìm kiếm
-        /// </summary>
-        /// <param name="q">key tìm kiếm</param>
-        /// <returns></returns>
-        /// CreatedBy dtnga (22/12/2020)
-        [HttpGet("search")]
-        public async Task<ActionServiceResult> GetBySearchingAsync([FromQuery] string q)
-        {
-            var _actionServiceResult = new ActionServiceResult
-            {
-                Data = await _productService.GetBySearching<Product>(q)
-            };
-            return _actionServiceResult;
         }
 
         /// <summary>
@@ -69,32 +33,36 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         /// <param name="brandId">Id thương hiệu</param>
         /// <param name="categoryId">Id danh mục</param>
         /// <returns></returns>
-        [HttpGet("filter")]
-        public async Task<ActionServiceResult> GetByFilterAsync([FromQuery] Guid? brandId, [FromQuery] Guid? categoryId)
+        [HttpGet]
+        public async Task<ActionServiceResult> GetByFilterAsync([FromQuery] int limit, [FromQuery] int offset, [FromBody] Dictionary<string, string> filterValues)
         {
-            var _actionServiceResult = new ActionServiceResult
+            var _actionServiceResult = new ActionServiceResult();
+            var keySearch = (filterValues.ContainsKey("KeySearch") == false) ? null : (string)filterValues["KeySearch"];
+            var result = new List<Product>();
+            if (filterValues.ContainsKey("BrandId") == false && filterValues.ContainsKey("CategoryId") == false)
             {
-                Data = await _productService.GetByFilterAsync(brandId, categoryId)
-            };
+                result = await _productService.GetByFilterAsync(limit, offset, keySearch);
+            }
+            else if(filterValues.ContainsKey("BrandId") == true && filterValues.ContainsKey("CategoryId") == true)
+            {
+                var brandId = new Guid(filterValues["BrandId"]);
+                var categoryId = new Guid(filterValues["CategoryId"]);
+                result = await _productService.GetByFilterAsync(limit, offset, keySearch, brandId, categoryId);
+            }
+            else if (filterValues.ContainsKey("BrandId") == true)
+            {
+                var brandId = new Guid(filterValues["BrandId"]);
+                result = await _productService.GetByFilterAsync(limit, offset, keySearch, brandId);
+            }
+            else
+            {
+                var categoryId = new Guid(filterValues["CategoryId"]);
+                result = await _productService.GetByFilterAsync(limit, offset, keySearch, categoryId);
+            }
+            _actionServiceResult.Data = result;
             return _actionServiceResult;
         }
 
-        /// <summary>
-        /// Lấy tất cả sản phẩm
-        /// </summary>
-        /// <returns></returns>
-        /// CreatedBy dtnga (16/12/2020)
-        [HttpGet]
-        public ActionServiceResult GetAll()
-        {
-            var response = new ActionServiceResult();
-            if (products.Count == 0)
-            {
-                products = _baseMemoryCache.GetCache<Product>("Products");
-            }
-            response.Data = products;
-            return response;
-        }
 
         /// <summary>
         /// Lấy thông tin sản phẩm theo Id
@@ -163,10 +131,10 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         public async Task<ActionServiceResult> DeleteAsync([FromRoute] Guid productId)
         {
             var response = await _productService.DeleteAsync<Product>(productId);
-            if(response.MISACode == MISACode.Success && products.Count>0)
+            if (response.MISACode == MISACode.Success && products.Count > 0)
             {
                 // Xóa cả trong cache
-                products.Remove(products.Where<Product>(p=>p.ProductId==productId).FirstOrDefault());
+                products.Remove(products.Where<Product>(p => p.ProductId == productId).FirstOrDefault());
                 _baseMemoryCache.SetCache("Products", products);
             }
             return response;

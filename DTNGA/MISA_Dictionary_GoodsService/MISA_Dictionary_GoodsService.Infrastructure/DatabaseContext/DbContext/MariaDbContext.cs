@@ -55,18 +55,16 @@ namespace MISA_Dictionary_GoodsService.Infrastructure.DatabaseContext.DbContext
             {
                 if (_dbConnection.State == ConnectionState.Closed)
                     _dbConnection.Open();
-                using (var tran = _dbConnection.BeginTransaction())
+                using var tran = _dbConnection.BeginTransaction();
+                try
                 {
-                    try
-                    {
-                        result = (await _dbConnection.QueryAsync<T>(queryCommand, param: parms, commandType: commandType, transaction: tran)).ToList();
-                        tran.Commit();
-                    }
-                    catch (Exception ex)
-                    {
-                        tran.Rollback();
-                        throw ex;
-                    }
+                    result = (await _dbConnection.QueryAsync<T>(queryCommand, param: parms, commandType: commandType, transaction: tran)).ToList();
+                    tran.Commit();
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                    throw ex;
                 }
             }
             catch (Exception ex)
@@ -91,18 +89,16 @@ namespace MISA_Dictionary_GoodsService.Infrastructure.DatabaseContext.DbContext
             {
                 if (_dbConnection.State == ConnectionState.Closed)
                     _dbConnection.Open();
-                using (var tran = _dbConnection.BeginTransaction())
+                using var tran = _dbConnection.BeginTransaction();
+                try
                 {
-                    try
-                    {
-                        result = (await _dbConnection.ExecuteAsync(sp, parms, transaction: tran));
-                        tran.Commit();
-                    }
-                    catch (Exception ex)
-                    {
-                        tran.Rollback();
-                        throw ex;
-                    }
+                    result = (await _dbConnection.ExecuteAsync(sp, parms, transaction: tran));
+                    tran.Commit();
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                    throw ex;
                 }
             }
             catch (Exception ex)
@@ -125,18 +121,16 @@ namespace MISA_Dictionary_GoodsService.Infrastructure.DatabaseContext.DbContext
             {
                 if (_dbConnection.State == ConnectionState.Closed)
                     _dbConnection.Open();
-                using (var tran = _dbConnection.BeginTransaction())
+                using var tran = _dbConnection.BeginTransaction();
+                try
                 {
-                    try
-                    {
-                        result = (await _dbConnection.QueryAsync<T>(sp, parms, commandType: commandType, transaction: tran)).FirstOrDefault();
-                        tran.Commit();
-                    }
-                    catch (Exception ex)
-                    {
-                        tran.Rollback();
-                        throw ex;
-                    }
+                    result = (await _dbConnection.QueryAsync<T>(sp, parms, commandType: commandType, transaction: tran)).FirstOrDefault();
+                    tran.Commit();
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                    throw ex;
                 }
             }
             catch (Exception ex)
@@ -161,18 +155,16 @@ namespace MISA_Dictionary_GoodsService.Infrastructure.DatabaseContext.DbContext
             {
                 if (_dbConnection.State == ConnectionState.Closed)
                     _dbConnection.Open();
-                using (var tran = _dbConnection.BeginTransaction())
+                using var tran = _dbConnection.BeginTransaction();
+                try
                 {
-                    try
-                    {
-                        result = (await _dbConnection.QueryAsync<T>(sp, parms, commandType: commandType, transaction: tran)).FirstOrDefault();
-                        tran.Commit();
-                    }
-                    catch (Exception ex)
-                    {
-                        tran.Rollback();
-                        throw ex;
-                    }
+                    result = (await _dbConnection.QueryAsync<T>(sp, parms, commandType: commandType, transaction: tran)).FirstOrDefault();
+                    tran.Commit();
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                    throw ex;
                 }
             }
             catch (Exception ex)
@@ -195,18 +187,16 @@ namespace MISA_Dictionary_GoodsService.Infrastructure.DatabaseContext.DbContext
                 if (_dbConnection.State == ConnectionState.Closed)
                     _dbConnection.Open();
 
-                using (var tran = _dbConnection.BeginTransaction())
+                using var tran = _dbConnection.BeginTransaction();
+                try
                 {
-                    try
-                    {
-                        result = (await _dbConnection.ExecuteAsync(sp, entities, transaction: tran));
-                        tran.Commit();
-                    }
-                    catch (Exception ex)
-                    {
-                        tran.Rollback();
-                        throw ex;
-                    }
+                    result = (await _dbConnection.ExecuteAsync(sp, entities, transaction: tran));
+                    tran.Commit();
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                    throw ex;
                 }
             }
             catch (Exception ex)
@@ -231,18 +221,16 @@ namespace MISA_Dictionary_GoodsService.Infrastructure.DatabaseContext.DbContext
             {
                 if (_dbConnection.State == ConnectionState.Closed)
                     _dbConnection.Open();
-                using (var trans = _dbConnection.BeginTransaction())
+                using var trans = _dbConnection.BeginTransaction();
+                try
                 {
-                    try
-                    {
-                        result = (await _dbConnection.QueryAsync<T>(sp, parms, commandType: commandType, transaction: trans)).FirstOrDefault();
-                        trans.Commit();
-                    }
-                    catch (Exception e)
-                    {
-                        trans.Rollback();
-                        throw (e);
-                    }
+                    result = (await _dbConnection.QueryAsync<T>(sp, parms, commandType: commandType, transaction: trans)).FirstOrDefault();
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                    throw (e);
                 }
             }
             catch (Exception e)
@@ -265,18 +253,16 @@ namespace MISA_Dictionary_GoodsService.Infrastructure.DatabaseContext.DbContext
             {
                 if (_dbConnection.State == ConnectionState.Closed)
                     _dbConnection.Open();
-                using (var trans = _dbConnection.BeginTransaction())
+                using var trans = _dbConnection.BeginTransaction();
+                try
                 {
-                    try
-                    {
-                        result = await _dbConnection.ExecuteAsync(sp, entities, transaction: trans);
-                        trans.Commit();
-                    }
-                    catch (Exception e)
-                    {
-                        trans.Rollback();
-                        throw (e);
-                    }
+                    result = await _dbConnection.ExecuteAsync(sp, entities, transaction: trans);
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                    throw (e);
                 }
             }
             catch (Exception e)

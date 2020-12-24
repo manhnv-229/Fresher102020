@@ -17,9 +17,12 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
             
         }
 
-        public async Task<List<Product>> GetByFilterAsync(Guid? brandId, Guid? categoryId)
+        public async Task<List<Product>> GetByFilterAsync(int limit, int offset, string keySearch=null, Guid? brandId=null, Guid? categoryId=null)
         {
             var parms = new DynamicParameters();
+            parms.Add("pageIndex", offset);
+            parms.Add("pageSize", limit);
+            parms.Add("keySearch", keySearch);
             parms.Add("brandId", brandId);
             parms.Add("categoryId", categoryId);
             var sp = "Proc_GetProductByFilter";

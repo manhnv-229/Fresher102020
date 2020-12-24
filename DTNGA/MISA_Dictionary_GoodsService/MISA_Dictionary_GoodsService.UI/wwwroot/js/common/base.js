@@ -52,7 +52,7 @@ class Base {
             $(`.content-body:visible`).find(`#btn-add`).on("click", function () {
                 me.onClick_btnAdd(this);
             });
-            $(`.content-body:visible`).find(`#btn-delete`).on("click", function () {
+            $(`.content-body:visible`).find(`#btnDelete`).on("click", function () {
                 me.onClick_btnDelete(this);
             });
             $(`.content-body:visible`).find(`#btn-refresh`).on("click", me.onClick_btnRefresh.bind(me));
@@ -66,12 +66,16 @@ class Base {
             me.autoFormatMoney();
             me.addFocusSupport();
             // Sự kiện khi thao tác với từng hàng dữ liệu trong bảng
-            $(`table tbody`).on("click", "tr", me.tr_onClick);
+            $(`table tbody`).on("click", "tr", function () {
+                me.tr_onClick(this);
+            });
             $(`table tbody`).on("dblclick", "tr", function () {
                 me.onDblClick_trow(this);
             });
             // sự kiện khi tick vào checkbox/ nhiều checkbox
-            $(`table thead input[type="checkbox"]`).on("click", me.onClickCheckAll);
+            $(`table thead input[type="checkbox"]`).on("click", function () {
+                me.onClickCheckAll(this);
+            });
             // sự kiện khi blur các trường input
             $(`input`).blur(me.onBlur_inputField);
 
@@ -429,7 +433,7 @@ class Base {
             $(popup).removeClass("displayNone");
             me.initEventPopup(popup);
             // Sự kiện khi click button Xóa
-            $(popup).find(`.btn-delete`).on("click", function () {
+            $(popup).find(`.btnDelete`).on("click", function () {
                 var parentBody = $(button).closest(`.content-body`);
                 var selectedRows = $(parentBody).find(`table tr.selected`);
                 var data = [];
@@ -839,7 +843,6 @@ class Base {
      * */
     onClick_btnRefresh() {
         this.loadData();
-        alert("Refresh success.");
     }
 
 
@@ -847,25 +850,27 @@ class Base {
     * Tô màu cho bản ghi được chọn
     * CreatedBy dtnga (21/11/2020)
     * */
-    tr_onClick() {
+    tr_onClick(row) {
         try {
+            var me = this;
             if ($(`thead input[type="checkbox"]`).is(":checked")) {
                 $(`thead input[type="checkbox"]`).prop("checked", false);
                 $(`tbody input[type="checkbox"]`).prop("checked", false);
                 $(`tbody tr`).removeClass("selected");
-                $(this).addClass("selected");
-                $(this).find(`input[type="checkbox"]`).prop("checked", true);
+                $(row).addClass("selected");
+                $(row).find(`input[type="checkbox"]`).prop("checked", true);
+                me.checkSelectedRow();
                 return;
             }
-            if ($(this).hasClass("selected")) {
-                $(this).removeClass("selected");
-                $(this).find(`input[type="checkbox"]`).prop("checked", false);
+            if ($(row).hasClass("selected")) {
+                $(row).removeClass("selected");
+                $(row).find(`input[type="checkbox"]`).prop("checked", false);
+                me.checkSelectedRow();
                 return;
             }
-            $(this).addClass("selected");
-            $(this).find(`input[type="checkbox"]`).prop("checked", true);
-            var deleleteBtn = $(this).closest(`.content-body`).find(`#btn-delete`);
-            deleleteBtn.prop("disabled", false);
+            $(row).addClass("selected");
+            $(row).find(`input[type="checkbox"]`).prop("checked", true);
+            me.checkSelectedRow();
         }
         catch (e) {
             console.log(e);
@@ -885,7 +890,9 @@ class Base {
             //Đổi màu hàng dữ liệu
             var selected = $(row);
             $(row).closest(`tbody`).find(`tr`).removeClass("selected");
+            $(row).closest(`tbody`).find(`input[type="checkbox"]`).prop("checked", false);
             $(selected).addClass("selected");
+            $(selected).find(`input[type="checkbox"]`).prop("checked", true);
             //Show form cập nhật đơn hàng
             var dialog = $(selected).closest(`.content-body`).find(`.m-dialog`);
             $(dialog).find(`.header-text`).text("CẬP NHẬT");
@@ -908,6 +915,24 @@ class Base {
                 })
 
 
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    /**
+     * Thực hiện kiểm tra có hàng dữ liệu nào được chọn hay không, không => disable button Xóa
+     * CreatedBy dtnga (24/12/2020)
+     * */
+    checkSelectedRow() {
+        try {
+            var currentTable = $(`.content-body:visible table`);
+            var selectedRow = $(currentTable).find(".selected");
+            if (selectedRow.length == 0)
+                $(`.content-body:visible #btnDelete`).prop("disabled", true);
+            else
+                $(`.content-body:visible #btnDelete`).prop("disabled", false);
         }
         catch (e) {
             console.log(e);
@@ -986,13 +1011,16 @@ class Base {
         }
     }
 
-    /** Thực hiện chọn tất cả bản ghi
+    /**
+     * Thực hiện chọn tất cả bản ghi
     * CreatedBy dtnga (21/11/2020)
+     * @param {any} checkbox
      */
-    onClickCheckAll() {
+    onClickCheckAll(checkbox) {
         try {
-            var checkboxAll = this;
-            var parentTable = $(this).closest(`table`);
+            var me = this;
+            var checkboxAll = $(checkbox);
+            var parentTable = $(checkboxAll).closest(`table`);
             if ($(checkboxAll).is(":checked")) {
                 $(parentTable).find(`tbody input[type="checkbox"]`).prop("checked", true);
                 $(parentTable).find(`tbody tr`).addClass("selected");
@@ -1001,6 +1029,7 @@ class Base {
                 $(parentTable).find(`tbody input[type="checkbox"]`).prop("checked", false);
                 $(parentTable).find(`tbody tr`).removeClass("selected");
             }
+            me.checkSelectedRow();
         }
         catch (e) {
             console.log(e);
@@ -1022,7 +1051,7 @@ class Base {
 
             var trow = $(checkbox).closest(`tr`);
             $(trow).addClass("selected");
-            var deleleteBtn = $(this).closest(`.content-body`).find(`#btn-delete`);
+            var deleleteBtn = $(this).closest(`.content-body`).find(`#btnDelete`);
             deleleteBtn.prop("disabled", false);
         }
         catch (e) {
@@ -1103,7 +1132,7 @@ class Base {
             //$(table).find(`tbody tr:first`).select();
             //$(table).find(`tbody tr:first`).addClass("selected");
             //$(table).find(`tbody tr:first input[type="checkbox"]`).prop("checked", true);
-            //$(table).closest(`.content-body`).find(`#btn-delete`).prop("disabled", false);
+            //$(table).closest(`.content-body`).find(`#btnDelete`).prop("disabled", false);
 
             me.route = me.getRoute();
             me.method = me.getMethod();
@@ -1137,7 +1166,7 @@ class Base {
                                             value = formatMoney(value);
                                             td.addClass("text-align-right");
                                             break;
-                                        case "ddmmyy":
+                                        case "dd/mm/yyyy":
                                             value = formatDate(value, "dd/mm/yyyy");
                                             td.addClass("text-align-center");
                                             break;
@@ -1162,7 +1191,8 @@ class Base {
                     $(table).find(`tbody tr:first`).select();
                     $(table).find(`tbody tr:first`).addClass("selected");
                     $(table).find(`tbody tr:first input[type="checkbox"]`).prop("checked", true);
-                    $(table).closest(`.content-body`).find(`#btn-delete`).prop("disabled", false);
+                    $(table).closest(`.content-body`).find(`#btnDelete`).prop("disabled", false);
+                    me.checkSelectedRow();
                 })
                 .fail(function (res) {
                     console.log(res);
