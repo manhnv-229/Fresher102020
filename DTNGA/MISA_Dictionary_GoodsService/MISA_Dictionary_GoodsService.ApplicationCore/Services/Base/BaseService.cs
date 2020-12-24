@@ -232,7 +232,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
                     // Check trùng lặp
                     // Lấy entity 
                     var entityDuplicate = await GetByPropertyAsync<T>(propName, propValue);
-                    if (entityDuplicate != null)
+                    if (entityDuplicate.Count>0)
                     {
                         isValid = false;
                         errorMsg.Add(string.Format(Properties.Resources.Duplicate, displayName));

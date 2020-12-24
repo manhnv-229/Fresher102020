@@ -121,6 +121,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         [HttpPost]
         public async Task<ActionServiceResult> AddNewAsync([FromBody] Product newProduct)
         {
+            newProduct.ProductId = Guid.NewGuid();
             var response = await _productService.InsertAsync<Product>(newProduct);
             if (response.MISACode == MISACode.Success && products.Count > 0)
             {

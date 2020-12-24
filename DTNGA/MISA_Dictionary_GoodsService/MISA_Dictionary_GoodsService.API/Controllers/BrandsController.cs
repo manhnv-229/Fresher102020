@@ -101,6 +101,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         [HttpPost]
         public async Task<ActionServiceResult> AddNewBrandAsync([FromBody] Brand newBrand)
         {
+            newBrand.BrandId = Guid.NewGuid();
             var response = await _baseService.InsertAsync<Brand>(newBrand);
             if (response.MISACode == MISACode.Success && brands.Count > 0)
             {

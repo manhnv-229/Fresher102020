@@ -2,18 +2,46 @@
 class Base {
     constructor() {
         var me = this;
-        me.Host = "https://localhost:44323";
-        me.Route = "";
-        me.ObjectName = "";
+        me.host = "https://localhost:44323";
+        // Mode action
+        me.formMode = "";
+        // API Route xử lý dữ liệu
+        me.route = "";
+        // Phương thức gọi API
+        me.method = "";
+        // Thông báo tương ứng với formMode
+        me.mesHeader = "";
+        // Tên đối tượng đang xử lý hiện tại
+        me.objectName = "";
     }
 
     getRoute() {
         var me = this;
-        me.ObjectName = $(`.content-body:visible`).attr("fieldName");
-        me.Route = "/api/v1/" + me.ObjectName + "s";
-        return me.Route;
+        me.objectName = $(`.content-body:visible`).attr("fieldName");
+        me.route = "/api/v1/" + me.objectName + "s";
+        return me.route;
     }
 
+    getMethod() {
+        var me = this;
+        if (me.formMode == "add") {
+            me.method = "POST";
+            me.mesHeader = "Thêm ";
+        }
+        else if (me.formMode == "edit") {
+            me.method = "PUT";
+            me.mesHeader = "Sửa ";
+        }
+        else if (me.formMode == "get") {
+            me.method = "GET";
+            me.mesHeader = "Lấy dữ liệu";
+        }
+        else if (me.formMode == "delete") {
+            me.method = "DELETE";
+            me.mesHeader = "Xóa";
+        }
+        return me.method;
+    }
 
     /* Hàm thực hiện khởi tạo sự kiện
      * CreatedBy dtnga (21/11/2020)
@@ -28,7 +56,7 @@ class Base {
                 me.onClick_btnDelete(this);
             });
             $(`.content-body:visible`).find(`#btn-refresh`).on("click", me.onClick_btnRefresh.bind(me));
-            $(`#btn-create`).on("click", me.onClick_btnCreate.bind(me));
+
             $(`#btn-clear`).on("click", me.onClick_btnClear.bind(me));
             // TODO sự kiện khi nhập trường Tìm kiếm
 
@@ -77,7 +105,7 @@ class Base {
         try {
             var me = this;
             var targetCombo = $(targetCombo);
-            var fieldName = $(targetCombo).attr("fieldName");
+            var comboName = $(targetCombo).attr("name");
             var comboSelectBox = $(`<div class="m-input selected-box">
                                        <input class="" type="search"/>
                                        <div class="arrow-button">
@@ -90,8 +118,8 @@ class Base {
             var optionIcon = `<div class="option-icon">
                                    <div class="displayNone m-icon check-icon"></div>
                                </div>`;
-            var idPropName = fieldName + "Id";
-            var namePropname = fieldName + "Name";
+            var idPropName = comboName + "Id";
+            var namePropname = comboName + "Name";
             $.each(data, function (index, item) {
                 var optionName = item[namePropname];
                 var optionId = item[idPropName];
@@ -369,53 +397,6 @@ class Base {
         $(`.extra-info`).addClass("displayNone");
     }
 
-    /**TODO Hàm thực hiện thêm đơn hàng
-     * CreatedBy dtnga (27/11/2020)
-     * */
-    onClick_btnCreate() {
-        try {
-            var me = this;
-            // kiểm tra validate (bắt buộc nhập, email, ...), nếu vẫn còn trường chưa valid thì cảnh báo
-            var invalidInputs = $(`input[validate="false"], select[validate="false"]`);
-            if (invalidInputs && invalidInputs.length > 0) {
-                $.each(invalidInputs, function (index, input) {
-                    $(input).trigger('blur');
-                });
-                invalidInputs[0].focus();
-            }
-            // build dữ liệu
-            // Lấy dữ liệu từ input
-            var obj = new Object();
-            var inputs = $(`.dialog-detail input`);
-            $.each(inputs, function (index, input) {
-                var value = $(input).val();
-                var fieldName = $(input).attr('fieldName');
-                // gán dữ liệu vào thuộc tính của obj (json) tương ứng với fieldName
-                if (input.type == "radio") {
-                    if (input.checked)
-                        obj[fieldName] = value;
-                }
-                else {
-                    obj[fieldName] = value;
-                }
-            });
-            console.log(obj);
-            if (me.formMode == "add") var method = "POST";
-            else if (me.formMode == "edit") var method = "PUT";
-
-            //Đóng gói danh sách sản phẩm => Danh sách orderDetail
-
-            // Đóng gói đơn vị vận chuyển => Transportor
-
-            // Đóng gói người nhận => receiver
-
-            // Lưu và thêm 
-
-        }
-        catch (e) {
-            console.log(e);
-        }
-    }
 
     /** Hàm thực hiện thêm dữ liệu mới
      * Created By dtnga (21/11/2020)
@@ -425,6 +406,7 @@ class Base {
             var me = this;
             me.formMode = "add";
             var dialog = $(buttonAdd).closest(`.content-body`).find(`.m-dialog`);
+            me.clear(dialog);
             me.showDialog(dialog);
         } catch (e) {
             console.log(e);
@@ -454,10 +436,9 @@ class Base {
                 $.each(selectedRows, function (index, item) {
                     data.push($(item).data("keyId"));
                 })
-
-                me.Route = me.getRoute();
+                me.route = me.getRoute();
                 $.ajax({
-                    url: me.Host + me.Route + "/range",
+                    url: me.host + me.route + "/range",
                     method: "DELETE",
                     data: JSON.stringify(data),
                     contentType: "application/json",
@@ -474,6 +455,9 @@ class Base {
                         $(selectedRows).remove();
                         // Hiển thị toast thông báo thành công
                         me.showToastMesseger("Xóa thành công", "success");
+                        if ($(parentBody).find(`table thead input[type="checkbox"]`).is(":checked")){
+                            $(parentBody).find(`table thead input[type="checkbox"]`).prop("checked", false);
+                        }
                     })
                     .fail(function (res) {
                         console.log(res);
@@ -549,7 +533,7 @@ class Base {
     showDialog(dialog) {
         var me = this;
         var dialog = $(dialog);
-        dialog.show();
+        $(dialog).removeClass("displayNone");
         // đóng form khi nhấn ESC
         $('body').on("keydown", function (e) {
             if (e.which === 27)
@@ -557,8 +541,12 @@ class Base {
         });
         $(`#btn-exit`).on("click", me.onClick_Exit_Dialog.bind(me));
         $(`#btn-cancel`).on("click", me.onClick_Exit_Dialog.bind(me));
-        $(`#btn-save`).on("click", me.onClick_btnSave.bind(me));
-        //$(`#btn-saveAdd`).on("click", me.onClick_btnSaveAdd.bind(me));
+        $(`#btn-save`).on("click", function () {
+            me.onClick_btnSave(this);
+        });
+        $(`#btn-saveAdd`).on("click", function () {
+            me.onClick_btnSaveAdd(this);
+        });
     }
 
     /** Tự động format các trường input số tiền 
@@ -591,53 +579,161 @@ class Base {
     /**Kiểm tra và build dữ liệu trước khi lưu 
      Createdby dtnga (14/11/2020)
      */
-    onClick_btnSave() {
+    onClick_btnSave(buttonSave) {
         try {
             var me = this;
+            var button = $(buttonSave);
+            var form = $(button).closest(".m-dialog");
             // kiểm tra validate (bắt buộc nhập, email, ...), nếu vẫn còn trường chưa valid thì cảnh báo
-            var invalidInputs = $(`input[validate="false"], select[validate="false"]`);
+            var valid = me.ValidateForm(form);
+            if (valid) {
+                // build dữ liệu
+                var obj = me.GetDataForm(form);
+                // Gọi Api Lưu dữ liệu
+                me.CallAjax(obj);
+            }
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    /**
+     * Thực hiện lưu dữ liệu mới và load lại
+     * CreatedBy dtnga (24/12/2020)
+     * */
+    onClick_btnSaveAdd(buttonSave) {
+        try {
+            var me = this;
+            var button = $(buttonSave);
+            var form = $(button).closest(".m-dialog");
+            // kiểm tra validate (bắt buộc nhập, email, ...), nếu vẫn còn trường chưa valid thì cảnh báo
+            var valid = me.ValidateForm(form);
+            if (valid) {
+                // build dữ liệu
+                var obj = me.GetDataForm(form);
+                // Gọi Api Lưu dữ liệu
+                me.CallAjax(obj);
+                me.loadData();
+            }
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    /**
+     * Thực hiện gọi Api qua Ajax
+     * @param {any} data
+     * CreatedBy dtnga (24/12/2020)
+     */
+    CallAjax(data) {
+        try {
+            var me = this;
+            var response = [];
+            me.route = me.getRoute();
+            if (data) {
+                $.ajax({
+                    url: me.host + me.route,
+                    method: me.getMethod(),
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    dataType: "json"
+                })
+                    .done(function (res) {
+                        response = res.Data;
+                        $(`.m-dialog:visible`).addClass("displayNone");
+                        me.showToastMesseger(me.mesHeader + "thành công", "success");
+                    })
+                    .fail(function (res) {
+                        console.log(res);
+                        $(`.m-dialog:visible`).addClass("displayNone");
+                        me.showToastMesseger(me.mesHeader + "không thành công", "fail");
+                    })
+            }
+            else {
+                $.ajax({
+                    url: me.host + me.route,
+                    method: me.getMethod()
+                })
+                    .done(function (res) {
+                        console.log(res);
+                        response = res.Data;
+                        $(`.m-dialog:visible`).addClass("displayNone");
+                        me.showToastMesseger(me.mesHeader + " thành công", "success");
+                    })
+                    .fail(function (res) {
+                        console.log(res);
+                        $(`.m-dialog:visible`).addClass("displayNone");
+                        me.showToastMesseger(me.mesHeader + " không thành công", "fail");
+                    })
+            }
+            return response;
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    /**
+     *  Thực hiện kiểm tra dữ liệu trong form
+     * @param {Element} targetForm form cần kiểm tra
+     * CreatedBy dtnga (24/12/2020)
+     */
+    ValidateForm(targetForm) {
+        try {
+            var form = $(targetForm);
+            var invalidInputs = $(form).find(`input[validate="false"], select[validate="false"]`);
             if (invalidInputs && invalidInputs.length > 0) {
                 $.each(invalidInputs, function (index, input) {
                     $(input).trigger('blur');
                 });
                 invalidInputs[0].focus();
+                return false;
             }
-            // build dữ liệu
-            // Lấy dữ liệu từ input
+            else
+                return true;
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    /**
+     *  Lấy dữ liệu từ Form
+     * @param {Element} targetForm form cần lấy dữ liệu
+     *  CreatedBy dtnga (24/12/2020)
+     */
+    GetDataForm(targetForm) {
+        try {
+            var me = this;
+            var form = $(targetForm);
             var obj = new Object();
-            var inputs = $(`.m-dialog input`);
+            // Lấy Id bản ghi
+            var formFieldName = $(form).attr("fieldName");
+            obj[formFieldName] = $(form).data("keyId");
+            var inputs = $(form).find(`input, textarea, .m-box`);
             $.each(inputs, function (index, input) {
-                var value = $(input).val();
                 var fieldName = $(input).attr('fieldName');
-                // gán dữ liệu vào thuộc tính của obj (json) tương ứng với fieldName
-                if (input.type == "radio") {
-                    if (input.checked)
+                // Nếu có fieldName mới lấy data
+                if (fieldName) {
+                    if ($(input).hasClass("m-box")) {
+                        var value = $(input).data("keyId");
+                    }
+                    else
+                        var value = $(input).val();
+                    // gán dữ liệu vào thuộc tính của obj (json) tương ứng với fieldName
+                    if (input.type == "radio") {
+                        if (input.checked)
+                            obj[fieldName] = value;
+                    }
+                    else {
                         obj[fieldName] = value;
+                    }
                 }
-                else {
-                    obj[fieldName] = value;
-                }
+
             });
-            console.log(obj);
-            if (me.formMode == "add") var method = "POST";
-            else if (me.formMode == "edit") var method = "PUT";
-            //TODO Gọi Api Lưu dữ liệu
-            //$.ajax({
-            //    url: me.Host + me.apiRouter,
-            //    method: method,
-            //    data: JSON.stringify(obj),
-            //    contentType: "application/json"
-            //}).done(function (res) {
-            //    me.status = "success";
-            //    me.openToastMesseger();
-            //}).fail(function (res) {
-            //    console.log(res);
-            //    me.status = "fail";
-            //    me.openToastMesseger();
-            //})
-
-            // Lưu và thêm 
-
+            return obj;
         }
         catch (e) {
             console.log(e);
@@ -721,9 +817,9 @@ class Base {
      Created by dtnga (14/11/2020)
      */
     onClick_Exit_Dialog() {
-        var dialog = $(`.m-dialog`);
+        var dialog = $(`.m-dialog:visible`);
         this.clear(dialog);
-        dialog.hide();
+        dialog.addClass("displayNone");
     }
 
     /** Thực hiện clear dữ liệu và cảnh báo trên object truyền vào hàm
@@ -795,12 +891,95 @@ class Base {
             $(dialog).find(`.header-text`).text("CẬP NHẬT");
             // Hiển thị dialog
             me.showDialog(dialog);
-            //TODO  bind dữ liệu hàng được chọn lên form
+            // bind dữ liệu hàng được chọn lên form
             var id = selected.data('keyId');
+            $(dialog).data("keyId", id);
             // Lấy thông tin từ api bằng id tương ứng
+            $.ajax({
+                url: me.host + me.getRoute() + "/" + id,
+                method: "GET"
+            })
+                .done(function (res) {
+                    var data = res.Data;
+                    me.BindDatatoForm(data, dialog);
+                })
+                .fail(function (res) {
+                    console.log(res);
+                })
 
 
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
 
+    /**
+     * Thực hiện đổ dữ liệu vào form
+     * @param {any} data dữ liệu cần đổ
+     * @param {any} targetForm form cần đổ dữ liệu
+     * CreatedBy dtnga (24/12/2020)
+     */
+    BindDatatoForm(data, targetForm) {
+        try {
+            var me = this;
+            var obj = data;
+            var form = $(targetForm);
+            var inputs = $(form).find(`input, textarea, .m-box`);
+            $.each(inputs, function (index, input) {
+                var fieldName = $(input).attr('fieldName');
+                // Nếu có fieldName mới lấy data
+                if (fieldName) {
+                    var value = obj[fieldName];
+                    if (!value)
+                        value = "";
+                    if ($(input).hasClass("m-box")) {
+                        $(input).data("keyId", value);
+                        // Select item có id như trên
+                        me.SelectItem(input, value);
+                    }
+                    else if (input.type == "radio") {
+                        if ($(input).attr("value") == value)
+                            $(input).prop("checked", true);
+                    }
+                    else {
+                        $(input).val(value);
+                    }
+                }
+
+            });
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    /**
+     * Thực hiện chọn item trong box (combobox/dropdown)
+     * @param {any} box Box cần chọn item
+     * @param {any} itemId Id item cần được chọn
+     * CreatedBy dtnga (24/12/2020)
+     */
+    SelectItem(box, itemId) {
+        try {
+            var me = this;
+            var box = $(box);
+            var id = itemId;
+            var items = $(box).find(`.item`);
+         //   var selectedItem = items.find(i => $(i).data("keyId") == id);
+            $.each(items, function (index, item) {
+                var itemId = $(item).data("keyId");
+                if (itemId == id) {
+                    var selectedItem = $(item);
+                    $(selectedItem).addClass("selected");
+                    $(selectedItem).find(`.check-icon`).removeClass("displayNone");
+                    var selectedItemText = $(selectedItem).find(`.option-text`).text();
+                    $(selectedItem).closest(`.m-box`).find(`input`).val(selectedItemText);
+                    $(selectedItem).closest(`.m-box`).data("keyId", id);
+                    return true;
+                }
+            })
+            return false;
         }
         catch (e) {
             console.log(e);
@@ -872,9 +1051,65 @@ class Base {
             var ths = $(table).find('tr th');
             var data = [];
             // Lấy data từ Api
+            me.formMode = "get";
+
+            //var data = me.CallAjax();
+            //$.each(data, function (index, obj) {
+            //    var tr = $(`<tr></tr>`);
+            //    $.each(ths, function (index, th) {
+            //        var td = $(`<td></td>`);
+            //        // Lấy fielname th 
+            //        var fieldName = $(th).attr('fieldName');
+            //        if (fieldName == "Checkbox") {
+            //            var checkbox = $(`<div><label class="m-checkbox">
+            //                                    <input class="checkbox" type="checkbox" name="row" />
+            //                                    <span class="checkmark"></span>
+            //                          </label></div>`);
+            //            td.append(checkbox);
+            //        }
+            //        else {
+            //            //Lấy giá trị của thuộc tính tương ứng với fieldName trong obj
+            //            var value = me.customeProcessTd(fieldName, obj);
+            //            if (value) {
+            //                // định dạng lại
+            //                var formatType = $(th).attr('formatType');
+            //                switch (formatType) {
+            //                    case "money":
+            //                        value = formatMoney(value);
+            //                        td.addClass("text-align-right");
+            //                        break;
+            //                    case "ddmmyy":
+            //                        value = formatDate(value, "dd/mm/yyyy");
+            //                        td.addClass("text-align-center");
+            //                        break;
+            //                    default:
+            //                        break;
+            //                }
+            //            }
+            //            else value = "...";
+            //            var span = `<span>` + value + `</span>`;
+            //            var div = `<div>` + span + `</div>`;
+            //            // gán vào td -> tr
+            //            td.append(div);
+            //        }
+            //        tr.append(td);
+            //    })
+            //    $(table).find(`tbody`).append(tr);
+            //    //Lưu Id vào data
+            //    var keyIdName = me.objectName + 'Id';
+            //    tr.data('keyId', obj[keyIdName]);
+            //})
+            //// Mặc định chọn row đầu tiên
+            //$(table).find(`tbody tr:first`).select();
+            //$(table).find(`tbody tr:first`).addClass("selected");
+            //$(table).find(`tbody tr:first input[type="checkbox"]`).prop("checked", true);
+            //$(table).closest(`.content-body`).find(`#btn-delete`).prop("disabled", false);
+
+            me.route = me.getRoute();
+            me.method = me.getMethod();
             $.ajax({
-                url: me.Host + me.Route,
-                method: "GET"
+                url: me.host + me.route,
+                method: me.method
             })
                 .done(function (res) {
                     data = res.Data;
@@ -882,7 +1117,7 @@ class Base {
                         var tr = $(`<tr></tr>`);
                         $.each(ths, function (index, th) {
                             var td = $(`<td></td>`);
-                            // Lấy fielname th 
+                            // lấy fielname th 
                             var fieldName = $(th).attr('fieldName');
                             if (fieldName == "Checkbox") {
                                 var checkbox = $(`<div><label class="m-checkbox">
@@ -892,7 +1127,7 @@ class Base {
                                 td.append(checkbox);
                             }
                             else {
-                                //Lấy giá trị của thuộc tính tương ứng với fieldName trong obj
+                                //lấy giá trị của thuộc tính tương ứng với fieldname trong obj
                                 var value = me.customeProcessTd(fieldName, obj);
                                 if (value) {
                                     // định dạng lại
@@ -919,11 +1154,11 @@ class Base {
                             tr.append(td);
                         })
                         $(table).find(`tbody`).append(tr);
-                        //Lưu Id vào data
-                        var keyIdName = me.ObjectName + 'Id';
+                        //lưu id vào data
+                        var keyIdName = me.objectName + 'Id';
                         tr.data('keyId', obj[keyIdName]);
                     })
-                    // Mặc định chọn row đầu tiên
+                    // mặc định chọn row đầu tiên
                     $(table).find(`tbody tr:first`).select();
                     $(table).find(`tbody tr:first`).addClass("selected");
                     $(table).find(`tbody tr:first input[type="checkbox"]`).prop("checked", true);

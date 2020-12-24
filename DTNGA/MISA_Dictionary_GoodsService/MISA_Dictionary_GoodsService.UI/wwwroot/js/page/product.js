@@ -7,14 +7,14 @@ class ProductManage extends Base {
         super();
         var me = this;
         me.initEventProduct();
-        me.Route = me.getRoute();
-        me.ObjectName = "Product";
+        me.route = me.getroute();
+        me.objectName = "Product";
         var productTable = $(`#products-table`);
         me.loadData(productTable);
         me.loadComboboxCustome();
     }
 
-    getRoute() {
+    getroute() {
         return "/api/v1/Products";
     }
     
@@ -31,34 +31,34 @@ class ProductManage extends Base {
             // Load combobox Brand
             var brands = [];
             $.ajax({
-                url: me.Host + "/api/v1/Brands",
+                url: me.host + "/api/v1/Brands",
                 method: "GET"
             })
                 .done(function (res) {
                     brands = res.Data;
-                    var targetComboboxs = $(`.m-box[fieldName="Brand"`);
+                    var targetComboboxs = $(`.m-box[name="Brand"]`);
                     $.each(targetComboboxs, function (index, item) {
                         me.createComboBox(brands, item);
                     })
                 })
                 .fail(function (res) {
-                    console.log(e);
+                    console.log(res);
                 })
             // Load combobox Category
             var categories = [];
             $.ajax({
-                url: me.Host + "/api/v1/Categories",
-                method: "GET"
+                url: me.host + "/api/v1/Categories",
+                method: "GET" 
             })
                 .done(function (res) {
                     categories = res.Data;
-                    var targetComboboxs = $(`.m-box[fieldName="Category"`);
+                    var targetComboboxs = $(`.m-box[name="Category"]`);
                     $.each(targetComboboxs, function (index, item) {
                         me.createComboBox(categories, item);
                     })
                 })
                 .fail(function (res) {
-                    console.log(e);
+                    console.log(res);
                 })
         }
         catch (e) {

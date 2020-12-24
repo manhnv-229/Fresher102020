@@ -41,7 +41,6 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         /// <summary>
         /// Url sảnh sản phẩm
         /// </summary>
-        [Required]
         [DisplayName("Ảnh sản phẩm")]
         public string ProductImage { get; set; }
 

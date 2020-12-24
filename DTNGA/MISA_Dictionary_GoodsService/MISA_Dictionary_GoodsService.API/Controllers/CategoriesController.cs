@@ -102,6 +102,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         [HttpPost]
         public async Task<ActionServiceResult> AddNewAsync([FromBody] Category newCategory)
         {
+            newCategory.CategoryId = Guid.NewGuid();
             var response = await _baseService.InsertAsync<Category>(newCategory);
             if (response.MISACode == MISACode.Success && categories.Count > 0)
             {

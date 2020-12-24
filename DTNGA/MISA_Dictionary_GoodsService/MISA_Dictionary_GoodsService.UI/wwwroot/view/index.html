@@ -58,8 +58,8 @@
                         <div class="m-icon search-icon"></div>
                         <input class="search-field" name="seacrh" type="search" placeholder="Tìm kiếm theo mã barcode, tên sản phẩm" />
                     </div>
-                    <div class="m-box m-dropdown" id="brand-list" fieldName="Brand"></div>
-                    <div class="m-box m-dropdown" id="category-list" fieldName="Category"></div>
+                    <div class="m-box m-dropdown" id="brand-list" name="Brand" fieldName="Brand"></div>
+                    <div class="m-box m-dropdown" id="category-list" name="Category" fieldName="Category"></div>
                 </div>
                 <div class="content-filter-right">
                     <button class="m-button-icon" id="btn-delete" disabled>
@@ -160,7 +160,7 @@
                 </div>
             </div>
             <!-- dialog -->
-            <div class="m-dialog displayNone">
+            <div class="m-dialog displayNone" fieldName="ProductId">
                 <div class="modal"></div>
                 <div class="dialog-detail">
                     <div class="dialog-header">
@@ -186,7 +186,7 @@
                                     <div class="input-line">
                                         <div class="input-box input-box-medium">
                                             <div class="input-title">Đơn vị tính</div>
-                                            <input class="m-input" type="text" fieldName="ProductName" />
+                                            <input class="m-input" type="text" fieldName="ProductUnit" />
                                         </div>
                                     </div>
                                 </div>
@@ -198,19 +198,19 @@
                                     <div class="input-line">
                                         <div class="input-box input-box-medium ">
                                             <div class="input-title">Nhóm hàng hóa</div>
-                                            <div class="m-box m-combobox" id="cb-category" fieldName="Category"></div>
+                                            <div class="m-box m-combobox" id="cb-category" name="Category" fieldName="CategoryId"></div>
                                         </div>
                                     </div>
                                     <div class="input-line">
                                         <div class="input-box input-box-medium ">
                                             <div class="input-title">Thương hiệu</div>
-                                            <div class="m-box m-combobox" id="cb-brand" fieldName="Brand"></div>
+                                            <div class="m-box m-combobox" id="cb-brand" name="Brand" fieldName="BrandId"></div>
                                         </div>
                                     </div>
                                     <div class="note">
                                         <div class="input-box input-box-big">
                                             <div class="input-title">Mô tả</div>
-                                            <textarea class="m-input note-area"></textarea>
+                                            <textarea class="m-input note-area" fieldName="ProductDescription"></textarea>
                                         </div>
                                     </div>
                                 </div>
