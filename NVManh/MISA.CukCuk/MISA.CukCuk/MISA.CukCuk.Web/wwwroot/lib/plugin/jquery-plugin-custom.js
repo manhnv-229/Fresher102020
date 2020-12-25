@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿/// <reference path="js/enum.js" />
+$(document).ready(function () {
     new MPlugin();
     (function ($) {
         $.fn.extend({
@@ -70,13 +71,13 @@ class MPlugin {
         $(document).on('keydown', '[control-type="combobox"] input.m-combobox-input,[control-type="combobox"] a.m-combobox-trigger', function (e) {
             var keyCode = e.keyCode;
             switch (keyCode) {
-                case 13:
+                case Enum.KeyCode.ENTER:
                     me.selectItemOnEnter(this.parentElement);
                     break;
-                case 40:
+                case Enum.KeyCode.RowDown:
                     me.setFocusComboboxItem(this.parentElement, true);
                     break;
-                case 38:
+                case Enum.KeyCode.RowUp:
                     me.setFocusComboboxItem(this.parentElement, false);
                     break;
                 default:
@@ -90,8 +91,6 @@ class MPlugin {
          * Author: NVMANH (07/12/2020)
          */
         $(document).on('input', '[control-type="combobox"] input.m-combobox-input', function () {
-            debugger
-            console.log('input');
             var inputValue = this.value;
             var combobox = $(this).parent();
             var data = combobox.data('data');
@@ -105,26 +104,22 @@ class MPlugin {
             combobox.data('areFiltering', true);
             combobox.data('selected', null);
             if (dataFilter && dataFilter.length > 0) {
-                console.log('input event');
                 var comboboxData = $(this).siblings('.m-combobox-data');
                 // mặc định focus luôn vào item đầu tiên:
                 comboboxData.children().first().addClass('mCombobox__item--focus');
                 comboboxData.show();
             } else {
-                console.log('hide data on input: ' + combobox);
                 $(this).siblings('.m-combobox-data').hide();
             }
         })
 
 
         $(document).on('blur', '[control-type="combobox"] input.m-combobox-input, [control-type="combobox"] a', function (e) {
-            console.log(e);
             var combobox = this.parentElement;
             var inputCombobox = $(combobox).children('input.m-combobox-input');
             var inputText = inputCombobox.val();
             var entity = $(combobox).data('entity')
             var dataMatch = me.getDataMathComboboxInputText(combobox, inputText);
-            console.log(dataMatch);
 
             // Có nhập liệu nhưng không có data phù hợp:
             if (dataMatch && dataMatch.length == 0 && inputText.trim() != '') {
@@ -142,7 +137,6 @@ class MPlugin {
                 $(inputCombobox).removeClass('border-red');
                 $(inputCombobox).removeAttr('title');
             }
-            console.log('----hide when blur-----')
             $(inputCombobox).siblings('.m-combobox-data').hide();
             //setTimeout(function () {
             //    console.log('hide data on blur: ' + combobox);
@@ -157,6 +151,7 @@ class MPlugin {
             //}
         })
 
+        
         //TODO: Chọn item trong combobox:
         $(document).on('click', '.m-combobox a.m-combobox-trigger', function () {
             var comboboxData = $(this).siblings('.m-combobox-data');
@@ -191,7 +186,6 @@ class MPlugin {
          * Author: NVMANH (09/12/2020)
          */
         $(document).on('mousedown', '.m-combobox .m-combobox-item', function (sender) {
-            console.log(sender);
             event.preventDefault();
             var comboboxData = this.parentElement;
             var input = $(comboboxData).siblings('input');
@@ -199,7 +193,6 @@ class MPlugin {
                 text = this.firstElementChild.textContent;
             input.val(text);
             $(input.parent()).data("selected", { text: text, value: value });
-            console.log('toggle combobox when click item');
             $(comboboxData).toggle();
             input.removeClass('border-red');
             event.stopPropagation();
@@ -284,17 +277,17 @@ class MPlugin {
             fieldText = entityInfo['FieldText'];
             fieldValue = entityInfo['FieldValue'];
         }
+        var itemHTML = '';
         $.each(data, function (index, item) {
             var text = item[fieldText],
                 value = item[fieldValue];
             var itemHTML = `<a class="m-combobox-item" value="` + value + `"><span>` + text + `</span></a>`;
-            comboboxDataEl.append(itemHTML);
         })
+        comboboxDataEl.append(itemHTML);
     }
 
     //TODO: đang lỗi không set được focus
     setFocusComboboxItem(combobox, isNext) {
-        console.log('setFocusComboboxItem');
         this.setStyleItemSelected(combobox);
         var comboboxData = $(combobox).children('.m-combobox-data');
         var childrenFirst = comboboxData.children().first();
@@ -347,7 +340,7 @@ class MPlugin {
         var comboboxData = $(combobox).children('.m-combobox-data');
         var itemSelected = $(combobox).data('selected');
         comboboxData.children().removeClass('mCombobox__item--selected');
-        if (itemSelected && itemSelected.value != null && itemSelected.value != undefined) {
+        if (itemSelected && itemSelected.value && itemSelected.value != undefined) {
             var value = itemSelected.value;
             comboboxData.children("[value='" + value + "']").addClass('mCombobox__item--selected');
         }
@@ -363,8 +356,6 @@ class MPlugin {
         // Kiểm tra xem box data có hiển thị không, 
         // nếu không thì hiển thị, hiển thị rồi thì thực hiện select luôn item đang focus:
         if (comboboxData.css('display') == 'none') {
-            console.log('show data when select item on ENTER: ' + combobox);
-            console.log(comboboxData);
             comboboxData.show();
             //setTimeout(function () {
             //    comboboxData.show();
@@ -373,7 +364,6 @@ class MPlugin {
         } else {
             var itemSelected = comboboxData.children('a.mCombobox__item--focus');
             itemSelected.trigger('mousedown');
-            console.log('hide data selectItemOnEnter: ' + combobox);
             comboboxData.hide();
             //setTimeout(function () {
             //    comboboxData.hide();

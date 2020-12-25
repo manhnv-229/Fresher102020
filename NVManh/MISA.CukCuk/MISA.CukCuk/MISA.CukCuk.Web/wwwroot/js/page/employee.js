@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
-    var employeeJs = new EmployeeJS();
+    employeeJs = new EmployeeJS();
     dialogDetail = $(".m-dialog").dialog({
-        autoOpen: true,
+        autoOpen: false,
         fluid: true,
         //height: 400,
         //width: '700px',

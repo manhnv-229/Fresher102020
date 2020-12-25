@@ -276,7 +276,6 @@ class BaseJS {
                 $('.loading').hide();
             })
         } catch (e) {
-            console.log(e);
         }
     }
 
