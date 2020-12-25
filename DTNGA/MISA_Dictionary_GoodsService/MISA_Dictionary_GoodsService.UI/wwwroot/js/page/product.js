@@ -31,7 +31,7 @@ class ProductManage extends Base {
             // Load combobox Brand
             var brands = [];
             $.ajax({
-                url: me.host + "/api/v1/Brands",
+                url: me.host + "/api/v1/Brands/all",
                 method: "GET"
             })
                 .done(function (res) {
@@ -47,7 +47,7 @@ class ProductManage extends Base {
             // Load combobox Category
             var categories = [];
             $.ajax({
-                url: me.host + "/api/v1/Categories",
+                url: me.host + "/api/v1/Categories/all",
                 method: "GET" 
             })
                 .done(function (res) {

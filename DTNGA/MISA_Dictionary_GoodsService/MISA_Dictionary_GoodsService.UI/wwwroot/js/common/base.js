@@ -13,6 +13,13 @@ class Base {
         me.mesHeader = "";
         // Tên đối tượng đang xử lý hiện tại
         me.objectName = "";
+        $.ajaxSetup({
+            converters: {
+                "text json": function (response) {
+                    return (response == "") ? null : JSON.parse(response);
+                },
+            },
+        });
     }
 
     getRoute() {
@@ -43,62 +50,7 @@ class Base {
         return me.method;
     }
 
-    /* Hàm thực hiện khởi tạo sự kiện
-     * CreatedBy dtnga (21/11/2020)
-     * */
-    initEvent() {
-        try {
-            var me = this;
-            $(`.content-body:visible`).find(`#btn-add`).on("click", function () {
-                me.onClick_btnAdd(this);
-            });
-            $(`.content-body:visible`).find(`#btnDelete`).on("click", function () {
-                me.onClick_btnDelete(this);
-            });
-            $(`.content-body:visible`).find(`#btn-refresh`).on("click", me.onClick_btnRefresh.bind(me));
-
-            $(`#btn-clear`).on("click", me.onClick_btnClear.bind(me));
-            // TODO sự kiện khi nhập trường Tìm kiếm
-
-            // TODO Sự kiện khi chọn filter
-
-            // format khi nhập liệu số tiền
-            me.autoFormatMoney();
-            me.addFocusSupport();
-            // Sự kiện khi thao tác với từng hàng dữ liệu trong bảng
-            $(`table tbody`).on("click", "tr", function () {
-                me.tr_onClick(this);
-            });
-            $(`table tbody`).on("dblclick", "tr", function () {
-                me.onDblClick_trow(this);
-            });
-            // sự kiện khi tick vào checkbox/ nhiều checkbox
-            $(`table thead input[type="checkbox"]`).on("click", function () {
-                me.onClickCheckAll(this);
-            });
-            // sự kiện khi blur các trường input
-            $(`input`).blur(me.onBlur_inputField);
-
-            // Sự kiện khi click navitem
-            $('.nav-item').on('click', function () {
-                $('.nav-item').removeClass('select-menu-item');
-                $('.nav-item .nav-item-icon ').removeClass('active');
-                $(this).addClass('select-menu-item');
-                $(this).find(`.nav-item-icon`).addClass("active");
-                // Ẩn các content
-                $(`.content-body`).addClass("displayNone");
-                // Hiển thị content tương ứng
-                var fieldName = $(this).attr("fieldName");
-                var content = $(`.content-body[fieldName="` + fieldName + `"]`);
-                $(content).removeClass("displayNone");
-                $(`.content-header-title`).text(content.attr("titleName"));
-            })
-        }
-        catch (e) {
-            console.log(e);
-        }
-    }
-
+ 
     /**
      * Sinh combobox với danh sách option cho trước
      * CreatedBy dtnga (10/12/2020)
@@ -110,8 +62,9 @@ class Base {
             var me = this;
             var targetCombo = $(targetCombo);
             var comboName = $(targetCombo).attr("name");
+            var title = (!$(targetCombo).attr("title")) ? "" : $(targetCombo).attr("title");
             var comboSelectBox = $(`<div class="m-input selected-box">
-                                       <input class="" type="search"/>
+                                       <input class="" type="search" placeholder="`+ title +`"/>
                                        <div class="arrow-button">
                                             <div class="m-icon arrow-icon"></div>
                                        </div>
@@ -715,7 +668,9 @@ class Base {
             var obj = new Object();
             // Lấy Id bản ghi
             var formFieldName = $(form).attr("fieldName");
-            obj[formFieldName] = $(form).data("keyId");
+            var formKeyId = $(form).data("keyId");
+            if (formKeyId)
+                obj[formFieldName] = formKeyId;
             var inputs = $(form).find(`input, textarea, .m-box`);
             $.each(inputs, function (index, input) {
                 var fieldName = $(input).attr('fieldName');
@@ -1071,74 +1026,40 @@ class Base {
 
     /**
      * Hàm base thực hiện load dữ liệu lên table
-     *  Created By dtnga (21/11/2020)
      * @param {Element} table Thành phần bảng cần đổ dữ liệu
+     * @param {number} pageIndex Số thứ tự trang
+     *  Created By dtnga (21/11/2020)
      */
-    loadData(table) {
+    loadData(targetTable, pageIndex) {
         try {
             var me = this;
-            var ths = $(table).find('tr th');
+            var currentContent = $(targetTable).closest(`.content-body`);
+            var ths = $(targetTable).find('tr th');
+            var pageIndex = (!pageIndex) ? 1 : pageIndex;
+            var pageSize = convertInt($(currentContent).find(`.pageSize`).attr("value"));
             var data = [];
             // Lấy data từ Api
             me.formMode = "get";
-
-            //var data = me.CallAjax();
-            //$.each(data, function (index, obj) {
-            //    var tr = $(`<tr></tr>`);
-            //    $.each(ths, function (index, th) {
-            //        var td = $(`<td></td>`);
-            //        // Lấy fielname th 
-            //        var fieldName = $(th).attr('fieldName');
-            //        if (fieldName == "Checkbox") {
-            //            var checkbox = $(`<div><label class="m-checkbox">
-            //                                    <input class="checkbox" type="checkbox" name="row" />
-            //                                    <span class="checkmark"></span>
-            //                          </label></div>`);
-            //            td.append(checkbox);
-            //        }
-            //        else {
-            //            //Lấy giá trị của thuộc tính tương ứng với fieldName trong obj
-            //            var value = me.customeProcessTd(fieldName, obj);
-            //            if (value) {
-            //                // định dạng lại
-            //                var formatType = $(th).attr('formatType');
-            //                switch (formatType) {
-            //                    case "money":
-            //                        value = formatMoney(value);
-            //                        td.addClass("text-align-right");
-            //                        break;
-            //                    case "ddmmyy":
-            //                        value = formatDate(value, "dd/mm/yyyy");
-            //                        td.addClass("text-align-center");
-            //                        break;
-            //                    default:
-            //                        break;
-            //                }
-            //            }
-            //            else value = "...";
-            //            var span = `<span>` + value + `</span>`;
-            //            var div = `<div>` + span + `</div>`;
-            //            // gán vào td -> tr
-            //            td.append(div);
-            //        }
-            //        tr.append(td);
-            //    })
-            //    $(table).find(`tbody`).append(tr);
-            //    //Lưu Id vào data
-            //    var keyIdName = me.objectName + 'Id';
-            //    tr.data('keyId', obj[keyIdName]);
-            //})
-            //// Mặc định chọn row đầu tiên
-            //$(table).find(`tbody tr:first`).select();
-            //$(table).find(`tbody tr:first`).addClass("selected");
-            //$(table).find(`tbody tr:first input[type="checkbox"]`).prop("checked", true);
-            //$(table).closest(`.content-body`).find(`#btnDelete`).prop("disabled", false);
-
             me.route = me.getRoute();
             me.method = me.getMethod();
+            // Lấy tất cả dữu liệu tìm kiếm, bộ lọc
+            var filters = new Object();
+            var SearchValue = $(currentContent).find(`.content-filter input[type="search"]`).text();
+            SearchValue = (!SearchValue) ? null : SearchValue;
+            filters["KeySearch"] = "áo";
+            var filterboxs = $(currentContent).find(`.content-filter .m-box`);
+            debugger
+            $.each(filterboxs, function (index, item) {
+                var filterName = $(item).attr("fieldName");
+                var filterValue = (!$(item).data("keyId")) ? null : $(item).data("keyId");
+                filters[filterName] = filterValue;
+            });
             $.ajax({
-                url: me.host + me.route,
-                method: me.method
+                url: me.host + me.route + "?limit=" + pageSize + "&offset=" + pageIndex,
+                method: me.method,
+                data: JSON.stringify(filters),
+                contentType: "application/json",
+                dataType: "json"
             })
                 .done(function (res) {
                     data = res.Data;
