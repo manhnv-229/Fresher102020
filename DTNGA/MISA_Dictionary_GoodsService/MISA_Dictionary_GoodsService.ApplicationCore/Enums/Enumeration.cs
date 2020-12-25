@@ -19,6 +19,10 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         /// Lấy dữ liệu theo khóa chính
         /// </summary>
         GetById,
+        /// <summary>
+        /// Lấy dữ liệu theo 1 thuộc tính
+        /// </summary>
+        GetByProperty,
 
         /// <summary>
         /// Thêm mới

@@ -107,26 +107,24 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
         {
             var entityName = typeof(T).Name;
             var sp = $"Proc_Get{entityName}By{entityName}Id";
-            var parms = MappingDataTypeForOne(entityName + "Id", id);
+            var parms = MappingDataTypeForOne($"{entityName}Id", id);
             return await _baseRepository.GetByIdAsync<T>(sp, parms);
         }
 
-        public async Task<List<T>> GetByPaging<T>(int limit, int offset)
+        public async Task<List<T>> GetByFilterAsync<T>(int limit, int offset, Dictionary<string, object> filterValues = null)
         {
-            var entityName = typeof(T).Name;
-            var sp = $"Proc_Get" + entityName + "ByPaging";
+            var results = new List<T>();
             var parms = new DynamicParameters();
-            parms.Add("pageSize", limit);
-            parms.Add("pageIndex", offset);
-            return await _baseRepository.GetAsync<T>(sp, parms);
-        }
-
-        public async Task<List<T>> GetBySearching<T>(string keySearch)
-        {
+            parms.Add("PageIndex", offset);
+            parms.Add("PageSize", limit);
+            foreach (KeyValuePair<string, object> item in filterValues)
+            {
+                var key = item.Key;
+                var value = item.Value;
+                parms.Add(key, value);
+            }
             var entityName = typeof(T).Name;
-            var sp = $"Proc_Get" + entityName + "BySearching";
-            var parms = new DynamicParameters();
-            parms.Add("keySearch", keySearch);
+            var sp = string.Format(Properties.Resources.GetByFilter, entityName);
             return await _baseRepository.GetAsync<T>(sp, parms);
         }
         #endregion

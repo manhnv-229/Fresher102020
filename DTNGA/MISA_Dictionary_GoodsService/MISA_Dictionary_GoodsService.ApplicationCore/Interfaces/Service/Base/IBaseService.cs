@@ -81,22 +81,17 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service.Base
         /// <returns>Đối tượng có Id theo mô tả</returns>
         /// CreatedBy dtnga (11/11/2020)
         Task<T> GetByIdAsync<T>(Guid entityId);
-        /// <summary>
-        /// Lấy thông tin theo phân trang
-        /// </summary>
-        /// <param name="limit">Số bản ghi trên 1 trang</param>
-        /// <param name="offset">Số thứ tự trang</param>
-        /// <returns></returns>
-        /// CreatedBy dtnga (22/12/2020)
-        Task<List<T>> GetByPaging<T>(int limit, int offset);
 
         /// <summary>
-        /// Lấy thông tin theo khóa tìm kiếm
+        /// Lấy dữu liệu theo tim fkieems và bộ lọc (có paging)
         /// </summary>
-        /// <param name="keySearch">key tìm kiếm</param>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="limit">Số bản ghi trên 1 trang</param>
+        /// <param name="offset">Số thứ tự trang cần lấy</param>
+        /// <param name="filterValues">Bộ lọc</param>
         /// <returns></returns>
-        /// CreatedBy dtnga (22/12/2020)
-        Task<List<T>> GetBySearching<T>(string keySearch);
+        /// CreatedBy dtnga (25/12/2020)
+        Task<List<T>> GetByFilterAsync<T>(int limit, int offset, Dictionary<string, object> filterValues = null);
         #endregion
 
         #region Insert

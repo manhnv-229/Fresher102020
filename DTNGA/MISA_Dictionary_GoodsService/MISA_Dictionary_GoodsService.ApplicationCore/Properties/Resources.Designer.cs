@@ -115,6 +115,15 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Proc_Get{0}ByFilter.
+        /// </summary>
+        public static string GetByFilter {
+            get {
+                return ResourceManager.GetString("GetByFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Thông tin {0} không được vượt quá {1} kí tự.
         /// </summary>
         public static string MaxLength {
@@ -129,6 +138,33 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Properties {
         public static string NotFound {
             get {
                 return ResourceManager.GetString("NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select * from {0};.
+        /// </summary>
+        public static string Proc_GetAll {
+            get {
+                return ResourceManager.GetString("Proc_GetAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select * from {0}  t where t.{1}Id = &apos;{2}&apos; ;.
+        /// </summary>
+        public static string Proc_GetById {
+            get {
+                return ResourceManager.GetString("Proc_GetById", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select * from {0}  t where t.{1} = {2};.
+        /// </summary>
+        public static string Proc_GetByProperty {
+            get {
+                return ResourceManager.GetString("Proc_GetByProperty", resourceCulture);
             }
         }
         

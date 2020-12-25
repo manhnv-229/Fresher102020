@@ -135,11 +135,27 @@
   <data name="Exception" xml:space="preserve">
     <value>Lỗi Exception.</value>
   </data>
+  <data name="GetByFilter" xml:space="preserve">
+    <value>Proc_Get{0}ByFilter</value>
+    <comment>Tên procedure lấy dữ liệu theo tìm kiếm và bộ lọc</comment>
+  </data>
   <data name="MaxLength" xml:space="preserve">
     <value>Thông tin {0} không được vượt quá {1} kí tự</value>
   </data>
   <data name="NotFound" xml:space="preserve">
     <value>Lỗi không tìm thấy dữ liệu.</value>
+  </data>
+  <data name="Proc_GetAll" xml:space="preserve">
+    <value>Select * from {0};</value>
+    <comment>Lấy tất cả bản ghi</comment>
+  </data>
+  <data name="Proc_GetById" xml:space="preserve">
+    <value>Select * from {0}  t where t.{1}Id = '{2}' ;</value>
+    <comment>Lấy thông tin theo Id</comment>
+  </data>
+  <data name="Proc_GetByProperty" xml:space="preserve">
+    <value>Select * from {0}  t where t.{1} = {2};</value>
+    <comment>Lấy thông tin theo thuộc tính nhất định</comment>
   </data>
   <data name="Province" xml:space="preserve">
     <value>Tỉnh</value>

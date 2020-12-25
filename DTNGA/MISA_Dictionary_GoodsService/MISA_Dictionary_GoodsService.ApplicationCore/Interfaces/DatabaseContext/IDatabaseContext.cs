@@ -36,6 +36,8 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.DatabaseContex
         /// <returns></returns>
         /// CreatedBy dtnga (16/12/2020)
         List<T> Get<T>(string queryCommand, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure);
+
+
         /// <summary>
         /// Lấy thông tin nhiều đối tượng
         /// </summary>

@@ -33,6 +33,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         /// <summary>
         /// Tên danh mục
         /// </summary>
+        [Required]
         [DisplayName("Tên danh mục")]
         public string CategoryName { get; set; }
 

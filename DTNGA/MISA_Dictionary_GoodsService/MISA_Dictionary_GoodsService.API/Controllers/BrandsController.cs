@@ -26,45 +26,28 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         }
 
         /// <summary>
-        /// Lấy thông tin theo phân trang
+        /// Lấy thông tin thương hiệu theo bộ lọc và tìm kiếm
         /// </summary>
-        /// <param name="limit">Số bản ghi trên 1 trang</param>
-        /// <param name="offset">số thứ thự trang</param>
+        /// <param name="limit">Số bản ghi trên trang</param>
+        /// <param name="offset">Số thứ tự trang</param>
+        /// <param name="filterValues">Bộ lọc</param>
         /// <returns></returns>
-        /// CreatedBy dtnga (22/12/2020)
-        [HttpGet("paging")]
-        public async Task<ActionServiceResult> GetByPagingAsync([FromQuery] int limit, [FromQuery] int offset)
+        /// CreatedBy dtnga (24/12/2020)
+        [HttpGet]
+        public async Task<ActionServiceResult> GetByFilterAsync([FromQuery] int limit, [FromQuery] int offset, [FromBody] Dictionary<string, object> filterValues)
         {
-            var _actionServiceResult = new ActionServiceResult
-            {
-                Data = await _baseService.GetByPaging<Brand>(limit, offset)
-            };
+            var _actionServiceResult = new ActionServiceResult();
+            var result = await _baseService.GetByFilterAsync<Brand>(limit, offset, filterValues);
+            _actionServiceResult.Data = result;
             return _actionServiceResult;
         }
-
-        /// <summary>
-        /// Lấy thông tin theo key tìm kiếm
-        /// </summary>
-        /// <param name="q">key tìm kiếm</param>
-        /// <returns></returns>
-        /// CreatedBy dtnga (22/12/2020)
-        [HttpGet("search")]
-        public async Task<ActionServiceResult> GetBySearchingAsync([FromQuery] string q)
-        {
-            var _actionServiceResult = new ActionServiceResult
-            {
-                Data = await _baseService.GetBySearching<Brand>(q)
-            };
-            return _actionServiceResult;
-        }
-
 
         /// <summary>
         /// Lấy tất cả thương hiệu
         /// </summary>
         /// <returns></returns>
         /// CreatedBy dtnga (16/12/2020)
-        [HttpGet]
+        [HttpGet("all")]
         public ActionServiceResult GetAllBrand()
         {
             var response = new ActionServiceResult();
@@ -133,24 +116,6 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
             return response;
         }
 
-        /// <summary>
-        /// Xóa thông tin thương hiêu theo Id
-        /// </summary>
-        /// <param name="brandId"></param>
-        /// <returns></returns>
-        /// CreatedBy dtnga (17/12/2020)
-        [HttpDelete("{brandId}")]
-        public async Task<ActionServiceResult> DeleteBrandAsync([FromRoute] Guid brandId)
-        {
-            var response = await _baseService.DeleteAsync<Brand>(brandId);
-            if (response.MISACode == MISACode.Success && brands.Count > 0)
-            {
-                // Cập nhật lại cache
-                brands.Remove(brands.Where<Brand>(p => p.BrandId == brandId).FirstOrDefault());
-                _baseMemoryCache.SetCache("Brands", brands);
-            }
-            return response;
-        }
 
         /// <summary>
         /// Thực hiện xóa nhiều thương hiệu
@@ -158,7 +123,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         /// <param name="range">danh sách chứa Id các thương hiệu cần xóa</param>
         /// <returns></returns>
         /// CreatedBy dtnga (23/12/2020)
-        [HttpDelete("range")]
+        [HttpDelete]
         public async Task<ActionServiceResult> DeleteRangeAsync([FromBody] List<Guid> range)
         {
             var response = await _baseService.DeleteRangeAsync<Brand>(range);

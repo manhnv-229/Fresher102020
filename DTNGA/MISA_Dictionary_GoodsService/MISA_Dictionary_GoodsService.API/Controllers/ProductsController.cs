@@ -28,37 +28,18 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         }
 
         /// <summary>
-        /// Lấy thông tin sản phẩm theo thương hiệu và danh mục, nếu tham số null thì lấy toàn bộ
+        /// Lấy thông tin sản phẩm theo bộ lọc và tìm kiếm
         /// </summary>
-        /// <param name="brandId">Id thương hiệu</param>
-        /// <param name="categoryId">Id danh mục</param>
+        /// <param name="limit">Số bản ghi trên trang</param>
+        /// <param name="offset">Số thứ tự trang</param>
+        /// <param name="filterValues">Bộ lọc</param>
         /// <returns></returns>
+        /// CreatedBy dtnga (24/12/2020)
         [HttpGet]
-        public async Task<ActionServiceResult> GetByFilterAsync([FromQuery] int limit, [FromQuery] int offset, [FromBody] Dictionary<string, string> filterValues)
+        public async Task<ActionServiceResult> GetByFilterAsync([FromQuery] int limit, [FromQuery] int offset, [FromBody] Dictionary<string, object> filterValues)
         {
             var _actionServiceResult = new ActionServiceResult();
-            var keySearch = (filterValues.ContainsKey("KeySearch") == false) ? null : (string)filterValues["KeySearch"];
-            var result = new List<Product>();
-            if (filterValues.ContainsKey("BrandId") == false && filterValues.ContainsKey("CategoryId") == false)
-            {
-                result = await _productService.GetByFilterAsync(limit, offset, keySearch);
-            }
-            else if(filterValues.ContainsKey("BrandId") == true && filterValues.ContainsKey("CategoryId") == true)
-            {
-                var brandId = new Guid(filterValues["BrandId"]);
-                var categoryId = new Guid(filterValues["CategoryId"]);
-                result = await _productService.GetByFilterAsync(limit, offset, keySearch, brandId, categoryId);
-            }
-            else if (filterValues.ContainsKey("BrandId") == true)
-            {
-                var brandId = new Guid(filterValues["BrandId"]);
-                result = await _productService.GetByFilterAsync(limit, offset, keySearch, brandId);
-            }
-            else
-            {
-                var categoryId = new Guid(filterValues["CategoryId"]);
-                result = await _productService.GetByFilterAsync(limit, offset, keySearch, categoryId);
-            }
+            var result = await _productService.GetByFilterAsync<Product>(limit, offset, filterValues);
             _actionServiceResult.Data = result;
             return _actionServiceResult;
         }
@@ -121,24 +102,6 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
             return response;
         }
 
-        /// <summary>
-        /// Xóa thông tin sản phẩm theo Id
-        /// </summary>
-        /// <param name="productId"></param>
-        /// <returns></returns>
-        /// CreatedBy dtnga (17/12/2020)
-        [HttpDelete("{productId}")]
-        public async Task<ActionServiceResult> DeleteAsync([FromRoute] Guid productId)
-        {
-            var response = await _productService.DeleteAsync<Product>(productId);
-            if (response.MISACode == MISACode.Success && products.Count > 0)
-            {
-                // Xóa cả trong cache
-                products.Remove(products.Where<Product>(p => p.ProductId == productId).FirstOrDefault());
-                _baseMemoryCache.SetCache("Products", products);
-            }
-            return response;
-        }
 
         /// <summary>
         /// Thực hiện xóa nhiều sản phẩm
@@ -146,7 +109,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         /// <param name="range">danh sách chứa Id các sản phẩm cần xóa</param>
         /// <returns></returns>
         /// CreatedBy dtnga (23/12/2020)
-        [HttpDelete("range")]
+        [HttpDelete]
         public async Task<ActionServiceResult> DeleteRangeAsync([FromBody] List<Guid> range)
         {
             var response = await _productService.DeleteRangeAsync<Product>(range);

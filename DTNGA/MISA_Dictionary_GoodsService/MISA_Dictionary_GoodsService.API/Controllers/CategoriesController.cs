@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MISA_Dictionary_GoodsService.ApplicationCore;
+using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service;
 using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service.Base;
 
 
@@ -16,48 +17,34 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly IBaseMemoryCache _baseMemoryCache;
-        private readonly IBaseService _baseService;
+        private readonly ICategoryService _categoryService;
         protected List<Category> categories;
-        public CategoriesController(IBaseMemoryCache baseMemoryCache, IBaseService baseService)
+        public CategoriesController(IBaseMemoryCache baseMemoryCache, ICategoryService baseService)
         {
             _baseMemoryCache = baseMemoryCache;
-            _baseService = baseService;
+            _categoryService = baseService;
             categories = (List<Category>)_baseMemoryCache.GetCache<Category>("Categories");
             
         }
 
+
         /// <summary>
-        /// Lấy thông tin theo phân trang
+        /// Lấy thông tin danh mục theo bộ lọc
         /// </summary>
-        /// <param name="limit">Số bản ghi trên 1 trang</param>
-        /// <param name="offset">số thứ thự trang</param>
+        /// <param name="limit">Số bản ghi trên trang</param>
+        /// <param name="offset">Số thứ tự trang</param>
+        /// <param name="filterValues">Bộ lọc</param>
         /// <returns></returns>
-        /// CreatedBy dtnga (22/12/2020)
-        [HttpGet("paging")]
-        public async Task<ActionServiceResult> GetByPagingAsync([FromQuery] int limit, [FromQuery] int offset)
+        /// CreatedBy dtnga (24/12/2020)
+        [HttpGet]
+        public async Task<ActionServiceResult> GetByFilterAsync([FromQuery] int limit, [FromQuery] int offset, [FromBody] Dictionary<string, object> filterValues)
         {
-            var _actionServiceResult = new ActionServiceResult
-            {
-                Data = await _baseService.GetByPaging<Category>(limit, offset)
-            };
+            var _actionServiceResult = new ActionServiceResult();
+            var result = await _categoryService.GetByFilterAsync<Category>(limit, offset, filterValues);
+            _actionServiceResult.Data = result;
             return _actionServiceResult;
         }
 
-        /// <summary>
-        /// Lấy thông tin theo key tìm kiếm
-        /// </summary>
-        /// <param name="q">key tìm kiếm</param>
-        /// <returns></returns>
-        /// CreatedBy dtnga (22/12/2020)
-        [HttpGet("search")]
-        public async Task<ActionServiceResult> GetBySearchingAsync([FromQuery] string q)
-        {
-            var _actionServiceResult = new ActionServiceResult
-            {
-                Data = await _baseService.GetBySearching<Category>(q)
-            };
-            return _actionServiceResult;
-        }
 
 
         /// <summary>
@@ -65,7 +52,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         /// </summary>
         /// <returns></returns>
         /// CreatedBy dtnga (16/12/2020)
-        [HttpGet]
+        [HttpGet("all")]
         public ActionServiceResult GetAll()
         {
             var response = new ActionServiceResult();
@@ -103,7 +90,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         public async Task<ActionServiceResult> AddNewAsync([FromBody] Category newCategory)
         {
             newCategory.CategoryId = Guid.NewGuid();
-            var response = await _baseService.InsertAsync<Category>(newCategory);
+            var response = await _categoryService.InsertAsync<Category>(newCategory);
             if (response.MISACode == MISACode.Success && categories.Count > 0)
             {
                 // Cập nhật lại cache
@@ -123,7 +110,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         [HttpPut]
         public async Task<ActionServiceResult> UpdateAsync([FromBody] Category newCategory)
         {
-            var response = await _baseService.UpdateAsync<Category>(newCategory);
+            var response = await _categoryService.UpdateAsync<Category>(newCategory);
             if (response.MISACode == MISACode.Success && categories.Count > 0)
             {
                 // Cập nhật lại cache
@@ -135,34 +122,15 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         }
 
         /// <summary>
-        /// Xóa thông tin danh mục theo Id
-        /// </summary>
-        /// <param name="categoryId"></param>
-        /// <returns></returns>
-        /// CreatedBy dtnga (17/12/2020)
-        [HttpDelete("{categoryId}")]
-        public async Task<ActionServiceResult> DeleteAsync([FromRoute] Guid categoryId)
-        {
-            var response = await _baseService.DeleteAsync<Category>(categoryId);
-            if (response.MISACode == MISACode.Success && categories.Count > 0)
-            {
-                // Cập nhật lại cache
-                categories.Remove(categories.Where<Category>(p => p.CategoryId == categoryId).FirstOrDefault());
-                _baseMemoryCache.SetCache("Categories", categories);
-            }
-            return response;
-        }
-
-        /// <summary>
         /// Thực hiện xóa nhiều danh mục
         /// </summary>
         /// <param name="range">danh sách chứa Id các danh mục cần xóa</param>
         /// <returns></returns>
         /// CreatedBy dtnga (23/12/2020)
-        [HttpDelete("range")]
+        [HttpDelete]
         public async Task<ActionServiceResult> DeleteRangeAsync([FromBody] List<Guid> range)
         {
-            var response = await _baseService.DeleteRangeAsync<Category>(range);
+            var response = await _categoryService.DeleteRangeAsync<Category>(range);
             if (response.MISACode == MISACode.Success && categories.Count > 0)
             {
                 // Xóa cả trong cache
