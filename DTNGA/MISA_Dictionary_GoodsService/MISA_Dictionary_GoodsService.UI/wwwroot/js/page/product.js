@@ -10,7 +10,6 @@ class ProductManage extends Base {
         me.route = me.getroute();
         me.objectName = "Product";
         var productTable = $(`#products-table`);
-        me.loadData(productTable);
         me.loadComboboxCustome();
     }
 

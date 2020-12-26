@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    
     var indexJs = new IndexJs();
 })
 
@@ -6,6 +7,7 @@ class IndexJs extends Base {
     constructor() {
         super();
         var me = this;
+        me.loadData(1);
         me.initEvent();
     }
 
@@ -14,6 +16,7 @@ class IndexJs extends Base {
   * */
     initEvent() {
         try {
+            
             var me = this;
             $(`.content-body:visible`).find(`#btn-add`).on("click", function () {
                 me.onClick_btnAdd(this);
@@ -22,12 +25,25 @@ class IndexJs extends Base {
                 me.onClick_btnDelete(this);
             });
             $(`.content-body:visible`).find(`#btn-refresh`).on("click", me.onClick_btnRefresh.bind(me));
+            //paging
+            $(`.content-body:visible`).find(`.paging-number button`).on("click", function () {
+                me.onClickPagingNumber(this);
+            });
+            $(`.content-body:visible`).find(`.paging #next`).on("click", me.onClickNextPage.bind(me));
+            $(`.content-body:visible`).find(`.paging #previous`).on("click", me.onClickPreviousPage.bind(me));
+            $(`.content-body:visible`).find(`.paging #jumpToFirst`).on("click", me.onClickFirstPage.bind(me));
+            $(`.content-body:visible`).find(`.paging #jumpToLast`).on("click", me.onClickLastPage.bind(me));
 
-            $(`#btn-clear`).on("click", me.onClick_btnClear.bind(me));
-            // TODO sự kiện khi nhập trường Tìm kiếm
-
+            //sự kiện khi nhập trường Tìm kiếm
+            $(`.content-body:visible`).find(`.content-filter input[type="search"]`).on("search", function (e) {
+                me.loadData(1);
+                me.onClickFirstPage();
+            });
             // TODO Sự kiện khi chọn filter
-
+            $(`.content-body:visible`).find(`.content-filter .m-box .item`).on("click", function () {
+                me.loadData(1);
+                me.onClickFirstPage();
+            });
             // format khi nhập liệu số tiền
             me.autoFormatMoney();
             me.addFocusSupport();
@@ -61,7 +77,7 @@ class IndexJs extends Base {
                 // load data tương ứng với content
                 var tblContent = $(content).find(`.m-table`);
                 var pageIndex = 1;
-                me.loadData(tblContent, pageIndex);
+                me.loadData(pageIndex, tblContent);
             })
         }
         catch (e) {

@@ -30,20 +30,53 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         /// <summary>
         /// Lấy thông tin sản phẩm theo bộ lọc và tìm kiếm
         /// </summary>
-        /// <param name="limit">Số bản ghi trên trang</param>
-        /// <param name="offset">Số thứ tự trang</param>
-        /// <param name="filterValues">Bộ lọc</param>
+        /// <param name="size">Số bản ghi trên trang</param>
+        /// <param name="page">Số thứ tự trang</param>
+        /// <param name="keySearch">key tìm kiếm</param>
+        /// <param name="brandId">Id thương hiệu</param>
+        /// <param name="categoryId">Id danh mục</param>
         /// <returns></returns>
         /// CreatedBy dtnga (24/12/2020)
+        /// ModifiedBy dtnga (26/12/2020) : Thay đổi tham số
         [HttpGet]
-        public async Task<ActionServiceResult> GetByFilterAsync([FromQuery] int limit, [FromQuery] int offset, [FromBody] Dictionary<string, object> filterValues)
+        public async Task<ActionServiceResult> GetByFilterAsync([FromQuery] int page, [FromQuery] int size, [FromQuery] string keySearch, [FromQuery] Guid? brandId, [FromQuery] Guid? categoryId )
         {
             var _actionServiceResult = new ActionServiceResult();
-            var result = await _productService.GetByFilterAsync<Product>(limit, offset, filterValues);
-            _actionServiceResult.Data = result;
+            var filterValues = new Dictionary<string, object>
+            {
+                { "KeySearch", keySearch },
+                { "BrandId", brandId },
+                { "CategoryId", categoryId }
+            };
+            var results = await _productService.GetByFilterAsync<Product>(filterValues);
+            if (page < 0) page = 1;
+            var resultPaging = results.Skip((page - 1) * size).Take(size).ToList();
+            _actionServiceResult.Data = resultPaging;
             return _actionServiceResult;
         }
 
+        /// <summary>
+        /// Đếm số hàng hóa thỏa mãn bộ lọc
+        /// </summary>
+        /// <param name="keySearch">key tìm kiếm</param>
+        /// <param name="brandId">Id thương hiệu</param>
+        /// <param name="categoryId">Id danh mục</param>
+        /// <returns></returns>
+        /// CreatedBy dtnga (26/12/2020)
+        [HttpGet("count")]
+        public async Task<ActionServiceResult> GetCountAsync([FromQuery] string keySearch, [FromQuery] Guid? brandId, [FromQuery] Guid? categoryId)
+        {
+            var _actionServiceResult = new ActionServiceResult();
+            var filterValues = new Dictionary<string, object>
+            {
+                { "KeySearch", keySearch },
+                { "BrandId", brandId },
+                { "CategoryId", categoryId }
+            };
+            var results = await _productService.GetByFilterAsync<Product>(filterValues);
+            _actionServiceResult.Data = results.Count;
+            return _actionServiceResult;
+        }
 
         /// <summary>
         /// Lấy thông tin sản phẩm theo Id

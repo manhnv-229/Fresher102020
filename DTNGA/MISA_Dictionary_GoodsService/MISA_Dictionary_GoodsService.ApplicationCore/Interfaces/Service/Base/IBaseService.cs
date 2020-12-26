@@ -86,12 +86,10 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service.Base
         /// Lấy dữu liệu theo tim fkieems và bộ lọc (có paging)
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="limit">Số bản ghi trên 1 trang</param>
-        /// <param name="offset">Số thứ tự trang cần lấy</param>
         /// <param name="filterValues">Bộ lọc</param>
         /// <returns></returns>
         /// CreatedBy dtnga (25/12/2020)
-        Task<List<T>> GetByFilterAsync<T>(int limit, int offset, Dictionary<string, object> filterValues = null);
+        Task<List<T>> GetByFilterAsync<T>(Dictionary<string, object> filterValues = null);
         #endregion
 
         #region Insert

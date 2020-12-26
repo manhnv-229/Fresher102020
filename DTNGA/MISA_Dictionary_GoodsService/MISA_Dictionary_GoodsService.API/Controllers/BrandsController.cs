@@ -28,17 +28,46 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         /// <summary>
         /// Lấy thông tin thương hiệu theo bộ lọc và tìm kiếm
         /// </summary>
-        /// <param name="limit">Số bản ghi trên trang</param>
-        /// <param name="offset">Số thứ tự trang</param>
-        /// <param name="filterValues">Bộ lọc</param>
+        /// <param name="size">Số bản ghi trên trang</param>
+        /// <param name="page">Số thứ tự trang</param>
+        /// <param name="keySearch">key tìm kiếm</param>
+        /// <param name="brandOrigin">Xuất xứ thương hiệu</param>
         /// <returns></returns>
         /// CreatedBy dtnga (24/12/2020)
         [HttpGet]
-        public async Task<ActionServiceResult> GetByFilterAsync([FromQuery] int limit, [FromQuery] int offset, [FromBody] Dictionary<string, object> filterValues)
+        public async Task<ActionServiceResult> GetByFilterAsync([FromQuery] int size, [FromQuery] int page, [FromQuery] string keySearch, [FromQuery] string brandOrigin)
         {
             var _actionServiceResult = new ActionServiceResult();
-            var result = await _baseService.GetByFilterAsync<Brand>(limit, offset, filterValues);
-            _actionServiceResult.Data = result;
+            var filterValues = new Dictionary<string, object>
+            {
+                { "KeySearch", keySearch },
+                { "BrandOrigin", brandOrigin }
+            };
+            var results = await _baseService.GetByFilterAsync<Brand>(filterValues);
+            if (page < 0) page = 1;
+            var resultPaging = results.Skip((page - 1) * size).Take(size).ToList();
+            _actionServiceResult.Data = resultPaging;
+            return _actionServiceResult;
+        }
+
+        /// <summary>
+        /// Đếm số bản ghi thỏa mãn bộ lọc
+        /// </summary>
+        /// <param name="keySearch">key tìm kiếm</param>
+        /// <param name="brandOrigin">Xuất xứ thương hiệu</param>
+        /// <returns></returns>
+        /// CreatedBy dtnga (26/12/2020)
+        [HttpGet("count")]
+        public async Task<ActionServiceResult> GetCountAsync([FromQuery] string keySearch, [FromQuery] string brandOrigin)
+        {
+            var _actionServiceResult = new ActionServiceResult();
+            var filterValues = new Dictionary<string, object>
+            {
+                { "KeySearch", keySearch },
+                { "BrandOrigin", brandOrigin }
+            };
+            var results = await _baseService.GetByFilterAsync<Brand>(filterValues);
+            _actionServiceResult.Data = results.Count;
             return _actionServiceResult;
         }
 

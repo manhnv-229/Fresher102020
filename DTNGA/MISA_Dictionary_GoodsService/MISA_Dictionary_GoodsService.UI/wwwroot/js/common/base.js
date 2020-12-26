@@ -1,4 +1,4 @@
-﻿
+
 class Base {
     constructor() {
         var me = this;
@@ -13,13 +13,7 @@ class Base {
         me.mesHeader = "";
         // Tên đối tượng đang xử lý hiện tại
         me.objectName = "";
-        $.ajaxSetup({
-            converters: {
-                "text json": function (response) {
-                    return (response == "") ? null : JSON.parse(response);
-                },
-            },
-        });
+
     }
 
     getRoute() {
@@ -50,7 +44,7 @@ class Base {
         return me.method;
     }
 
- 
+
     /**
      * Sinh combobox với danh sách option cho trước
      * CreatedBy dtnga (10/12/2020)
@@ -64,7 +58,7 @@ class Base {
             var comboName = $(targetCombo).attr("name");
             var title = (!$(targetCombo).attr("title")) ? "" : $(targetCombo).attr("title");
             var comboSelectBox = $(`<div class="m-input selected-box">
-                                       <input class="" type="search" placeholder="`+ title +`"/>
+                                       <input class="" type="search" placeholder="`+ title + `"/>
                                        <div class="arrow-button">
                                             <div class="m-icon arrow-icon"></div>
                                        </div>
@@ -386,7 +380,7 @@ class Base {
             $(popup).removeClass("displayNone");
             me.initEventPopup(popup);
             // Sự kiện khi click button Xóa
-            $(popup).find(`.btnDelete`).on("click", function () {
+            $(popup).find(`#btn-delete-popup`).on("click", function () {
                 var parentBody = $(button).closest(`.content-body`);
                 var selectedRows = $(parentBody).find(`table tr.selected`);
                 var data = [];
@@ -395,7 +389,7 @@ class Base {
                 })
                 me.route = me.getRoute();
                 $.ajax({
-                    url: me.host + me.route + "/range",
+                    url: me.host + me.route,
                     method: "DELETE",
                     data: JSON.stringify(data),
                     contentType: "application/json",
@@ -412,9 +406,10 @@ class Base {
                         $(selectedRows).remove();
                         // Hiển thị toast thông báo thành công
                         me.showToastMesseger("Xóa thành công", "success");
-                        if ($(parentBody).find(`table thead input[type="checkbox"]`).is(":checked")){
+                        if ($(parentBody).find(`table thead input[type="checkbox"]`).is(":checked")) {
                             $(parentBody).find(`table thead input[type="checkbox"]`).prop("checked", false);
                         }
+                        me.loadData();
                     })
                     .fail(function (res) {
                         console.log(res);
@@ -424,6 +419,155 @@ class Base {
                         me.showToastMesseger("Xóa không thành công", "fail");
                     })
             });
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    /**
+     * Sự kiện khi click số trang
+     * @param {Element} button Button số trang
+     * CreatedBy dtnga (26/12/2020)
+     */
+    onClickPagingNumber(button) {
+        try {
+            var me = this;
+            if (!button)
+                button = $(`.content-body:visible .paging-numbber button.selected`);
+            var index = convertInt($(button).text().trim());
+            debugger
+            me.setPageNumberPosition(index);
+            me.loadData(index);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    /**
+     * Thực hiện chuyển đến trang tiếp theo
+     * CreatedBy dtnga (26/12/2020)
+     */
+    onClickNextPage() {
+        try {
+            var me = this;
+            var index = convertInt($(`.content-body:visible .paging-number button.selected`).text().trim()) + 1;
+            me.setPageNumberPosition(index);
+            me.loadData(index);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+    /**
+     * Thực hiện chuyển đến trang trước
+     * CreatedBy dtnga (26/12/2020)
+     */
+    onClickPreviousPage() {
+        try {
+            var me = this;
+            var index = convertInt($(`.content-body:visible .paging-number button.selected`).text().trim()) - 1;
+            me.setPageNumberPosition(index);
+            me.loadData(index);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    /**
+    * Thực hiện chuyển đến trang đầu tiên
+    * CreatedBy dtnga (26/12/2020)
+    */
+    onClickFirstPage() {
+        try {
+            var me = this;
+            me.setPageNumberPosition(1);
+            me.loadData(1);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    /**
+    * Thực hiện chuyển đến trang cuối cùng
+    * CreatedBy dtnga (26/12/2020)
+    */
+    onClickLastPage() {
+        try {
+            var me = this;
+            var pagingBar = $(`.content-body:visible .paging`);
+            var recordTotal = convertInt($(pagingBar).find(`#total`).text().trim());
+            var pageSize = convertInt($(pagingBar).find(`.pageSize`).attr("value"));
+            var maxIndex = Math.ceil(recordTotal / pageSize); // Số trang lớn nhất có thể lấy theo tổng số bản ghi
+            me.setPageNumberPosition(maxIndex);
+            me.loadData(maxIndex);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    /**
+     * Thực hiện đặt vị trí số trang được chọn
+     * @param {number} indexPage button số trang hiện tại
+     * CreatedBy dtnga (26/12/2020)
+     */
+    setPageNumberPosition(indexPage) {
+        try {
+            var pagingBar = $(`.content-body:visible .paging`);
+            if (!indexPage) indexPage = $(pagingBar).find(`.paging-number button.selected`).text();
+            // set lại giá trị các page number
+            var pageNumberbuttons = $(pagingBar).find(`.paging-number button`);
+            // tìm vị trang bắt đầu và kết thúc
+            var range = $(pageNumberbuttons).length - 1;
+            var endIndex = Math.ceil((indexPage * 2 + range) / 2); //Số trang cuối hiển thị trên giao diện
+            var startIndex = endIndex - range;
+
+            var recordTotal = convertInt($(pagingBar).find(`#total`).text().trim());
+            var pageSize = convertInt($(pagingBar).find(`.pageSize`).attr("value"));
+            var maxIndex = Math.ceil(recordTotal / pageSize); // Số trang lớn nhất có thể lấy theo tổng số bản ghi
+            if (startIndex < 1) {
+                startIndex = 1;
+                endIndex = range + 1;
+            }
+            else if (endIndex > maxIndex) {
+                endIndex = maxIndex;
+                startIndex = ((endIndex - range) < 1) ? 1 : endIndex - range;
+            }
+            // Xóa hết style của các button
+            $(pageNumberbuttons).removeClass("selected");
+            var i = 0;
+            $.each(pageNumberbuttons, function (index, button) {
+                var nextIndex = startIndex + i++;
+                $(button).text(nextIndex);
+                if (nextIndex == indexPage) { // trang được chọn
+                    $(button).addClass("selected");
+                }
+                else if (nextIndex > endIndex)
+                    $(button).prop("disabled", true);
+            });
+            // disable các button chuyển trang nếu gặp trang đầu và cuối
+            if (indexPage == 1) {
+                $(pagingBar).find(`#previous`).prop("disabled", true);
+                $(pagingBar).find(`#jumpToFirst`).prop("disabled", true);
+                $(pagingBar).find(`#next`).prop("disabled", false);
+                $(pagingBar).find(`#jumpToLast`).prop("disabled", false);
+            }
+            else if (indexPage == maxIndex) {
+                $(pagingBar).find(`#previous`).prop("disabled", false);
+                $(pagingBar).find(`#jumpToFirst`).prop("disabled", false);
+                $(pagingBar).find(`#next`).prop("disabled", true);
+                $(pagingBar).find(`#jumpToLast`).prop("disabled", true);
+            }
+            else {
+                $(pagingBar).find(`#previous`).prop("disabled", false);
+                $(pagingBar).find(`#jumpToFirst`).prop("disabled", false);
+                $(pagingBar).find(`#next`).prop("disabled", false);
+                $(pagingBar).find(`#jumpToLast`).prop("disabled", false);
+            }
         }
         catch (e) {
             console.log(e);
@@ -946,7 +1090,7 @@ class Base {
             var box = $(box);
             var id = itemId;
             var items = $(box).find(`.item`);
-         //   var selectedItem = items.find(i => $(i).data("keyId") == id);
+            //   var selectedItem = items.find(i => $(i).data("keyId") == id);
             $.each(items, function (index, item) {
                 var itemId = $(item).data("keyId");
                 if (itemId == id) {
@@ -1030,41 +1174,45 @@ class Base {
      * @param {number} pageIndex Số thứ tự trang
      *  Created By dtnga (21/11/2020)
      */
-    loadData(targetTable, pageIndex) {
+    loadData(pageIndex, targetTable) {
         try {
             var me = this;
-            var currentContent = $(targetTable).closest(`.content-body`);
-            var ths = $(targetTable).find('tr th');
-            var pageIndex = (!pageIndex) ? 1 : pageIndex;
+            var table = (targetTable) ? $(targetTable) : $(`.content-body:visible table`);
+            $(table).find(`tbody tr`).remove();
+            var currentContent = $(table).closest(`.content-body`);
+            var ths = $(table).find('tr th');
+            if (!pageIndex)
+                // lấy pageIndex hiện tại
+                pageIndex = $(`.paging-numbber button.selected`).val();
             var pageSize = convertInt($(currentContent).find(`.pageSize`).attr("value"));
             var data = [];
             // Lấy data từ Api
-            me.formMode = "get";
             me.route = me.getRoute();
-            me.method = me.getMethod();
-            // Lấy tất cả dữu liệu tìm kiếm, bộ lọc
-            var filters = new Object();
-            var SearchValue = $(currentContent).find(`.content-filter input[type="search"]`).text();
-            SearchValue = (!SearchValue) ? null : SearchValue;
-            filters["KeySearch"] = "áo";
+            // Lấy tất cả dữ liệu tìm kiếm, bộ lọc
+            var filterString = "";
+            var SearchValue = $(currentContent).find(`.content-filter input[type="search"]`).val();
+            filterString = (!SearchValue) ? (filterString + "&KeySearch=") : (filterString + "&KeySearch=" + SearchValue);
+
             var filterboxs = $(currentContent).find(`.content-filter .m-box`);
-            debugger
             $.each(filterboxs, function (index, item) {
-                var filterName = $(item).attr("fieldName");
+                var filterKey = $(item).attr("fieldName");
                 var filterValue = (!$(item).data("keyId")) ? null : $(item).data("keyId");
-                filters[filterName] = filterValue;
+                if (filterKey & filterValue)
+                    filterString = filterString + "&" + filterKey + "=" + filterValue;
+                else
+                    filterString = filterString + "&" + filterKey + "=";
             });
+
+            // Lấy dữ liệu thỏa mãn bộ lọc
             $.ajax({
-                url: me.host + me.route + "?limit=" + pageSize + "&offset=" + pageIndex,
-                method: me.method,
-                data: JSON.stringify(filters),
-                contentType: "application/json",
-                dataType: "json"
+                url: me.host + me.route + "?page=" + pageIndex + "&size=" + pageSize + filterString,
+                method: "GET"
             })
                 .done(function (res) {
                     data = res.Data;
                     $.each(data, function (index, obj) {
                         var tr = $(`<tr></tr>`);
+                        // bind dữ liệu vào tr
                         $.each(ths, function (index, th) {
                             var td = $(`<td></td>`);
                             // lấy fielname th 
@@ -1108,12 +1256,36 @@ class Base {
                         var keyIdName = me.objectName + 'Id';
                         tr.data('keyId', obj[keyIdName]);
                     })
-                    // mặc định chọn row đầu tiên
-                    $(table).find(`tbody tr:first`).select();
-                    $(table).find(`tbody tr:first`).addClass("selected");
-                    $(table).find(`tbody tr:first input[type="checkbox"]`).prop("checked", true);
-                    $(table).closest(`.content-body`).find(`#btnDelete`).prop("disabled", false);
+                    // nếu hiện tại chưa có row nào được chọn thì chọn row đầu tiên
+                    if ($(table).find(`tbody tr.selected`).length == 0) {
+                        $(table).find(`tbody tr:first`).select();
+                        $(table).find(`tbody tr:first`).addClass("selected");
+                        $(table).find(`tbody tr:first input[type="checkbox"]`).prop("checked", true);
+                        $(table).closest(`.content-body`).find(`#btnDelete`).prop("disabled", false);
+                    }
                     me.checkSelectedRow();
+                })
+                .fail(function (res) {
+                    console.warn("Lỗi load dữ liệu");
+                    console.log(res);
+                })
+            // Cập nhật paging
+            // Lấy tổng số bản ghi
+            $.ajax({
+                url: me.host + me.route + "/count?" + filterString.substring(1, filterString.length - 1),
+                method: "GET"
+            })
+                .done(function (res) {
+                    var recordTotal = res.Data;
+                    var pagingText = $(currentContent).find(`.paging-left-text`);
+                    var totalSpan = $(pagingText).find(`#total`);
+                    $(totalSpan).text(recordTotal);
+                    var range = $(pagingText).find(`#range`);
+                    var startRecordIndex = (pageIndex - 1) * pageSize + 1;
+                    var endRecordIndex = startRecordIndex + pageSize;
+                    if (endRecordIndex > recordTotal) endRecordIndex = recordTotal;
+                    $(range).text(startRecordIndex + "-" + endRecordIndex);
+                    
                 })
                 .fail(function (res) {
                     console.log(res);

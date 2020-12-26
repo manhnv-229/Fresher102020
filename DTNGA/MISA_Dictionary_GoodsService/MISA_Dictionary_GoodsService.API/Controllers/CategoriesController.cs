@@ -31,21 +31,44 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         /// <summary>
         /// Lấy thông tin danh mục theo bộ lọc
         /// </summary>
-        /// <param name="limit">Số bản ghi trên trang</param>
-        /// <param name="offset">Số thứ tự trang</param>
-        /// <param name="filterValues">Bộ lọc</param>
+        /// <param name="size">Số bản ghi trên trang</param>
+        /// <param name="page">Số thứ tự trang</param>
+        /// <param name="keySearch">key tìm kiếm</param>
         /// <returns></returns>
         /// CreatedBy dtnga (24/12/2020)
         [HttpGet]
-        public async Task<ActionServiceResult> GetByFilterAsync([FromQuery] int limit, [FromQuery] int offset, [FromBody] Dictionary<string, object> filterValues)
+        public async Task<ActionServiceResult> GetByFilterAsync([FromQuery] int size, [FromQuery] int page, [FromQuery] string keySearch)
         {
             var _actionServiceResult = new ActionServiceResult();
-            var result = await _categoryService.GetByFilterAsync<Category>(limit, offset, filterValues);
-            _actionServiceResult.Data = result;
+            var filterValues = new Dictionary<string, object>
+            {
+                { "KeySearch", keySearch }
+            };
+            var results = await _categoryService.GetByFilterAsync<Category>(filterValues);
+            if (page < 0) page = 1;
+            var resultPaging = results.Skip((page - 1) * size).Take(size).ToList();
+            _actionServiceResult.Data = resultPaging;
             return _actionServiceResult;
         }
 
-
+        /// <summary>
+        /// Đếm số bản ghi thỏa mãn bộ lọc
+        /// </summary>
+        /// <param name="keySearch">key tìm kiếm</param>
+        /// <returns></returns>
+        /// CreatedBy dtnga (26/12/2020)
+        [HttpGet("count")]
+        public async Task<ActionServiceResult> GetCountAsync([FromQuery] string keySearch)
+        {
+            var _actionServiceResult = new ActionServiceResult();
+            var filterValues = new Dictionary<string, object>
+            {
+                { "KeySearch", keySearch }
+            };
+            var results = await _categoryService.GetByFilterAsync<Category>(filterValues);
+            _actionServiceResult.Data = results.Count;
+            return _actionServiceResult;
+        }
 
         /// <summary>
         /// Lấy tất cả danh mục sản phẩm

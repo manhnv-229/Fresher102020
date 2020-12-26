@@ -111,12 +111,9 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
             return await _baseRepository.GetByIdAsync<T>(sp, parms);
         }
 
-        public async Task<List<T>> GetByFilterAsync<T>(int limit, int offset, Dictionary<string, object> filterValues = null)
+        public async Task<List<T>> GetByFilterAsync<T>(Dictionary<string, object> filterValues = null)
         {
-            var results = new List<T>();
             var parms = new DynamicParameters();
-            parms.Add("PageIndex", offset);
-            parms.Add("PageSize", limit);
             foreach (KeyValuePair<string, object> item in filterValues)
             {
                 var key = item.Key;

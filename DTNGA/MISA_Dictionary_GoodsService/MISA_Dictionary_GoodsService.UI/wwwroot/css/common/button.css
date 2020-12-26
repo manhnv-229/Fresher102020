@@ -1,4 +1,4 @@
-﻿/* style button dùng chung*/
+/* style button dùng chung*/
 
 /*button chỉ có icon*/
 .m-button-icon {
@@ -52,13 +52,16 @@ button[disabled] {
         background-color: #e5e5e5;
     }
 
-    .m-button-round:focus {
+        .m-button-round:focus{
+            border: none;
+            outline: none;
+        }
+.m-button-round.selected{
         border: none;
         outline: none;
         background-color: #01B075;
         color: #ffffff;
-    }
-
+}
 /*------------------------*/
 /* button chỉ chứa text */
 /* button với content có 1-2 từ*/

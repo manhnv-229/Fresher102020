@@ -1,4 +1,4 @@
-﻿/*-----------------------------------------*/
+/*-----------------------------------------*/
 /* Style cho các thành phần thuộc side bar*/
 
 /*------------------------*/
@@ -63,4 +63,17 @@
     height: 20px;
     margin: auto 0; /* hoac align-sefl: center; */
     margin-right: 16px;
+}
+
+.sub-nav{
+    background-color: #ca6868;
+    z-index: 2;
+    position: absolute;
+    left: 221px;
+    top: 49px;
+    display: flex;
+}
+
+.item-sub-nav{
+    
 }
