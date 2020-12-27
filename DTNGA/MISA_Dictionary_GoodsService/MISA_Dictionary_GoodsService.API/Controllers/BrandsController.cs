@@ -88,6 +88,19 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
             return response;
         }
 
+        [HttpGet("origin")]
+        public ActionServiceResult GetAllOrigin()
+        {
+            var response = new ActionServiceResult();
+            if (brands.Count == 0)
+            {
+                brands = _baseMemoryCache.GetCache<Brand>("Brands");
+            }
+            var origin = brands.Select(b => b.BrandOrigin).Distinct().ToList();
+            response.Data = origin;
+            return response;
+        }
+
         /// <summary>
         /// Lấy thông tin thương hiệu theo Id
         /// </summary>

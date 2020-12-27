@@ -51,6 +51,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
             var results = await _productService.GetByFilterAsync<Product>(filterValues);
             if (page < 0) page = 1;
             var resultPaging = results.Skip((page - 1) * size).Take(size).ToList();
+            resultPaging.ForEach(p => _productService.ProcessingProduct(p));
             _actionServiceResult.Data = resultPaging;
             return _actionServiceResult;
         }
@@ -105,7 +106,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         {
             newProduct.ProductId = Guid.NewGuid();
             var response = await _productService.InsertAsync<Product>(newProduct);
-            if (response.MISACode == MISACode.Success && products.Count > 0)
+            if (response.Success == true && products.Count > 0)
             {
                 // Cập nhật lại cache
                 products.Add(newProduct);

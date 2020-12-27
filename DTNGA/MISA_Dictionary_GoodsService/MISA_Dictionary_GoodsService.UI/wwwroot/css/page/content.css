@@ -139,6 +139,6 @@
 }
 
 /* Style riêng cho từng content-body*/
-#product .m-dialog .dialog-col{
+.m-dialog .dialog-col{
     width: 50%;
 }

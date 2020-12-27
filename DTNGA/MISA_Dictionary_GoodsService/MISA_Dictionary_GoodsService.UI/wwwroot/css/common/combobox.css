@@ -1,4 +1,4 @@
-﻿/* style cho box dùng chung*/
+/* style cho box dùng chung*/
 
 .m-box {
     height: 40px;
@@ -9,13 +9,13 @@
     position: relative;
 }
 
-.green-border {
-    border: 1px solid #019160;
-}
+    .m-box.green-border {
+        border: 1px solid #019160;
+    }
 
-.m-box:focus {
-    border: 1px solid #019160;
-}
+    .m-box:focus {
+        border: 1px solid #019160;
+    }
 
 .m-box .selected-box {
     width: 100%;
@@ -37,7 +37,7 @@
 /* icon trong combo box*/
 .arrow-button {
     width: 40px;
-    height: 100%;
+    height: calc(100% - 0px);
     padding: 12px;
     align-items: center;
     border-radius: 0 4px 4px 0;

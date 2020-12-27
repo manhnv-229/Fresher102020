@@ -1,6 +1,6 @@
-﻿$(document).ready(function () {
-    
-    var indexJs = new IndexJs();
+var current = new Object();
+$(document).ready(function () {
+    current = new BrandJs();
 })
 
 class IndexJs extends Base {
@@ -11,12 +11,12 @@ class IndexJs extends Base {
         me.initEvent();
     }
 
+
     /* Hàm thực hiện khởi tạo sự kiện
   * CreatedBy dtnga (21/11/2020)
   * */
     initEvent() {
         try {
-            
             var me = this;
             $(`.content-body:visible`).find(`#btn-add`).on("click", function () {
                 me.onClick_btnAdd(this);
@@ -25,6 +25,23 @@ class IndexJs extends Base {
                 me.onClick_btnDelete(this);
             });
             $(`.content-body:visible`).find(`#btn-refresh`).on("click", me.onClick_btnRefresh.bind(me));
+            // Dialog
+            var dialog = $(`.content-body:visible .m-dialog`);
+            // đóng form khi nhấn ESC
+            $('body').on("keydown", function (e) {
+                if (e.which === 27)
+                    $(dialog).addClass("displayNone");
+            });
+            $(dialog).find(`#btn-exit`).on("click", me.onClick_Exit_Dialog.bind(me));
+            $(dialog).find(`#btn-cancel`).on("click", me.onClick_Exit_Dialog.bind(me));
+            $(dialog).find(`#btn-save`).on("click", function () {
+                me.onClick_btnSave(this);
+            });
+            $(dialog).find(`#btn-saveAdd`).on("click", function () {
+                me.onClick_btnSaveAdd(this);
+            });
+            //popup
+            $(`#btn-delete-popup`).on("click", me.onDeleteSelectedRow.bind(me));
             //paging
             $(`.content-body:visible`).find(`.paging-number button`).on("click", function () {
                 me.onClickPagingNumber(this);
@@ -33,16 +50,20 @@ class IndexJs extends Base {
             $(`.content-body:visible`).find(`.paging #previous`).on("click", me.onClickPreviousPage.bind(me));
             $(`.content-body:visible`).find(`.paging #jumpToFirst`).on("click", me.onClickFirstPage.bind(me));
             $(`.content-body:visible`).find(`.paging #jumpToLast`).on("click", me.onClickLastPage.bind(me));
-
+            $(`.pageSize select`).on("change", function () {
+                var pageSize = $(this).find(`option:selected`).val();
+                $(this).closest(`.pageSize`).attr("value", pageSize);
+                me.loadData(1);
+            });
             //sự kiện khi nhập trường Tìm kiếm
             $(`.content-body:visible`).find(`.content-filter input[type="search"]`).on("search", function (e) {
                 me.loadData(1);
-                me.onClickFirstPage();
             });
-            // TODO Sự kiện khi chọn filter
+            //Sự kiện khi chọn filter
+            $(`.content-body:visible`).find(`.content-filter .m-box .item`).off("click");
             $(`.content-body:visible`).find(`.content-filter .m-box .item`).on("click", function () {
+                me.onSelect_comboItem(this);
                 me.loadData(1);
-                me.onClickFirstPage();
             });
             // format khi nhập liệu số tiền
             me.autoFormatMoney();

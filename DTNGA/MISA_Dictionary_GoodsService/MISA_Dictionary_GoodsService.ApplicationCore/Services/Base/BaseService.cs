@@ -132,6 +132,9 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
             var isValid = await ValidateAsync<T>(entity);
             if (isValid == false)
             {
+                _actionServiceResult.Success = false;
+                _actionServiceResult.MISACode = MISACode.ValidateEntity;
+                _actionServiceResult.Message = Properties.Resources.ValidateEntity;
                 return _actionServiceResult;
             }
             else
@@ -218,8 +221,6 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
                     {
                         isValid = false;
                         errorMsg.Add(string.Format(Properties.Resources.Required, displayName));
-                        _actionServiceResult.MISACode = MISACode.ValidateEntity;
-                        _actionServiceResult.Message = Properties.Resources.ValidateEntity;
                     }
                 }
                 if (prop.IsDefined(typeof(Unduplicated), false))
@@ -231,8 +232,6 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
                     {
                         isValid = false;
                         errorMsg.Add(string.Format(Properties.Resources.Duplicate, displayName));
-                        _actionServiceResult.MISACode = MISACode.ValidateEntity;
-                        _actionServiceResult.Message = Properties.Resources.ValidateEntity;
                     }
                 }
                 if (prop.IsDefined(typeof(MaxLength), false))
@@ -246,8 +245,6 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
                         isValid = false;
                         if (msg == null) errorMsg.Add(string.Format(Properties.Resources.MaxLength, displayName, maxLength));
                         errorMsg.Add(msg);
-                        _actionServiceResult.MISACode = MISACode.ValidateEntity;
-                        _actionServiceResult.Message = Properties.Resources.ValidateEntity;
                     }
                 }
             }
@@ -323,6 +320,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
             return parms;
         }
         #endregion
+
 
     }
 }

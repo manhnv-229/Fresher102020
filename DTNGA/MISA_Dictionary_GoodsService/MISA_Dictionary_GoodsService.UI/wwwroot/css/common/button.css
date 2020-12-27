@@ -39,7 +39,7 @@ button[disabled] {
         border-radius: 50%;
         width: 32px;
         height: 32px;
-        padding: 8px;
+         padding: 0; 
         border: 1px solid #e5e5e5;
         background-color: #ffffff;
         background-repeat: no-repeat;

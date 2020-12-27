@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -39,7 +39,7 @@
         <div class="header-right">
             <div class="header-right-box">
                 <div class="avatar"></div>
-                <div class="username"></div>
+                <div class="username">Đặng Thị Nga</div>
                 <div class="m-icon setting-more-icon"></div>
             </div>
         </div>
@@ -51,15 +51,15 @@
             <div class="content-header-title">Hàng hóa</div>
             <div class="content-header-right"></div>
         </div>
-        <div class="content-body" id="product" fieldName="Product" titleName="Hàng hóa">
+        <div class="content-body displayNone" id="product" fieldName="Product" titleName="Hàng hóa">
             <div class="content-filter">
                 <div class="content-filter-left">
                     <div class="m-input">
                         <div class="m-icon search-icon"></div>
                         <input class="search-field" name="seacrh" type="search" placeholder="Tìm kiếm theo mã barcode, tên sản phẩm" />
                     </div>
-                    <div class="m-box m-dropdown" id="brand-list" name="Brand" fieldName="BrandId" title="Chọn thương hiệu"></div>
-                    <div class="m-box m-dropdown" id="category-list" name="Category" fieldName="CategoryId" title="Chọn danh mục"></div>
+                    <div class="m-box m-dropdown" id="brand-list" name="Brand" fieldName="BrandId" title="Chọn thương hiệu" loadAfterSelect></div>
+                    <div class="m-box m-dropdown" id="category-list" name="Category" fieldName="CategoryId" title="Chọn danh mục" loadAfterSelect></div>
                 </div>
                 <div class="content-filter-right">
                     <button class="m-button-icon" id="btnDelete" disabled title="Xóa">
@@ -164,12 +164,13 @@
                     </button>
                 </div>
                 <div class="paging-right">
-                    <div class="pageSize" value="20">
+                    <div class="pageSize" name="PageSize" loadAfterSelect value="15">
                         <select>
-                            <option>15/trang</option>
-                            <option>20/trang</option>
-                            <option>25/trang</option>
-                            <option>30/trang</option>
+                            <option value="15" selected>15/trang</option>
+                            <option value="20">20/trang</option>
+                            <option value="30">30/trang</option>
+                            <option value="40">40/trang</option>
+                            <option value="50">50/trang</option>
                         </select>
                     </div>
                 </div>
@@ -243,29 +244,30 @@
                 </div>
             </div>
         </div>
-        <div class="content-body displayNone" id="brand" fieldName="Brand" titleName="Thương hiệu">
+
+        <div class="content-body" id="brand" fieldName="Brand" titleName="Thương hiệu">
             <div class="content-filter">
                 <div class="content-filter-left">
                     <div class="m-input">
                         <div class="m-icon search-icon"></div>
-                        <input class="search-field" name="seacrh" type="search" placeholder="Tìm kiếm theo mã hoặc tên thương hiệu" />
+                        <input class="search-field" name="seacrh" type="search" placeholder="Tìm kiếm theo mã, tên thương hiệu" />
                     </div>
-                    <div class="m-box m-dropdown" fieldName="BrandOrigin" title="Chọn xuất xứ"></div>
+                    <div class="m-box m-dropdown" id="cbBrandOrigin" name="BrandOrigin" fieldName="BrandOrigin" title="Chọn xuất xứ" loadAfterSelect></div>
                 </div>
                 <div class="content-filter-right">
-                    <button class="m-button-icon" id="btn-delete" disabled>
+                    <button class="m-button-icon" id="btnDelete" disabled title="Xóa">
                         <div class="m-icon delete-icon"></div>
                     </button>
-                    <button class="m-button-icon" id="btn-add">
+                    <button class="m-button-icon" id="btn-add" title="Thêm">
                         <div class="m-icon add-icon"></div>
                     </button>
-                    <button class="m-button-icon" id="btn-refresh">
+                    <button class="m-button-icon" id="btn-refresh" title="Làm mới">
                         <div class="m-icon refresh-icon"></div>
                     </button>
                 </div>
             </div>
             <div class="grid">
-                <table class="m-table" id="tblBrands">
+                <table class="m-table" id="brands-table">
                     <thead>
                         <tr>
                             <th class="field-short" fieldName="Checkbox">
@@ -278,13 +280,13 @@
                             </th>
                             <th fieldName="BrandCode">
                                 <div class="thead-box">
-                                    <div class="thead-text">Mã Thương hiệu</div>
+                                    <div class="thead-text">Mã thương hiệu</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
                             <th fieldName="BrandName">
                                 <div class="thead-box">
-                                    <div class="thead-text">Tên Thương hiệu</div>
+                                    <div class="thead-text">Tên thương hiệu</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
@@ -322,10 +324,10 @@
                     <div class="paging-left-text">Hiển thị <span id="range">1-15</span>/<span id="total">100</span> thương hiệu</div>
                 </div>
                 <div class="paging-mid">
-                    <button class="m-button-icon">
+                    <button class="m-button-icon" id="jumpToFirst">
                         <div class="m-icon chevrons-left-icon"></div>
                     </button>
-                    <button class="m-button-icon chevron-left">
+                    <button class="m-button-icon chevron-left" id="previous">
                         <div class="m-icon chevron-left-icon"></div>
                     </button>
                     <div class="paging-number">
@@ -335,24 +337,27 @@
                         <button class="m-button-round">4</button>
                         <button class="m-button-round">5</button>
                     </div>
-                    <button class="m-button-icon chevron-right">
+                    <button class="m-button-icon chevron-right" id="next">
                         <div class="m-icon chevron-right-icon"></div>
                     </button>
-                    <button class="m-button-icon">
+                    <button class="m-button-icon" id="jumpToLast">
                         <div class="m-icon chevrons-right-icon"></div>
                     </button>
                 </div>
                 <div class="paging-right">
-                    <select>
-                        <option>15/trang</option>
-                        <option>20/trang</option>
-                        <option>25/trang</option>
-                        <option>30/trang</option>
-                    </select>
+                    <div class="pageSize" name="PageSize" loadAfterSelect value="15">
+                        <select>
+                            <option value="15" selected>15/trang</option>
+                            <option value="20">20/trang</option>
+                            <option value="30">30/trang</option>
+                            <option value="40">40/trang</option>
+                            <option value="50">50/trang</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <!-- dialog -->
-            <div class="m-dialog" fieldName="BrandId">
+            <div class="m-dialog displayNone" fieldName="BrandId">
                 <div class="modal"></div>
                 <div class="dialog-detail">
                     <div class="dialog-header">
@@ -375,10 +380,16 @@
                                             <input class="m-input" type="text" required fieldName="BrandCode" validate="false" />
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dialog-col">
+                            <div class="content-box">
+                                <div class="box-body">
                                     <div class="input-line">
                                         <div class="input-box input-box-medium">
-                                            <div class="input-title">Xuất xứ thương hiệu</div>
-                                            <input class="m-input" type="text" fieldName="BrandOrigin" />
+                                            <div class="input-title">Xuất xứ</div>
+                                            <div class="m-box m-dropdown" name="BrandOrigin" fieldName="BrandOrigin" title="Chọn xuất xứ"></div>
                                         </div>
                                     </div>
                                     <div class="note">
@@ -468,5 +479,7 @@
     <script src="/js/common/base.js"></script>
     <script src="/js/page/index.js"></script>
     <script src="/js/page/product.js"></script>
+    <script src="/js/page/brand.js"></script>
+    <script src="/js/page/category.js"></script>
 </body>
 </html>

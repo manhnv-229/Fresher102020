@@ -72,8 +72,16 @@ class Base {
             var idPropName = comboName + "Id";
             var namePropname = comboName + "Name";
             $.each(data, function (index, item) {
-                var optionName = item[namePropname];
-                var optionId = item[idPropName];
+                var optionName = "";
+                var optionId = "";
+                if (typeof(item)== "string") {
+                    optionName = item;
+                    optionId = item;
+                }
+                else {
+                    optionName = item[namePropname];
+                    optionId = item[idPropName];
+                }
                 var optionText = `<div class="option-text">` + optionName + `</div>`;
                 var option = $(`<div class="item combo-item "></div>`);
                 $(option).data("keyId", optionId);
@@ -101,7 +109,7 @@ class Base {
             me.detectKeyCode(comboInputField);
             // Sự kiện khi click erase icon trong input search
             $(comboInputField).on("search", function () {
-                $(targetCombo).data("keyId", null);
+                me.onChangeComboInputField(this);
             });
             // sự kiện khi click chọn combo item
             $(comboItemBox).find(`.item`).on("click", function () {
@@ -116,6 +124,32 @@ class Base {
             console.log(e);
         }
     }
+
+    /**
+     * Sự kiện khi thay đổi giá trị input tại comboBox/Dropdown
+     * @param {Element} input trường input thay đổi tại combobox
+     * CreatedBy dtnga (27/12/2020)
+     */
+     onChangeComboInputField(input){
+            try{
+                if(input){
+                    var me=this;
+                    var inputText = $(input).val();
+                    var box = $(input).closest(".m-box");
+                    if (!inputText) {
+                        $(box).data("keyId", null);
+                        $(box).find(".item").removeClass("selected");
+                        $(box).find(".item .check-icon").addClass("displayNone");
+                    }
+                    var attr= $(box).attr("loadAfterSelect");
+                    if (typeof attr !== typeof undefined && attr !== false)
+                        me.loadData(1);
+                }
+            }
+            catch(e){
+                console.log(e);
+            }
+        }
 
     /** Sự kiện khi click button tại combobox
      * CreatedBy dtnga (10/12/2020)
@@ -184,22 +218,29 @@ class Base {
         var optionText = $(optionText).text();
         var inputField = $(comboBox).find(`input`);
         $(inputField).val(optionText);
-        // hiện delete-icon
-
         // Lưu id của item vào combobox
         var id = $(item).data("keyId");
         $(comboBox).data("keyId", id);
-
         me.doSomethingWhenItemSelected(item);
     }
 
     /**
      *  Thực hiện hành động sau khi chọn option tại comboBox/ Dropdown
+     * @param {Element} option option được chọn
      *  CreatedBy dtnga (12/12/2020)
-     * @param {Element} option
      */
     doSomethingWhenItemSelected(option) {
-
+        try {
+            var me = this;
+            var box = $(option).closest(".m-box");
+            var attr = $(box).attr("loadAfterSelect");
+            if (typeof attr !== typeof undefined && attr !== false) {
+                me.loadData(1);
+            }
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
 
     /**
@@ -356,7 +397,8 @@ class Base {
         try {
             var me = this;
             me.formMode = "add";
-            var dialog = $(buttonAdd).closest(`.content-body`).find(`.m-dialog`);
+            if (!buttonAdd) var dialog = $(`.content-body:visible .m-dialog`);
+            else var dialog = $(buttonAdd).closest(`.content-body`).find(`.m-dialog`);
             me.clear(dialog);
             me.showDialog(dialog);
         } catch (e) {
@@ -379,49 +421,56 @@ class Base {
 
             $(popup).removeClass("displayNone");
             me.initEventPopup(popup);
-            // Sự kiện khi click button Xóa
-            $(popup).find(`#btn-delete-popup`).on("click", function () {
-                var parentBody = $(button).closest(`.content-body`);
-                var selectedRows = $(parentBody).find(`table tr.selected`);
-                var data = [];
-                $.each(selectedRows, function (index, item) {
-                    data.push($(item).data("keyId"));
-                })
-                me.route = me.getRoute();
-                $.ajax({
-                    url: me.host + me.route,
-                    method: "DELETE",
-                    data: JSON.stringify(data),
-                    contentType: "application/json",
-                    dataType: "json",
-                })
-                    .done(function (res) {
-                        // Ẩn popup
-                        $(popup).addClass("displayNone");
-                        //Lấy row ngay sau row được chọn và chuyển nó sang trạng thái selected
-                        var nextRow = $(selectedRows).last().next();
-                        nextRow.addClass("selected");
-                        $(nextRow).find(`input[type=checkbox]`).prop("checked", true);
-                        // Remove rows được chọn hiện tại
-                        $(selectedRows).remove();
-                        // Hiển thị toast thông báo thành công
-                        me.showToastMesseger("Xóa thành công", "success");
-                        if ($(parentBody).find(`table thead input[type="checkbox"]`).is(":checked")) {
-                            $(parentBody).find(`table thead input[type="checkbox"]`).prop("checked", false);
-                        }
-                        me.loadData();
-                    })
-                    .fail(function (res) {
-                        console.log(res);
-                        // Ẩn popup
-                        $(popup).addClass("displayNone");
-                        // Hiển thị toast thông báo lỗi
-                        me.showToastMesseger("Xóa không thành công", "fail");
-                    })
-            });
         }
         catch (e) {
             console.log(e);
+        }
+    }
+
+    onDeleteSelectedRow() {
+        try {
+            var me = this;
+            var popupDelete = $(`#popup-delete`);
+            var parentBody = $(`.content-body:visible`);
+            var selectedRows = $(parentBody).find(`table tr.selected`);
+            var data = [];
+            $.each(selectedRows, function (index, item) {
+                data.push($(item).data("keyId"));
+            })
+            me.route = me.getRoute();
+            $.ajax({
+                url: me.host + me.route,
+                method: "DELETE",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                dataType: "json",
+            })
+                .done(function (res) {
+                    // Ẩn popup
+                    $(popupDelete).addClass("displayNone");
+                    //Lấy row ngay sau row được chọn và chuyển nó sang trạng thái selected
+                    var nextRow = $(selectedRows).last().next();
+                    nextRow.addClass("selected");
+                    $(nextRow).find(`input[type=checkbox]`).prop("checked", true);
+                    // Remove rows được chọn hiện tại
+                    $(selectedRows).remove();
+                    // Hiển thị toast thông báo thành công
+                    me.showToastMesseger("Xóa thành công", "success");
+                    if ($(parentBody).find(`table thead input[type="checkbox"]`).is(":checked")) {
+                        $(parentBody).find(`table thead input[type="checkbox"]`).prop("checked", false);
+                    }
+                    me.loadData();
+                })
+                .fail(function (res) {
+                    console.log(res);
+                    // Ẩn popup
+                    $(popupDelete).addClass("displayNone");
+                    // Hiển thị toast thông báo lỗi
+                    me.showToastMesseger("Xóa không thành công", "fail");
+                })
+        }
+        catch (e) {
+
         }
     }
 
@@ -436,7 +485,6 @@ class Base {
             if (!button)
                 button = $(`.content-body:visible .paging-numbber button.selected`);
             var index = convertInt($(button).text().trim());
-            debugger
             me.setPageNumberPosition(index);
             me.loadData(index);
         }
@@ -512,7 +560,7 @@ class Base {
 
     /**
      * Thực hiện đặt vị trí số trang được chọn
-     * @param {number} indexPage button số trang hiện tại
+     * @param {number} indexPage button số thứ tự trang, nếu không truyền vào thì lấy trang đang chọn hiện tại
      * CreatedBy dtnga (26/12/2020)
      */
     setPageNumberPosition(indexPage) {
@@ -533,12 +581,13 @@ class Base {
                 startIndex = 1;
                 endIndex = range + 1;
             }
-            else if (endIndex > maxIndex) {
+            if (endIndex > maxIndex) {
                 endIndex = maxIndex;
                 startIndex = ((endIndex - range) < 1) ? 1 : endIndex - range;
             }
-            // Xóa hết style của các button
+            // Xóa hết style của các button tại paging
             $(pageNumberbuttons).removeClass("selected");
+            $(pagingBar).find(`button`).prop("disabled", false);
             var i = 0;
             $.each(pageNumberbuttons, function (index, button) {
                 var nextIndex = startIndex + i++;
@@ -553,20 +602,14 @@ class Base {
             if (indexPage == 1) {
                 $(pagingBar).find(`#previous`).prop("disabled", true);
                 $(pagingBar).find(`#jumpToFirst`).prop("disabled", true);
-                $(pagingBar).find(`#next`).prop("disabled", false);
-                $(pagingBar).find(`#jumpToLast`).prop("disabled", false);
+                if (endIndex <= 1) {
+                    $(pagingBar).find(`#next`).prop("disabled", true);
+                    $(pagingBar).find(`#jumpToLast`).prop("disabled", true);
+                }
             }
             else if (indexPage == maxIndex) {
-                $(pagingBar).find(`#previous`).prop("disabled", false);
-                $(pagingBar).find(`#jumpToFirst`).prop("disabled", false);
                 $(pagingBar).find(`#next`).prop("disabled", true);
                 $(pagingBar).find(`#jumpToLast`).prop("disabled", true);
-            }
-            else {
-                $(pagingBar).find(`#previous`).prop("disabled", false);
-                $(pagingBar).find(`#jumpToFirst`).prop("disabled", false);
-                $(pagingBar).find(`#next`).prop("disabled", false);
-                $(pagingBar).find(`#jumpToLast`).prop("disabled", false);
             }
         }
         catch (e) {
@@ -633,21 +676,9 @@ class Base {
      */
     showDialog(dialog) {
         var me = this;
-        var dialog = $(dialog);
+        if (!dialog) dialog = $(`.content-body:visible .m-dialog`);
         $(dialog).removeClass("displayNone");
-        // đóng form khi nhấn ESC
-        $('body').on("keydown", function (e) {
-            if (e.which === 27)
-                $(dialog).addClass("displayNone");
-        });
-        $(`#btn-exit`).on("click", me.onClick_Exit_Dialog.bind(me));
-        $(`#btn-cancel`).on("click", me.onClick_Exit_Dialog.bind(me));
-        $(`#btn-save`).on("click", function () {
-            me.onClick_btnSave(this);
-        });
-        $(`#btn-saveAdd`).on("click", function () {
-            me.onClick_btnSaveAdd(this);
-        });
+        
     }
 
     /** Tự động format các trường input số tiền 
@@ -742,9 +773,16 @@ class Base {
                     dataType: "json"
                 })
                     .done(function (res) {
-                        response = res.Data;
-                        $(`.m-dialog:visible`).addClass("displayNone");
-                        me.showToastMesseger(me.mesHeader + "thành công", "success");
+                        if (res.Success) {
+                            response = res.Data;
+                            $(`.m-dialog:visible`).addClass("displayNone");
+                            me.showToastMesseger(me.mesHeader + "thành công", "success");
+                        }
+                        else {
+                            console.log(res);
+                            $(`.m-dialog:visible`).addClass("displayNone");
+                            me.showToastMesseger(me.mesHeader + "không thành công", "fail");
+                        }
                     })
                     .fail(function (res) {
                         console.log(res);
@@ -758,10 +796,13 @@ class Base {
                     method: me.getMethod()
                 })
                     .done(function (res) {
-                        console.log(res);
-                        response = res.Data;
-                        $(`.m-dialog:visible`).addClass("displayNone");
-                        me.showToastMesseger(me.mesHeader + " thành công", "success");
+                        if (res.Success) {
+                            response = res.Data;
+                            $(`.m-dialog:visible`).addClass("displayNone");
+                            me.showToastMesseger(me.mesHeader + " thành công", "success");
+                        }
+                        else
+                            console.log(res);
                     })
                     .fail(function (res) {
                         console.log(res);
@@ -834,8 +875,8 @@ class Base {
                         obj[fieldName] = value;
                     }
                 }
-
             });
+            obj["CreatedBy"] = $(targetForm).closest(`body`).find(`.header .username`).text();
             return obj;
         }
         catch (e) {
@@ -920,7 +961,7 @@ class Base {
      Created by dtnga (14/11/2020)
      */
     onClick_Exit_Dialog() {
-        var dialog = $(`.m-dialog:visible`);
+        var dialog = $(`.content-body:visible`).find(`.m-dialog`);
         this.clear(dialog);
         dialog.addClass("displayNone");
     }
@@ -929,12 +970,15 @@ class Base {
     * CreatedBy dtnga (17/11/2020) 
     */
     clear(obj) {
-        $(obj).find(`input`).val(null);
+        $(obj).find(`input, textarea`).val(null);
         $(obj).find(`input[required],input[type="email"]`).removeClass("m-input-warning");
         $(obj).find(`input[required],input[type="email"]`).attr('validate', 'false');
         //clear ngày, select, radio button
         $(obj).find(`input[type="radio"]`).prop('checked', false);
         $(obj).find(`select option`).remove();
+        $(obj).find(`.m-box`).data("keyId", null);
+        $(obj).find(`.m-box .item`).removeClass("selected");
+        $(obj).find(`.m-box .item .check-icon`).addClass("displayNone");
     }
 
     /** Hàm thực hiện làm mới dữ liệu
@@ -988,8 +1032,8 @@ class Base {
             me.formMode = "edit";
             //Đổi màu hàng dữ liệu
             var selected = $(row);
-            $(row).closest(`tbody`).find(`tr`).removeClass("selected");
-            $(row).closest(`tbody`).find(`input[type="checkbox"]`).prop("checked", false);
+            $(selected).closest(`tbody`).find(`tr`).removeClass("selected");
+            $(selected).closest(`tbody`).find(`input[type="checkbox"]`).prop("checked", false);
             $(selected).addClass("selected");
             $(selected).find(`input[type="checkbox"]`).prop("checked", true);
             //Show form cập nhật đơn hàng
@@ -998,7 +1042,7 @@ class Base {
             // Hiển thị dialog
             me.showDialog(dialog);
             // bind dữ liệu hàng được chọn lên form
-            var id = selected.data('keyId');
+            var id =  $(selected).data('keyId');
             $(dialog).data("keyId", id);
             // Lấy thông tin từ api bằng id tương ứng
             $.ajax({
@@ -1029,9 +1073,9 @@ class Base {
             var currentTable = $(`.content-body:visible table`);
             var selectedRow = $(currentTable).find(".selected");
             if (selectedRow.length == 0)
-                $(`.content-body:visible #btnDelete`).prop("disabled", true);
+                $(`.content-body:visible`).find(`#btnDelete`).prop("disabled", true);
             else
-                $(`.content-body:visible #btnDelete`).prop("disabled", false);
+                 $(`.content-body:visible`).find(`#btnDelete`).prop("disabled", false);
         }
         catch (e) {
             console.log(e);
@@ -1090,10 +1134,12 @@ class Base {
             var box = $(box);
             var id = itemId;
             var items = $(box).find(`.item`);
-            //   var selectedItem = items.find(i => $(i).data("keyId") == id);
             $.each(items, function (index, item) {
+                $(item).removeClass("selected");
+                $(item).find(`.check-icon`).addClass("displayNone");
                 var itemId = $(item).data("keyId");
                 if (itemId == id) {
+                    // set style cho item được chọn:
                     var selectedItem = $(item);
                     $(selectedItem).addClass("selected");
                     $(selectedItem).find(`.check-icon`).removeClass("displayNone");
@@ -1177,13 +1223,13 @@ class Base {
     loadData(pageIndex, targetTable) {
         try {
             var me = this;
-            var table = (targetTable) ? $(targetTable) : $(`.content-body:visible table`);
+            var table = (targetTable) ? $(targetTable) : $(`.content-body:visible`).find(`table`);
             $(table).find(`tbody tr`).remove();
             var currentContent = $(table).closest(`.content-body`);
             var ths = $(table).find('tr th');
             if (!pageIndex)
                 // lấy pageIndex hiện tại
-                pageIndex = $(`.paging-numbber button.selected`).val();
+                pageIndex = $(currentContent).find(`.paging-number button.selected`).text();
             var pageSize = convertInt($(currentContent).find(`.pageSize`).attr("value"));
             var data = [];
             // Lấy data từ Api
@@ -1197,7 +1243,7 @@ class Base {
             $.each(filterboxs, function (index, item) {
                 var filterKey = $(item).attr("fieldName");
                 var filterValue = (!$(item).data("keyId")) ? null : $(item).data("keyId");
-                if (filterKey & filterValue)
+                if (filterKey && filterValue)
                     filterString = filterString + "&" + filterKey + "=" + filterValue;
                 else
                     filterString = filterString + "&" + filterKey + "=";
@@ -1263,7 +1309,7 @@ class Base {
                         $(table).find(`tbody tr:first input[type="checkbox"]`).prop("checked", true);
                         $(table).closest(`.content-body`).find(`#btnDelete`).prop("disabled", false);
                     }
-                    me.checkSelectedRow();
+                    me.checkSelectedRow(); // nếu không có row nào được chọn -> disable button Xóa
                 })
                 .fail(function (res) {
                     console.warn("Lỗi load dữ liệu");
@@ -1272,7 +1318,7 @@ class Base {
             // Cập nhật paging
             // Lấy tổng số bản ghi
             $.ajax({
-                url: me.host + me.route + "/count?" + filterString.substring(1, filterString.length - 1),
+                url: me.host + me.route + "/count?" + filterString.substring(1, filterString.length),
                 method: "GET"
             })
                 .done(function (res) {
@@ -1281,11 +1327,17 @@ class Base {
                     var totalSpan = $(pagingText).find(`#total`);
                     $(totalSpan).text(recordTotal);
                     var range = $(pagingText).find(`#range`);
-                    var startRecordIndex = (pageIndex - 1) * pageSize + 1;
-                    var endRecordIndex = startRecordIndex + pageSize;
-                    if (endRecordIndex > recordTotal) endRecordIndex = recordTotal;
-                    $(range).text(startRecordIndex + "-" + endRecordIndex);
+                    if(recordTotal<2){
+                        $(range).text(recordTotal);
+                    }
+                    else{
+                        var startRecordIndex = (pageIndex - 1) * pageSize + 1;
+                        var endRecordIndex = startRecordIndex + pageSize;
+                        if (endRecordIndex > recordTotal) endRecordIndex = recordTotal;
+                        $(range).text(startRecordIndex + "-" + endRecordIndex);
+                    }
                     
+                    me.setPageNumberPosition(pageIndex);
                 })
                 .fail(function (res) {
                     console.log(res);
