@@ -55,6 +55,8 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         [DisplayName("Mô tả danh mục")]
         public string CategoryDescription { get; set; }
 
+        [DisplayName("Danh mục cha")]
+        public virtual Category ParentCategory { get; set; }
         [DisplayName("Sản phẩm")]
         public virtual ICollection<Product> Products { get; set; }
     }

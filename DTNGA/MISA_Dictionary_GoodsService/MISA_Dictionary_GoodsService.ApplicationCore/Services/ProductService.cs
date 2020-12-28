@@ -23,7 +23,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
             //Lấy thông tin danh mục sản phẩm
             var categoryId = product.CategoryId;
             var categories= _baseMemoryCache.GetCache<Category>("Categories");
-            var category = categories.Where<Category>(c => c.CategoryId == categoryId).FirstOrDefault();
+            var category = categories.Where(c => c.CategoryId == categoryId).FirstOrDefault();
             //Lấy thông tin thương hiệu
             var brandId = product.BrandId;
             var brands= _baseMemoryCache.GetCache<Brand>("Brands");

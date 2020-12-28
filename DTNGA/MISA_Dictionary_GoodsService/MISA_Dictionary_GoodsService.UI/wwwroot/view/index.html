@@ -17,16 +17,22 @@
             </div>
         </div>
         <div class="nav-content">
-            <div class="nav-item select-menu-item" id="setting-menu" fieldName="Product">
+            <div class="nav-item select-menu-item" id="product" fieldName="Product">
                 <div class="nav-item-box">
                     <div class="m-icon nav-item-icon active products-icon"></div>
                     <div class="nav-item-text">Hàng hóa</div>
                 </div>
             </div>
-            <div class="nav-item" id="order-management-menu" fieldName="Category">
+            <div class="nav-item" id="category" fieldName="Category">
                 <div class="nav-item-box">
                     <div class="m-icon nav-item-icon category-icon"></div>
                     <div class="nav-item-text">Danh mục</div>
+                </div>
+            </div>
+            <div class="nav-item" id="brand" fieldName="Brand">
+                <div class="nav-item-box">
+                    <div class="m-icon nav-item-icon brands-icon"></div>
+                    <div class="nav-item-text">Thương hiệu</div>
                 </div>
             </div>
         </div>
@@ -51,7 +57,7 @@
             <div class="content-header-title">Hàng hóa</div>
             <div class="content-header-right"></div>
         </div>
-        <div class="content-body displayNone" id="product" fieldName="Product" titleName="Hàng hóa">
+        <div class="content-body" id="product" fieldName="Product" route="Products" titleName="Hàng hóa">
             <div class="content-filter">
                 <div class="content-filter-left">
                     <div class="m-input">
@@ -103,13 +109,13 @@
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th fieldName="CategoryName">
+                            <th fieldName="CategoryName" fromExtraObject="Category">
                                 <div class="thead-box">
                                     <div class="thead-text">Nhóm hàng hóa</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th fieldName="BrandName">
+                            <th fieldName="BrandName" FromExtraObject="Brand">
                                 <div class="thead-box">
                                     <div class="thead-text">Thương hiệu</div>
                                     <div class="m-icon sort-icon"></div>
@@ -245,7 +251,7 @@
             </div>
         </div>
 
-        <div class="content-body" id="brand" fieldName="Brand" titleName="Thương hiệu">
+        <div class="content-body displayNone" id="brand" fieldName="Brand" route="Brands" titleName="Thương hiệu">
             <div class="content-filter">
                 <div class="content-filter-left">
                     <div class="m-input">
@@ -413,6 +419,174 @@
                 </div>
             </div>
         </div>
+
+        <div class="content-body displayNone" id="category" fieldName="Category" route="Categories" titleName="Danh mục">
+            <div class="content-filter">
+                <div class="content-filter-left">
+                    <div class="m-input">
+                        <div class="m-icon search-icon"></div>
+                        <input class="search-field" name="seacrh" type="search" placeholder="Tìm kiếm theo mã, tên danh mục" />
+                    </div>
+                </div>
+                <div class="content-filter-right">
+                    <button class="m-button-icon" id="btnDelete" disabled title="Xóa">
+                        <div class="m-icon delete-icon"></div>
+                    </button>
+                    <button class="m-button-icon" id="btn-add" title="Thêm">
+                        <div class="m-icon add-icon"></div>
+                    </button>
+                    <button class="m-button-icon" id="btn-refresh" title="Làm mới">
+                        <div class="m-icon refresh-icon"></div>
+                    </button>
+                </div>
+            </div>
+            <div class="grid">
+                <table class="m-table" id="categories-table">
+                    <thead>
+                        <tr>
+                            <th class="field-short" fieldName="Checkbox">
+                                <div class="thead-box">
+                                    <label class="m-checkbox">
+                                        <input class="checkbox" type="checkbox" name="order" value="all" id="checkAll" />
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </th>
+                            <th fieldName="CategoryCode">
+                                <div class="thead-box">
+                                    <div class="thead-text">Mã danh mục</div>
+                                    <div class="m-icon sort-icon"></div>
+                                </div>
+                            </th>
+                            <th fieldName="CategoryName">
+                                <div class="thead-box">
+                                    <div class="thead-text">Tên danh mục</div>
+                                    <div class="m-icon sort-icon"></div>
+                                </div>
+                            </th>
+                            <th fieldName="CategoryName" fromExtraObject="ParentCategory">
+                                <div class="thead-box">
+                                    <div class="thead-text">Danh mục cha</div>
+                                    <div class="m-icon sort-icon"></div>
+                                </div>
+                            </th>
+                            <th fieldName="CategoryDescription">
+                                <div class="thead-box">
+                                    <div class="thead-text">Mô tả</div>
+                                    <div class="m-icon sort-icon"></div>
+                                </div>
+                            </th>
+                            <th fieldName="CreatedDate" formatType="dd/mm/yyyy">
+                                <div class="thead-box">
+                                    <div class="thead-text">Ngày tạo</div>
+                                    <div class="m-icon sort-icon"></div>
+                                </div>
+                            </th>
+                            <th fieldName="ModifiedDate" formatType="dd/mm/yyyy">
+                                <div class="thead-box">
+                                    <div class="thead-text">Ngày chỉnh sửa</div>
+                                    <div class="m-icon sort-icon"></div>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="paging">
+                <div class="paging-left">
+                    <div class="paging-left-text">Hiển thị <span id="range">1-15</span>/<span id="total">100</span> danh mục</div>
+                </div>
+                <div class="paging-mid">
+                    <button class="m-button-icon" id="jumpToFirst">
+                        <div class="m-icon chevrons-left-icon"></div>
+                    </button>
+                    <button class="m-button-icon chevron-left" id="previous">
+                        <div class="m-icon chevron-left-icon"></div>
+                    </button>
+                    <div class="paging-number">
+                        <button class="m-button-round selected">1</button>
+                        <button class="m-button-round">2</button>
+                        <button class="m-button-round">3</button>
+                        <button class="m-button-round">4</button>
+                        <button class="m-button-round">5</button>
+                    </div>
+                    <button class="m-button-icon chevron-right" id="next">
+                        <div class="m-icon chevron-right-icon"></div>
+                    </button>
+                    <button class="m-button-icon" id="jumpToLast">
+                        <div class="m-icon chevrons-right-icon"></div>
+                    </button>
+                </div>
+                <div class="paging-right">
+                    <div class="pageSize" name="PageSize" loadAfterSelect value="15">
+                        <select>
+                            <option value="15" selected>15/trang</option>
+                            <option value="20">20/trang</option>
+                            <option value="30">30/trang</option>
+                            <option value="40">40/trang</option>
+                            <option value="50">50/trang</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- dialog -->
+            <div class="m-dialog displayNone" fieldName="CategoryId">
+                <div class="modal"></div>
+                <div class="dialog-detail">
+                    <div class="dialog-header">
+                        <div class="header-text">THÊM</div>
+                        <div class="btn-exit" id="btn-exit"></div>
+                    </div>
+                    <div class="dialog-body">
+                        <div class="dialog-col">
+                            <div class="content-box">
+                                <div class="box-body">
+                                    <div class="input-line">
+                                        <div class="input-box input-box-medium">
+                                            <div class="input-title">Tên danh mục (<span>*</span>)</div>
+                                            <input class="m-input" type="text" required fieldName="CategoryName" validate="false" />
+                                        </div>
+                                    </div>
+                                    <div class="input-line">
+                                        <div class="input-box input-box-medium">
+                                            <div class="input-title">Mã danh mục (<span>*</span>)</div>
+                                            <input class="m-input" type="text" required fieldName="CategoryCode" validate="false" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dialog-col">
+                            <div class="content-box">
+                                <div class="box-body">
+                                    <div class="input-line">
+                                        <div class="input-box input-box-medium">
+                                            <div class="input-title">Danh mục cha</div>
+                                            <div class="m-box m-dropdown" name="Category" fieldName="CategoryParentId" title="Chọn danh mục cha"></div>
+                                        </div>
+                                    </div>
+                                    <div class="note">
+                                        <div class="input-box input-box-big">
+                                            <div class="input-title">Mô tả</div>
+                                            <textarea class="m-input note-area" fieldName="CategoryDescription"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dialog-footer">
+                        <button class="m-button m-button-short btn-cancel" id="btn-cancel">Hủy</button>
+                        <button class="m-button" id="btn-save">
+                            <div class="m-icon save-icon"></div>
+                            <div class="btn-text">Lưu</div>
+                        </button>
+                        <button class="m-button m-button-long" id="btn-saveAdd">Lưu và thêm mới</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Popup Xóa-->
@@ -458,19 +632,6 @@
         </div>
     </div>
 
-    <div class="sub-nav">
-        <div class="item-sub-nav">
-            <div class="content-box">
-                <div class="content-title">Hàng hóa</div>
-                <div class="content-body">
-                    <div>Nhóm hàng hóa</div>
-                    <div>Thương hiệu</div>
-                    <div>Hàng hóa</div>
-                </div>
-            </div>
-        </div>
-         <div class="item-sub-nav">item1</div>
-    </div>
 
 
     <script src="/js/lib/jquery-3.5.1.min.js"></script>
@@ -478,8 +639,5 @@
     <script src="/js/common/common.js"></script>
     <script src="/js/common/base.js"></script>
     <script src="/js/page/index.js"></script>
-    <script src="/js/page/product.js"></script>
-    <script src="/js/page/brand.js"></script>
-    <script src="/js/page/category.js"></script>
 </body>
 </html>

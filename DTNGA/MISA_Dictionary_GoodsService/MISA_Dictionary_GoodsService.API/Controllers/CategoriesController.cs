@@ -47,6 +47,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
             var results = await _categoryService.GetByFilterAsync<Category>(filterValues);
             if (page < 0) page = 1;
             var resultPaging = results.Skip((page - 1) * size).Take(size).ToList();
+            resultPaging.ForEach(c => c = _categoryService.ProcessingCategory(c));
             _actionServiceResult.Data = resultPaging;
             return _actionServiceResult;
         }

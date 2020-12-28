@@ -2,7 +2,6 @@
     constructor() {
         super();
         var me = this;
-        me.objectName = "Brand";
         me.loadComboboxCustome();
     }
 

@@ -5,14 +5,9 @@ class ProductManage extends IndexJs {
         super();
         var me = this;
         me.route = me.getRoute();
-        me.objectName = "Product";
         me.loadComboboxCustome();
     }
 
-    getRoute() {
-        return "/api/v1/Products";
-    }
-    
 
     /** Thực hiện load một số combobox thuộc trang
      * CreatedBy dtnga(23/12/2020)

@@ -18,11 +18,15 @@ class Base {
 
     getRoute() {
         var me = this;
-        me.objectName = $(`.content-body:visible`).attr("fieldName");
-        me.route = "/api/v1/" + me.objectName + "s";
+        var route = $(`.content-body:visible`).attr("route");
+        me.route = "/api/v1/" + route;
         return me.route;
     }
-
+    getObjectName() {
+        var me = this;
+        me.objectName = $(`.content-body:visible`).attr("fieldName");
+        return me.objectName;
+    }
     getMethod() {
         var me = this;
         if (me.formMode == "add") {
@@ -1215,6 +1219,23 @@ class Base {
     }
 
     /**
+     * Xử lý data tại mỗi td đặc biệt của table
+     * @param {Element} th Th chứa thông tin lấy dữ liệu
+     * @param {object} obj Đối tượng chứa dữ liệu
+     * CreatedBy dtnga (22/12/2020)
+     */
+    customeProcessTd(th, obj) {
+        var fieldName = $(th).attr("fieldName");
+        var markAttr = $(th).attr("fromExtraObject");
+        if (typeof markAttr !== typeof undefined && markAttr !== false) {
+            var extraObject = obj[markAttr];
+            if (!extraObject) return "";
+            else return extraObject[fieldName];
+        }
+        else return obj[fieldName];
+    }
+
+    /**
      * Hàm base thực hiện load dữ liệu lên table
      * @param {Element} table Thành phần bảng cần đổ dữ liệu
      * @param {number} pageIndex Số thứ tự trang
@@ -1234,6 +1255,7 @@ class Base {
             var data = [];
             // Lấy data từ Api
             me.route = me.getRoute();
+            me.objectName = me.getObjectName();
             // Lấy tất cả dữ liệu tìm kiếm, bộ lọc
             var filterString = "";
             var SearchValue = $(currentContent).find(`.content-filter input[type="search"]`).val();
@@ -1272,7 +1294,7 @@ class Base {
                             }
                             else {
                                 //lấy giá trị của thuộc tính tương ứng với fieldname trong obj
-                                var value = me.customeProcessTd(fieldName, obj);
+                                var value = me.customeProcessTd(th, obj);
                                 if (value) {
                                     // định dạng lại
                                     var formatType = $(th).attr('formatType');

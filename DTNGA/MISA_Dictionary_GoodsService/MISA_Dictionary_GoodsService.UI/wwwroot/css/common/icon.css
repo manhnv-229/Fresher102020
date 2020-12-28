@@ -49,6 +49,13 @@
         opacity:1;
     }
 
+.brands-icon {
+    background-image: url('/content/icon/common/BlackIcon/brand.png');
+}
+    .brands-icon.active {
+        background-image: url('/content/icon/common/whiteicon/brand.png');
+    }
+
 .setting-icon {
     background-image: url('/content/icon/common/BlackIcon/settings.svg');
 }
