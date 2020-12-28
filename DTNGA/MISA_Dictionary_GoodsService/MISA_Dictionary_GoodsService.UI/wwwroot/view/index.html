@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>MISA Dictionary</title>
     <link href="/css/common/main.css" rel="stylesheet" />
     <link href="/css/page/common.css" rel="stylesheet" />
     <link href="/css/lib/jquery-ui.css" rel="stylesheet" />
@@ -128,13 +128,13 @@
                                 </div>
                             </th>
                             <th fieldName="CreatedDate" formatType="dd/mm/yyyy">
-                                <div class="thead-box">
+                                <div class="thead-box center">
                                     <div class="thead-text">Ngày tạo</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
                             <th fieldName="ModifiedDate" formatType="dd/mm/yyyy">
-                                <div class="thead-box">
+                                <div class="thead-box center">
                                     <div class="thead-text">Ngày chỉnh sửa</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
@@ -196,13 +196,16 @@
                                     <div class="input-line">
                                         <div class="input-box input-box-medium">
                                             <div class="input-title">Tên hàng hóa (<span>*</span>)</div>
+                                            <div class="error-validate error-empty displayNone">Tên sản phẩm không được phép bỏ trống</div>
                                             <input class="m-input" type="text" required fieldName="ProductName" validate="false" />
                                         </div>
                                     </div>
                                     <div class="input-line">
                                         <div class="input-box input-box-medium">
                                             <div class="input-title">Mã Barcode (<span>*</span>)</div>
-                                            <input class="m-input" type="text" required fieldName="ProductBarcode" validate="false" />
+                                            <div class="error-validate error-empty displayNone">Mã sản phẩm không được phép bỏ trống</div>
+                                            <div class="error-validate error-duplicate displayNone">Mã sản phẩm đã có trên hệ thống</div>
+                                            <input class="m-input" type="text" required fieldName="ProductBarcode" validate="false" unduplicated />
                                         </div>
                                     </div>
                                     <div class="input-line">
@@ -220,6 +223,7 @@
                                     <div class="input-line">
                                         <div class="input-box input-box-medium ">
                                             <div class="input-title">Nhóm hàng hóa (<span>*</span>)</div>
+                                            <div class="error-validate error-empty displayNone">Nhóm hàng hóa không được phép bỏ trống</div>
                                             <div class="m-box m-combobox" id="cb-category" name="Category" validate="false" fieldName="CategoryId" title="Chọn danh mục"></div>
                                         </div>
                                     </div>
@@ -309,14 +313,14 @@
                                 </div>
                             </th>
                             <th fieldName="CreatedDate" formatType="dd/mm/yyyy">
-                                <div class="thead-box">
+                                <div class="thead-box center">
                                     <div class="thead-text">Ngày tạo</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
                             <th fieldName="ModifiedDate" formatType="dd/mm/yyyy">
-                                <div class="thead-box">
-                                    <div class="thead-text">Ngày chỉnh sửa</div>
+                                <div class="thead-box center">
+                                    <div class="thead-text text-align-center">Ngày chỉnh sửa</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
@@ -377,12 +381,16 @@
                                     <div class="input-line">
                                         <div class="input-box input-box-medium">
                                             <div class="input-title">Tên thương hiệu (<span>*</span>)</div>
+                                            <div class="error-validate error-empty displayNone">Tên thương hiệu không được phép bỏ trống</div>
+                                            <div class="error-validate error-duplicate displayNone">Tên thương hiệu đã có trên hệ thống</div>
                                             <input class="m-input" type="text" required fieldName="BrandName" validate="false" />
                                         </div>
                                     </div>
                                     <div class="input-line">
                                         <div class="input-box input-box-medium">
                                             <div class="input-title">Mã thương hiệu (<span>*</span>)</div>
+                                            <div class="error-validate error-empty displayNone">Mã thương hiệu không được phép bỏ trống</div>
+                                            <div class="error-validate error-duplicate displayNone">Mã thương hiệu đã có trên hệ thống</div>
                                             <input class="m-input" type="text" required fieldName="BrandCode" validate="false" />
                                         </div>
                                     </div>
@@ -477,13 +485,13 @@
                                 </div>
                             </th>
                             <th fieldName="CreatedDate" formatType="dd/mm/yyyy">
-                                <div class="thead-box">
+                                <div class="thead-box center">
                                     <div class="thead-text">Ngày tạo</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
                             <th fieldName="ModifiedDate" formatType="dd/mm/yyyy">
-                                <div class="thead-box">
+                                <div class="thead-box center">
                                     <div class="thead-text">Ngày chỉnh sửa</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
@@ -545,12 +553,15 @@
                                     <div class="input-line">
                                         <div class="input-box input-box-medium">
                                             <div class="input-title">Tên danh mục (<span>*</span>)</div>
+                                            <div class="error-validate error-empty displayNone">Tên danh mục không được phép bỏ trống</div>
                                             <input class="m-input" type="text" required fieldName="CategoryName" validate="false" />
                                         </div>
                                     </div>
                                     <div class="input-line">
                                         <div class="input-box input-box-medium">
                                             <div class="input-title">Mã danh mục (<span>*</span>)</div>
+                                            <div class="error-validate error-empty displayNone">Mã danh mục không được phép bỏ trống</div>
+                                            <div class="error-validate error-duplicate displayNone">Mã danh mục đã có trên hệ thống</div>
                                             <input class="m-input" type="text" required fieldName="CategoryCode" validate="false" />
                                         </div>
                                     </div>
@@ -633,8 +644,8 @@
     </div>
 
 
-
     <script src="/js/lib/jquery-3.5.1.min.js"></script>
+    <script src="/js/lib/jquery.min.js"></script>
     <script src="/js/lib/jquery-ui.min.js"></script>
     <script src="/js/common/common.js"></script>
     <script src="/js/common/base.js"></script>

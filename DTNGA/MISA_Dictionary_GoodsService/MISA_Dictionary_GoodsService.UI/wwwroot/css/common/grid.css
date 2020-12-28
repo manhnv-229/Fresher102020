@@ -1,4 +1,4 @@
-﻿/*style cho phần grid ( bảng dữ liệu ) dùng chung*/
+/*style cho phần grid ( bảng dữ liệu ) dùng chung*/
 .grid {
     width: 100%;
     height: calc(100% - 128px);
@@ -59,7 +59,9 @@
         align-self: center;
         padding-left: 10px;
     }
-
+        .grid thead .thead-box.center {
+            justify-content: center;
+        }
         .grid thead .thead-box .thead-text {
             font-family: GoogleSans-Bold;
             white-space: nowrap;
@@ -90,6 +92,7 @@
 
         .grid table tbody tr td {
             height: 100%;
+            width: 100px;
         }
 /* row khi được chọn */
 .selected {
@@ -106,11 +109,9 @@
         width: 100%;
         background-color: none;
         padding: 10px;
-        max-width: 200px;
         white-space: nowrap;
         overflow: hidden !important;
         text-overflow: ellipsis;
-        margin-right: -10px;
     }
 
 .grid table tr td:first-child {

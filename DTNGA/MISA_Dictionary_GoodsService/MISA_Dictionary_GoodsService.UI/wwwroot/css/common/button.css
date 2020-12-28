@@ -1,5 +1,9 @@
 /* style button dùng chung*/
 
+button{
+    cursor: pointer;
+}
+
 /*button chỉ có icon*/
 .m-button-icon {
     width: 40px;

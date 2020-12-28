@@ -16,17 +16,31 @@ class Base {
 
     }
 
+    /**
+     * Thực hiện lấy route
+     * CreatedBy dtnga (26/12/2020)
+     * */
     getRoute() {
         var me = this;
         var route = $(`.content-body:visible`).attr("route");
         me.route = "/api/v1/" + route;
         return me.route;
     }
+
+    /**
+     * Thực hiện lấy tên object đang xử lý
+     * CreatedBy dtnga (26/12/2020)
+     * */
     getObjectName() {
         var me = this;
         me.objectName = $(`.content-body:visible`).attr("fieldName");
         return me.objectName;
     }
+
+    /**
+     * Thực hiện lấy method
+     * CreatedBy dtnga (26/12/2020)
+     * */
     getMethod() {
         var me = this;
         if (me.formMode == "add") {
@@ -73,25 +87,28 @@ class Base {
             var optionIcon = `<div class="option-icon">
                                    <div class="displayNone m-icon check-icon"></div>
                                </div>`;
-            var idPropName = comboName + "Id";
-            var namePropname = comboName + "Name";
+
             $.each(data, function (index, item) {
-                var optionName = "";
-                var optionId = "";
-                if (typeof(item)== "string") {
-                    optionName = item;
-                    optionId = item;
+                if (item) {
+                    var optionName = "";
+                    var optionId = "";
+                    if (typeof (item) == "string") {
+                        optionName = item;
+                        optionId = item;
+                    }
+                    else {
+                        var idPropName = comboName + "Id";
+                        var namePropname = comboName + "Name";
+                        optionName = item[namePropname];
+                        optionId = item[idPropName];
+                    }
+                    var optionText = `<div class="option-text">` + optionName + `</div>`;
+                    var option = $(`<div class="item combo-item "></div>`);
+                    $(option).data("keyId", optionId);
+                    var comboItem = $(optionIcon + optionText);
+                    option.append(comboItem);
+                    comboItemBox.append(option);
                 }
-                else {
-                    optionName = item[namePropname];
-                    optionId = item[idPropName];
-                }
-                var optionText = `<div class="option-text">` + optionName + `</div>`;
-                var option = $(`<div class="item combo-item "></div>`);
-                $(option).data("keyId", optionId);
-                var comboItem = $(optionIcon + optionText);
-                option.append(comboItem);
-                comboItemBox.append(option);
             })
             wrapper.append(comboItemBox);
             targetCombo.append(wrapper);
@@ -134,26 +151,28 @@ class Base {
      * @param {Element} input trường input thay đổi tại combobox
      * CreatedBy dtnga (27/12/2020)
      */
-     onChangeComboInputField(input){
-            try{
-                if(input){
-                    var me=this;
-                    var inputText = $(input).val();
-                    var box = $(input).closest(".m-box");
-                    if (!inputText) {
-                        $(box).data("keyId", null);
-                        $(box).find(".item").removeClass("selected");
-                        $(box).find(".item .check-icon").addClass("displayNone");
-                    }
-                    var attr= $(box).attr("loadAfterSelect");
-                    if (typeof attr !== typeof undefined && attr !== false)
-                        me.loadData(1);
+    onChangeComboInputField(input) {
+        try {
+            if (input) {
+                var me = this;
+                var inputText = $(input).val();
+                var box = $(input).closest(".m-box");
+                if (!inputText) {
+                    $(box).data("keyId", null);
+                    $(box).find(".item").removeClass("selected");
+                    $(box).find(".item .check-icon").addClass("displayNone");
+                    $(box).attr("validate", false);
+                    $(box).closest(".input-box").find(".error-empty").removeClass("displayNone");
                 }
-            }
-            catch(e){
-                console.log(e);
+                var attr = $(box).attr("loadAfterSelect");
+                if (typeof attr !== typeof undefined && attr !== false)
+                    me.loadData(1);
             }
         }
+        catch (e) {
+            console.log(e);
+        }
+    }
 
     /** Sự kiện khi click button tại combobox
      * CreatedBy dtnga (10/12/2020)
@@ -225,6 +244,8 @@ class Base {
         // Lưu id của item vào combobox
         var id = $(item).data("keyId");
         $(comboBox).data("keyId", id);
+        $(comboBox).attr("validate", true);
+        $(comboBox).closest(".input-box").find(".error-empty").addClass("displayNone");
         me.doSomethingWhenItemSelected(item);
     }
 
@@ -272,6 +293,18 @@ class Base {
     }
 
     /**
+     * Thực hiện lọc
+     * @param {Element} input trường input tại comboBox
+     * CreatedBy dtnga (28/12/2020)
+     */
+    onKeyUpInputSearch(input) {
+        var textarea = $(input).val().toLowerCase();
+        $(input).closest(".m-box").find(".combo-item").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(textarea) > -1);
+        });
+    }
+
+    /**
      * Sự kiện khi ấn phím tại trường nhập liệu của combobox/Dropdown
      * CreatedBy dtnga (10/12/2020)
      * @param {Element} element trường nhập liệu tại combobox/Dropdown
@@ -301,6 +334,7 @@ class Base {
             } else if (e.which == 38) {
                 $(innerWrapper).find('.item:not(:first-child).item-hover').removeClass('item-hover').prev().addClass('item-hover');
             }
+
             me.centerItFixedHeight($(wrapper).find('.item-hover'), wrapper);
         });
     }
@@ -682,7 +716,7 @@ class Base {
         var me = this;
         if (!dialog) dialog = $(`.content-body:visible .m-dialog`);
         $(dialog).removeClass("displayNone");
-        
+        $(dialog).find(`.error-validate`).addClass("displayNone");
     }
 
     /** Tự động format các trường input số tiền 
@@ -829,10 +863,16 @@ class Base {
     ValidateForm(targetForm) {
         try {
             var form = $(targetForm);
-            var invalidInputs = $(form).find(`input[validate="false"], select[validate="false"]`);
+            var invalidInputs = $(form).find(`input[validate="false"], select[validate="false"], .m-box[validate="false"]`);
             if (invalidInputs && invalidInputs.length > 0) {
                 $.each(invalidInputs, function (index, input) {
                     $(input).trigger('blur');
+                    var parentBox = $(input).closest(".input-box");
+                    $(parentBox).find(`.error-empty`).removeClass("displayNone");
+                    // TODO check trùng lặp
+                    //var duplicatedAttr = $(input).attr("unduplicated");
+                    //if (typeof duplicatedAttr !== undefined && duplicatedAttr !== false)
+                    //    $(parentBox).find(`.error-duplicate`).removeClass("displayNone");
                 });
                 invalidInputs[0].focus();
                 return false;
@@ -914,12 +954,18 @@ class Base {
             var value = $(input).val();
             if (!value || !value.trim()) {
                 $(input).addClass("m-input-warning");
-                $(input).attr('validate', 'fasle');
+                $(input).attr('validate', 'false');
                 $(input).attr('title', "Trường này không được để trống");
+                $(input).closest(".input-box").find(".error-empty").removeClass("displayNone");
+                // TODO check trùng
+                //    $(input).closest(".input-box").find(".error-duplicate").addClass("displayNone");
             }
             else {
                 $(input).removeAttr('validate');
                 $(input).removeClass("m-input-warning");
+                $(input).closest(".input-box").find(".error-empty").addClass("displayNone");
+                // TODO check trùng
+                $(input).closest(".input-box").find(".error-duplicate").addClass("displayNone");
             }
         }
     }
@@ -1024,7 +1070,6 @@ class Base {
         }
     }
 
-
     /**
      * Hiển thị form Sửa thông tin khi double click vào 1 bản ghi
      * CreatedBy dtnga (21/11/2020)
@@ -1046,7 +1091,7 @@ class Base {
             // Hiển thị dialog
             me.showDialog(dialog);
             // bind dữ liệu hàng được chọn lên form
-            var id =  $(selected).data('keyId');
+            var id = $(selected).data('keyId');
             $(dialog).data("keyId", id);
             // Lấy thông tin từ api bằng id tương ứng
             $.ajax({
@@ -1079,7 +1124,7 @@ class Base {
             if (selectedRow.length == 0)
                 $(`.content-body:visible`).find(`#btnDelete`).prop("disabled", true);
             else
-                 $(`.content-body:visible`).find(`#btnDelete`).prop("disabled", false);
+                $(`.content-body:visible`).find(`#btnDelete`).prop("disabled", false);
         }
         catch (e) {
             console.log(e);
@@ -1117,6 +1162,11 @@ class Base {
                     else {
                         $(input).val(value);
                     }
+                    $(input).attr("validate", true);
+                    $(input).closest(".input-box").find(".error-empty").addClass("displayNone");
+                    // TODO check trùng
+                    $(input).closest(".input-box").find(".error-duplicate").addClass("displayNone");
+
                 }
 
             });
@@ -1150,6 +1200,7 @@ class Base {
                     var selectedItemText = $(selectedItem).find(`.option-text`).text();
                     $(selectedItem).closest(`.m-box`).find(`input`).val(selectedItemText);
                     $(selectedItem).closest(`.m-box`).data("keyId", id);
+                    $(box).closest(".input-box").find(".error-empty").addClass("displayNone");
                     return true;
                 }
             })
@@ -1349,16 +1400,16 @@ class Base {
                     var totalSpan = $(pagingText).find(`#total`);
                     $(totalSpan).text(recordTotal);
                     var range = $(pagingText).find(`#range`);
-                    if(recordTotal<2){
+                    if (recordTotal < 2) {
                         $(range).text(recordTotal);
                     }
-                    else{
+                    else {
                         var startRecordIndex = (pageIndex - 1) * pageSize + 1;
                         var endRecordIndex = startRecordIndex + pageSize;
                         if (endRecordIndex > recordTotal) endRecordIndex = recordTotal;
                         $(range).text(startRecordIndex + "-" + endRecordIndex);
                     }
-                    
+
                     me.setPageNumberPosition(pageIndex);
                 })
                 .fail(function (res) {
@@ -1369,6 +1420,8 @@ class Base {
             console.log(e);
         }
     }
+
 }
+
 
 

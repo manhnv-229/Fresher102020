@@ -1,5 +1,6 @@
 $(document).ready(function () {
     current = new IndexJs();
+    sort.sortOder();
 })
 
 class IndexJs extends Base {
@@ -9,6 +10,7 @@ class IndexJs extends Base {
         me.loadData(1);
         me.loadComboboxCustome();
         me.initEvent();
+
     }
 
     /* Hàm thực hiện khởi tạo sự kiện
@@ -87,6 +89,7 @@ class IndexJs extends Base {
                 if (e.which === 27)
                     $(dialog).addClass("displayNone");
             });
+            
             $(dialog).find(`#btn-exit`).on("click", me.onClick_Exit_Dialog.bind(me));
             $(dialog).find(`#btn-cancel`).on("click", me.onClick_Exit_Dialog.bind(me));
             $(dialog).find(`#btn-save`).on("click", function () {
