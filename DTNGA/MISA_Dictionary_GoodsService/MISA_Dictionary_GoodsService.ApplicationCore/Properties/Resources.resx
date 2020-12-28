@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CountByFilter" xml:space="preserve">
+    <value>Proc_GetCount{0}ByFilter</value>
+    <comment>Tên procedure đếm số bản ghi thỏa mãn tìm kiếm và bộ lọc</comment>
+  </data>
   <data name="Duplicate" xml:space="preserve">
     <value>Thông tin {0} đã tồn tại trên hệ thống</value>
   </data>

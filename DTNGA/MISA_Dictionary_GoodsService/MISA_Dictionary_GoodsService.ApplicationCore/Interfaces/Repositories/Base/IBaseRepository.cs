@@ -15,14 +15,14 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Repositories
     {
         #region Execute
         /// <summary>
-        /// Thực thi tuy vấn
+        /// Thực hiện đếm bản ghi
         /// </summary>
         /// <param name="sp">Chuỗi truy vấn/ Tên procedure</param>
         /// <param name="parms">Bộ tham số</param>
         /// <param name="commandType">Loại truy vấn</param>
         /// <returns>Số bản ghi bị ảnh hưởng</returns>
         /// CreatedBy dtnga (11/11/2020)
-        Task<int> ExecuteAsync(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
+        Task<int> CountAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
         #endregion
 
         #region Delete

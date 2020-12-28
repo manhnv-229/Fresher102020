@@ -65,7 +65,7 @@ namespace MISA_Dictionary_GoodsService.API
             services.AddScoped<IBaseService, BaseService>();
             services.AddScoped<IBaseRepository, BaseRepository>();
 
-            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IGoodsService, GoodsService>();
             services.AddScoped<ICategoryService, CategoryService>();
         }
 

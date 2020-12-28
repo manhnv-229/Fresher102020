@@ -1304,6 +1304,7 @@ class Base {
                 pageIndex = $(currentContent).find(`.paging-number button.selected`).text();
             var pageSize = convertInt($(currentContent).find(`.pageSize`).attr("value"));
             var data = [];
+            var total = 0;
             // Lấy data từ Api
             me.route = me.getRoute();
             me.objectName = me.getObjectName();
@@ -1328,6 +1329,7 @@ class Base {
                 method: "GET"
             })
                 .done(function (res) {
+                    total = res.Total;
                     data = res.Data;
                     $.each(data, function (index, obj) {
                         var tr = $(`<tr></tr>`);
@@ -1375,46 +1377,30 @@ class Base {
                         var keyIdName = me.objectName + 'Id';
                         tr.data('keyId', obj[keyIdName]);
                     })
-                    // nếu hiện tại chưa có row nào được chọn thì chọn row đầu tiên
-                    if ($(table).find(`tbody tr.selected`).length == 0) {
-                        $(table).find(`tbody tr:first`).select();
-                        $(table).find(`tbody tr:first`).addClass("selected");
-                        $(table).find(`tbody tr:first input[type="checkbox"]`).prop("checked", true);
-                        $(table).closest(`.content-body`).find(`#btnDelete`).prop("disabled", false);
-                    }
+                    
                     me.checkSelectedRow(); // nếu không có row nào được chọn -> disable button Xóa
+                    // Cập nhật paging
+                    // Lấy tổng số bản ghi
+                    var pagingText = $(currentContent).find(`.paging-left-text`);
+                    var totalSpan = $(pagingText).find(`#total`);
+                    $(totalSpan).text(total);
+                    var range = $(pagingText).find(`#range`);
+                    if (total < 2) {
+                        $(range).text(total);
+                    }
+                    else {
+                        var startRecordIndex = (pageIndex - 1) * pageSize + 1;
+                        var endRecordIndex = startRecordIndex + pageSize;
+                        if (endRecordIndex > total) endRecordIndex = total;
+                        $(range).text(startRecordIndex + "-" + endRecordIndex);
+                    }
+                    me.setPageNumberPosition(pageIndex);
                 })
                 .fail(function (res) {
                     console.warn("Lỗi load dữ liệu");
                     console.log(res);
                 })
-            // Cập nhật paging
-            // Lấy tổng số bản ghi
-            $.ajax({
-                url: me.host + me.route + "/count?" + filterString.substring(1, filterString.length),
-                method: "GET"
-            })
-                .done(function (res) {
-                    var recordTotal = res.Data;
-                    var pagingText = $(currentContent).find(`.paging-left-text`);
-                    var totalSpan = $(pagingText).find(`#total`);
-                    $(totalSpan).text(recordTotal);
-                    var range = $(pagingText).find(`#range`);
-                    if (recordTotal < 2) {
-                        $(range).text(recordTotal);
-                    }
-                    else {
-                        var startRecordIndex = (pageIndex - 1) * pageSize + 1;
-                        var endRecordIndex = startRecordIndex + pageSize;
-                        if (endRecordIndex > recordTotal) endRecordIndex = recordTotal;
-                        $(range).text(startRecordIndex + "-" + endRecordIndex);
-                    }
-
-                    me.setPageNumberPosition(pageIndex);
-                })
-                .fail(function (res) {
-                    console.log(res);
-                })
+            
         }
         catch (e) {
             console.log(e);

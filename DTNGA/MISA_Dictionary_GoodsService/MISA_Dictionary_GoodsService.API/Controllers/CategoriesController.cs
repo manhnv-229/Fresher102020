@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using MISA_Dictionary_GoodsService.ApplicationCore;
 using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service;
 using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service.Base;
-
+using Newtonsoft.Json.Linq;
 
 namespace MISA_Dictionary_GoodsService.API.Controllers
 {
@@ -37,38 +37,25 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         /// <returns></returns>
         /// CreatedBy dtnga (24/12/2020)
         [HttpGet]
-        public async Task<ActionServiceResult> GetByFilterAsync([FromQuery] int size, [FromQuery] int page, [FromQuery] string keySearch)
+        public async Task<IActionResult> GetByFilterAsync([FromQuery] int size, [FromQuery] int page, [FromQuery] string keySearch)
         {
-            var _actionServiceResult = new ActionServiceResult();
             var filterValues = new Dictionary<string, object>
             {
+                { "PageIndex", page },
+                { "PageSize", size },
                 { "KeySearch", keySearch }
             };
-            var results = await _categoryService.GetByFilterAsync<Category>(filterValues);
-            if (page < 0) page = 1;
-            var resultPaging = results.Skip((page - 1) * size).Take(size).ToList();
-            resultPaging.ForEach(c => c = _categoryService.ProcessingCategory(c));
-            _actionServiceResult.Data = resultPaging;
-            return _actionServiceResult;
-        }
-
-        /// <summary>
-        /// Đếm số bản ghi thỏa mãn bộ lọc
-        /// </summary>
-        /// <param name="keySearch">key tìm kiếm</param>
-        /// <returns></returns>
-        /// CreatedBy dtnga (26/12/2020)
-        [HttpGet("count")]
-        public async Task<ActionServiceResult> GetCountAsync([FromQuery] string keySearch)
-        {
-            var _actionServiceResult = new ActionServiceResult();
-            var filterValues = new Dictionary<string, object>
+            var categories = await _categoryService.GetByFilterAsync<Category>(filterValues);
+            categories.ForEach(c => _categoryService.ProcessingCategory(c));
+            filterValues.Remove("PageIndex");
+            filterValues.Remove("PageSize");
+            var total = await _categoryService.CountByFilterAsync<Category>(filterValues);
+            var result = JObject.FromObject(new
             {
-                { "KeySearch", keySearch }
-            };
-            var results = await _categoryService.GetByFilterAsync<Category>(filterValues);
-            _actionServiceResult.Data = results.Count;
-            return _actionServiceResult;
+                Total = total,
+                Data = categories
+            });
+            return Ok(result);
         }
 
         /// <summary>

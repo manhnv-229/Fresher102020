@@ -40,13 +40,13 @@
         opacity: 1;
     }
 
-.products-icon {
+.goods-icon {
     background-image: url('/content/icon/common/blackicon/cubes_black.png');
 }
 
-    .products-icon.active {
+    .goods-icon.active {
         background-image: url('/content/icon/common/whiteicon/cubes_white.png');
-        opacity:1;
+        opacity: 1;
     }
 
 .brands-icon {

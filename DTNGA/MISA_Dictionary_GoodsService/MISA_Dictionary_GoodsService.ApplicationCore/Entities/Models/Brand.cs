@@ -9,7 +9,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
     {
         public Brand()
         {
-            Products = new HashSet<Product>();
+            Goods = new HashSet<Goods>();
         }
 
         /// <summary>
@@ -51,6 +51,6 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         public string BrandDescription { get; set; }
 
         [DisplayName("Sản phẩm")]
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<Goods> Goods { get; set; }
     }
 }

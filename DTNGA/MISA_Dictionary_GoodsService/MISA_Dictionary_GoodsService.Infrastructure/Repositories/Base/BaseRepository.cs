@@ -40,9 +40,9 @@ namespace SManage.Infrastructure.Repositories.Base
         #endregion
 
         #region Execute
-        public Task<int> ExecuteAsync(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
+        public Task<int> CountAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
-            return _databaseContext.ExecuteAsync(sp, parms);
+            return _databaseContext.CountAsync(sp, parms);
         }
         #endregion
 

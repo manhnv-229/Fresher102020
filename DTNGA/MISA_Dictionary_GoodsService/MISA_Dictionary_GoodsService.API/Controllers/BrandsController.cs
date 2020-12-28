@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MISA_Dictionary_GoodsService.ApplicationCore;
 using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service.Base;
+using Newtonsoft.Json.Linq;
 
 namespace MISA_Dictionary_GoodsService.API.Controllers
 {
@@ -35,40 +36,25 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         /// <returns></returns>
         /// CreatedBy dtnga (24/12/2020)
         [HttpGet]
-        public async Task<ActionServiceResult> GetByFilterAsync([FromQuery] int size, [FromQuery] int page, [FromQuery] string keySearch, [FromQuery] string brandOrigin)
+        public async Task<IActionResult> GetByFilterAsync([FromQuery] int size, [FromQuery] int page, [FromQuery] string keySearch, [FromQuery] string brandOrigin)
         {
-            var _actionServiceResult = new ActionServiceResult();
             var filterValues = new Dictionary<string, object>
             {
+                { "PageIndex", page },
+                { "PageSize", size },
                 { "KeySearch", keySearch },
                 { "BrandOrigin", brandOrigin }
             };
-            var results = await _baseService.GetByFilterAsync<Brand>(filterValues);
-            if (page < 0) page = 1;
-            var resultPaging = results.Skip((page - 1) * size).Take(size).ToList();
-            _actionServiceResult.Data = resultPaging;
-            return _actionServiceResult;
-        }
-
-        /// <summary>
-        /// Đếm số bản ghi thỏa mãn bộ lọc
-        /// </summary>
-        /// <param name="keySearch">key tìm kiếm</param>
-        /// <param name="brandOrigin">Xuất xứ thương hiệu</param>
-        /// <returns></returns>
-        /// CreatedBy dtnga (26/12/2020)
-        [HttpGet("count")]
-        public async Task<ActionServiceResult> GetCountAsync([FromQuery] string keySearch, [FromQuery] string brandOrigin)
-        {
-            var _actionServiceResult = new ActionServiceResult();
-            var filterValues = new Dictionary<string, object>
+            var brands = await _baseService.GetByFilterAsync<Brand>(filterValues);
+            filterValues.Remove("PageIndex");
+            filterValues.Remove("PageSize");
+            var total = await _baseService.CountByFilterAsync<Brand>(filterValues);
+            var result = JObject.FromObject(new
             {
-                { "KeySearch", keySearch },
-                { "BrandOrigin", brandOrigin }
-            };
-            var results = await _baseService.GetByFilterAsync<Brand>(filterValues);
-            _actionServiceResult.Data = results.Count;
-            return _actionServiceResult;
+                Total = total,
+                Data = brands
+            });
+            return Ok(result);
         }
 
         /// <summary>

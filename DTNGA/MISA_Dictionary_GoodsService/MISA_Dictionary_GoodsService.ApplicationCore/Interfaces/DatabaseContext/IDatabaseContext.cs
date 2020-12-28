@@ -23,7 +23,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.DatabaseContex
         /// <param name="commandType">Loại truy vẫn</param>
         /// <returns>Số lượng bản ghi bị ảnh hưởng</returns>
         /// CreatedBy DtNga : 03/11/2020
-        Task<int> ExecuteAsync(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
+        Task<int> CountAsync(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
 
         #region GET
         /// <summary>

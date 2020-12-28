@@ -74,9 +74,9 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
         #endregion
 
         #region Execute
-        public async Task<int> ExecuteAsync(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
+        public async Task<int> ExecuteAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
-            return await _baseRepository.ExecuteAsync(sp, parms);
+            return await _baseRepository.CountAsync<T>(sp, parms);
         }
         #endregion
 
@@ -123,6 +123,20 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
             var entityName = typeof(T).Name;
             var sp = string.Format(Properties.Resources.GetByFilter, entityName);
             return await _baseRepository.GetAsync<T>(sp, parms);
+        }
+
+        public async Task<int> CountByFilterAsync<T>(Dictionary<string, object> filterValues = null)
+        {
+            var parms = new DynamicParameters();
+            foreach (KeyValuePair<string, object> item in filterValues)
+            {
+                var key = item.Key;
+                var value = item.Value;
+                parms.Add(key, value);
+            }
+            var entityName = typeof(T).Name;
+            var sp = string.Format(Properties.Resources.CountByFilter, entityName);
+            return await _baseRepository.CountAsync<T>(sp, parms);
         }
         #endregion
 

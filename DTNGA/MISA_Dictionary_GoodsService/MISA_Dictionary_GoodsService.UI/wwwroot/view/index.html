@@ -17,9 +17,9 @@
             </div>
         </div>
         <div class="nav-content">
-            <div class="nav-item select-menu-item" id="product" fieldName="Product">
+            <div class="nav-item select-menu-item" id="Goods" fieldName="Goods">
                 <div class="nav-item-box">
-                    <div class="m-icon nav-item-icon active products-icon"></div>
+                    <div class="m-icon nav-item-icon active goods-icon"></div>
                     <div class="nav-item-text">Hàng hóa</div>
                 </div>
             </div>
@@ -57,12 +57,12 @@
             <div class="content-header-title">Hàng hóa</div>
             <div class="content-header-right"></div>
         </div>
-        <div class="content-body" id="product" fieldName="Product" route="Products" titleName="Hàng hóa">
+        <div class="content-body" id="Goods" fieldName="Goods" route="Goods" titleName="Hàng hóa">
             <div class="content-filter">
                 <div class="content-filter-left">
                     <div class="m-input">
                         <div class="m-icon search-icon"></div>
-                        <input class="search-field" name="seacrh" type="search" placeholder="Tìm kiếm theo mã barcode, tên sản phẩm" />
+                        <input class="search-field" name="seacrh" type="search" placeholder="Mã barcode/ Tên sản phẩm" />
                     </div>
                     <div class="m-box m-dropdown" id="brand-list" name="Brand" fieldName="BrandId" title="Chọn thương hiệu" loadAfterSelect></div>
                     <div class="m-box m-dropdown" id="category-list" name="Category" fieldName="CategoryId" title="Chọn danh mục" loadAfterSelect></div>
@@ -80,7 +80,7 @@
                 </div>
             </div>
             <div class="grid">
-                <table class="m-table" id="products-table">
+                <table class="m-table" id="Goodss-table">
                     <thead>
                         <tr>
                             <th class="field-short" fieldName="Checkbox">
@@ -91,19 +91,19 @@
                                     </label>
                                 </div>
                             </th>
-                            <th fieldName="ProductBarcode">
+                            <th fieldName="GoodsBarcode">
                                 <div class="thead-box">
                                     <div class="thead-text">Mã Barcode</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th fieldName="ProductName">
+                            <th fieldName="GoodsName">
                                 <div class="thead-box">
                                     <div class="thead-text">Tên sản phẩm</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th fieldName="ProductUnit">
+                            <th fieldName="GoodsUnit">
                                 <div class="thead-box">
                                     <div class="thead-text">Đơn vị tính</div>
                                     <div class="m-icon sort-icon"></div>
@@ -121,7 +121,7 @@
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th fieldName="ProductDescription">
+                            <th fieldName="GoodsDescription">
                                 <div class="thead-box">
                                     <div class="thead-text">Mô tả</div>
                                     <div class="m-icon sort-icon"></div>
@@ -146,7 +146,7 @@
             </div>
             <div class="paging">
                 <div class="paging-left">
-                    <div class="paging-left-text">Hiển thị <span id="range">1-15</span>/<span id="total">100</span> hàng hóa</div>
+                    <div class="paging-left-text">Hiển thị <span id="range">1-15</span> trên <span id="total">100</span> hàng hóa</div>
                 </div>
                 <div class="paging-mid">
                     <button class="m-button-icon" id="jumpToFirst">
@@ -182,7 +182,7 @@
                 </div>
             </div>
             <!-- dialog -->
-            <div class="m-dialog displayNone" fieldName="ProductId">
+            <div class="m-dialog displayNone" fieldName="GoodsId">
                 <div class="modal"></div>
                 <div class="dialog-detail">
                     <div class="dialog-header">
@@ -197,7 +197,7 @@
                                         <div class="input-box input-box-medium">
                                             <div class="input-title">Tên hàng hóa (<span>*</span>)</div>
                                             <div class="error-validate error-empty displayNone">Tên sản phẩm không được phép bỏ trống</div>
-                                            <input class="m-input" type="text" required fieldName="ProductName" validate="false" />
+                                            <input class="m-input" type="text" required fieldName="GoodsName" validate="false" />
                                         </div>
                                     </div>
                                     <div class="input-line">
@@ -205,13 +205,13 @@
                                             <div class="input-title">Mã Barcode (<span>*</span>)</div>
                                             <div class="error-validate error-empty displayNone">Mã sản phẩm không được phép bỏ trống</div>
                                             <div class="error-validate error-duplicate displayNone">Mã sản phẩm đã có trên hệ thống</div>
-                                            <input class="m-input" type="text" required fieldName="ProductBarcode" validate="false" unduplicated />
+                                            <input class="m-input" type="text" required fieldName="GoodsBarcode" validate="false" unduplicated />
                                         </div>
                                     </div>
                                     <div class="input-line">
                                         <div class="input-box input-box-medium">
                                             <div class="input-title">Đơn vị tính</div>
-                                            <input class="m-input" type="text" fieldName="ProductUnit" />
+                                            <input class="m-input" type="text" fieldName="GoodsUnit" />
                                         </div>
                                     </div>
                                 </div>
@@ -236,7 +236,7 @@
                                     <div class="note">
                                         <div class="input-box input-box-big">
                                             <div class="input-title">Mô tả</div>
-                                            <textarea class="m-input note-area" fieldName="ProductDescription"></textarea>
+                                            <textarea class="m-input note-area" fieldName="GoodsDescription"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -260,7 +260,7 @@
                 <div class="content-filter-left">
                     <div class="m-input">
                         <div class="m-icon search-icon"></div>
-                        <input class="search-field" name="seacrh" type="search" placeholder="Tìm kiếm theo mã, tên thương hiệu" />
+                        <input class="search-field" name="seacrh" type="search" placeholder="Mã/ Tên thương hiệu" />
                     </div>
                     <div class="m-box m-dropdown" id="cbBrandOrigin" name="BrandOrigin" fieldName="BrandOrigin" title="Chọn xuất xứ" loadAfterSelect></div>
                 </div>
@@ -331,7 +331,7 @@
             </div>
             <div class="paging">
                 <div class="paging-left">
-                    <div class="paging-left-text">Hiển thị <span id="range">1-15</span>/<span id="total">100</span> thương hiệu</div>
+                    <div class="paging-left-text">Hiển thị <span id="range">1-15</span> trên <span id="total">100</span> thương hiệu</div>
                 </div>
                 <div class="paging-mid">
                     <button class="m-button-icon" id="jumpToFirst">
@@ -433,7 +433,7 @@
                 <div class="content-filter-left">
                     <div class="m-input">
                         <div class="m-icon search-icon"></div>
-                        <input class="search-field" name="seacrh" type="search" placeholder="Tìm kiếm theo mã, tên danh mục" />
+                        <input class="search-field" name="seacrh" type="search" placeholder="Mã/ Tên danh mục" />
                     </div>
                 </div>
                 <div class="content-filter-right">
@@ -503,7 +503,7 @@
             </div>
             <div class="paging">
                 <div class="paging-left">
-                    <div class="paging-left-text">Hiển thị <span id="range">1-15</span>/<span id="total">100</span> danh mục</div>
+                    <div class="paging-left-text">Hiển thị <span id="range">1-15</span> trên <span id="total">100</span> danh mục</div>
                 </div>
                 <div class="paging-mid">
                     <button class="m-button-icon" id="jumpToFirst">

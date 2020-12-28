@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service
 {
-    public interface IProductService : IBaseService
+    public interface IGoodsService : IBaseService
     {
 
         /// <summary>
         /// Thực hiện lấy thông tin chi tiết về sản phẩm (danh mục, thương hiệu,...)
         /// </summary>
-        /// <param name="product">sản phẩm cần xử lý</param>
+        /// <param name="goods">sản phẩm cần xử lý</param>
         /// <returns></returns>
         /// CreatedBy dtnga (21/12/2020)
-        Product ProcessingProduct(Product product);
+        Goods ProcessingGoods(Goods goods);
 
     }
 }

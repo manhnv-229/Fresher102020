@@ -61,6 +61,15 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Proc_GetCount{0}ByFilter.
+        /// </summary>
+        public static string CountByFilter {
+            get {
+                return ResourceManager.GetString("CountByFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Thông tin {0} đã tồn tại trên hệ thống.
         /// </summary>
         public static string Duplicate {

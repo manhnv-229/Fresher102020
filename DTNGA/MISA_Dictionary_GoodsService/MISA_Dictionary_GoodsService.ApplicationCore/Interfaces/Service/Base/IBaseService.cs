@@ -40,7 +40,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service.Base
         /// <param name="commandType">Loại truy vấn</param>
         /// <returns>Số bản ghi bị ảnh hưởng</returns>
         /// CreatedBy dtnga (11/11/2020)
-        Task<int> ExecuteAsync(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
+        Task<int> ExecuteAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
         #endregion
 
         #region Get
@@ -87,9 +87,18 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service.Base
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="filterValues">Bộ lọc</param>
-        /// <returns></returns>
+        /// <returns>Danh sách bản ghi thỏa mãn bộ lọc với số trang với kích cỡ đầu vào/returns>
         /// CreatedBy dtnga (25/12/2020)
         Task<List<T>> GetByFilterAsync<T>(Dictionary<string, object> filterValues = null);
+
+        /// <summary>
+        /// Đếm số lượng bản ghi thỏa mãn tìm kiếm và bộ lọc
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="filterValues">Bộ lọc</param>
+        /// <returns>Số bản ghi thỏa mãn</returns>
+        /// CreatedBy dtnga (29/12/2020)
+        Task<int>  CountByFilterAsync<T>(Dictionary<string, object> filterValues = null);
         #endregion
 
         #region Insert

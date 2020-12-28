@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace MISA_Dictionary_GoodsService.ApplicationCore
 {
-    public partial class Product : BaseEntity
+    public partial class Goods : BaseEntity
     {
         /// <summary>
         /// Id sản phẩm
@@ -14,14 +14,14 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         [Required]
         [Unduplicated]
         [DisplayName("Id sản phẩm")]
-        public Guid ProductId { get; set; }
+        public Guid GoodsId { get; set; }
 
         /// <summary>
         /// Tên sản phẩm
         /// </summary>
         [Required]
         [DisplayName("Tên sản phẩm")]
-        public string ProductName { get; set; }
+        public string GoodsName { get; set; }
 
         /// <summary>
         /// Mã barcode của sản phẩm
@@ -30,25 +30,25 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         [Unduplicated]
         [DisplayName("Mã Barcode")]
         [MaxLength(20, "Mã Barcode không được vượt quá 20 ký tự")]
-        public string ProductBarcode { get; set; }
+        public string GoodsBarcode { get; set; }
 
         /// <summary>
         /// Đơn vị tính sản phẩm
         /// </summary>
         [DisplayName("Đơn vị tính")]
-        public string ProductUnit { get; set; }
+        public string GoodsUnit { get; set; }
 
         /// <summary>
         /// Url sảnh sản phẩm
         /// </summary>
         [DisplayName("Ảnh sản phẩm")]
-        public string ProductImage { get; set; }
+        public string GoodsImage { get; set; }
 
         /// <summary>
         /// Mô tả sản phẩm
         /// </summary>
         [DisplayName("Mô tả sản phẩm")]
-        public string ProductDescription { get; set; }
+        public string GoodsDescription { get; set; }
 
         /// <summary>
         /// Id danh mục sản phẩm

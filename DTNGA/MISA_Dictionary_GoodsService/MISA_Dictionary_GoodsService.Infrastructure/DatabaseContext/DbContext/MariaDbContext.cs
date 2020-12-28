@@ -29,9 +29,9 @@ namespace MISA_Dictionary_GoodsService.Infrastructure.DatabaseContext.DbContext
         }
 
         #region Execute
-        public async Task<int> ExecuteAsync(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
+        public async Task<int> CountAsync(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
-            var result = await _dbConnection.ExecuteAsync(sp, parms, commandType: commandType);
+            var result = await _dbConnection.QueryFirstAsync<int>(sp, parms, commandType: commandType);
             return result;
         }
         #endregion

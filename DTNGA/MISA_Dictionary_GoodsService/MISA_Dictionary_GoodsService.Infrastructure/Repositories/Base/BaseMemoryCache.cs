@@ -17,7 +17,7 @@ namespace MISA_Dictionary_GoodsService.Infrastructure
         protected readonly IMemoryCache _memoryCache;
         protected List<Brand> brands;
         protected List<Category> categories;
-        protected List<Product> products;
+        protected List<Goods> Goods;
         public BaseMemoryCache(IDbConnection dbConnection, IMemoryCache importMemoryCache)
         {
             _dbConnection = dbConnection ?? throw new ArgumentNullException(nameof(MySqlConnection));
@@ -25,7 +25,7 @@ namespace MISA_Dictionary_GoodsService.Infrastructure
             //Lấy dữ liệu:
             brands = _dbConnection.Query<Brand>("Proc_GetAllBrand", commandType: CommandType.StoredProcedure).ToList();
             categories = _dbConnection.Query<Category>("Proc_GetAllCategory", commandType: CommandType.StoredProcedure).ToList();
-            products = _dbConnection.Query<Product>("Proc_GetAllProduct", commandType: CommandType.StoredProcedure).ToList();
+            Goods = _dbConnection.Query<Goods>("Proc_GetAllGoods", commandType: CommandType.StoredProcedure).ToList();
             // Cache lại:
             CacheGetOrCreate();
         }
@@ -37,7 +37,7 @@ namespace MISA_Dictionary_GoodsService.Infrastructure
         {
             SetCache("Brands", brands);
             SetCache("Categories", categories);
-            SetCache("Products", products);
+            SetCache("Goods", Goods);
         }
 
 
