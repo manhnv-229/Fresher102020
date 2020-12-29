@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MISA_Dictionary_GoodsService.ApplicationCore;
+using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service;
 using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service.Base;
 using Newtonsoft.Json.Linq;
 
@@ -16,13 +17,11 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
     public class BrandsController : ControllerBase
     {
         private readonly IBaseMemoryCache _baseMemoryCache;
-        private readonly IBaseService _baseService;
-        protected List<Brand> brands;
-        public BrandsController(IBaseMemoryCache baseMemoryCache, IBaseService baseService)
+        private readonly IBrandService _brandService;
+        public BrandsController(IBaseMemoryCache baseMemoryCache, IBrandService brandService)
         {
             _baseMemoryCache = baseMemoryCache;
-            _baseService = baseService;
-            brands = (List<Brand>)_baseMemoryCache.GetCache<Brand>("Brands");
+            _brandService = brandService;
             
         }
 
@@ -33,7 +32,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         /// <param name="page">Số thứ tự trang</param>
         /// <param name="keySearch">key tìm kiếm</param>
         /// <param name="brandOrigin">Xuất xứ thương hiệu</param>
-        /// <returns></returns>
+        /// <returns>Danh sách thương hiệu trên trang cần lấy và tổng số bản ghi thỏa mãn</returns>
         /// CreatedBy dtnga (24/12/2020)
         [HttpGet]
         public async Task<IActionResult> GetByFilterAsync([FromQuery] int size, [FromQuery] int page, [FromQuery] string keySearch, [FromQuery] string brandOrigin)
@@ -45,10 +44,10 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
                 { "KeySearch", keySearch },
                 { "BrandOrigin", brandOrigin }
             };
-            var brands = await _baseService.GetByFilterAsync<Brand>(filterValues);
+            var brands = await _brandService.GetByFilterAsync<Brand>(filterValues);
             filterValues.Remove("PageIndex");
             filterValues.Remove("PageSize");
-            var total = await _baseService.CountByFilterAsync<Brand>(filterValues);
+            var total = await _brandService.CountByFilterAsync<Brand>(filterValues);
             var result = JObject.FromObject(new
             {
                 Total = total,
@@ -60,67 +59,71 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         /// <summary>
         /// Lấy tất cả thương hiệu
         /// </summary>
-        /// <returns></returns>
+        /// <returns>danh sách thương hiệu</returns>
         /// CreatedBy dtnga (16/12/2020)
         [HttpGet("all")]
-        public ActionServiceResult GetAllBrand()
+        public async Task<IActionResult> GetAllBrandAsync()
         {
-            var response = new ActionServiceResult();
-            if (brands.Count == 0)
+            var brands = await _brandService.GetAllAsync<Brand>();
+            var result = JObject.FromObject(new
             {
-                brands = _baseMemoryCache.GetCache<Brand>("Brands");
-            }
-            response.Data = brands;
-            return response;
+                Data = brands
+            });
+            return Ok(result);
         }
 
+        /// <summary>
+        /// Lấy tên tất cả xuất xứ thương hiệu
+        /// </summary>
+        /// <returns>Tên tất cả xuất xứ thương hiệu</returns>
+        /// CreatedBy dtnga (27/12/2020)
         [HttpGet("origin")]
-        public ActionServiceResult GetAllOrigin()
+        public async Task<IActionResult> GetAllOriginAsync()
         {
-            var response = new ActionServiceResult();
-            if (brands.Count == 0)
+            var origins =await _brandService.GetBrandOrigin();
+            var result = JObject.FromObject(new
             {
-                brands = _baseMemoryCache.GetCache<Brand>("Brands");
-            }
-            var origin = brands.Select(b => b.BrandOrigin).Distinct().ToList();
-            response.Data = origin;
-            return response;
+                Data = origins
+            });
+            return Ok(result);
         }
 
         /// <summary>
         /// Lấy thông tin thương hiệu theo Id
         /// </summary>
         /// <param name="brandId">Id thương hiệu</param>
-        /// <returns></returns>
+        /// <returns>Thông tin thương hiệu theo Id</returns>
         [HttpGet("{brandId}")]
-        public ActionServiceResult GetBrandById([FromRoute] Guid brandId)
+        public async Task<IActionResult> GetBrandByIdAsync([FromRoute] Guid brandId)
         {
-            var response = new ActionServiceResult();
-            if (brands.Count == 0)
+            var brand = _baseMemoryCache.GetCache<Brand>(brandId.ToString());
+            if (brand == null)
             {
-                brands = _baseMemoryCache.GetCache<Brand>("Brands");
+                brand = await _brandService.GetByIdAsync<Brand>(brandId);
+                _baseMemoryCache.SetCache(brandId.ToString(), brand);
             }
-            response.Data = brands.Where<Brand>(b => b.BrandId == brandId).FirstOrDefault();
-            return response;
+            var result = JObject.FromObject(new
+            {
+                Data = brand
+            });
+            return Ok(result);
         }
 
         /// <summary>
         /// Thêm thương hiệu mới
         /// </summary>
         /// <param name="newBrand">Thông tin thương hiệu mới</param>
+        /// <returns>Id thương hiệu thêm thành công</returns>
         /// CreatedBy dtnga (17/12/2020)
         [HttpPost]
-        public async Task<ActionServiceResult> AddNewBrandAsync([FromBody] Brand newBrand)
+        public async Task<IActionResult> AddNewBrandAsync([FromBody] Brand newBrand)
         {
             newBrand.BrandId = Guid.NewGuid();
-            var response = await _baseService.InsertAsync<Brand>(newBrand);
-            if (response.MISACode == MISACode.Success && brands.Count > 0)
-            {
-                // Cập nhật lại cache
-                brands.Add(newBrand);
-                _baseMemoryCache.SetCache("Brands", brands);
-            }
-            return response;
+            var response = await _brandService.InsertAsync<Brand>(newBrand);
+            if (response.Success == false)
+                return (IActionResult)response;
+            else
+                return Ok(newBrand.BrandId);
         }
 
         
@@ -128,20 +131,16 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         /// Cập nhật thông tin thương hiệu
         /// </summary>
         /// <param name="newBrand"></param>
-        /// <returns></returns>
+        /// <returns>Id thương hiệu cập nhật thành công </returns>
         /// CreatedBy dtnga (17/12/2020)
         [HttpPut]
-        public async Task<ActionServiceResult> UpdateBrandAsync([FromBody] Brand newBrand)
+        public async Task<IActionResult> UpdateBrandAsync([FromBody] Brand newBrand)
         {
-            var response = await _baseService.UpdateAsync<Brand>(newBrand);
-            if (response.MISACode == MISACode.Success && brands.Count > 0)
-            {
-                // Cập nhật lại cache
-                brands.Remove(brands.Where<Brand>(p => p.BrandId == newBrand.BrandId).FirstOrDefault());
-                brands.Add(newBrand);
-                _baseMemoryCache.SetCache("Brands", brands);
-            }
-            return response;
+            var response = await _brandService.UpdateAsync<Brand>(newBrand);
+            if (response.Success == false)
+                return (IActionResult)response;
+            else
+                return Ok(newBrand.BrandId);
         }
 
 
@@ -152,19 +151,13 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         /// <returns></returns>
         /// CreatedBy dtnga (23/12/2020)
         [HttpDelete]
-        public async Task<ActionServiceResult> DeleteRangeAsync([FromBody] List<Guid> range)
+        public async Task<IActionResult> DeleteRangeAsync([FromBody] List<Guid> range)
         {
-            var response = await _baseService.DeleteRangeAsync<Brand>(range);
-            if (response.MISACode == MISACode.Success && brands.Count > 0)
-            {
-                // Xóa cả trong cache
-                range.ForEach(itemId =>
-                {
-                    brands.Remove(brands.Where<Brand>(p => p.BrandId == itemId).FirstOrDefault());
-                });
-                _baseMemoryCache.SetCache("Brands", brands);
-            }
-            return response;
+            var response = await _brandService.DeleteRangeAsync<Brand>(range);
+            if (response.Success == false)
+                return (IActionResult)response;
+            else
+                return Ok(range);
         }
     }
 }

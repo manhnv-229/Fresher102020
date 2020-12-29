@@ -1,8 +1,10 @@
 ﻿
+using Microsoft.AspNetCore.Mvc;
 using MISA_Dictionary_GoodsService.ApplicationCore.Properties;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MISA_Dictionary_GoodsService.ApplicationCore
 {
@@ -54,5 +56,6 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
             MISACode = misacode;
             Data = data;
         }
+
     }
 }

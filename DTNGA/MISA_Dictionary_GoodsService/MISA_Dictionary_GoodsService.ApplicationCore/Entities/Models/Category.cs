@@ -47,7 +47,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         /// Id danh mục cha
         /// </summary>
         [DisplayName("Id danh mục cha")]
-        public Guid? CategoryParentId { get; set; }
+        public Guid CategoryParentId { get; set; }
 
         /// <summary>
         /// Mô tả danh mục

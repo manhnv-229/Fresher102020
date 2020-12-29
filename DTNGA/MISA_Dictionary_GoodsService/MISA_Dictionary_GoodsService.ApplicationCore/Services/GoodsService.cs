@@ -11,25 +11,25 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
 {
     public class GoodsService : BaseService, IGoodsService
     {
-        protected List<Goods> Goodss;
         public GoodsService(IBaseMemoryCache baseMemoryCache, IBaseRepository baseRepository) : base(baseMemoryCache, baseRepository)
         {
             
         }
 
 
-        public  Goods ProcessingGoods(Goods Goods)
+        public async Task<Goods> ProcessingGoodsAsync(Goods Goods)
         {
             //Lấy thông tin danh mục sản phẩm
             var categoryId = Goods.CategoryId;
-            var categories= _baseMemoryCache.GetCache<Category>("Categories");
-            var category = categories.Where(c => c.CategoryId == categoryId).FirstOrDefault();
+            var category = await base.GetByIdAsync<Category>(categoryId);
+            Goods.Category = category;
             //Lấy thông tin thương hiệu
             var brandId = Goods.BrandId;
-            var brands= _baseMemoryCache.GetCache<Brand>("Brands");
-            var brand = brands.Where<Brand>(b => b.BrandId == brandId).FirstOrDefault();
-            Goods.Category = category;
-            Goods.Brand = brand;
+            if (brandId != null)
+            {
+                var brand = await base.GetByIdAsync<Brand>((Guid)brandId);
+                Goods.Brand = brand;
+            }
             return Goods;
         }
     }

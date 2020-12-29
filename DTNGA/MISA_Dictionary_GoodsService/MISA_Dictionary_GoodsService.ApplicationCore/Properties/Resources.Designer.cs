@@ -133,6 +133,15 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Proc_Get{0}.
+        /// </summary>
+        public static string GetProperty {
+            get {
+                return ResourceManager.GetString("GetProperty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Thông tin {0} không được vượt quá {1} kí tự.
         /// </summary>
         public static string MaxLength {
@@ -151,29 +160,11 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select * from {0};.
+        ///   Looks up a localized string similar to Proc_GetAll{0}.
         /// </summary>
-        public static string Proc_GetAll {
+        public static string Proc_GetAlll {
             get {
-                return ResourceManager.GetString("Proc_GetAll", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select * from {0}  t where t.{1}Id = &apos;{2}&apos; ;.
-        /// </summary>
-        public static string Proc_GetById {
-            get {
-                return ResourceManager.GetString("Proc_GetById", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select * from {0}  t where t.{1} = {2};.
-        /// </summary>
-        public static string Proc_GetByProperty {
-            get {
-                return ResourceManager.GetString("Proc_GetByProperty", resourceCulture);
+                return ResourceManager.GetString("Proc_GetAlll", resourceCulture);
             }
         }
         

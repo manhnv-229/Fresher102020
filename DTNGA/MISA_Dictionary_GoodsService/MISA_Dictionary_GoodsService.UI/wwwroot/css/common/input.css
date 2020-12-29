@@ -1,4 +1,4 @@
-﻿/*-----------------*/
+/*-----------------*/
 /* style input dùng chung */
 
 .m-input {
@@ -176,7 +176,7 @@ input[typeFormat="money"], input[type="number"] {
 
 /* Input Search field*/
 .search-field {
-    width: calc( 100% - 24px);
+    width: 210px; 
     outline: none;
     border: none;
     border-radius: 4px;

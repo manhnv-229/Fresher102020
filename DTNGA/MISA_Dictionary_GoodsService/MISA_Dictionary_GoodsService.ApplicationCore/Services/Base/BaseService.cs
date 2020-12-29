@@ -54,7 +54,8 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
             var entityName = typeof(T).Name;
             var sp = $"Proc_Delete{entityName}By{entityName}Id";
             var listDeleted = new List<T>();
-            for( var i=0; i<entities.Count; i++)
+            var failDelete = new List<Guid>();
+            for (var i = 0; i < entities.Count; i++)
             {
                 var entityId = entities[i];
                 var parms = MappingDataTypeForOne($"{entityName}Id", entityId);
@@ -64,12 +65,21 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
                     _actionServiceResult.Success = false;
                     _actionServiceResult.MISACode = MISACode.ErrorDeleteEntity;
                     _actionServiceResult.Message = Properties.Resources.ErrorDeleteEntity;
-                    return _actionServiceResult;
+                    failDelete.Add(entityId);
                 }
-                listDeleted.Add(result);
+                else
+                    listDeleted.Add(result);
             }
-            _actionServiceResult.Data = listDeleted;
-            return _actionServiceResult;
+            if (failDelete.Count > 0)
+            {
+                _actionServiceResult.Data = failDelete;
+                return _actionServiceResult;
+            }
+            else
+            {
+                _actionServiceResult.Data = listDeleted;
+                return _actionServiceResult;
+            }
         }
         #endregion
 
@@ -191,6 +201,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
                 _actionServiceResult.Success = false;
                 _actionServiceResult.MISACode = MISACode.ErrorDeleteEntity;
                 _actionServiceResult.Message = ApplicationCore.Properties.Resources.ErrorDeleteEntity;
+                return _actionServiceResult;
             }
             _actionServiceResult.Data = updatedEntity;
             return _actionServiceResult;
@@ -242,7 +253,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
                     // Check trùng lặp
                     // Lấy entity 
                     var entityDuplicate = await GetByPropertyAsync<T>(propName, propValue);
-                    if (entityDuplicate.Count>0)
+                    if (entityDuplicate.Count > 0)
                     {
                         isValid = false;
                         errorMsg.Add(string.Format(Properties.Resources.Duplicate, displayName));

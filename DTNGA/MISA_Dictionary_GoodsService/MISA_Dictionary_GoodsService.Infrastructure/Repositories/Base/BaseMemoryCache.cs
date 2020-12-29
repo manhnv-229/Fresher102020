@@ -15,19 +15,11 @@ namespace MISA_Dictionary_GoodsService.Infrastructure
     {
         readonly IDbConnection _dbConnection;
         protected readonly IMemoryCache _memoryCache;
-        protected List<Brand> brands;
-        protected List<Category> categories;
-        protected List<Goods> Goods;
-        public BaseMemoryCache(IDbConnection dbConnection, IMemoryCache importMemoryCache)
+        public BaseMemoryCache(IDbConnection dbConnection, IMemoryCache memoryCache)
         {
             _dbConnection = dbConnection ?? throw new ArgumentNullException(nameof(MySqlConnection));
-            _memoryCache = importMemoryCache;
-            //Lấy dữ liệu:
-            brands = _dbConnection.Query<Brand>("Proc_GetAllBrand", commandType: CommandType.StoredProcedure).ToList();
-            categories = _dbConnection.Query<Category>("Proc_GetAllCategory", commandType: CommandType.StoredProcedure).ToList();
-            Goods = _dbConnection.Query<Goods>("Proc_GetAllGoods", commandType: CommandType.StoredProcedure).ToList();
-            // Cache lại:
-            CacheGetOrCreate();
+            _memoryCache = memoryCache;
+            
         }
         /// <summary>
         /// Thực hiện cache dữ liệu các danh mục phục vụ cho import dữ liệu:
@@ -35,9 +27,7 @@ namespace MISA_Dictionary_GoodsService.Infrastructure
         /// CreatedBy dtnga (11/11/2020)
         public void CacheGetOrCreate()
         {
-            SetCache("Brands", brands);
-            SetCache("Categories", categories);
-            SetCache("Goods", Goods);
+            
         }
 
 
@@ -51,7 +41,7 @@ namespace MISA_Dictionary_GoodsService.Infrastructure
         {
             _memoryCache.GetOrCreate(key, entry =>
             {
-                entry.SlidingExpiration = TimeSpan.FromMinutes(5);
+                entry.SlidingExpiration = TimeSpan.FromDays(1);
                 return data;
             });
         }
@@ -77,16 +67,9 @@ namespace MISA_Dictionary_GoodsService.Infrastructure
         /// <param name="key">Key</param>
         /// <returns></returns>
         /// CreatedBy dtnga (11/11/2020)
-        public List<T> GetCache<T>(string key)
+        public T GetCache<T>(string key)
         {
-            var cacheEntry = _memoryCache.Get<List<T>>(key);
-            if (cacheEntry.Count == 0)
-            {
-                var typeName = typeof(T).Name;
-                var sp = "Proc_GetAll" + typeName;
-                cacheEntry =  _dbConnection.Query<T>(sp, commandType: CommandType.StoredProcedure).ToList();
-                SetCache(key, cacheEntry);
-            }
+            var cacheEntry = _memoryCache.Get<T>(key);
             return cacheEntry;
         }
     }

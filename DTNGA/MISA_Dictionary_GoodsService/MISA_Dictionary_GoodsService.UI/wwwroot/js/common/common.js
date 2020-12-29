@@ -1,4 +1,4 @@
-﻿
+
 /**
  * Hàm xử lý định dạng ngày
  * @param {any} date Bất kì kiểu dữ liệu nào
@@ -86,7 +86,6 @@ var sort = {
                 }
             );
             $(this).click(function () {
-                debugger
                 //remove class
                 $('.repeatgridtop').removeClass('sorttop');
                 $('.repeatgridbutoom').removeClass('sortbutton');

@@ -4,6 +4,8 @@ using System.Text;
 
 namespace MISA_Dictionary_GoodsService.ApplicationCore
 {
+    
+
     /// <summary>
     /// Tên kiểu store sẽ thực thi
     /// </summary>

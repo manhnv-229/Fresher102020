@@ -15,16 +15,12 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
         {
         }
 
-        public Category ProcessingCategory(Category category)
+        public async Task<Category> ProcessingCategoryAsync(Category category)
         {
             // Lấy thông tin danh mục cha
             var parentCategoryId = category.CategoryParentId;
             if (parentCategoryId != null)
-            {
-                var categories = _baseMemoryCache.GetCache<Category>("Categories");
-                category.ParentCategory = categories.Where(c => c.CategoryId == parentCategoryId).FirstOrDefault();
-            }
-
+                category.ParentCategory = await base.GetByIdAsync<Category>(parentCategoryId);
             return category;
         }
     }

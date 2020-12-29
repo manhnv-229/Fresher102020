@@ -14,6 +14,6 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service
         /// <param name="category">danh mục cần xử lý</param>
         /// <returns></returns>
         /// CreatedBy dtnga (21/12/2020)
-        Category ProcessingCategory(Category category);
+        Task<Category> ProcessingCategoryAsync(Category category);
     }
 }

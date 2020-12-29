@@ -58,7 +58,7 @@ namespace MISA_Dictionary_GoodsService.API
             });
             services.AddMemoryCache();
             //Khởi tạo kết nối tới MariaDB:
-            services.AddScoped<IDbConnection>(_ => new MySqlConnection(Configuration["ConnectionStrings:SManageMariaDB"]));
+            services.AddScoped<IDbConnection>(_ => new MySqlConnection(Configuration["ConnectionStrings:MISADictionaryProductMariaDB"]));
             // DI
             services.AddScoped<IDatabaseContext, MariaDbContext>();
             services.AddScoped<IBaseMemoryCache, BaseMemoryCache>();
@@ -67,6 +67,7 @@ namespace MISA_Dictionary_GoodsService.API
 
             services.AddScoped<IGoodsService, GoodsService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IBrandService, BrandService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

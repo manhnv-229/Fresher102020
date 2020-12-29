@@ -811,16 +811,10 @@ class Base {
                     dataType: "json"
                 })
                     .done(function (res) {
-                        if (res.Success) {
                             response = res.Data;
                             $(`.m-dialog:visible`).addClass("displayNone");
                             me.showToastMesseger(me.mesHeader + "thành công", "success");
-                        }
-                        else {
-                            console.log(res);
-                            $(`.m-dialog:visible`).addClass("displayNone");
-                            me.showToastMesseger(me.mesHeader + "không thành công", "fail");
-                        }
+                        
                     })
                     .fail(function (res) {
                         console.log(res);
@@ -834,13 +828,10 @@ class Base {
                     method: me.getMethod()
                 })
                     .done(function (res) {
-                        if (res.Success) {
                             response = res.Data;
                             $(`.m-dialog:visible`).addClass("displayNone");
                             me.showToastMesseger(me.mesHeader + " thành công", "success");
-                        }
-                        else
-                            console.log(res);
+                       
                     })
                     .fail(function (res) {
                         console.log(res);
@@ -1055,15 +1046,17 @@ class Base {
                 me.checkSelectedRow();
                 return;
             }
-            if ($(row).hasClass("selected")) {
+            else if ($(row).hasClass("selected")) {
                 $(row).removeClass("selected");
                 $(row).find(`input[type="checkbox"]`).prop("checked", false);
                 me.checkSelectedRow();
                 return;
             }
-            $(row).addClass("selected");
-            $(row).find(`input[type="checkbox"]`).prop("checked", true);
-            me.checkSelectedRow();
+            else{
+                $(row).addClass("selected");
+                $(row).find(`input[type="checkbox"]`).prop("checked", true);
+                me.checkSelectedRow();
+            }
         }
         catch (e) {
             console.log(e);
@@ -1120,7 +1113,7 @@ class Base {
     checkSelectedRow() {
         try {
             var currentTable = $(`.content-body:visible table`);
-            var selectedRow = $(currentTable).find(".selected");
+            var selectedRow = $(currentTable).find("tbody tr.selected");
             if (selectedRow.length == 0)
                 $(`.content-body:visible`).find(`#btnDelete`).prop("disabled", true);
             else
@@ -1377,7 +1370,6 @@ class Base {
                         var keyIdName = me.objectName + 'Id';
                         tr.data('keyId', obj[keyIdName]);
                     })
-                    
                     me.checkSelectedRow(); // nếu không có row nào được chọn -> disable button Xóa
                     // Cập nhật paging
                     // Lấy tổng số bản ghi

@@ -15,7 +15,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service
         /// <param name="goods">sản phẩm cần xử lý</param>
         /// <returns></returns>
         /// CreatedBy dtnga (21/12/2020)
-        Goods ProcessingGoods(Goods goods);
+        Task<Goods> ProcessingGoodsAsync(Goods goods);
 
     }
 }

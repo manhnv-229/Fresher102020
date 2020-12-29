@@ -21,6 +21,7 @@ class IndexJs extends Base {
             var me = this;
             // Sự kiện khi click navitem
             $('.nav-item').on('click', function () {
+                debugger
                 $('.nav-item').removeClass('select-menu-item');
                 $('.nav-item .nav-item-icon ').removeClass('active');
                 $(this).addClass('select-menu-item');
@@ -34,23 +35,25 @@ class IndexJs extends Base {
                 $(`.content-header-title`).text(content.attr("titleName"));
                 // load data tương ứng với content
                 var tblContent = $(content).find(`.m-table`);
-                var pageIndex = 1;
-                me.loadData(pageIndex, tblContent);
+                var tableData = $(tblContent).find('tbody tr');
+                if (tableData.length==0)
+                    me.loadData(1, tblContent);
             });
             // format khi nhập liệu số tiền
             me.autoFormatMoney();
             me.addFocusSupport();
+
             // Sự kiện khi thao tác với từng hàng dữ liệu trong bảng
-            $(`table tbody`).on("click", "tr", function () {
+            $(`table tbody`).on("click", "tr", function (e) {
+                event.stopPropagation();
                 me.tr_onClick(this);
             });
             $(`table tbody`).on("dblclick", "tr", function () {
                 me.onDblClick_trow(this);
             });
-            // sự kiện khi tick vào checkbox/ nhiều checkbox
             $(`table thead input[type="checkbox"]`).on("click", function () {
                 me.onClickCheckAll(this);
-            });
+            })
             // sự kiện khi blur các trường input
             $(`input`).blur(me.onBlur_inputField);
             //popup

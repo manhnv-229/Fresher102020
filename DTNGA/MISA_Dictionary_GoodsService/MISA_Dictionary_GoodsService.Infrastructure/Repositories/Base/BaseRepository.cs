@@ -22,7 +22,7 @@ namespace SManage.Infrastructure.Repositories.Base
         /// Khởi tạo
         /// </summary>
         /// <param name="databaseContext"></param>
-        public BaseRepository(IDatabaseContext databaseContext, IMemoryCache memoryCache)
+        public BaseRepository(IDatabaseContext databaseContext)
         {
             _databaseContext = databaseContext;
         }

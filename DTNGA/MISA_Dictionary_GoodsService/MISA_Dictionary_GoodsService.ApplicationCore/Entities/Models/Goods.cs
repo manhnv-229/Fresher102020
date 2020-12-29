@@ -55,7 +55,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         /// </summary>
         [Required]
         [DisplayName("Id danh mục sản phẩm")]
-        public Guid? CategoryId { get; set; }
+        public Guid CategoryId { get; set; }
 
         /// <summary>
         /// Id thương hiệu
