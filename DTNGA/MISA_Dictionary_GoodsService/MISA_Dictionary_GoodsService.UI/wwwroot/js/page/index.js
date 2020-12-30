@@ -37,12 +37,13 @@ class IndexJs extends Base {
                 // load data tương ứng với content
                 var tblContent = $(content).find(`.m-table`);
                 var tableData = $(tblContent).find('tbody tr');
-                if (tableData.length==0)
-                    me.loadData(1, tblContent);
+                me.loadData(1, tblContent);
             });
-            // format khi nhập liệu số tiền
-            me.autoFormatMoney();
-            me.addFocusSupport();
+
+            // Select toàn bộ text khi focus field nhập liệu
+            $(`input, textarea`).focus(function () {
+                $(this).select();
+            });
 
             // Sự kiện khi thao tác với từng hàng dữ liệu trong bảng
             $(`table tbody`).on("click", "tr", function (e) {
@@ -101,7 +102,6 @@ class IndexJs extends Base {
             $(dialog).find(`#btn-exit`).on("click", me.onClick_Exit_Dialog.bind(me));
             $(dialog).find(`#btn-cancel`).on("click", me.onClick_Exit_Dialog.bind(me));
             $(dialog).find(`#btn-save`).on("click", function (e) {
-                console.log(e.target);
                 event.stopPropagation();
                 me.onClick_btnSave(this);
             });

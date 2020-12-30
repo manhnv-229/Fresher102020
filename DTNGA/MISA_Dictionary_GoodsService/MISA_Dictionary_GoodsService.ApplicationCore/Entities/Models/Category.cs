@@ -58,6 +58,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         /// <summary>
         /// Tên danh mục cha
         /// </summary>
+        [DisplayName("Tên danh mục cha")]
         public string ParentCategoryName{ get; set; }
 
         [DisplayName("Danh mục cha")]

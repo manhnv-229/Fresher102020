@@ -133,6 +133,14 @@ class Base {
             })
             $(comboInputField).blur(function () {
                 $(targetCombo).removeClass("green-border");
+                var validateAttr= $(targetCombo).attr("validate");
+                if( typeof validateAttr !== undefined && validateAttr == "false"){
+                    $(targetCombo).addClass("m-input-warning");
+                    $(targetCombo).closest(".input-box").find(".error-validate").removeClass("displayNone");
+                }
+                else if(typeof validateAttr !== undefined && validateAttr == "true")
+                 $(targetCombo).removeClass("m-input-warning");
+                    
             })
             me.detectKeyCode(comboInputField);
             // Sự kiện khi click erase icon trong input search
@@ -254,6 +262,7 @@ class Base {
         $(comboBox).data("keyId", id);
         $(comboBox).attr("validate", true);
         $(comboBox).closest(".input-box").find(".error-empty").addClass("displayNone");
+        $(comboBox).removeClass("m-input-warning");
         me.doSomethingWhenItemSelected(item);
     }
 
@@ -338,16 +347,19 @@ class Base {
                 }
                 return;
             }
-            $(wrapper).removeClass("displayNone");
-            $(parent).find(".arrow-button").addClass("rotate");
-            $(parent).find(".arrow-button").addClass(`arrow-button-clicked`);
+            
             if (e.which == 40) {
+                $(wrapper).removeClass("displayNone");
+                $(parent).find(".arrow-button").addClass("rotate");
+                $(parent).find(".arrow-button").addClass(`arrow-button-clicked`);
                 $(innerWrapper).find('.item:not(:last-child).item-hover').removeClass('item-hover').next().addClass('item-hover');
 
             } else if (e.which == 38) {
+                $(wrapper).removeClass("displayNone");
+                $(parent).find(".arrow-button").addClass("rotate");
+                $(parent).find(".arrow-button").addClass(`arrow-button-clicked`);
                 $(innerWrapper).find('.item:not(:first-child).item-hover').removeClass('item-hover').prev().addClass('item-hover');
             }
-
             me.centerItFixedHeight($(wrapper).find('.item-hover'), wrapper);
         });
     }
@@ -421,25 +433,7 @@ class Base {
             console.log(e);
         }
     }
-
-    /** Hàm thực hiện clear dữ liệu khi nhấn button Clear
-     * CreatedBy dtnga (27/11/2020)
-     * */
-    onClick_btnClear() {
-        var me = this;
-        me.clear($(`.dialog-detail`));
-        // CLear giỏ hàng
-        $(`.product-list`).children().remove();
-        // Cập nhật tổng số lượng sản phẩm
-        $(`.total-quantity span`).text("0");
-        // Cập nhật tổng giá trị giỏ hàng
-        $(`.total-money`).text(0);
-        $(`.total-money`).attr("value", 0);
-        //Ẩn các box thông báo/ thông tin thêm
-        $(`.empty-result`).addClass("displayNone");
-        $(`.extra-info`).addClass("displayNone");
-    }
-
+        
 
     /** Hàm thực hiện thêm dữ liệu mới
      * Created By dtnga (21/11/2020)
@@ -450,7 +444,6 @@ class Base {
             me.formMode = "add";
             if (!buttonAdd) var dialog = $(`.content-body:visible .m-dialog`);
             else var dialog = $(buttonAdd).closest(`.content-body`).find(`.m-dialog`);
-            me.clear(dialog);
             me.showDialog(dialog);
         } catch (e) {
             console.log(e);
@@ -728,8 +721,9 @@ class Base {
     showDialog(dialog) {
         var me = this;
         if (!dialog) dialog = $(`.content-body:visible .m-dialog`);
+        me.clear(dialog);
         $(dialog).removeClass("displayNone");
-        $(dialog).find(`.error-validate`).addClass("displayNone");
+        $(dialog).find(`input, textarea`)[0].focus();
     }
 
     /** Tự động format các trường input số tiền 
@@ -770,11 +764,28 @@ class Base {
             // kiểm tra validate (bắt buộc nhập, email, ...), nếu vẫn còn trường chưa valid thì cảnh báo
             var valid = me.ValidateForm(form);
             if (valid) {
+                $(`.m-loading`).removeClass("displayNone");
                 // build dữ liệu
                 var obj = me.GetDataForm(form);
                 // Gọi Api Lưu dữ liệu
-                me.CallAjax(obj);
-                me.loadData();
+                $.ajax({
+                    url: me.host + me.getRoute(),
+                    method: me.getMethod(),
+                    data: JSON.stringify(obj),
+                    contentType: "application/json",
+                    dataType: "json"
+                })
+                    .done(function (res) {
+                        $(`.m-loading`).addClass("displayNone");
+                        $(`.m-dialog:visible`).addClass("displayNone");
+                        me.showToastMesseger(me.mesHeader + "thành công", "success");
+                        me.loadData();
+                    })
+                    .fail(function (res) {
+                        console.log(res);
+                        $(`.m-dialog:visible`).addClass("displayNone");
+                        me.showToastMesseger(me.mesHeader + "không thành công", "fail");
+                    })
             }
         }
         catch (e) {
@@ -783,7 +794,7 @@ class Base {
     }
 
     /**
-     * Thực hiện lưu dữ liệu mới và load lại
+     * Thực hiện lưu dữ liệu mới và hiển thị form thêm mới
      * CreatedBy dtnga (24/12/2020)
      * */
     onClick_btnSaveAdd(buttonSave) {
@@ -797,8 +808,26 @@ class Base {
                 // build dữ liệu
                 var obj = me.GetDataForm(form);
                 // Gọi Api Lưu dữ liệu
-                me.CallAjax(obj);
-                me.loadData();
+                $.ajax({
+                    url: me.host + me.getRoute(),
+                    method: me.getMethod(),
+                    data: JSON.stringify(obj),
+                    contentType: "application/json",
+                    dataType: "json"
+                })
+                    .done(function (res) {
+                        $(`.m-loading`).addClass("displayNone");
+                        me.showToastMesseger(me.mesHeader + " thành công", "success");
+                        me.loadData();
+                        $(form).find(".header-text").text("THÊM");
+                        me.formMode = "add";
+                        me.clear(form);
+                    })
+                    .fail(function (res) {
+                        console.log(res);
+                        $(`.m-dialog:visible`).addClass("displayNone");
+                        me.showToastMesseger(me.mesHeader + "không thành công", "fail");
+                    })
             }
         }
         catch (e) {
@@ -825,7 +854,7 @@ class Base {
                     dataType: "json"
                 })
                     .done(function (res) {
-                            response = res.Data;
+                            response = res;
                             $(`.m-dialog:visible`).addClass("displayNone");
                             me.showToastMesseger(me.mesHeader + "thành công", "success");
                         
@@ -842,7 +871,7 @@ class Base {
                     method: me.getMethod()
                 })
                     .done(function (res) {
-                            response = res.Data;
+                            response = res;
                             $(`.m-dialog:visible`).addClass("displayNone");
                             me.showToastMesseger(me.mesHeader + " thành công", "success");
                        
@@ -868,7 +897,7 @@ class Base {
     ValidateForm(targetForm) {
         try {
             var form = $(targetForm);
-            var invalidInputs = $(form).find(`input[validate="false"], select[validate="false"], .m-box[validate="false"]`);
+            var invalidInputs = $(form).find(`.m-input[validate="false"], .m-box[validate="false"] .m-input`);
             if (invalidInputs && invalidInputs.length > 0) {
                 $.each(invalidInputs, function (index, input) {
                     $(input).trigger('blur');
@@ -1031,9 +1060,17 @@ class Base {
         //clear ngày, select, radio button
         $(obj).find(`input[type="radio"]`).prop('checked', false);
         $(obj).find(`select option`).remove();
-        $(obj).find(`.m-box`).data("keyId", null);
-        $(obj).find(`.m-box .item`).removeClass("selected");
-        $(obj).find(`.m-box .item .check-icon`).addClass("displayNone");
+
+        //comboBox/dropdown
+        var boxs = $(obj).find(`.m-box`);
+        $(boxs).removeClass("m-input-warning");
+        $(boxs).data("keyId", null);
+        $(boxs).find(`.item`).removeClass("selected");
+        $(boxs).find(`.item .check-icon`).addClass("displayNone");
+        $(obj).find(`.m-box[validate]`).attr("validate", false);
+
+        // thông báo validate
+        $(obj).find(`.error-validate`).addClass("displayNone");
     }
 
     /** Hàm thực hiện làm mới dữ liệu
@@ -1169,7 +1206,10 @@ class Base {
                     else {
                         $(input).val(value);
                     }
-                    $(input).attr("validate", true);
+                    var validateAttr = $(input).attr("validate");
+                    if (typeof validateAttr !== undefined && validateAttr == "false") {
+                        $(input).attr("validate", true);
+                    }
                     $(input).closest(".input-box").find(".error-empty").addClass("displayNone");
                     // TODO check trùng
                     $(input).closest(".input-box").find(".error-duplicate").addClass("displayNone");

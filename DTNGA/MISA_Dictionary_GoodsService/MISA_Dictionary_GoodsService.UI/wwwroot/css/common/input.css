@@ -17,7 +17,7 @@
 
 /* cảnh báo khi input có giá trị invalid */
 .m-input-warning {
-    border: 1px solid #FF4747;
+    border: 1px solid #FF4747 !important;
 }
 
 /* Dòng chứa nhiều input box*/

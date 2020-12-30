@@ -64,7 +64,6 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
             var goods = _baseMemoryCache.GetCache<Goods>(goodsId.ToString());
             if (goods == null)
             {
-                var id = goodsId.ToString();
                 goods = await _GoodsService.GetByIdAsync<Goods>(goodsId);
                 _baseMemoryCache.SetCache(goodsId.ToString(), goods);
             }

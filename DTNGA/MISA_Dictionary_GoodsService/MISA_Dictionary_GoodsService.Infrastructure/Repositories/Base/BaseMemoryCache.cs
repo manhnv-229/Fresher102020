@@ -39,11 +39,7 @@ namespace MISA_Dictionary_GoodsService.Infrastructure
         /// CreatedBy dtnga (11/11/2020)
         public void SetCache(string key, object data)
         {
-            _memoryCache.GetOrCreate(key, entry =>
-            {
-                entry.SlidingExpiration = TimeSpan.FromDays(1);
-                return data;
-            });
+            _memoryCache.Set(key, data, TimeSpan.FromDays(1));
         }
 
         /// <summary>
@@ -72,5 +68,6 @@ namespace MISA_Dictionary_GoodsService.Infrastructure
             var cacheEntry = _memoryCache.Get<T>(key);
             return cacheEntry;
         }
+
     }
 }

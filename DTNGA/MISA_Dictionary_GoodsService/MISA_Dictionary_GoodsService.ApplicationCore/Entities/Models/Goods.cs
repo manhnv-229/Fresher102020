@@ -68,7 +68,9 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         [DisplayName("Danh mục")]
         public virtual Category Category { get; set; }
 
+        [DisplayName("Tên danh mục")]
         public string CategoryName { get; set; }
+        [DisplayName("Tên thương hiệu")]
         public string BrandName { get; set; }
     }
 }
