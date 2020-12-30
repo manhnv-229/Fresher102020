@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MISA_Dictionary_GoodsService.API.Middleware;
 using MISA_Dictionary_GoodsService.ApplicationCore;
 using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.DatabaseContext;
 using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Repositories;
@@ -56,6 +57,7 @@ namespace MISA_Dictionary_GoodsService.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MISA_Dictionary_GoodsService.API", Version = "v1" });
                 var xmlFile = Path.ChangeExtension(typeof(Startup).Assembly.Location, ".xml");
             });
+
             services.AddMemoryCache();
             //Khởi tạo kết nối tới MariaDB:
             services.AddScoped<IDbConnection>(_ => new MySqlConnection(Configuration["ConnectionStrings:MISADictionaryProductMariaDB"]));
@@ -83,6 +85,7 @@ namespace MISA_Dictionary_GoodsService.API
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "MISA_Dictionary_GoodsService.API - V1");
                 c.RoutePrefix = "swagger";
             });
+            app.UseExceptionHandlerMiddleware();
             app.UseHttpsRedirection();
             app.UseCors("AllowAll");
             app.UseRouting();

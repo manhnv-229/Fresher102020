@@ -44,16 +44,8 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
                 { "KeySearch", keySearch },
                 { "BrandOrigin", brandOrigin }
             };
-            var brands = await _brandService.GetByFilterAsync<Brand>(filterValues);
-            filterValues.Remove("PageIndex");
-            filterValues.Remove("PageSize");
-            var total = await _brandService.CountByFilterAsync<Brand>(filterValues);
-            var result = JObject.FromObject(new
-            {
-                Total = total,
-                Data = brands
-            });
-            return Ok(result);
+            var pagingData = await _brandService.GetPagingByFilterAsync<Brand>(filterValues);
+            return Ok(pagingData);
         }
 
         /// <summary>
@@ -65,11 +57,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         public async Task<IActionResult> GetAllBrandAsync()
         {
             var brands = await _brandService.GetAllAsync<Brand>();
-            var result = JObject.FromObject(new
-            {
-                Data = brands
-            });
-            return Ok(result);
+            return Ok(brands);
         }
 
         /// <summary>
@@ -81,11 +69,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         public async Task<IActionResult> GetAllOriginAsync()
         {
             var origins =await _brandService.GetBrandOrigin();
-            var result = JObject.FromObject(new
-            {
-                Data = origins
-            });
-            return Ok(result);
+            return Ok(origins);
         }
 
         /// <summary>
@@ -102,11 +86,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
                 brand = await _brandService.GetByIdAsync<Brand>(brandId);
                 _baseMemoryCache.SetCache(brandId.ToString(), brand);
             }
-            var result = JObject.FromObject(new
-            {
-                Data = brand
-            });
-            return Ok(result);
+            return Ok(brand);
         }
 
         /// <summary>
@@ -118,12 +98,16 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddNewBrandAsync([FromBody] Brand newBrand)
         {
+            if (!ModelState.IsValid)
+            {
+                return StatusCode(400, ModelState);
+            }
             newBrand.BrandId = Guid.NewGuid();
             var response = await _brandService.InsertAsync<Brand>(newBrand);
             if (response.Success == false)
-                return (IActionResult)response;
+                return StatusCode((int)response.MISACode, response);
             else
-                return Ok(newBrand.BrandId);
+                return StatusCode(201, newBrand.BrandId);
         }
 
         
@@ -136,11 +120,15 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateBrandAsync([FromBody] Brand newBrand)
         {
+            if (!ModelState.IsValid)
+            {
+                return StatusCode(400, ModelState);
+            }
             var response = await _brandService.UpdateAsync<Brand>(newBrand);
             if (response.Success == false)
-                return (IActionResult)response;
+                return StatusCode((int)response.MISACode, response);
             else
-                return Ok(newBrand.BrandId);
+                return StatusCode(200, newBrand.BrandId);
         }
 
 
@@ -153,9 +141,10 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteRangeAsync([FromBody] List<Guid> range)
         {
+            if (range.Count == 0) return StatusCode(400, string.Format(ApplicationCore.Properties.Resources.EmptyInput, "Id thương hiệu"));
             var response = await _brandService.DeleteRangeAsync<Brand>(range);
             if (response.Success == false)
-                return (IActionResult)response;
+                return StatusCode((int)response.MISACode, response);
             else
                 return Ok(range);
         }

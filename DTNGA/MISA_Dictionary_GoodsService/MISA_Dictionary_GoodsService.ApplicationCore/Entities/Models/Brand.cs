@@ -15,26 +15,26 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         /// <summary>
         /// Id thương hiệu
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Mã thương hiệu không được bỏ trống")]
         [PrimaryKey]
         [Unduplicated]
-        [Required]
         [DisplayName("Id thương hiệu")]
         public Guid BrandId { get; set; }
 
         /// <summary>
         /// Mã thương hiệu
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Mã thương hiệu không được bỏ trống")]
+        [System.ComponentModel.DataAnnotations.MaxLength(20, ErrorMessage = "Mã thương hiệu không được vượt quá 20 ký tự")]
         [Unduplicated]
-        [Required]
         [DisplayName("Mã thương hiệu")]
-        [MaxLength(20, "")]
         public string BrandCode { get; set; }
 
         /// <summary>
         /// Tên thương hiệu
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Mã thương hiệu không được bỏ trống")]
         [Unduplicated]
-        [Required]
         [DisplayName("Tên thương hiệu")]
         public string BrandName { get; set; }
 

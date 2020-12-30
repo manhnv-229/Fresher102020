@@ -43,20 +43,8 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
                 { "PageSize", size },
                 { "KeySearch", keySearch }
             };
-            var categories = await _categoryService.GetByFilterAsync<Category>(filterValues);
-            for(var i=0; i<categories.Count; i++)
-            {
-                categories[i]= await _categoryService.ProcessingCategoryAsync(categories[i]);
-            }
-            filterValues.Remove("PageIndex");
-            filterValues.Remove("PageSize");
-            var total = await _categoryService.CountByFilterAsync<Category>(filterValues);
-            var result = JObject.FromObject(new
-            {
-                Total = total,
-                Data = categories
-            });
-            return Ok(result);
+            var pagingData = await _categoryService.GetPagingByFilterAsync<Category>(filterValues);
+            return Ok(pagingData);
         }
 
         /// <summary>
@@ -68,11 +56,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         public async Task<IActionResult> GetAllAsync()
         {
             var categories = await _categoryService.GetAllAsync<Category>();
-            var result = JObject.FromObject(new
-            {
-                Data = categories
-            });
-            return Ok(result);
+            return Ok(categories);
         }
 
         /// <summary>
@@ -89,12 +73,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
                 category = await _categoryService.GetByIdAsync<Category>(categoryId);
                 _baseMemoryCache.SetCache(categoryId.ToString(), category);
             }
-            category = await _categoryService.ProcessingCategoryAsync(category);
-            var result = JObject.FromObject(new
-            {
-                Data = category
-            });
-            return Ok(result);
+            return Ok(category);
         }
 
         /// <summary>
@@ -106,12 +85,16 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddNewAsync([FromBody] Category newCategory)
         {
+            if (!ModelState.IsValid)
+            {
+                return StatusCode(400, ModelState);
+            }
             newCategory.CategoryId = Guid.NewGuid();
             var response = await _categoryService.InsertAsync<Category>(newCategory);
             if (response.Success == false)
-                return (IActionResult)response;
+                return StatusCode((int)response.MISACode, response);
             else
-                return Ok(newCategory.CategoryId);
+                return StatusCode(201, newCategory.CategoryId);
         }
 
 
@@ -124,11 +107,15 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateAsync([FromBody] Category newCategory)
         {
+            if (!ModelState.IsValid)
+            {
+                return StatusCode(400, ModelState);
+            }
             var response = await _categoryService.UpdateAsync<Category>(newCategory);
             if (response.Success == false)
-                return (IActionResult)response;
+                return StatusCode((int)response.MISACode, response);
             else
-                return Ok(newCategory.CategoryId);
+                return StatusCode(200, newCategory.CategoryId);
         }
 
         /// <summary>
@@ -140,9 +127,10 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteRangeAsync([FromBody] List<Guid> range)
         {
+            if (range.Count == 0) return StatusCode(400, string.Format(ApplicationCore.Properties.Resources.EmptyInput, "Id danh mục"));
             var response = await _categoryService.DeleteRangeAsync<Category>(range);
             if (response.Success == false)
-                return (IActionResult)response;
+                return StatusCode((int)response.MISACode, response);
             else
                 return Ok(range);
         }

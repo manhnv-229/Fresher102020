@@ -1,4 +1,5 @@
-﻿using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Repositories;
+﻿using MISA_Dictionary_GoodsService.ApplicationCore.Entities;
+using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Repositories;
 using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
 
         public async Task<List<string>> GetBrandOrigin()
         {
-            var sp = string.Format(Properties.Resources.GetProperty, "BrandOrigin");
+            var sp = string.Format(MISAConst.Proc_GetProperty, "BrandOrigin");
             var origins = await _baseRepository.GetAsync<string>(sp);
             return origins;
         }

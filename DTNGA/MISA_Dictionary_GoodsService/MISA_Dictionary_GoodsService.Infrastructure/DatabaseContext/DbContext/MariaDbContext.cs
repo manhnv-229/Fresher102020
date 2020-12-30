@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using MISA_Dictionary_GoodsService.ApplicationCore.Entities.Base;
 using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.DatabaseContext;
 using MySqlConnector;
 using System;
@@ -78,6 +79,8 @@ namespace MISA_Dictionary_GoodsService.Infrastructure.DatabaseContext.DbContext
             }
             return result;
         }
+
+
 
         #endregion
 
@@ -282,6 +285,37 @@ namespace MISA_Dictionary_GoodsService.Infrastructure.DatabaseContext.DbContext
 
         }
 
-
+        public async Task<PagingData<T>> GetPagingAsync<T>(string sp, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure)
+        {
+            PagingData<T> pagingData = new PagingData<T>();
+            try
+            {
+                if (_dbConnection.State == ConnectionState.Closed)
+                    _dbConnection.Open();
+                using var tran = _dbConnection.BeginTransaction();
+                try
+                {
+                    parms.Add("@TotalRecord", dbType: DbType.Int32, direction:ParameterDirection.Output);
+                    pagingData.Data = (await _dbConnection.QueryAsync<T>(sp, param: parms, commandType: commandType, transaction: tran)).ToList();
+                    pagingData.Total = parms.Get<int>("@TotalRecord");
+                    tran.Commit();
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                    throw ex;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (_dbConnection.State == ConnectionState.Open)
+                    _dbConnection.Close();
+            }
+            return pagingData;
+        }
     }
 }

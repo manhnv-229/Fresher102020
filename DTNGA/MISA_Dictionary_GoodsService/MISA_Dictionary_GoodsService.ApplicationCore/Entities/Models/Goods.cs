@@ -11,7 +11,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         /// Id sản phẩm
         /// </summary>
         [PrimaryKey]
-        [Required]
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Id sản phẩm không được bỏ trống")]
         [Unduplicated]
         [DisplayName("Id sản phẩm")]
         public Guid GoodsId { get; set; }
@@ -19,17 +19,17 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         /// <summary>
         /// Tên sản phẩm
         /// </summary>
-        [Required]
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Tên sản phẩm không được bỏ trống")]
         [DisplayName("Tên sản phẩm")]
         public string GoodsName { get; set; }
 
         /// <summary>
         /// Mã barcode của sản phẩm
         /// </summary>
-        [Required]
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Mã Barcode không được bỏ trống")]
+        [System.ComponentModel.DataAnnotations.MaxLength(20,ErrorMessage = "Mã Barcode không được vượt quá 20 ký tự")]
         [Unduplicated]
         [DisplayName("Mã Barcode")]
-        [MaxLength(20, "Mã Barcode không được vượt quá 20 ký tự")]
         public string GoodsBarcode { get; set; }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         /// <summary>
         /// Id danh mục sản phẩm
         /// </summary>
-        [Required]
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Id danh mục sản phẩm không được bỏ trống")]
         [DisplayName("Id danh mục sản phẩm")]
         public Guid CategoryId { get; set; }
 
@@ -67,5 +67,8 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         public virtual Brand Brand { get; set; }
         [DisplayName("Danh mục")]
         public virtual Category Category { get; set; }
+
+        public string CategoryName { get; set; }
+        public string BrandName { get; set; }
     }
 }

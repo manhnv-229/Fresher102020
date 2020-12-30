@@ -117,12 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CountByFilter" xml:space="preserve">
-    <value>Proc_GetCount{0}ByFilter</value>
-    <comment>Tên procedure đếm số bản ghi thỏa mãn tìm kiếm và bộ lọc</comment>
-  </data>
   <data name="Duplicate" xml:space="preserve">
     <value>Thông tin {0} đã tồn tại trên hệ thống</value>
+  </data>
+  <data name="EmptyInput" xml:space="preserve">
+    <value>Thông tin {0} không được để trống </value>
   </data>
   <data name="ErrorAddEntity" xml:space="preserve">
     <value>Lỗi thêm mới dữ liệu.</value>
@@ -139,23 +138,11 @@
   <data name="Exception" xml:space="preserve">
     <value>Lỗi Exception.</value>
   </data>
-  <data name="GetByFilter" xml:space="preserve">
-    <value>Proc_Get{0}ByFilter</value>
-    <comment>Tên procedure lấy dữ liệu theo tìm kiếm và bộ lọc</comment>
-  </data>
-  <data name="GetProperty" xml:space="preserve">
-    <value>Proc_Get{0}</value>
-    <comment>Lấy thông tin cột mô tả</comment>
-  </data>
   <data name="MaxLength" xml:space="preserve">
     <value>Thông tin {0} không được vượt quá {1} kí tự</value>
   </data>
   <data name="NotFound" xml:space="preserve">
     <value>Lỗi không tìm thấy dữ liệu.</value>
-  </data>
-  <data name="Proc_GetAlll" xml:space="preserve">
-    <value>Proc_GetAll{0}</value>
-    <comment>Tên procedure lấy tất cả bản ghi</comment>
   </data>
   <data name="Province" xml:space="preserve">
     <value>Tỉnh</value>

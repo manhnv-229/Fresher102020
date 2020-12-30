@@ -1,4 +1,6 @@
 ﻿using Dapper;
+using MISA_Dictionary_GoodsService.ApplicationCore.Entities;
+using MISA_Dictionary_GoodsService.ApplicationCore.Entities.Base;
 using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Repositories;
 using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service.Base;
 using System;
@@ -94,21 +96,21 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
         public List<T> GetAll<T>()
         {
             var entityName = typeof(T).Name;
-            var sp = $"Proc_GetAll{entityName}";
+            var sp = string.Format(MISAConst.Proc_GetAlll, entityName);
             return _baseRepository.Get<T>(sp);
         }
 
         public async Task<List<T>> GetAllAsync<T>()
         {
             var entityName = typeof(T).Name;
-            var sp = $"Proc_GetAll{entityName}";
+            var sp = string.Format(MISAConst.Proc_GetAlll, entityName);
             return await _baseRepository.GetAsync<T>(sp);
         }
 
         public async Task<List<T>> GetByPropertyAsync<T>(string propName, object propValue)
         {
             var entityName = typeof(T).Name;
-            var sp = $"Proc_Get{entityName}By{propName}";
+            var sp = string.Format(MISAConst.Proc_GetByProperty, entityName, propName);
             var parms = MappingDataTypeForOne(propName, propValue);
             return await _baseRepository.GetAsync<T>(sp, parms);
         }
@@ -116,12 +118,12 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
         public async Task<T> GetByIdAsync<T>(Guid id)
         {
             var entityName = typeof(T).Name;
-            var sp = $"Proc_Get{entityName}By{entityName}Id";
+            var sp = string.Format(MISAConst.Proc_GetById, entityName, entityName);
             var parms = MappingDataTypeForOne($"{entityName}Id", id);
             return await _baseRepository.GetByIdAsync<T>(sp, parms);
         }
 
-        public async Task<List<T>> GetByFilterAsync<T>(Dictionary<string, object> filterValues = null)
+        public async Task<PagingData<T>> GetPagingByFilterAsync<T>(Dictionary<string, object> filterValues = null)
         {
             var parms = new DynamicParameters();
             foreach (KeyValuePair<string, object> item in filterValues)
@@ -131,22 +133,8 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
                 parms.Add(key, value);
             }
             var entityName = typeof(T).Name;
-            var sp = string.Format(Properties.Resources.GetByFilter, entityName);
-            return await _baseRepository.GetAsync<T>(sp, parms);
-        }
-
-        public async Task<int> CountByFilterAsync<T>(Dictionary<string, object> filterValues = null)
-        {
-            var parms = new DynamicParameters();
-            foreach (KeyValuePair<string, object> item in filterValues)
-            {
-                var key = item.Key;
-                var value = item.Value;
-                parms.Add(key, value);
-            }
-            var entityName = typeof(T).Name;
-            var sp = string.Format(Properties.Resources.CountByFilter, entityName);
-            return await _baseRepository.CountAsync<T>(sp, parms);
+            var sp = string.Format(MISAConst.Proc_GetByFilter, entityName);
+            return await _baseRepository.GetPagingAsync<T>(sp, parms);
         }
         #endregion
 
@@ -157,8 +145,8 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
             if (isValid == false)
             {
                 _actionServiceResult.Success = false;
-                _actionServiceResult.MISACode = MISACode.ValidateEntity;
-                _actionServiceResult.Message = Properties.Resources.ValidateEntity;
+                _actionServiceResult.MISACode = MISACode.Validate;
+                _actionServiceResult.Message = Properties.Resources.Validate;
                 return _actionServiceResult;
             }
             else
@@ -180,13 +168,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
             }
         }
 
-        //TODO thêm list object
-        public async Task<int> InsertRangeAsync<T>(List<object> entities)
-        {
-            var entityName = typeof(T).GetType().Name;
-            var sp = $"Proc_Insert{entityName}";
-            return await _baseRepository.InsertRangeAsync<T>(sp, entities);
-        }
+        
         #endregion
 
         #region Update
@@ -199,21 +181,14 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
             if (updatedEntity == null)
             {
                 _actionServiceResult.Success = false;
-                _actionServiceResult.MISACode = MISACode.ErrorDeleteEntity;
-                _actionServiceResult.Message = ApplicationCore.Properties.Resources.ErrorDeleteEntity;
+                _actionServiceResult.MISACode = MISACode.ErrorUpdateEntity;
+                _actionServiceResult.Message = ApplicationCore.Properties.Resources.ErrorUpdateEntity;
                 return _actionServiceResult;
             }
             _actionServiceResult.Data = updatedEntity;
             return _actionServiceResult;
         }
 
-        //TODO Update list object
-        public async Task<int> UpdateRangeAsync<T>(List<object> entities)
-        {
-            var entityName = typeof(T).GetType().Name;
-            var sp = $"Proc_Update{entityName}";
-            return await _baseRepository.UpdateRangeAsync<T>(sp, entities);
-        }
         #endregion
 
         #region Validate
@@ -239,15 +214,6 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
                 var propValue = prop.GetValue(entity);
                 var propName = prop.Name;
                 // Kiểm tra property có Attribute cần validate không
-                if (prop.IsDefined(typeof(Required), false))
-                {
-                    // Check bắt buộc nhập
-                    if (propValue == null)
-                    {
-                        isValid = false;
-                        errorMsg.Add(string.Format(Properties.Resources.Required, displayName));
-                    }
-                }
                 if (prop.IsDefined(typeof(Unduplicated), false))
                 {
                     // Check trùng lặp
@@ -259,19 +225,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
                         errorMsg.Add(string.Format(Properties.Resources.Duplicate, displayName));
                     }
                 }
-                if (prop.IsDefined(typeof(MaxLength), false))
-                {
-                    // Lấy ra attribute của property
-                    var attributeMaxLength = prop.GetCustomAttributes(typeof(MaxLength), true)[0];
-                    var maxLength = (attributeMaxLength as MaxLength).maxLength;
-                    var msg = (attributeMaxLength as MaxLength).errorMsg;
-                    if (propValue.ToString().Trim().Length > maxLength)
-                    {
-                        isValid = false;
-                        if (msg == null) errorMsg.Add(string.Format(Properties.Resources.MaxLength, displayName, maxLength));
-                        errorMsg.Add(msg);
-                    }
-                }
+                
             }
             _actionServiceResult.Data = errorMsg;
             return isValid;

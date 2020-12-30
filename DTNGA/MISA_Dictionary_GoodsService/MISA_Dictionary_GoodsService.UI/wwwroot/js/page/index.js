@@ -20,7 +20,8 @@ class IndexJs extends Base {
         try {
             var me = this;
             // Sự kiện khi click navitem
-            $('.nav-item').on('click', function () {
+            $('.nav-item').on('click', function (e) {
+                event.stopPropagation();
                 debugger
                 $('.nav-item').removeClass('select-menu-item');
                 $('.nav-item .nav-item-icon ').removeClass('active');
@@ -85,6 +86,10 @@ class IndexJs extends Base {
                 me.onClick_btnDelete(this);
             });
             $(`.content-body`).find(`#btn-refresh`).on("click", me.onClick_btnRefresh.bind(me));
+
+            $(`.content-filter .item[selectAll]`).on("click", function () {
+                me.onClearFilter(this);
+            })
             // Dialog
             var dialog = $(`.content-body .m-dialog`);
             // đóng form khi nhấn ESC
@@ -95,7 +100,9 @@ class IndexJs extends Base {
             
             $(dialog).find(`#btn-exit`).on("click", me.onClick_Exit_Dialog.bind(me));
             $(dialog).find(`#btn-cancel`).on("click", me.onClick_Exit_Dialog.bind(me));
-            $(dialog).find(`#btn-save`).on("click", function () {
+            $(dialog).find(`#btn-save`).on("click", function (e) {
+                console.log(e.target);
+                event.stopPropagation();
                 me.onClick_btnSave(this);
             });
             $(dialog).find(`#btn-saveAdd`).on("click", function () {
@@ -121,7 +128,7 @@ class IndexJs extends Base {
                 method: "GET"
             })
                 .done(function (res) {
-                    brands = res.Data;
+                    brands = res;
                     var targetComboboxs = $(`.m-box[name="Brand"]`);
                     $.each(targetComboboxs, function (index, item) {
                         me.createComboBox(brands, item);
@@ -137,7 +144,7 @@ class IndexJs extends Base {
                 method: "GET"
             })
                 .done(function (res) {
-                    brandOrigins = res.Data;
+                    brandOrigins = res;
                     var targetComboboxs = $(`.m-box[name="BrandOrigin"]`);
                     $.each(targetComboboxs, function (index, item) {
                         me.createComboBox(brandOrigins, item);
@@ -154,15 +161,19 @@ class IndexJs extends Base {
                 method: "GET"
             })
                 .done(function (res) {
-                    categories = res.Data;
+                    categories = res;
                     var targetComboboxs = $(`.m-box[name="Category"]`);
                     $.each(targetComboboxs, function (index, item) {
                         me.createComboBox(categories, item);
+                         // display item All cho các Filter
+                        $(`.content-filter .m-box .item[selectAll]`).removeClass("displayNone");
                     })
                 })
                 .fail(function (res) {
                     console.log(res);
                 })
+           
+            
         }
         catch (e) {
             console.log(e);

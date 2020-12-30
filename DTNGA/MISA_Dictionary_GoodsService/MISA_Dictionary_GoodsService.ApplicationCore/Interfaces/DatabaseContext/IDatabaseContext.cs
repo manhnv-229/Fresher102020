@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using MISA_Dictionary_GoodsService.ApplicationCore.Entities.Base;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -48,6 +49,17 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.DatabaseContex
         /// <returns>1 đối tượng kiểu T</returns>
         ///  CreatedBy dtnga (16/12/2020)
         Task<List<T>> GetAsync<T>(string sp, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure);
+
+        /// <summary>
+        /// Lấy thông tin theo phân trang
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sp">Chuỗi truy vấn/ Tên Procedure</param>
+        /// <param name="parms"> Bộ tham số</param>
+        /// <param name="commandType">Loại truy vẫn</param>
+        /// <returns>PagingData chứa danh sách và tổng số bản ghi thỏa mãn</returns>
+        /// CreatedBy dtnga (30/12/2020)
+        Task<PagingData<T>> GetPagingAsync<T>(string sp, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure);
         /// <summary>
         /// Lấy thông tin đối tượng dựa theo Id
         /// </summary>
@@ -58,6 +70,8 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.DatabaseContex
         /// <returns>1 đối tượng kiểu T</returns>
         ///  CreatedBy dtnga (16/12/2020)
         Task<T> GetByIdAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
+
+
         #endregion
 
         #region INSERT

@@ -87,7 +87,14 @@ class Base {
             var optionIcon = `<div class="option-icon">
                                    <div class="displayNone m-icon check-icon"></div>
                                </div>`;
+            // Option : chọn tất cả item (xóa lọc)
+            var optionText = `<div class="option-text">Tất cả</div>`;
+            var option = $(`<div class="item combo-item "> </div>`);
 
+            var optionAll = $(`<div class="item combo-item item-hover displayNone" selectAll> <div class="option-icon">
+                                   <div class="displayNone m-icon check-icon"></div>
+                               </div><div class="option-text">Tất cả</div></div>`);
+            comboItemBox.append(optionAll);
             $.each(data, function (index, item) {
                 if (item) {
                     var optionName = "";
@@ -243,11 +250,13 @@ class Base {
         $(inputField).val(optionText);
         // Lưu id của item vào combobox
         var id = $(item).data("keyId");
+        if(!id) $(comboBox).data("keyId", null);
         $(comboBox).data("keyId", id);
         $(comboBox).attr("validate", true);
         $(comboBox).closest(".input-box").find(".error-empty").addClass("displayNone");
         me.doSomethingWhenItemSelected(item);
     }
+
 
     /**
      *  Thực hiện hành động sau khi chọn option tại comboBox/ Dropdown
@@ -260,6 +269,10 @@ class Base {
             var box = $(option).closest(".m-box");
             var attr = $(box).attr("loadAfterSelect");
             if (typeof attr !== typeof undefined && attr !== false) {
+                var optionAttr = $(option).attr("selectAll");
+                if (typeof optionAttr !== typeof undefined && optionAttr !== false) {
+                    $(box).data("KeyId", null);
+                }
                 me.loadData(1);
             }
         }
@@ -761,6 +774,7 @@ class Base {
                 var obj = me.GetDataForm(form);
                 // Gọi Api Lưu dữ liệu
                 me.CallAjax(obj);
+                me.loadData();
             }
         }
         catch (e) {
@@ -1092,7 +1106,7 @@ class Base {
                 method: "GET"
             })
                 .done(function (res) {
-                    var data = res.Data;
+                    var data = res;
                     me.BindDatatoForm(data, dialog);
                 })
                 .fail(function (res) {
@@ -1262,23 +1276,7 @@ class Base {
         return obj[fieldName];
     }
 
-    /**
-     * Xử lý data tại mỗi td đặc biệt của table
-     * @param {Element} th Th chứa thông tin lấy dữ liệu
-     * @param {object} obj Đối tượng chứa dữ liệu
-     * CreatedBy dtnga (22/12/2020)
-     */
-    customeProcessTd(th, obj) {
-        var fieldName = $(th).attr("fieldName");
-        var markAttr = $(th).attr("fromExtraObject");
-        if (typeof markAttr !== typeof undefined && markAttr !== false) {
-            var extraObject = obj[markAttr];
-            if (!extraObject) return "";
-            else return extraObject[fieldName];
-        }
-        else return obj[fieldName];
-    }
-
+    
     /**
      * Hàm base thực hiện load dữ liệu lên table
      * @param {Element} table Thành phần bảng cần đổ dữ liệu
@@ -1316,12 +1314,15 @@ class Base {
                     filterString = filterString + "&" + filterKey + "=";
             });
 
+            $(`.m-loading`).removeClass("displayNone");
+
             // Lấy dữ liệu thỏa mãn bộ lọc
             $.ajax({
                 url: me.host + me.route + "?page=" + pageIndex + "&size=" + pageSize + filterString,
                 method: "GET"
             })
                 .done(function (res) {
+                    $(`.m-loading`).addClass("displayNone");
                     total = res.Total;
                     data = res.Data;
                     $.each(data, function (index, obj) {
@@ -1340,7 +1341,7 @@ class Base {
                             }
                             else {
                                 //lấy giá trị của thuộc tính tương ứng với fieldname trong obj
-                                var value = me.customeProcessTd(th, obj);
+                                var value = obj[fieldName];
                                 if (value) {
                                     // định dạng lại
                                     var formatType = $(th).attr('formatType');
@@ -1387,6 +1388,7 @@ class Base {
                         $(range).text(startRecordIndex + "-" + endRecordIndex);
                     }
                     me.setPageNumberPosition(pageIndex);
+
                 })
                 .fail(function (res) {
                     console.warn("Lỗi load dữ liệu");

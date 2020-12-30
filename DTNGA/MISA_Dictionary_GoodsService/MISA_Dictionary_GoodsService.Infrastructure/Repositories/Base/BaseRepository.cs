@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Caching.Memory;
+using MISA_Dictionary_GoodsService.ApplicationCore.Entities.Base;
 using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.DatabaseContext;
 using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Repositories;
 using System;
@@ -60,6 +61,11 @@ namespace SManage.Infrastructure.Repositories.Base
         {
             return await _databaseContext.GetByIdAsync<T>(sp, parms);
         }
+
+        public async Task<PagingData<T>> GetPagingAsync<T>(string sp, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure)
+        {
+            return await _databaseContext.GetPagingAsync<T>(sp, parms);
+        }
         #endregion
 
         #region Insert
@@ -89,6 +95,5 @@ namespace SManage.Infrastructure.Repositories.Base
         {
         }
 
-        
     }
 }

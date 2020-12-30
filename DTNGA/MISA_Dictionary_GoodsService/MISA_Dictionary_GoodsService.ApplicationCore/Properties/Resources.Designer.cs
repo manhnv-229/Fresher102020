@@ -61,20 +61,20 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Proc_GetCount{0}ByFilter.
-        /// </summary>
-        public static string CountByFilter {
-            get {
-                return ResourceManager.GetString("CountByFilter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Thông tin {0} đã tồn tại trên hệ thống.
         /// </summary>
         public static string Duplicate {
             get {
                 return ResourceManager.GetString("Duplicate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thông tin {0} không được để trống .
+        /// </summary>
+        public static string EmptyInput {
+            get {
+                return ResourceManager.GetString("EmptyInput", resourceCulture);
             }
         }
         
@@ -124,24 +124,6 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Proc_Get{0}ByFilter.
-        /// </summary>
-        public static string GetByFilter {
-            get {
-                return ResourceManager.GetString("GetByFilter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Proc_Get{0}.
-        /// </summary>
-        public static string GetProperty {
-            get {
-                return ResourceManager.GetString("GetProperty", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Thông tin {0} không được vượt quá {1} kí tự.
         /// </summary>
         public static string MaxLength {
@@ -156,15 +138,6 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Properties {
         public static string NotFound {
             get {
                 return ResourceManager.GetString("NotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Proc_GetAll{0}.
-        /// </summary>
-        public static string Proc_GetAlll {
-            get {
-                return ResourceManager.GetString("Proc_GetAlll", resourceCulture);
             }
         }
         

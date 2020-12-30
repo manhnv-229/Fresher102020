@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using MISA_Dictionary_GoodsService.ApplicationCore.Entities.Base;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -89,16 +90,8 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service.Base
         /// <param name="filterValues">Bộ lọc</param>
         /// <returns>Danh sách bản ghi thỏa mãn bộ lọc với số trang với kích cỡ đầu vào/returns>
         /// CreatedBy dtnga (25/12/2020)
-        Task<List<T>> GetByFilterAsync<T>(Dictionary<string, object> filterValues = null);
-
-        /// <summary>
-        /// Đếm số lượng bản ghi thỏa mãn tìm kiếm và bộ lọc
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="filterValues">Bộ lọc</param>
-        /// <returns>Số bản ghi thỏa mãn</returns>
-        /// CreatedBy dtnga (29/12/2020)
-        Task<int>  CountByFilterAsync<T>(Dictionary<string, object> filterValues = null);
+        Task<PagingData<T>> GetPagingByFilterAsync<T>(Dictionary<string, object> filterValues = null);
+        
         #endregion
 
         #region Insert
@@ -112,16 +105,6 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service.Base
         /// <returns>Đối tượng được thêm thành công</returns>
         /// CreatedBy dtnga (11/11/2020)
         Task<ActionServiceResult> InsertAsync<T>(T entity);
-        /// <summary>
-        /// Thêm nhiều bản ghi vào DB
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="sp">Chuỗi truy vấn/ Tên procedure</param>
-        /// <param name="entities">Bộ tham số</param>
-        /// <param name="commandType">Loại truy vấn</param>
-        /// <returns>Đối tượng được thêm thành công</returns>
-        /// CreatedBy dtnga (11/11/2020)
-        Task<int> InsertRangeAsync<T>(List<object> entities);
         #endregion
 
         #region Update
@@ -135,16 +118,6 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service.Base
         /// <returns>Đối tượng được cập nhật thành công</returns>
         /// CreatedBy dtnga (11/11/2020)
         Task<ActionServiceResult> UpdateAsync<T>(T entity);
-        /// <summary>
-        /// Cập nhật dữ liệu bất đồng bộ
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="sp">Chuỗi truy vấn/ Tên procedure</param>
-        /// <param name="entities">Danh sách đối tượng cần thêm</param>
-        /// <param name="commandType">Loại truy vấn</param>
-        /// <returns>Đối tượng được cập nhật thành công</returns>
-        /// CreatedBy dtnga (11/11/2020)
-        Task<int> UpdateRangeAsync<T>(List<object> entities);
         #endregion
 
         /// <summary>
