@@ -205,7 +205,7 @@
                                             <div class="input-title">Mã Barcode (<span>*</span>)</div>
                                             <div class="error-validate error-empty displayNone">Mã sản phẩm không được phép bỏ trống</div>
                                             <div class="error-validate error-duplicate displayNone">Mã sản phẩm đã có trên hệ thống</div>
-                                            <input class="m-input" type="text" required fieldName="GoodsBarcode" validate="false" unduplicated />
+                                            <input class="m-input" type="text" maxlength="20" required fieldName="GoodsBarcode" validate="false" unduplicated />
                                         </div>
                                     </div>
                                     <div class="input-line">
@@ -383,7 +383,7 @@
                                             <div class="input-title">Tên thương hiệu (<span>*</span>)</div>
                                             <div class="error-validate error-empty displayNone">Tên thương hiệu không được phép bỏ trống</div>
                                             <div class="error-validate error-duplicate displayNone">Tên thương hiệu đã có trên hệ thống</div>
-                                            <input class="m-input" type="text" required fieldName="BrandName" validate="false" />
+                                            <input class="m-input" type="text" required  unduplicated fieldName="BrandName" validate="false" />
                                         </div>
                                     </div>
                                     <div class="input-line">
@@ -391,7 +391,7 @@
                                             <div class="input-title">Mã thương hiệu (<span>*</span>)</div>
                                             <div class="error-validate error-empty displayNone">Mã thương hiệu không được phép bỏ trống</div>
                                             <div class="error-validate error-duplicate displayNone">Mã thương hiệu đã có trên hệ thống</div>
-                                            <input class="m-input" type="text" required fieldName="BrandCode" validate="false" />
+                                            <input class="m-input" type="text" maxlength="20" required unduplicated fieldName="BrandCode" validate="false" />
                                         </div>
                                     </div>
                                 </div>
@@ -562,7 +562,7 @@
                                             <div class="input-title">Mã danh mục (<span>*</span>)</div>
                                             <div class="error-validate error-empty displayNone">Mã danh mục không được phép bỏ trống</div>
                                             <div class="error-validate error-duplicate displayNone">Mã danh mục đã có trên hệ thống</div>
-                                            <input class="m-input" type="text" required fieldName="CategoryCode" validate="false" />
+                                            <input class="m-input" type="text" maxlength="20" required unduplicated fieldName="CategoryCode" validate="false" />
                                         </div>
                                     </div>
                                 </div>

@@ -60,10 +60,30 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         }
 
         /// <summary>
+        /// Kiểm tra trùng lặp dữ liệu
+        /// </summary>
+        /// <param name="categoryCode">Mã hàng hóa</param>
+        /// <returns></returns>
+        /// CreatedBy dtnga (30/12/2020)
+        [HttpGet("duplication")]
+        public async Task<IActionResult> CheckDuplicate([FromQuery] string key, [FromQuery] string value)
+        {
+            bool duplicate = false;
+            if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(value) || value.Length>20) return StatusCode(400, ApplicationCore.Properties.Resources.Validate);
+            var result = new Category();
+            if (key=="CategoryCode")
+                result = (await _categoryService.GetByPropertyAsync<Category>("CategoryCode", value)).FirstOrDefault();
+            if (result != null)
+                duplicate = true;
+            return StatusCode(200, duplicate);
+        }
+
+        /// <summary>
         /// Lấy thông tin danh mục theo Id
         /// </summary>
         /// <param name="categoryId">Id danh mục</param>
         /// <returns>Thông tin danh mục theo Id</returns>
+        /// CreatedBy dtnga (16/12/2020)
         [HttpGet("{categoryId}")]
         public async Task<IActionResult> GetByIdAsync([FromRoute] Guid categoryId)
         {

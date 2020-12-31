@@ -163,6 +163,15 @@ input[typeFormat="money"], input[type="number"] {
         background-size: 16px;
     }
 
+
+.checkmark.selected {
+    border: none;
+    background-color: #019160;
+    background-image: url('/content/icon/common/whiteIcon/check.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+}
 /* Style text area*/
 .note-area {
     min-height: 40px;

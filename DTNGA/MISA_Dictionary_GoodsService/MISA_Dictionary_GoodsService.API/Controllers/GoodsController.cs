@@ -17,11 +17,11 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
     public class GoodsController : ControllerBase
     {
         private readonly IBaseMemoryCache _baseMemoryCache;
-        private readonly IGoodsService _GoodsService;
+        private readonly IGoodsService _goodsService;
         public GoodsController(IBaseMemoryCache baseMemoryCache, IGoodsService GoodsService)
         {
             _baseMemoryCache = baseMemoryCache;
-            _GoodsService = GoodsService;
+            _goodsService = GoodsService;
 
         }
 
@@ -47,11 +47,28 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
                 { "BrandId", brandId },
                 { "CategoryId", categoryId }
             };
-            var pagingData = await _GoodsService.GetPagingByFilterAsync<Goods>(filterValues);
+            var pagingData = await _goodsService.GetPagingByFilterAsync<Goods>(filterValues);
             return Ok(pagingData);
         }
 
-
+        /// <summary>
+        /// Kiểm tra trùng lặp dữ liệu
+        /// </summary>
+        /// <param name="goodsBarcode">Mã hàng hóa</param>
+        /// <returns></returns>
+        /// CreatedBy dtnga (30/12/2020)
+        [HttpGet("duplication")]
+        public async Task<IActionResult> CheckDuplicate([FromQuery] string key, [FromQuery] string value)
+        {
+            bool duplicate = false;
+            if (string.IsNullOrEmpty(key)|| string.IsNullOrEmpty(value) || value.Length > 20) return StatusCode(400, string.Format(ApplicationCore.Properties.Resources.EmptyInput, "Mã hàng hóa"));
+            var result = new Goods();
+            if(key=="GoodsBarcode")
+                result = (await _goodsService.GetByPropertyAsync<Goods>("GoodsBarcode", value)).FirstOrDefault();
+            if (result != null)
+                duplicate = true;
+            return StatusCode(200, duplicate);
+        }
 
         /// <summary>
         /// Lấy thông tin sản phẩm theo Id
@@ -64,7 +81,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
             var goods = _baseMemoryCache.GetCache<Goods>(goodsId.ToString());
             if (goods == null)
             {
-                goods = await _GoodsService.GetByIdAsync<Goods>(goodsId);
+                goods = await _goodsService.GetByIdAsync<Goods>(goodsId);
                 _baseMemoryCache.SetCache(goodsId.ToString(), goods);
             }
             return Ok(goods);
@@ -84,7 +101,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
                 return StatusCode(400, ModelState);
             }
             newGoods.GoodsId = Guid.NewGuid();
-            var response = await _GoodsService.InsertAsync<Goods>(newGoods);
+            var response = await _goodsService.InsertAsync<Goods>(newGoods);
             if (response.Success == false)
                 return StatusCode((int)response.MISACode, response);
             else
@@ -105,7 +122,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
             {
                 return StatusCode(400, ModelState);
             }
-            var response = await _GoodsService.UpdateAsync<Goods>(newGoods);
+            var response = await _goodsService.UpdateAsync<Goods>(newGoods);
             if (response.Success == false)
                 return StatusCode((int)response.MISACode, response);
             else
@@ -131,7 +148,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         public async Task<IActionResult> DeleteRangeAsync([FromBody] List<Guid> range)
         {
             if (range.Count == 0) return StatusCode(400, string.Format(ApplicationCore.Properties.Resources.EmptyInput, "Id hàng hóa"));
-            var response = await _GoodsService.DeleteRangeAsync<Goods>(range);
+            var response = await _goodsService.DeleteRangeAsync<Goods>(range);
             if (response.Success == false)
                 return StatusCode((int)response.MISACode, response);
             else

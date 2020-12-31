@@ -1,6 +1,5 @@
 $(document).ready(function () {
     current = new IndexJs();
-    sort.sortOder();
 })
 
 class IndexJs extends Base {
@@ -22,7 +21,6 @@ class IndexJs extends Base {
             // Sự kiện khi click navitem
             $('.nav-item').on('click', function (e) {
                 event.stopPropagation();
-                debugger
                 $('.nav-item').removeClass('select-menu-item');
                 $('.nav-item .nav-item-icon ').removeClass('active');
                 $(this).addClass('select-menu-item');
@@ -50,6 +48,7 @@ class IndexJs extends Base {
                 event.stopPropagation();
                 me.tr_onClick(this);
             });
+
             $(`table tbody`).on("dblclick", "tr", function () {
                 me.onDblClick_trow(this);
             });
@@ -57,7 +56,10 @@ class IndexJs extends Base {
                 me.onClickCheckAll(this);
             })
             // sự kiện khi blur các trường input
-            $(`input`).blur(me.onBlur_inputField);
+            $(`input`).blur(function () {
+                me.onBlur_inputField(this);
+            });
+            
             //popup
             $(`#btn-delete-popup`).on("click", me.onDeleteSelectedRow.bind(me));
             //paging
@@ -75,8 +77,13 @@ class IndexJs extends Base {
             });
 
             //sự kiện khi nhập trường Tìm kiếm
-            $(`.content-filter input[type="search"]`).on("search", function (e) {
+            $(`.content-filter input[type="search"]`).on("search", function () {
                 me.loadData(1);
+            });
+
+            $(`.content-filter input[type="search"]`).on("keyup", function (e) {
+                if(!$(this).val())
+                    me.loadData(1);
             });
 
             // Sự kiện các button tại content-filter

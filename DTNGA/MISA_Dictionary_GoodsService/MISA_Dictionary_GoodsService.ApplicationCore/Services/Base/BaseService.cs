@@ -167,8 +167,6 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
                 return _actionServiceResult;
             }
         }
-
-        
         #endregion
 
         #region Update
@@ -188,7 +186,6 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
             _actionServiceResult.Data = updatedEntity;
             return _actionServiceResult;
         }
-
         #endregion
 
         #region Validate
@@ -299,7 +296,6 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
             return parms;
         }
         #endregion
-
 
     }
 }

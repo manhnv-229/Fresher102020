@@ -129,5 +129,6 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service.Base
         /// CreatedBy dtnga (04/12/2020)
         Task<bool> CustomeValidateAsync<T>(T entity);
 
+        
     }
 }

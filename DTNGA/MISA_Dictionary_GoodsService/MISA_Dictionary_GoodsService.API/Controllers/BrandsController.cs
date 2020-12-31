@@ -49,6 +49,27 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         }
 
         /// <summary>
+        /// Kiểm tra trùng lặp dữ liệu
+        /// </summary>
+        /// <param name="goodsBarcode">Mã hàng hóa</param>
+        /// <returns></returns>
+        /// CreatedBy dtnga (30/12/2020)
+        [HttpGet("duplication")]
+        public async Task<IActionResult> CheckDuplicate([FromQuery] string key, [FromQuery] string value)
+        {
+            bool duplicate = false;
+            if (string.IsNullOrEmpty(key) ||  string.IsNullOrEmpty(value) || value.Length > 20) return StatusCode(400, ApplicationCore.Properties.Resources.Validate);
+            var result = new Brand();
+            if(key=="BrandName")
+                result = (await _brandService.GetByPropertyAsync<Brand>("BrandName", value)).FirstOrDefault();
+            else if (key == "BrandCode")
+                result = (await _brandService.GetByPropertyAsync<Brand>("BrandCode", value)).FirstOrDefault();
+            if(result!=null)
+                duplicate = true;
+            return StatusCode(200, duplicate);
+        }
+
+        /// <summary>
         /// Lấy tất cả thương hiệu
         /// </summary>
         /// <returns>danh sách thương hiệu</returns>

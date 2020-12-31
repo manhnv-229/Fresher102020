@@ -133,14 +133,14 @@ class Base {
             })
             $(comboInputField).blur(function () {
                 $(targetCombo).removeClass("green-border");
-                var validateAttr= $(targetCombo).attr("validate");
-                if( typeof validateAttr !== undefined && validateAttr == "false"){
+                var validateAttr = $(targetCombo).attr("validate");
+                if (typeof validateAttr !== undefined && validateAttr == "false") {
                     $(targetCombo).addClass("m-input-warning");
                     $(targetCombo).closest(".input-box").find(".error-validate").removeClass("displayNone");
                 }
-                else if(typeof validateAttr !== undefined && validateAttr == "true")
-                 $(targetCombo).removeClass("m-input-warning");
-                    
+                else if (typeof validateAttr !== undefined && validateAttr == "true")
+                    $(targetCombo).removeClass("m-input-warning");
+
             })
             me.detectKeyCode(comboInputField);
             // Sự kiện khi click erase icon trong input search
@@ -258,7 +258,7 @@ class Base {
         $(inputField).val(optionText);
         // Lưu id của item vào combobox
         var id = $(item).data("keyId");
-        if(!id) $(comboBox).data("keyId", null);
+        if (!id) $(comboBox).data("keyId", null);
         $(comboBox).data("keyId", id);
         $(comboBox).attr("validate", true);
         $(comboBox).closest(".input-box").find(".error-empty").addClass("displayNone");
@@ -347,7 +347,7 @@ class Base {
                 }
                 return;
             }
-            
+
             if (e.which == 40) {
                 $(wrapper).removeClass("displayNone");
                 $(parent).find(".arrow-button").addClass("rotate");
@@ -433,7 +433,7 @@ class Base {
             console.log(e);
         }
     }
-        
+
 
     /** Hàm thực hiện thêm dữ liệu mới
      * Created By dtnga (21/11/2020)
@@ -854,10 +854,10 @@ class Base {
                     dataType: "json"
                 })
                     .done(function (res) {
-                            response = res;
-                            $(`.m-dialog:visible`).addClass("displayNone");
-                            me.showToastMesseger(me.mesHeader + "thành công", "success");
-                        
+                        response = res;
+                        $(`.m-dialog:visible`).addClass("displayNone");
+                        me.showToastMesseger(me.mesHeader + "thành công", "success");
+
                     })
                     .fail(function (res) {
                         console.log(res);
@@ -871,10 +871,10 @@ class Base {
                     method: me.getMethod()
                 })
                     .done(function (res) {
-                            response = res;
-                            $(`.m-dialog:visible`).addClass("displayNone");
-                            me.showToastMesseger(me.mesHeader + " thành công", "success");
-                       
+                        response = res;
+                        $(`.m-dialog:visible`).addClass("displayNone");
+                        me.showToastMesseger(me.mesHeader + " thành công", "success");
+
                     })
                     .fail(function (res) {
                         console.log(res);
@@ -897,16 +897,17 @@ class Base {
     ValidateForm(targetForm) {
         try {
             var form = $(targetForm);
-            var invalidInputs = $(form).find(`.m-input[validate="false"], .m-box[validate="false"] .m-input`);
+            var invalidInputs = $(form).find(`.m-input[validate="false"], .m-box[validate="false"]`);
             if (invalidInputs && invalidInputs.length > 0) {
                 $.each(invalidInputs, function (index, input) {
                     $(input).trigger('blur');
-                    var parentBox = $(input).closest(".input-box");
-                    $(parentBox).find(`.error-empty`).removeClass("displayNone");
-                    // TODO check trùng lặp
-                    //var duplicatedAttr = $(input).attr("unduplicated");
-                    //if (typeof duplicatedAttr !== undefined && duplicatedAttr !== false)
-                    //    $(parentBox).find(`.error-duplicate`).removeClass("displayNone");
+                    if ($(input).hasClass("m-box")) {
+                        var parentBox = $(input).closest(".input-box");
+                        $(parentBox).find(`.error-empty`).removeClass("displayNone");
+                        $(input).addClass("m-input-warning");
+                    }
+                        
+
                 });
                 invalidInputs[0].focus();
                 return false;
@@ -980,29 +981,50 @@ class Base {
     }
 
     /** Kiểm tra input có hợp lệ không 
+     * @param {Element} inputField trường input được blur
     * CreatedBy dtnga (08/12/2020)
      */
-    onBlur_inputField() {
-        var input = this;
-        if ($(input).is(":required")) {
-            var value = $(input).val();
-            if (!value || !value.trim()) {
-                $(input).addClass("m-input-warning");
-                $(input).attr('validate', 'false');
-                $(input).attr('title', "Trường này không được để trống");
-                $(input).closest(".input-box").find(".error-empty").removeClass("displayNone");
-                // TODO check trùng
-                //    $(input).closest(".input-box").find(".error-duplicate").addClass("displayNone");
-            }
-            else {
-                $(input).removeAttr('validate');
-                $(input).removeClass("m-input-warning");
-                $(input).closest(".input-box").find(".error-empty").addClass("displayNone");
-                // TODO check trùng
-                $(input).closest(".input-box").find(".error-duplicate").addClass("displayNone");
+    onBlur_inputField(inputField) {
+        var me = this;
+        var input = $(inputField);
+        var value = $(input).val();
+        $(input).closest(".input-box").find(".error-duplicate").addClass("displayNone");
+        $(input).closest(".input-box").find(".error-empty").addClass("displayNone");
+        $(input).removeClass("m-input-warning");
+        $(input).removeAttr('validate');
+        // Check trùng
+        var duplicateAttr = $(input).attr("unduplicated");
+        if (value && typeof duplicateAttr !== typeof undefined && duplicateAttr !== false) {
+            var oldValue = $(input).attr("value").trim();
+            if (value && value.trim() !== oldValue) {
+                var fieldName = $(input).attr("fieldName");
+                $.ajax({
+                    url: me.host + me.getRoute() + "/duplication?key=" + fieldName + "&value=" + value,
+                    method: "GET"
+                })
+                    .done(function (res) {
+                        if (res) {
+                            // Bị trùng
+                            $(input).addClass("m-input-warning");
+                            $(input).attr('validate', 'false');
+                            $(input).closest(".input-box").find(".error-duplicate").removeClass("displayNone");
+                        }
+                    })
+                    .fail(function (res) {
+                        console.log(res);
+                    })
             }
         }
+        else if ((!value || !value.trim()) && $(input).is(":required")) {
+            $(input).addClass("m-input-warning");
+            $(input).attr('validate', 'false');
+            $(input).attr('title', "Trường này không được để trống");
+            $(input).closest(".input-box").find(".error-empty").removeClass("displayNone");
+           
+        }
+        
     }
+
 
     /**Kiểm tra dữ liệu, nếu trống thì cảnh báo
      * Createdby dtnga (14/11/2020)
@@ -1055,6 +1077,7 @@ class Base {
     */
     clear(obj) {
         $(obj).find(`input, textarea`).val(null);
+        $(obj).find(`input, textarea`).attr("value", "");
         $(obj).find(`input[required],input[type="email"]`).removeClass("m-input-warning");
         $(obj).find(`input[required],input[type="email"]`).attr('validate', 'false');
         //clear ngày, select, radio button
@@ -1090,22 +1113,22 @@ class Base {
             var me = this;
             if ($(`thead input[type="checkbox"]`).is(":checked")) {
                 $(`thead input[type="checkbox"]`).prop("checked", false);
-                $(`tbody input[type="checkbox"]`).prop("checked", false);
+                $(`tbody`).find(`.checkmark`).removeClass("selected");
                 $(`tbody tr`).removeClass("selected");
                 $(row).addClass("selected");
-                $(row).find(`input[type="checkbox"]`).prop("checked", true);
+                $(row).find(`.checkmark`).addClass("selected");
                 me.checkSelectedRow();
                 return;
             }
             else if ($(row).hasClass("selected")) {
                 $(row).removeClass("selected");
-                $(row).find(`input[type="checkbox"]`).prop("checked", false);
+                $(row).find(`.checkmark`).removeClass("selected");
                 me.checkSelectedRow();
                 return;
             }
-            else{
+            else {
                 $(row).addClass("selected");
-                $(row).find(`input[type="checkbox"]`).prop("checked", true);
+                $(row).find(`.checkmark`).addClass("selected");
                 me.checkSelectedRow();
             }
         }
@@ -1126,9 +1149,9 @@ class Base {
             //Đổi màu hàng dữ liệu
             var selected = $(row);
             $(selected).closest(`tbody`).find(`tr`).removeClass("selected");
-            $(selected).closest(`tbody`).find(`input[type="checkbox"]`).prop("checked", false);
+            $(selected).closest(`tbody`).find(`.checkmark`).removeClass("selected");
             $(selected).addClass("selected");
-            $(selected).find(`input[type="checkbox"]`).prop("checked", true);
+            $(selected).find(`.checkmark`).addClass("selected");
             //Show form cập nhật đơn hàng
             var dialog = $(selected).closest(`.content-body`).find(`.m-dialog`);
             $(dialog).find(`.header-text`).text("CẬP NHẬT");
@@ -1205,14 +1228,12 @@ class Base {
                     }
                     else {
                         $(input).val(value);
+                        $(input).attr("value", value);
                     }
                     var validateAttr = $(input).attr("validate");
-                    if (typeof validateAttr !== undefined && validateAttr == "false") {
+                    if (value && typeof validateAttr !== undefined && validateAttr == "false") {
                         $(input).attr("validate", true);
                     }
-                    $(input).closest(".input-box").find(".error-empty").addClass("displayNone");
-                    // TODO check trùng
-                    $(input).closest(".input-box").find(".error-duplicate").addClass("displayNone");
 
                 }
 
@@ -1269,11 +1290,11 @@ class Base {
             var checkboxAll = $(checkbox);
             var parentTable = $(checkboxAll).closest(`table`);
             if ($(checkboxAll).is(":checked")) {
-                $(parentTable).find(`tbody input[type="checkbox"]`).prop("checked", true);
+                $(parentTable).find(`tbody .checkmark`).addClass("selected");
                 $(parentTable).find(`tbody tr`).addClass("selected");
             }
             else {
-                $(parentTable).find(`tbody input[type="checkbox"]`).prop("checked", false);
+                $(parentTable).find(`tbody .checkmark`).removeClass("selected");
                 $(parentTable).find(`tbody tr`).removeClass("selected");
             }
             me.checkSelectedRow();
@@ -1316,7 +1337,7 @@ class Base {
         return obj[fieldName];
     }
 
-    
+
     /**
      * Hàm base thực hiện load dữ liệu lên table
      * @param {Element} table Thành phần bảng cần đổ dữ liệu
@@ -1374,7 +1395,6 @@ class Base {
                             var fieldName = $(th).attr('fieldName');
                             if (fieldName == "Checkbox") {
                                 var checkbox = $(`<div><label class="m-checkbox">
-                                                <input class="checkbox" type="checkbox" name="row" />
                                                 <span class="checkmark"></span>
                                       </label></div>`);
                                 td.append(checkbox);
@@ -1434,7 +1454,7 @@ class Base {
                     console.warn("Lỗi load dữ liệu");
                     console.log(res);
                 })
-            
+
         }
         catch (e) {
             console.log(e);
