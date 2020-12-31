@@ -6,7 +6,6 @@ class IndexJs extends Base {
     constructor() {
         super();
         var me = this;
-        me.loadData(1);
         me.loadComboboxCustome();
         me.initEvent();
 
@@ -48,13 +47,13 @@ class IndexJs extends Base {
                 event.stopPropagation();
                 me.tr_onClick(this);
             });
-
             $(`table tbody`).on("dblclick", "tr", function () {
                 me.onDblClick_trow(this);
             });
             $(`table thead input[type="checkbox"]`).on("click", function () {
                 me.onClickCheckAll(this);
             })
+
             // sự kiện khi blur các trường input
             $(`input`).blur(function () {
                 me.onBlur_inputField(this);
@@ -62,6 +61,7 @@ class IndexJs extends Base {
             
             //popup
             $(`#btn-delete-popup`).on("click", me.onDeleteSelectedRow.bind(me));
+
             //paging
             $(`.paging-number button`).on("click", function () {
                 me.onClickPagingNumber(this);
@@ -70,17 +70,13 @@ class IndexJs extends Base {
             $(`.paging #previous`).on("click", me.onClickPreviousPage.bind(me));
             $(`.paging #jumpToFirst`).on("click", me.onClickFirstPage.bind(me));
             $(`.paging #jumpToLast`).on("click", me.onClickLastPage.bind(me));
-            $(`.pageSize select`).on("change", function () {
-                var pageSize = $(this).find(`option:selected`).val();
-                $(this).closest(`.pageSize`).attr("value", pageSize);
-                me.loadData(1);
-            });
+
+            
 
             //sự kiện khi nhập trường Tìm kiếm
             $(`.content-filter input[type="search"]`).on("search", function () {
                 me.loadData(1);
             });
-
             $(`.content-filter input[type="search"]`).on("keyup", function (e) {
                 if(!$(this).val())
                     me.loadData(1);
@@ -93,7 +89,9 @@ class IndexJs extends Base {
             $(`.content-body`).find(`#btnDelete`).on("click", function () {
                 me.onClick_btnDelete(this);
             });
-            $(`.content-body`).find(`#btn-refresh`).on("click", me.onClick_btnRefresh.bind(me));
+            $(`.content-body`).find(`#btn-refresh`).on("click", function () {
+                me.onClick_btnRefresh(this);
+            });
 
             $(`.content-filter .item[selectAll]`).on("click", function () {
                 me.onClearFilter(this);
@@ -179,7 +177,21 @@ class IndexJs extends Base {
                 .fail(function (res) {
                     console.log(res);
                 })
-           
+
+            // Tạo pagingSize
+            var pagingSize = ["15", "20", "30", "40", "50"];
+            var targetComboboxs = $(`.paging .m-box[name="PageSize"]`);
+            $.each(targetComboboxs, function (index, item) {
+                me.createComboBox(pagingSize, item);
+                $(item).find(`.item`)[0].remove();
+                $(item).find(`.item`).on("click", function () {
+                    var pageSize = $(this).find(`.option-text`).text();
+                    $(this).closest(`.pageSize`).attr("value", pageSize);
+                    me.loadData(1);
+                });
+                var defaultSelectedItem = $(item).find(".item")[0];
+                $(defaultSelectedItem).trigger("click");
+            });
             
         }
         catch (e) {

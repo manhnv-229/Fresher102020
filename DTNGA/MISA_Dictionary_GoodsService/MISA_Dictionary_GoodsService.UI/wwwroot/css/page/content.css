@@ -1,4 +1,4 @@
-﻿/* Style phần content dùng chung*/
+/* Style phần content dùng chung*/
 
 /* content header*/
 .content .content-header {
@@ -135,10 +135,28 @@
 
 /*Right paging*/
 .paging .paging-right{
-
+    display: flex;
+    align-items: center;
 }
 
-/* Style riêng cho từng content-body*/
-.m-dialog .dialog-col{
-    width: 50%;
-}
+    .paging .paging-right .m-box{
+        width: 105px;
+        min-width:50px;
+        margin-right: 8px;
+    }
+
+    .paging .paging-right .m-box .wrapper{
+        top: -175px;
+        width: 65px;
+    }
+    .paging .paging-right .m-box .item{
+        width: 65px;
+    }
+        .paging .paging-right .m-box input {
+            /* min-width: 100px; */
+        }
+    /* Style riêng cho từng content-body*/
+    .m-dialog .dialog-col {
+        width: 50%;
+        /* padding-bottom: 0; */
+    }

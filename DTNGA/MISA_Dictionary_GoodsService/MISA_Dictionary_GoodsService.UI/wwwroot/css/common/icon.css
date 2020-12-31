@@ -18,7 +18,7 @@
 .toggle-icon {
     width: 24px;
     height: 24px;
-    background-image: url('/content/icon/common/BlackIcon/toggle.png');
+    background-image: url('/content/icon/common/blackIcon/toggle.png');
 }
 
 .logo-image {
@@ -32,7 +32,7 @@
 }
 
 .category-icon {
-    background-image: url('/content/icon/common/blackicon/list.svg');
+    background-image: url('/content/icon/common/blackIcon/list.svg');
 }
 
     .category-icon.active {
@@ -41,7 +41,7 @@
     }
 
 .goods-icon {
-    background-image: url('/content/icon/common/blackicon/cubes_black.png');
+    background-image: url('/content/icon/common/blackIcon/cubes_black.png');
 }
 
     .goods-icon.active {
@@ -50,35 +50,44 @@
     }
 
 .brands-icon {
-    background-image: url('/content/icon/common/BlackIcon/brand.png');
+    background-image: url('/content/icon/common/blackIcon/brand.png');
 }
+
     .brands-icon.active {
         background-image: url('/content/icon/common/whiteicon/brand.png');
     }
 
 .setting-icon {
-    background-image: url('/content/icon/common/BlackIcon/settings.svg');
+    background-image: url('/content/icon/common/blackIcon/settings.svg');
 }
 
 /*header*/
 .setting-more-icon {
-    background-image: url('/content/icon/common/BlackIcon/more-horizontal.svg');
+    background-image: url('/content/icon/common/blackIcon/more-horizontal.svg');
     opacity: 0.4;
 }
 /*content*/
 /*filter*/
 .search-icon {
-    background-image: url('/content/icon/common/BlackIcon/search.svg');
+    background-image: url('/content/icon/common/blackIcon/search.svg');
     opacity: 0.3;
 }
 
 .add-icon {
-    background-image: url('/content/icon/common/BlackIcon/plus.svg');
+    background-image: url('/content/icon/common/blackIcon/plus.svg');
 }
 
+    .add-icon.active {
+        background-image: url('/content/icon/common/whiteIcon/plus.svg');
+    }
+
 .refresh-icon {
-    background-image: url('/content/icon/common/BlackIcon/rotate-cw.svg');
+    background-image: url('/content/icon/common/blackIcon/rotate-cw.svg');
 }
+
+    .refresh-icon.active {
+        background-image: url('/content/icon/common/whiteIcon/rotate-cw.svg');
+    }
 
 .save-icon {
     background-image: url('/content/icon/common/whiteIcon/save-icon-white.png');
@@ -87,24 +96,24 @@
 /*grid*/
 
 .sort-icon {
-    background-image: url('/content/icon/common/BlackIcon/sort.png');
+    background-image: url('/content/icon/common/blackIcon/sort.png');
 }
 
 /* paging */
 .chevrons-left-icon {
-    background-image: url('/content/icon/common/BlackIcon/chevrons-left.svg');
+    background-image: url('/content/icon/common/blackIcon/chevrons-left.svg');
 }
 
 .chevrons-right-icon {
-    background-image: url('/content/icon/common/BlackIcon/chevrons-right.svg');
+    background-image: url('/content/icon/common/blackIcon/chevrons-right.svg');
 }
 
 .chevron-left-icon {
-    background-image: url('/content/icon/common/BlackIcon/chevron-left.svg');
+    background-image: url('/content/icon/common/blackIcon/chevron-left.svg');
 }
 
 .chevron-right-icon {
-    background-image: url('/content/icon/common/BlackIcon/chevron-right.svg');
+    background-image: url('/content/icon/common/blackIcon/chevron-right.svg');
 }
 
 /* add-order page */
@@ -113,15 +122,19 @@
 }
 
 .delete-icon {
-    background-image: url('/content/icon/common/BlackIcon/x.svg');
+    background-image: url('/content/icon/common/blackIcon/trash.svg');
     background-size: 10px;
     align-self: center;
     border: none;
     outline: none;
 }
+
+    .delete-icon.active {
+        background-image: url('/content/icon/common/whiteIcon/trash.svg');
+    }
 /* areow icon */
 .arrow-icon {
-    background-image: url('/content/icon/common/BlackIcon/chevron-down.svg');
+    background-image: url('/content/icon/common/blackIcon/chevron-down.svg');
 }
 /* quay ngược icon*/
 .rotate {

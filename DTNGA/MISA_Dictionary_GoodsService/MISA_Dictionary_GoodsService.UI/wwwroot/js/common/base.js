@@ -471,6 +471,10 @@ class Base {
         }
     }
 
+    /**
+     * Xóa bản ghi
+     * CreatedBy dtnga (23/12/2020)
+     * */
     onDeleteSelectedRow() {
         try {
             var me = this;
@@ -1099,7 +1103,7 @@ class Base {
     /** Hàm thực hiện làm mới dữ liệu
      * Created By dtnga (21/11/2020)
      * */
-    onClick_btnRefresh() {
+    onClick_btnRefresh(buttonRefresh) {
         this.loadData();
     }
 

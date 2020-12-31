@@ -75,9 +75,13 @@
         width: 60px;
     }
 
+    .grid thead .field-medium {
+        width: 200px;
+    }
+
     .grid thead .field-long {
-        width: 300px;
-        min-width: 150px;
+        width: 350px;
+        min-width: 200px;
     }
 
     /* tbody */

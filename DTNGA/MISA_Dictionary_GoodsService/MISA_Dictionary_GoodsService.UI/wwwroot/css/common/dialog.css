@@ -20,7 +20,7 @@
 /*-------------------------*/
 /*dialog*/
 .dialog-detail {
-    width: 60%;
+    width: 35%;
     min-width: 500px;
     border-radius: 4px;
     position: fixed;
@@ -113,7 +113,8 @@
         background-color: #019160;
     }
 
-    .dialog-detail .dialog-col .content-box .box-body {
+    .dialog-detail .dialog-col .content-box .box-body .input-line:last-child{
+        margin-bottom: 0;
     }
 
     .dialog-detail .content-box .box-body .box-info {

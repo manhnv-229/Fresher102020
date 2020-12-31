@@ -57,6 +57,7 @@
             <div class="content-header-title">Hàng hóa</div>
             <div class="content-header-right"></div>
         </div>
+        <!-- content Hàng hóa -->
         <div class="content-body" id="Goods" fieldName="Goods" route="Goods" titleName="Hàng hóa">
             <div class="content-filter">
                 <div class="content-filter-left">
@@ -91,49 +92,49 @@
                                     </label>
                                 </div>
                             </th>
-                            <th fieldName="GoodsBarcode">
+                            <th fieldName="GoodsBarcode" class="field-short">
                                 <div class="thead-box">
-                                    <div class="thead-text">Mã Barcode</div>
+                                    <div class="thead-text">Mã hàng hóa</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th fieldName="GoodsName">
+                            <th fieldName="GoodsName" class="field-medium">
                                 <div class="thead-box">
                                     <div class="thead-text">Tên sản phẩm</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th fieldName="GoodsUnit">
+                            <th fieldName="GoodsUnit" class="field-short">
                                 <div class="thead-box">
                                     <div class="thead-text">Đơn vị tính</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th fieldName="CategoryName">
+                            <th fieldName="CategoryName" class="field-medium">
                                 <div class="thead-box">
                                     <div class="thead-text">Nhóm hàng hóa</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th fieldName="BrandName">
+                            <th fieldName="BrandName" class="field-medium">
                                 <div class="thead-box">
                                     <div class="thead-text">Thương hiệu</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th fieldName="GoodsDescription">
+                            <th fieldName="GoodsDescription" class="field-long">
                                 <div class="thead-box">
                                     <div class="thead-text">Mô tả</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th fieldName="CreatedDate" formatType="dd/mm/yyyy">
+                            <th fieldName="CreatedDate" class="field-short" formatType="dd/mm/yyyy">
                                 <div class="thead-box center">
                                     <div class="thead-text">Ngày tạo</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th fieldName="ModifiedDate" formatType="dd/mm/yyyy">
+                            <th fieldName="ModifiedDate" class="field-short" formatType="dd/mm/yyyy">
                                 <div class="thead-box center">
                                     <div class="thead-text">Ngày chỉnh sửa</div>
                                     <div class="m-icon sort-icon"></div>
@@ -146,7 +147,7 @@
             </div>
             <div class="paging">
                 <div class="paging-left">
-                    <div class="paging-left-text">Hiển thị <span id="range">1-15</span> trên <span id="total">100</span> hàng hóa</div>
+                    <div class="paging-left-text">Hiển thị <span id="range">...</span> trên <span id="total">...</span> hàng hóa</div>
                 </div>
                 <div class="paging-mid">
                     <button class="m-button-icon" id="jumpToFirst">
@@ -170,15 +171,8 @@
                     </button>
                 </div>
                 <div class="paging-right">
-                    <div class="pageSize" name="PageSize" loadAfterSelect value="15">
-                        <select>
-                            <option value="15" selected>15/trang</option>
-                            <option value="20">20/trang</option>
-                            <option value="30">30/trang</option>
-                            <option value="40">40/trang</option>
-                            <option value="50">50/trang</option>
-                        </select>
-                    </div>
+                    <div class="pageSize m-box" name="PageSize"></div>
+                    <div>hàng hóa trên trang</div>
                 </div>
             </div>
             <!-- dialog -->
@@ -255,6 +249,7 @@
             </div>
         </div>
 
+        <!-- content Thương hiệu -->
         <div class="content-body displayNone" id="brand" fieldName="Brand" route="Brands" titleName="Thương hiệu">
             <div class="content-filter">
                 <div class="content-filter-left">
@@ -288,37 +283,37 @@
                                     </label>
                                 </div>
                             </th>
-                            <th fieldName="BrandCode">
+                            <th fieldName="BrandCode" class="field-short">
                                 <div class="thead-box">
                                     <div class="thead-text">Mã thương hiệu</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th fieldName="BrandName">
+                            <th fieldName="BrandName" class="field-medium">
                                 <div class="thead-box">
                                     <div class="thead-text">Tên thương hiệu</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th fieldName="BrandOrigin">
+                            <th fieldName="BrandOrigin" class="field-short">
                                 <div class="thead-box">
                                     <div class="thead-text">Xuất xứ thương hiệu</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th fieldName="BrandDescription">
+                            <th fieldName="BrandDescription" class="field-long">
                                 <div class="thead-box">
                                     <div class="thead-text">Mô tả</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th fieldName="CreatedDate" formatType="dd/mm/yyyy">
+                            <th fieldName="CreatedDate" class="field-short" formatType="dd/mm/yyyy">
                                 <div class="thead-box center">
                                     <div class="thead-text">Ngày tạo</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th fieldName="ModifiedDate" formatType="dd/mm/yyyy">
+                            <th fieldName="ModifiedDate" class="field-short" formatType="dd/mm/yyyy">
                                 <div class="thead-box center">
                                     <div class="thead-text text-align-center">Ngày chỉnh sửa</div>
                                     <div class="m-icon sort-icon"></div>
@@ -331,7 +326,7 @@
             </div>
             <div class="paging">
                 <div class="paging-left">
-                    <div class="paging-left-text">Hiển thị <span id="range">1-15</span> trên <span id="total">100</span> thương hiệu</div>
+                    <div class="paging-left-text">Hiển thị <span id="range">...</span> trên <span id="total">...</span> thương hiệu</div>
                 </div>
                 <div class="paging-mid">
                     <button class="m-button-icon" id="jumpToFirst">
@@ -355,15 +350,8 @@
                     </button>
                 </div>
                 <div class="paging-right">
-                    <div class="pageSize" name="PageSize" loadAfterSelect value="15">
-                        <select>
-                            <option value="15" selected>15/trang</option>
-                            <option value="20">20/trang</option>
-                            <option value="30">30/trang</option>
-                            <option value="40">40/trang</option>
-                            <option value="50">50/trang</option>
-                        </select>
-                    </div>
+                    <div class="pageSize m-box" name="PageSize"></div>
+                    <div>thương hiệu trên trang</div>
                 </div>
             </div>
             <!-- dialog -->
@@ -383,7 +371,7 @@
                                             <div class="input-title">Tên thương hiệu (<span>*</span>)</div>
                                             <div class="error-validate error-empty displayNone">Tên thương hiệu không được phép bỏ trống</div>
                                             <div class="error-validate error-duplicate displayNone">Tên thương hiệu đã có trên hệ thống</div>
-                                            <input class="m-input" type="text" required  unduplicated fieldName="BrandName" validate="false" />
+                                            <input class="m-input" type="text" required unduplicated fieldName="BrandName" validate="false" />
                                         </div>
                                     </div>
                                     <div class="input-line">
@@ -428,6 +416,7 @@
             </div>
         </div>
 
+        <!-- content Danh mục -->
         <div class="content-body displayNone" id="category" fieldName="Category" route="Categories" titleName="Danh mục">
             <div class="content-filter">
                 <div class="content-filter-left">
@@ -460,37 +449,37 @@
                                     </label>
                                 </div>
                             </th>
-                            <th fieldName="CategoryCode">
+                            <th fieldName="CategoryCode" class="field-short">
                                 <div class="thead-box">
                                     <div class="thead-text">Mã danh mục</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th fieldName="CategoryName">
+                            <th fieldName="CategoryName" class="field-medium">
                                 <div class="thead-box">
                                     <div class="thead-text">Tên danh mục</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th fieldName="ParentCategoryName">
+                            <th fieldName="ParentCategoryName" class="field-short">
                                 <div class="thead-box">
                                     <div class="thead-text">Danh mục cha</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th fieldName="CategoryDescription">
+                            <th fieldName="CategoryDescription" class="field-long">
                                 <div class="thead-box">
                                     <div class="thead-text">Mô tả</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th fieldName="CreatedDate" formatType="dd/mm/yyyy">
+                            <th fieldName="CreatedDate" class="field-short" formatType="dd/mm/yyyy">
                                 <div class="thead-box center">
                                     <div class="thead-text">Ngày tạo</div>
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th fieldName="ModifiedDate" formatType="dd/mm/yyyy">
+                            <th fieldName="ModifiedDate" class="field-short" formatType="dd/mm/yyyy">
                                 <div class="thead-box center">
                                     <div class="thead-text">Ngày chỉnh sửa</div>
                                     <div class="m-icon sort-icon"></div>
@@ -503,7 +492,7 @@
             </div>
             <div class="paging">
                 <div class="paging-left">
-                    <div class="paging-left-text">Hiển thị <span id="range">1-15</span> trên <span id="total">100</span> danh mục</div>
+                    <div class="paging-left-text">Hiển thị <span id="range">...</span> trên <span id="total">...</span> danh mục</div>
                 </div>
                 <div class="paging-mid">
                     <button class="m-button-icon" id="jumpToFirst">
@@ -527,15 +516,8 @@
                     </button>
                 </div>
                 <div class="paging-right">
-                    <div class="pageSize" name="PageSize" loadAfterSelect value="15">
-                        <select>
-                            <option value="15" selected>15/trang</option>
-                            <option value="20">20/trang</option>
-                            <option value="30">30/trang</option>
-                            <option value="40">40/trang</option>
-                            <option value="50">50/trang</option>
-                        </select>
-                    </div>
+                    <div class="pageSize m-box" name="PageSize"></div>
+                    <div>danh mục trên trang</div>
                 </div>
             </div>
             <!-- dialog -->
