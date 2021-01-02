@@ -15,79 +15,13 @@ namespace SManage.API.Controllers
     [ApiController]
     public class TransportorsController : ControllerBase
     {
-        private readonly IBaseMemoryCache _baseMemoryCache;
         private readonly IBaseService _baseService;
-        private readonly List<ShopTransportor> ShopTransportors;
-        private readonly List<Transportor> Transportors;
-        public TransportorsController(IBaseMemoryCache baseMemoryCache, IBaseService baseService)
+        public TransportorsController(IBaseService baseService)
         {
-            _baseMemoryCache = baseMemoryCache;
             _baseService = baseService;
-            ShopTransportors = (List<ShopTransportor>)_baseMemoryCache.GetCache("ShopTransportors");
-            Transportors= (List<Transportor>)_baseMemoryCache.GetCache("Transportors");
-            if (ShopTransportors.Count == 0)
-            {
-                ShopTransportors = (List<ShopTransportor>)_baseService.GetAll<ShopTransportor>().Data;
-                _baseMemoryCache.SetCache("ShopTransportors", ShopTransportors);
-            }
-            if (Transportors.Count == 0)
-            {
-                Transportors = (List<Transportor>)_baseService.GetAll<Transportor>().Data;
-                _baseMemoryCache.SetCache("Transportors", Transportors);
-            }
         }
 
-        /// <summary>
-        /// Lấy tất cả đơn vị vận chuyển trên hệ thống
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public ActionServiceResult GetAll()
-        {
-            var response = new ActionServiceResult();
-            response.Data = Transportors;
-            return response;
-        }
-
-        /// <summary>
-        /// Lấy danh sách đơn vị vận chuyển liên kết với cửa hàng
-        /// </summary>
-        /// <param name="shopId">Id cửa hàng</param>
-        /// <returns></returns>
-        /// CreatedBy dtnga /(13/12/2020)
-        // GET api/<TransportorsController>/5
-        [HttpGet("{shopId}")]
-        public ActionServiceResult GetTransportorByShopId([FromRoute] Guid shopId)
-        {
-            var response = new ActionServiceResult();
-            if (shopId == null)
-            {
-                response.MISACode = MISACode.NotFound;
-                response.Message = ApplicationCore.Properties.Resources.NotFound;
-                return response;
-            }
-            var data = new List<Transportor>();
-            var listTransportor = ShopTransportors.Where<ShopTransportor>(t=> t.ShopId==shopId).ToList();
-            // Lấy thông tin chi tiết đơn vị vận chuyển
-            listTransportor.ForEach(trans =>
-            {
-                var transportorId = trans.TransportorId;
-                var transportor = (Transportor) Transportors.Where<Transportor>(t => t.TransportorId == transportorId).FirstOrDefault();
-                if (transportor != null)
-                    data.Add(transportor);
-            });
-           
-            if (data.Count == 0)
-            {
-                response.MISACode = MISACode.NotFound;
-                response.Message = ApplicationCore.Properties.Resources.NotFound;
-                return response;
-            }
-            response.Data = data;
-            response.MISACode = MISACode.Success;
-            response.Message = ApplicationCore.Properties.Resources.Success;
-            return response;
-        }
+        
 
         /// <summary>
         /// Thực hiện tính chi phí vận chuyển

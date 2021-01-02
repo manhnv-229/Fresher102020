@@ -1,18 +1,19 @@
-﻿/* style cho dialog dùng chung */
+/* style cho dialog dùng chung */
 
 .m-dialog {
     position: relative;
-    display: none;
     z-index: 999;
 }
 /*-------------------------*/
 /*Màn mờ phía sau dialog*/
 .modal {
-    width: 100%;
+    width: 100vw;
     height: 100vh;
-    margin: 0px;
+    position: fixed;
+    left: 0;
     background-color: #000000;
     opacity: 0.5;
+    z-index: 2
 }
 
 /*-------------------------*/

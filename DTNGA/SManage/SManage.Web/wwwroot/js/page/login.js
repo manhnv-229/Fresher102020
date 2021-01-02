@@ -1,10 +1,12 @@
-﻿$(document).ready(function () {
+$(document).ready(function () {
     var login = new Login();
 })
 
 class Login {
     constructor() {
         var me = this;
+        me.host = "https://localhost:44394";
+        me.route = "/api/v1/Accounts";
         me.initEventLogin();
     }
 
@@ -13,6 +15,20 @@ class Login {
      * */
     initEventLogin() {
         var me = this;
+        $(`input`).first().focus();
+        $(`input`).focus(function () {
+            this.select();
+        });
+        $(`input`).on("keydown", function (e) {
+            if (e.which == 13)
+                $(`#btn-login`).trigger("click");
+        })
+        $(`input`).blur(function () {
+            if ($(this).val())
+                $(this).closest(`.wrap-input`).find(`span.error-info`).addClass("displayNone");
+            else
+                $(this).closest(`.wrap-input`).find(`span.error-info`).removeClass("displayNone");
+        });
         $(`i[objname="jBntShowPass"]`).on("click", me.onClick_showPassIcon);
         $(`#btn-login`).on("click", me.onClick_btnLogin.bind(me));
 
@@ -23,7 +39,7 @@ class Login {
      * */
     onClick_showPassIcon() {
         var btnShowPass = this;
-        if ( $(btnShowPass).hasClass("active")) {
+        if ($(btnShowPass).hasClass("active")) {
             $(btnShowPass).removeClass("active");
             var parent = $(btnShowPass).closest(`.wrap-input`);
             var inputPass = $(parent).find(`input[objname="jPassword"]`);
@@ -42,6 +58,7 @@ class Login {
      * */
     onClick_btnLogin() {
         try {
+            $(`.text-login-fail`).addClass("displayNone");
             var me = this;
             // Lấy thông tin đăng nhập
             var userName = $(`input[name="username"]`).val();
@@ -51,7 +68,32 @@ class Login {
                 $(`span[res-key="FormLogin_UserNotEmpty"]`).removeClass("displayNone");
             if (!password)
                 $(`span[res-key="FormLogin_PasswordNotEmpty"]`).removeClass("displayNone");
+            if (userName && password) {
+                $.ajax({
+                    url: me.host + me.route + "?username=" + userName + "&password=" + password,
+                    method: "GET"
+                })
+                    .done(function (res) {
+                        if (res) {
+                            var data = res.Data;
+                            sessionStorage.setItem("user", JSON.stringify(data));
+                            if (data["RoleCode"] == "QL") {
+                                location.replace("/view/owner.html");
 
+                            }
+                            else if (data["RoleCode"] == "NV") {
+                                location.replace("/view/saler.html");
+                            }
+                        }
+                        else {
+                            $(`.text-login-fail`).removeClass("displayNone");
+                        }
+                    })
+                    .fail(function (res) {
+                        console.log(res);
+
+                    })
+            }
         }
         catch (e) {
             console.log(e);

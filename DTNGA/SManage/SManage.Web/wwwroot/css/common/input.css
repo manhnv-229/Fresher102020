@@ -1,4 +1,4 @@
-﻿/*-----------------*/
+/*-----------------*/
 /* style input dùng chung */
 
 .m-input {
@@ -7,7 +7,6 @@
     border: 1px solid #bbbbbb;
     border-radius: 5px;
     outline: none;
-    margin-top: 4px;
     padding-left: 16px;
     display: flex;
 }
@@ -18,7 +17,7 @@
 
 /* cảnh báo khi input có giá trị invalid */
 .m-input-warning {
-    border: 1px solid #FF4747;
+    border: 1px solid #FF4747 !important;
 }
 
 /* Dòng chứa nhiều input box*/
@@ -29,11 +28,11 @@
     justify-content: space-between;
 }
 
-.flex-line{
-    display:flex;
+.flex-line {
+    display: flex;
 }
 /* Dòng chứa thành phần căn phải */
-.right-line{
+.right-line {
     justify-content: flex-end;
 }
 /* Dòng chứa thành phần căn giữa */
@@ -45,21 +44,23 @@
     justify-content: space-between;
 }
 
-.input-box{
-    display:flex;
-    flex-direction:column;
+.input-box {
+    display: flex;
+    flex-direction: column;
 }
 /* box input mà các thành phần sắp xếp từ cuối lên*/
-.input-box-end{
+.input-box-end {
     justify-content: flex-end;
 }
 /* * đỏ thể hiện trường bắt buộc nhập */
 .input-box .input-title {
     font-family: GoogleSans-Bold;
+    margin-bottom: 4px;
 }
-.input-box .input-title span {
-    color: #FF4747;
-}
+
+    .input-box .input-title span {
+        color: #FF4747;
+    }
 
 /*trường input có kiểu là money*/
 input[typeFormat="money"], input[type="number"] {
@@ -122,8 +123,8 @@ input[typeFormat="money"], input[type="number"] {
     }
 
 /* custome input type checkbox */
-.m-checkbox{
-    position:relative;
+.m-checkbox {
+    position: relative;
     width: 20px;
     height: 20px;
     margin-right: 16px;
@@ -158,11 +159,20 @@ input[typeFormat="money"], input[type="number"] {
         border: none;
         background-color: #019160;
         background-image: url('/content/icon/common/whiteIcon/check.svg');
-        background-position:center;
+        background-position: center;
         background-repeat: no-repeat;
         background-size: 16px;
     }
 
+
+.checkmark.selected {
+    border: none;
+    background-color: #019160;
+    background-image: url('/content/icon/common/whiteIcon/check.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+}
 /* Style text area*/
 .note-area {
     min-height: 40px;
@@ -171,25 +181,28 @@ input[typeFormat="money"], input[type="number"] {
     overflow: hidden;
     text-overflow: ellipsis;
     resize: vertical;
+    max-height: 200px;
 }
 
 /* Input Search field*/
 .search-field {
-    width: calc( 100% - 24px);
+    width: 210px;
     outline: none;
     border: none;
     border-radius: 4px;
 }
+
 .search-icon {
     margin-right: 8px;
     align-self: center;
 }
+
 input[type="search"]::-webkit-search-cancel-button {
     -webkit-appearance: none;
     height: 1em;
     width: 1em;
     margin-left: 8px;
-    margin-right:10px;
+    margin-right: 10px;
     border-radius: 50em;
     background-image: url('/content/icon/common/BlackIcon/x.svg');
     background-repeat: no-repeat;

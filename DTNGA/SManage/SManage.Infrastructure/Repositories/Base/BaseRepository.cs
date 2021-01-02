@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Caching.Memory;
+using SManage.ApplicationCore.Entities.Base;
 using SManage.ApplicationCore.Interfaces.DatabaseContext;
 using SManage.ApplicationCore.Interfaces.Repositories;
 using System;
@@ -59,6 +60,10 @@ namespace SManage.Infrastructure.Repositories.Base
         public async Task<T> GetByIdAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
             return await _databaseContext.GetByIdAsync<T>(sp, parms);
+        }
+        public async Task<PagingData<T>> GetPagingAsync<T>(string sp, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure)
+        {
+            return await _databaseContext.GetPagingAsync<T>(sp, parms);
         }
         #endregion
 

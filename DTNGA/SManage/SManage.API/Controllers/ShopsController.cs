@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SManage.ApplicationCore;
 using SManage.ApplicationCore.Entities;
+using SManage.ApplicationCore.Enums;
 using SManage.ApplicationCore.Interfaces.Service.Base;
 
 namespace SManage.API.Controllers
@@ -33,10 +34,25 @@ namespace SManage.API.Controllers
             return await _baseService.GetByIdAsync<Shop>(shopId);
         }
 
-        [HttpGet("user/{userId}")]
-        public async Task<ActionServiceResult> GetByUserId([FromRoute] Guid userId)
+        /// <summary>
+        /// Lấy danh sách đơn vị vận chuyển liên kết với cửa hàng
+        /// </summary>
+        /// <param name="shopId">Id cửa hàng</param>
+        /// <returns></returns>
+        /// CreatedBy dtnga /(13/12/2020)
+        // GET api/<TransportorsController>/5
+        [HttpGet("{shopId}/transportors")]
+        public async Task<ActionServiceResult> GetTransportorByShopIdAsync([FromRoute] Guid shopId)
         {
-            return await _baseService.GetByPropertyAsync<Shop>("UserId", userId);
+            var response = new ActionServiceResult();
+            if (shopId == null)
+            {
+                response.MISACode = MISACode.NotFound;
+                response.Message = ApplicationCore.Properties.Resources.NotFound;
+                return response;
+            }
+            response = await _baseService.GetByPropertyAsync<Transportor>("ShopId", shopId);
+            return response;
         }
     }
 }

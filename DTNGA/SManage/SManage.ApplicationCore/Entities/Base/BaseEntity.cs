@@ -15,19 +15,23 @@ namespace SManage.ApplicationCore.Entities.Base
         /// <summary>
         /// Ngày tạo
         /// </summary>
+        [DisplayName("Ngày tạo")]
         public DateTime? CreatedDate { get; set; }
         /// <summary>
         /// Người tạo
         /// </summary>
-        public Guid? CreatedBy { get; set; }
+        [DisplayName("Người tạo")]
+        public string CreatedBy { get; set; }
         /// <summary>
         /// Ngày chỉnh sửa
         /// </summary>
+        [DisplayName("Người chỉnh sửa")]
         public DateTime? ModifiedDate { get; set; }
         /// <summary>
         /// Người chỉnh sửa
         /// </summary>
-        public Guid? ModifiedBy { get; set; }
+        [DisplayName("Ngày chỉnh sửa")]
+        public string ModifiedBy { get; set; }
 
     }
 

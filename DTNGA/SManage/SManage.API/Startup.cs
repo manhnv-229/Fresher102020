@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -33,8 +33,6 @@ namespace SManage.API
         }
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(options => options.AddPolicy("AllowAll", builder =>
@@ -55,7 +53,12 @@ namespace SManage.API
                 Options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver(); Options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
             services.AddMemoryCache();
-            //Kh?i t?o k?t n?i t?i MariaDB:
+
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time   
+            });
+            services.AddMvc();
+            //Khởi tạo kết nối tới MariaDB:
             services.AddScoped<IDbConnection>(_ => new MySqlConnection(Configuration["ConnectionStrings:SManageMariaDB"]));
 
             // DI
@@ -91,6 +94,8 @@ namespace SManage.API
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

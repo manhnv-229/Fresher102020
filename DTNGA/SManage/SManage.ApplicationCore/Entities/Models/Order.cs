@@ -66,8 +66,17 @@ namespace SManage.ApplicationCore.Entities
         [Required]
         [DisplayName("Bên trả phí vận chuyển")]
         public int ShippingPaidBy { get; set; }
-        //public DateTime CreatedDate { get; set; }
-        //public DateTime? ModifiedDate { get; set; }
+
+        [DisplayName("Họ tên khách hàng")]
+        public string CustomerName { get; set; }
+        [DisplayName("Số điện thoại khách hàng")]
+        public string  PhoneNumber { get; set; }
+        [DisplayName("Địa chỉ nhận hàng")]
+        public string  Address { get; set; }
+        [DisplayName("Id trạng thái đơn hàng")]
+        public Guid OrderStateId { get; set; }
+        [DisplayName("Tên sản phẩm")]
+        public string ProductName { get; set; }
 
         [DisplayName("Người tạo")]
         public virtual UserInfo Creater { get; set; }

@@ -9,8 +9,7 @@ class AddOrder extends Base {
             this.autoCompleteProduct();
             this.autoCompleteProvince();
             this.initEventOrderAddPage();
-            var cbTrans = `#order-add #cb-transportor`;
-            this.autoCompleteTransportor(cbTrans);
+            
         }
         catch (e) {
             console.log(e);

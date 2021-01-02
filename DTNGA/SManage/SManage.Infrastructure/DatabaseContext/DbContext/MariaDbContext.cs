@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using MySqlConnector;
+using SManage.ApplicationCore.Entities.Base;
 using SManage.ApplicationCore.Interfaces.DatabaseContext;
 using System;
 using System.Collections.Generic;
@@ -37,11 +38,46 @@ namespace SManage.Infrastructure.DatabaseContext.DbContext
         #endregion
 
         #region GET
+        public async Task<PagingData<T>> GetPagingAsync<T>(string sp, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure)
+        {
+            PagingData<T> pagingData = new PagingData<T>();
+            try
+            {
+                if (_dbConnection.State == ConnectionState.Closed)
+                    _dbConnection.Open();
+                using (var tran = _dbConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        parms.Add("@TotalRecord", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                        pagingData.Data = (await _dbConnection.QueryAsync<T>(sp, param: parms, commandType: commandType, transaction: tran)).ToList();
+                        pagingData.Total = parms.Get<int>("@TotalRecord");
+                        tran.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (_dbConnection.State == ConnectionState.Open)
+                    _dbConnection.Close();
+            }
+            return pagingData;
+        }
+
         public List<T> Get<T>(string queryCommand, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure)
         {
             return _dbConnection.Query<T>(queryCommand, commandType: commandType).ToList();
         }
- 
+
         public async Task<T> GetByIdAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
             var result = await _dbConnection.QueryFirstOrDefaultAsync<T>(sp, parms, commandType: commandType);
@@ -59,7 +95,7 @@ namespace SManage.Infrastructure.DatabaseContext.DbContext
                 {
                     try
                     {
-                        result = (await _dbConnection.QueryAsync<T>(queryCommand,param:parms, commandType:commandType, transaction: tran)).ToList();
+                        result = (await _dbConnection.QueryAsync<T>(queryCommand, param: parms, commandType: commandType, transaction: tran)).ToList();
                         tran.Commit();
                     }
                     catch (Exception ex)

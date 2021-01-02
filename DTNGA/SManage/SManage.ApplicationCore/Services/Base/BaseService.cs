@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using SManage.ApplicationCore.Entities;
 using SManage.ApplicationCore.Entities.Base;
 using SManage.ApplicationCore.Enums;
 using SManage.ApplicationCore.Interfaces.Repositories;
@@ -46,11 +47,38 @@ namespace SManage.ApplicationCore.Services
             return _actionServiceResult;
         }
 
-        public async Task<int> DeleteRangeAsync<T>(List<object> entities)
+        public async Task<ActionServiceResult> DeleteRangeAsync<T>(List<Guid> entities)
         {
-            var entityName = typeof(T).GetType().Name;
+            _actionServiceResult = new ActionServiceResult();
+            var entityName = typeof(T).Name;
             var sp = $"Proc_Delete{entityName}By{entityName}Id";
-            return await _baseRepository.DeleteRangeAsync<T>(sp, entities);
+            var listDeleted = new List<T>();
+            var failDelete = new List<Guid>();
+            for (var i = 0; i < entities.Count; i++)
+            {
+                var entityId = entities[i];
+                var parms = MappingDataTypeForOne($"{entityName}Id", entityId);
+                var result = await _baseRepository.DeleteAsync<T>(sp, parms);
+                if (result == null)
+                {
+                    _actionServiceResult.Success = false;
+                    _actionServiceResult.MISACode = MISACode.ErrorDeleteEntity;
+                    _actionServiceResult.Message = Properties.Resources.ErrorDeleteEntity;
+                    failDelete.Add(entityId);
+                }
+                else
+                    listDeleted.Add(result);
+            }
+            if (failDelete.Count > 0)
+            {
+                _actionServiceResult.Data = failDelete;
+                return _actionServiceResult;
+            }
+            else
+            {
+                _actionServiceResult.Data = listDeleted;
+                return _actionServiceResult;
+            }
         }
         #endregion
 
@@ -137,43 +165,18 @@ namespace SManage.ApplicationCore.Services
             _actionServiceResult.Data = result;
             return _actionServiceResult;
         }
-        public virtual async Task<ActionServiceResult> GetByPagingAsync<T>(int limit, int offset)
+        public async Task<PagingData<T>> GetPagingByFilterAsync<T>(Dictionary<string, object> filterValues = null)
         {
-            _actionServiceResult = new ActionServiceResult();
-            var entityName = typeof(T).Name;
-            var sp = $"Proc_Get" + entityName + "ByPaging";
             var parms = new DynamicParameters();
-            parms.Add("PageIndex", offset);
-            parms.Add("PageSize", limit);
-            var result = await _baseRepository.GetAsync<T>(sp, parms);
-            if (result == null)
+            foreach (KeyValuePair<string, object> item in filterValues)
             {
-                _actionServiceResult.Success = false;
-                _actionServiceResult.MISACode = MISACode.NotFound;
-                _actionServiceResult.Message = ApplicationCore.Properties.Resources.NotFound;
-                return _actionServiceResult;
+                var key = item.Key;
+                var value = item.Value;
+                parms.Add(key, value);
             }
-            _actionServiceResult.Data = result;
-            return _actionServiceResult;
-        }
-
-        public virtual async Task<ActionServiceResult> GetByFilterAsync<T>(string propName, object propValue)
-        {
-            _actionServiceResult = new ActionServiceResult();
             var entityName = typeof(T).Name;
-            var sp = $"Proc_Get" + entityName + "ByFilter";
-            var parms = new DynamicParameters();
-            parms.Add($"{propName}", propValue);
-            var result = await _baseRepository.GetAsync<T>(sp, parms);
-            if (result == null)
-            {
-                _actionServiceResult.Success = false;
-                _actionServiceResult.MISACode = MISACode.NotFound;
-                _actionServiceResult.Message = ApplicationCore.Properties.Resources.NotFound;
-                return _actionServiceResult;
-            }
-            _actionServiceResult.Data = result;
-            return _actionServiceResult;
+            var sp = string.Format(MISAConst.Proc_GetByFilter, entityName);
+            return await _baseRepository.GetPagingAsync<T>(sp, parms);
         }
         #endregion
 

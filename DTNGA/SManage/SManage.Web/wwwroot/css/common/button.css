@@ -1,10 +1,16 @@
-﻿/* style button dùng chung*/
+/* style button dùng chung*/
+
+button {
+    cursor: pointer;
+    align-self: center;
+}
 
 /*button chỉ có icon*/
 .m-button-icon {
     width: 40px;
     height: 40px;
     padding: 12px;
+    outline: none;
     border: 1px solid #e5e5e5;
     border-radius: 5px;
     background-color: #ffffff;
@@ -14,29 +20,33 @@
 }
 
     .m-button-icon:hover {
-        border: none;
-        outline: none;
+        border: 1px solid #E9EBEE;
         background-color: #E9EBEE;
     }
 
-    .m-button-icon:focus {
-        border: none;
-        outline: none;
-        background-color: #01B075;
-    }
+button:disabled,
+button[disabled] {
+    background-color: #e5e5e5;
+    opacity: 0.5;
+}
 
-    /* button tròn */
+    button:disabled,
+    button[disabled] ~ .m-icon {
+        opacity: 0.5;
+    }
+/* button tròn */
 .m-button-round {
     border-radius: 50%;
     width: 32px;
     height: 32px;
-    padding: 8px;
+    padding: 0;
     border: 1px solid #e5e5e5;
     background-color: #ffffff;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
 }
+
     .m-button-round:hover {
         border: none;
         outline: none;
@@ -46,10 +56,14 @@
     .m-button-round:focus {
         border: none;
         outline: none;
+    }
+
+    .m-button-round.selected {
+        border: none;
+        outline: none;
         background-color: #01B075;
         color: #ffffff;
     }
-
 /*------------------------*/
 /* button chỉ chứa text */
 /* button với content có 1-2 từ*/

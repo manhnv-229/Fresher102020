@@ -7,7 +7,6 @@
   <ItemGroup>
     <Folder Include="wwwroot\content\icon\page\" />
     <Folder Include="wwwroot\content\image\page\" />
-    <Folder Include="wwwroot\view\saler\" />
   </ItemGroup>
 
   <ItemGroup>

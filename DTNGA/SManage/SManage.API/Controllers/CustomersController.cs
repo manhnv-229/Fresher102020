@@ -15,8 +15,7 @@ namespace SManage.API.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private readonly IBaseService _baseService;
-        private ActionServiceResult _actionServiceResult;
+        protected readonly IBaseService _baseService;
 
         public CustomersController(IBaseService baseService)
         {

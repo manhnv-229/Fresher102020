@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using SManage.ApplicationCore.Entities.Base;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -25,6 +26,17 @@ namespace SManage.ApplicationCore.Interfaces.DatabaseContext
         Task<int> ExecuteAsync(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
 
         #region GET
+        /// <summary>
+        /// Lấy thông tin theo phân trang
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sp">Chuỗi truy vấn/ Tên Procedure</param>
+        /// <param name="parms"> Bộ tham số</param>
+        /// <param name="commandType">Loại truy vẫn</param>
+        /// <returns>PagingData chứa danh sách và tổng số bản ghi thỏa mãn</returns>
+        /// CreatedBy dtnga (30/12/2020)
+        Task<PagingData<T>> GetPagingAsync<T>(string sp, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure);
+
         /// <summary>
         /// Lấy nhiều bản ghi
         /// </summary>

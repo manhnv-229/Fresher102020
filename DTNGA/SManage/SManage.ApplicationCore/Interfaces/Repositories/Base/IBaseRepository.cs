@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using SManage.ApplicationCore.Entities.Base;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -78,6 +79,17 @@ namespace SManage.ApplicationCore.Interfaces.Repositories
         /// <returns>Đối tượng có Id theo mô tả</returns>
         /// CreatedBy dtnga (11/11/2020)
         Task<T> GetByIdAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
+        /// <summary>
+        /// Lấy thông tin theo phân trang
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sp"></param>
+        /// <param name="parms"></param>
+        /// <param name="commandType"></param>
+        /// <returns></returns>
+        /// CreatedBy dtnga (30/12/2020)
+        Task<PagingData<T>> GetPagingAsync<T>(string sp, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure);
+
         #endregion
 
         #region Insert

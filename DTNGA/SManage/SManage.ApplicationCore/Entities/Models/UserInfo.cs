@@ -47,6 +47,9 @@ namespace SManage.ApplicationCore.Entities
         [DisplayName("Mã đơn vị hành chính")]
         public string AdministrativeAreaCode { get; set; }
 
+        [DisplayName("Mã vai trò")]
+        public string RoleCode { get; set; }
+
         [DisplayName("Tài khoản")]
         public virtual ICollection<Account> Accounts { get; set; }
         [DisplayName("Cửa hàng")]

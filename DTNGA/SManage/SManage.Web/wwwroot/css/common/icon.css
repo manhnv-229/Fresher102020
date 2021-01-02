@@ -71,6 +71,10 @@
     background-image: url('/content/icon/common/BlackIcon/more-horizontal.svg');
     opacity: 0.4;
 }
+
+.logout-icon {
+    background-image: url('/content/icon/common/whiteIcon/log-out.svg');
+}
 /*content*/
 /*filter*/
 .search-icon {

@@ -10,48 +10,53 @@ using SManage.ApplicationCore.Interfaces.Service.Base;
 
 namespace SManage.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class OrdersController : ControllerBase
     {
         private readonly IBaseMemoryCache _baseMemoryCache;
-        private readonly IOrderService _baseService;
+        private readonly IOrderService _orderService;
 
         public OrdersController(IBaseMemoryCache baseMemoryCache, IOrderService baseService)
         {
             _baseMemoryCache = baseMemoryCache;
-            _baseService = baseService;
+            _orderService = baseService;
         }
-
-
-
+        
         /// <summary>
-        /// Lấy thông tin đơn hàng theo phân trang
+        /// Lấy danh sách trạng thái đơn hàng trên hệ thống
         /// </summary>
-        /// <param name="shopId">Id cửa hàng</param>
-        /// <param name="pageIndex">Số thứ tự trang</param>
-        /// <param name="pageSize">Số bản ghi trên 1 trang</param>
         /// <returns></returns>
-        [HttpGet("Paging/{shopId}")]
-        public async Task<ActionServiceResult> GetOrderByPaging([FromRoute] Guid shopId, [FromQuery] int pageIndex, [FromQuery] int pageSize)
+        [HttpGet("state")]
+        public async Task<ActionServiceResult> GetOrderState()
         {
-            _baseMemoryCache.SetCache("ShopId", shopId);
-            return await _baseService.GetByPagingAsync<Order>(pageSize, pageIndex);
+            return await _orderService.GetAllAsync<OrderState>();
         }
 
         /// <summary>
-        /// Lấy thông tin đơn hàng theo bộ lọc
+        /// Lấy danh sách đơn hàng
         /// </summary>
-        /// <param name="filterType"></param>
-        /// <param name="filterValue"></param>
+        /// <param name="page"></param>
+        /// <param name="size"></param>
+        /// <param name="keySearch"></param>
+        /// <param name="shopId"></param>
+        /// <param name="orderStateId"></param>
         /// <returns></returns>
-        /// CreatedBy dtnga(16/12/2020)
-        [HttpGet("Filter/{shopId}")]
-        public async Task<ActionServiceResult> GetOrderByFilter([FromRoute] Guid shopId, [FromQuery] string filterType, [FromQuery] string filterValue)
+        [HttpGet]
+        public async Task<IActionResult> GetByFilterAsync([FromQuery] int page, [FromQuery] int size, [FromQuery] string keySearch, [FromQuery] Guid shopId, [FromQuery] Guid? orderStateId)
         {
-            _baseMemoryCache.SetCache("ShopId", shopId);
-            return await _baseService.GetByFilterAsync<Order>(filterType, filterValue);
+            var filterValues = new Dictionary<string, object>
+            {
+                { "PageIndex", page },
+                { "PageSize", size },
+                { "KeySearch", keySearch },
+                { "ShopId", shopId},
+                { "OrderStateId", orderStateId}
+            };
+            var pagingData = await _orderService.GetPagingByFilterAsync<Order>(filterValues);
+            return Ok(pagingData);
         }
+
         /// <summary>
         /// Lấy thông tin đơn hàng theo Id
         /// </summary>
@@ -62,8 +67,8 @@ namespace SManage.API.Controllers
         public async Task<ActionServiceResult> GetOrderById([FromRoute] Guid orderId)
         {
             var response = new ActionServiceResult();
-            var order= (Order) (await _baseService.GetByIdAsync<Order>(orderId)).Data;
-            return await _baseService.ProcessingOrder(order);
+            var order= (Order) (await _orderService.GetByIdAsync<Order>(orderId)).Data;
+            return await _orderService.ProcessingOrder(order);
 
         }
 
@@ -76,7 +81,7 @@ namespace SManage.API.Controllers
         [HttpPost]
         public async Task<ActionServiceResult> CreatOrder([FromBody] Order order)
         {
-            return await _baseService.InsertAsync<Order>(order);
+            return await _orderService.InsertAsync<Order>(order);
         }
 
         /// <summary>
@@ -89,7 +94,7 @@ namespace SManage.API.Controllers
         [HttpPut("{orderId}")]
         public async Task<ActionServiceResult> UpdateOrder([FromBody] Order order)
         {
-            return await _baseService.UpdateAsync<Order>(order);
+            return await _orderService.UpdateAsync<Order>(order);
         }
 
         /// <summary>
@@ -98,10 +103,14 @@ namespace SManage.API.Controllers
         /// <param name="orderId">Id đơn hàng</param>
         /// <returns></returns>
         /// CreatedBy dtnga(16/12/2020)
-        [HttpDelete("{orderId}")]
-        public async Task<ActionServiceResult> DeleteOrder([FromRoute] Guid orderId)
+        [HttpDelete]
+        public async Task<IActionResult> DeleteOrder([FromBody] List<Guid> range)
         {
-            return await _baseService.DeleteAsync<Order>(orderId);
+            var response = await _orderService.DeleteRangeAsync<Order>(range);
+            if (response.Success == false)
+                return StatusCode((int)response.MISACode, response);
+            else
+                return Ok(range);
         }
     }
 }

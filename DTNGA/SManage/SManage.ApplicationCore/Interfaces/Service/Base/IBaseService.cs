@@ -28,7 +28,7 @@ namespace SManage.ApplicationCore.Interfaces.Service.Base
         /// <param name="commandType">Loại truy vấn</param>
         /// <returns>Số bản ghi xóa thành công</returns>
         /// CreatedBy dtnga (11/11/2020)
-        Task<int> DeleteRangeAsync<T>(List<object> entities);
+        Task<ActionServiceResult> DeleteRangeAsync<T>(List<Guid> entities);
 
         #endregion
 
@@ -84,24 +84,13 @@ namespace SManage.ApplicationCore.Interfaces.Service.Base
         Task<ActionServiceResult> GetByIdAsync<T>(Guid entityId);
 
         /// <summary>
-        /// Lấy thông tin theo phân trang
+        /// Lấy dữu liệu theo tim fkieems và bộ lọc (có paging)
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="limit">Số bản ghi trên 1 trang</param>
-        /// <param name="offset">Trang cần lấy</param>
-        /// <returns></returns>
-        /// CreatedBy dtnga (18/12/2020)
-        Task<ActionServiceResult> GetByPagingAsync<T>(int limit, int offset);
-
-        /// <summary>
-        /// Lấy thông tin theo bộ lọc
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="propName">Tên tham số</param>
-        /// <param name="propValue">Giá trị</param>
-        /// <returns></returns>
-        /// CreatedBy dtnga (18/12/2020)
-        Task<ActionServiceResult> GetByFilterAsync<T>(string propName, object propValue);
+        /// <param name="filterValues">Bộ lọc</param>
+        /// <returns>Danh sách bản ghi thỏa mãn bộ lọc với số trang với kích cỡ đầu vào/returns>
+        /// CreatedBy dtnga (25/12/2020)
+        Task<PagingData<T>> GetPagingByFilterAsync<T>(Dictionary<string, object> filterValues = null);
         #endregion
 
         #region Insert
