@@ -90,7 +90,7 @@ namespace SManage.ApplicationCore.Interfaces.Service.Base
         /// <param name="filterValues">Bộ lọc</param>
         /// <returns>Danh sách bản ghi thỏa mãn bộ lọc với số trang với kích cỡ đầu vào/returns>
         /// CreatedBy dtnga (25/12/2020)
-        Task<PagingData<T>> GetPagingByFilterAsync<T>(Dictionary<string, object> filterValues = null);
+        Task<PagingData<T>> GetByFilterAsync<T>(Dictionary<string, object> filterValues = null);
         #endregion
 
         #region Insert

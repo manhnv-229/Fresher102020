@@ -94,7 +94,9 @@ class Base {
             var optionAll = $(`<div class="item combo-item item-hover displayNone" selectAll> <div class="option-icon">
                                    <div class="displayNone m-icon check-icon"></div>
                                </div><div class="option-text">Tất cả</div></div>`);
-            comboItemBox.append(optionAll);
+            var filterParent = $(targetCombo).closest(`.content-filter`);
+            if (filterParent.length > 0)
+                comboItemBox.append(optionAll);
             $.each(data, function (index, item) {
                 if (item) {
                     var optionName = "";
@@ -134,11 +136,11 @@ class Base {
             $(comboInputField).blur(function () {
                 $(targetCombo).removeClass("green-border");
                 var validateAttr = $(targetCombo).attr("validate");
-                if (typeof validateAttr !== undefined && validateAttr == "false") {
+                if (typeof validateAttr !== typeof undefined && validateAttr == "false") {
                     $(targetCombo).addClass("m-input-warning");
                     $(targetCombo).closest(".input-box").find(".error-validate").removeClass("displayNone");
                 }
-                else if (typeof validateAttr !== undefined && validateAttr == "true")
+                else if (typeof validateAttr !== typeof undefined && validateAttr == "true")
                     $(targetCombo).removeClass("m-input-warning");
 
             })
@@ -176,7 +178,10 @@ class Base {
                     $(box).data("keyId", null);
                     $(box).find(".item").removeClass("selected");
                     $(box).find(".item .check-icon").addClass("displayNone");
-                    $(box).attr("validate", false);
+                    var validateAttr = $(box).attr("validate");
+                    if (typeof validateAttr !== typeof undefined && validateAttr == "true") {
+                         $(box).attr("validate", false);
+                    }
                     $(box).closest(".input-box").find(".error-empty").removeClass("displayNone");
                 }
                 var attr = $(box).attr("loadAfterSelect");
@@ -260,7 +265,10 @@ class Base {
         var id = $(item).data("keyId");
         if (!id) $(comboBox).data("keyId", null);
         $(comboBox).data("keyId", id);
-        $(comboBox).attr("validate", true);
+        var validateAttr = $(comboBox).attr("validate");
+        if (typeof validateAttr !== typeof undefined && validateAttr == "false") {
+             $(comboBox).attr("validate", true);
+        }
         $(comboBox).closest(".input-box").find(".error-empty").addClass("displayNone");
         $(comboBox).removeClass("m-input-warning");
         me.doSomethingWhenItemSelected(item);
@@ -347,7 +355,6 @@ class Base {
                 }
                 return;
             }
-
             if (e.which == 40) {
                 $(wrapper).removeClass("displayNone");
                 $(parent).find(".arrow-button").addClass("rotate");
@@ -998,7 +1005,7 @@ class Base {
         $(input).removeAttr('validate');
         // Check trùng
         var duplicateAttr = $(input).attr("unduplicated");
-        if (value && typeof duplicateAttr !== typeof undefined && duplicateAttr !== false) {
+        if (value.trim() && typeof duplicateAttr !== typeof undefined && duplicateAttr !== false) {
             var oldValue = $(input).attr("value").trim();
             if (value && value.trim() !== oldValue) {
                 var fieldName = $(input).attr("fieldName");
@@ -1248,7 +1255,7 @@ class Base {
         }
     }
 
-    /**
+    /** 
      * Thực hiện chọn item trong box (combobox/dropdown)
      * @param {any} box Box cần chọn item
      * @param {any} itemId Id item cần được chọn

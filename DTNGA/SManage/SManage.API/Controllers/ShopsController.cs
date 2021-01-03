@@ -54,5 +54,27 @@ namespace SManage.API.Controllers
             response = await _baseService.GetByPropertyAsync<Transportor>("ShopId", shopId);
             return response;
         }
+
+        /// <summary>
+        /// Lấy danh sách sản phẩm thuộc cửa hàng thoe khóa tìm kiếm
+        /// </summary>
+        /// <param name="shopId">Id cửa hàng</param>
+        ///  <param name="keySearch">Khóa tìm kiếm</param>
+        /// <returns></returns>
+        [HttpGet("{shopId}/products")]
+        public async Task<IActionResult> GetProductByShopId([FromRoute] Guid shopId, [FromQuery] string keySearch)
+        {
+            if (shopId == Guid.Empty) return StatusCode(400, "Không có dữ liệu đầu vào");
+            else
+            {
+                var filterValues = new Dictionary<string, object>
+                {
+                    { "KeySearch", keySearch },
+                    { "ShopId", shopId}
+                };
+                var products = await _baseService.GetByFilterAsync<Product>(filterValues);
+                return StatusCode(200, products);
+            }
+        }
     }
 }

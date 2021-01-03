@@ -1,3 +1,4 @@
+
 $(document).ready(function () {
     current = new IndexJs();
 })
@@ -81,6 +82,11 @@ class IndexJs extends Base {
                 if(!$(this).val())
                     me.loadData(1);
             });
+            $(`.content-filter .search-icon`).on("click", function () {
+                var searchField = $(this).closest(`.content-filter`).find(`.search-field`);
+                if ($(searchField).val())
+                    me.loadData(1);
+            });
 
             // Sự kiện các button tại content-filter
             $(`.content-body`).find(`#btn-add`).on("click", function () {
@@ -113,6 +119,7 @@ class IndexJs extends Base {
             $(dialog).find(`#btn-saveAdd`).on("click", function () {
                 me.onClick_btnSaveAdd(this);
             });
+
         }
         catch (e) {
 

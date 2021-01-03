@@ -20,21 +20,21 @@
             </div>
         </div>
         <div class="nav-content">
-            <div class="nav-item select-menu-item" id="order-management-menu" name="order">
+            <div class="nav-item select-menu-item" loadData  name="order">
                 <div class="nav-item-box">
                     <div class="m-icon nav-item-icon active orders-list-icon"></div>
                     <div class="nav-item-text">Quản lý đơn hàng</div>
                 </div>
             </div>
-            <div class="nav-item" id="order-add-menu" name="OrderAdd">
+            <div class="nav-item"  name="OrderAdd">
                 <div class="nav-item-box">
                     <div class="m-icon nav-item-icon create-order-icon"></div>
                     <div class="nav-item-text">Tạo đơn mới</div>
                 </div>
             </div>
-            <div class="nav-item" id="setting-menu" name="Setting">
+            <div class="nav-item"  name="Setting">
                 <div class="nav-item-box">
-                    <div class="m-icon nav-item-icon setting-icon"></div>s
+                    <div class="m-icon nav-item-icon setting-icon"></div>
                     <div class="nav-item-text">Thiết lập</div>
                 </div>
             </div>
@@ -70,7 +70,7 @@
                 <div class="content-filter-left">
                     <div class="m-input">
                         <div class="m-icon search-icon"></div>
-                        <input class="search-field" id="search-field" name="seacrh" type="search" placeholder="Mã đơn hàng/số điện thoại" />
+                        <input class="search-field" id="search-field" name="seacrh" type="search" placeholder="Mã đơn hàng/ số điện thoại/ họ tên" />
                     </div>
                     <div class="m-combobox m-box" id="cb-orderState" name="OrderState" fieldName="OrderStateId" title="Trạng thái đơn hàng" loadAfterSelect></div>
                 </div>
@@ -78,7 +78,7 @@
                     <button class="m-button-icon" id="btnDelete" disabled title="Xóa">
                         <div class="m-icon delete-icon"></div>
                     </button>
-                    <button class="m-button-icon" id="btn-addOrder">
+                    <button class="m-button-icon" id="btn-add">
                         <div class="m-icon add-icon"></div>
                     </button>
                     <button class="m-button-icon" id="btn-refresh">
@@ -90,7 +90,7 @@
                 <table class="m-table" id="orders-table">
                     <thead>
                         <tr>
-                            <th class="field-short" fieldName="Checkbox">
+                            <th class="field-short" type="Checkbox">
                                 <div class="thead-box">
                                     <label class="m-checkbox">
                                         <input class="checkbox" type="checkbox" name="order" value="all" id="checkAll" />
@@ -122,12 +122,6 @@
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th class="field-long" fieldName="ProductName">
-                                <div class="thead-box">
-                                    <div class="thead-text">Sản phẩm</div>
-                                    <div class="m-icon sort-icon"></div>
-                                </div>
-                            </th>
                             <th fieldName="CreatedDate" formatType="hh:mm dd/mm/yyyy" class="text-align-center">
                                 <div class="thead-box center">
                                     <div class="thead-text">Thời gian tạo</div>
@@ -146,7 +140,7 @@
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
-                            <th fieldName="OrderStateId" type="mBox">
+                            <th fieldName="OrderStateName">
                                 <div class="thead-box">
                                     <div class="thead-text">Trạng thái</div>
                                     <div class="m-icon sort-icon"></div>

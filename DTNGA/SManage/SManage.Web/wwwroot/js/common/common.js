@@ -1,4 +1,4 @@
-﻿
+
 /**
  * Hàm xử lý định dạng ngày
  * @param {any} date Bất kì kiểu dữ liệu nào
@@ -65,4 +65,50 @@ function formatMoney(money) {
  */
 function convertInt(value){
     return parseInt(value, 10);
+}
+
+/**
+ * sắp sếp
+ * CreatedBy:DvQuan(24/12/2020)
+ * */
+var sort = {
+    sortOder() {
+        $(`table`).find(`th`).on("click", function () {
+            var th = $(this);
+            var order = th.attr("order");
+            // nếu chưa có thì gán mặc định là ASC (tăng dần)
+            if (typeof order == typeof undefined)
+                order = "asc";
+            var tbody = th.closest(`table`).find(`tbody`);
+            // sort
+            $(tbody).find(`tr`).sort(function (a, b) {
+                var col = $(th).index();
+                var valueType = th.attr("formatType");
+                var valueA= $(a).children('td').eq(col).text().toUpperCase();
+                var valueB= $(b).children('td').eq(col).text().toUpperCase();
+                if (typeof valueType !== typeof undefined) {
+                    switch (valueType) {
+                        case "money":
+                            valueA = valueA.replaceAll('.', '');
+                            valueB = valueB.replaceAll('.', '');
+                            break;
+                        case "hh:mm dd/mm/yyyy":
+                            valueA = new Date(valueA);
+                            valueB = new Date(valueB);
+                            break;
+                    }
+                }
+                if (order == 'asc') {
+                    return valueA.localeCompare(valueB);
+                }
+                else {
+                    return valueB.localeCompare(valueA);
+                }
+            }).appendTo(tbody);
+            // đảo lại order
+            if (order == "asc") th.attr("order", "desc");
+            if (order == "desc") th.attr("order", "asc");
+
+        });
+    }
 }

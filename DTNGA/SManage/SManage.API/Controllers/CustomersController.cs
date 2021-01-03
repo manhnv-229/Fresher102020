@@ -11,7 +11,7 @@ using SManage.ApplicationCore.Interfaces.Service.Base;
 
 namespace SManage.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class CustomersController : ControllerBase
     {
@@ -37,12 +37,13 @@ namespace SManage.API.Controllers
         /// Lấy thông tin khách hàng theo Id
         /// </summary>
         /// <param name="customerId">Id khách hàng</param>
-        /// <returns></returns>
+        /// <returns>Thông tin khách hàng có Id mô tả</returns>
         /// CreatedBy dtnga (15/12/2020)
         [HttpGet("{customerId}")]
-        public async Task<ActionServiceResult> GetCustomerByIdAsync([FromRoute] Guid customerId)
+        public async Task<IActionResult> GetCustomerByIdAsync([FromRoute] Guid customerId)
         {
-            return await _baseService.GetByIdAsync<Customer>(customerId);
+            var customer = (await _baseService.GetByIdAsync<Customer>(customerId)).Data;
+            return Ok(customer);
         }
 
         /// <summary>
@@ -51,10 +52,11 @@ namespace SManage.API.Controllers
         /// <param name="phoneNumber">Số điện thoại</param>
         /// <returns></returns>
         /// CreateBy dtnga (15/12/2020)
-        [HttpGet("PhoneNumber")]
-        public async Task<ActionServiceResult> GetCustomerByPhoneNumber ([FromQuery] string phoneNumber)
+        [HttpGet("PhoneNumber/{phoneNumber}")]
+        public async Task<IActionResult> GetCustomerByPhoneNumber ([FromRoute] string phoneNumber)
         {
-            return await  _baseService.GetByPropertyAsync<Customer>("PhoneNumber", phoneNumber);
+            var customer = (await _baseService.GetByPropertyAsync<Customer>("PhoneNumber", phoneNumber)).Data;
+            return Ok(customer);
         }
 
     }

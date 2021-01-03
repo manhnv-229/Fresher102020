@@ -1,7 +1,7 @@
-﻿/*Style icon dùng chung*/
+/*Style icon dùng chung*/
 .m-icon {
-    width: 16px;
-    height: 16px;
+    width: 16px !important;
+    height: 16px !important;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -123,7 +123,7 @@
 }
 
 .delete-icon {
-    background-image: url('/content/icon/common/BlackIcon/x.svg');
+    background-image: url('/content/icon/common/BlackIcon/trash.svg');
     background-size: 10px;
     opacity: 1;
     align-self: center;

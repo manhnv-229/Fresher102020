@@ -104,9 +104,6 @@
         padding: 8px;
     }
 
-        .paging .paging-mid .m-button-icon:hover {
-        }
-
         .paging .paging-mid .m-button-icon:focus {
             background-color: none;
         }

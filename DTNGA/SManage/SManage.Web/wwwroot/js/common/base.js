@@ -13,9 +13,7 @@ class Base {
         me.mesHeader = "";
         // Tên đối tượng đang xử lý hiện tại
         me.objectName = "Order";
-    }
-    getUserInfo(){
-        return userInfo;
+
     }
 
     /**
@@ -72,6 +70,7 @@ class Base {
         try {
             var me = this;
             var targetCombo = $(targetCombo);
+            $(targetCombo).children().remove();
             var comboName = $(targetCombo).attr("name");
             var title = (!$(targetCombo).attr("title")) ? "" : $(targetCombo).attr("title");
             var comboSelectBox = $(`<div class="m-input selected-box">
@@ -87,7 +86,6 @@ class Base {
                                    <div class="displayNone m-icon check-icon"></div>
                                </div>`;
             // Option : chọn tất cả item (xóa lọc)
-
             var optionAll = $(`<div class="item combo-item item-hover" selectAll> <div class="option-icon">
                                    <div class="displayNone m-icon check-icon"></div>
                                </div><div class="option-text">Tất cả</div></div>`);
@@ -154,6 +152,43 @@ class Base {
             $(comboButton).on("click", function () {
                 me.onClick_btnComboBoxButton(comboButton);
             });
+
+            return targetCombo;
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    /** 
+     * Thực hiện chọn item trong box (combobox/dropdown)
+     * @param {any} box Box cần chọn item
+     * @param {any} itemId Id item cần được chọn
+     * CreatedBy dtnga (24/12/2020)
+     */
+    SelectItem(box, itemId) {
+        try {
+            var me = this;
+            var box = $(box);
+            var id = itemId;
+            var items = $(box).find(`.item`);
+            $.each(items, function (index, item) {
+                $(item).removeClass("selected");
+                $(item).find(`.check-icon`).addClass("displayNone");
+                var itemId = $(item).data("keyId");
+                if (itemId == id) {
+                    // set style cho item được chọn:
+                    var selectedItem = $(item);
+                    $(selectedItem).addClass("selected");
+                    $(selectedItem).find(`.check-icon`).removeClass("displayNone");
+                    var selectedItemText = $(selectedItem).find(`.option-text`).text();
+                    $(selectedItem).closest(`.m-box`).find(`input`).val(selectedItemText);
+                    $(selectedItem).closest(`.m-box`).data("keyId", id);
+                    $(box).closest(".input-box").find(".error-empty").addClass("displayNone");
+                    return true;
+                }
+            })
+            return false;
         }
         catch (e) {
             console.log(e);
@@ -751,11 +786,13 @@ class Base {
     /** Hàm thực hiện thêm dữ liệu mới
      * Created By dtnga (21/11/2020)
      * */
-    onClick_btnAdd() {
+    onClick_btnAdd(buttonAdd) {
         try {
             var me = this;
             me.formMode = "add";
-            me.showDialog();
+            if (!buttonAdd) var dialog = $(`.content-body:visible .m-dialog`);
+            else var dialog = $(buttonAdd).closest(`.content-body`).find(`.m-dialog`);
+            me.showDialog(dialog);
         } catch (e) {
             console.log(e);
         }
@@ -863,24 +900,51 @@ class Base {
         }
     }
 
-    /** Kiểm tra input /ó hợp lệ không 
-    * CreatedBy dtnga (08/12/2020)
-     */
-    onBlur_inputField() {
-        var input = this;
-        if ($(input).is(":required")) {
-            var value = $(input).val();
-            if (!value || !value.trim()) {
-                $(input).addClass("m-input-warning");
-                $(input).attr('validate', 'fasle');
-                $(input).attr('title', "Trường này không được để trống");
-            }
-            else {
-                $(input).removeAttr('validate');
-                $(input).removeClass("m-input-warning");
+    /** Kiểm tra input có hợp lệ không 
+    * @param {Element} inputField trường input được blur
+   * CreatedBy dtnga (08/12/2020)
+    */
+    onBlur_inputField(inputField) {
+        var me = this;
+        var input = $(inputField);
+        var value = $(input).val();
+        $(input).closest(".input-box").find(".error-duplicate").addClass("displayNone");
+        $(input).closest(".input-box").find(".error-empty").addClass("displayNone");
+        $(input).removeClass("m-input-warning");
+        $(input).removeAttr('validate');
+        // Check trùng
+        var duplicateAttr = $(input).attr("unduplicated");
+        if (value.trim() && typeof duplicateAttr !== typeof undefined && duplicateAttr !== false) {
+            var oldValue = $(input).attr("value").trim();
+            if (value && value.trim() !== oldValue) {
+                var fieldName = $(input).attr("fieldName");
+                $.ajax({
+                    url: me.host + me.getRoute() + "/duplication?key=" + fieldName + "&value=" + value,
+                    method: "GET"
+                })
+                    .done(function (res) {
+                        if (res) {
+                            // Bị trùng
+                            $(input).addClass("m-input-warning");
+                            $(input).attr('validate', 'false');
+                            $(input).closest(".input-box").find(".error-duplicate").removeClass("displayNone");
+                        }
+                    })
+                    .fail(function (res) {
+                        console.log(res);
+                    })
             }
         }
+        else if ((!value || !value.trim()) && $(input).is(":required")) {
+            $(input).addClass("m-input-warning");
+            $(input).attr('validate', 'false');
+            $(input).attr('title', "Trường này không được để trống");
+            $(input).closest(".input-box").find(".error-empty").removeClass("displayNone");
+
+        }
+
     }
+
     /** 
      * TODO bị lặp/ Kiểm tra trường bắt buộc nhập trước
      * CreatedBy dtnga(08/12/2020)
@@ -904,6 +968,7 @@ class Base {
             }
         }
     }
+
     /**Kiểm tra dữ liệu, nếu trống thì cảnh báo
      * Createdby dtnga (14/11/2020)
      * */
@@ -945,9 +1010,9 @@ class Base {
      Created by dtnga (14/11/2020)
      */
     onClick_Exit_Dialog() {
-        var dialog = $(`.m-dialog`);
+        var dialog = $(`.content-body:visible`).find(`.m-dialog`);
         this.clear(dialog);
-        dialog.hide();
+        dialog.addClass("displayNone");
     }
 
     /** Hàm thực hiện đóng form khi người dùng nhấn ESC
@@ -961,16 +1026,29 @@ class Base {
             }
         });
     }
+
     /** Thực hiện clear dữ liệu và cảnh báo trên object truyền vào hàm
-    * CreatedBy dtnga (17/11/2020) 
-    */
+   * CreatedBy dtnga (17/11/2020) 
+   */
     clear(obj) {
-        $(obj).find(`input`).val(null);
+        $(obj).find(`input, textarea`).val(null);
+        $(obj).find(`input, textarea`).attr("value", "");
         $(obj).find(`input[required],input[type="email"]`).removeClass("m-input-warning");
         $(obj).find(`input[required],input[type="email"]`).attr('validate', 'false');
         //clear ngày, select, radio button
         $(obj).find(`input[type="radio"]`).prop('checked', false);
         $(obj).find(`select option`).remove();
+
+        //comboBox/dropdown
+        var boxs = $(obj).find(`.m-box`);
+        $(boxs).removeClass("m-input-warning");
+        $(boxs).data("keyId", null);
+        $(boxs).find(`.item`).removeClass("selected");
+        $(boxs).find(`.item .check-icon`).addClass("displayNone");
+        $(obj).find(`.m-box[validate]`).attr("validate", false);
+
+        // thông báo validate
+        $(obj).find(`.error-validate`).addClass("displayNone");
     }
 
     /** Hàm thực hiện làm mới dữ liệu
@@ -978,7 +1056,6 @@ class Base {
      * */
     onClick_btnRefresh() {
         this.loadData();
-        alert("Refresh success.");
     }
 
 
@@ -1481,6 +1558,7 @@ class Base {
 
             var filterboxs = $(currentContent).find(`.content-filter .m-box`);
             filterboxs.push($(`.header .m-box`));
+
             $.each(filterboxs, function (index, item) {
                 var filterKey = $(item).attr("fieldName");
                 var filterValue = (!$(item).data("keyId")) ? null : $(item).data("keyId");
@@ -1491,7 +1569,7 @@ class Base {
             });
 
             $(`.m-loading`).removeClass("displayNone");
-
+            
             me.route = "/api/v1/Orders";
             me.objectName = me.getObjectName();
             // Lấy dữ liệu thỏa mãn bộ lọc
@@ -1510,7 +1588,8 @@ class Base {
                             var td = $(`<td></td>`);
                             // lấy fielname th
                             var fieldName = $(th).attr('fieldName');
-                            if (fieldName == "Checkbox") {
+                            var type = $(th).attr("type");
+                            if (type == "Checkbox") {
                                 var checkbox = $(`<div><label class="m-checkbox">
                                                 <span class="checkmark"></span>
                                       </label></div>`);
@@ -1535,11 +1614,30 @@ class Base {
                                             value = formatDate(value, "hh:mm dd/mm/yyyy");
                                             td.addClass("text-align-center");
                                             break;
+                                        case "mBox":
+
+                                            break;
                                         default:
                                             break;
                                     }
                                 }
-                                else value = "...";
+                                else {
+                                    value = "...";
+                                    var formatType = $(th).attr('formatType');
+                                    switch (formatType) {
+                                        case "money":
+                                            td.addClass("text-align-right");
+                                            break;
+                                        case "dd/mm/yyyy":
+                                            td.addClass("text-align-center");
+                                            break;
+                                        case "hh:mm dd/mm/yyyy":
+                                            td.addClass("text-align-center");
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
                                 var span = `<span>` + value + `</span>`;
                                 var div = `<div>` + span + `</div>`;
                                 // gán vào td -> tr

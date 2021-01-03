@@ -2,6 +2,9 @@ $(document).ready(function () {
     var owner = new Owner();
 })
 
+
+var orderState = [];
+
 class Owner extends Base {
     constructor() {
         super();
@@ -11,6 +14,7 @@ class Owner extends Base {
         me.loadAccount();
         me.loadComboBoxCustome();
         me.initEvent();
+        var sortEvent = sort.sortOder();
     }
 
     /** Thực hiện lấy thông tin người dùng sau khi đăng nhập
@@ -46,9 +50,8 @@ class Owner extends Base {
                 .done(function (res) {
                     var targetBox = $(document).find(`.m-box[name="OrderState"]`);
                     var data = res.Data;
+                    orderState = data;
                     me.createComboBox(data, targetBox);
-                    // display item All cho các Filter
-                    $(`.content-filter .m-box .item[selectAll]`).removeClass("displayNone");
                 })
                 .fail(function (res) {
                     console.log(res);
@@ -70,43 +73,72 @@ class Owner extends Base {
                 $(firstItem).trigger("click");
                 // Tạo sự kiện khi click item
                 $(comboBoxShop).find(`.item`).on("click", function () {
-                    me.loadData(1);
+                    // load lại đơn hàng
+                    me.loadData(1, $(`#orders-table`));
+                    // load lại đơn vị vận chuyển
+                    me.loadTransportComboBox();
                 });
 
-                // Danh sách đơn vị vận chuyển
-                var shopId = $(comboBoxShop).data("keyId");
-                route = "/api/v1/Shops/" + shopId + "/transportors";
-                $.ajax({
-                    url: me.host + route,
-                    method: "GET"
-                })
-                    .done(function (res) {
-                        var transportors = res.Data;
-                        var cbTrans = `#order-add #cb-transportor`;
-                        me.createComboBox(transportors, cbTrans);
-                    })
-                    .fail(function (res) {
-                        console.log(res);
-                    })
-
-                // Tạo pagingSize
-                var pagingSize = ["15", "20", "30", "40", "50"];
-                var targetComboboxs = $(`.paging .m-box[name="PageSize"]`);
-                $.each(targetComboboxs, function (index, item) {
-                    me.createComboBox(pagingSize, item);
-                    $(item).find(`.item`).on("click", function () {
-                        var pageSize = $(this).find(`.option-text`).text();
-                        $(this).closest(`.pageSize`).attr("value", pageSize);
-                        me.loadData(1);
-                    });
-                    var defaultSelectedItem = $(item).find(".item")[0];
-                    $(defaultSelectedItem).trigger("click");
-                });
+                me.loadTransportComboBox();
+                me.creatPagingBox();
+                
             })
                 .fail(function (res) {
                     console.log(res);
                 })
 
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    creatPagingBox() {
+        try {
+            var me = this;
+            // Tạo pagingSize
+            var pagingSize = ["15", "20", "30", "40", "50"];
+            var targetComboboxs = $(`.paging .m-box[name="PageSize"]`);
+            $.each(targetComboboxs, function (index, item) {
+                me.createComboBox(pagingSize, item);
+                $(item).find(`.item`).on("click", function () {
+                    var pageSize = $(this).find(`.option-text`).text();
+                    $(this).closest(`.pageSize`).attr("value", pageSize);
+                    me.loadData(1);
+                });
+                var defaultSelectedItem = $(item).find(".item")[0];
+                $(defaultSelectedItem).trigger("click");
+            });
+        }
+        catch (e) {
+            console.log(e);
+        }
+        
+    }
+
+    /**
+     * Thực hiện load danh sách đơn vị vận chuyển
+     * createdBy dtnga (31/12/2020)
+     * */
+    loadTransportComboBox() {
+        try {
+            var me = this;
+            // Danh sách đơn vị vận chuyển
+            var comboBoxShop = $(`#cb-Shop`);
+            var shopId = $(comboBoxShop).data("keyId");
+            var route = "/api/v1/Shops/" + shopId + "/transportors";
+            $.ajax({
+                url: me.host + route,
+                method: "GET"
+            })
+                .done(function (res) {
+                    var transportors = res.Data;
+                    var cbTrans = $(`#order-add #cb-transportor`);
+                    me.createComboBox(transportors, cbTrans);
+                })
+                .fail(function (res) {
+                    console.log(res);
+                })
         }
         catch (e) {
             console.log(e);
@@ -130,13 +162,17 @@ class Owner extends Base {
                 $(`.content-body`).addClass("displayNone");
                 // Hiển thị content tương ứng
                 var fieldName = $(this).attr("name");
-                var content = $(`.content-body[fieldName="` + fieldName + `"]`);
+                var content = $(`.content-body[name="` + fieldName + `"]`);
                 $(content).removeClass("displayNone");
                 $(`.content-header-title`).text(content.attr("titleName"));
                 // load data tương ứng với content
-                var tblContent = $(content).find(`.m-table`);
-                var tableData = $(tblContent).find('tbody tr');
-                me.loadData(1, tblContent);
+                var loadAttr = $(this).attr("loadData");
+                if (typeof loadAttr !== typeof undefined && loadAttr !== false) {
+                    var tblContent = $(content).find(`.m-table`);
+                    var trs = $(tblContent).find(`tbody tr`);
+                    if (trs.length==0)
+                        me.loadData(1, tblContent);
+                }
             });
 
             // Logout

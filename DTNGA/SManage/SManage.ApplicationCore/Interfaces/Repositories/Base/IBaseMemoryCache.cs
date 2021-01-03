@@ -20,6 +20,14 @@ namespace SManage.ApplicationCore
         object GetCache(string key);
 
         /// <summary>
+        /// Thực hiện lấy dữ liệu từ cache
+        /// </summary>
+        /// <param name="key">Khóa để lấy dữ liệu</param>
+        /// <returns>Đối tượng chứa dữ liệu có khóa được mô tả</returns>
+        /// CreatedBy dtnga (11/11/2020)
+        T GetCache<T>(string key);
+
+        /// <summary>
         /// Thực hiện thêm dữ liệu vào cache theo key
         /// </summary>
         /// <param name="key">Khóa để thêm dữ liệu</param>

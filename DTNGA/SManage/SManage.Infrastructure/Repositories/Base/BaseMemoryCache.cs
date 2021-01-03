@@ -74,5 +74,17 @@ namespace SManage.Infrastructure
             var cacheEntry = _memoryCache.Get(key);
             return cacheEntry;
         }
+
+        /// <summary>
+        /// Lấy dữ liệu từ cache theo key
+        /// </summary>
+        /// <param name="key">Key</param>
+        /// <returns></returns>
+        /// CreatedBy dtnga (11/11/2020)
+        public T GetCache<T>(string key)
+        {
+            var cacheEntry = _memoryCache.Get<T>(key);
+            return cacheEntry;
+        }
     }
 }

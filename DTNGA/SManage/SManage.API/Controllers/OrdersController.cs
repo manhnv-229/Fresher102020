@@ -53,7 +53,7 @@ namespace SManage.API.Controllers
                 { "ShopId", shopId},
                 { "OrderStateId", orderStateId}
             };
-            var pagingData = await _orderService.GetPagingByFilterAsync<Order>(filterValues);
+            var pagingData = await _orderService.GetByFilterAsync<Order>(filterValues);
             return Ok(pagingData);
         }
 
@@ -64,11 +64,15 @@ namespace SManage.API.Controllers
         /// <returns></returns>
         /// CreatedBy dtnga(16/12/2020)
         [HttpGet("{orderId}")]
-        public async Task<ActionServiceResult> GetOrderById([FromRoute] Guid orderId)
+        public async Task<IActionResult> GetOrderById([FromRoute] Guid orderId)
         {
-            var response = new ActionServiceResult();
-            var order= (Order) (await _orderService.GetByIdAsync<Order>(orderId)).Data;
-            return await _orderService.ProcessingOrder(order);
+            var order = _baseMemoryCache.GetCache<Order>(orderId.ToString());
+            if (order == null)
+            {
+                order = (Order)(await _orderService.GetByIdAsync<Order>(orderId)).Data;
+                _baseMemoryCache.SetCache(orderId.ToString(), order);
+            }
+            return Ok(order);
 
         }
 
@@ -100,7 +104,7 @@ namespace SManage.API.Controllers
         /// <summary>
         /// Thực hiện xóa đơn hàng theo Id
         /// </summary>
-        /// <param name="orderId">Id đơn hàng</param>
+        /// <param name="range">Id đơn hàng</param>
         /// <returns></returns>
         /// CreatedBy dtnga(16/12/2020)
         [HttpDelete]

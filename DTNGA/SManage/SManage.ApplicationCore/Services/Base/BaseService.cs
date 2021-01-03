@@ -165,7 +165,7 @@ namespace SManage.ApplicationCore.Services
             _actionServiceResult.Data = result;
             return _actionServiceResult;
         }
-        public async Task<PagingData<T>> GetPagingByFilterAsync<T>(Dictionary<string, object> filterValues = null)
+        public async Task<PagingData<T>> GetByFilterAsync<T>(Dictionary<string, object> filterValues = null)
         {
             var parms = new DynamicParameters();
             foreach (KeyValuePair<string, object> item in filterValues)

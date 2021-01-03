@@ -1,4 +1,4 @@
-﻿/* Style phần content dùng chung*/
+/* Style phần content dùng chung*/
 
 /* content header*/
 .content .content-header {
@@ -38,14 +38,15 @@
     .content-filter .content-filter-left .m-input {
         margin-top: 0;
     }
-
-
-        /* hint */
-        .content-filter .content-filter-left .search-field::-webkit-input-placeholder {
-            font-size: 12px;
-            color: #bbbbbb;
-            font-family: GoogleSans-Regular;
-        }
+.content-filter-left .search-field{
+    width: 220px;
+}
+/* hint */
+.search-field::-webkit-input-placeholder {
+    font-size: 12px;
+    color: #bbbbbb;
+    font-family: GoogleSans-Regular;
+}
 
     .content-filter .content-filter-left .state-box {
         width: 150px;
@@ -69,7 +70,9 @@
     margin-right: 0px;
     margin-left: 16px;
 }
-
+.content-filter-right .delete-icon {
+    background-size: contain;
+}
 /* content grid ( chứa bảng dữ liệu) => grid.css*/
 .content .content-body {
     height: calc(100% - 50px);
