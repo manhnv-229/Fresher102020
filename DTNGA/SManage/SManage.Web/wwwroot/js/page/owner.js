@@ -80,8 +80,8 @@ class Owner extends Base {
                 });
 
                 me.loadTransportComboBox();
-                me.creatPagingBox();
-                
+                me.creatPagingSizeBox();
+
             })
                 .fail(function (res) {
                     console.log(res);
@@ -93,7 +93,11 @@ class Owner extends Base {
         }
     }
 
-    creatPagingBox() {
+    /**
+     * Tạo pagingSize
+     * CreatedBy dtnga (31/12/2020)
+     * */
+    creatPagingSizeBox() {
         try {
             var me = this;
             // Tạo pagingSize
@@ -113,7 +117,7 @@ class Owner extends Base {
         catch (e) {
             console.log(e);
         }
-        
+
     }
 
     /**
@@ -170,7 +174,7 @@ class Owner extends Base {
                 if (typeof loadAttr !== typeof undefined && loadAttr !== false) {
                     var tblContent = $(content).find(`.m-table`);
                     var trs = $(tblContent).find(`tbody tr`);
-                    if (trs.length==0)
+                    if (trs.length == 0)
                         me.loadData(1, tblContent);
                 }
             });
@@ -233,7 +237,6 @@ class Owner extends Base {
             // format khi nhập liệu số tiền
             me.autoFormatMoney();
             // kiểm tra dữ liệu
-            // me.checkRequired();
             me.validateEmail();
 
             // Sự kiện khi thao tác với từng hàng dữ liệu trong bảng
@@ -253,10 +256,41 @@ class Owner extends Base {
             // sự kiện khi blur các trường input
             $(`input`).blur(me.onBlur_inputField);
 
+            // Sự kiện trên trang Add Order:
+            $(`input[type="search"][fieldName="PhoneNumber"]`).on("search", function(){
+                if( $(this).val() && $(this).val().trim())
+                    me.onSearchCustomerByPhoneNumber(this);
+            });
         }
         catch (e) {
             console.log(e);
         }
+    }
+
+    onSearchCustomerByPhoneNumber(input) {
+        var me = this;
+        if (!input)
+            return;
+        var phoneNumber = $(input).val().trim();
+        var route = "/api/v1/Customers/PhoneNumber/" + phoneNumber;
+        $.ajax({
+            url: me.host + route,
+            method: "GET"
+        })
+            .done(function (res) {
+                var customer = res;
+                if (customer) {
+                    // ẩn mark 
+                    $(this).closest(".content-box").find(`.empty-result`).addClass("displayNone");
+                    // Bind dữ liệu
+                    me.autoBindCustomer(customer);
+                }
+                else
+                    $(this).closest(".content-box").find(`.empty-result`).removeClass("displayNone");
+            })
+            .fail(function (res) {
+
+            })
     }
 
     /**
@@ -268,48 +302,48 @@ class Owner extends Base {
         var me = this;
         if (!customer)
             return;
-        var customerName = !customer["FullName"] ? '' : customer["FullName"].trim();
-        var phoneNumber = !customer["PhoneNumber"] ? '' : customer["PhoneNumber"].trim();
-        var address = !customer["Address"] ? '' : customer["Address"].trim();
-        var areaCode = !customer["AdministrativeAreaCode"] ? "VN" : customer["AdministrativeAreaCode"];
-        if (areaCode.length > 2) {
-            //TODO Lấy dữ liệu từ API
-            //$.ajax({
-            //    url: me.host + me.Route + "?areaCode=" + areaCode,
-            //    method: "GET"
-            //}).done(function (res) {
-            //    var fullArea = res.data;
-            //    var province = fullArea["Province"];
-            //    var district = fullArea["District"];
-            //    var ward = fullArea["Ward"];
-            //    $(`.box-info input[fieldName="Province"]`).val(province);
-            //    $(`.box-info input[fieldName="District"]`).val(district);
-            //    $(`.box-info input[fieldName="Ward"]`).val(ward);
-            //}).fail(function (res) {
-            //    console.log(res);
-            //})
-
-            //fakde data
-            var res = resFullArea;
-            var fullArea = res.Data;
-            var province = fullArea["Province"];
-            var district = fullArea["District"];
-            var ward = fullArea["Ward"];
-            $(`.box-info input[fieldName="Province"]`).val(province["AdministrativeAreaName"]);
-            $(`.box-info input[fieldName="Province"]`).data("keyCode", province["AdministrativeAreaCode"]);
-
-            $(`.box-info input[fieldName="District"]`).val(district["AdministrativeAreaName"]);
-            $(`.box-info input[fieldName="District"]`).data("keyCode", district["AdministrativeAreaCode"]);
-
-            $(`.box-info input[fieldName="Ward"]`).val(ward["AdministrativeAreaName"]);
-            $(`.box-info input[fieldName="Ward"]`).data("keyCode", ward["AdministrativeAreaCode"]);
-        }
-        // Bind dữ liệu
+        //thông tin chung
+        var customerName = !customer["FullName"] ? '' : customer["FullName"];
+        var phoneNumber = !customer["PhoneNumber"] ? '' : customer["PhoneNumber"]
+        var address = !customer["Address"] ? '' : customer["Address"];
         $(`.box-info input[fieldName="CustomerName"]`).val(customerName);
         $(`.box-info input[fieldName="PhoneNumber"]`).val(phoneNumber);
         $(`.box-info input[fieldName="Address"]`).val(address);
-
-
+        // thông tin xã/phường, ...
+        var areaCode = !customer["AdministrativeAreaCode"] ? "VN" : customer["AdministrativeAreaCode"];
+        if (areaCode.length > 2) {
+            //lấy dữ liệu đầy đủ từ api
+            var route = "/api/v1/AdministrativeAreas/FullAddress";
+            $.ajax({
+                url: me.host + route + "?areaCode=" + areacode,
+                method: "GET"
+            })
+                .done(function (res) {
+                    var fullarea = res.Data;
+                    var province = !fullarea["Province"] ? '' : fullarea["Province"];
+                    var district = !fullarea["District"] ? '' : fullarea["District"];
+                    var ward = !fullarea["Ward"] ? '' : fullarea["Ward"];
+                    if (province) {
+                        //TODO chọn item tại combo Tỉnh/thành
+                        $(`.box-info input[fieldname="Province"]`).val(province["AdministrativeAreaName"]);
+                        $(`.box-info input[fieldname="Province"]`).attr("validate", true);
+                        $(`.box-info input[fieldName="Province"]`).data("keyCode", province["AdministrativeAreaCode"]);
+                    }
+                    if (district) {
+                        $(`.box-info input[fieldname="District"]`).val(district["AdministrativeAreaName"]);
+                        $(`.box-info input[fieldName="District"]`).data("keyCode", district["AdministrativeAreaCode"]);
+                        $(`.box-info input[fieldname="District"]`).attr("validate", true);
+                    }
+                    if (ward) {
+                        $(`.box-info input[fieldname="Ward"]`).val(ward["AdministrativeAreaName"]);
+                        $(`.box-info input[fieldName="Ward"]`).data("keyCode", ward["AdministrativeAreaCode"]);
+                        $(`.box-info input[fieldname="Ward"]`).attr("validate", true);
+                    }
+                })
+                .fail(function (res) {
+                    console.log(res);
+                })
+        }
     }
 
     /** Thực hiện tự động bind dữ liệu tỉnh/thành

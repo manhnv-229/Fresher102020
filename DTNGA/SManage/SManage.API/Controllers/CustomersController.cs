@@ -55,7 +55,7 @@ namespace SManage.API.Controllers
         [HttpGet("PhoneNumber/{phoneNumber}")]
         public async Task<IActionResult> GetCustomerByPhoneNumber ([FromRoute] string phoneNumber)
         {
-            var customer = (await _baseService.GetByPropertyAsync<Customer>("PhoneNumber", phoneNumber)).Data;
+            var customer = ((List<Customer>)(await _baseService.GetByPropertyAsync<Customer>("PhoneNumber", phoneNumber)).Data).FirstOrDefault();
             return Ok(customer);
         }
 

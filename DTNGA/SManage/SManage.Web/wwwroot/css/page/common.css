@@ -78,3 +78,9 @@
     .empty-result span {
         font-weight: bold;
     }
+/* thông báo lỗi*/
+.error-validate {
+    font-size: 11px;
+    color: #f65454;
+    margin-bottom: 4px;
+}

@@ -20,19 +20,19 @@
             </div>
         </div>
         <div class="nav-content">
-            <div class="nav-item select-menu-item" loadData  name="order">
+            <div class="nav-item select-menu-item" loadData name="order">
                 <div class="nav-item-box">
                     <div class="m-icon nav-item-icon active orders-list-icon"></div>
                     <div class="nav-item-text">Quản lý đơn hàng</div>
                 </div>
             </div>
-            <div class="nav-item"  name="OrderAdd">
+            <div class="nav-item" name="OrderAdd">
                 <div class="nav-item-box">
                     <div class="m-icon nav-item-icon create-order-icon"></div>
                     <div class="nav-item-text">Tạo đơn mới</div>
                 </div>
             </div>
-            <div class="nav-item"  name="Setting">
+            <div class="nav-item" name="Setting">
                 <div class="nav-item-box">
                     <div class="m-icon nav-item-icon setting-icon"></div>
                     <div class="nav-item-text">Thiết lập</div>
@@ -443,19 +443,20 @@
                                         <div class="input-title flex-line">
                                             <div>Giỏ hàng</div>
                                         </div>
+                                        <div class="error-validate error-empty displayNone">Giỏ hàng không được để trống</div>
                                         <div class="product-list">
                                             <div class="empty-mark">Giỏ hàng trống</div>
                                         </div>
                                     </div>
                                     <div class="input-line total-line">
                                         <div class="total-quantity" value="0">Tổng sản phẩm: <span>0</span></div>
-                                        <div class="total-money" value="0">0</div>
+                                        <div class="total-money" fieldName="CartTotal" value="0">0</div>
                                     </div>
                                 </div>
                                 <div class="note">
                                     <div class="input-box input-box-big">
                                         <div class="input-title">Ghi chú đơn hàng</div>
-                                        <textarea class="m-input note-area"></textarea>
+                                        <textarea class="m-input note-area" fieldName="OrderNote"> </textarea>
                                     </div>
                                 </div>
                             </div>
@@ -479,33 +480,39 @@
                                     <div class="input-line">
                                         <div class="input-box input-box-small">
                                             <div class="input-title">Tên khách hàng (<span>*</span>)</div>
+                                            <div class="error-validate error-empty displayNone">Tên khách hàng không được bỏ trống</div>
                                             <input class="m-input" type="text" required fieldName="CustomerName" validate="false" />
                                         </div>
                                         <div class="input-box input-box-small">
                                             <div class="input-title">Số điện thoại (<span>*</span>)</div>
-                                            <input class="m-input" type="tel" required fieldName="PhoneNumber" validate="false" />
+                                            <div class="error-validate error-empty displayNone">Số điện thoại không được bỏ trống</div>
+                                            <input class="m-input" type="text" required fieldName="PhoneNumber" validate="false" />
                                         </div>
                                     </div>
                                     <div class="input-line">
                                         <div class="input-box input-box-big ">
                                             <div class="input-title">Địa chỉ (<span>*</span>)</div>
+                                            <div class="error-validate error-empty displayNone">Địa chỉ không được bỏ trống</div>
                                             <input class="m-input" type="text" required fieldName="Address" validate="false" />
                                         </div>
                                     </div>
                                     <div class="input-line">
                                         <div class="input-box input-box-small">
                                             <div class="input-title">Tỉnh/Thành phố (<span>*</span>)</div>
+                                            <div class="error-validate error-empty displayNone">Thông tin tỉnh/thành không được bỏ trống</div>
                                             <div class="m-combobox m-box" id="cb-province" name="Province" validate="false"></div>
                                         </div>
                                         <div class="input-box input-box-small">
                                             <div class="input-title">Quận/Huyện (<span>*</span>)</div>
+                                            <div class="error-validate error-empty displayNone">Thông tin quận/huyện không được bỏ trống</div>
                                             <div class="m-combobox m-box" id="cb-district" name="District" validate="false"></div>
                                         </div>
                                     </div>
                                     <div class="input-line">
                                         <div class="input-box input-box-small">
                                             <div class="input-title">Phường/Xã (<span>*</span>)</div>
-                                            <div class="m-combobox m-box" id="cb-ward" name="Ward" validate="false"></div>
+                                            <div class="error-validate error-empty displayNone">Thông tin phường/xã không được bỏ trống</div>
+                                            <div class="m-combobox m-box" id="cb-ward" name="Ward" fieldName="AdministrativeAreaCode" validate="false"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -523,16 +530,18 @@
                                 <div class="input-line">
                                     <div class="input-box input-box-small">
                                         <div class="input-title">Đơn vị vận chuyển (<span>*</span>)</div>
-                                        <div class="m-combobox m-box" id="cb-transportor" name="Transportor" validate="false"></div>
+                                        <div class="error-validate error-empty displayNone">Đơn vị vận chuyển không được bỏ trống</div>
+                                        <div class="m-combobox m-box" id="cb-transportor" fieldName="TransportorId" name="Transportor" validate="false"></div>
                                     </div>
                                 </div>
                                 <div class="input-line">
                                     <div class="input-box input-box-small">
                                         <div class="input-title">Phí vận chuyển (<span>*</span>)</div>
-                                        <input class="m-input" type="text" typeFormat="money" required fieldName="Fee" validate="false" />
+                                        <div class="error-validate error-empty displayNone">Phí vận chuyển không được bỏ trống</div>
+                                        <input class="m-input" type="text" typeFormat="money" required fieldName="ShippingFee" validate="false" />
                                     </div>
                                 </div>
-                                <div class="extra-info displayNone">Thời gian nhận hàng dự kiến: <span>05/12/2020</span></div>
+                                <div class="extra-info displayNone" name="ExpectedDeliveryDate">Thời gian nhận hàng dự kiến: <span fieldName="ExpectedDeliveryDate"></span></div>
                                 <div class="input-line">
                                     <div class="input-box input-box-small">
                                         <div class="input-title">Thời gian lấy hàng</div>
@@ -565,10 +574,27 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="input-line">
+                                    <div class="input-box input-box-small">
+                                        <div class="input-title">Người chịu phí vận chuyển</div>
+                                        <div class="radio-button-group">
+                                            <label class="m-radio">
+                                                <input class="radio" type="radio" name="ShippingPaidBy" value="0" fieldName="ShippingPaidBy" checked/>
+                                                <span class="checkmark"></span>
+                                                <label>Người bán</label>
+                                            </label>
+                                            <label class="m-radio">
+                                                <input class="radio" type="radio" name="ShippingPaidBy" value="1" fieldName="ShippingPaidBy" />
+                                                <span class="checkmark"></span>
+                                                <label>Người mua</label>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="note">
                                     <div class="input-box input-box-big">
                                         <div class="input-title">Ghi chú vận chuyển</div>
-                                        <textarea class="m-input note-area"></textarea>
+                                        <textarea class="m-input note-area" fieldName="ShippingNote"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -580,21 +606,22 @@
                             </div>
                             <div class="box-body">
                                 <div class="input-line">
-                                    <div class="input-box input-box-medium">
+                                    <div class="input-box input-box-small">
                                         <div class="input-title">Tổng số tiền</div>
-                                        <input class=" m-input" type="text" required fieldName="ProductCode" validate="false" />
+                                        <input class=" m-input" type="text" typeformat="money" required fieldName="OrderTotal" validate="true" value="0" />
                                     </div>
                                 </div>
                                 <div class="input-line">
-                                    <div class="input-box input-box-medium">
-                                        <div class="input-title">Đã thanh toán</div>
-                                        <input class=" m-input" type="text" required fieldName="ProductName" validate="false" />
+                                    <div class="input-box input-box-small">
+                                        <div class="input-title">Số tiền đã thanh toán</div>
+                                        <input class=" m-input" type="text" typeformat="money" required fieldName="paid" validate="true" value="0" />
                                     </div>
                                 </div>
                                 <div class="input-line">
-                                    <div class="input-box input-box-medium">
-                                        <div class="input-title">Còn thiếu</div>
-                                        <input class=" m-input" type="text" required fieldName="ProductName" validate="false" />
+                                    <div class="input-box input-box-small">
+                                        <div class="input-title insufficient-cash">Số tiền thiếu</div>
+                                        <div class="input-title excess-cash displayNone">Số tiền thừa</div>
+                                        <input class=" m-input" type="text" typeformat="money" required fieldName="InsufficientCash" validate="true" value="0" />
                                     </div>
                                 </div>
                             </div>
@@ -621,7 +648,7 @@
 
     </div>
 
-    
+
     <!-- Popup Xóa-->
     <div class="m-popup displayNone" id="popup-delete">
         <div class="modal"></div>

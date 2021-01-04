@@ -217,3 +217,5 @@ input[type="search"]:focus::-webkit-search-cancel-button {
     opacity: 0.7;
     pointer-events: all;
 }
+;
+}
