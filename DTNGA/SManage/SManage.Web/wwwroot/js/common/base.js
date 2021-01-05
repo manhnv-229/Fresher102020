@@ -117,14 +117,13 @@ class Base {
             wrapper.append(comboItemBox);
             targetCombo.append(wrapper);
             // sự kiện khi click ra ngoài combo-item-box => đóng comboItemBox
-            me.detectClickOutside(wrapper);
+            me.detectClickOutside(targetCombo);
             // Focus vào item đầu tiên
             $(comboItemBox).find(`.item:first-child`).addClass("item-hover");
             // Khởi tạo sự kiện cho từng thành phần
             var comboInputField = $(targetCombo).find(`.selected-box input`);
             var comboButton = $(targetCombo).find(`.arrow-button`);
             // Sự kiện khi focus/blur trường nhập liệu tại combobox
-            //TODO tạo auto complete cho input field
             $(comboInputField).focus(function () {
                 $(targetCombo).addClass("green-border");
             })
@@ -154,6 +153,60 @@ class Base {
             });
 
             return targetCombo;
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    /**
+     * Hiển thị combo item của ComboBox
+     * @param {any} comboBox comboBox cần xử lý
+     * CreatedBy dtnga (05/12/2020)
+     */
+    opentComboWrapper(comboBox) {
+        try {
+            if (!comboBox) return;
+
+            $(comboBox).addClass("green-border");
+            // arrow button
+            var comboButton = $(comboBox).find(".arrow-button");
+            if (!$(comboButton).hasClass("arrow-button-clicked")) {
+                // quay ngược arrow icon
+                $(comboButton).addClass("rotate");
+                $(comboButton).addClass(`arrow-button-clicked`);
+            }
+            var wrapper = $(comboBox).find(`.wrapper`);
+            // input
+            $(comboBox).find(`input`).focus();
+            if (!$(comboBox).find(`input`).val())
+                $(wrapper).find(".item").show();
+            // comboItem
+            if ($(wrapper).hasClass("displayNone")) {
+                $(wrapper).removeClass("displayNone");
+                var items = $(wrapper).find(".item:visible");
+                $(items).removeClass("item-hover");
+                $(items).first().addClass("item-hover");
+            }
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    /**
+     * Đóng comboItem của comboBox
+     * @param {any} comboItem
+     * CreatedBy dtnga (05/01/2020)
+     */
+    closeComboWrapper(comboItem) {
+        try {
+            if (!comboItem) return;
+            var parent = $(comboItem).closest(".m-box");
+            $(comboItem).addClass("displayNone");
+            $(parent).find(`.arrow-button`).removeClass("rotate");
+            $(parent).find(`.arrow-button`).removeClass("arrow-button-clicked");
+            $(parent).removeClass("green-border");
         }
         catch (e) {
             console.log(e);
@@ -196,41 +249,18 @@ class Base {
     }
 
     /** Sự kiện khi click button tại combobox
-     * CreatedBy dtnga (10/12/2020)
-     * */
+    * CreatedBy dtnga (10/12/2020)
+    * */
     onClick_btnComboBoxButton(comboButton) {
         var me = this;
-        if (!$(comboButton).hasClass("arrow-button-clicked")) {
-            // quay ngược arrow icon
-            $(comboButton).addClass("rotate");
-            $(comboButton).addClass(`arrow-button-clicked`);
-            // combobox
-            var comboBox = $(comboButton).closest(`.m-box`);
-            $(comboBox).addClass("green-border");
-
-            var comboItemBox = $(comboBox).find(`.wrapper`);
-            if ($(comboItemBox).hasClass("displayNone")) {
-                $(comboItemBox).removeClass("displayNone");
-                $(comboBox).find(`input`).focus();
-            }
-            return;
-        }
-        //else {
-        //    alert("sdsd");
-        //    // quay ngược arrow icon
-        //    $(comboButton).removeClass("rotate");
-        //    $(comboButton).removeClass("arrow-button-clicked");
-        //    // combobox
-        //    var comboBox = $(comboButton).closest(`.m-box`);
-        //    $(comboBox).removeClass("green-border");
-        //    // box chứa các option
-        //    var comboItemBox = $(comboBox).find(`.wrapper`);
-        //    $(comboItemBox).addClass("displayNone");
-        //}
+        // combobox
+        var comboBox = $(comboButton).closest(`.m-box`);
+        me.opentComboWrapper(comboBox);
+        return;
     }
 
     /**
-     * Sự kiện khi chọn item
+     * Sự kiện khi click chọn item
      * CreatedBy dtnga(10/12/2020)
      * @param {element} selectedItem item được chọn
      */
@@ -239,10 +269,6 @@ class Base {
         var item = selectedItem;
         // combobox
         var comboBox = $(item).closest(`.m-box`);
-        $(comboBox).removeClass("green-border");
-        // Arrow-button
-        $(comboBox).find(`.arrow-button`).removeClass("rotate");
-        $(comboBox).find(`.arrow-button`).removeClass("arrow-button-clicked");
         // inner-wrapper, các item còn lại
         var comboItemBox = $(item).closest(".inner-wrapper");
         var items = $(comboItemBox).find(`.item`);
@@ -254,9 +280,8 @@ class Base {
         $(item).removeClass("item-hover");
         $(item).addClass("selected");
         $(item).find(`.option-icon .check-icon`).removeClass("displayNone");
-        // ẩn option box 
-        $(comboItemBox).find(`.item:first-child`).addClass("item-hover");
-        $(comboItemBox).parent().addClass("displayNone");
+        // đóng comboItem
+        me.closeComboWrapper($(comboBox).find(".wrapper"));
         // đổ dữ liệu lên input field
         var optionText = $(item).find(`.option-text`);
         var optionText = $(optionText).text();
@@ -299,26 +324,21 @@ class Base {
     }
 
     /**
-     * Ẩn container nếu click ra ngoài container
-     * CreatedBy dtnga (10/12/2020)
-     * @param {Element} container
-     */
-    detectClickOutside(container) {
-        var parent = $(container).parent();
+    * Ẩn comboItem nếu click ra ngoài comboItem
+    * CreatedBy dtnga (10/12/2020)
+    * @param {Element} comboBox
+    */
+    detectClickOutside(comboBox) {
+        var me = this;
         $(document).mouseup(function (e) {
             // Nếu container đang mở
-            if (!$(container).hasClass("displayNone")) {
+            if (!$(comboBox).hasClass("displayNone")) {
                 // Nếu target không phải container
-                if (!container.is(e.target) && container.has(e.target).length === 0) {
-                    $(container).addClass("displayNone");
-                    $(container).children().removeClass("item-hover");
-                    $(container).find(`.item:first-child`).addClass("item-hover");
-                    $(parent).find(`.arrow-button`).removeClass("rotate");
-                    $(parent).find(`.arrow-button`).removeClass("arrow-button-clicked");
-                    $(parent).removeClass("green-border");
+                if (!comboBox.is(e.target) && comboBox.has(e.target).length === 0) {
+                    var comboItem = $(comboBox).find(".wrapper");
+                    me.closeComboWrapper(comboItem);
                 }
             }
-
         });
     }
 
@@ -333,9 +353,9 @@ class Base {
         var wrapper = $(parent).find(`.wrapper`);
         var innerWrapper = $(parent).find(".inner-wrapper");
 
-        $(element).on("keydown", function (e) {
+        $(element).on("keyup", function (e) {
             if (e.which == 13) {
-                if ($(wrapper).hasClass(".displayNone")) {
+                if ($(wrapper).hasClass("displayNone")) {
                 }
                 else {
                     var hoverdItem = $(innerWrapper).find('.item-hover');
@@ -343,21 +363,65 @@ class Base {
                 }
                 return;
             }
-            if (e.which == 40) {
-                $(wrapper).removeClass("displayNone");
-                $(parent).find(".arrow-button").addClass("rotate");
-                $(parent).find(".arrow-button").addClass(`arrow-button-clicked`);
-                $(innerWrapper).find('.item:not(:last-child).item-hover').removeClass('item-hover').next().addClass('item-hover');
+            else if (e.which !== 13 && e.which !== 38 && e.which !== 40) {
+                var value = $(this).val().toLowerCase();
+                $(this).closest(".m-box").find(".item").filter(function () {
+                    $(this).closest(".wrapper").removeClass("displayNone");
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                    var visibleItem = $(this).closest(".wrapper").find(".item:visible");
+                    if (visibleItem.length > 0) {
+                        $(this).closest(".wrapper").find(".item").removeClass("item-hover");
+                        $(visibleItem).first().addClass("item-hover");
+                    }
+                });
+            }
+        });
+        $(element).on("keydown", function (e) {
+            if (e.which == 9) {
+                if (!$(wrapper).hasClass("displayNone"))
+                    $(wrapper).addClass("displayNone");
+            }
+            else if (e.which == 40) {
+                me.opentComboWrapper(parent);
+                var items = $(innerWrapper).find('.item:visible');
+                if ($(items[items.length - 1]).hasClass("item-hover")) {
+                    $(items[items.length - 1]).removeClass('item-hover');
+                    $(items[0]).addClass('item-hover');
+                    me.centerItFixedHeight($(items[0]), wrapper);
+                    return;
+                }
+                else {
+                    for (var i = 0; i < items.length - 1; i++) {
+                        if ($(items[i]).hasClass("item-hover")) {
+                            $(items[i]).removeClass('item-hover');
+                            $(items[i + 1]).addClass('item-hover');
+                            me.centerItFixedHeight($(items[i + 1]), wrapper);
+                            return;
+                        }
+                    }
+                }
 
             } else if (e.which == 38) {
-                $(wrapper).removeClass("displayNone");
-                $(parent).find(".arrow-button").addClass("rotate");
-                $(parent).find(".arrow-button").addClass(`arrow-button-clicked`);
-                $(innerWrapper).find('.item:not(:first-child).item-hover').removeClass('item-hover').prev().addClass('item-hover');
+                me.opentComboWrapper(parent);
+                var items = $(innerWrapper).find('.item:visible');
+                if ($(items[0]).hasClass("item-hover")) {
+                    $(items[0]).removeClass('item-hover');
+                    $(items[items.length - 1]).addClass('item-hover');
+                    me.centerItFixedHeight($(items[items.length - 1]), wrapper);
+                    return;
+                }
+                for (var i = 1; i < items.length; i++) {
+                    if ($(items[i]).hasClass("item-hover")) {
+                        $(items[i]).removeClass('item-hover');
+                        $(items[i - 1]).addClass('item-hover');
+                        me.centerItFixedHeight($(items[i - 1]), wrapper);
+                        return;
+                    }
+                }
             }
-            me.centerItFixedHeight($(wrapper).find('.item-hover'), wrapper);
         });
     }
+
 
     /**
      * Thực hiện đưa target vào giữa của outer (theo chiều dọc)
@@ -375,16 +439,17 @@ class Base {
     }
 
     /**
-    * Sự kiện khi thay đổi giá trị input tại comboBox/Dropdown
-    * @param {Element} input trường input thay đổi tại combobox
-    * CreatedBy dtnga (27/12/2020)
-    */
+     * Sự kiện khi thay đổi giá trị input tại comboBox/Dropdown
+     * @param {Element} input trường input thay đổi tại combobox
+     * CreatedBy dtnga (27/12/2020)
+     */
     onChangeComboInputField(input) {
         try {
             if (input) {
                 var me = this;
                 var inputText = $(input).val();
                 var box = $(input).closest(".m-box");
+                var comboItem = $(box).find(`.wrapper`);
                 if (!inputText) {
                     $(box).data("keyId", null);
                     $(box).find(".item").removeClass("selected");
@@ -396,8 +461,11 @@ class Base {
                     $(box).closest(".input-box").find(".error-empty").removeClass("displayNone");
                 }
                 var attr = $(box).attr("loadAfterSelect");
-                if (typeof attr !== typeof undefined && attr !== false)
+                if (typeof attr !== typeof undefined && attr !== false && $(comboItem).hasClass("displayNone"))
                     me.loadData(1);
+                else if (!$(comboItem).hasClass("displayNone")) {
+                    $(input).trigger("keyup");
+                }
             }
         }
         catch (e) {
@@ -661,42 +729,6 @@ class Base {
             var productdetail = $(button).closest(".product-detail");
             // Xóa dòng chứa thông tin sản phẩm
             $(productdetail).remove();
-        }
-        catch (e) {
-            console.log(e);
-        }
-    }
-
-    /** Hàm thực hiện set AutoComplete cho các trường yêu cầu AutoComplete
-     * CreatedBy dtnga (28/11/200)
-     * */
-    autoComplete() {
-        try {
-            var inputs = $(`input[autocomplete="on"]`);
-            $.each(inputs, function (index, input) {
-                var fieldName = $(input).attr("fieldName");
-                var data = listProduct;
-                //Tạo source theo fielName của trường input
-                var sourceList = [];
-                $.each(data, function (index, item) {
-                    var label = item[fieldName];
-                    var value = item["ProductId"]; // TODO :)
-                    sourceList.push({ label: label, value: value });
-                });
-                $(input).autocomplete({
-                    source: sourceList,
-                    autoFocus: true,
-                    focus: function (event, suggest) {
-                        $(input).val(suggest.item.label);
-                        return false;
-                    },
-                    select: function (event, suggest) {
-                        $(input).val(suggest.item.label);
-                        var id = suggest.item.value;
-                        return false;
-                    }
-                });
-            })
         }
         catch (e) {
             console.log(e);

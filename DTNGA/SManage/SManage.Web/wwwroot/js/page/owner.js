@@ -324,20 +324,22 @@ class Owner extends Base {
                     var district = !fullarea["District"] ? '' : fullarea["District"];
                     var ward = !fullarea["Ward"] ? '' : fullarea["Ward"];
                     if (province) {
-                        //TODO chọn item tại combo Tỉnh/thành
-                        $(`.box-info input[fieldname="Province"]`).val(province["AdministrativeAreaName"]);
-                        $(`.box-info input[fieldname="Province"]`).attr("validate", true);
-                        $(`.box-info input[fieldName="Province"]`).data("keyCode", province["AdministrativeAreaCode"]);
+                        //chọn item tại combo Tỉnh/thành
+                        var proviceBox = $(`.m-box[name="Province"]`);
+                        var provineId = province["AdministrativeAreaId"];
+                        me.SelectItem(proviceBox, provineId);
                     }
                     if (district) {
-                        $(`.box-info input[fieldname="District"]`).val(district["AdministrativeAreaName"]);
-                        $(`.box-info input[fieldName="District"]`).data("keyCode", district["AdministrativeAreaCode"]);
-                        $(`.box-info input[fieldname="District"]`).attr("validate", true);
+                        // TODO tạo comboBox quận/huyện theo thông tin tỉnh được chọn
+                        var districtBox = $(`.m-box[name="District"]`);
+                        var districtId = district["AdministrativeAreaId"];
+                        me.SelectItem(districtBox, districtId);
                     }
                     if (ward) {
-                        $(`.box-info input[fieldname="Ward"]`).val(ward["AdministrativeAreaName"]);
-                        $(`.box-info input[fieldName="Ward"]`).data("keyCode", ward["AdministrativeAreaCode"]);
-                        $(`.box-info input[fieldname="Ward"]`).attr("validate", true);
+                        // TODO tạo comboBox xã/phường theo thông tin quận/huyện được chọn
+                        var wardBox = $(`.m-box[name="Ward"]`);
+                        var wardId = ward["AdministrativeAreaId"];
+                        me.SelectItem(wardBox, wardId);
                     }
                 })
                 .fail(function (res) {

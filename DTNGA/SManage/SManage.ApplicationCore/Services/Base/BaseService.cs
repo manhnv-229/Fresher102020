@@ -238,13 +238,6 @@ namespace SManage.ApplicationCore.Services
         }
 
 
-        //TODO Update list object
-        public async Task<int> UpdateRangeAsync<T>(List<object> entities)
-        {
-            var entityName = typeof(T).GetType().Name;
-            var sp = $"Proc_Update{entityName}";
-            return await _baseRepository.UpdateRangeAsync<T>(sp, entities);
-        }
         #endregion
 
         #region Validate
