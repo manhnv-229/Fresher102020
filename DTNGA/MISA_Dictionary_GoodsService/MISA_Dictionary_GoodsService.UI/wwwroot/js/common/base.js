@@ -371,7 +371,7 @@ class Base {
                 }
                 return;
             }
-            if (e.which !== 13 && e.which !== 38 && e.which !== 40) {
+            else if (e.which !== 13 && e.which !== 38 && e.which !== 40) {
                 var value = $(this).val().toLowerCase();
                 $(this).closest(".m-box").find(".item").filter(function () {
                     $(this).closest(".wrapper").removeClass("displayNone");
@@ -389,7 +389,7 @@ class Base {
                 if (!$(wrapper).hasClass("displayNone"))
                     $(wrapper).addClass("displayNone");
             }
-            if (e.which == 40) {
+            else if (e.which == 40) {
                 me.opentComboWrapper(parent);
                 var items = $(innerWrapper).find('.item:visible');
                 if ($(items[items.length - 1]).hasClass("item-hover")) {

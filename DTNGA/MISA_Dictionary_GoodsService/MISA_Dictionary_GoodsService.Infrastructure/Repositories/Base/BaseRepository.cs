@@ -15,7 +15,7 @@ namespace SManage.Infrastructure.Repositories.Base
     /// Base thực hiện tương tác chung với DB
     /// </summary>
     /// Created by DtNga : 03/11/2020
-    public class BaseRepository : IBaseRepository
+    public class BaseRepository : IBaseRepository, IDisposable
     {
         readonly IDatabaseContext _databaseContext;
 
@@ -93,6 +93,7 @@ namespace SManage.Infrastructure.Repositories.Base
         #endregion
         public void Dispose()
         {
+            _databaseContext.Dispose();
         }
 
     }

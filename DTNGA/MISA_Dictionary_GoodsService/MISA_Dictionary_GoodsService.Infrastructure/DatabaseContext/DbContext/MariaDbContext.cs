@@ -282,7 +282,7 @@ namespace MISA_Dictionary_GoodsService.Infrastructure.DatabaseContext.DbContext
         #endregion
         public void Dispose()
         {
-
+            _dbConnection.Close();
         }
 
         public async Task<PagingData<T>> GetPagingAsync<T>(string sp, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure)

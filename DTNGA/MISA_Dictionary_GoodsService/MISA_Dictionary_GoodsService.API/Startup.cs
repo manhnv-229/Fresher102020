@@ -2,29 +2,16 @@
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MISA_Dictionary_GoodsService.API.Middleware;
-using MISA_Dictionary_GoodsService.ApplicationCore;
-using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.DatabaseContext;
-using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Repositories;
-using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service;
-using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service.Base;
-using MISA_Dictionary_GoodsService.ApplicationCore.Services;
-using MISA_Dictionary_GoodsService.Infrastructure;
-using MISA_Dictionary_GoodsService.Infrastructure.DatabaseContext.DbContext;
-using MySqlConnector;
+using MISA_Dictionary_GoodsService.ApplicationCore.Extensions;
 using Newtonsoft.Json.Serialization;
-using SManage.Infrastructure.Repositories.Base;
+
 
 namespace MISA_Dictionary_GoodsService.API
 {
@@ -59,17 +46,7 @@ namespace MISA_Dictionary_GoodsService.API
             });
 
             services.AddMemoryCache();
-            //Khởi tạo kết nối tới MariaDB:
-            services.AddScoped<IDbConnection>(_ => new MySqlConnection(Configuration["ConnectionStrings:MISADictionaryProductMariaDB"]));
-            // DI
-            services.AddScoped<IDatabaseContext, MariaDbContext>();
-            services.AddScoped<IBaseMemoryCache, BaseMemoryCache>();
-            services.AddScoped<IBaseService, BaseService>();
-            services.AddScoped<IBaseRepository, BaseRepository>();
-
-            services.AddScoped<IGoodsService, GoodsService>();
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IBrandService, BrandService>();
+            services.AddDI(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
