@@ -78,13 +78,23 @@ namespace SManage.API.Controllers
             }
             var fullArea = new FullArea();
             areaCode = areaCode.Trim();
-            var provinceCode = areaCode.Substring(0, 4);
-            var districtCode = areaCode.Substring(0, 7);
-            var wardCode = areaCode;
-            fullArea.Province = AdministrativeAreas.Where<AdministrativeArea>(a => a.AdministrativeAreaCode == provinceCode).FirstOrDefault();
-            fullArea.District = AdministrativeAreas.Where<AdministrativeArea>(a => a.AdministrativeAreaCode == districtCode).FirstOrDefault();
-            fullArea.Ward = AdministrativeAreas.Where<AdministrativeArea>(a => a.AdministrativeAreaCode == wardCode).FirstOrDefault();
+            if (areaCode.Length >=4)
+            {
+                var provinceCode = areaCode.Substring(0, 4);
+                fullArea.Province = AdministrativeAreas.Where<AdministrativeArea>(a => a.AdministrativeAreaCode == provinceCode).FirstOrDefault();
+                if (areaCode.Length >= 7)
+                {
+                    var districtCode = areaCode.Substring(0, 7);
+                    fullArea.District = AdministrativeAreas.Where<AdministrativeArea>(a => a.AdministrativeAreaCode == districtCode).FirstOrDefault();
+                    if (areaCode.Length >= 12)
+                    {
+                        var wardCode = areaCode;
+                        fullArea.Ward = AdministrativeAreas.Where<AdministrativeArea>(a => a.AdministrativeAreaCode == wardCode).FirstOrDefault();
+                    }
+                }
+            }
             response.Data = fullArea;
+
             return response;
         }
     }

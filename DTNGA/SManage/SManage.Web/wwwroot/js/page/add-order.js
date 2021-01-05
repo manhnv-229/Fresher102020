@@ -22,15 +22,7 @@ class AddOrder extends Base {
     initEventOrderAddPage() {
         try {
             var me = this;
-            $(`#order-add input[type="search"][fieldName="ProductCode"]`).on("keyup", function (e) {
-                if (e.which === 13)
-                    $(`#btn-addToShoppingCard`).click();
-            });
-            $(`#order-add input[type="search"][fieldName="PhoneNumber"]`).on("keyup", function (e) {
-                if (e.which == 13) {
-                    me.checkCustomer(this);
-                }
-            })
+            
             //TODO lỗi lặp check trường bắt buộc nhập trước
             $(`#order-add input[type="search"][fieldName="District"]`).focus(me.onFocus_inputField);
 
@@ -98,62 +90,6 @@ class AddOrder extends Base {
     }
 
 
-    /**
-    * Thực hiện kiểm tra khách hàng đã có thông tin trên hệ thống hay chưa
-    * CreatedBy dtnga (02/12/2020)
-    * @param {string} tel Số điện thoại
-    */
-    checkCustomer(tel) {
-        try {
-            var me = this;
-            // Lấy thông tin số điện thoại
-            var phoneNumber = $(tel).val().trim();
-            if (phoneNumber) {
-                var route = "/api/v1/Customers/PhoneNumber/" + phoneNumber;
-                $.ajax({
-                    url: me.host + route,
-                    method: "GET"
-                })
-                    .done(function (res) {
-                        var customer = res;
-                        // Nếu có thông tin => tự động bind dữ liệu vào box-info
-                        if (customer) {
-                            $(`.empty-result`).addClass("displayNone");
-                            me.autoBindCustomer(customer);
-                            $(`.box-info`).removeClass("displayNone");
-                            $(tel).val('');
-                        }
-                        // Nếu chưa có thông tin => Hiển thị thông báo Chưa có dữ liệu
-                        else {
-                            $(tel).focus();
-                            $(`.empty-result`).removeClass("displayNone");
-                            $(`.box-info input`).val("");
-                            $(`.box-info`).removeClass("displayNone");
-                            $(`.box-info input[type=text]:first`).focus();
-                        }
-                    })
-                    .fail(function (res) {
-                        console.log(res);
-                    })
-            }
-        }
-        catch (e) {
-            console.log(e);
-        }
-    }
-
-    /**
-     * Tự động bind dữ liệu khách hàng
-     * @param {any} customer Thông tin khách hàng
-     */
-    autoBindCustomer(customer) {
-        try {
-
-        }
-        catch (e) {
-            console.log(e);
-        }
-    }
 
     /**
      * Thực hiện gen và thêm sản phẩm mới vào giỏ hàng

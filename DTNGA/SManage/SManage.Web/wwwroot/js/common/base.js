@@ -238,6 +238,9 @@ class Base {
                     $(selectedItem).closest(`.m-box`).find(`input`).val(selectedItemText);
                     $(selectedItem).closest(`.m-box`).data("keyId", id);
                     $(box).closest(".input-box").find(".error-empty").addClass("displayNone");
+                    var validateAttr = $(selectedItem).closest(`.m-box`).attr("validate");
+                    if (typeof validateAttr !== typeof undefined && validateAttr == "false")
+                        $(selectedItem).closest(`.m-box`).attr("validate", true);
                     return true;
                 }
             })
@@ -1601,7 +1604,7 @@ class Base {
             });
 
             $(`.m-loading`).removeClass("displayNone");
-            
+            $(`.nodata-mark`).addClass("displayNone");
             me.route = "/api/v1/Orders";
             me.objectName = me.getObjectName();
             // Lấy dữ liệu thỏa mãn bộ lọc
@@ -1612,6 +1615,10 @@ class Base {
                 .done(function (res) {
                     $(`.m-loading`).addClass("displayNone");
                     total = res.Total;
+                    if (total < 1) {
+                        $(`.nodata-mark`).removeClass("displayNone");
+                        return;
+                    }
                     data = res.Data;
                     $.each(data, function (index, obj) {
                         var tr = $(`<tr></tr>`);

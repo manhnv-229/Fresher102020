@@ -14,7 +14,6 @@ class Owner extends Base {
         me.loadAccount();
         me.loadComboBoxCustome();
         me.initEvent();
-        var sortEvent = sort.sortOder();
     }
 
     /** Thực hiện lấy thông tin người dùng sau khi đăng nhập
@@ -87,6 +86,8 @@ class Owner extends Base {
                     console.log(res);
                 })
 
+            // danh sách tỉnh/thành
+            me.loadProvince();
         }
         catch (e) {
             console.log(e);
@@ -257,90 +258,121 @@ class Owner extends Base {
             $(`input`).blur(me.onBlur_inputField);
 
             // Sự kiện trên trang Add Order:
-            $(`input[type="search"][fieldName="PhoneNumber"]`).on("search", function(){
-                if( $(this).val() && $(this).val().trim())
-                    me.onSearchCustomerByPhoneNumber(this);
+            $(`#order-add input[type="search"][fieldName="ProductCode"]`).on("keyup", function (e) {
+                if (e.which === 13)
+                    $(`#order-add #btn-addToShoppingCard`).click();
             });
+            $(`#order-add input[type="search"][fieldName="PhoneNumber"]`).on("keyup", function (e) {
+                if (e.which == 13 && $(this).val() && $(this).val().trim()) {
+                    me.checkCustomer(this);
+                }
+            })
         }
         catch (e) {
             console.log(e);
         }
     }
 
-    onSearchCustomerByPhoneNumber(input) {
-        var me = this;
-        if (!input)
-            return;
-        var phoneNumber = $(input).val().trim();
-        var route = "/api/v1/Customers/PhoneNumber/" + phoneNumber;
-        $.ajax({
-            url: me.host + route,
-            method: "GET"
-        })
-            .done(function (res) {
-                var customer = res;
-                if (customer) {
-                    // ẩn mark 
-                    $(this).closest(".content-box").find(`.empty-result`).addClass("displayNone");
-                    // Bind dữ liệu
-                    me.autoBindCustomer(customer);
-                }
-                else
-                    $(this).closest(".content-box").find(`.empty-result`).removeClass("displayNone");
-            })
-            .fail(function (res) {
-
-            })
+    /**
+   * Thực hiện kiểm tra khách hàng đã có thông tin trên hệ thống hay chưa
+   * CreatedBy dtnga (02/12/2020)
+   * @param {string} tel trường tìm kiếm theo số điện thoại
+   */
+    checkCustomer(tel) {
+        try {
+            var me = this;
+            // Lấy thông tin số điện thoại
+            var phoneNumber = $(tel).val().trim();
+            var contentBox = $(tel).closest(`.content-box`);
+            if (phoneNumber) {
+                var route = "/api/v1/Customers/PhoneNumber/" + phoneNumber;
+                $.ajax({
+                    url: me.host + route,
+                    method: "GET"
+                })
+                    .done(function (res) {
+                        var customer = res;
+                        // Nếu có thông tin => tự động bind dữ liệu vào box-info
+                        if (customer) {
+                            $(`.empty-result`).addClass("displayNone");
+                            me.autoBindCustomer(contentBox, customer);
+                            $(contentBox).find(`.box-info`).removeClass("displayNone");
+                            $(tel).val('');
+                        }
+                        // Nếu chưa có thông tin => Hiển thị thông báo Chưa có dữ liệu
+                        else {
+                            $(tel).focus();
+                            $(`.empty-result`).removeClass("displayNone");
+                            $(`.box-info input`).val("");
+                            $(`.box-info`).removeClass("displayNone");
+                            $(`.box-info input[type=text]:first`).focus();
+                        }
+                    })
+                    .fail(function (res) {
+                        console.log(res);
+                    })
+            }
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
 
     /**
   *Thực hiện bind dữ liệu khách hàng tự động
   * CreatedBy dtnga (02/12/2020)
+  * @param {object} targetBox Box chứa thông tin
   * @param {object} customer Thông tin khách hàng
   */
-    autoBindCustomer(customer) {
+    autoBindCustomer(targetBox, customer) {
         var me = this;
         if (!customer)
             return;
+        if (!targetBox) targetBox = $(`.content-body:visible .content-box[name="customer"]`);
         //thông tin chung
         var customerName = !customer["FullName"] ? '' : customer["FullName"];
         var phoneNumber = !customer["PhoneNumber"] ? '' : customer["PhoneNumber"]
         var address = !customer["Address"] ? '' : customer["Address"];
-        $(`.box-info input[fieldName="CustomerName"]`).val(customerName);
-        $(`.box-info input[fieldName="PhoneNumber"]`).val(phoneNumber);
-        $(`.box-info input[fieldName="Address"]`).val(address);
+        $(targetBox).find(`input[fieldName="CustomerName"]`).val(customerName);
+        $(targetBox).find(`input[fieldName="PhoneNumber"]`).val(phoneNumber);
+        $(targetBox).find(`input[fieldName="Address"]`).val(address);
         // thông tin xã/phường, ...
         var areaCode = !customer["AdministrativeAreaCode"] ? "VN" : customer["AdministrativeAreaCode"];
         if (areaCode.length > 2) {
             //lấy dữ liệu đầy đủ từ api
-            var route = "/api/v1/AdministrativeAreas/FullAddress";
+            var route = "/api/v1/AdministrativeAreas";
             $.ajax({
-                url: me.host + route + "?areaCode=" + areacode,
+                url: me.host + route + "/FullAddress?areaCode=" + areaCode,
                 method: "GET"
             })
                 .done(function (res) {
                     var fullarea = res.Data;
-                    var province = !fullarea["Province"] ? '' : fullarea["Province"];
-                    var district = !fullarea["District"] ? '' : fullarea["District"];
-                    var ward = !fullarea["Ward"] ? '' : fullarea["Ward"];
+                    var province = fullarea["Province"];
+                    var district = fullarea["District"];
+                    var ward = fullarea["Ward"];
                     if (province) {
                         //chọn item tại combo Tỉnh/thành
-                        var proviceBox = $(`.m-box[name="Province"]`);
+                        var proviceBox = $(targetBox).find(`.input-box[fieldName="Province"] .m-box`);
                         var provineId = province["AdministrativeAreaId"];
                         me.SelectItem(proviceBox, provineId);
+
+                        // tạo comboBox quận/huyện theo thông tin tỉnh được chọn
+                        var districtBox = $(targetBox).find(`.input-box[fieldName="District"] .m-box`);
+                        me.loadDistrict(province["AdministrativeAreaCode"], districtBox);
+                        if (district) {
+                            var districtId = district["AdministrativeAreaId"];
+                            me.SelectItem(districtBox, districtId);
+
+                            // tạo comboBox xã/phường theo thông tin quận/huyện được chọn
+                            var wardBox = $(targetBox).find(`.input-box[fieldName="Ward"] .m-box`);
+                            me.loadWard(ward["AdministrativeAreaCode"], wardBox);
+                            if (ward) {
+                                var wardId = ward["AdministrativeAreaId"];
+                                me.SelectItem(wardBox, wardId);
+                            }
+                        }
                     }
-                    if (district) {
-                        // TODO tạo comboBox quận/huyện theo thông tin tỉnh được chọn
-                        var districtBox = $(`.m-box[name="District"]`);
-                        var districtId = district["AdministrativeAreaId"];
-                        me.SelectItem(districtBox, districtId);
-                    }
-                    if (ward) {
-                        // TODO tạo comboBox xã/phường theo thông tin quận/huyện được chọn
-                        var wardBox = $(`.m-box[name="Ward"]`);
-                        var wardId = ward["AdministrativeAreaId"];
-                        me.SelectItem(wardBox, wardId);
-                    }
+                    
                 })
                 .fail(function (res) {
                     console.log(res);
@@ -349,122 +381,51 @@ class Owner extends Base {
     }
 
     /** Thực hiện tự động bind dữ liệu tỉnh/thành
+     * @param {Element} provinceBox Box chứa thông tin
      * CreatedBy dtnga (08/12/2020)
      * */
-    autoCompleteProvince() {
+    loadProvince(provinceBox) {
         var me = this;
-        var provinceField = $(`input[type="search"][fieldName="Province"]`);
+        var targetCombos = $(`.content-body`).find(`.input-box[fieldName="Province"] .m-box`);
         // Lấy danh sách tỉnh/thành tại Việt Nam qua API
-        //me.Route = "/AdministrativeAreas/Code";
-        //$.ajax({
-        //    url: me.host + me.Route + "?areaCode=&kind=1",
-        //    method: "GET"
-        //})
-        //.done(function (res) {
-
-        //})
-        //.fail(function (res) {
-        //    console.log(res);
-        //})
-
-        // start of ajax done function body
-        var res = resProvince;
-        // Tạo source data:
-        var listProvince = res.Data;
-        var source = [];
-        $.each(listProvince, function (index, province) {
-            var provinceName = province["AdministrativeAreaName"];
-            var provinceCode = province["AdministrativeAreaCode"];
-            source.push({
-                label: provinceName,
-                code: provinceCode
-            });
+        var route = "/api/v1/AdministrativeAreas";
+        var provinces = [];
+        $.ajax({
+            url: me.host + route + "/Code?areaCode=&kind=1",
+            method: "GET"
         })
-        // Tạo autoComplete
-        $(provinceField).autocomplete({
-            source: source,
-            autoFocus: true,
-            focus: function (event, suggest) {
-                $(provinceField).val(suggest.item.label);
-            },
-            select: function (event, suggest) {
-                // bind tên tỉnh/thành lên input field
-                $(provinceField).val(suggest.item.label);
-                // Lưu mã tỉnh/thành và thực hiện complete danh sách quận/ huyện
-                var provinceCode = suggest.item.code;
-                $(provinceField).data("keyCode", provinceCode);
-                me.autoCompleteDistrict(provinceCode);
-            }
-        });
-        // End of ajax done function body
+            .done(function (res) {
+                provinces = res.Data;
+                $.each(targetCombos, function (index, combo) {
+                    me.createComboBox(provinces, combo);
+                });
+            })
+            .fail(function (res) {
+                console.log(res);
+            })
     }
 
     /**
      *Thực hiện tự động bind dữ liệu quận/ huyện của tỉnh đã cho
      * CreatedBy dtnga (08/12/2020)
      * @param {string} provinceCode Mã tỉnh/ thành
+     * @param {Element} districtBox Box chứa thông tin
      */
-    autoCompleteDistrict(provinceCode) {
-        var me = this;
-        provinceCode = provinceCode.trim();
-        if (!provinceCode) {
-            provinceCode = $(`input[type="search][fieldName="Province"]`).data("keyCode");
-            if (!provinceCode) {
-                // Hiển thị popup yêu cầu nhập thông tin tỉnh thành
-                var popup = $(`.popup-notification`);
-                var popupBody = $(popup).find(`.popup-body`);
-                $(popupBody).children().remove();
-                var content = $(`<div class="popup-body-text">Thông tin tỉnh/thành không được bỏ trống. Vui lòng kiểm tra và nhập lại</div>`);
-                popupBody.append(content);
-                popup.show();
-                me.initEventPopup(popup);
-                return;
-            }
-        }
-        else {
-            // Lấy danh sách quận/ huyện theo mã tỉnh/ thành qua API
-            //me.Route = "/AdministrativeAreas/Code";
-            //$.ajax({
-            //    url: me.host + me.Route + "?areaCode=" + provinceCode + "&kind=2",
-            //    method: "GET"
-            //})
-            //    .done(function (res) {
-
-            //    })
-            //    .fail(function (res) {
-            //        console.log(res);
-            //    })
-
-            // fake res
-            var res = resDistrict;
-            var listDistrict = res.Data;
-            // Tạo source data:
-            var source = [];
-            $.each(listDistrict, function (index, district) {
-                var districtName = district["AdministrativeAreaName"];
-                var districtCode = district["AdministrativeAreaCode"];
-                source.push({
-                    label: districtName,
-                    code: districtCode
-                });
+    loadDistrict(provinceCode, districtBox) {
+        if (provinceCode && districtBox) {
+            var me = this;
+            var route = "/api/v1/AdministrativeAreas";
+            $.ajax({
+                url: me.host + route + "/Code?areaCode=" + provinceCode + "&kind=2",
+                method: "GET"
             })
-            // Tạo autoComplete
-            var districtField = $(`input[type="search"][fieldName="District"]`);
-            $(districtField).autocomplete({
-                source: source,
-                autoFocus: true,
-                focus: function (event, suggest) {
-                    $(districtField).val(suggest.item.label);
-                },
-                select: function (event, suggest) {
-                    // bind tên tỉnh/thành lên input field
-                    $(districtField).val(suggest.item.label);
-                    // Lưu mã tỉnh/thành và thực hiện complete danh sách quận/ huyện
-                    var districtCode = suggest.item.code;
-                    $(districtField).data("keyCode", districtCode);
-                    me.autoCompleteWard(districtCode);
-                }
-            });
+                .done(function (res) {
+                    var districts = res.Data;
+                    me.createComboBox(districts, districtBox);
+                })
+                .fail(function (res) {
+                    console.log(res);
+                })
         }
     }
 
@@ -472,68 +433,23 @@ class Owner extends Base {
      * Thực hiện bind dữ liệu phường/ xã tự động dựa theo mã quận/ huyện
      * CreatedBy dtnga (08/12/2020)
      * @param {string} districtCode Mã quận/ huyện
+     *  @param {Element} wardBox Box chứa thông tin
      */
-    autoCompleteWard(districtCode) {
-        var me = this;
-        districtCode = districtCode.trim();
-        if (!districtCode) {
-            districtCode = $(`input[type="search][fieldName="District"]`).data("keyCode");
-            if (!districtCode) {
-                // Hiển thị popup yêu cầu nhập thông tin tỉnh thành
-                var popup = $(`.popup-notification`);
-                var popupBody = $(popup).find(`.popup-body`);
-                $(popupBody).children().remove();
-                var content = $(`<div class="popup-body-text">Thông tin quận/ huyện không được bỏ trống. Vui lòng kiểm tra và nhập lại</div>`);
-                popupBody.append(content);
-                popup.show();
-                me.initEventPopup(popup);
-                return;
-            }
-        }
-        else {
-            // Lấy danh sách xã/ phường theo mã quận/ huyện qua API
-            //me.Route = "/AdministrativeAreas/Code";
-            //$.ajax({
-            //    url: me.host + me.Route + "?areaCode=" + districtCode + "&kind=3",
-            //    method: "GET"
-            //})
-            //    .done(function (res) {
-
-            //    })
-            //    .fail(function (res) {
-            //        console.log(res);
-            //    })
-
-            // fake res
-            var res = resWard;
-            var listWard = res.Data;
-            // Tạo source data:
-            var source = [];
-            $.each(listWard, function (index, ward) {
-                var wardName = ward["AdministrativeAreaName"];
-                var wardCode = ward["AdministrativeAreaCode"];
-                source.push({
-                    label: wardName,
-                    code: wardCode
-                });
+    loadWard(districtCode, wardBox) {
+        if (districtCode && wardBox) {
+            var me = this;
+            var route = "/api/v1/AdministrativeAreas";
+            $.ajax({
+                url: me.host + route + "/Code?areaCode=" + districtCode + "&kind=3",
+                method: "GET"
             })
-            // Tạo autoComplete
-            var wardField = $(`input[type="search"][fieldName="Ward"]`);
-            $(wardField).autocomplete({
-                source: source,
-                autoFocus: true,
-                focus: function (event, suggest) {
-                    $(wardField).val(suggest.item.label);
-                },
-                select: function (event, suggest) {
-                    // bind tên tỉnh/thành lên input field
-                    $(wardField).val(suggest.item.label);
-                    // Lưu mã tỉnh/thành và thực hiện complete danh sách quận/ huyện
-                    var wardCode = suggest.item.code;
-                    $(wardField).data("keyCode", wardCode);
-                }
-            });
+                .done(function (res) {
+                    var wards = res.Data;
+                    me.createComboBox(wards, wardBox);
+                })
+                .fail(function (res) {
+                    console.log(res);
+                })
         }
     }
-
 }

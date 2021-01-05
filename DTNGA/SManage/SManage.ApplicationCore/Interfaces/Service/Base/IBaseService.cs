@@ -127,16 +127,6 @@ namespace SManage.ApplicationCore.Interfaces.Service.Base
         /// <returns>Đối tượng được cập nhật thành công</returns>
         /// CreatedBy dtnga (11/11/2020)
         Task<ActionServiceResult> UpdateAsync<T>(T entity) where T : BaseEntity;
-        /// <summary>
-        /// Cập nhật dữ liệu bất đồng bộ
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="sp">Chuỗi truy vấn/ Tên procedure</param>
-        /// <param name="entities">Danh sách đối tượng cần thêm</param>
-        /// <param name="commandType">Loại truy vấn</param>
-        /// <returns>Đối tượng được cập nhật thành công</returns>
-        /// CreatedBy dtnga (11/11/2020)
-        Task<int> UpdateRangeAsync<T>(List<object> entities);
         #endregion
 
         /// <summary>

@@ -151,6 +151,11 @@
                     <tbody></tbody>
                 </table>
             </div>
+            <!-- Nếu không có dữ liệu thì hiển thị -->
+            <div class="nodata-mark displayNone">
+                <div class="nodata-image"></div>
+                <div>Không có dữ liệu</div>
+            </div>
             <div class="paging">
                 <div class="paging-left">
                     <div class="paging-left-text">Hiển thị <span id="range">...</span> trên <span id="total">...</span> đơn hàng</div>
@@ -223,42 +228,10 @@
                                         <div class="input-box input-box-big">
                                             <div class="input-title">Giỏ hàng</div>
                                             <div class="product-list">
-                                                <div class="product-detail">
-                                                    <div class="product-line">
-                                                        <div class="product-line-left">
-                                                            <div class="sort">1</div>
-                                                            <div class="product-code">DasT-szS</div>
-                                                        </div>
-                                                        <div class="product-line-right">
-                                                            <div><input class="m-input price" type="text" typeFormat="money" /></div>
-                                                            <div> x </div>
-                                                            <div><input class="m-input quantity" type="number" min="0" value="1" /></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="cost-line">
-                                                        <div class="cost">5000000</div>
-                                                    </div>
-                                                </div>
-                                                <div class="product-detail">
-                                                    <div class="product-line">
-                                                        <div class="product-line-left">
-                                                            <div class="sort">2</div>
-                                                            <div class="product-code">DasT-szS</div>
-                                                        </div>
-                                                        <div class="product-line-right">
-                                                            <div><input class="m-input price" type="text" typeFormat="money" /></div>
-                                                            <div> x </div>
-                                                            <div><input class="m-input quantity" type="number" min="0" value="1" /></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="cost-line">
-                                                        <div class="cost">5000000</div>
-                                                    </div>
-                                                </div>
                                             </div>
                                             <div class="total-line">
-                                                <div class="total-quantity">Tổng sản phẩm: <span>2</span></div>
-                                                <div class="total-money">1000000</div>
+                                                <div class="total-quantity">Tổng sản phẩm: <span></span></div>
+                                                <div class="total-money"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -461,7 +434,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="content-box">
+                        <div class="content-box" name="customer">
                             <div class="box-title">
                                 <span>THÔNG TIN NGƯỜI NHẬN</span>
                                 <div class="border-bottom"></div>
@@ -497,22 +470,22 @@
                                         </div>
                                     </div>
                                     <div class="input-line">
-                                        <div class="input-box input-box-small">
+                                        <div class="input-box input-box-small" fieldName="Province">
                                             <div class="input-title">Tỉnh/Thành phố (<span>*</span>)</div>
                                             <div class="error-validate error-empty displayNone">Thông tin tỉnh/thành không được bỏ trống</div>
-                                            <div class="m-combobox m-box" id="cb-province" name="Province" validate="false"></div>
+                                            <div class="m-combobox m-box" id="cb-province" name="AdministrativeArea" validate="false"></div>
                                         </div>
-                                        <div class="input-box input-box-small">
+                                        <div class="input-box input-box-small" fieldName="District">
                                             <div class="input-title">Quận/Huyện (<span>*</span>)</div>
                                             <div class="error-validate error-empty displayNone">Thông tin quận/huyện không được bỏ trống</div>
-                                            <div class="m-combobox m-box" id="cb-district" name="District" validate="false"></div>
+                                            <div class="m-combobox m-box" id="cb-district" name="AdministrativeArea" validate="false"></div>
                                         </div>
                                     </div>
                                     <div class="input-line">
-                                        <div class="input-box input-box-small">
+                                        <div class="input-box input-box-small" fieldName="Ward">
                                             <div class="input-title">Phường/Xã (<span>*</span>)</div>
                                             <div class="error-validate error-empty displayNone">Thông tin phường/xã không được bỏ trống</div>
-                                            <div class="m-combobox m-box" id="cb-ward" name="Ward" fieldName="AdministrativeAreaCode" validate="false"></div>
+                                            <div class="m-combobox m-box" id="cb-ward" name="AdministrativeArea" fieldName="AdministrativeAreaId" validate="false"></div>
                                         </div>
                                     </div>
                                 </div>
