@@ -79,8 +79,8 @@ a {
 }
 
 /**/
-.displayNone{
-    display:none;
+.displayNone {
+    display: none !important;
 }
 /*----------------------------*/
 /* font */

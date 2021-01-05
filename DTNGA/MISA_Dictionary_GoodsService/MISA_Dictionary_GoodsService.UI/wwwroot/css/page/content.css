@@ -32,20 +32,22 @@
 .content-filter .content-filter-left {
     display: flex;
 }
-    .content-filter .content-filter-left > *{
+
+    .content-filter .content-filter-left > * {
         margin-right: 16px;
     }
+
     .content-filter .content-filter-left .m-input {
         margin-top: 0;
     }
 
 
-        /* hint */
-        .content-filter .content-filter-left .search-field::-webkit-input-placeholder {
-            font-size: 12px;
-            color: #bbbbbb;
-            font-family: GoogleSans-Regular;
-        }
+    /* hint */
+    .content-filter .content-filter-left .search-field::-webkit-input-placeholder {
+        font-size: 12px;
+        color: #bbbbbb;
+        font-family: GoogleSans-Regular;
+    }
 
     .content-filter .content-filter-left .state-box {
         width: 150px;
@@ -69,7 +71,8 @@
     margin-right: 0px;
     margin-left: 16px;
 }
-.content-filter-right .delete-icon{
+
+.content-filter-right .delete-icon {
     background-size: contain;
 }
 /* content grid ( chứa bảng dữ liệu) => grid.css*/
@@ -86,17 +89,16 @@
 }
 
 /*Left paging */
-.paging .paging-left{
-
+.paging .paging-left {
 }
 
-    .paging .paging-left span{
+    .paging .paging-left span {
         font-weight: bold;
     }
-    /* middle paging */
-    .paging .paging-mid {
-        display: flex;
-    }
+/* middle paging */
+.paging .paging-mid {
+    display: flex;
+}
 
     .paging .paging-mid .m-button-icon {
         width: 32px;
@@ -131,29 +133,41 @@
     }
 
 /*Right paging*/
-.paging .paging-right{
+.paging .paging-right {
+    /* width: 105px; */
+    height: 30px;
+    min-width: 50px;
+    margin-right: 8px;
     display: flex;
     align-items: center;
 }
 
-    .paging .paging-right .m-box{
+    .paging .paging-right .m-box {
         width: 105px;
-        min-width:50px;
+        height: 30px;
+        min-width: 50px;
         margin-right: 8px;
     }
 
-    .paging .paging-right .m-box .wrapper{
-        top: -175px;
-        width: 65px;
-    }
-    .paging .paging-right .m-box .item{
-        width: 65px;
-    }
+        .paging .paging-right .m-box .wrapper {
+            top: -175px;
+            width: 65px;
+        }
+
+        .paging .paging-right .m-box .item {
+            width: 65px;
+        }
+
         .paging .paging-right .m-box input {
             /* min-width: 100px; */
         }
-    /* Style riêng cho từng content-body*/
-    .m-dialog .dialog-col {
-        width: 50%;
-        /* padding-bottom: 0; */
+
+    .paging .paging-right .arrow-button {
+        padding: 7px 11px;
     }
+
+/* Style riêng cho từng content-body*/
+.m-dialog .dialog-col {
+    width: 50%;
+    /* padding-bottom: 0; */
+}

@@ -177,8 +177,6 @@ class IndexJs extends Base {
                     var targetComboboxs = $(`.m-box[name="Category"]`);
                     $.each(targetComboboxs, function (index, item) {
                         me.createComboBox(categories, item);
-                         // display item All cho các Filter
-                        $(`.content-filter .m-box .item[selectAll]`).removeClass("displayNone");
                     })
                 })
                 .fail(function (res) {
@@ -190,7 +188,6 @@ class IndexJs extends Base {
             var targetComboboxs = $(`.paging .m-box[name="PageSize"]`);
             $.each(targetComboboxs, function (index, item) {
                 me.createComboBox(pagingSize, item);
-                $(item).find(`.item`)[0].remove();
                 $(item).find(`.item`).on("click", function () {
                     var pageSize = $(this).find(`.option-text`).text();
                     $(this).closest(`.pageSize`).attr("value", pageSize);
@@ -205,6 +202,5 @@ class IndexJs extends Base {
             console.log(e);
         }
     }
-
 
 }
