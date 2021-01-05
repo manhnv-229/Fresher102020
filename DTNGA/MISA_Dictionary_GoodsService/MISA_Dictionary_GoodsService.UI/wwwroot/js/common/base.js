@@ -227,7 +227,7 @@ class Base {
                 var me = this;
                 var inputText = $(input).val();
                 var box = $(input).closest(".m-box");
-                var comboItem= $(box).find(`.wrapper`);
+                var comboItem = $(box).find(`.wrapper`);
                 if (!inputText) {
                     $(box).data("keyId", null);
                     $(box).find(".item").removeClass("selected");
@@ -238,13 +238,15 @@ class Base {
                     }
                     $(box).closest(".input-box").find(".error-empty").removeClass("displayNone");
                 }
-                var attr = $(box).attr("loadAfterSelect");
-                if (typeof attr !== typeof undefined && attr !== false && $(comboItem).hasClass("displayNone"))
-                    me.loadData(1);
-                else if (!$(comboItem).hasClass("displayNone")) {
-                    $(input).trigger("keyup");
+                else {
+                    var selectedItemId = $(comboItem).find(".item-hover").data("keyId");
+                    me.SelectItem(box, selectedItemId);
+                    var attr = $(box).attr("loadAfterSelect");
+                    if (typeof attr !== typeof undefined && attr !== false && $(comboItem).hasClass("displayNone"))
+                        me.loadData(1);
                 }
             }
+
         }
         catch (e) {
             console.log(e);
@@ -283,8 +285,7 @@ class Base {
         $(item).removeClass("item-hover");
         $(item).addClass("selected");
         $(item).find(`.option-icon .check-icon`).removeClass("displayNone");
-        // đóng comboItem
-        me.closeComboWrapper($(comboBox).find(".wrapper"));
+
         // đổ dữ liệu lên input field
         var optionText = $(item).find(`.option-text`);
         var optionText = $(optionText).text();
@@ -300,6 +301,8 @@ class Base {
         }
         $(comboBox).closest(".input-box").find(".error-empty").addClass("displayNone");
         $(comboBox).removeClass("m-input-warning");
+        // đóng comboItem
+        me.closeComboWrapper($(comboBox).find(".wrapper"));
         me.doSomethingWhenItemSelected(item);
     }
 
@@ -359,6 +362,15 @@ class Base {
         var innerWrapper = $(parent).find(".inner-wrapper");
 
         $(element).on("keyup", function (e) {
+            if (e.which == 13) {
+                if ($(wrapper).hasClass("displayNone")) {
+                }
+                else {
+                    var hoverdItem = $(innerWrapper).find('.item-hover');
+                    me.onSelect_comboItem(hoverdItem);
+                }
+                return;
+            }
             if (e.which !== 13 && e.which !== 38 && e.which !== 40) {
                 var value = $(this).val().toLowerCase();
                 $(this).closest(".m-box").find(".item").filter(function () {
@@ -371,17 +383,11 @@ class Base {
                     }
                 });
             }
-
         });
         $(element).on("keydown", function (e) {
-            if (e.which == 13) {
-                if ($(wrapper).hasClass(".displayNone")) {
-                }
-                else {
-                    var hoverdItem = $(innerWrapper).find('.item-hover');
-                    me.onSelect_comboItem(hoverdItem);
-                }
-                return;
+            if (e.which == 9) {
+                if (!$(wrapper).hasClass("displayNone"))
+                    $(wrapper).addClass("displayNone");
             }
             if (e.which == 40) {
                 me.opentComboWrapper(parent);
@@ -420,7 +426,6 @@ class Base {
                         return;
                     }
                 }
-                //    $(innerWrapper).find('.item:not(:first-child).item-hover:visible').removeClass('item-hover').prev().addClass('item-hover');
             }
         });
     }
@@ -754,11 +759,11 @@ class Base {
                     $(iconMes).addClass("fail");
                     $(iconExit).addClass("fail");
                 }
-                $(toastMes).show();
+                $(toastMes).removeClass("displayNone");
                 me.initEventToastMesseger(toastMes);
                 //Set timeout, popup tự đóng sau 3s
                 setTimeout(function () {
-                    $(`.m-toast-messeger`).hide();
+                    $(`.m-toast-messeger`).addClass("displayNone");
                 }, 2000);
             }
         }
@@ -1408,7 +1413,7 @@ class Base {
 
     /**
      * Hàm base thực hiện load dữ liệu lên table
-     * @param {Element} table Thành phần bảng cần đổ dữ liệu
+     * @param {Element} targetTable Thành phần bảng cần đổ dữ liệu
      * @param {number} pageIndex Số thứ tự trang
      *  Created By dtnga (21/11/2020)
      */

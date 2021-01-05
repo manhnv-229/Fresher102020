@@ -33,9 +33,8 @@ class IndexJs extends Base {
                 $(content).removeClass("displayNone");
                 $(`.content-header-title`).text(content.attr("titleName"));
                 // load data tương ứng với content
-                var tblContent = $(content).find(`.m-table`);
-                var tableData = $(tblContent).find('tbody tr');
-                me.loadData(1, tblContent);
+                var defaultSelectedItem = $(`.content-body:visible .pageSize`).find(".item")[0];
+                $(defaultSelectedItem).trigger("click");
             });
 
             // Select toàn bộ text khi focus field nhập liệu
@@ -193,9 +192,9 @@ class IndexJs extends Base {
                     $(this).closest(`.pageSize`).attr("value", pageSize);
                     me.loadData(1);
                 });
-                var defaultSelectedItem = $(item).find(".item")[0];
-                $(defaultSelectedItem).trigger("click");
             });
+            var defaultSelectedItem = $(`.content-body:visible .pageSize`).find(".item")[0];
+            $(defaultSelectedItem).trigger("click");
             
         }
         catch (e) {
