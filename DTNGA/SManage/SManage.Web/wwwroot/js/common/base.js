@@ -30,7 +30,7 @@ class Base {
      * */
     getObjectName() {
         var me = this;
-    //    me.objectName = $(`.content-body:visible`).attr("fieldName");
+        //    me.objectName = $(`.content-body:visible`).attr("fieldName");
         return me.objectName;
     }
 
@@ -90,7 +90,7 @@ class Base {
                                    <div class="displayNone m-icon check-icon"></div>
                                </div><div class="option-text">Tất cả</div></div>`);
             var filterParent = $(targetCombo).closest(`.content-filter`);
-            if (filterParent.length>0)
+            if (filterParent.length > 0)
                 comboItemBox.append(optionAll);
             $.each(data, function (index, item) {
                 if (item) {
@@ -940,44 +940,44 @@ class Base {
    * CreatedBy dtnga (08/12/2020)
     */
     onBlur_inputField(inputField) {
-        var me = this;
-        var input = $(inputField);
-        var value = $(input).val();
-        $(input).closest(".input-box").find(".error-duplicate").addClass("displayNone");
-        $(input).closest(".input-box").find(".error-empty").addClass("displayNone");
-        $(input).removeClass("m-input-warning");
-        $(input).removeAttr('validate');
-        // Check trùng
-        var duplicateAttr = $(input).attr("unduplicated");
-        if (value.trim() && typeof duplicateAttr !== typeof undefined && duplicateAttr !== false) {
-            var oldValue = $(input).attr("value").trim();
-            if (value && value.trim() !== oldValue) {
-                var fieldName = $(input).attr("fieldName");
-                $.ajax({
-                    url: me.host + me.getRoute() + "/duplication?key=" + fieldName + "&value=" + value,
-                    method: "GET"
-                })
-                    .done(function (res) {
-                        if (res) {
-                            // Bị trùng
-                            $(input).addClass("m-input-warning");
-                            $(input).attr('validate', 'false');
-                            $(input).closest(".input-box").find(".error-duplicate").removeClass("displayNone");
-                        }
+        if (inputField) {
+            var me = this;
+            var input = $(inputField);
+            var value = $(input).val();
+            $(input).closest(".input-box").find(".error-duplicate").addClass("displayNone");
+            $(input).closest(".input-box").find(".error-empty").addClass("displayNone");
+            $(input).removeClass("m-input-warning");
+            $(input).removeAttr('validate');
+            // Check trùng
+            var duplicateAttr = $(input).attr("unduplicated");
+            if (value.trim() && typeof duplicateAttr !== typeof undefined && duplicateAttr !== false) {
+                var oldValue = $(input).attr("value").trim();
+                if (value && value.trim() !== oldValue) {
+                    var fieldName = $(input).attr("fieldName");
+                    $.ajax({
+                        url: me.host + me.getRoute() + "/duplication?key=" + fieldName + "&value=" + value,
+                        method: "GET"
                     })
-                    .fail(function (res) {
-                        console.log(res);
-                    })
+                        .done(function (res) {
+                            if (res) {
+                                // Bị trùng
+                                $(input).addClass("m-input-warning");
+                                $(input).attr('validate', 'false');
+                                $(input).closest(".input-box").find(".error-duplicate").removeClass("displayNone");
+                            }
+                        })
+                        .fail(function (res) {
+                            console.log(res);
+                        })
+                }
+            }
+            else if ((!value || !value.trim()) && $(input).is(":required")) {
+                $(input).addClass("m-input-warning");
+                $(input).attr('validate', 'false');
+                $(input).attr('title', "Trường này không được để trống");
+                $(input).closest(".input-box").find(".error-empty").removeClass("displayNone");
             }
         }
-        else if ((!value || !value.trim()) && $(input).is(":required")) {
-            $(input).addClass("m-input-warning");
-            $(input).attr('validate', 'false');
-            $(input).attr('title', "Trường này không được để trống");
-            $(input).closest(".input-box").find(".error-empty").removeClass("displayNone");
-
-        }
-
     }
 
     /** 
@@ -1585,7 +1585,7 @@ class Base {
             var data = [];
             var total = 0;
             // Lấy data từ Api
-            
+
             // Lấy tất cả dữ liệu tìm kiếm, bộ lọc
             var filterString = "";
             var SearchValue = $(currentContent).find(`.content-filter input[type="search"]`).val();

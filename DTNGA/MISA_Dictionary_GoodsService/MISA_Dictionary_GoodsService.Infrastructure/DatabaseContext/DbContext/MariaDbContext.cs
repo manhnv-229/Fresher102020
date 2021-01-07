@@ -56,16 +56,18 @@ namespace MISA_Dictionary_GoodsService.Infrastructure.DatabaseContext.DbContext
             {
                 if (_dbConnection.State == ConnectionState.Closed)
                     _dbConnection.Open();
-                using var tran = _dbConnection.BeginTransaction();
-                try
+                using (var tran = _dbConnection.BeginTransaction())
                 {
-                    result = (await _dbConnection.QueryAsync<T>(queryCommand, param: parms, commandType: commandType, transaction: tran)).ToList();
-                    tran.Commit();
-                }
-                catch (Exception ex)
-                {
-                    tran.Rollback();
-                    throw ex;
+                    try
+                    {
+                        result = (await _dbConnection.QueryAsync<T>(queryCommand, param: parms, commandType: commandType, transaction: tran)).ToList();
+                        tran.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                        throw ex;
+                    }
                 }
             }
             catch (Exception ex)
@@ -295,7 +297,7 @@ namespace MISA_Dictionary_GoodsService.Infrastructure.DatabaseContext.DbContext
                 using var tran = _dbConnection.BeginTransaction();
                 try
                 {
-                    parms.Add("@TotalRecord", dbType: DbType.Int32, direction:ParameterDirection.Output);
+                    parms.Add("@TotalRecord", dbType: DbType.Int32, direction: ParameterDirection.Output);
                     pagingData.Data = (await _dbConnection.QueryAsync<T>(sp, param: parms, commandType: commandType, transaction: tran)).ToList();
                     pagingData.Total = parms.Get<int>("@TotalRecord");
                     tran.Commit();

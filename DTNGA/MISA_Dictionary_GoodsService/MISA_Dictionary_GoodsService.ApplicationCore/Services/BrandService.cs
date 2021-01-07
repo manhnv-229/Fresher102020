@@ -17,7 +17,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
 
         public async Task<List<string>> GetBrandOrigin()
         {
-            var sp = string.Format(MISAConst.Proc_GetProperty, "BrandOrigin");
+            var sp = string.Format(ConstProcedure.Proc_GetProperty, "BrandOrigin");
             var origins = await _baseRepository.GetAsync<string>(sp);
             return origins;
         }

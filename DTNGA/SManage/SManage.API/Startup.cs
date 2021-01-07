@@ -72,6 +72,7 @@ namespace SManage.API
 
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ITransportorService, TransportorService>();
 
         }
 

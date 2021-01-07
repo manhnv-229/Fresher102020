@@ -80,70 +80,57 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         /// <summary>
         /// Thành công
         /// </summary>
-        Success = 200,
+        Success = 1001,
         /// <summary>
         /// Thêm thành công
         /// </summary>
-        Created = 201,
+        Created = 1002,
 
         /// <summary>
         /// Lỗi validate dữ liệu chung
         /// </summary>
-        Validate = 400,
+        Validate = 1003,
 
         /// <summary>
         /// Lỗi validate dữ liệu không hợp lệ
         /// </summary>
-        ValidateEntity = 401,
+        ValidateEntity = 1004,
 
         /// <summary>
         /// Lỗi validate dữ liệu do không đúng nghiệp vụ
         /// </summary>
-        ValidateBussiness = 402,
+        ValidateBussiness = 1005,
 
         /// <summary>
         /// Lỗi không tìm thấy
         /// </summary>
-        NotFound = 404,
+        NotFound = 1006,
 
         /// <summary>
         /// Lỗi Exception
         /// </summary>
-        Exception = 500,
+        Exception = 1007,
 
         /// <summary>
         /// Lỗi Trùng dữ liệu
         /// </summary>
-        Duplicate = 501,
-
-        /// <summary>
-        /// Lỗi File không đúng định dạng
-        /// </summary>
-        FileFormat = 600,
-
-        /// <summary>
-        /// Lỗi File import không đúng định dạng
-        /// </summary>
-        ImportFileFormat = 601,
-
-        /// <summary>
-        /// Lỗi File Export không đúng định dạng
-        /// </summary>
-        ExportFileFormat = 602,
+        Duplicate = 1008,
 
         /// <summary>
         /// Lỗi thêm mới entity
         /// </summary>
-        ErrorAddEntity = 603,
+        ErrorAddEntity = 1009,
 
         /// <summary>
         /// Lỗi xóa entity
         /// </summary>
-        ErrorDeleteEntity = 604,
+        ErrorDeleteEntity = 1010,
         /// <summary>
         /// Lỗi cập nhật entity
         /// </summary>
-        ErrorUpdateEntity = 605,
+        ErrorUpdateEntity = 1011,
+
+
     }
     
     /// <summary>

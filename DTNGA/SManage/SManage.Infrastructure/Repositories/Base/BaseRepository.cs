@@ -65,6 +65,10 @@ namespace SManage.Infrastructure.Repositories.Base
         {
             return await _databaseContext.GetPagingAsync<T>(sp, parms);
         }
+        public async Task<TransportData> GetTransportData(string sp, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure)
+        {
+            return await _databaseContext.GetTransportData(sp, parms);
+        }
         #endregion
 
         #region Insert

@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using MISA_Dictionary_GoodsService.API.Middleware;
 using MISA_Dictionary_GoodsService.ApplicationCore.Extensions;
 using Newtonsoft.Json.Serialization;
 
@@ -62,7 +61,6 @@ namespace MISA_Dictionary_GoodsService.API
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "MISA_Dictionary_GoodsService.API - V1");
                 c.RoutePrefix = "swagger";
             });
-            app.UseExceptionHandlerMiddleware();
             app.UseHttpsRedirection();
             app.UseCors("AllowAll");
             app.UseRouting();

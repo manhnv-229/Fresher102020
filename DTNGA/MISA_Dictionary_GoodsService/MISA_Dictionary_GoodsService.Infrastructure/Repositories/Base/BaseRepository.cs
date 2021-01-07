@@ -81,15 +81,11 @@ namespace SManage.Infrastructure.Repositories.Base
         #endregion
 
         #region Update
-        public Task<T> UpdateAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
+        public async Task<T> UpdateAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
-            return _databaseContext.UpdateAsync<T>(sp, parms);
+            return await _databaseContext.UpdateAsync<T>(sp, parms);
         }
 
-        public Task<int> UpdateRangeAsync<T>(string sp, List<object> entities, CommandType commandType = CommandType.Text)
-        {
-            return _databaseContext.UpdateRangeAsync<T>(sp, entities);
-        }
         #endregion
         public void Dispose()
         {

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MISA_Dictionary_GoodsService.ApplicationCore;
+using MISA_Dictionary_GoodsService.ApplicationCore.Const;
+using MISA_Dictionary_GoodsService.ApplicationCore.Entities.DTO;
 using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service;
 using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service.Base;
 using Newtonsoft.Json.Linq;
@@ -22,7 +24,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         {
             _baseMemoryCache = baseMemoryCache;
             _categoryService = baseService;
-            
+
         }
 
 
@@ -31,20 +33,27 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         /// </summary>
         /// <param name="size">Số bản ghi trên trang</param>
         /// <param name="page">Số thứ tự trang</param>
-        /// <param name="keySearch">key tìm kiếm</param>
+        /// <param name="keyWord">key tìm kiếm</param>
         /// <returns></returns>
         /// CreatedBy dtnga (24/12/2020)
         [HttpGet]
-        public async Task<IActionResult> GetByFilterAsync([FromQuery] int size, [FromQuery] int page, [FromQuery] string keySearch)
+        public async Task<IActionResult> GetByFilterAsync([FromQuery] int size, [FromQuery] int page, [FromQuery] string keyWord)
         {
-            var filterValues = new Dictionary<string, object>
+            try
             {
-                { "PageIndex", page },
-                { "PageSize", size },
-                { "KeySearch", keySearch }
-            };
-            var pagingData = await _categoryService.GetPagingByFilterAsync<Category>(filterValues);
-            return Ok(pagingData);
+                var filterValues = new Dictionary<string, object>
+                {
+                    { ConstParameter.PageIndex, page },
+                    { ConstParameter.PageSize, size },
+                    { ConstParameter.KeyWord, keyWord }
+                };
+                var pagingData = await _categoryService.GetPagingByFilterAsync<Category>(filterValues);
+                return Ok(pagingData);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApplicationCore.Properties.Resources.Exception);
+            }
         }
 
         /// <summary>
@@ -55,27 +64,43 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         [HttpGet("all")]
         public async Task<IActionResult> GetAllAsync()
         {
-            var categories = await _categoryService.GetAllAsync<Category>();
-            return Ok(categories);
+            try
+            {
+                var categories = await _categoryService.GetAllAsync<Category>();
+                return Ok(categories);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApplicationCore.Properties.Resources.Exception);
+            }
         }
 
         /// <summary>
         /// Kiểm tra trùng lặp dữ liệu
         /// </summary>
-        /// <param name="categoryCode">Mã hàng hóa</param>
+        /// <param name="key">Khóa kiểm tra</param>
+        /// <param name="value">Giá trị cần kiểm tra</param>
         /// <returns></returns>
         /// CreatedBy dtnga (30/12/2020)
         [HttpGet("duplication")]
         public async Task<IActionResult> CheckDuplicate([FromQuery] string key, [FromQuery] string value)
         {
-            bool duplicate = false;
-            if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(value) || value.Length>20) return StatusCode(400, ApplicationCore.Properties.Resources.Validate);
-            var result = new Category();
-            if (key=="CategoryCode")
-                result = (await _categoryService.GetByPropertyAsync<Category>("CategoryCode", value)).FirstOrDefault();
-            if (result != null)
-                duplicate = true;
-            return StatusCode(200, duplicate);
+            try
+            {
+                if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(value)) return StatusCode(400, ApplicationCore.Properties.Resources.EmptyInput);
+                bool duplicate = false;
+                if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(value) || value.Length > 20) return StatusCode(400, ApplicationCore.Properties.Resources.Validate);
+                var result = new Category();
+                if (key == ConstParameter.CategoryCode)
+                    result = (await _categoryService.GetByPropertyAsync<Category>(ConstParameter.CategoryCode, value)).FirstOrDefault();
+                if (result != null)
+                    duplicate = true;
+                return StatusCode(200, duplicate);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApplicationCore.Properties.Resources.Exception);
+            }
         }
 
         /// <summary>
@@ -87,13 +112,21 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         [HttpGet("{categoryId}")]
         public async Task<IActionResult> GetByIdAsync([FromRoute] Guid categoryId)
         {
-            var category = _baseMemoryCache.GetCache<Category>(categoryId.ToString());
-            if (category == null)
+            try
             {
-                category = await _categoryService.GetByIdAsync<Category>(categoryId);
-                _baseMemoryCache.SetCache(categoryId.ToString(), category);
+                if (categoryId == null) return StatusCode(400, ApplicationCore.Properties.Resources.EmptyInput);
+                var category = _baseMemoryCache.GetCache<Category>(categoryId.ToString());
+                if (category == null)
+                {
+                    category = await _categoryService.GetByIdAsync<Category>(categoryId);
+                    _baseMemoryCache.SetCache(categoryId.ToString(), category);
+                }
+                return Ok(category);
             }
-            return Ok(category);
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApplicationCore.Properties.Resources.Exception);
+            }
         }
 
         /// <summary>
@@ -103,18 +136,26 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         /// <returns>Id danh mục đã thêm mới</returns>
         /// CreatedBy dtnga (17/12/2020)
         [HttpPost]
-        public async Task<IActionResult> AddNewAsync([FromBody] Category newCategory)
+        public async Task<IActionResult> AddNewAsync([FromBody] CategoryCreateDTO newCategory)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return StatusCode(400, ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return StatusCode(400, ModelState);
+                }
+                var category = Category.ConvertFromCreateDTO(newCategory);
+                category.CategoryId = Guid.NewGuid();
+                var response = await _categoryService.InsertAsync<Category>(category);
+                if (response.Success == false)
+                    return StatusCode(400, response);
+                else
+                    return StatusCode(201, category.CategoryId);
             }
-            newCategory.CategoryId = Guid.NewGuid();
-            var response = await _categoryService.InsertAsync<Category>(newCategory);
-            if (response.Success == false)
-                return StatusCode((int)response.MISACode, response);
-            else
-                return StatusCode(201, newCategory.CategoryId);
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApplicationCore.Properties.Resources.Exception);
+            }
         }
 
 
@@ -125,17 +166,25 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         /// <returns>Id danh mục đã cập nhật</returns>
         /// CreatedBy dtnga (17/12/2020)
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromBody] Category newCategory)
+        public async Task<IActionResult> UpdateAsync([FromBody] CategoryUpdateDTO newCategory)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return StatusCode(400, ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return StatusCode(400, ModelState);
+                }
+                var category = Category.ConvertFromUpdateDTO(newCategory);
+                var response = await _categoryService.UpdateAsync<Category>(category);
+                if (response.Success == false)
+                    return StatusCode(400, response);
+                else
+                    return StatusCode(200, category.CategoryId);
             }
-            var response = await _categoryService.UpdateAsync<Category>(newCategory);
-            if (response.Success == false)
-                return StatusCode((int)response.MISACode, response);
-            else
-                return StatusCode(200, newCategory.CategoryId);
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApplicationCore.Properties.Resources.Exception);
+            }
         }
 
         /// <summary>
@@ -147,12 +196,19 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteRangeAsync([FromBody] List<Guid> range)
         {
-            if (range.Count == 0) return StatusCode(400, string.Format(ApplicationCore.Properties.Resources.EmptyInput, "Id danh mục"));
-            var response = await _categoryService.DeleteRangeAsync<Category>(range);
-            if (response.Success == false)
-                return StatusCode((int)response.MISACode, response);
-            else
-                return Ok(range);
+            try
+            {
+                if (range.Count == 0) return StatusCode(400, ApplicationCore.Properties.Resources.EmptyInput);
+                var response = await _categoryService.DeleteRangeAsync<Category>(range);
+                if (response.Success == false)
+                    return StatusCode(400, response);
+                else
+                    return Ok(range);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApplicationCore.Properties.Resources.Exception);
+            }
         }
     }
 }

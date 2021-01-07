@@ -61,7 +61,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thông tin {0} đã tồn tại trên hệ thống.
+        ///   Looks up a localized string similar to Trùng dữ liệu.
         /// </summary>
         public static string Duplicate {
             get {
@@ -70,7 +70,16 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thông tin {0} không được để trống .
+        ///   Looks up a localized string similar to Thông tin {0} đã tồn tại trên hệ thống.
+        /// </summary>
+        public static string DuplicateNotification {
+            get {
+                return ResourceManager.GetString("DuplicateNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Không có dữ liệu đầu vào.
         /// </summary>
         public static string EmptyInput {
             get {
@@ -97,7 +106,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lỗi xóa dữ liệu..
+        ///   Looks up a localized string similar to Lỗi xóa dữ liệu. Thông tin không ồn tại trên hệ thống.
         /// </summary>
         public static string ErrorDeleteEntity {
             get {
@@ -115,7 +124,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lỗi Exception..
+        ///   Looks up a localized string similar to Có lỗi xảy ra, vui lòng liên hệ MISA..
         /// </summary>
         public static string Exception {
             get {

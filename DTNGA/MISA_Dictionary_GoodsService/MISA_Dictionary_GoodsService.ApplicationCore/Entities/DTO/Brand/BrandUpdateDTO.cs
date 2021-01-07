@@ -1,22 +1,14 @@
-﻿using MISA_Dictionary_GoodsService.ApplicationCore.Entities.DTO.Brand;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
-#nullable disable
-
-namespace MISA_Dictionary_GoodsService.ApplicationCore
+namespace MISA_Dictionary_GoodsService.ApplicationCore.Entities.DTO.Brand
 {
     /// <summary>
-    /// Thương hiệu
+    /// Object dùng để cập nhật thương hiệu
     /// </summary>
-    public partial class Brand : BaseEntity
+    public class BrandUpdateDTO
     {
-        public Brand()
-        {
-            Goods = new HashSet<Goods>();
-        }
-
-        #region Properties
         /// <summary>
         /// Id thương hiệu
         /// </summary>
@@ -55,31 +47,5 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         [DisplayName("Mô tả thương hiệu")]
         public string BrandDescription { get; set; }
 
-        [DisplayName("Sản phẩm")]
-        public virtual ICollection<Goods> Goods { get; set; }
-        #endregion
-        #region Methods
-        public static Brand ConvertFromCreateDTO(BrandCreateDTO brandCreateDTO)
-        {
-            return new Brand
-            {
-                BrandCode = brandCreateDTO.BrandCode,
-                BrandName= brandCreateDTO.BrandName,
-                BrandDescription= brandCreateDTO.BrandDescription,
-                BrandOrigin= brandCreateDTO.BrandOrigin
-            };
-        }
-        public static Brand ConvertFromUpdateDTO(BrandUpdateDTO brandUpdateDTO)
-        {
-            return new Brand
-            {
-                BrandId= brandUpdateDTO.BrandId,
-                BrandCode = brandUpdateDTO.BrandCode,
-                BrandName = brandUpdateDTO.BrandName,
-                BrandDescription = brandUpdateDTO.BrandDescription,
-                BrandOrigin = brandUpdateDTO.BrandOrigin
-            };
-        }
-        #endregion
     }
 }

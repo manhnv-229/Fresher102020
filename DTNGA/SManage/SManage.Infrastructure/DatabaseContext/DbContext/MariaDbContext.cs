@@ -73,6 +73,42 @@ namespace SManage.Infrastructure.DatabaseContext.DbContext
             return pagingData;
         }
 
+        public async Task<TransportData> GetTransportData(string sp, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure)
+        {
+            TransportData transportData = new TransportData();
+            try
+            {
+                if (_dbConnection.State == ConnectionState.Closed)
+                    _dbConnection.Open();
+                using (var tran = _dbConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        parms.Add("@ShippingFee", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                        parms.Add("@ExpectedDeliveryDate", dbType: DbType.DateTime, direction: ParameterDirection.Output);
+                        var result = (await _dbConnection.QueryAsync(sp, param: parms, commandType: commandType, transaction: tran)).ToList();
+                        transportData.ShippingFee = parms.Get<int>("@ShippingFee");
+                        transportData.ExpectedDeliveryDate = parms.Get<DateTime>("@ExpectedDeliveryDate");
+                        tran.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (_dbConnection.State == ConnectionState.Open)
+                    _dbConnection.Close();
+            }
+            return transportData;
+        }
         public List<T> Get<T>(string queryCommand, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure)
         {
             return _dbConnection.Query<T>(queryCommand, commandType: commandType).ToList();
@@ -331,5 +367,7 @@ namespace SManage.Infrastructure.DatabaseContext.DbContext
         public void Dispose()
         {
         }
+
+        
     }
 }

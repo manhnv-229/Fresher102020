@@ -97,5 +97,19 @@ namespace SManage.API.Controllers
 
             return response;
         }
+
+        /// <summary>
+        /// Lấy mã vùng dựa theo Id
+        /// </summary>
+        /// <param name="administrativeAreaId"></param>
+        /// <returns></returns>
+        [HttpGet("{administrativeAreaId}")]
+        public string GetAreaCodeById([FromRoute] Guid administrativeAreaId)
+        {
+            var administrativeArea = AdministrativeAreas.Where<AdministrativeArea>(a => a.AdministrativeAreaId == administrativeAreaId).FirstOrDefault();
+            if (administrativeArea != null)
+                return administrativeArea.AdministrativeAreaCode;
+            else return null;
+        }
     }
 }

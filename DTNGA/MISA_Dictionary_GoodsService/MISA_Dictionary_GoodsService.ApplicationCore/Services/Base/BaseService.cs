@@ -96,21 +96,21 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
         public List<T> GetAll<T>()
         {
             var entityName = typeof(T).Name;
-            var sp = string.Format(MISAConst.Proc_GetAlll, entityName);
+            var sp = string.Format(ConstProcedure.Proc_GetAlll, entityName);
             return _baseRepository.Get<T>(sp);
         }
 
         public async Task<List<T>> GetAllAsync<T>()
         {
             var entityName = typeof(T).Name;
-            var sp = string.Format(MISAConst.Proc_GetAlll, entityName);
+            var sp = string.Format(ConstProcedure.Proc_GetAlll, entityName);
             return await _baseRepository.GetAsync<T>(sp);
         }
 
         public async Task<List<T>> GetByPropertyAsync<T>(string propName, object propValue)
         {
             var entityName = typeof(T).Name;
-            var sp = string.Format(MISAConst.Proc_GetByProperty, entityName, propName);
+            var sp = string.Format(ConstProcedure.Proc_GetByProperty, entityName, propName);
             var parms = MappingDataTypeForOne(propName, propValue);
             return await _baseRepository.GetAsync<T>(sp, parms);
         }
@@ -118,7 +118,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
         public async Task<T> GetByIdAsync<T>(Guid id)
         {
             var entityName = typeof(T).Name;
-            var sp = string.Format(MISAConst.Proc_GetById, entityName, entityName);
+            var sp = string.Format(ConstProcedure.Proc_GetById, entityName, entityName);
             var parms = MappingDataTypeForOne($"{entityName}Id", id);
             return await _baseRepository.GetByIdAsync<T>(sp, parms);
         }
@@ -133,7 +133,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
                 parms.Add(key, value);
             }
             var entityName = typeof(T).Name;
-            var sp = string.Format(MISAConst.Proc_GetByFilter, entityName);
+            var sp = string.Format(ConstProcedure.Proc_GetByFilter, entityName);
             return await _baseRepository.GetPagingAsync<T>(sp, parms);
         }
         #endregion
@@ -143,12 +143,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
         {
             var isValid = await ValidateAsync<T>(entity);
             if (isValid == false)
-            {
-                _actionServiceResult.Success = false;
-                _actionServiceResult.MISACode = MISACode.Validate;
-                _actionServiceResult.Message = Properties.Resources.Validate;
                 return _actionServiceResult;
-            }
             else
             {
                 var entityName = entity.GetType().Name;
@@ -172,19 +167,26 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
         #region Update
         public async Task<ActionServiceResult> UpdateAsync<T>(T entity)
         {
-            var entityName = entity.GetType().Name;
-            var sp = $"Proc_Update{entityName}";
-            var parms = MappingDataType<T>(entity);
-            var updatedEntity = await _baseRepository.UpdateAsync<T>(sp, parms);
-            if (updatedEntity == null)
+            var isValid = await ValidateAsync<T>(entity);
+            if (isValid == false)
+                return _actionServiceResult;
+            else
             {
-                _actionServiceResult.Success = false;
-                _actionServiceResult.MISACode = MISACode.ErrorUpdateEntity;
-                _actionServiceResult.Message = ApplicationCore.Properties.Resources.ErrorUpdateEntity;
+                var entityName = entity.GetType().Name;
+                var sp = $"Proc_Update{entityName}";
+                var parms = MappingDataType<T>(entity);
+                var updatedEntity = await _baseRepository.UpdateAsync<T>(sp, parms);
+                if (updatedEntity == null)
+                {
+                    _actionServiceResult.Success = false;
+                    _actionServiceResult.MISACode = MISACode.ErrorUpdateEntity;
+                    _actionServiceResult.Message = ApplicationCore.Properties.Resources.ErrorUpdateEntity;
+                    return _actionServiceResult;
+                }
+                _actionServiceResult.Data = updatedEntity;
                 return _actionServiceResult;
             }
-            _actionServiceResult.Data = updatedEntity;
-            return _actionServiceResult;
+
         }
         #endregion
 
@@ -211,18 +213,22 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
                 var propValue = prop.GetValue(entity);
                 var propName = prop.Name;
                 // Kiểm tra property có Attribute cần validate không
-                if (prop.IsDefined(typeof(Unduplicated), false))
+                if (prop.IsDefined(typeof(Unduplicated), false) && prop.IsDefined(typeof(PrimaryKey), false)==false)
                 {
+                    // TODO không check trùng trong trường hợp update và dữu liệu không thay đổi
                     // Check trùng lặp
                     // Lấy entity 
                     var entityDuplicate = await GetByPropertyAsync<T>(propName, propValue);
                     if (entityDuplicate.Count > 0)
                     {
                         isValid = false;
-                        errorMsg.Add(string.Format(Properties.Resources.Duplicate, displayName));
+                        _actionServiceResult.Success = false;
+                        _actionServiceResult.MISACode = MISACode.Duplicate;
+                        _actionServiceResult.Message = Properties.Resources.Duplicate;
+                        errorMsg.Add(string.Format(Properties.Resources.DuplicateNotification, displayName));
                     }
                 }
-                
+
             }
             _actionServiceResult.Data = errorMsg;
             return isValid;

@@ -36,7 +36,15 @@ namespace SManage.ApplicationCore.Interfaces.DatabaseContext
         /// <returns>PagingData chứa danh sách và tổng số bản ghi thỏa mãn</returns>
         /// CreatedBy dtnga (30/12/2020)
         Task<PagingData<T>> GetPagingAsync<T>(string sp, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure);
-
+        
+        /// <summary>
+        /// Lấy thông tin vận chuyển (chi phí , ngày giao hàng dự kiến)
+        /// </summary>
+        /// <param name="sp"></param>
+        /// <param name="parms"></param>
+        /// <param name="commandType"></param>
+        /// <returns></returns>
+        Task<TransportData> GetTransportData(string sp, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure);
         /// <summary>
         /// Lấy nhiều bản ghi
         /// </summary>

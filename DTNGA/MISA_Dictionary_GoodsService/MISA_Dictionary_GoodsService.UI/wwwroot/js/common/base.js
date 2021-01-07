@@ -1436,7 +1436,7 @@ class Base {
             // Lấy tất cả dữ liệu tìm kiếm, bộ lọc
             var filterString = "";
             var SearchValue = $(currentContent).find(`.content-filter input[type="search"]`).val();
-            filterString = (!SearchValue) ? (filterString + "&KeySearch=") : (filterString + "&KeySearch=" + SearchValue);
+            filterString = (!SearchValue) ? (filterString + "&KeyWord=") : (filterString + "&KeyWord=" + SearchValue);
 
             var filterboxs = $(currentContent).find(`.content-filter .m-box`);
             $.each(filterboxs, function (index, item) {

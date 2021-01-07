@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MISA_Dictionary_GoodsService.ApplicationCore;
+using MISA_Dictionary_GoodsService.ApplicationCore.Const;
+using MISA_Dictionary_GoodsService.ApplicationCore.Entities.DTO.Brand;
 using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service;
 using MISA_Dictionary_GoodsService.ApplicationCore.Interfaces.Service.Base;
 using Newtonsoft.Json.Linq;
@@ -22,7 +24,7 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         {
             _baseMemoryCache = baseMemoryCache;
             _brandService = brandService;
-            
+
         }
 
         /// <summary>
@@ -30,43 +32,59 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         /// </summary>
         /// <param name="size">Số bản ghi trên trang</param>
         /// <param name="page">Số thứ tự trang</param>
-        /// <param name="keySearch">key tìm kiếm</param>
+        /// <param name="keyWord">key tìm kiếm</param>
         /// <param name="brandOrigin">Xuất xứ thương hiệu</param>
         /// <returns>Danh sách thương hiệu trên trang cần lấy và tổng số bản ghi thỏa mãn</returns>
         /// CreatedBy dtnga (24/12/2020)
         [HttpGet]
-        public async Task<IActionResult> GetByFilterAsync([FromQuery] int size, [FromQuery] int page, [FromQuery] string keySearch, [FromQuery] string brandOrigin)
+        public async Task<IActionResult> GetByFilterAsync([FromQuery] int size, [FromQuery] int page, [FromQuery] string keyWord, [FromQuery] string brandOrigin)
         {
-            var filterValues = new Dictionary<string, object>
+            try
             {
-                { "PageIndex", page },
-                { "PageSize", size },
-                { "KeySearch", keySearch },
-                { "BrandOrigin", brandOrigin }
+                var filterValues = new Dictionary<string, object>
+            {
+                { ConstParameter.PageIndex, page },
+                { ConstParameter.PageSize, size },
+                { ConstParameter.KeyWord, keyWord },
+                { ConstParameter.BrandOrigin, brandOrigin }
             };
-            var pagingData = await _brandService.GetPagingByFilterAsync<Brand>(filterValues);
-            return Ok(pagingData);
+                var pagingData = await _brandService.GetPagingByFilterAsync<Brand>(filterValues);
+                return Ok(pagingData);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApplicationCore.Properties.Resources.Exception);
+            }
         }
 
         /// <summary>
         /// Kiểm tra trùng lặp dữ liệu
         /// </summary>
-        /// <param name="goodsBarcode">Mã hàng hóa</param>
+        /// <param name="key">Khóa kiểm tra</param>
+        /// <param name="value">Giá trị cần kiểm tra</param>
         /// <returns></returns>
         /// CreatedBy dtnga (30/12/2020)
         [HttpGet("duplication")]
         public async Task<IActionResult> CheckDuplicate([FromQuery] string key, [FromQuery] string value)
         {
-            bool duplicate = false;
-            if (string.IsNullOrEmpty(key) ||  string.IsNullOrEmpty(value) || value.Length > 20) return StatusCode(400, ApplicationCore.Properties.Resources.Validate);
-            var result = new Brand();
-            if(key=="BrandName")
-                result = (await _brandService.GetByPropertyAsync<Brand>("BrandName", value)).FirstOrDefault();
-            else if (key == "BrandCode")
-                result = (await _brandService.GetByPropertyAsync<Brand>("BrandCode", value)).FirstOrDefault();
-            if(result!=null)
-                duplicate = true;
-            return StatusCode(200, duplicate);
+            try
+            {
+                if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(value)) return StatusCode(400, ApplicationCore.Properties.Resources.EmptyInput);
+                bool duplicate = false;
+                if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(value) || value.Length > 20) return StatusCode(400, ApplicationCore.Properties.Resources.Validate);
+                var result = new Brand();
+                if (key == ConstParameter.BrandName)
+                    result = (await _brandService.GetByPropertyAsync<Brand>(ConstParameter.BrandName, value)).FirstOrDefault();
+                else if (key == ConstParameter.BrandCode)
+                    result = (await _brandService.GetByPropertyAsync<Brand>(ConstParameter.BrandCode, value)).FirstOrDefault();
+                if (result != null)
+                    duplicate = true;
+                return StatusCode(200, duplicate);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApplicationCore.Properties.Resources.Exception);
+            }
         }
 
         /// <summary>
@@ -77,8 +95,15 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         [HttpGet("all")]
         public async Task<IActionResult> GetAllBrandAsync()
         {
-            var brands = await _brandService.GetAllAsync<Brand>();
-            return Ok(brands);
+            try
+            {
+                var brands = await _brandService.GetAllAsync<Brand>();
+                return Ok(brands);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApplicationCore.Properties.Resources.Exception);
+            }
         }
 
         /// <summary>
@@ -89,8 +114,15 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         [HttpGet("origin")]
         public async Task<IActionResult> GetAllOriginAsync()
         {
-            var origins =await _brandService.GetBrandOrigin();
-            return Ok(origins);
+            try
+            {
+                var origins = await _brandService.GetBrandOrigin();
+                return Ok(origins);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApplicationCore.Properties.Resources.Exception);
+            }
         }
 
         /// <summary>
@@ -101,13 +133,21 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         [HttpGet("{brandId}")]
         public async Task<IActionResult> GetBrandByIdAsync([FromRoute] Guid brandId)
         {
-            var brand = _baseMemoryCache.GetCache<Brand>(brandId.ToString());
-            if (brand == null)
+            try
             {
-                brand = await _brandService.GetByIdAsync<Brand>(brandId);
-                _baseMemoryCache.SetCache(brandId.ToString(), brand);
+                if (brandId == null) return StatusCode(400, ApplicationCore.Properties.Resources.EmptyInput);
+                var brand = _baseMemoryCache.GetCache<Brand>(brandId.ToString());
+                if (brand == null)
+                {
+                    brand = await _brandService.GetByIdAsync<Brand>(brandId);
+                    _baseMemoryCache.SetCache(brandId.ToString(), brand);
+                }
+                return Ok(brand);
             }
-            return Ok(brand);
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApplicationCore.Properties.Resources.Exception);
+            }
         }
 
         /// <summary>
@@ -117,21 +157,29 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         /// <returns>Id thương hiệu thêm thành công</returns>
         /// CreatedBy dtnga (17/12/2020)
         [HttpPost]
-        public async Task<IActionResult> AddNewBrandAsync([FromBody] Brand newBrand)
+        public async Task<IActionResult> AddNewBrandAsync([FromBody] BrandCreateDTO newBrand)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return StatusCode(400, ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return StatusCode(400, ModelState);
+                }
+                var brand = Brand.ConvertFromCreateDTO(newBrand);
+                brand.BrandId = Guid.NewGuid();
+                var response = await _brandService.InsertAsync<Brand>(brand);
+                if (response.Success == false)
+                    return StatusCode(400, response);
+                else
+                    return StatusCode(201, brand.BrandId);
             }
-            newBrand.BrandId = Guid.NewGuid();
-            var response = await _brandService.InsertAsync<Brand>(newBrand);
-            if (response.Success == false)
-                return StatusCode((int)response.MISACode, response);
-            else
-                return StatusCode(201, newBrand.BrandId);
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApplicationCore.Properties.Resources.Exception);
+            }
         }
 
-        
+
         /// <summary>
         /// Cập nhật thông tin thương hiệu
         /// </summary>
@@ -139,17 +187,25 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         /// <returns>Id thương hiệu cập nhật thành công </returns>
         /// CreatedBy dtnga (17/12/2020)
         [HttpPut]
-        public async Task<IActionResult> UpdateBrandAsync([FromBody] Brand newBrand)
+        public async Task<IActionResult> UpdateBrandAsync([FromBody] BrandUpdateDTO newBrand)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return StatusCode(400, ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return StatusCode(400, ModelState);
+                }
+                var brand = Brand.ConvertFromUpdateDTO(newBrand);
+                var response = await _brandService.UpdateAsync<Brand>(brand);
+                if (response.Success == false)
+                    return StatusCode(400, response);
+                else
+                    return StatusCode(200, brand.BrandId);
             }
-            var response = await _brandService.UpdateAsync<Brand>(newBrand);
-            if (response.Success == false)
-                return StatusCode((int)response.MISACode, response);
-            else
-                return StatusCode(200, newBrand.BrandId);
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApplicationCore.Properties.Resources.Exception);
+            }
         }
 
 
@@ -162,12 +218,19 @@ namespace MISA_Dictionary_GoodsService.API.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteRangeAsync([FromBody] List<Guid> range)
         {
-            if (range.Count == 0) return StatusCode(400, string.Format(ApplicationCore.Properties.Resources.EmptyInput, "Id thương hiệu"));
-            var response = await _brandService.DeleteRangeAsync<Brand>(range);
-            if (response.Success == false)
-                return StatusCode((int)response.MISACode, response);
-            else
-                return Ok(range);
+            try
+            {
+                if (range.Count == 0) return StatusCode(400, string.Format(ApplicationCore.Properties.Resources.EmptyInput, "Id thương hiệu"));
+                var response = await _brandService.DeleteRangeAsync<Brand>(range);
+                if (response.Success == false)
+                    return StatusCode(400, response);
+                else
+                    return Ok(range);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApplicationCore.Properties.Resources.Exception);
+            }
         }
     }
 }

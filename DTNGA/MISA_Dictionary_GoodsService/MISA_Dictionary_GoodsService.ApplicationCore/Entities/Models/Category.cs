@@ -1,10 +1,14 @@
-﻿using System;
+﻿using MISA_Dictionary_GoodsService.ApplicationCore.Entities.DTO;
+using System;
 using System.Collections.Generic;
 
 #nullable disable
 
 namespace MISA_Dictionary_GoodsService.ApplicationCore
 {
+    /// <summary>
+    /// Danh mục
+    /// </summary>
     public partial class Category : BaseEntity
     {
         public Category()
@@ -12,6 +16,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
             Goods = new HashSet<Goods>();
         }
 
+        #region Properties
         /// <summary>
         /// Id danh mục
         /// </summary>
@@ -65,5 +70,42 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore
         public virtual Category ParentCategory { get; set; }
         [DisplayName("Sản phẩm")]
         public virtual ICollection<Goods> Goods { get; set; }
+        #endregion
+
+        #region Methods
+        /// <summary>
+        /// Hàm thực hiện convert từ object Thêm danh mục sang object Danh mục
+        /// </summary>
+        /// <param name="categoryCreateDTO">Danh mục thêm</param>
+        /// <returns>Danh mục</returns>
+        /// CreatedBy dtnga (06/01/2021)
+        public static Category ConvertFromCreateDTO(CategoryCreateDTO categoryCreateDTO)
+        {
+            return new Category
+            {
+                CategoryName = categoryCreateDTO.CategoryName,
+                CategoryCode = categoryCreateDTO.CategoryCode,
+                CategoryDescription = categoryCreateDTO.CategoryDescription,
+                CategoryParentId = categoryCreateDTO.CategoryParentId
+            };
+        }
+        /// <summary>
+        /// Hàm thực hiện convert từ object Cập nhật danh mục sang object Danh mục
+        /// </summary>
+        /// <param name="categoryUpdateDTO">Danh mục cập nhật</param>
+        /// <returns>Danh mục</returns>
+        /// CreatedBy dtnga (06/01/2021)
+        public static Category ConvertFromUpdateDTO(CategoryUpdateDTO categoryUpdateDTO)
+        {
+            return new Category
+            {
+                CategoryId= categoryUpdateDTO.CategoryId,
+                CategoryName = categoryUpdateDTO.CategoryName,
+                CategoryCode = categoryUpdateDTO.CategoryCode,
+                CategoryDescription = categoryUpdateDTO.CategoryDescription,
+                CategoryParentId = categoryUpdateDTO.CategoryParentId
+            };
+        }
+        #endregion
     }
 }
