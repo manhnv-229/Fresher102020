@@ -23,17 +23,6 @@ namespace SManage.API.Controllers
         }
 
         /// <summary>
-        /// Lấy thông tin tất cả khách hàng
-        /// </summary>
-        /// <returns></returns>
-        /// CreatedBy dtnga (15/12/2020)
-        [HttpGet]
-        public async Task<ActionServiceResult> GetAllCustomer()
-        {
-            return await _baseService.GetAllAsync<Customer>();
-        }
-
-        /// <summary>
         /// Lấy thông tin khách hàng theo Id
         /// </summary>
         /// <param name="customerId">Id khách hàng</param>
@@ -42,7 +31,7 @@ namespace SManage.API.Controllers
         [HttpGet("{customerId}")]
         public async Task<IActionResult> GetCustomerByIdAsync([FromRoute] Guid customerId)
         {
-            var customer = (await _baseService.GetByIdAsync<Customer>(customerId)).Data;
+            var customer = await _baseService.GetByIdAsync<Customer>(customerId);
             return Ok(customer);
         }
 
@@ -53,11 +42,33 @@ namespace SManage.API.Controllers
         /// <returns></returns>
         /// CreateBy dtnga (15/12/2020)
         [HttpGet("PhoneNumber/{phoneNumber}")]
-        public async Task<IActionResult> GetCustomerByPhoneNumber ([FromRoute] string phoneNumber)
+        public async Task<IActionResult> GetCustomerByPhoneNumber([FromRoute] string phoneNumber)
         {
-            var customer = ((List<Customer>)(await _baseService.GetByPropertyAsync<Customer>("PhoneNumber", phoneNumber)).Data).FirstOrDefault();
+            var customer = (await _baseService.GetByPropertyAsync<Customer>("PhoneNumber", phoneNumber)).FirstOrDefault();
             return Ok(customer);
         }
 
+        /// <summary>
+        /// TODO Thêm khách hàng mới
+        /// </summary>
+        /// <param name="newCustomer"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> InsertCustomer([FromBody] Customer newCustomer)
+        {
+            var customer=  (await _baseService.InsertAsync<Customer>(newCustomer)).Data;
+            return Ok(customer);
+        }
+        /// <summary>
+        /// TODO Cập nhật khách hàng mới
+        /// </summary>
+        /// <param name="newCustomer"></param>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<IActionResult> UpdateCustomer([FromBody] Customer newCustomer)
+        {
+            var customer = (await _baseService.UpdateAsync<Customer>(newCustomer)).Data;
+            return Ok(customer);
+        }
     }
 }

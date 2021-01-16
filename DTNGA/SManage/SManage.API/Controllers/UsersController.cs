@@ -23,15 +23,6 @@ namespace SManage.API.Controllers
             _baseMemoryCache = baseMemoryCache;
         }
 
-        /// <summary>
-        /// Lấy thông tin người dùng hiện tại
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public UserInfo GetCurrentUser()
-        {
-            return (UserInfo)_baseMemoryCache.GetCache("currentUser");
-        }
 
         /// <summary>
         /// Lấy danh sách cửa hàng theo Id người dùng
@@ -40,9 +31,90 @@ namespace SManage.API.Controllers
         /// <returns></returns>
         /// CreatedBy dtnga (22/12/2021)
         [HttpGet("{userId}/shops")]
-        public async Task<ActionServiceResult> GetByUserId([FromRoute] Guid userId)
+        public async Task<IActionResult> GetByUserId([FromRoute] Guid userId)
         {
-            return await _baseService.GetByPropertyAsync<Shop>("UserId", userId);
+            var shops= await _baseService.GetByPropertyAsync<Shop>("UserId", userId);
+            return Ok(shops);
+        }
+
+
+        /// <summary>
+        /// Thêm nhân viên mới
+        /// </summary>
+        /// <param name="newUser">Thông tin nhân viên mới</param>
+        /// <returns>Id hàng hóa mới được thêm thành công</returns>
+        /// CreatedBy dtnga (17/12/2020)
+        [HttpPost]
+        public async Task<IActionResult> AddNewAsync([FromBody] UserInfo newUser)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return StatusCode(400, ModelState);
+                }
+                newUser.UserId = Guid.NewGuid();
+                var response = await _baseService.InsertAsync<UserInfo>(newUser);
+                if (response.Success == false)
+                    return StatusCode(400, response);
+                else
+                    return StatusCode(201, newUser.UserId);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApplicationCore.Properties.Resources.Exception);
+            }
+        }
+
+        /// <summary>
+        /// Cập nhật thông tin nhân viên
+        /// </summary>
+        /// <param name="newUser"></param>
+        /// <returns>Id thương hiệu cập nhật thành công </returns>
+        /// CreatedBy dtnga (17/12/2020)
+        [HttpPut]
+        public async Task<IActionResult> UpdateUserAsync([FromBody] UserInfo newUser)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return StatusCode(400, ModelState);
+                }
+                var response = await _baseService.UpdateAsync<UserInfo>(newUser);
+                if (response.Success == false)
+                    return StatusCode(400, response);
+                else
+                    return StatusCode(200, newUser.UserId);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApplicationCore.Properties.Resources.Exception);
+            }
+        }
+
+        /// <summary>
+        /// Xóa nhân viên
+        /// </summary>
+        /// <param name="range">Thông tin nhân viên mới</param>
+        /// <returns>Id hàng hóa mới được thêm thành công</returns>
+        /// CreatedBy dtnga (17/12/2020)
+        [HttpDelete]
+        public async Task<IActionResult> DeleteUserAsync([FromBody] List<Guid> range)
+        {
+            try
+            {
+                if (range.Count == 0) return StatusCode(400, ApplicationCore.Properties.Resources.EmptyInput);
+                var response = await _baseService.DeleteRangeAsync<UserInfo>(range);
+                if (response.Success == false)
+                    return StatusCode(400, response);
+                else
+                    return Ok(range);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApplicationCore.Properties.Resources.Exception);
+            }
         }
     }
 }

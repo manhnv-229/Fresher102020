@@ -50,8 +50,8 @@ namespace SManage.ApplicationCore.Interfaces.Service.Base
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        /// CreatedBy dtnga (17/12/2020)
-        ActionServiceResult GetAll<T>();
+        /// CreatedBy dtnga (16/12/2020)
+        List<T> GetAll<T>();
         /// <summary>
         /// Lấy tất cả bản ghi
         /// </summary>
@@ -61,17 +61,17 @@ namespace SManage.ApplicationCore.Interfaces.Service.Base
         /// <param name="commandType">Loại truy vấn</param>
         /// <returns>Danh sách đối tượng chứa dữ liệu đọc từ DB</returns>
         /// CreatedBy dtnga (11/11/2020)
-        Task<ActionServiceResult> GetAllAsync<T>();
+        Task<List<T>> GetAllAsync<T>();
         /// <summary>
         /// /// <summary>
-        /// Lấy nhiều bản ghi dựa theo 1 thuộc tính
+        /// Lấy 1 bản ghi dựa theo 1 thuộc tính
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="propName">Tên thuộc tính</param>
         /// <param name="propValue">Giá trị thuộc tính</param>
         /// <returns></returns>
         /// CreatedBy dtnga (11/11/2020)
-        Task<ActionServiceResult> GetByPropertyAsync<T>(string propName, object propValue);
+        Task<List<T>> GetByPropertyAsync<T>(string propName, object propValue);
         /// <summary>
         /// Lấy 1 bản ghi dựa theo Id
         /// </summary>
@@ -81,7 +81,7 @@ namespace SManage.ApplicationCore.Interfaces.Service.Base
         /// <param name="commandType">Loại truy vấn</param>
         /// <returns>Đối tượng có Id theo mô tả</returns>
         /// CreatedBy dtnga (11/11/2020)
-        Task<ActionServiceResult> GetByIdAsync<T>(Guid entityId);
+        Task<T> GetByIdAsync<T>(Guid entityId);
 
         /// <summary>
         /// Lấy dữu liệu theo tim fkieems và bộ lọc (có paging)
@@ -91,6 +91,7 @@ namespace SManage.ApplicationCore.Interfaces.Service.Base
         /// <returns>Danh sách bản ghi thỏa mãn bộ lọc với số trang với kích cỡ đầu vào/returns>
         /// CreatedBy dtnga (25/12/2020)
         Task<PagingData<T>> GetByFilterAsync<T>(Dictionary<string, object> filterValues = null);
+
         #endregion
 
         #region Insert
@@ -103,7 +104,7 @@ namespace SManage.ApplicationCore.Interfaces.Service.Base
         /// <param name="commandType">Loại truy vấn</param>
         /// <returns>Đối tượng được thêm thành công</returns>
         /// CreatedBy dtnga (11/11/2020)
-        Task<ActionServiceResult> InsertAsync<T>(T entity) where T : BaseEntity;
+        Task<ActionServiceResult> InsertAsync<T>(T entity);
         /// <summary>
         /// Thêm nhiều bản ghi vào DB
         /// </summary>
@@ -126,7 +127,7 @@ namespace SManage.ApplicationCore.Interfaces.Service.Base
         /// <param name="commandType">Loại truy vấn</param>
         /// <returns>Đối tượng được cập nhật thành công</returns>
         /// CreatedBy dtnga (11/11/2020)
-        Task<ActionServiceResult> UpdateAsync<T>(T entity) where T : BaseEntity;
+        Task<ActionServiceResult> UpdateAsync<T>(T entity);
         #endregion
 
         /// <summary>
@@ -136,6 +137,6 @@ namespace SManage.ApplicationCore.Interfaces.Service.Base
         /// <param name="Entity"></param>
         /// <returns>true-entity hợp lệ, false- entity không hợp lệ</returns>
         /// CreatedBy dtnga (04/12/2020)
-        Task<bool> CustomeValidateAsync<T>(T entity) where T : BaseEntity;
+        Task<bool> CustomeValidateAsync<T>(T entity);
     }
 }

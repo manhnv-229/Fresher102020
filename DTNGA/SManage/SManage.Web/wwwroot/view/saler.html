@@ -3,8 +3,207 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <link href="/css/lib/jquery-ui.css" rel="stylesheet" />
+    <link href="/css/common/main.css" rel="stylesheet" />
+    <link href="/css/page/common.css" rel="stylesheet" />
+    <link href="/css/page/add-order.css" rel="stylesheet" />
+    <link href="/css/page/other.css" rel="stylesheet" />
 </head>
 <body>
-    trang nhân viên
+    <!-- navbar -->
+    <div class="navbar">
+        <div class="nav-header">
+            <div class="logo-box">
+                <div class="m-icon toggle-icon"></div>
+                <div class="logo-image"></div>
+            </div>
+        </div>
+        <div class="nav-content">
+            <div class="nav-item select-menu-item" name="OrderAdd">
+                <div class="nav-item-box">
+                    <div class="m-icon nav-item-icon create-order-icon active"></div>
+                    <div class="nav-item-text">Tạo đơn mới</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <div class="m-combobox m-box" name="Shop" fieldName="ShopId" id="cb-Shop"></div>
+        </div>
+        <div class="header-right">
+            <div class="header-right-box">
+                <div class="avatar"></div>
+                <div class="username"></div>
+                <button class="m-button" id="btnLogout">
+                    <div class="m-icon logout-icon"></div>
+                    <div class="btn-text">Đăng xuất</div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <div class="content-header">
+            <div class="content-header-title">Tạo đơn hàng</div>
+            <div class="content-header-right"></div>
+        </div>
+        <div id="order-add" class="content-body" name="OrderAdd" titleName="Tạo đơn hàng">
+            <div class="content-filter">
+                <div class="content-filter-right">
+                    <button class="m-button m-button-short btn-clear" id="btn-clear">Nhập lại</button>
+                    <button class="m-button" id="btn-create">
+                        <div class="m-icon save-icon"></div>
+                        <div class="btn-text">Lưu</div>
+                    </button>
+                </div>
+            </div>
+            <div class="dialog-detail">
+                <div class="dialog-body">
+                    <div class="dialog-col dialog-col-left">
+                        <div class="content-box" name="product">
+                            <div class="box-title">
+                                <span>THÔNG TIN SẢN PHẨM</span>
+                                <div class="border-bottom"></div>
+                            </div>
+                            <div class="box-body">
+                                <div class="input-line">
+                                    <div class="input-box input-box-small">
+                                        <div class="input-title">Mã sản phẩm</div>
+                                        <div class="m-input">
+                                            <div class="m-icon search-icon"></div>
+                                            <input class="search-field" type="search" placeholder="Nhập mã sản phẩm" autocomplete="on" />
+                                            <div class="m-autoComplete" name="Product"></div>
+
+                                        </div>
+                                    </div>
+                                    <div class="input-box input-box-end input-box-small">
+                                        <button class="m-button flex-end" id="btn-addToShoppingCard">
+                                            <div class="m-icon shopping-icon"></div>
+                                            <div class="btn-text">Thêm vào giỏ</div>
+                                        </button>
+                                    </div>
+
+                                </div>
+                                <div class="shopping-cart">
+                                    <div class="input-box input-box-big">
+                                        <div class="input-title flex-line">
+                                            <div>Giỏ hàng</div>
+                                        </div>
+                                        <div class="error-validate error-empty displayNone">Giỏ hàng không được để trống</div>
+                                        <div class="product-list">
+                                            <div class="empty-mark">Giỏ hàng trống</div>
+                                        </div>
+                                    </div>
+                                    <div class="input-line total-line">
+                                        <div class="total-quantity" value="0">Tổng sản phẩm: <span>0</span></div>
+                                        <div class="total-money" fieldName="CartTotal" value="0">0</div>
+                                    </div>
+                                </div>
+                                <div class="note">
+                                    <div class="input-box input-box-big">
+                                        <div class="input-title">Ghi chú đơn hàng</div>
+                                        <textarea class="m-input note-area" fieldName="OrderNote"> </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-box" name="payment">
+                            <div class="box-title">
+                                <span>THÔNG TIN THANH TOÁN</span>
+                                <div class="border-bottom"></div>
+                            </div>
+                            <div class="box-body">
+                                <div class="input-line">
+                                    <div class="input-box input-box-small">
+                                        <div class="input-title">Phí vận chuyển</div>
+                                        <input class=" m-input" type="text" typeformat="money" required fieldName="ShippingFee" validate="true" value="0" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <div class="input-box input-box-small">
+                                        <div class="input-title">Tổng số tiền</div>
+                                        <input class=" m-input" type="text" typeformat="money" required fieldName="OrderTotal" validate="true" value="0" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dialog-col dialog-col-right">
+                        <div class="content-box" name="customer">
+                            <div class="box-title">
+                                <span>THÔNG TIN NGƯỜI NHẬN</span>
+                                <div class="border-bottom"></div>
+                            </div>
+                            <div class="box-body">
+                                <div class="input-line">
+                                    <div class="input-box input-box-small">
+                                        <div class="m-input">
+                                            <div class="m-icon search-icon"></div>
+                                            <input class="search-field" type="search" placeholder="Nhập số điện thoại" fieldName="PhoneNumber" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="empty-result displayNone">Chưa có dữ liệu khách hàng</div>
+                                <div class="box-info">
+                                    <div class="input-line">
+                                        <div class="input-box input-box-small">
+                                            <div class="input-title">Tên khách hàng (<span>*</span>)</div>
+                                            <div class="error-validate error-empty displayNone">Tên khách hàng không được bỏ trống</div>
+                                            <input class="m-input" type="text" required fieldName="CustomerName" validate="false" />
+                                        </div>
+                                        <div class="input-box input-box-small">
+                                            <div class="input-title">Số điện thoại (<span>*</span>)</div>
+                                            <div class="error-validate error-empty displayNone">Số điện thoại không được bỏ trống</div>
+                                            <input class="m-input" type="text" required fieldName="PhoneNumber" validate="false" />
+                                        </div>
+                                    </div>
+                                    <div class="input-line">
+                                        <div class="input-box input-box-big ">
+                                            <div class="input-title">Địa chỉ (<span>*</span>)</div>
+                                            <div class="error-validate error-empty displayNone">Địa chỉ không được bỏ trống</div>
+                                            <input class="m-input" type="text" required fieldName="Address" validate="false" />
+                                        </div>
+                                    </div>
+                                    <div class="input-line">
+                                        <div class="input-box input-box-small" fieldName="Province">
+                                            <div class="input-title">Tỉnh/Thành phố (<span>*</span>)</div>
+                                            <div class="error-validate error-empty displayNone">Thông tin tỉnh/thành không được bỏ trống</div>
+                                            <div class="m-combobox m-box" id="cb-province" name="AdministrativeArea" validate="false"></div>
+                                        </div>
+                                        <div class="input-box input-box-small" fieldName="District">
+                                            <div class="input-title">Quận/Huyện (<span>*</span>)</div>
+                                            <div class="error-validate error-empty displayNone">Thông tin quận/huyện không được bỏ trống</div>
+                                            <div class="m-combobox m-box" id="cb-district" name="AdministrativeArea" validate="false"></div>
+                                        </div>
+                                    </div>
+                                    <div class="input-line">
+                                        <div class="input-box input-box-small" fieldName="Ward">
+                                            <div class="input-title">Phường/Xã (<span>*</span>)</div>
+                                            <div class="error-validate error-empty displayNone">Thông tin phường/xã không được bỏ trống</div>
+                                            <div class="m-combobox m-box" id="cb-ward" name="AdministrativeArea" fieldName="AdministrativeAreaId" validate="false"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/lib/jquery-3.5.1.min.js"></script>
+    <script src="/js/lib/jquery-ui.min.js"></script>
+    <script src="/js/common/common.js"></script>
+    <script src="/js/common/base.js"></script>
+    <script src="/js/page/owner.js"></script>
+    <script src="/js/page/saler.js"></script>
 </body>
 </html>

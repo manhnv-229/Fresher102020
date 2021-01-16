@@ -7,11 +7,7 @@ namespace SManage.ApplicationCore.Entities
 {
     public partial class UserInfo : BaseEntity
     {
-        public UserInfo()
-        {
-            Accounts = new HashSet<Account>();
-            Shops = new HashSet<Shop>();
-        }
+       
         [Unduplicated]
         [Required]
         [DisplayName("Id Người dùng")]
@@ -32,7 +28,7 @@ namespace SManage.ApplicationCore.Entities
 
         [DisplayName("Giới tính")]
         public int? Gender { get; set; }
-
+        
         [Required]
         [DisplayName("Số điện thoại")]
         public string PhoneNumber { get; set; }
@@ -49,10 +45,14 @@ namespace SManage.ApplicationCore.Entities
 
         [DisplayName("Mã vai trò")]
         public string RoleCode { get; set; }
+        [DisplayName("Giới tính")]
+        public string GenderName { get; set; }
+        [DisplayName("Tên đăng nhập")]
+        public string AccountName{ get; set; }
+        [DisplayName("Mật khẩu")]
+        public string  Password { get; set; }
+        [DisplayName("Id cửa hàng")]
+        public Guid ShopId { get; set; }
 
-        [DisplayName("Tài khoản")]
-        public virtual ICollection<Account> Accounts { get; set; }
-        [DisplayName("Cửa hàng")]
-        public virtual ICollection<Shop> Shops { get; set; }
     }
 }

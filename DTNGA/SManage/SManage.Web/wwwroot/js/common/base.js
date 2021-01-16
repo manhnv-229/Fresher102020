@@ -21,7 +21,10 @@ class Base {
      * CreatedBy dtnga (26/12/2020)
      * */
     getRoute() {
-        return "/api/v1/Orders";
+        var me = this;
+        var route = $(`.content-body:visible`).attr("route");
+        me.route = "/api/v1/" + route;
+        return me.route;
     }
 
     /**
@@ -30,7 +33,7 @@ class Base {
      * */
     getObjectName() {
         var me = this;
-        //    me.objectName = $(`.content-body:visible`).attr("fieldName");
+        me.objectName = $(`.content-body:visible`).attr("fieldName");
         return me.objectName;
     }
 
@@ -59,6 +62,21 @@ class Base {
         return me.method;
     }
 
+    /** Thực hiện lấy thông tin người dùng sau khi đăng nhập
+     * CreatedBy dtnga (26/11/2020)
+     * */
+    loadAccount() {
+        try {
+            var me = this;
+            var fullName = me.userInfo["FullName"];
+            var userId = me.userInfo["UserId"];
+            $(`.header .username`).text(fullName);
+            $(`.header .username`).data("keyId", userId);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
 
     /**
      * Sinh combobox với danh sách option cho trước
@@ -178,7 +196,7 @@ class Base {
             }
             var wrapper = $(comboBox).find(`.wrapper`);
             // input
-            $(comboBox).find(`input`).focus();
+        //    $(comboBox).find(`input`).focus();
             if (!$(comboBox).find(`input`).val())
                 $(wrapper).find(".item").show();
             // comboItem
@@ -271,7 +289,7 @@ class Base {
         var me = this;
         var item = selectedItem;
         // combobox
-        var comboBox = $(item).closest(`.m-box`);
+        var comboBox = $(item).closest(`.m-box, .m-autoComplete`);
         // inner-wrapper, các item còn lại
         var comboItemBox = $(item).closest(".inner-wrapper");
         var items = $(comboItemBox).find(`.item`);
@@ -353,6 +371,7 @@ class Base {
     detectKeyCode(element) {
         var me = this;
         var parent = $(element).closest(".m-box");
+        if (parent.length == 0) parent= $(".m-autoComplete");
         var wrapper = $(parent).find(`.wrapper`);
         var innerWrapper = $(parent).find(".inner-wrapper");
 
@@ -479,11 +498,11 @@ class Base {
     /**
      * Thực hiện gen và thêm sản phẩm mới vào giỏ hàng
      * CreatedBy dtnga (01/12/2020)
-     * @param {object} product
+     * @param {string} productId
      */
-    addProductToCart(product) {
+    addProductToCart(productId) {
     }
-
+     
     /**Thực hiện cập nhật tổng tiền của giỏ hàng khi thay đổi giá sản  phẩm
      * CreatedBy dtnga (01/12/2020)
      * */
@@ -507,23 +526,25 @@ class Base {
      */
     calcculateTotal() {
         try {
+            debugger
             //Cập nhật tổng số lượng sản phẩm trong giỏ hàng
-            var totalQuantity = $(`#order-add .product-list`).children().length - 1; // trừ empty mark đi
-            $(`.total-quantity span`).text(totalQuantity);
+            var productList = $(`.content-body:visible .product-list`);
+            var totalQuantity = $(productList).children().length - 1; // trừ empty mark đi
+            $(productList).closest(`.shopping-cart`).find(`.total-quantity span`).text(totalQuantity);
             // Nếu trống thì hiển thị empty mark
             if (totalQuantity <= 0) {
-                var emptyMark = $(`.product-list .empty-mark`);
+                var emptyMark = $(productList).find(`.empty-mark`);
                 $(emptyMark).removeClass(`displayNone`);
             }
             // Cập nhật tổng số tiền giỏ hàng
-            var productList = $(`#order-add .product-list .product-detail`);
+            var products = $(productList).find(`.product-detail`);
             var newTotal = 0;
-            $.each(productList, function (index, item) {
+            $.each(products, function (index, item) {
                 var cost = convertInt($(item).find(`.cost`).attr("value"));
                 newTotal = newTotal + cost;
             });
-            $(`#order-add .total-money`).text(formatMoney(newTotal));
-            $(`#order-add .total-money`).attr("value", newTotal);
+            $(productList).closest(`.shopping-cart`).find(`.total-money`).text(formatMoney(newTotal));
+            $(productList).closest(`.shopping-cart`).find(`.total-money`).attr("value", newTotal);
         } catch (e) {
             console.log(e);
         }
@@ -549,7 +570,7 @@ class Base {
         }
     }
 
-    /** Thực hiện thêm sản phẩm vào giỏ hàng
+    /**TODO Thực hiện thêm sản phẩm vào giỏ hàng
      * CreatedBy dtnga (29/11/2020)
      * */
     onClick_addToShoppingCard() {
@@ -639,14 +660,14 @@ class Base {
      */
     initEventPopup(popup) {
         $(`.m-popup #btn-exit-popup`).on("click", function () {
-            $(popup).hide();
+            $(popup).addClass("displayNone");
         });
-        $(`.m-popup #btn-close`).on("click", function () {
-            $(popup).hide();
+        $(`.m-popup #btn-cancel-popup`).on("click", function () {
+            $(popup).addClass("displayNone");
         });
         $('body').on("keydown", function (e) {
             if (e.which === 27)
-                $(popup).hide();
+                $(popup).addClass("displayNone");
         });
     }
 
@@ -738,6 +759,9 @@ class Base {
         }
     }
 
+    /**
+     * Đăng xuất khỏi hệ thống
+     * */
     onclick_btnLogout() {
         var me = this;
         $.ajax({
@@ -834,7 +858,6 @@ class Base {
     }
 
 
-
     /** Tự động format các trường input số tiền 
     * CreatedBy dtnga (26/11/2020) 
      */
@@ -865,53 +888,79 @@ class Base {
     /**Kiểm tra và build dữ liệu trước khi lưu 
      Createdby dtnga (14/11/2020)
      */
-    onClick_btnSave() {
+    onClick_btnSave(buttonSave) {
         try {
             var me = this;
+            var button = $(buttonSave);
+            var form = $(button).closest(".m-dialog");
             // kiểm tra validate (bắt buộc nhập, email, ...), nếu vẫn còn trường chưa valid thì cảnh báo
-            var invalidInputs = $(`input[validate="false"], select[validate="false"]`);
-            if (invalidInputs && invalidInputs.length > 0) {
-                $.each(invalidInputs, function (index, input) {
-                    $(input).trigger('blur');
-                });
-                invalidInputs[0].focus();
+            var valid = me.ValidateForm(form);
+            if (valid) {
+                $(`.m-loading`).removeClass("displayNone");
+                // build dữ liệu
+                var obj = me.GetDataForm(form);
+                // Gọi Api Lưu dữ liệu
+                $.ajax({
+                    url: me.host + me.getRoute(),
+                    method: me.getMethod(),
+                    data: JSON.stringify(obj),
+                    contentType: "application/json",
+                    dataType: "json"
+                })
+                    .done(function (res) {
+                        $(`.m-loading`).addClass("displayNone");
+                        $(`.m-dialog:visible`).addClass("displayNone");
+                        me.showToastMesseger(me.mesHeader + "thành công", "success");
+                        me.loadData();
+                    })
+                    .fail(function (res) {
+                        console.log(res);
+                        $(`.m-dialog:visible`).addClass("displayNone");
+                        me.showToastMesseger(me.mesHeader + "không thành công", "fail");
+                    })
             }
-            // build dữ liệu
-            // Lấy dữ liệu từ input
-            var obj = new Object();
-            var inputs = $(`.m-dialog input`);
-            $.each(inputs, function (index, input) {
-                var value = $(input).val();
-                var fieldName = $(input).attr('fieldName');
-                // gán dữ liệu vào thuộc tính của obj (json) tương ứng với fieldName
-                if (input.type == "radio") {
-                    if (input.checked)
-                        obj[fieldName] = value;
-                }
-                else {
-                    obj[fieldName] = value;
-                }
-            });
-            console.log(obj);
-            if (me.formMode == "add") var method = "POST";
-            else if (me.formMode == "edit") var method = "PUT";
-            //TODO Gọi Api Lưu dữ liệu
-            //$.ajax({
-            //    url: me.host + me.apiRouter,
-            //    method: method,
-            //    data: JSON.stringify(obj),
-            //    contentType: "application/json"
-            //}).done(function (res) {
-            //    me.status = "success";
-            //    me.openToastMesseger();
-            //}).fail(function (res) {
-            //    console.log(res);
-            //    me.status = "fail";
-            //    me.openToastMesseger();
-            //})
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
 
-            // Lưu và thêm 
-
+    /**
+     * Thực hiện lưu dữ liệu mới và hiển thị form thêm mới
+     * CreatedBy dtnga (24/12/2020)
+     * */
+    onClick_btnSaveAdd(buttonSave) {
+        try {
+            var me = this;
+            var button = $(buttonSave);
+            var form = $(button).closest(".m-dialog");
+            // kiểm tra validate (bắt buộc nhập, email, ...), nếu vẫn còn trường chưa valid thì cảnh báo
+            var valid = me.ValidateForm(form);
+            if (valid) {
+                // build dữ liệu
+                var obj = me.GetDataForm(form);
+                // Gọi Api Lưu dữ liệu
+                $.ajax({
+                    url: me.host + me.getRoute(),
+                    method: me.getMethod(),
+                    data: JSON.stringify(obj),
+                    contentType: "application/json",
+                    dataType: "json"
+                })
+                    .done(function (res) {
+                        $(`.m-loading`).addClass("displayNone");
+                        me.showToastMesseger(me.mesHeader + " thành công", "success");
+                        me.loadData();
+                        $(form).find(".header-text").text("THÊM");
+                        me.formMode = "add";
+                        me.clear(form);
+                    })
+                    .fail(function (res) {
+                        console.log(res);
+                        $(`.m-dialog:visible`).addClass("displayNone");
+                        me.showToastMesseger(me.mesHeader + "không thành công", "fail");
+                    })
+            }
         }
         catch (e) {
             console.log(e);
@@ -1030,7 +1079,7 @@ class Base {
      */
     validateEmail(email) {
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        $(`input[type='email']`).blur(function () {
+        $(`input[type='email'][required]`).blur(function () {
             var email = $(this).val();
             if (!re.test(email)) {
                 $(this).addClass("m-input-warning");
@@ -1057,7 +1106,7 @@ class Base {
         var me = this;
         me.on("keydown", function (e) {
             if (e.which === 27) {
-                me.hide();
+                me.addClass("displayNone");
             }
         });
     }
@@ -1144,9 +1193,8 @@ class Base {
             $(selected).find(`.checkmark`).addClass("selected");
             //Show form cập nhật đơn hàng
             var dialog = $(selected).closest(`.content-body`).find(`.m-dialog`);
-            $(dialog).find(`.header-text`).text("CẬP NHẬT");
-            // Hiển thị dialog
             me.showDialog(dialog);
+            $(`.m-loading`).removeClass("displayNone");
             // bind dữ liệu hàng được chọn lên form
             var id = $(selected).data('keyId');
             $(dialog).data("keyId", id);
@@ -1158,18 +1206,18 @@ class Base {
                 .done(function (res) {
                     var data = res;
                     me.BindDatatoForm(data, dialog);
+                    $(`.m-loading`).addClass("displayNone");
                 })
                 .fail(function (res) {
                     console.log(res);
                 })
-
-
         }
         catch (e) {
             console.log(e);
         }
     }
 
+    
     /**
      * Thực hiện chọn tất cả bản ghi
     * CreatedBy dtnga (21/11/2020)
@@ -1381,11 +1429,11 @@ class Base {
                     $(iconMes).addClass("fail");
                     $(iconExit).addClass("fail");
                 }
-                $(toastMes).show();
+                $(toastMes).removeClass("displayNone");
                 me.initEventToastMesseger(toastMes);
                 //Set timeout, popup tự đóng sau 3s
                 setTimeout(function () {
-                    $(`.m-toast-messeger`).hide();
+                    $(`.m-toast-messeger`).addClass("displayNone");
                 }, 2000);
             }
         }
@@ -1402,9 +1450,39 @@ class Base {
     initEventToastMesseger(toastMes) {
         var toastMessger = $(toastMes);
         $(toastMessger).find(`.btn-exit-messeger`).on("click", function () {
-            $(toastMessger).hide();
+            $(toastMessger).addClass("displayNone");
         });
     }
+
+    /**
+     * Hiển thị thông báo
+     * @param {any} mes
+     */
+    showNotificationPopup(mes) {
+        try {
+            var me = this;
+            if (mes) {
+                var popup = $(`.popup-notification`);
+                $(popup).find(`.popup-body`).text(mes);
+                $(popup).removeClass("displayNone");
+                // Sự kiện trên popup
+                $(popup).find(`.btn-exit`).on("click", function () {
+                    $(popup).addClass("displayNone");
+                });
+                $(popup).find(`#btn-close`).on("click", function () {
+                    $(popup).addClass("displayNone");
+                });
+                $(`body`).on("keydown", function (e) {
+                    if (e.which == 27)
+                        $(popup).addClass("displayNone");
+                });
+            }
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
 
     /**
      * Thực hiện hiển thị dialog và khởi tạo các sự kiện liên quan
@@ -1415,6 +1493,15 @@ class Base {
         var me = this;
         if (!dialog) dialog = $(`.content-body:visible .m-dialog`);
         me.clear(dialog);
+        if (me.formMode == "edit") {
+            $(dialog).find(`.header-text.add-header`).addClass("displayNone");
+            $(dialog).find(`.header-text.edit-header`).removeClass("displayNone");
+            $(dialog).find(`input[type="password"]`).prop("disabled", true);
+        }
+        else if (me.formMode == "add") {
+            $(dialog).find(`.header-text.add-header`).removeClass("displayNone");
+            $(dialog).find(`.header-text.edit-header`).addClass("displayNone");
+        }
         $(dialog).removeClass("displayNone");
         $(dialog).find(`input, textarea`)[0].focus();
     }
@@ -1426,8 +1513,8 @@ class Base {
      */
     CallAjax(data) {
         try {
-            var me = this;
             var response = [];
+            var me = this;
             me.route = me.getRoute();
             if (data) {
                 $.ajax({
@@ -1548,6 +1635,64 @@ class Base {
     }
 
     /**
+     * Thực hiện đổ dữ liệu vào form
+     * @param {any} data dữ liệu cần đổ
+     * @param {any} targetForm form cần đổ dữ liệu
+     * CreatedBy dtnga (24/12/2020)
+     */
+    BindDatatoForm(data, targetForm) {
+        try {
+            var me = this;
+            var obj = data;
+            var form = $(targetForm);
+            var inputs = $(form).find(`input, textarea, .m-box`);
+            $.each(inputs, function (index, input) {
+                var fieldName = $(input).attr('fieldName');
+                var typeFormat = $(input).attr("typeFormat");
+                // Nếu có fieldName mới lấy data
+                if (fieldName) {
+                    var value = obj[fieldName];
+                    if (!value)
+                        value = "";
+                    if ($(input).hasClass("m-box")) {
+                        $(input).data("keyId", value);
+                        // Select item có id như trên
+                        me.SelectItem(input, value);
+                    }
+                    else if (input.type == "radio") {
+                        if ($(input).attr("radioValue") == value)
+                            $(input).prop("checked", true);
+                    }
+                    else if (input.type == "date") {
+
+                    }
+                    else {
+                        if (typeof typeFormat !== typeof undefined && typeFormat !== false) {
+                            switch (typeFormat) {
+                                case "money":
+                                    value = formatMoney(value);
+                                    break;
+                                default:
+                            }
+                        }
+                        $(input).val(value);
+                        $(input).attr("value", value);
+                    }
+                    var validateAttr = $(input).attr("validate");
+                    if (value && typeof validateAttr !== undefined && validateAttr == "false") {
+                        $(input).attr("validate", true);
+                    }
+                }
+
+            });
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+
+    /**
     * Thực hiện kiểm tra có hàng dữ liệu nào được chọn hay không, không => disable button Xóa
     * CreatedBy dtnga (24/12/2020)
     * */
@@ -1605,7 +1750,7 @@ class Base {
 
             $(`.m-loading`).removeClass("displayNone");
             $(`.nodata-mark`).addClass("displayNone");
-            me.route = "/api/v1/Orders";
+            me.route = me.getRoute();
             me.objectName = me.getObjectName();
             // Lấy dữ liệu thỏa mãn bộ lọc
             $.ajax({
@@ -1653,8 +1798,8 @@ class Base {
                                             value = formatDate(value, "hh:mm dd/mm/yyyy");
                                             td.addClass("text-align-center");
                                             break;
-                                        case "mBox":
-
+                                        case "number":
+                                            td.addClass("text-align-center");
                                             break;
                                         default:
                                             break;
@@ -1720,3 +1865,4 @@ class Base {
     }
 
 }
+

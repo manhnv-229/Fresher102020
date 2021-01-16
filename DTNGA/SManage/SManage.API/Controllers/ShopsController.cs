@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SManage.ApplicationCore;
 using SManage.ApplicationCore.Entities;
+using SManage.ApplicationCore.Entities.Base;
 using SManage.ApplicationCore.Enums;
 using SManage.ApplicationCore.Interfaces.Service.Base;
 
@@ -16,10 +17,11 @@ namespace SManage.API.Controllers
     public class ShopsController : ControllerBase
     {
         protected readonly IBaseService _baseService;
-
-        public ShopsController(IBaseService baseService)
+        protected readonly IBaseMemoryCache _baseMemoryCache;
+        public ShopsController(IBaseService baseService, IBaseMemoryCache baseMemoryCache)
         {
             _baseService = baseService;
+            _baseMemoryCache = baseMemoryCache;
         }
 
         /// <summary>
@@ -29,9 +31,10 @@ namespace SManage.API.Controllers
         /// <returns></returns>
         /// CreatedBy dtnga (22/12/2020)
         [HttpGet("{shopId}")]
-        public async Task<ActionServiceResult> GetByIdAsync([FromRoute] Guid shopId)
+        public async Task<IActionResult> GetByIdAsync([FromRoute] Guid shopId)
         {
-            return await _baseService.GetByIdAsync<Shop>(shopId);
+            var shop= await _baseService.GetByIdAsync<Shop>(shopId);
+            return Ok(shop);
         }
 
         /// <summary>
@@ -42,21 +45,17 @@ namespace SManage.API.Controllers
         /// CreatedBy dtnga /(13/12/2020)
         // GET api/<TransportorsController>/5
         [HttpGet("{shopId}/transportors")]
-        public async Task<ActionServiceResult> GetTransportorByShopIdAsync([FromRoute] Guid shopId)
+        public async Task<IActionResult> GetTransportorByShopIdAsync([FromRoute] Guid shopId)
         {
             var response = new ActionServiceResult();
-            if (shopId == null)
-            {
-                response.MISACode = MISACode.NotFound;
-                response.Message = ApplicationCore.Properties.Resources.NotFound;
-                return response;
-            }
-            response = await _baseService.GetByPropertyAsync<Transportor>("ShopId", shopId);
-            return response;
+            if(shopId==null) return StatusCode(400, ApplicationCore.Properties.Resources.EmptyInput);
+            var transportors = await _baseService.GetByPropertyAsync<Transportor>("ShopId", shopId);
+            return Ok(transportors);
         }
 
+        
         /// <summary>
-        /// Lấy danh sách sản phẩm thuộc cửa hàng thoe khóa tìm kiếm
+        /// Lấy danh sách sản phẩm thuộc cửa hàng theo khóa tìm kiếm
         /// </summary>
         /// <param name="shopId">Id cửa hàng</param>
         ///  <param name="keySearch">Khóa tìm kiếm</param>
@@ -76,5 +75,45 @@ namespace SManage.API.Controllers
                 return StatusCode(200, products);
             }
         }
+
+        /// <summary>
+        /// Lấy danh sách nhân viên của cửa hàng
+        /// </summary>
+        /// <param name="shopId"></param>
+        /// <returns></returns>
+        [HttpGet("Salers")]
+        public async Task<IActionResult> GetSalerByShopIdAsync([FromQuery] int page, [FromQuery] int size, [FromQuery] string keySearch, [FromQuery] Guid shopId)
+        {
+            var filterValues = new Dictionary<string, object>
+            {
+                { "PageIndex", page },
+                { "PageSize", size },
+                { "KeySearch", keySearch },
+                { "ShopId", shopId}
+            };
+            var pagingData = await _baseService.GetByFilterAsync<UserInfo>(filterValues);
+            return Ok(pagingData);
+        }
+
+        /// <summary>
+        /// Lấy thông tin đơn hàng theo Id
+        /// </summary>
+        /// <param name="userId">Id đơn hàng</param>
+        /// <returns></returns>
+        /// CreatedBy dtnga(16/12/2020)
+        [HttpGet("Salers/{userId}")]
+        public async Task<IActionResult> GetOrderById([FromRoute] Guid userId)
+        {
+            var user = _baseMemoryCache.GetCache<UserInfo>(userId.ToString());
+            if (user == null)
+            {
+                user = await _baseService.GetByIdAsync<UserInfo>(userId);
+                _baseMemoryCache.SetCache(userId.ToString(), user);
+            }
+            return Ok(user);
+        }
+
+        
     }
+
 }

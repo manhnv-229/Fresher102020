@@ -7,44 +7,35 @@ namespace SManage.ApplicationCore.Entities
 {
     public partial class Customer: BaseEntity
     {
-        public Customer()
-        {
-            Orders = new HashSet<Order>();
-        }
 
         [Unduplicated]
-        [Required]
         [DisplayName("Id khách hàng")]
-        public Guid CustomerId { get; set; }
+        public Guid? CustomerId { get; set; }
 
-        [Required]
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Họ tên khách hàng không được bỏ trống")]
         [DisplayName("Họ tên khách hàng")]
         public string FullName { get; set; }
 
         [Unduplicated]
-        [Required]
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Số điện thoại không được bỏ trống")]
         [DisplayName("Số điện thoại")]
         public string PhoneNumber { get; set; }
 
-        [Required]
         [DisplayName("Địa chỉ ngắn gọn")]
         public string Address { get; set; }
 
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Mã đơn vị hành chính không được bỏ trống")]
         [DisplayName("Mã đơn vị hành chính")]
         public string AdministrativeAreaCode { get; set; }
 
         [DisplayName("Số đơn đặt thành công")]
-        public int SuccessOrderedAmount { get; set; }
+        public int? SuccessOrderedAmount { get; set; }
 
         [DisplayName("Số đơn đã đặt")]
-        public int OrderAmount { get; set; }
+        public int? OrderAmount { get; set; }
 
-        
-        //[DisplayName("Ngày tạo")]
-        //public int? Type { get; set; }
-        //public DateTime CreatedDate { get; set; }
+        [DisplayName("Loai khach hang")]
+        public int Type { get; set; }
 
-        [DisplayName("")]
-        public virtual ICollection<Order> Orders { get; set; }
     }
 }

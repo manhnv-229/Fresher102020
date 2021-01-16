@@ -7,10 +7,7 @@ namespace SManage.ApplicationCore.Entities
 {
     public partial class Transportor : BaseEntity
     {
-        public Transportor()
-        {
-            ShopTransportors = new HashSet<ShopTransportor>();
-        }
+        
 
         [Unduplicated]
         [Required]
@@ -43,7 +40,7 @@ namespace SManage.ApplicationCore.Entities
         [DisplayName("Thời gian vận chuyển ngoại tỉnh/thành")]
         public int OutsideDeliveryTime { get; set; }
 
-        [DisplayName("")]
-        public virtual ICollection<ShopTransportor> ShopTransportors { get; set; }
+        [DisplayName("Là đơn vị vận chuyển của hệ thống hay không")]
+        public int IsSystem { get; set; }
     }
 }

@@ -96,6 +96,7 @@ namespace SManage.Infrastructure.Repositories.Base
         #endregion
         public void Dispose()
         {
+            _databaseContext.Dispose();
         }
 
         

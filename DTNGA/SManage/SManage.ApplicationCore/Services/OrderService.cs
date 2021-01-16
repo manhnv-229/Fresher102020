@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using SManage.ApplicationCore.Entities;
 using SManage.ApplicationCore.Entities.Base;
+using SManage.ApplicationCore.Entities.DTO;
 using SManage.ApplicationCore.Enums;
 using SManage.ApplicationCore.Interfaces.Repositories;
 using SManage.ApplicationCore.Interfaces.Service;
@@ -17,8 +18,45 @@ namespace SManage.ApplicationCore.Services
     {
         protected Guid shopId;
 
-        public OrderService(IBaseMemoryCache baseMemoryCache ,IBaseRepository baseRepository) : base(baseMemoryCache, baseRepository)
+        public OrderService(IBaseMemoryCache baseMemoryCache, IBaseRepository baseRepository) : base(baseMemoryCache, baseRepository)
         {
+        }
+
+        /// <summary>
+        /// Override lại InsertAsync ở BaseService
+        /// </summary>
+        /// <typeparam name="T">Order</typeparam>
+        /// <param name="entity">Order</param>
+        /// <returns></returns>
+        public override async Task<ActionServiceResult> InsertAsync<T>(T entity)
+        {
+            var orderDTO = entity as OrderCreateDTO;
+            var order = Order.ConvertFromCreateDTO(orderDTO);
+            order.OrderId = Guid.NewGuid();
+            order.OrderCode = RandomString(13);
+            // Kiểm tra thông tin khách hàng đã có chưa, chưa thì thêm mới rồi lưu đơn hàng
+            var customer = (await GetByPropertyAsync<Customer>("PhoneNumber", orderDTO.Customer.PhoneNumber)).FirstOrDefault();
+            if(customer == null)
+            {
+                // thêm mới
+                customer = orderDTO.Customer;
+                customer.CustomerId = Guid.NewGuid();
+                var res = await base.InsertAsync<Customer>(customer);
+                if (res.Success == false)
+                    return res;
+            }
+            order.CustomerId = (Guid)customer.CustomerId;
+            // Thêm orderDetails
+            var orderDetails = (List<OrderDetail>) orderDTO.OrderDetails;
+            for(var i=0; i<orderDetails.Count; i++)
+            {
+                var detail = orderDetails[i];
+                detail.OrderId = order.OrderId;
+                var resOD= await base.InsertAsync<OrderDetail>(detail);
+                if (resOD.Success == false)
+                    return resOD;
+            }
+            return await base.InsertAsync<Order>(order);
         }
 
         /// <summary>
@@ -26,29 +64,33 @@ namespace SManage.ApplicationCore.Services
         /// </summary>
         /// <param name="order"></param>
         /// <returns></returns>
-        public async Task<ActionServiceResult> ProcessingOrder(Order order)
+        public async Task<OrderGetByIdDTO> ProcessingOrder(Order order)
         {
-            _actionServiceResult = new ActionServiceResult();
-            // Đọc người tạo
-            var createrId = order.CreatedBy;
-            var creater = (await base.GetByPropertyAsync<UserInfo>("AccountId", createrId)).Data;            
-            order.Creater = (UserInfo)creater;
-            // Đọc người xử lý
-            var modifierId = order.ModifiedBy;
-            var modifier = (await base.GetByPropertyAsync<UserInfo>("AccountId", modifierId)).Data;
-            order.Modifier = (UserInfo)modifier;
-            // Đọc khách hàng
-            var customerId = order.CustomerId;
-            var customer= (await base.GetByIdAsync<Customer>(customerId)).Data;
-            order.Customer = (Customer)customer;
-            // Đọc danh sách chi tiết đơn hàng
-            var orderId = order.OrderId;
-            var listOrderDetail = (await base.GetByPropertyAsync<OrderDetail>("OrderId", orderId)).Data;
-            order.OrderDetails = (ICollection<OrderDetail>)listOrderDetail;
-            _actionServiceResult.Data = order;
-            return _actionServiceResult;
+            if (order != null)
+            {
+                var orderGetById = OrderGetByIdDTO.ConvertFromOrder(order);
+                // Lấy thông tin khách hàng
+                orderGetById.Customer = _baseMemoryCache.GetCache<Customer>(order.CustomerId.ToString());
+                if (orderGetById.Customer == null)
+                {
+                    // Lấy từ DB về theo ID Order
+                    orderGetById.Customer = await GetByIdAsync<Customer>((Guid)order.CustomerId);
+                }
+                // Lấy thông tin sản phẩm
+                orderGetById.Products = await GetByPropertyAsync<Product>("OrderId", order.OrderId);
+                return orderGetById;
+            }
+            else return null;
         }
 
-
+        public string RandomString(int length=20)
+        {
+            Random random = new Random();
+            const string chars = "0123456789";
+            length -= 3;
+            var subString= new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+            return "OD_" + subString;
+        }
     }
 }

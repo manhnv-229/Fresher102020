@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SManage.ApplicationCore;
 using SManage.ApplicationCore.Entities;
+using SManage.ApplicationCore.Entities.DTO;
 using SManage.ApplicationCore.Interfaces.Service;
 using SManage.ApplicationCore.Interfaces.Service.Base;
 
@@ -22,15 +23,16 @@ namespace SManage.API.Controllers
             _baseMemoryCache = baseMemoryCache;
             _orderService = baseService;
         }
-        
+
         /// <summary>
         /// Lấy danh sách trạng thái đơn hàng trên hệ thống
         /// </summary>
         /// <returns></returns>
         [HttpGet("state")]
-        public async Task<ActionServiceResult> GetOrderState()
+        public async Task<IActionResult> GetOrderState()
         {
-            return await _orderService.GetAllAsync<OrderState>();
+            var states = await _orderService.GetAllAsync<OrderState>();
+            return Ok(states);
         }
 
         /// <summary>
@@ -66,39 +68,82 @@ namespace SManage.API.Controllers
         [HttpGet("{orderId}")]
         public async Task<IActionResult> GetOrderById([FromRoute] Guid orderId)
         {
-            var order = _baseMemoryCache.GetCache<Order>(orderId.ToString());
-            if (order == null)
+            try
             {
-                order = (Order)(await _orderService.GetByIdAsync<Order>(orderId)).Data;
-                _baseMemoryCache.SetCache(orderId.ToString(), order);
+                if (orderId == null) return StatusCode(400, ApplicationCore.Properties.Resources.EmptyInput);
+                var result = _baseMemoryCache.GetCache<OrderGetByIdDTO>(orderId.ToString());
+                if (result == null)
+                {
+                    //order = await _orderService.GetByIdAsync<OrderGetByIdDTO>(orderId);
+                    var order = await _orderService.GetByIdAsync<Order>(orderId);
+                    result  = await _orderService.ProcessingOrder(order);
+                    _baseMemoryCache.SetCache(orderId.ToString(), result);
+                }
+                return Ok(result);
             }
-            return Ok(order);
-
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
+
 
         /// <summary>
         /// Thực hiện thêm đơn hàng mới
         /// </summary>
-        /// <param name="order">Thông tin đơn hàng</param>
+        /// <param name="newOrder">Thông tin đơn hàng</param>
         /// <returns></returns>
         /// CreatedBy dtnga(16/12/2020)
         [HttpPost]
-        public async Task<ActionServiceResult> CreatOrder([FromBody] Order order)
+        public async Task<IActionResult> CreatOrder([FromBody] OrderCreateDTO newOrder)
         {
-            return await _orderService.InsertAsync<Order>(order);
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return StatusCode(400, ModelState);
+                }
+                // override phương thức insertAsync
+                var response = await _orderService.InsertAsync<OrderCreateDTO>(newOrder);
+                if (response.Success == false)
+                    return StatusCode(400, response);
+                else
+                    return StatusCode(201, response.Data);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500,ex);
+            }
         }
+
 
         /// <summary>
         /// Thực hiện cập nhật đơn hàng
         /// </summary>
-        /// <param name="orderId">Id đơn hàng</param>
-        /// <param name="order">thông tin đơn hàng</param>
+        /// <param name="newOrder">thông tin đơn hàng</param>
         /// <returns></returns>
         /// CreatedBy dtnga(16/12/2020)
         [HttpPut("{orderId}")]
-        public async Task<ActionServiceResult> UpdateOrder([FromBody] Order order)
+        public async Task<IActionResult> UpdateOrder([FromBody] OrderUpdateDTO newOrder)
         {
-            return await _orderService.UpdateAsync<Order>(order);
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return StatusCode(400, ModelState);
+                }
+                var order = Order.ConvertFromUpdateDTO(newOrder);
+                // override lại phương thức UpdateAsync
+                var response = await _orderService.UpdateAsync<Order>(order);
+                if (response.Success == false)
+                    return StatusCode(400, response);
+                else
+                    return StatusCode(200, order.OrderId);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApplicationCore.Properties.Resources.Exception);
+            }
         }
 
         /// <summary>

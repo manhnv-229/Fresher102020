@@ -15,6 +15,6 @@ namespace SManage.ApplicationCore.Interfaces.Service
         /// <typeparam name="T"></typeparam>
         /// <param name="param"></param>
         /// <returns></returns>
-        Task<List<T>> GetByKeySearch<T>(Dictionary<string, object> param);
+        Task<List<T>> GetByKeyword<T>(Dictionary<string, object> param);
     }
 }

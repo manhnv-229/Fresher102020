@@ -58,6 +58,12 @@
         opacity: 1;
     }
 
+.truck-plus-icon {
+    background-image: url('/content/icon/common/BlackIcon/truck-plus.png');
+    opacity: 1;
+    background-size: 23px;
+}
+
 .setting-icon {
     background-image: url('/content/icon/common/BlackIcon/settings.svg');
 }
@@ -65,6 +71,30 @@
     .setting-icon.active {
         background-image: url('/content/icon/common/whiteIcon/settings.svg');
         opacity: 1;
+    }
+
+.users-icon {
+    background-image: url('/content/icon/common/BlackIcon/users.svg');
+}
+
+    .users-icon.active {
+        background-image: url('/content/icon/common/whiteIcon/users.svg');
+    }
+
+.user-plus-icon {
+    background-image: url('/content/icon/common/BlackIcon/user-plus.svg');
+}
+
+    .user-plus-icon.active {
+        background-image: url('/content/icon/common/whiteIcon/user-plus.svg');
+    }
+
+.user-x-icon {
+    background-image: url('/content/icon/common/BlackIcon/user-x.svg');
+}
+
+    .user-x-icon.active {
+        background-image: url('/content/icon/common/whiteIcon/user-x.svg');
     }
 /*header*/
 .setting-more-icon {

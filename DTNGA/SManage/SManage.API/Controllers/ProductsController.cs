@@ -30,11 +30,28 @@ namespace SManage.API.Controllers
             var product = _baseMemoryCache.GetCache<Product>(productId.ToString());
             if (product == null)
             {
-                product = (Product)(await _productService.GetByIdAsync<Product>(productId)).Data;
-                _baseMemoryCache.SetCache(productId.ToString(), product);
+                product = await _productService.GetByIdAsync<Product>(productId);
+                if(product!=null)
+                 _baseMemoryCache.SetCache(productId.ToString(), product);
             }
             return Ok(product);
         }
-       
+
+        /// <summary>
+        /// Lấy danh sách sản phầm dựa theo khóa tìm kiếm (mã/ tên sản phẩm)
+        /// </summary>
+        /// <param name="shopId"></param>
+        /// <param name="keyword"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<List<Product>> GetByKeyword([FromQuery] Guid shopId, [FromQuery] string keyword)
+        {
+            var param = new Dictionary<string, object>
+            {
+                {"ShopId", shopId},
+                {"Keyword", keyword }
+            };
+            return await _productService.GetByKeyword<Product>(param);
+        }
     }
 }

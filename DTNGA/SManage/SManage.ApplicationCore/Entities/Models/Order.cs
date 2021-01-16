@@ -1,72 +1,68 @@
-﻿using SManage.ApplicationCore.Entities.Base;
+﻿using SManage.ApplicationCore.Entities.DTO;
 using System;
 using System.Collections.Generic;
+using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace SManage.ApplicationCore.Entities
 {
     public partial class Order : BaseEntity
     {
-        public Order()
-        {
-            OrderDetails = new HashSet<OrderDetail>();
-        }
+        #region Properties
 
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Id đơn hàng không được bỏ trống")]
+        [PrimaryKey]
         [Unduplicated]
-        [Required]
         [DisplayName("Id đơn hàng")]
         public Guid OrderId { get; set; }
 
+        [System.ComponentModel.DataAnnotations.MaxLength(20, ErrorMessage = "Mã đơn hàng không được vượt quá 20 ký tự")]
         [Unduplicated]
-        [Required]
         [DisplayName("Mã đơn hàng")]
         public string OrderCode { get; set; }
 
-        [Required]
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Tổng tiền đơn hàng không được bỏ trống")]
         [DisplayName("Tổng tiền đơn hàng")]
         public decimal OrderTotal { get; set; }
 
-        [Required]
         [DisplayName("Mã trạng thái đơn hàng")]
-        public int OrderStateCode { get; set; }
+        public Guid? OrderStateId { get; set; }
 
         [DisplayName("Ghi chú")]
         public string OrderNote { get; set; }
 
-        [Required]
-        [MustExist]
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Id tài khoản tạo đơn không được bỏ trống")]
         [DisplayName("Id tài khoản tạo đơn")]
         public new Guid CreatedBy { get; set; }
 
-        [Required]
-        [MustExist]
         [DisplayName("Id tài khoản xử lý đơn")]
-        public new Guid ModifiedBy { get; set; }
+        public new Guid? ModifiedBy { get; set; }
 
-        [Required]
         [DisplayName("Id khách hàng")]
-        public Guid CustomerId { get; set; }
+        public Guid? CustomerId { get; set; }
 
-        [Required]
-        [MustExist]
+        /// <summary>
+        /// Id đơn vị vận chuyển, đơn hàng do nhân viên tạo không có đơn vị vận chuyển
+        /// </summary>
         [DisplayName("Id đơn vị vận chuyển")]
-        public Guid ShopTransportorId { get; set; }
+        public Guid? TransportorId { get; set; }
 
-        [Required]
         [DisplayName("Ngày nhận hàng dự kiến")]
-        public DateTime ExpectedDeliveryDate { get; set; }
+        public DateTime? ExpectedDeliveryDate { get; set; }
 
-        [Required]
+        /// <summary>
+        ///  Ngày nhận hàng thực tế, nếu chưa tạo thì lấy bằng ngày hiện tại
+        /// </summary>
         [DisplayName("Ngày nhận hàng thực tế")]
-        public DateTime RealDeliveryDate { get; set; }
+        public DateTime? RealDeliveryDate { get; set; }
 
-        [Required]
         [DisplayName("Phí vận chuyển")]
-        public decimal ShippingFee { get; set; }
+        public decimal? ShippingFee { get; set; }
 
-        [Required]
         [DisplayName("Bên trả phí vận chuyển")]
-        public int ShippingPaidBy { get; set; }
+        public int? ShippingPaidBy { get; set; }
 
+      
         [DisplayName("Họ tên khách hàng")]
         public string CustomerName { get; set; }
         [DisplayName("Số điện thoại khách hàng")]
@@ -75,16 +71,50 @@ namespace SManage.ApplicationCore.Entities
         public string  Address { get; set; }
         [DisplayName("Trạng thái đơn hàng")]
         public string OrderStateName { get; set; }
+        [DisplayName("Id tài khoản tạo đơn")]
+        public string CreatedByName { get; set; }
+        [DisplayName("Id tài khoản xử lý đơn")]
+        public string ModifiedByName { get; set; }
 
-        [DisplayName("Người tạo")]
-        public virtual UserInfo Creater { get; set; }
-        [DisplayName("Người chỉnh sửa")]
-        public virtual UserInfo Modifier { get; set; }
-        [DisplayName("Khách hàng")]
-        public virtual Customer Customer { get; set; }
-        [DisplayName("Đơn vị vận chuyển")]
-        public virtual ShopTransportor ShopTransportor { get; set; }
-        [DisplayName("Danh sách chi tiết đơn hàng")]
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        #endregion
+
+        #region methods
+        public static Order ConvertFromCreateDTO(OrderCreateDTO orderCreateDTO)
+        {
+            return new Order
+            {
+                OrderCode = orderCreateDTO.OrderCode,
+                OrderTotal = orderCreateDTO.OrderTotal,
+                OrderStateId = orderCreateDTO.OrderStateId,
+                OrderNote = orderCreateDTO.OrderNote,
+                CreatedBy = orderCreateDTO.CreatedBy,
+                ModifiedBy = orderCreateDTO.ModifiedBy,
+                CreatedDate = DateTime.Now,
+                ModifiedDate= DateTime.Now,
+                TransportorId= orderCreateDTO.TransportorId,
+                ExpectedDeliveryDate= orderCreateDTO.ExpectedDeliveryDate,
+                ShippingFee = orderCreateDTO.ShippingFee,
+                ShippingPaidBy= orderCreateDTO.ShippingPaidBy,
+                CustomerId= orderCreateDTO.Customer.CustomerId,
+            };
+        }
+        public static Order ConvertFromUpdateDTO(OrderUpdateDTO orderUpdateDTO)
+        {
+            return new Order
+            {
+                OrderId= orderUpdateDTO.OrderId,
+                OrderCode = orderUpdateDTO.OrderCode,
+                OrderTotal = orderUpdateDTO.OrderTotal,
+                OrderStateId = orderUpdateDTO.OrderStateId,
+                ModifiedBy = orderUpdateDTO.ModifiedBy,
+                ModifiedDate= orderUpdateDTO.ModifiedDate,
+                TransportorId = orderUpdateDTO.TransportorId,
+                ShippingPaidBy= orderUpdateDTO.ShippingPaidBy,
+                ExpectedDeliveryDate = orderUpdateDTO.ExpectedDeliveryDate,
+                RealDeliveryDate= orderUpdateDTO.RealDeliveryDate,
+                ShippingFee = orderUpdateDTO.ShippingFee,
+            };
+        }
+        #endregion
     }
 }

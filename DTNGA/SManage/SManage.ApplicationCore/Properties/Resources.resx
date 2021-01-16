@@ -118,16 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Duplicate" xml:space="preserve">
+    <value>Trùng dữ liệu</value>
+  </data>
+  <data name="DuplicateNotification" xml:space="preserve">
     <value>Thông tin {0} đã tồn tại trên hệ thống</value>
   </data>
-  <data name="Empty_Entity" xml:space="preserve">
-    <value>Không có dữ liệu {0} trên hệ thống</value>
+  <data name="EmptyInput" xml:space="preserve">
+    <value>Không có dữ liệu đầu vào</value>
   </data>
   <data name="ErrorAddEntity" xml:space="preserve">
     <value>Lỗi thêm mới dữ liệu.</value>
   </data>
   <data name="ErrorDeleteEntity" xml:space="preserve">
-    <value>Lỗi xóa dữ liệu.</value>
+    <value>Lỗi xóa dữ liệu. Thông tin không ồn tại trên hệ thống</value>
   </data>
   <data name="ErrorUpdateEntity" xml:space="preserve">
     <value>Lỗi Cập nhật dữ liệu</value>
@@ -136,16 +139,16 @@
     <value>Dữ liệu tỉnh thành hoặc quận huyện không chính xác.</value>
   </data>
   <data name="Exception" xml:space="preserve">
-    <value>Lỗi Exception.</value>
-  </data>
-  <data name="Invalid_Data" xml:space="preserve">
-    <value>Thông tin {0} không chính xác</value>
+    <value>Có lỗi xảy ra, vui lòng liên hệ MISA.</value>
   </data>
   <data name="MaxLength" xml:space="preserve">
     <value>Thông tin {0} không được vượt quá {1} kí tự</value>
   </data>
   <data name="NotFound" xml:space="preserve">
     <value>Lỗi không tìm thấy dữ liệu.</value>
+  </data>
+  <data name="Province" xml:space="preserve">
+    <value>Tỉnh</value>
   </data>
   <data name="Required" xml:space="preserve">
     <value>Thông tin {0} không được phép bỏ trống</value>

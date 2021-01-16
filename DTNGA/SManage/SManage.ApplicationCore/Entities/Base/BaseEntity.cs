@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SManage.ApplicationCore.Entities.Base
+namespace SManage.ApplicationCore
 {
     public class BaseEntity
     {
@@ -13,7 +13,7 @@ namespace SManage.ApplicationCore.Entities.Base
         // danh sách thông báo lỗi
         public List<string> InvalidError = new List<string>();
         /// <summary>
-        /// Ngày tạo
+        /// Ngày tạo, nếu null thì set = Ngày hiện tại
         /// </summary>
         [DisplayName("Ngày tạo")]
         public DateTime? CreatedDate { get; set; }
@@ -21,17 +21,17 @@ namespace SManage.ApplicationCore.Entities.Base
         /// Người tạo
         /// </summary>
         [DisplayName("Người tạo")]
-        public string CreatedBy { get; set; }
+        public Guid? CreatedBy { get; set; }
         /// <summary>
-        /// Ngày chỉnh sửa
+        /// Ngày chỉnh sửa, nếu null thì set = Ngày tạo
         /// </summary>
-        [DisplayName("Người chỉnh sửa")]
+        [DisplayName("Ngày chỉnh sửa")]
         public DateTime? ModifiedDate { get; set; }
         /// <summary>
         /// Người chỉnh sửa
         /// </summary>
-        [DisplayName("Ngày chỉnh sửa")]
-        public string ModifiedBy { get; set; }
+        [DisplayName("Người chỉnh sửa chỉnh sửa")]
+        public Guid? ModifiedBy { get; set; }
 
     }
 

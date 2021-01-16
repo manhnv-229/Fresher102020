@@ -20,15 +20,17 @@
 /*-------------------------*/
 /*dialog*/
 .dialog-detail {
-    width: 1000px;
-    height: calc(100vh - 48px);
-    border-radius: 4px;
-    top: 24px;
-    left: calc(50% - 500px);
+    height: 85%;
+    border-radius: 5px;
     position: fixed;
     z-index: 3;
     background-color: #ffffff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -51%);
 }
+
+
     /*header của dialog*/
     .dialog-detail .dialog-header {
         width: 100%;
@@ -52,11 +54,11 @@
         height: calc(100% - 120px);
         display: flex;
         justify-content: space-between;
-        overflow: scroll;
+        overflow-y: scroll;
     }
 
         .dialog-detail .dialog-body::-webkit-scrollbar {
-            height: 5px;
+            height: 0px;
             width: 0;
         }
 
@@ -74,7 +76,8 @@
         }
 
         .dialog-detail .dialog-body .dialog-col {
-            margin-right: 48px;
+            margin-right: 24px;
+            width: 50%;
         }
 
             .dialog-detail .dialog-body .dialog-col:last-child {
@@ -113,7 +116,8 @@
         background-color: #019160;
     }
 
-    .dialog-detail .dialog-col .content-box .box-body {
+    .dialog-detail .dialog-col .content-box:last-child {
+        /* margin-bottom:24px; */
     }
 
     .dialog-detail .content-box .box-body .box-info {
@@ -187,7 +191,7 @@
                 }
 
 .product-detail .quantity-box {
-    width: 50%;
+    width: 70%;
 }
 
 .product-detail .cost-line {
@@ -225,6 +229,24 @@
 
     .total-line .total-money {
         color: #019160;
+        font-weight: bold;
+    }
+
+.product-box {
+    cursor: default;
+}
+
+    .product-box .product-name {
+        opacity: 0.8;
+        font-size: 11px;
+        max-width: 95px;
+        white-space: nowrap;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+    }
+
+    .product-box .product-code {
+        color: #108ee9;
         font-weight: bold;
     }
 /*footer*/
@@ -279,8 +301,13 @@
 /* radio button group*/
 .radio-button-group {
     width: 100%;
-    height: 40px;
+    height: 30px;
     display: flex;
     margin-top: 4px;
     align-items: center;
+}
+
+;
+}
+;
 }

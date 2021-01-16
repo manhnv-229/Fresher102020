@@ -15,7 +15,7 @@ namespace SManage.ApplicationCore.Services
         {
         }
 
-        public async Task<List<T>> GetByKeySearch<T>(Dictionary<string, object> param)
+        public async Task<List<T>> GetByKeyword<T>(Dictionary<string, object> param)
         {
             var parms = new DynamicParameters();
             foreach (KeyValuePair<string, object> item in param)

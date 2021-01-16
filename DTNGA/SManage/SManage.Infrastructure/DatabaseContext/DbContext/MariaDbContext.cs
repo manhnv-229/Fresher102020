@@ -109,6 +109,7 @@ namespace SManage.Infrastructure.DatabaseContext.DbContext
             }
             return transportData;
         }
+        
         public List<T> Get<T>(string queryCommand, DynamicParameters parms = null, CommandType commandType = CommandType.StoredProcedure)
         {
             return _dbConnection.Query<T>(queryCommand, commandType: commandType).ToList();
@@ -116,7 +117,7 @@ namespace SManage.Infrastructure.DatabaseContext.DbContext
 
         public async Task<T> GetByIdAsync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
-            var result = await _dbConnection.QueryFirstOrDefaultAsync<T>(sp, parms, commandType: commandType);
+            var result=  await _dbConnection.QueryFirstOrDefaultAsync<T>(sp, parms, commandType: commandType);
             return result;
         }
 
@@ -366,6 +367,7 @@ namespace SManage.Infrastructure.DatabaseContext.DbContext
 
         public void Dispose()
         {
+            _dbConnection.Close();
         }
 
         
