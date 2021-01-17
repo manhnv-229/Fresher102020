@@ -9,3 +9,8 @@
 .extra-info span{
     font-weight: bold;
 }
+
+#order-management .m-dialog .dialog-footer button {
+    margin-left: 16px;
+    margin-right: 0;
+}

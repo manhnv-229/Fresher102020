@@ -11,34 +11,12 @@ class Saler extends Owner {
         me.userInfo = JSON.parse(sessionStorage.getItem("user"));
         me.loadAccount();
         me.loadComboBoxCustome();
-        me.initEvent();
+        me.initEventSaler();
     }
 
-    /** Thực hiện load thông tin cửa hàng do user làm chủ
-     * CreatedBy dtnga (27/11/2020)
-     * */
-    loadComboBoxCustome() {
-        var me=this;
-        // danh sách cửa hàng
-        //lấy danh sách cửa hàng theo UserId từ API
-        var userId = me.userInfo["UserId"];
-        var route = "/api/v1/Users/" + userId + "/shops";
-        $.ajax({
-            url: me.host + route,
-            method: "GET"
-        }).done(function (res) {
-            var shops = res.Data;
-            var comboBoxShop = $(`#cb-Shop`);
-            me.createComboBox(shops, comboBoxShop);
-            var firstItem = $(comboBoxShop).find(".item")[0];
-            $(firstItem).trigger("click");
-        })
-            .fail(function (res) {
-                console.log(res);
-            })
-    }
+    
 
-    initEvent() {
+    initEventSaler() {
         var me = this;
         // Logout
         $(`#btnLogout`).on("click", me.onclick_btnLogout.bind(me));

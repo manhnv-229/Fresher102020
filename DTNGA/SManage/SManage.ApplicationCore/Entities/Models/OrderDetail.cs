@@ -14,7 +14,7 @@ namespace SManage.ApplicationCore.Entities
 
         
         [DisplayName("Số lượng")]
-        public decimal Quantity { get; set; }
+        public decimal Amount { get; set; }
 
         
         [DisplayName("Id sản phẩm")]
@@ -28,7 +28,12 @@ namespace SManage.ApplicationCore.Entities
         [DisplayName("Giá bán")]
         public decimal? Price { get; set; }
 
-        [DisplayName("Sản phẩm")]
-        public virtual Product Product { get; set; }
+        [DisplayName("Mã Sản phẩm")]
+        public string ProductCode { get; set; }
+        [DisplayName("Tên Sản phẩm")]
+        public string ProductName { get; set; }
+        [DisplayName("Số lượng sản phẩm còn trong kho")]
+        public string MaxAmount { get; set; }
+
     }
 }

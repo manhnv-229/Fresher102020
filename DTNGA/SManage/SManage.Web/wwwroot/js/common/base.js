@@ -164,7 +164,7 @@ class Base {
             // sự kiện khi click chọn combo item
             $(comboItemBox).find(`.item`).on("click", function () {
                 me.onSelect_comboItem(this);
-            });
+            }); 
             // Sự kiện khi click arrow icon tại combo box
             $(comboButton).on("click", function () {
                 me.onClick_btnComboBoxButton(comboButton);
@@ -482,11 +482,12 @@ class Base {
                     }
                     $(box).closest(".input-box").find(".error-empty").removeClass("displayNone");
                 }
-                var attr = $(box).attr("loadAfterSelect");
-                if (typeof attr !== typeof undefined && attr !== false && $(comboItem).hasClass("displayNone"))
-                    me.loadData(1);
-                else if (!$(comboItem).hasClass("displayNone")) {
-                    $(input).trigger("keyup");
+                else {
+                    var selectedItemId = $(comboItem).find(".item-hover").data("keyId");
+                    me.SelectItem(box, selectedItemId);
+                    var attr = $(box).attr("loadAfterSelect");
+                    if (typeof attr !== typeof undefined && attr !== false && $(comboItem).hasClass("displayNone"))
+                        me.loadData(1);
                 }
             }
         }
@@ -498,10 +499,88 @@ class Base {
     /**
      * Thực hiện gen và thêm sản phẩm mới vào giỏ hàng
      * CreatedBy dtnga (01/12/2020)
-     * @param {string} productId
+     * @param {string} productId Id sản phẩm, nếu Id null thì lấy dữ liệu theo tham số thứ 2
+     * @param {Object} productObj Object thông tin sản phẩm
      */
-    addProductToCart(productId) {
+    addProductToCart(productId, productObj) {
+        var me = this;
+        if (!product && !productObj) return;
+        if (productId && !productObj) {
+            //Lấy thông tin sản phẩm theo Id
+            var route = "/api/v1/Products/" + productId;
+            var product = new Object();
+            $.ajax({
+                url: me.host + route,
+                method: "GET"
+            })
+                .done(function (res) {
+                    if (res) {
+                        product = res;
+                    }
+                })
+                .fail(function (res) {
+                    console.log(res);
+                })
+        }
+        else if ((!productId || !productId.trim()) && productObj) {
+            product = productObj;
+        }
+        var productList = $(`.content-body:visible`).find(`.product-list`);
+        $(productList).find(`.empty-mark`).addClass("displayNone");
+        var index = $(productList).find(`.product-detail`).length + 1;
+        var productCode = product["ProductCode"];
+        var productName = product["ProductName"];
+        var productPrice = convertInt(product["Price"]);
+        if (!productPrice)
+            productPrice = convertInt(product["CurrentPrice"]);
+        var curentAmount = convertInt(product["Amount"]);
+        var productDetail = $(`<div class="product-detail">
+                                            <div class="product-line">
+                                                <div class="product-line-left">
+                                                    <button class="button-delete m-icon round-icon delete-icon" title="Xóa"></button>
+                                                    <div class="product-box" title="`+ productName + `">
+                                                        <div class="product-code blue-text bold">`+ productCode + `</div>
+                                                        <div class="product-name"><span>`+ productName + `</span></div>
+                                                    </div>
+                                                </div>
+                                                <div class="product-line-right">
+                                                    <div><input class="m-input price" type="text" typeFormat="money" fieldName="CurrentPrice" value="`+ productPrice + `" index="` + index + `"/></div>
+                                                    <div> x </div>
+                                                    <div class="quantity-box"><input class="m-input quantity" type="number" min="1" max="`+ curentAmount + `" value="1" placeholder="Còn lại ` + curentAmount + ` sản phẩm" title="Còn lại ` + curentAmount + ` sản phẩm" index="` + index + `"/></div>
+                                                </div>
+                                            </div>
+                                            <div class="cost-line">
+                                                <div class="cost" value="`+ productPrice + `">` + formatMoney(productPrice) + `</div>
+                                            </div>
+                                        </div>`);
+        productList.append(productDetail);
+        $(productDetail).find(`input.price`).val(formatMoney(productPrice));
+        me.calcculateTotal();
+        // format khi nhập liệu số tiền
+        me.autoFormatMoney();
+        me.addFocusSupport();
+        // Sự kiện khi nhấn nút xóa tại mỗi dòng sản phẩm
+        $(`.product-list .product-line button`).on("click", function () {
+            me.onClick_deleteProduct(this);
+            me.calcculateTotal();
+        });
+        // sự kiện khi thay đổi giá bán sản phẩm
+        $(`.product-list .product-line input[typeFormat="money"]`).on("keyup", function () {
+            // Cập nhật tổng tiền sản phẩm
+            me.onChangeProductPrice(this);
+            // Cập nhật tổng số lượng và số tiền giỏ hàng
+            me.calcculateTotal();
+        });
+        // sự kiện khi thay đổi số lượng sản phẩm
+        $(`.product-list .product-line input[type="number"]`).on("input", function () {
+            // Cập nhật tổng tiền sản phẩm
+            me.onChangeAmount(this);
+            // Cập nhật tổng số lượng và số tiền giỏ hàng
+            me.calcculateTotal();
+        });
+
     }
+
      
     /**Thực hiện cập nhật tổng tiền của giỏ hàng khi thay đổi giá sản  phẩm
      * CreatedBy dtnga (01/12/2020)
@@ -526,7 +605,6 @@ class Base {
      */
     calcculateTotal() {
         try {
-            debugger
             //Cập nhật tổng số lượng sản phẩm trong giỏ hàng
             var productList = $(`.content-body:visible .product-list`);
             var totalQuantity = $(productList).children().length - 1; // trừ empty mark đi
@@ -1116,7 +1194,9 @@ class Base {
    */
     clear(obj) {
         $(obj).find(`input, textarea`).val(null);
-        $(obj).find(`input, textarea`).attr("value", "");
+        $(obj).find(`input, textarea`).attr("value", '');
+        $(obj).find(`input[typeformat="money"]`).val(0); 
+        $(obj).find(`input[typeformat="money"]`).attr("value",0);
         $(obj).find(`input[required],input[type="email"]`).removeClass("m-input-warning");
         $(obj).find(`input[required],input[type="email"]`).attr('validate', 'false');
         //clear ngày, select, radio button
@@ -1133,6 +1213,19 @@ class Base {
 
         // thông báo validate
         $(obj).find(`.error-validate`).addClass("displayNone");
+    }
+
+    /**
+     * Thực hiện xóa hết dữ liệu của comboBox
+     * @param {Element} comboBox
+     * CreatedBy dtnga (20/12/2020)
+     */
+    clearCombobox(comboBox) {
+        if (comboBox) {
+            $(comboBox).find(`.item`).remove();
+            $(comboBox).find(`input`).val('');
+            $(comboBox).data("keyId", null);
+        }
     }
 
     /** Hàm thực hiện làm mới dữ liệu

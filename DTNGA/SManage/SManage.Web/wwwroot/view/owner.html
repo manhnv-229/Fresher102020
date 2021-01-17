@@ -225,7 +225,7 @@
                                         </div>
                                     </div>
                                     <div class="input-line">
-                                        <div class="input-box input-box-small">
+                                        <div class="input-box input-box-big">
                                             <div class="input-title">Trạng thái đơn hàng</div>
                                             <div class="m-combobox m-box" name="OrderState" fieldName="OrderStateId" title="Trạng thái đơn hàng"></div>
                                         </div>
@@ -252,7 +252,7 @@
                                         </div>
                                         <div class="input-line total-line">
                                             <div class="total-quantity" value="0">Tổng sản phẩm: <span>0</span></div>
-                                            <div class="total-money" fieldName="CartTotal" value="0">0</div>
+                                            <div class="total-money green-text bold" fieldName="CartTotal" value="0">0</div>
                                         </div>
                                     </div>
                                     <div class="note">
@@ -340,53 +340,22 @@
                                         <div class="input-box input-box-small">
                                             <div class="input-title">Phí vận chuyển (<span>*</span>)</div>
                                             <div class="error-validate error-empty displayNone">Phí vận chuyển không được bỏ trống</div>
-                                            <input class="m-input" type="text" typeFormat="money" required fieldName="ShippingFee" validate="false" />
+                                            <input class="m-input" type="text" value="0" typeFormat="money" required fieldName="ShippingFee" validate="false" />
                                         </div>
                                     </div>
                                     <div class="extra-info displayNone" name="ExpectedDeliveryDate">Thời gian nhận hàng dự kiến: <span fieldName="ExpectedDeliveryDate"></span></div>
-                                    <div class="input-line">
-                                        <div class="input-box input-box-small">
-                                            <div class="input-title">Thời gian lấy hàng</div>
-                                            <div class="radio-button-group">
-                                                <label class="m-radio">
-                                                    <input class="radio" type="radio" name="picktime" radioValue="0" fieldName="PickTime" />
-                                                    <span class="checkmark"></span>
-                                                    <label>Buổi sáng</label>
-                                                </label>
-                                                <label class="m-radio">
-                                                    <input class="radio" type="radio" name="picktime" radioValue="1" fieldName="PickTime" />
-                                                    <span class="checkmark"></span>
-                                                    <label>Buổi tối</label>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="input-box input-box-small">
-                                            <div class="input-title">Thời gian nhận hàng</div>
-                                            <div class="radio-button-group">
-                                                <label class="m-radio">
-                                                    <input class="radio" type="radio" name="receivetime" radioValue="0" fieldName="ReceiveTime" />
-                                                    <span class="checkmark"></span>
-                                                    <label>Buổi sáng</label>
-                                                </label>
-                                                <label class="m-radio">
-                                                    <input class="radio" type="radio" name="receivetime" radioValue="1" fieldName="ReceiveTime" />
-                                                    <span class="checkmark"></span>
-                                                    <label>Buổi tối</label>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                     <div class="input-line">
                                         <div class="input-box input-box-small">
                                             <div class="input-title">Người chịu phí vận chuyển</div>
                                             <div class="radio-button-group">
                                                 <label class="m-radio">
-                                                    <input class="radio" type="radio" name="ShippingPaidBy" value="0" fieldName="ShippingPaidBy" checked />
+                                                    <input class="radio" type="radio" name="ShippingPaidBy" radioValue="0" value="0" fieldName="ShippingPaidBy" checked />
                                                     <span class="checkmark"></span>
                                                     <label>Người bán</label>
                                                 </label>
                                                 <label class="m-radio">
-                                                    <input class="radio" type="radio" name="ShippingPaidBy" value="1" fieldName="ShippingPaidBy" />
+                                                    <input class="radio" type="radio" name="ShippingPaidBy" radioValue="1" value="1" fieldName="ShippingPaidBy" />
                                                     <span class="checkmark"></span>
                                                     <label>Người mua</label>
                                                 </label>
@@ -410,20 +379,20 @@
                                     <div class="input-line">
                                         <div class="input-box input-box-small">
                                             <div class="input-title">Tổng số tiền</div>
-                                            <input class=" m-input" type="text" typeformat="money" required fieldName="OrderTotal" validate="true" value="0" />
+                                            <input class=" m-input green-text bold" type="text" typeformat="money" required fieldName="OrderTotal" validate="true" value="0" />
                                         </div>
                                     </div>
                                     <div class="input-line">
                                         <div class="input-box input-box-small">
                                             <div class="input-title">Số tiền đã thanh toán</div>
-                                            <input class=" m-input" type="text" typeformat="money" required fieldName="paid" validate="true" value="0" />
+                                            <input class="m-input green-text bold" type="text" typeformat="money" required fieldName="Paid" validate="true" value="0" />
                                         </div>
                                     </div>
                                     <div class="input-line">
                                         <div class="input-box input-box-small">
                                             <div class="input-title insufficient-cash">Số tiền thiếu</div>
                                             <div class="input-title excess-cash displayNone">Số tiền thừa</div>
-                                            <input class=" m-input" type="text" typeformat="money" required fieldName="InsufficientCash" validate="true" value="0" />
+                                            <input class=" m-input green-text bold"  type="text" typeformat="money" required fieldName="InsufficientCash" validate="true" value="0" />
                                         </div>
                                     </div>
                                 </div>
@@ -431,12 +400,11 @@
                         </div>
                     </div>
                     <div class="dialog-footer">
-                        <button class="m-button m-button-short btn-cancel" id="btn-cancel">Hủy</button>
                         <button class="m-button" id="btn-save">
                             <div class="m-icon save-icon"></div>
                             <div class="btn-text">Lưu</div>
                         </button>
-                        <button class="m-button m-button-long" id="btn-saveAdd">Lưu và thêm mới</button>
+                        <button class="m-button m-button-short btn-cancel" id="btn-cancel">Hủy</button>
                     </div>
                 </div>
             </div>
@@ -492,7 +460,7 @@
                                     </div>
                                     <div class="input-line total-line">
                                         <div class="total-quantity" value="0">Tổng sản phẩm: <span>0</span></div>
-                                        <div class="total-money" fieldName="CartTotal" value="0">0</div>
+                                        <div class="total-money green-text bold" fieldName="CartTotal" value="0">0</div>
                                     </div>
                                 </div>
                                 <div class="note">
@@ -580,53 +548,22 @@
                                     <div class="input-box input-box-small">
                                         <div class="input-title">Phí vận chuyển (<span>*</span>)</div>
                                         <div class="error-validate error-empty displayNone">Phí vận chuyển không được bỏ trống</div>
-                                        <input class="m-input" type="text" typeFormat="money" required fieldName="ShippingFee" validate="false" />
+                                        <input class="m-input" type="text" value="0"  typeFormat="money" required fieldName="ShippingFee" validate="false" />
                                     </div>
                                 </div>
                                 <div class="extra-info displayNone" name="ExpectedDeliveryDate">Thời gian nhận hàng dự kiến: <span fieldName="ExpectedDeliveryDate"></span></div>
-                                <div class="input-line">
-                                    <div class="input-box input-box-small">
-                                        <div class="input-title">Thời gian lấy hàng</div>
-                                        <div class="radio-button-group">
-                                            <label class="m-radio">
-                                                <input class="radio" type="radio" name="picktime" value="0" fieldName="PickTime" />
-                                                <span class="checkmark"></span>
-                                                <label>Buổi sáng</label>
-                                            </label>
-                                            <label class="m-radio">
-                                                <input class="radio" type="radio" name="picktime" value="1" fieldName="PickTime" />
-                                                <span class="checkmark"></span>
-                                                <label>Buổi tối</label>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="input-box input-box-small">
-                                        <div class="input-title">Thời gian nhận hàng</div>
-                                        <div class="radio-button-group">
-                                            <label class="m-radio">
-                                                <input class="radio" type="radio" name="receivetime" value="0" fieldName="ReceiveTime" />
-                                                <span class="checkmark"></span>
-                                                <label>Buổi sáng</label>
-                                            </label>
-                                            <label class="m-radio">
-                                                <input class="radio" type="radio" name="receivetime" value="1" fieldName="ReceiveTime" />
-                                                <span class="checkmark"></span>
-                                                <label>Buổi tối</label>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
+                               
                                 <div class="input-line">
                                     <div class="input-box input-box-small">
                                         <div class="input-title">Người chịu phí vận chuyển</div>
                                         <div class="radio-button-group">
                                             <label class="m-radio">
-                                                <input class="radio" type="radio" name="ShippingPaidBy" value="0" fieldName="ShippingPaidBy" checked />
+                                                <input class="radio" type="radio" name="ShippingPaidBy" radioValue="0" value="0" fieldName="ShippingPaidBy" checked />
                                                 <span class="checkmark"></span>
                                                 <label>Người bán</label>
                                             </label>
                                             <label class="m-radio">
-                                                <input class="radio" type="radio" name="ShippingPaidBy" value="1" fieldName="ShippingPaidBy" />
+                                                <input class="radio" type="radio" name="ShippingPaidBy" radioValue="1" value="1" fieldName="ShippingPaidBy" />
                                                 <span class="checkmark"></span>
                                                 <label>Người mua</label>
                                             </label>
@@ -650,20 +587,20 @@
                                 <div class="input-line">
                                     <div class="input-box input-box-small">
                                         <div class="input-title">Tổng số tiền</div>
-                                        <input class=" m-input" type="text" typeformat="money" required fieldName="OrderTotal" validate="true" value="0" />
+                                        <input class=" m-input green-text bold" type="text" value="0"  typeformat="money" required fieldName="OrderTotal" validate="true" />
                                     </div>
                                 </div>
                                 <div class="input-line">
                                     <div class="input-box input-box-small">
                                         <div class="input-title">Số tiền đã thanh toán</div>
-                                        <input class=" m-input" type="text" typeformat="money" required fieldName="paid" validate="true" value="0" />
+                                        <input class=" m-input green-text bold" type="text" value="0"  typeformat="money" required fieldName="Paid" validate="true"/>
                                     </div>
                                 </div>
                                 <div class="input-line">
                                     <div class="input-box input-box-small">
                                         <div class="input-title insufficient-cash">Số tiền thiếu</div>
                                         <div class="input-title excess-cash displayNone">Số tiền thừa</div>
-                                        <input class=" m-input" type="text" typeformat="money" required fieldName="InsufficientCash" validate="true" value="0" />
+                                        <input class="m-input green-text bold" type="text" value="0"  typeformat="money" required fieldName="InsufficientCash" validate="true" />
                                     </div>
                                 </div>
                             </div>

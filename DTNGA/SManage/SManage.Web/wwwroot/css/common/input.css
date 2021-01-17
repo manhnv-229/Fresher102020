@@ -47,6 +47,7 @@
 .input-box {
     display: flex;
     flex-direction: column;
+    min-width: 100px;
 }
 /* box input mà các thành phần sắp xếp từ cuối lên*/
 .input-box-end {

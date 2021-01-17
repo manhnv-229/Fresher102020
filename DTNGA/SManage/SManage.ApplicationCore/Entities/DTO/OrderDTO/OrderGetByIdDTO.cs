@@ -71,7 +71,7 @@ namespace SManage.ApplicationCore.Entities.DTO
         /// list đơn hàng chi tiết (dòng sản phẩm)
         /// </summary>
         [DisplayName("Danh sách sản phẩm")]
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         #endregion
 
         #region methods

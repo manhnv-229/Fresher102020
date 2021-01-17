@@ -20,6 +20,7 @@
 /*-------------------------*/
 /*dialog*/
 .dialog-detail {
+    width: 60%;
     height: 85%;
     border-radius: 5px;
     position: fixed;
@@ -89,7 +90,7 @@
         }
 
         .dialog-detail .dialog-body .dialog-col-mid {
-            width: 40%;
+            width: calc(40% - 24px);
         }
 
         .dialog-detail .dialog-body .dialog-col-right {
@@ -227,10 +228,6 @@
         font-weight: bold;
     }
 
-    .total-line .total-money {
-        color: #019160;
-        font-weight: bold;
-    }
 
 .product-box {
     cursor: default;
@@ -245,10 +242,6 @@
         text-overflow: ellipsis;
     }
 
-    .product-box .product-code {
-        color: #108ee9;
-        font-weight: bold;
-    }
 /*footer*/
 .dialog-detail .dialog-footer {
     width: 100%;
@@ -256,7 +249,7 @@
     display: flex;
     background-color: #E9EBEE;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
     border-radius: 0 0 4px 4px;
 }
 

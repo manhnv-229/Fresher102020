@@ -16,7 +16,7 @@ class Owner extends Base {
         me.initEvent();
     }
 
-    
+
 
     /** Thực hiện load thông tin cửa hàng do user làm chủ
      * CreatedBy dtnga (27/11/2020)
@@ -31,7 +31,7 @@ class Owner extends Base {
                 method: "GET"
             })
                 .done(function (res) {
-                    var targetBoxs= $(document).find(`.m-box[name="OrderState"]`);
+                    var targetBoxs = $(document).find(`.m-box[name="OrderState"]`);
                     orderState = res;
                     $.each(targetBoxs, function (index, item) {
                         me.createComboBox(orderState, item);
@@ -68,7 +68,8 @@ class Owner extends Base {
                 });
                 me.loadTransportComboBox();
                 me.creatPagingSizeBox();
-
+                var defaultSelectedItem = $(`.paging .m-box[name="PageSize"] .item`)[0];
+                $(defaultSelectedItem).trigger("click");
             })
                 .fail(function (res) {
                     console.log(res);
@@ -99,8 +100,6 @@ class Owner extends Base {
                     $(this).closest(`.pageSize`).attr("value", pageSize);
                     me.loadData(1);
                 });
-                var defaultSelectedItem = $(item).find(".item")[0];
-                $(defaultSelectedItem).trigger("click");
             });
         }
         catch (e) {
@@ -163,7 +162,7 @@ class Owner extends Base {
                 // load data tương ứng với content
                 var loadAttr = $(this).attr("loadData");
                 if (typeof loadAttr !== typeof undefined && loadAttr !== false) {
-                        me.loadData(1);
+                    me.loadData(1);
                 }
             });
 
@@ -235,11 +234,11 @@ class Owner extends Base {
                 event.stopPropagation();
                 me.tr_onClick(this);
             });
-            $(`.content-body[name="order"] tbody`).on("dblclick", "tr", function () {
-                me.onDblClick_Order(this);
-            });
             $(`table tbody`).on("dblclick", "tr", function () {
-                me.onDblClick_trow(this);
+                if ($(this).closest(`.content-body`).attr("name") == "order")
+                    me.onDblClick_Order(this);
+                else
+                    me.onDblClick_trow(this);
             });
             $(`table thead input[type="checkbox"]`).on("click", function () {
                 me.onClickCheckAll(this);
@@ -247,18 +246,19 @@ class Owner extends Base {
 
             // Sự kiện tự động thêm sản phẩm vào giỏ khi click nút Thêm vào giỏ
             $(`#btn-addToShoppingCard`).on("click", me.onClick_addToShoppingCard.bind(me));
-
+            $(`.content-body input[type="radio"][fieldName="ShippingPaidBy"]`).on("change", me.updateOrderTotal.bind(me));
             // Sự kiện trên trang Add Order:
             $(`#order-add`).find(`.content-box[name="product"]`).find(`input[type="search"]`).on("search", function (e) {
                 if ($(this).val())
                     me.checkProduct(this);
-                
+
             });
             $(`.content-body`).find(`input[type="search"][fieldName="PhoneNumber"]`).on("keyup", function (e) {
                 if (e.which == 13 && $(this).val() && $(this).val().trim()) {
                     me.checkCustomer(this);
                 }
             });
+            
         }
         catch (e) {
             console.log(e);
@@ -272,7 +272,7 @@ class Owner extends Base {
     checkProduct(productInputField) {
         if (!productInputField)
             productInputField = $(`#order-add .content-box[name="product"]`)
-                                    .find(`input[type="search"][fieldName="ProductCode"]`);
+                .find(`input[type="search"][fieldName="ProductCode"]`);
         var me = this;
         var keyWord = $(productInputField).val();
         var shopId = $(`#cb-Shop`).data("keyId");
@@ -300,7 +300,7 @@ class Owner extends Base {
      * @param {any} targetInput trường nhập liệu mục tiêu
      */
     createAutoComplete(data, targetInput) {
-        //TODO tạo auto complete
+        // tạo auto complete
         try {
             if (data && targetInput) {
                 var targetContainer = $(targetInput).closest(".input-box").find(`.m-autoComplete`);
@@ -427,7 +427,7 @@ class Owner extends Base {
         var phoneNumber = !customer["PhoneNumber"] ? '' : customer["PhoneNumber"]
         var address = !customer["Address"] ? '' : customer["Address"];
         $(targetBox).find(`input[fieldName="CustomerName"]`).val(customerName);
-        $(targetBox).find(`input[fieldName="PhoneNumber"]`).val(phoneNumber);
+        $(targetBox).find(`input[type="text"][fieldName="PhoneNumber"]`).val(phoneNumber);
         $(targetBox).find(`input[fieldName="Address"]`).val(address);
         // thông tin xã/phường, ...
         var areaCode = !customer["AdministrativeAreaCode"] ? "VN" : customer["AdministrativeAreaCode"];
@@ -458,8 +458,8 @@ class Owner extends Base {
 
                             // tạo comboBox xã/phường theo thông tin quận/huyện được chọn
                             var wardBox = $(targetBox).find(`.input-box[fieldName="Ward"] .m-box`);
-                            me.loadWard(ward["AdministrativeAreaCode"], wardBox);
                             if (ward) {
+                                me.loadWard(ward["AdministrativeAreaCode"], wardBox);
                                 var wardId = ward["AdministrativeAreaId"];
                                 me.SelectItem(wardBox, wardId);
                             }
@@ -480,6 +480,7 @@ class Owner extends Base {
     loadProvince(provinceBox) {
         var me = this;
         var targetCombos = $(`.content-body`).find(`.input-box[fieldName="Province"] .m-box`);
+        $(targetCombos).find(`.wrapper .item`).remove();
         // Lấy danh sách tỉnh/thành tại Việt Nam qua API
         var route = "/api/v1/AdministrativeAreas";
         var provinces = [];
@@ -510,6 +511,9 @@ class Owner extends Base {
         if (item) {
             var me = this;
             var districtBox = $(item).closest(`.content-body`).find(`.input-box[fieldName="District"] .m-box`);
+            me.clearCombobox(districtBox);
+            var wardBox = $(item).closest(`.content-body`).find(`.input-box[fieldName="Ward"] .m-box`);
+            me.clearCombobox(wardBox);
             var provinceId = $(item).data("keyId");
             var route = "/api/v1/AdministrativeAreas";
             $.ajax({
@@ -562,6 +566,7 @@ class Owner extends Base {
         if (item) {
             var me = this;
             var wardBox = $(item).closest(`.content-body`).find(`.input-box[fieldName="Ward"] .m-box`);
+            me.clearCombobox(wardBox);
             var wardId = $(item).data("keyId");
             var route = "/api/v1/AdministrativeAreas";
             $.ajax({
@@ -610,18 +615,25 @@ class Owner extends Base {
      * CreatedBy dtnga (12/12/2020)
      * @param {any} option
      */
-    doSomethingWhenItemSelected(option) {
+    doSomethingWhenItemSelected(selectedItem) {
         try {
             var me = this;
             var base = new Base();
-            base.doSomethingWhenItemSelected(option);
-            var cbTrans = $(option).closest(`.m-box[name="Transportor"]`);
+            base.doSomethingWhenItemSelected(selectedItem);
+            var cbTrans = $(selectedItem).closest(`.m-box[name="Transportor"]`);
             if (cbTrans.length > 0)
                 me.updateTransportorInfo(cbTrans);
-            var autoCompleteProduct = $(option).closest(`.m-autoComplete[name="Product"]`);
+            var autoCompleteProduct = $(selectedItem).closest(`.m-autoComplete[name="Product"]`);
             if (autoCompleteProduct.length > 0)
-                me.addProductToCart($(option).data("keyId"));
-
+                me.addProductToCart($(selectedItem).data("keyId"));
+            if ($(selectedItem).closest(`.input-box[fieldName="Ward"] .m-box`).length > 0)
+                // trigger sự kiện trên item xã/phường
+                me.updateTransportorInfo();
+            else if ($(selectedItem).closest(`.input-box[fieldName="District"] .m-box`).length > 0)
+                // load lại comboBox xã/phường
+                me.onclick_DistrictItem(selectedItem);
+            else if ($(selectedItem).closest(`.input-box[fieldName="Province"] .m-box`).length > 0)
+                me.onclick_ProvinceItem(selectedItem);
         }
         catch (e) {
             console.log(e);
@@ -660,13 +672,15 @@ class Owner extends Base {
             })
                 .done(function (res) {
                     var data = res.Data;
-                    fee = formatMoney(data.ShippingFee);
+                    fee = data.ShippingFee;
                     expectedDeliveryDate = formatDate(data.ExpectedDeliveryDate, "dd/mm/yyyy");
                     // bind dữ liệu và hiển thị thông tin vận chuyển
                     var contentBox = $(comboBoxTrans).closest(`.content-box`);
                     var feeField = $(contentBox).find(`input[fieldName="ShippingFee"]`);
-                    $(feeField).val(fee);
+                    $(feeField).val(formatMoney(fee));
+                    $(feeField).attr("value",fee);
                     $(feeField).removeClass("m-input-warning");
+                    me.updateOrderTotal();
                     var extraInfo = $(contentBox).find(`.extra-info`);
                     $(extraInfo).find(`span`).text(expectedDeliveryDate);
                     $(extraInfo).removeClass("displayNone");
@@ -679,85 +693,7 @@ class Owner extends Base {
             console.log(e);
         }
     }
-
-    /**
-     * Thực hiện gen và thêm sản phẩm mới vào giỏ hàng
-     * CreatedBy dtnga (01/12/2020)
-     * @param {string} productId
-     */
-    addProductToCart(productId) {
-        if (!productId || !productId.trim()) {
-            return;
-        }
-        var me = this;
-        //Lấy thông tin sản phẩm theo Id
-        var route = "/api/v1/Products/" + productId;
-        $.ajax({
-            url: me.host + route,
-            method: "GET"
-        })
-            .done(function (res) {
-                if (res) {
-                    var product = res;
-                    var productList = $(`.content-body:visible`).find(`.product-list`);
-                    $(productList).find(`.empty-mark`).addClass("displayNone");
-                    var index = $(productList).find(`.product-detail`).length + 1;
-                    var productCode = product["ProductCode"];
-                    var productName = product["ProductName"];
-                    var defaultPrice = convertInt(product["Price"]);
-                    var productPrice = convertInt(product["CurrentPrice"]);
-                    var curentAmount = convertInt(product["Amount"]);
-                    var productDetail = $(`<div class="product-detail">
-                                            <div class="product-line">
-                                                <div class="product-line-left">
-                                                    <button class="button-delete m-icon round-icon delete-icon" title="Xóa"></button>
-                                                    <div class="product-box" title="`+ productName +`">
-                                                        <div class="product-code">`+ productCode +`</div>
-                                                        <div class="product-name"><span>`+ productName +`</span></div>
-                                                    </div>
-                                                </div>
-                                                <div class="product-line-right">
-                                                    <div><input class="m-input price" type="text" typeFormat="money" fieldName="CurrentPrice" value="`+ productPrice + `" index="` + index + `"/></div>
-                                                    <div> x </div>
-                                                    <div class="quantity-box"><input class="m-input quantity" type="number" min="1" max="`+ curentAmount + `" value="1" placeholder="Còn lại ` + curentAmount + ` sản phẩm" title="Còn lại ` + curentAmount + ` sản phẩm" index="` + index + `"/></div>
-                                                </div>
-                                            </div>
-                                            <div class="cost-line">
-                                                <div class="cost" value="`+ productPrice + `">` + formatMoney(productPrice) + `</div>
-                                            </div>
-                                        </div>`);
-                    productList.append(productDetail);
-                    $(productDetail).find(`input.price`).val(formatMoney(productPrice));
-                    me.calcculateTotal();
-                    // format khi nhập liệu số tiền
-                    me.autoFormatMoney();
-                    me.addFocusSupport();
-                    // Sự kiện khi nhấn nút xóa tại mỗi dòng sản phẩm
-                    $(`.product-list .product-line button`).on("click", function () {
-                        me.onClick_deleteProduct(this);
-                        me.calcculateTotal();
-                    });
-                    // sự kiện khi thay đổi giá bán sản phẩm
-                    $(`.product-list .product-line input[typeFormat="money"]`).on("keyup", function () {
-                        // Cập nhật tổng tiền sản phẩm
-                        me.onChangeProductPrice(this);
-                        // Cập nhật tổng số lượng và số tiền giỏ hàng
-                        me.calcculateTotal();
-                    });
-                    // sự kiện khi thay đổi số lượng sản phẩm
-                    $(`.product-list .product-line input[type="number"]`).on("input", function () {
-                        // Cập nhật tổng tiền sản phẩm
-                        me.onChangeAmount(this);
-                        // Cập nhật tổng số lượng và số tiền giỏ hàng
-                        me.calcculateTotal();
-                    });
-                }
-            })
-            .fail(function (res) {
-                console.log(res);
-            })
-    }
-
+        
     /**
      * Hiển thị form Sửa thông tin khi double click vào 1 đơn hàng
      * CreatedBy dtnga (21/11/2020)
@@ -824,43 +760,74 @@ class Owner extends Base {
             var form = $(targetForm);
             $(`.m-loading`).removeClass("displayNone");
             // bind thông tin chung:
-            $(targetForm).find(`.orderNote`).text(data["OrderCode"]);
-            $(targetForm).find(`.createdBy`).text(data["CreatedByName"]);
-            $(targetForm).find(`.modifiedBy`).text(data["ModifiedByName"]);
+            $(targetForm).find(`.orderNote`).text(obj["OrderNote"]);
+            $(targetForm).find(`.createdBy`).text(obj["CreatedByName"]);
+            $(targetForm).find(`.modifiedBy`).text(obj["ModifiedByName"]);
             // bind trạng thái đơn hàng
-            var cbState = $(targetForm).find(`.m-box[name="OrderState"]`);
-            var stateId = data["OrderStateId"];
+            var cbState = $(form).find(`.m-box[name="OrderState"]`);
+            var stateId = obj["OrderStateId"];
             me.SelectItem(cbState, stateId);
             // bind thông tin sản phẩm
-            var orderId = $(targetForm).data("keyId");
-            var route = "/api/v1/Orders/" + orderId + "/Products";
-            $.ajax({
-                url: me.host + route,
-                method: "GET"
-            })
-                .done(function (res) {
-                    var products = res;
-                    if (products.length > 0) {
-                        $.each(products, function (index, item) {
-                            me.addProductToCart(item["ProductId"]);
-                            $(`.m-loading`).addClass("displayNone");
-                        });
-                    }
-                })
-                .fail(function (res) {
-                    console.log(res);
-                })
-            //TODO bind thông tin người nhận
-
+            var orderDetails = obj["OrderDetails"];
+            if (orderDetails) {
+                $.each(orderDetails, function (index, item) {
+                    me.addProductToCart('', item);
+                });
+            }
+            $(`textarea[fieldname="OrderNote"]`).val(obj["OrderNote"]);
+            // bind thông tin người nhận
+            var customer = obj["Customer"];
+            var targetBox = $(form).find(`.content-box[name="customer"]`);
+            me.autoBindCustomer(targetBox, customer);
             // bind thông tin vận chuyển
-            var cbTran = $(targetForm).find(`.m-box[name="Transportor"]`);
-            var transId = data["TransportorId"];
+            var cbTran = $(form).find(`.m-box[name="Transportor"]`);
+            var transId = obj["TransportorId"];
             me.SelectItem(cbTran, transId);
+            var paidOrderBy = obj["ShippingPaidBy"];
+            $(`input[type="radio"][fieldName="ShippingPaidBy"][radioValue=` + paidOrderBy + `]`).prop("checked", true);
+            $(`textarea[fieldname="ShippingNote"]`).val(obj["ShippingNote"]);
             // bind thông tin thanh toán
-           
+            me.updateOrderTotal();
+            $(`.m-loading`).addClass("displayNone");
         }
         catch (e) {
             console.log(e);
         }
     }
+
+    /** 
+     * Thực hiện cập nhật tiền đơn hàng
+     * CreatedBy dtnga (20/12/2020)
+     * */
+    updateOrderTotal() {
+        var container = $(`.content-body:visible`);
+        var total = convertInt($(container).find(`.total-money`).attr("value"));
+        var shippingFee = convertInt($(container).find(`input[fieldName="ShippingFee"]`).attr("value"));
+        if (!shippingFee) shippingFee = 0;
+        var shippingPaidBy = convertInt($(container).find(`input[type="radio"][fieldName="ShippingPaidBy"]:checked`).attr("radioValue"));
+        var totalField = $(container).find(`input[fieldName="OrderTotal"]`);
+        var insufficientCashField = $(container).find(`input[fieldName="InsufficientCash"]`); // Số tiền thừa/thiếu
+        var paidMoney = convertInt($(container).find(`input[fieldName="Paid"]`).attr("value"));
+        if (shippingPaidBy == 1) {
+            // khách trả phí vận chuyển
+            total = total + shippingFee;
+        }
+        // cửa hàng trả phí vận chuyển
+        $(totalField).val(formatMoney(total));
+        $(totalField).attr("value", total);
+        var insufficientCash = 0;
+        if (total < paidMoney) {
+            // thừa tiền
+            insufficientCash = paidMoney - total;
+            $(container).find(`.insufficient-cash`).addClass("displayNone");
+            $(container).find(`.excess-cash`).addClass("displayNone");
+        }
+        else
+            insufficientCash = total - paidMoney;
+
+        $(insufficientCashField).val(formatMoney(insufficientCash));
+        $(insufficientCashField).attr("value", insufficientCash);
+
+    }
+
 }

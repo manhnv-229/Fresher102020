@@ -77,6 +77,22 @@ a {
 .flex-end {
     align-self: flex-end;
 }
+
+/* Màu text*/
+.green-text {
+    color: #019160;
+}
+.blue-text {
+    color: #108ee9
+}
+.red-text {
+    color: #ff5053;
+}
+/* Độ dày text*/
+.bold {
+    font-weight: bold;
+}
+
 /*----------------------------*/
 /* font */
 @font-face {

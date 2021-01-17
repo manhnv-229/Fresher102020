@@ -77,7 +77,7 @@ namespace SManage.ApplicationCore.Services
                     orderGetById.Customer = await GetByIdAsync<Customer>((Guid)order.CustomerId);
                 }
                 // Lấy thông tin sản phẩm
-                orderGetById.Products = await GetByPropertyAsync<Product>("OrderId", order.OrderId);
+                orderGetById.OrderDetails = await GetByPropertyAsync<OrderDetail>("OrderId", order.OrderId);
                 return orderGetById;
             }
             else return null;
