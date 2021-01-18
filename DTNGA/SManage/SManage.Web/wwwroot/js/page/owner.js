@@ -162,7 +162,8 @@ class Owner extends Base {
                 // load data tương ứng với content
                 var loadAttr = $(this).attr("loadData");
                 if (typeof loadAttr !== typeof undefined && loadAttr !== false) {
-                    me.loadData(1);
+                    var defaultSelectedItem = $(content).find(`.paging .m-box[name="PageSize"] .item`)[0];
+                    $(defaultSelectedItem).trigger("click");
                 }
             });
 

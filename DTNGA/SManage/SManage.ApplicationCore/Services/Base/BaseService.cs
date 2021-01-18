@@ -181,7 +181,7 @@ namespace SManage.ApplicationCore.Services
         #endregion
 
         #region Update
-        public async Task<ActionServiceResult> UpdateAsync<T>(T entity)
+        public virtual async Task<ActionServiceResult> UpdateAsync<T>(T entity)
         {
             var isValid = await ValidateAsync<T>(entity);
             if (isValid == false)

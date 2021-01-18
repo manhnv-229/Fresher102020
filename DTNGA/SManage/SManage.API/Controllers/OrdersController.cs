@@ -103,6 +103,7 @@ namespace SManage.API.Controllers
                 {
                     return StatusCode(400, ModelState);
                 }
+                
                 // override phương thức insertAsync
                 var response = await _orderService.InsertAsync<OrderCreateDTO>(newOrder);
                 if (response.Success == false)
@@ -132,13 +133,13 @@ namespace SManage.API.Controllers
                 {
                     return StatusCode(400, ModelState);
                 }
-                var order = Order.ConvertFromUpdateDTO(newOrder);
+                
                 // override lại phương thức UpdateAsync
-                var response = await _orderService.UpdateAsync<Order>(order);
+                var response = await _orderService.UpdateAsync<OrderUpdateDTO>(newOrder);
                 if (response.Success == false)
                     return StatusCode(400, response);
                 else
-                    return StatusCode(200, order.OrderId);
+                    return StatusCode(200, response.Data);
             }
             catch (Exception ex)
             {

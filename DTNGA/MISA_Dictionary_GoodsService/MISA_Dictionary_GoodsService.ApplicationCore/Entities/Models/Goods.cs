@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-#nullable disable
+
 
 namespace MISA_Dictionary_GoodsService.ApplicationCore
 {

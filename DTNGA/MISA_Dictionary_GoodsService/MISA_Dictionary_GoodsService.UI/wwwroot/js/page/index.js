@@ -61,7 +61,7 @@ class IndexJs extends Base {
             
             //popup
             $(`#btn-delete-popup`).on("click", me.onDeleteSelectedRow.bind(me));
-
+            
             //paging
             $(`.paging-number button`).on("click", function () {
                 me.onClickPagingNumber(this);
@@ -70,8 +70,6 @@ class IndexJs extends Base {
             $(`.paging #previous`).on("click", me.onClickPreviousPage.bind(me));
             $(`.paging #jumpToFirst`).on("click", me.onClickFirstPage.bind(me));
             $(`.paging #jumpToLast`).on("click", me.onClickLastPage.bind(me));
-
-            
 
             //sự kiện khi nhập trường Tìm kiếm
             $(`.content-filter input[type="search"]`).on("search", function () {

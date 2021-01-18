@@ -530,9 +530,9 @@ class Base {
         var index = $(productList).find(`.product-detail`).length + 1;
         var productCode = product["ProductCode"];
         var productName = product["ProductName"];
-        var productPrice = convertInt(product["Price"]);
+        var productPrice = product["Price"] ? convertInt(product["Price"]) : 0;
         if (!productPrice)
-            productPrice = convertInt(product["CurrentPrice"]);
+            productPrice = product["Price"] ? convertInt(product["CurrentPrice"]) : 0;
         var curentAmount = convertInt(product["Amount"]);
         var productDetail = $(`<div class="product-detail">
                                             <div class="product-line">

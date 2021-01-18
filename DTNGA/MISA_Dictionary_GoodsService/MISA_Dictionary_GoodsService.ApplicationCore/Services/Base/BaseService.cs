@@ -215,7 +215,7 @@ namespace MISA_Dictionary_GoodsService.ApplicationCore.Services
                 // Kiểm tra property có Attribute cần validate không
                 if (prop.IsDefined(typeof(Unduplicated), false) && prop.IsDefined(typeof(PrimaryKey), false)==false)
                 {
-                    // TODO không check trùng trong trường hợp update và dữu liệu không thay đổi
+                    // TODO không check trùng trong trường hợp update và dữ liệu không thay đổi
                     // Check trùng lặp
                     // Lấy entity 
                     var entityDuplicate = await GetByPropertyAsync<T>(propName, propValue);

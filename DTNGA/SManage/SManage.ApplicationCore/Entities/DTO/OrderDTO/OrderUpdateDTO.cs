@@ -52,5 +52,21 @@ namespace SManage.ApplicationCore.Entities.DTO
         [DisplayName("Bên trả phí vận chuyển")]
         public int ShippingPaidBy { get; set; }
 
+        /// <summary>
+        /// Thông tin khách hàng
+        /// </summary>
+        [DisplayName("Khách hàng")]
+        public virtual Customer Customer { get; set; }
+        /// <summary>
+        /// list đơn hàng chi tiết (dòng sản phẩm)
+        /// </summary>
+        [DisplayName("Danh sách sản phẩm")]
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+
+        /// <summary>
+        /// Thông tin có thay đổi hay không
+        /// </summary>
+        public int ischanged { get; set; }
+
     }
 }

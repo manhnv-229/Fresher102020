@@ -31,21 +31,14 @@ namespace SManage.ApplicationCore.Services
         public override async Task<ActionServiceResult> InsertAsync<T>(T entity)
         {
             var orderDTO = entity as OrderCreateDTO;
+            
             var order = Order.ConvertFromCreateDTO(orderDTO);
             order.OrderId = Guid.NewGuid();
             order.OrderCode = RandomString(13);
-            // Kiểm tra thông tin khách hàng đã có chưa, chưa thì thêm mới rồi lưu đơn hàng
-            var customer = (await GetByPropertyAsync<Customer>("PhoneNumber", orderDTO.Customer.PhoneNumber)).FirstOrDefault();
-            if(customer == null)
-            {
-                // thêm mới
-                customer = orderDTO.Customer;
-                customer.CustomerId = Guid.NewGuid();
-                var res = await base.InsertAsync<Customer>(customer);
-                if (res.Success == false)
-                    return res;
-            }
-            order.CustomerId = (Guid)customer.CustomerId;
+            // check thông tin khách hàng
+            var result = await checkCustomerAsync(orderDTO.Customer);
+            if(result.Data!=null)
+                order.CustomerId = (Guid)((Customer)result.Data).CustomerId;
             // Thêm orderDetails
             var orderDetails = (List<OrderDetail>) orderDTO.OrderDetails;
             for(var i=0; i<orderDetails.Count; i++)
@@ -57,6 +50,36 @@ namespace SManage.ApplicationCore.Services
                     return resOD;
             }
             return await base.InsertAsync<Order>(order);
+        }
+
+        public override async Task<ActionServiceResult> UpdateAsync<T>(T entity)
+        {
+            var response = new ActionServiceResult();
+            var orderDTO = entity as OrderUpdateDTO;
+            var order = Order.ConvertFromUpdateDTO(orderDTO);
+            // check thông tin orderDetails (price, amount)
+
+            // check thông tin khách hàng
+            var result = await checkCustomerAsync(orderDTO.Customer);
+            if (result.Data != null)
+                order.CustomerId = (Guid)((Customer)result.Data).CustomerId;
+            // check id đơn vị vận chuyển hợp lệ không
+            var transportorId = orderDTO.TransportorId;
+            if(transportorId!= null)
+            {
+                var tran = await base.GetByIdAsync<Transportor>((Guid)transportorId);
+                if (tran == null) {
+                    response.Success = false;
+                    response.MISACode = MISACode.ValidateEntity;
+                    response.Message = ApplicationCore.Properties.Resources.ValueEntity;
+                    return response;
+                }
+                else
+                {
+                    order.TransportorId = transportorId;
+                }
+            }
+            return default;
         }
 
         /// <summary>
@@ -91,6 +114,24 @@ namespace SManage.ApplicationCore.Services
             var subString= new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
             return "OD_" + subString;
+        }
+
+        public async Task<ActionServiceResult> checkCustomerAsync(Customer customer)
+        {
+            // Kiểm tra thông tin khách hàng đã có chưa, chưa thì thêm mới rồi lưu đơn hàng
+            var cus = (await GetByPropertyAsync<Customer>("PhoneNumber", customer.PhoneNumber)).FirstOrDefault();
+            if (cus == null)
+            {
+                // thêm mới
+                customer.CustomerId = Guid.NewGuid();
+                return await base.InsertAsync<Customer>(customer);
+            }
+            else
+            {
+                // Kiểm tra thông tin khách hàng có thay đổi hay không, có thì thực hiện cập nhật
+
+            }
+            return default;
         }
     }
 }
