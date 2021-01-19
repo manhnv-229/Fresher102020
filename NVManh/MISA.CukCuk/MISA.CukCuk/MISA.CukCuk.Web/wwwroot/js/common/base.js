@@ -192,6 +192,10 @@ class BaseJS {
                 method: "GET",
                 async: true,
             }).done(function (res) {
+                console.warn("Đây là cảnh báo");
+                console.groupCollapsed("Danh sách nhân viên");
+                console.table(res);
+                console.groupEnd();
                 $.each(res, function (index, obj) {
                     var tr = $(`<tr class="el-table__row"></tr>`);
                     if (index == 0) {

@@ -1,4 +1,4 @@
-﻿/// <reference path="js/enum.js" />
+/// <reference path="js/enum.js" />
 $(document).ready(function () {
     new MPlugin();
     (function ($) {
@@ -162,7 +162,7 @@ class MPlugin {
             var areFiltering = combobox.data('areFiltering');
 
             // Nếu đang có việc filter dữ liệu thì load lại data, không thì thôi:
-            if (data && areFiltering) {
+            if (data) {
                 combobox.data('areFiltering', false);
                 var entity = combobox.data('entity');
                 me.buildHTMLComboboxData(combobox, data, entity.FieldText, entity.FieldValue);
@@ -277,13 +277,15 @@ class MPlugin {
             fieldText = entityInfo['FieldText'];
             fieldValue = entityInfo['FieldValue'];
         }
-        var itemHTML = '';
+        console.table(data);
+       
         $.each(data, function (index, item) {
             var text = item[fieldText],
                 value = item[fieldValue];
             var itemHTML = `<a class="m-combobox-item" value="` + value + `"><span>` + text + `</span></a>`;
+            comboboxDataEl.append(itemHTML);
         })
-        comboboxDataEl.append(itemHTML);
+        
     }
 
     //TODO: đang lỗi không set được focus
@@ -340,7 +342,7 @@ class MPlugin {
         var comboboxData = $(combobox).children('.m-combobox-data');
         var itemSelected = $(combobox).data('selected');
         comboboxData.children().removeClass('mCombobox__item--selected');
-        if (itemSelected && itemSelected.value && itemSelected.value != undefined) {
+        if (itemSelected && itemSelected.value !== false && itemSelected.value != undefined) {
             var value = itemSelected.value;
             comboboxData.children("[value='" + value + "']").addClass('mCombobox__item--selected');
         }

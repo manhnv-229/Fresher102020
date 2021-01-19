@@ -1,4 +1,4 @@
-﻿
+
 /* Grid */
 .grid {
     width: 100%;
@@ -53,7 +53,7 @@
 }
 
 .grid tbody tr:nth-child(2n+1) {
-    background-color: #fafafa;
+    background-color: #9f4040;
 }
 
 .grid tbody tr:hover {
