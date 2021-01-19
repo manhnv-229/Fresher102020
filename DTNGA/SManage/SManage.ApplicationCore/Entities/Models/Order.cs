@@ -12,12 +12,14 @@ namespace SManage.ApplicationCore.Entities
 
         [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Id đơn hàng không được bỏ trống")]
         [PrimaryKey]
+        [NotCheckDuplicateWhenEdit]
         [Unduplicated]
         [DisplayName("Id đơn hàng")]
         public Guid OrderId { get; set; }
 
         [System.ComponentModel.DataAnnotations.MaxLength(20, ErrorMessage = "Mã đơn hàng không được vượt quá 20 ký tự")]
         [Unduplicated]
+        [NotCheckDuplicateWhenEdit]
         [DisplayName("Mã đơn hàng")]
         public string OrderCode { get; set; }
 
@@ -104,6 +106,7 @@ namespace SManage.ApplicationCore.Entities
             {
                 OrderId= orderUpdateDTO.OrderId,
                 OrderCode = orderUpdateDTO.OrderCode,
+                OrderNote= orderUpdateDTO.OrderNote,
                 OrderTotal = orderUpdateDTO.OrderTotal,
                 OrderStateId = orderUpdateDTO.OrderStateId,
                 ModifiedBy = orderUpdateDTO.ModifiedBy,

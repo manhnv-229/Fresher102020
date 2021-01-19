@@ -9,6 +9,7 @@ namespace SManage.ApplicationCore.Entities
     {
        
         [Unduplicated]
+        [NotCheckDuplicateWhenEdit]
         [Required]
         [DisplayName("Id Người dùng")]
         public Guid UserId { get; set; }

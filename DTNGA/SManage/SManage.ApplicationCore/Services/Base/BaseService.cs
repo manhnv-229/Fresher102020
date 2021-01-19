@@ -145,8 +145,9 @@ namespace SManage.ApplicationCore.Services
             // Tạo Id mới
             var entityName = entity.GetType().Name;
             var idProp = entity.GetType().GetProperty(entityName + "Id");
-            var newId = Guid.NewGuid();
-            idProp.SetValue(entity, newId);
+            idProp.SetValue(entity, Guid.NewGuid());
+            var createdDateProp = entity.GetType().GetProperty("CreatedDate");
+            createdDateProp.SetValue(entity, DateTime.Now);
             // Kiểm tra hợp lệ
             var isValid = await ValidateAsync<T>(entity);
             if (isValid==false)
@@ -189,6 +190,8 @@ namespace SManage.ApplicationCore.Services
             else
             {
                 var entityName = entity.GetType().Name;
+                var modifiedDateProp = entity.GetType().GetProperty("ModifiedDate");
+                modifiedDateProp.SetValue(entity, DateTime.Now);
                 var sp = $"Proc_Update{entityName}";
                 var parms = MappingDataType<T>(entity);
                 var updatedEntity = await _baseRepository.UpdateAsync<T>(sp, parms);
@@ -231,7 +234,7 @@ namespace SManage.ApplicationCore.Services
                 var propValue = prop.GetValue(entity);
                 var propName = prop.Name;
                 // Kiểm tra property có Attribute cần validate không
-                if (prop.IsDefined(typeof(Unduplicated), false) && prop.IsDefined(typeof(PrimaryKey), false) == false)
+                if (prop.IsDefined(typeof(Unduplicated), false) && prop.IsDefined(typeof(NotCheckDuplicateWhenEdit), false) == false)
                 {
                     // TODO không check trùng trong trường hợp update và dữ liệu không thay đổi
                     // Check trùng lặp

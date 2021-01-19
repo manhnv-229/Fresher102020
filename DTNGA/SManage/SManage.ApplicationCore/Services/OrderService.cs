@@ -44,6 +44,7 @@ namespace SManage.ApplicationCore.Services
             for(var i=0; i<orderDetails.Count; i++)
             {
                 var detail = orderDetails[i];
+                detail.OrderDetailId = Guid.NewGuid();
                 detail.OrderId = order.OrderId;
                 var resOD= await base.InsertAsync<OrderDetail>(detail);
                 if (resOD.Success == false)
@@ -57,7 +58,7 @@ namespace SManage.ApplicationCore.Services
             var response = new ActionServiceResult();
             var orderDTO = entity as OrderUpdateDTO;
             var order = Order.ConvertFromUpdateDTO(orderDTO);
-            // check thông tin orderDetails (price, amount)
+            //TODO check thông tin orderDetails (price, amount)
 
             // check thông tin khách hàng
             var result = await checkCustomerAsync(orderDTO.Customer);
@@ -79,7 +80,7 @@ namespace SManage.ApplicationCore.Services
                     order.TransportorId = transportorId;
                 }
             }
-            return default;
+            return await base.UpdateAsync<Order>(order);
         }
 
         /// <summary>
@@ -116,6 +117,13 @@ namespace SManage.ApplicationCore.Services
             return "OD_" + subString;
         }
 
+        /// <summary>
+        /// Thực hiện kiểm tra thông tin khách hàng trên hệ thống,
+        /// nếu chưa có thì thêm mới,
+        /// nếu đã có thì kiểm tra có thay đổi thông tin hay không -> cập nhật hoặc không
+        /// </summary>
+        /// <param name="customer">Thông tin khách hàng cần kiểm tra</param>
+        /// <returns>Thông tin khách hàng nếu thêm/cập nhật thành công. Nếu lỗi, trả về lỗi</returns>
         public async Task<ActionServiceResult> checkCustomerAsync(Customer customer)
         {
             // Kiểm tra thông tin khách hàng đã có chưa, chưa thì thêm mới rồi lưu đơn hàng
@@ -129,9 +137,25 @@ namespace SManage.ApplicationCore.Services
             else
             {
                 // Kiểm tra thông tin khách hàng có thay đổi hay không, có thì thực hiện cập nhật
-
+                var compareResult = compareEntity<Customer>(cus, customer);
+                if (!compareResult)
+                {
+                    return await base.UpdateAsync<Customer>(customer);
+                }
+                else return new ActionServiceResult { Data = customer };
             }
-            return default;
+        }
+
+        /// <summary>
+        /// TODO Thực hiện so sánh hai object
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="firstObject"></param>
+        /// <param name="secondObject"></param>
+        /// <returns>true nếu hai object giống nhau, false nếu khách nhau</returns>
+        public bool compareEntity<T>(T firstObject, T secondObject)
+        {
+            return true;
         }
     }
 }

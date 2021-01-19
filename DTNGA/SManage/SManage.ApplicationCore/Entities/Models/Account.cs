@@ -13,11 +13,13 @@ namespace SManage.ApplicationCore.Entities
         }
 
         [Unduplicated]
+        [NotCheckDuplicateWhenEdit]
         [Required]
         [DisplayName("Id tài khoản")]
         public Guid AccountId { get; set; }
 
         [Unduplicated]
+        [NotCheckDuplicateWhenEdit]
         [Required]
         [DisplayName("Tên tài khoản")]
         public string AccountName { get; set; }

@@ -15,8 +15,8 @@ namespace SManage.API.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly IBaseMemoryCache _baseMemoryCache;
-        private readonly IOrderService _orderService;
+        private  IBaseMemoryCache _baseMemoryCache;
+        private  IOrderService _orderService;
 
         public OrdersController(IBaseMemoryCache baseMemoryCache, IOrderService baseService)
         {

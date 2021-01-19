@@ -84,7 +84,14 @@ namespace SManage.ApplicationCore
     {
 
     }
+    /// <summary>
+    /// Không cần check trùng nếu đang ở chế độ cập nhật
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
+    public class NotCheckDuplicateWhenEdit : Attribute
+    {
 
+    }
 }
 
 

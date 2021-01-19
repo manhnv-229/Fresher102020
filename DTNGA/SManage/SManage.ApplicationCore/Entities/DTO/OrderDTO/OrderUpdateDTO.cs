@@ -21,6 +21,9 @@ namespace SManage.ApplicationCore.Entities.DTO
         [DisplayName("Tổng tiền đơn hàng")]
         public decimal OrderTotal { get; set; }
 
+        [DisplayName("Ghi chú")]
+        public string OrderNote { get; set; }
+
         [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Mã trạng thái đơn hàng không được bỏ trống")]
         [DisplayName("Mã trạng thái đơn hàng")]
         public Guid OrderStateId { get; set; }

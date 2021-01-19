@@ -10,6 +10,7 @@ namespace SManage.ApplicationCore.Entities
         
 
         [Unduplicated]
+        [NotCheckDuplicateWhenEdit]
         [Required]
         [DisplayName("Id đơn vị vận chuyển")]
         public Guid TransportorId { get; set; }
