@@ -259,7 +259,8 @@ class Owner extends Base {
                     me.checkCustomer(this);
                 }
             });
-            
+            $(`#order-add input[fieldName="ShippingFee"]`).on("keyup", me.updateOrderTotal.bind(me));
+            $(`#btn-adToShoppingCard`).on("click", me.onClick_addToShoppingCard.bind(me));
         }
         catch (e) {
             console.log(e);
@@ -288,6 +289,11 @@ class Owner extends Base {
                 if (products.length > 0) {
                     // tạo autoComplete
                     me.createAutoComplete(products, productInputField);
+                }
+                else {
+                    // Không có sản phẩm thỏa mãn
+                    me.showNotificationPopup("Không có sản phẩm thỏa mãn. vui lòng kiểm tra lại.");
+                    return;
                 }
             })
             .fail(function (res) {
@@ -625,11 +631,17 @@ class Owner extends Base {
             if (cbTrans.length > 0)
                 me.updateTransportorInfo(cbTrans);
             var autoCompleteProduct = $(selectedItem).closest(`.m-autoComplete[name="Product"]`);
-            if (autoCompleteProduct.length > 0)
-                me.addProductToCart($(selectedItem).data("keyId"));
-            if ($(selectedItem).closest(`.input-box[fieldName="Ward"] .m-box`).length > 0)
+            if (autoCompleteProduct.length > 0){
+                var productId= $(selectedItem).data("keyId");
+                me.addProductToCart(productId, null);
+            }
+            if ($(selectedItem).closest(`.input-box[fieldName="Ward"] .m-box`).length > 0){
+               if($(selectedItem).closest(`.content-body`).find(`.m-box[name="Transportor"]`).length > 0)
                 // trigger sự kiện trên item xã/phường
-                me.updateTransportorInfo();
+                     me.updateTransportorInfo();
+                else me.updateOrderTotal();
+            }
+                
             else if ($(selectedItem).closest(`.input-box[fieldName="District"] .m-box`).length > 0)
                 // load lại comboBox xã/phường
                 me.onclick_DistrictItem(selectedItem);
@@ -772,7 +784,7 @@ class Owner extends Base {
             var orderDetails = obj["OrderDetails"];
             if (orderDetails) {
                 $.each(orderDetails, function (index, item) {
-                    me.addProductToCart('', item);
+                    me.buidProductDetail(item);
                 });
             }
             $(`textarea[fieldname="OrderNote"]`).val(obj["OrderNote"]);
@@ -805,7 +817,9 @@ class Owner extends Base {
         var total = convertInt($(container).find(`.total-money`).attr("value"));
         var shippingFee = convertInt($(container).find(`input[fieldName="ShippingFee"]`).attr("value"));
         if (!shippingFee) shippingFee = 0;
-        var shippingPaidBy = convertInt($(container).find(`input[type="radio"][fieldName="ShippingPaidBy"]:checked`).attr("radioValue"));
+        var shippingPaidBy = $(container).find(`input[type="radio"][fieldName="ShippingPaidBy"]:checked`).attr("radioValue");
+        if(!shippingPaidBy) shippingPaidBy=1; // khách trả tiền (addOrder-saler)
+        else shippingPaidBy = convertInt(shippingPaidBy);
         var totalField = $(container).find(`input[fieldName="OrderTotal"]`);
         var insufficientCashField = $(container).find(`input[fieldName="InsufficientCash"]`); // Số tiền thừa/thiếu
         var paidMoney = convertInt($(container).find(`input[fieldName="Paid"]`).attr("value"));
@@ -829,6 +843,19 @@ class Owner extends Base {
         $(insufficientCashField).val(formatMoney(insufficientCash));
         $(insufficientCashField).attr("value", insufficientCash);
 
+    }
+
+    /**Thực hiện thêm sản phẩm vào giỏ hàng
+     * CreatedBy dtnga (29/11/2020)
+     * */
+    onClick_addToShoppingCard() {
+        try {
+            var me = this;
+            me.checkProduct();
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
 
 }

@@ -11,7 +11,7 @@ class Saler extends Owner {
         me.userInfo = JSON.parse(sessionStorage.getItem("user"));
         me.loadAccount();
         me.loadComboBoxCustome();
-        me.initEventSaler();
+    //    me.initEventSaler();
     }
 
     

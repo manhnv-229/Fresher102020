@@ -33,7 +33,7 @@ namespace SManage.API.Controllers
         [HttpGet("{shopId}")]
         public async Task<IActionResult> GetByIdAsync([FromRoute] Guid shopId)
         {
-            var shop= await _baseService.GetByIdAsync<Shop>(shopId);
+            var shop = await _baseService.GetByIdAsync<Shop>(shopId);
             return Ok(shop);
         }
 
@@ -48,12 +48,12 @@ namespace SManage.API.Controllers
         public async Task<IActionResult> GetTransportorByShopIdAsync([FromRoute] Guid shopId)
         {
             var response = new ActionServiceResult();
-            if(shopId==null) return StatusCode(400, ApplicationCore.Properties.Resources.EmptyInput);
+            if (shopId == null) return StatusCode(400, ApplicationCore.Properties.Resources.EmptyInput);
             var transportors = await _baseService.GetByPropertyAsync<Transportor>("ShopId", shopId);
             return Ok(transportors);
         }
 
-        
+
         /// <summary>
         /// Lấy danh sách sản phẩm thuộc cửa hàng theo khóa tìm kiếm
         /// </summary>
@@ -66,13 +66,21 @@ namespace SManage.API.Controllers
             if (shopId == Guid.Empty) return StatusCode(400, "Không có dữ liệu đầu vào");
             else
             {
-                var filterValues = new Dictionary<string, object>
+                // Kiểm tra trong bộ đệm có sản phẩm mã code trùng với key tìm kiếm không, nếu có thì trả về luôn
+                var ltProduct = (List<Product>)_baseMemoryCache.GetCache(shopId.ToString());
+                var product = ltProduct.Where<Product>(p => p.ProductCode == keySearch.Trim());
+                if (product != null) return StatusCode(200, product);
+                else
+                {
+                    var filterValues = new Dictionary<string, object>
                 {
                     { "KeySearch", keySearch },
                     { "ShopId", shopId}
                 };
-                var products = await _baseService.GetByFilterAsync<Product>(filterValues);
-                return StatusCode(200, products);
+                    var products = (await _baseService.GetByFilterAsync<Product>(filterValues)).Data;
+                    if (products.Count > 0) _baseMemoryCache.SetCache(shopId.ToString(), products);
+                    return StatusCode(200, products);
+                }
             }
         }
 
@@ -113,7 +121,7 @@ namespace SManage.API.Controllers
             return Ok(user);
         }
 
-        
+
     }
 
 }

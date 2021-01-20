@@ -70,11 +70,11 @@ namespace SManage.API.Controllers
         {
             try
             {
-                if (orderId == null) return StatusCode(400, ApplicationCore.Properties.Resources.EmptyInput);
+                if (orderId == null)
+                    return StatusCode(400, ApplicationCore.Properties.Resources.EmptyInput);
                 var result = _baseMemoryCache.GetCache<OrderGetByIdDTO>(orderId.ToString());
                 if (result == null)
                 {
-                    //order = await _orderService.GetByIdAsync<OrderGetByIdDTO>(orderId);
                     var order = await _orderService.GetByIdAsync<Order>(orderId);
                     result  = await _orderService.ProcessingOrder(order);
                     _baseMemoryCache.SetCache(orderId.ToString(), result);
@@ -124,7 +124,7 @@ namespace SManage.API.Controllers
         /// <param name="newOrder">thông tin đơn hàng</param>
         /// <returns></returns>
         /// CreatedBy dtnga(16/12/2020)
-        [HttpPut("{orderId}")]
+        [HttpPut]
         public async Task<IActionResult> UpdateOrder([FromBody] OrderUpdateDTO newOrder)
         {
             try

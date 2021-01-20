@@ -87,7 +87,7 @@ namespace SManage.ApplicationCore.Entities.DTO
                 CreatedBy= order.CreatedBy,
                 CreatedDate= order.CreatedDate,
                 CreatedByName= order.CreatedByName,
-                ModifiedBy= (Guid)order.ModifiedBy,
+                ModifiedBy= order.ModifiedBy,
                 ModifiedDate= order.ModifiedDate,
                 ModifiedByName= order.ModifiedByName,
                 CustomerId= (Guid)order.CustomerId,
