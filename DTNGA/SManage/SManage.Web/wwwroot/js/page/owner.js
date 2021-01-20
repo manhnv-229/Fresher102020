@@ -261,6 +261,7 @@ class Owner extends Base {
             });
             $(`#order-add input[fieldName="ShippingFee"]`).on("keyup", me.updateOrderTotal.bind(me));
             $(`#btn-adToShoppingCard`).on("click", me.onClick_addToShoppingCard.bind(me));
+
         }
         catch (e) {
             console.log(e);
@@ -858,4 +859,31 @@ class Owner extends Base {
         }
     }
 
+    /** 
+     * Sự kiện khi click nút tạo đơn hàng 
+     * CreatedBy dtnga (28/12/2020)
+     * */
+    onClickCreateOrder() {
+        try {
+            var me = this;
+            var container = $(`.content-body:visible`);
+
+        }
+        catch (e) {
+            console(e);
+        }
+    }
+
+    /**
+     * Sự kiện khi click nút cập nhật đơn hàng
+     * CreatedBy dtnga (28/12/2020)
+     * */
+    onClickUpdateOrder() {
+        try {
+
+        }
+        catch (e) {
+            console(e);
+        }
+    }
 }

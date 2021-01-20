@@ -25,9 +25,12 @@ namespace SManage.ApplicationCore.Entities
         [DisplayName("Địa chỉ ngắn gọn")]
         public string Address { get; set; }
 
-        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Mã đơn vị hành chính không được bỏ trống")]
         [DisplayName("Mã đơn vị hành chính")]
         public string AdministrativeAreaCode { get; set; }
+
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Id đơn vị hành chính không được bỏ trống")]
+        [DisplayName("Id đơn vị hành chính")]
+        public Guid AdministrativeAreaId { get; set; }
 
         [DisplayName("Số đơn đặt thành công")]
         public int? SuccessOrderedAmount { get; set; }

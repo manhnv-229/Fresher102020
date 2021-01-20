@@ -597,6 +597,7 @@ class Base {
                 productList.append(productDetail);
                 $(productDetail).find(`input.price`).val(formatMoney(productPrice));
                 me.calcculateTotal();
+                $(productDetail).data("keyId", product["ProductId"])
                 // format khi nhập liệu số tiền
                 me.autoFormatMoney();
                 me.addFocusSupport();
@@ -838,42 +839,72 @@ class Base {
     onClick_btnCreate() {
         try {
             var me = this;
-            // kiểm tra validate (bắt buộc nhập, email, ...), nếu vẫn còn trường chưa valid thì cảnh báo
-            var invalidInputs = $(`input[validate="false"], select[validate="false"]`);
-            if (invalidInputs && invalidInputs.length > 0) {
-                $.each(invalidInputs, function (index, input) {
-                    $(input).trigger('blur');
+            var container = $(`.content-body:visible`);
+            if (me.ValidateForm(container)){
+                // build dữ liệu
+                var obj = new Object();
+                //Đóng gói danh sách sản phẩm => Danh sách orderDetail
+                var listOrderDetails = [];
+                var productDetails = $(container).find(`.content-box[name=product] .product-list .product-detail`);
+                $.each(productDetails, function (index, item) {
+                    var orderDetail = new Object();
+                    orderDetail["ProductId"] = $(item).data("keyId");
+                    orderDetail["Price"] = $(item).find(`.price`).val();
+                    orderDetail["Amount"] = $(item).find(`.quantity`).val();
+                    listOrderDetails.push(orderDetail);
                 });
-                invalidInputs[0].focus();
+                obj["OrderDetails"] = listOrderDetails;
+                // Đóng gói người nhận => receiver
+                var customerBox = $(container).find(`.content-box[name="customer"]`);
+                var customer = new Object();
+                var inputs = $(customerBox).find(`input[type=text], input[type=radio], textarea, .m-box`);
+                $.each(inputs, function (index, item) {
+                    var fieldName = $(item).attr("fieldName");
+                    if (fieldName) {
+                        if ($(item).is(":radio")) {
+                            var value = convertInt($(item).attr("radioValue"));
+                            customer[fieldName] = value;
+                        }
+                        else if ($(item).hasClass(".m-box")) {
+                            customer[fieldName] = $(item).data("keyId");
+                        }
+                        else customer[fieldName] = $(item).val();
+                    }
+                })
+                obj["Customer"] = customer;
+                // Lấy thông tin vận chuyển
+                // Lấy các thông tin khác
+                inputs = $(container).find(`input[type=text], input[type=radio], textarea, .m-box`);
+                $.each(inputs, function (index, item) {
+                    var fieldName = $(item).attr("fieldName");
+                    if (fieldName) {
+                        if ($(item).is(":radio")) {
+                            var value = convertInt($(item).attr("radioValue"));
+                            obj[fieldName] = value;
+                        }
+                        else if ($(item).hasClass(".m-box")) {
+                            obj[fieldName] = $(item).data("keyId");
+                        }
+                        else obj[fieldName] = $(item).val();
+                    }
+                })
+                //TODO Lưu và thêm 
+                console.log(obj);
+                $.ajax({
+                    url: me.host + me.getRoute(),
+                    method: "POST",
+                    data: JSON.stringify(obj),
+                    contentType: "application/json",
+                    dataType: "json"
+                })
+                    .done(function (res) {
+                        console.log(res);
+                    })
+                    .fail(function (res) {
+                        console.log(res);
+                    })
+
             }
-            // build dữ liệu
-            // Lấy dữ liệu từ input
-            var obj = new Object();
-            var inputs = $(`.dialog-detail input`);
-            $.each(inputs, function (index, input) {
-                var value = $(input).val();
-                var fieldName = $(input).attr('fieldName');
-                // gán dữ liệu vào thuộc tính của obj (json) tương ứng với fieldName
-                if (input.type == "radio") {
-                    if (input.checked)
-                        obj[fieldName] = value;
-                }
-                else {
-                    obj[fieldName] = value;
-                }
-            });
-            console.log(obj);
-            if (me.formMode == "add") var method = "POST";
-            else if (me.formMode == "edit") var method = "PUT";
-
-            //Đóng gói danh sách sản phẩm => Danh sách orderDetail
-
-            // Đóng gói đơn vị vận chuyển => Transportor
-
-            // Đóng gói người nhận => receiver
-
-            // Lưu và thêm 
-
         }
         catch (e) {
             console.log(e);
