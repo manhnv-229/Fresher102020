@@ -16,17 +16,17 @@ namespace SManage.ApplicationCore.Entities
         [DisplayName("Số lượng")]
         public decimal Amount { get; set; }
 
-        
         [DisplayName("Id sản phẩm")]
         public Guid ProductId { get; set; }
 
-        
+
         [DisplayName("Id đơn hàng")]
         public Guid OrderId { get; set; }
 
         
         [DisplayName("Giá bán")]
         public decimal? Price { get; set; }
+
 
         [DisplayName("Mã Sản phẩm")]
         public string ProductCode { get; set; }

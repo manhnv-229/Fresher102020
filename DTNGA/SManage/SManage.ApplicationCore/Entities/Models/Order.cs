@@ -85,7 +85,6 @@ namespace SManage.ApplicationCore.Entities
         {
             return new Order
             {
-                OrderCode = orderCreateDTO.OrderCode,
                 OrderTotal = orderCreateDTO.OrderTotal,
                 OrderStateId = orderCreateDTO.OrderStateId,
                 OrderNote = orderCreateDTO.OrderNote,

@@ -257,8 +257,10 @@ class Base {
                     $(selectedItem).closest(`.m-box`).data("keyId", id);
                     $(box).closest(".input-box").find(".error-empty").addClass("displayNone");
                     var validateAttr = $(selectedItem).closest(`.m-box`).attr("validate");
-                    if (typeof validateAttr !== typeof undefined && validateAttr == "false")
+                    if (typeof validateAttr !== typeof undefined && validateAttr == "false") {
                         $(selectedItem).closest(`.m-box`).attr("validate", true);
+                        $(selectedItem).closest(`.m-box`).removeClass("m-input-warning");
+                    }
                     return true;
                 }
             })
@@ -296,7 +298,7 @@ class Base {
         $.each(items, function (index, item) {
             $(item).removeClass("selected");
             $(item).find(`.option-icon .check-icon`).addClass("displayNone");
-        })
+        }) 
         // item được chọn
         $(item).removeClass("item-hover");
         $(item).addClass("selected");
@@ -541,6 +543,7 @@ class Base {
     buidProductDetail(product) {
         if (product) {
             var me = this;
+            $(`.content-body:visible .shopping-cart`).find(".error-empty").addClass("displayNone");
             var productCode = product["ProductCode"];
             // Nếu sản phẩm đã có trong giỏ hàng => số lượng + 1 và tăng tổng tiền
             var existProducts = $(`.content-body:visible .product-list .product-detail`);
@@ -833,14 +836,16 @@ class Base {
         $(`.extra-info`).addClass("displayNone");
     }
 
-    /**TODO Hàm thực hiện thêm đơn hàng
+    /** Hàm thực hiện thêm đơn hàng
      * CreatedBy dtnga (27/11/2020)
      * */
     onClick_btnCreate() {
         try {
             var me = this;
             var container = $(`.content-body:visible`);
-            if (me.ValidateForm(container)){
+       
+            var validateShoppingCart = me.validateShopppingCart();
+            if (me.ValidateForm(container) && validateShoppingCart){
                 // build dữ liệu
                 var obj = new Object();
                 //Đóng gói danh sách sản phẩm => Danh sách orderDetail
@@ -849,8 +854,8 @@ class Base {
                 $.each(productDetails, function (index, item) {
                     var orderDetail = new Object();
                     orderDetail["ProductId"] = $(item).data("keyId");
-                    orderDetail["Price"] = $(item).find(`.price`).val();
-                    orderDetail["Amount"] = $(item).find(`.quantity`).val();
+                    orderDetail["Price"] = $(item).find(`.price`).attr("value");
+                    orderDetail["Amount"] = $(item).find(`.quantity`).attr("value");
                     listOrderDetails.push(orderDetail);
                 });
                 obj["OrderDetails"] = listOrderDetails;
@@ -865,7 +870,7 @@ class Base {
                             var value = convertInt($(item).attr("radioValue"));
                             customer[fieldName] = value;
                         }
-                        else if ($(item).hasClass(".m-box")) {
+                        else if ($(item).hasClass("m-box")) {
                             customer[fieldName] = $(item).data("keyId");
                         }
                         else customer[fieldName] = $(item).val();
@@ -882,14 +887,13 @@ class Base {
                             var value = convertInt($(item).attr("radioValue"));
                             obj[fieldName] = value;
                         }
-                        else if ($(item).hasClass(".m-box")) {
+                        else if ($(item).hasClass("m-box")) {
                             obj[fieldName] = $(item).data("keyId");
                         }
-                        else obj[fieldName] = $(item).val();
+                        else obj[fieldName] = (!$(item).attr("value"))? null: $(item).attr("value");
                     }
                 })
-                //TODO Lưu và thêm 
-                console.log(obj);
+                // Lưu và thêm
                 $.ajax({
                     url: me.host + me.getRoute(),
                     method: "POST",
@@ -899,16 +903,24 @@ class Base {
                 })
                     .done(function (res) {
                         console.log(res);
+                        me.showToastMesseger("Thêm đơn hàng thành công", "success");
+                        me.clear(container);
+                        $(productDetails).remove();
+                        me.calcculateTotal();
                     })
                     .fail(function (res) {
                         console.log(res);
                     })
-
             }
         }
         catch (e) {
             console.log(e);
         }
+    }
+
+
+    validateShopppingCart() {
+
     }
 
     /** Hàm thực hiện thêm dữ liệu mới
@@ -1661,8 +1673,6 @@ class Base {
                         $(parentBox).find(`.error-empty`).removeClass("displayNone");
                         $(input).addClass("m-input-warning");
                     }
-
-
                 });
                 invalidInputs[0].focus();
                 return false;

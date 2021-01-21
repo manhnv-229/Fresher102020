@@ -260,7 +260,6 @@ class Owner extends Base {
                 }
             });
             $(`#order-add input[fieldName="ShippingFee"]`).on("keyup", me.updateOrderTotal.bind(me));
-            $(`#btn-adToShoppingCard`).on("click", me.onClick_addToShoppingCard.bind(me));
 
         }
         catch (e) {
@@ -434,7 +433,7 @@ class Owner extends Base {
         var customerName = !customer["FullName"] ? '' : customer["FullName"];
         var phoneNumber = !customer["PhoneNumber"] ? '' : customer["PhoneNumber"]
         var address = !customer["Address"] ? '' : customer["Address"];
-        $(targetBox).find(`input[fieldName="CustomerName"]`).val(customerName);
+        $(targetBox).find(`input[fieldName="FullName"]`).val(customerName);
         $(targetBox).find(`input[type="text"][fieldName="PhoneNumber"]`).val(phoneNumber);
         $(targetBox).find(`input[fieldName="Address"]`).val(address);
         // thông tin xã/phường, ...
@@ -478,6 +477,8 @@ class Owner extends Base {
                 .fail(function (res) {
                     console.log(res);
                 })
+            debugger
+            me.ValidateForm(targetBox);
         }
     }
 
@@ -692,7 +693,8 @@ class Owner extends Base {
                     var contentBox = $(comboBoxTrans).closest(`.content-box`);
                     var feeField = $(contentBox).find(`input[fieldName="ShippingFee"]`);
                     $(feeField).val(formatMoney(fee));
-                    $(feeField).attr("value",fee);
+                    $(feeField).attr("value", fee);
+                    $(feeField).attr("validate", true);
                     $(feeField).removeClass("m-input-warning");
                     me.updateOrderTotal();
                     var extraInfo = $(contentBox).find(`.extra-info`);
@@ -788,7 +790,7 @@ class Owner extends Base {
                     me.buidProductDetail(item);
                 });
             }
-            $(`textarea[fieldname="OrderNote"]`).val(obj["OrderNote"]);
+            $(form).find(`textarea[fieldname="OrderNote"]`).val(obj["OrderNote"]);
             // bind thông tin người nhận
             var customer = obj["Customer"];
             var targetBox = $(form).find(`.content-box[name="customer"]`);
@@ -798,8 +800,8 @@ class Owner extends Base {
             var transId = obj["TransportorId"];
             me.SelectItem(cbTran, transId);
             var paidOrderBy = obj["ShippingPaidBy"];
-            $(`input[type="radio"][fieldName="ShippingPaidBy"][radioValue=` + paidOrderBy + `]`).prop("checked", true);
-            $(`textarea[fieldname="ShippingNote"]`).val(obj["ShippingNote"]);
+            $(form).find(`input[type="radio"][fieldName="ShippingPaidBy"][radioValue=` + paidOrderBy + `]`).prop("checked", true);
+            $(form).find(`textarea[fieldname="ShippingNote"]`).val(obj["ShippingNote"]);
             // bind thông tin thanh toán
             me.updateOrderTotal();
             $(`.m-loading`).addClass("displayNone");
@@ -884,6 +886,30 @@ class Owner extends Base {
         }
         catch (e) {
             console(e);
+        }
+    }
+
+    /**
+     * Kiểm tra giỏ hàng có sản phẩm chưa
+     * CreatedBy dtnga (22/1/2021)
+     * */
+    validateShopppingCart() {
+        try {
+            var shoppingCart = $(`.content-body:visible .shopping-cart`);
+            var productDetails = $(shoppingCart).find(".product-detail");
+            if (productDetails.length == 0) {
+                $(shoppingCart).find(".empty-mark").removeClass("displayNone");
+                $(shoppingCart).find(".error-empty").removeClass("displayNone");
+                return false;
+            }
+            else {
+                $(shoppingCart).find(".empty-mark").addClass("displayNone");
+                $(shoppingCart).find(".error-empty").addClass("displayNone");
+                return true;
+            }
+        }
+        catch (e) {
+            console.log(e);
         }
     }
 }

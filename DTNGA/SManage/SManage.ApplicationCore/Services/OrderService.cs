@@ -136,13 +136,13 @@ namespace SManage.ApplicationCore.Services
             }
             else
             {
-                // Kiểm tra thông tin khách hàng có thay đổi hay không, có thì thực hiện cập nhật
+                //TODO Kiểm tra thông tin khách hàng có thay đổi hay không, có thì thực hiện cập nhật
                 var compareResult = compareEntity<Customer>(cus, customer);
                 if (!compareResult)
                 {
                     return await base.UpdateAsync<Customer>(customer);
                 }
-                else return new ActionServiceResult { Data = customer };
+                else return new ActionServiceResult { Data = cus };
             }
         }
 

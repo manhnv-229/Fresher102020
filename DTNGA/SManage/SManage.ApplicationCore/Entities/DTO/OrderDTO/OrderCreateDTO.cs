@@ -7,10 +7,7 @@ namespace SManage.ApplicationCore.Entities.DTO
 {
     public class OrderCreateDTO : BaseEntity
     {
-        [Unduplicated]
-        [System.ComponentModel.DataAnnotations.MaxLength(20, ErrorMessage = "Mã đơn hàng không được vượt quá 20 ký tự")]
-        [DisplayName("Mã đơn hàng")]
-        public string OrderCode { get; set; }
+        
 
         [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Tổng tiền đơn hàng không được bỏ trống")]
         [DisplayName("Tổng tiền đơn hàng")]
