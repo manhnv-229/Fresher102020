@@ -25,12 +25,15 @@ namespace SManage.ApplicationCore.Entities
 
         [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Tổng tiền đơn hàng không được bỏ trống")]
         [DisplayName("Tổng tiền đơn hàng")]
+        [CheckChange]
         public decimal OrderTotal { get; set; }
 
         [DisplayName("Mã trạng thái đơn hàng")]
+        [CheckChange]
         public Guid? OrderStateId { get; set; }
 
         [DisplayName("Ghi chú")]
+        [CheckChange]
         public string OrderNote { get; set; }
 
         [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Id tài khoản tạo đơn không được bỏ trống")]
@@ -38,6 +41,7 @@ namespace SManage.ApplicationCore.Entities
         public new Guid CreatedBy { get; set; }
 
         [DisplayName("Id tài khoản xử lý đơn")]
+        [CheckChange]
         public new Guid? ModifiedBy { get; set; }
 
         [DisplayName("Id khách hàng")]
@@ -47,21 +51,26 @@ namespace SManage.ApplicationCore.Entities
         /// Id đơn vị vận chuyển, đơn hàng do nhân viên tạo không có đơn vị vận chuyển
         /// </summary>
         [DisplayName("Id đơn vị vận chuyển")]
+        [CheckChange]
         public Guid? TransportorId { get; set; }
 
         [DisplayName("Ngày nhận hàng dự kiến")]
+        [CheckChange]
         public DateTime? ExpectedDeliveryDate { get; set; }
 
         /// <summary>
         ///  Ngày nhận hàng thực tế, nếu chưa tạo thì lấy bằng ngày hiện tại
         /// </summary>
         [DisplayName("Ngày nhận hàng thực tế")]
+        [CheckChange]
         public DateTime? RealDeliveryDate { get; set; }
 
         [DisplayName("Phí vận chuyển")]
+        [CheckChange]
         public decimal? ShippingFee { get; set; }
 
         [DisplayName("Bên trả phí vận chuyển")]
+        [CheckChange]
         public int? ShippingPaidBy { get; set; }
 
       

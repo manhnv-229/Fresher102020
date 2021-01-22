@@ -56,20 +56,24 @@ namespace SManage.ApplicationCore.Services
         public override async Task<ActionServiceResult> UpdateAsync<T>(T entity)
         {
             var response = new ActionServiceResult();
+
             var orderDTO = entity as OrderUpdateDTO;
-            var order = Order.ConvertFromUpdateDTO(orderDTO);
-            //TODO check thông tin orderDetails (price, amount)
+            var newOrder = Order.ConvertFromUpdateDTO(orderDTO);
+            var order =await GetByIdAsync<Order>(orderDTO.OrderId);
+            order = MappingObject<Order>(order, newOrder);
+            //TODO check thông tin orderDetails
 
             // check thông tin khách hàng
             var result = await checkCustomerAsync(orderDTO.Customer);
             if (result.Data != null)
                 order.CustomerId = (Guid)((Customer)result.Data).CustomerId;
             // check id đơn vị vận chuyển hợp lệ không
-            var transportorId = orderDTO.TransportorId;
+            var transportorId = order.TransportorId;
             if(transportorId!= null)
             {
                 var tran = await base.GetByIdAsync<Transportor>((Guid)transportorId);
                 if (tran == null) {
+                    // đơn vị vận chuyển không tồn tại
                     response.Success = false;
                     response.MISACode = MISACode.ValidateEntity;
                     response.Message = ApplicationCore.Properties.Resources.ValueEntity;
@@ -122,40 +126,30 @@ namespace SManage.ApplicationCore.Services
         /// nếu chưa có thì thêm mới,
         /// nếu đã có thì kiểm tra có thay đổi thông tin hay không -> cập nhật hoặc không
         /// </summary>
-        /// <param name="customer">Thông tin khách hàng cần kiểm tra</param>
+        /// <param name="newCustomer">Thông tin khách hàng cần kiểm tra</param>
         /// <returns>Thông tin khách hàng nếu thêm/cập nhật thành công. Nếu lỗi, trả về lỗi</returns>
-        public async Task<ActionServiceResult> checkCustomerAsync(Customer customer)
+        public async Task<ActionServiceResult> checkCustomerAsync(Customer newCustomer)
         {
             // Kiểm tra thông tin khách hàng đã có chưa, chưa thì thêm mới rồi lưu đơn hàng
-            var cus = (await GetByPropertyAsync<Customer>("PhoneNumber", customer.PhoneNumber)).FirstOrDefault();
-            if (cus == null)
+            var customer = (await GetByPropertyAsync<Customer>("PhoneNumber", newCustomer.PhoneNumber)).FirstOrDefault();
+            if (customer == null)
             {
                 // thêm mới
-                customer.CustomerId = Guid.NewGuid();
-                return await base.InsertAsync<Customer>(customer);
+                newCustomer.CustomerId = Guid.NewGuid();
+                return await base.InsertAsync<Customer>(newCustomer);
             }
             else
             {
-                //TODO Kiểm tra thông tin khách hàng có thay đổi hay không, có thì thực hiện cập nhật
-                var compareResult = compareEntity<Customer>(cus, customer);
-                if (!compareResult)
+                //Kiểm tra thông tin khách hàng có thay đổi hay không, có thì thực hiện cập nhật, trả về thông tin mới
+                var changedProperties = CompareEntity<Customer>(customer, newCustomer);
+                if (changedProperties.Count>0)
                 {
+                    customer = MappingObject<Customer>(customer, newCustomer);
                     return await base.UpdateAsync<Customer>(customer);
                 }
-                else return new ActionServiceResult { Data = cus };
+                else return new ActionServiceResult { Data = customer };
             }
         }
-
-        /// <summary>
-        /// TODO Thực hiện so sánh hai object
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="firstObject"></param>
-        /// <param name="secondObject"></param>
-        /// <returns>true nếu hai object giống nhau, false nếu khách nhau</returns>
-        public bool compareEntity<T>(T firstObject, T secondObject)
-        {
-            return true;
-        }
+                
     }
 }

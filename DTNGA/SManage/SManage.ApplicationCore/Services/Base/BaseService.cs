@@ -8,6 +8,7 @@ using SManage.ApplicationCore.Interfaces.Service.Base;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,7 +28,7 @@ namespace SManage.ApplicationCore.Services
         }
 
         #region Delete
-        public async Task<ActionServiceResult> DeleteAsync<T>(Guid entityId) 
+        public async Task<ActionServiceResult> DeleteAsync<T>(Guid entityId)
         {
             var entityName = typeof(T).Name;
             // Kiểm tra tồn tại trên hệ thống hay không
@@ -91,7 +92,7 @@ namespace SManage.ApplicationCore.Services
         #endregion
 
         #region Get
-       
+
         public List<T> GetAll<T>()
         {
             var entityName = typeof(T).Name;
@@ -135,24 +136,25 @@ namespace SManage.ApplicationCore.Services
             var sp = string.Format(ConstProcedure.Proc_GetByFilter, entityName);
             return await _baseRepository.GetPagingAsync<T>(sp, parms);
         }
-        
+
 
         #endregion
 
         #region Insert
-        public virtual async Task<ActionServiceResult> InsertAsync<T>(T entity)
+        public virtual async Task<ActionServiceResult> InsertAsync<T>(T entity) where T : BaseEntity
         {
             // Tạo Id mới
             var entityName = entity.GetType().Name;
             var idProp = entity.GetType().GetProperty(entityName + "Id");
             var idValue = idProp.GetValue(entity);
-            if(idValue==null)   
+            if (idValue == null)
                 idProp.SetValue(entity, Guid.NewGuid());
             var createdDateProp = entity.GetType().GetProperty("CreatedDate");
             createdDateProp.SetValue(entity, DateTime.Now);
             // Kiểm tra hợp lệ
+            entity.EntityState = EntityState.INSERT;
             var isValid = await ValidateAsync<T>(entity);
-            if (isValid==false)
+            if (isValid == false)
             {
                 return _actionServiceResult;
             }
@@ -160,7 +162,7 @@ namespace SManage.ApplicationCore.Services
             {
                 var sp = $"Proc_Insert{entityName}";
                 var parms = MappingDataType<T>(entity);
-                var result= await _baseRepository.InsertAsync<T>(sp, parms);
+                var result = await _baseRepository.InsertAsync<T>(sp, parms);
                 if (result == null)
                 {
                     _actionServiceResult.Success = false;
@@ -184,8 +186,9 @@ namespace SManage.ApplicationCore.Services
         #endregion
 
         #region Update
-        public virtual async Task<ActionServiceResult> UpdateAsync<T>(T entity)
+        public virtual async Task<ActionServiceResult> UpdateAsync<T>(T entity) where T : BaseEntity
         {
+            entity.EntityState = EntityState.UPDATE;
             var isValid = await ValidateAsync<T>(entity);
             if (isValid == false)
                 return _actionServiceResult;
@@ -221,9 +224,10 @@ namespace SManage.ApplicationCore.Services
         /// <param name="entity"></param>
         /// <returns></returns>
         /// CreatedBy dtnga (04/12/2020)
-        protected async Task<bool> ValidateAsync<T>(T entity)
+        protected async Task<bool> ValidateAsync<T>(T entity) where T : BaseEntity
         {
             var isValid = true;
+            var entityName = typeof(T).Name;
             // Đọc các propperty
             var properties = entity.GetType().GetProperties();
             var errorMsg = new List<string>();
@@ -236,14 +240,19 @@ namespace SManage.ApplicationCore.Services
                 var propValue = prop.GetValue(entity);
                 var propName = prop.Name;
                 // Kiểm tra property có Attribute cần validate không
-                if (prop.IsDefined(typeof(Unduplicated), false) && prop.IsDefined(typeof(NotCheckDuplicateWhenEdit), false) == false)
+                if (prop.IsDefined(typeof(Unduplicated), false))
                 {
-                    // TODO không check trùng trong trường hợp update và dữ liệu không thay đổi
                     // Check trùng lặp
                     // Lấy entity 
                     var entityDuplicate = await GetByPropertyAsync<T>(propName, propValue);
                     if (entityDuplicate.Count > 0)
                     {
+                        if (entityDuplicate.Count == 1 && entity.EntityState == EntityState.UPDATE)
+                        {
+                            var idProp = entity.GetType().GetProperty(entityName + "Id");
+                            if ((Guid)idProp.GetValue(entity) == (Guid)idProp.GetValue(entityDuplicate[0]))
+                                continue;
+                        }
                         isValid = false;
                         _actionServiceResult.Success = false;
                         _actionServiceResult.MISACode = MISACode.Duplicate;
@@ -264,7 +273,7 @@ namespace SManage.ApplicationCore.Services
         /// <param name="entity"></param>
         /// <returns></returns>
         ///  CreatedBy dtnga (04/12/2020)
-        public virtual async Task<bool> CustomeValidateAsync<T>(T entity)
+        public virtual async Task<bool> CustomeValidateAsync<T>(T entity) where T : BaseEntity
         {
             return await ValidateAsync<T>(entity);
         }
@@ -325,11 +334,78 @@ namespace SManage.ApplicationCore.Services
         protected DynamicParameters MappingDataTypeForOne(string propName, object propValue)
         {
             var parms = new DynamicParameters();
-            if(typeof(object)== typeof(Guid))
+            if (typeof(object) == typeof(Guid))
                 parms.Add($"{propName}", propValue, DbType.String);
             else
                 parms.Add($"{propName}", propValue);
             return parms;
+        }
+
+        public T MappingObject<T>(T firstObject, T secondObject)
+        {
+            // Đọc các propperty
+            var properties = typeof(T).GetProperties();
+            foreach (var prop in properties)
+            {
+                // Kiểm tra property có Attribute checkChange không
+                if (prop.IsDefined(typeof(CheckChange), false))
+                {
+                    var firstValue = prop.GetValue(firstObject);
+                    var secondValue = prop.GetValue(secondObject);
+                    if (prop.PropertyType == typeof(string))
+                    {
+                        if (firstValue.Equals(secondValue) == false)
+                            prop.SetValue(firstObject, secondValue);
+                    }
+                    else if (prop.PropertyType == typeof(int))
+                    {
+                        if ((int)firstValue != (int)secondValue)
+                            prop.SetValue(firstObject, secondValue);
+                    }
+                    else
+                    {
+                        if (firstValue != secondValue)
+                            // nếu giá trị thay đổi, cập nhật giá trị mới từ secondObject vào firstObject
+                            prop.SetValue(firstObject, secondValue);
+                    }
+                }
+            }
+            return firstObject;
+        }
+
+        public List<PropertyInfo> CompareEntity<T>(T firstObject, T secondObject)
+        {
+            var changedProperties = new List<PropertyInfo>();
+            // Đọc các propperty
+            var properties = typeof(T).GetProperties();
+            foreach (var prop in properties)
+            {
+                // Kiểm tra property có Attribute checkChange không
+                if (prop.IsDefined(typeof(CheckChange), false))
+                {
+                    var firstValue = prop.GetValue(firstObject);
+                    var secondValue = prop.GetValue(secondObject);
+                    if (secondValue != null)
+                    {
+                        if (prop.PropertyType == typeof(string))
+                        {
+                            if (firstValue.Equals(secondValue) == false)
+                                changedProperties.Add(prop);
+                        }
+                        else if (prop.PropertyType == typeof(int))
+                        {
+                            if ((int)firstValue != (int)secondValue)
+                                changedProperties.Add(prop);
+                        }
+                        else
+                        {
+                            if (firstValue != secondValue)
+                                changedProperties.Add(prop);
+                        }
+                    }
+                }
+            }
+            return changedProperties;
         }
         #endregion
     }

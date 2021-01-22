@@ -92,6 +92,14 @@ namespace SManage.ApplicationCore
     {
 
     }
+    /// <summary>
+    /// Check thay đổi so với thuộc tính tương ứng của object cũ không
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
+    public class CheckChange : Attribute
+    {
+
+    }
 }
 
 

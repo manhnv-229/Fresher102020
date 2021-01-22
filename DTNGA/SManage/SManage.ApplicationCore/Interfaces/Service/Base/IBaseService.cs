@@ -3,6 +3,7 @@ using SManage.ApplicationCore.Entities.Base;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -104,7 +105,7 @@ namespace SManage.ApplicationCore.Interfaces.Service.Base
         /// <param name="commandType">Loại truy vấn</param>
         /// <returns>Đối tượng được thêm thành công</returns>
         /// CreatedBy dtnga (11/11/2020)
-        Task<ActionServiceResult> InsertAsync<T>(T entity);
+        Task<ActionServiceResult> InsertAsync<T>(T entity) where T:BaseEntity;
         /// <summary>
         /// Thêm nhiều bản ghi vào DB
         /// </summary>
@@ -127,7 +128,7 @@ namespace SManage.ApplicationCore.Interfaces.Service.Base
         /// <param name="commandType">Loại truy vấn</param>
         /// <returns>Đối tượng được cập nhật thành công</returns>
         /// CreatedBy dtnga (11/11/2020)
-        Task<ActionServiceResult> UpdateAsync<T>(T entity);
+        Task<ActionServiceResult> UpdateAsync<T>(T entity) where T : BaseEntity;
         #endregion
 
         /// <summary>
@@ -137,6 +138,26 @@ namespace SManage.ApplicationCore.Interfaces.Service.Base
         /// <param name="Entity"></param>
         /// <returns>true-entity hợp lệ, false- entity không hợp lệ</returns>
         /// CreatedBy dtnga (04/12/2020)
-        Task<bool> CustomeValidateAsync<T>(T entity);
+        Task<bool> CustomeValidateAsync<T>(T entity) where T : BaseEntity;
+
+        /// <summary>
+        /// Thực hiện mapping từ object 2 vào object 1 nếu có thay đổi giá trị
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="firstObject">Object nhận giá trị mới</param>
+        /// <param name="secondObject">Object lấy giá trị</param>
+        /// <returns>Object 1 sau khi mapping giá trị mới</returns>
+        /// CreatedBy dtnga (22/01/2020)
+        T MappingObject<T>(T firstObject, T secondObject);
+
+        /// <summary>
+        /// Thực hiện so sánh hai object
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="firstObject"></param>
+        /// <param name="secondObject"></param>
+        /// <returns>Danh sách thuộc tính có giá trị khác nhau</returns>
+        List<PropertyInfo> CompareEntity<T>(T firstObject, T secondObject);
+
     }
 }

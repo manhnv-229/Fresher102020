@@ -9,27 +9,27 @@ namespace SManage.ApplicationCore.Entities
     {
 
         [Unduplicated]
-        [NotCheckDuplicateWhenEdit]
         [DisplayName("Id khách hàng")]
         public Guid? CustomerId { get; set; }
 
         [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Họ tên khách hàng không được bỏ trống")]
         [DisplayName("Họ tên khách hàng")]
+        [CheckChange]
         public string FullName { get; set; }
 
         [Unduplicated]
         [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Số điện thoại không được bỏ trống")]
         [DisplayName("Số điện thoại")]
+        [CheckChange]
         public string PhoneNumber { get; set; }
 
         [DisplayName("Địa chỉ ngắn gọn")]
+        [CheckChange]
         public string Address { get; set; }
-
-        [DisplayName("Mã đơn vị hành chính")]
-        public string AdministrativeAreaCode { get; set; }
 
         [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Id đơn vị hành chính không được bỏ trống")]
         [DisplayName("Id đơn vị hành chính")]
+        [CheckChange]
         public Guid AdministrativeAreaId { get; set; }
 
         [DisplayName("Số đơn đặt thành công")]
@@ -39,6 +39,7 @@ namespace SManage.ApplicationCore.Entities
         public int? OrderAmount { get; set; }
 
         [DisplayName("Loai khach hang")]
+        [CheckChange]
         public int Type { get; set; }
 
     }
