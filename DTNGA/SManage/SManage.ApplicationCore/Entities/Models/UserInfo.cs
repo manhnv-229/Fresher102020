@@ -54,6 +54,8 @@ namespace SManage.ApplicationCore.Entities
         public string  Password { get; set; }
         [DisplayName("Id cửa hàng")]
         public Guid ShopId { get; set; }
+        [DisplayName("Id tài khoản")]
+        public Guid AccountId { get; set; }
 
     }
 }

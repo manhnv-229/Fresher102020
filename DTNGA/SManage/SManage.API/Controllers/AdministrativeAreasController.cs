@@ -63,21 +63,22 @@ namespace SManage.API.Controllers
         /// <summary>
         /// Lấy ra dữ liệu đầy đủ theo mã xã/phường
         /// </summary>
-        /// <param name="areaCode">Mã xã/phường</param>
+        /// <param name="areaCodeId">ID xã/phường</param>
         /// <returns></returns>
         /// CreatedBy dtnga(08/12/2020)
         [HttpGet("FullAddress")]
-        public ActionServiceResult GetFullAddressByAreaCode([FromQuery] string areaCode)
+        public ActionServiceResult GetFullAddressByAreaCode([FromQuery] Guid areaCodeId)
         {
             var response = new ActionServiceResult();
-            if (String.IsNullOrEmpty(areaCode))
+            if (areaCodeId==null)
             {
                 response.Message = ApplicationCore.Properties.Resources.Value_Empty;
                 response.MISACode = MISACode.NotFound;
                 return response;
             }
             var fullArea = new FullArea();
-            areaCode = areaCode.Trim();
+            fullArea.Ward = AdministrativeAreas.Where<AdministrativeArea>(a => a.AdministrativeAreaId == areaCodeId).FirstOrDefault();
+            var areaCode = fullArea.Ward.AdministrativeAreaCode.Trim();
             if (areaCode.Length >=4)
             {
                 var provinceCode = areaCode.Substring(0, 4);
@@ -86,11 +87,7 @@ namespace SManage.API.Controllers
                 {
                     var districtCode = areaCode.Substring(0, 7);
                     fullArea.District = AdministrativeAreas.Where<AdministrativeArea>(a => a.AdministrativeAreaCode == districtCode).FirstOrDefault();
-                    if (areaCode.Length >= 12)
-                    {
-                        var wardCode = areaCode;
-                        fullArea.Ward = AdministrativeAreas.Where<AdministrativeArea>(a => a.AdministrativeAreaCode == wardCode).FirstOrDefault();
-                    }
+                    
                 }
             }
             response.Data = fullArea;

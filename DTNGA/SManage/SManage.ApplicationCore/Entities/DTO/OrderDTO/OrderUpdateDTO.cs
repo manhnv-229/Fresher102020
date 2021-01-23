@@ -25,7 +25,7 @@ namespace SManage.ApplicationCore.Entities.DTO
         public string OrderNote { get; set; }
 
         [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Mã trạng thái đơn hàng không được bỏ trống")]
-        [DisplayName("Mã trạng thái đơn hàng")]
+        [DisplayName("Id trạng thái đơn hàng")]
         public Guid OrderStateId { get; set; }
 
         [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Id tài khoản xử lý đơn không được bỏ trống")]
@@ -55,6 +55,11 @@ namespace SManage.ApplicationCore.Entities.DTO
         [DisplayName("Bên trả phí vận chuyển")]
         public int ShippingPaidBy { get; set; }
 
+        [DisplayName("tên tài khoản tạo đơn")]
+        public string CreatedByName { get; set; }
+        [DisplayName("tên tài khoản xử lý đơn")]
+        public string ModifiedByName { get; set; }
+
         /// <summary>
         /// Thông tin khách hàng
         /// </summary>
@@ -66,10 +71,6 @@ namespace SManage.ApplicationCore.Entities.DTO
         [DisplayName("Danh sách sản phẩm")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 
-        /// <summary>
-        /// Thông tin có thay đổi hay không
-        /// </summary>
-        public int ischanged { get; set; }
 
     }
 }

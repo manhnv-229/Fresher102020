@@ -9,7 +9,6 @@ class Owner extends Base {
     constructor() {
         super();
         var me = this;
-        $(`.m-loading`).removeClass("displayNone");
         me.userInfo = JSON.parse(sessionStorage.getItem("user"));
         me.loadAccount();
         me.loadComboBoxCustome();
@@ -225,6 +224,11 @@ class Owner extends Base {
                 me.onClick_btnSave(this);
             });
 
+            $(`.content-body[name="order"] .m-dialog`).find(`#btn-save`).off("click").on("click", function (e) {
+                event.stopPropagation();
+                me.onClickUpdateOrder(this);
+            });
+
             // format khi nhập liệu số tiền
             me.autoFormatMoney();
             // kiểm tra dữ liệu
@@ -428,58 +432,51 @@ class Owner extends Base {
         var me = this;
         if (!customer)
             return;
+        
         if (!targetBox) targetBox = $(`.content-body:visible .content-box[name="customer"]`);
         //thông tin chung
         var customerName = !customer["FullName"] ? '' : customer["FullName"];
         var phoneNumber = !customer["PhoneNumber"] ? '' : customer["PhoneNumber"]
         var address = !customer["Address"] ? '' : customer["Address"];
-        $(targetBox).find(`input[fieldName="FullName"]`).val(customerName);
-        $(targetBox).find(`input[type="text"][fieldName="PhoneNumber"]`).val(phoneNumber);
-        $(targetBox).find(`input[fieldName="Address"]`).val(address);
+        $(targetBox).find(`input[fieldName="FullName"]`).val(customerName).attr("validate", true);
+        $(targetBox).find(`input[type="text"][fieldName="PhoneNumber"]`).val(phoneNumber).attr("validate", true);
+        $(targetBox).find(`input[fieldName="Address"]`).val(address).attr("validate", true);
         // thông tin xã/phường, ...
-        var areaCode = !customer["AdministrativeAreaCode"] ? "VN" : customer["AdministrativeAreaCode"];
-        if (areaCode.length > 2) {
-            //lấy dữ liệu đầy đủ từ api
-            var route = "/api/v1/AdministrativeAreas";
-            $.ajax({
-                url: me.host + route + "/FullAddress?areaCode=" + areaCode,
-                method: "GET"
-            })
-                .done(function (res) {
-                    var fullarea = res.Data;
-                    var province = fullarea["Province"];
-                    var district = fullarea["District"];
-                    var ward = fullarea["Ward"];
-                    if (province) {
-                        //chọn item tại combo Tỉnh/thành
-                        var proviceBox = $(targetBox).find(`.input-box[fieldName="Province"] .m-box`);
-                        var provineId = province["AdministrativeAreaId"];
-                        me.SelectItem(proviceBox, provineId);
-
+        var areaCodeId = customer["AdministrativeAreaId"];
+        //lấy dữ liệu đầy đủ từ api
+        var route = "/api/v1/AdministrativeAreas";
+        $.ajax({
+            url: me.host + route + "/FullAddress?areaCodeId=" + areaCodeId,
+            method: "GET"
+        })
+            .done(function (res) {
+                var fullarea = res.Data;
+                var province = fullarea["Province"];
+                var district = fullarea["District"];
+                var ward = fullarea["Ward"];
+                if (province) {
+                    //chọn item tại combo Tỉnh/thành
+                    var proviceBox = $(targetBox).find(`.input-box[fieldName="Province"] .m-box`);
+                    var provineId = province["AdministrativeAreaId"];
+                    me.SelectItem(proviceBox, provineId);
+                    if (district) {
                         // tạo comboBox quận/huyện theo thông tin tỉnh được chọn
                         var districtBox = $(targetBox).find(`.input-box[fieldName="District"] .m-box`);
-                        me.loadDistrict(province["AdministrativeAreaCode"], districtBox);
-                        if (district) {
-                            var districtId = district["AdministrativeAreaId"];
-                            me.SelectItem(districtBox, districtId);
-
-                            // tạo comboBox xã/phường theo thông tin quận/huyện được chọn
-                            var wardBox = $(targetBox).find(`.input-box[fieldName="Ward"] .m-box`);
-                            if (ward) {
-                                me.loadWard(ward["AdministrativeAreaCode"], wardBox);
-                                var wardId = ward["AdministrativeAreaId"];
-                                me.SelectItem(wardBox, wardId);
-                            }
-                        }
+                        var districtId = district["AdministrativeAreaId"];
+                        me.loadDistrict(province["AdministrativeAreaCode"], districtBox, districtId);
                     }
-
-                })
-                .fail(function (res) {
-                    console.log(res);
-                })
-            debugger
-            me.ValidateForm(targetBox);
-        }
+                    if (ward) {
+                        // tạo comboBox xã/phường theo thông tin quận/huyện được chọn
+                        var wardBox = $(targetBox).find(`.input-box[fieldName="Ward"] .m-box`);
+                        var wardId = ward["AdministrativeAreaId"];
+                        me.loadWard(district["AdministrativeAreaCode"], wardBox, wardId);
+                    }
+                }
+            })
+            .fail(function (res) {
+                console.log(res);
+            })
+        me.ValidateForm(targetBox);
     }
 
     /** Thực hiện tự động bind dữ liệu tỉnh/thành
@@ -540,12 +537,14 @@ class Owner extends Base {
     }
 
     /**
-     *Thực hiện tự động bind dữ liệu quận/ huyện của tỉnh đã cho
+     * Thực hiện tự động bind dữ liệu quận/ huyện của tỉnh đã cho
+     * Và thực hiện select item nếu có giá trị đầu vào
      * CreatedBy dtnga (08/12/2020)
      * @param {string} provinceCode Mã tỉnh/ thành
      * @param {Element} districtBox Box chứa thông tin
+     *  @param {string} districtId Id quận/huyện được chọn
      */
-    loadDistrict(provinceCode, districtBox) {
+    loadDistrict(provinceCode, districtBox, districtId) {
         if (provinceCode && districtBox) {
             var me = this;
             var route = "/api/v1/AdministrativeAreas";
@@ -555,16 +554,21 @@ class Owner extends Base {
             })
                 .done(function (res) {
                     var districts = res.Data;
-                    me.createComboBox(districts, districtBox);
+                    var result = me.createComboBox(districts, districtBox);
                     $(districtBox).find(".item").on("click", function () {
                         // load lại comboBox xã/phường
                         me.onclick_DistrictItem(this);
                     });
+                    if (districtId)
+                        me.SelectItem(districtBox, districtId);
+                    return result;
                 })
                 .fail(function (res) {
                     console.log(res);
+                    return false;
                 })
         }
+        else return false;
     }
 
     /**
@@ -594,11 +598,13 @@ class Owner extends Base {
 
     /**
      * Thực hiện bind dữ liệu phường/ xã tự động dựa theo mã quận/ huyện
+     * Và thực hiện select item nếu có giá trị đầu vào
      * CreatedBy dtnga (08/12/2020)
      * @param {string} districtCode Mã quận/ huyện
      *  @param {Element} wardBox Box chứa thông tin
+     *   @param {string} wardId Id quận/huyện được chọn
      */
-    loadWard(districtCode, wardBox) {
+    loadWard(districtCode, wardBox, wardId) {
         if (districtCode && wardBox) {
             var me = this;
             var route = "/api/v1/AdministrativeAreas";
@@ -608,15 +614,24 @@ class Owner extends Base {
             })
                 .done(function (res) {
                     var wards = res.Data;
-                    me.createComboBox(wards, wardBox);
+                    var result = me.createComboBox(wards, wardBox);
                     $(wardBox).find(`.item`).on("click", function () {
-                        me.updateTransportorInfo();
+                        if ($(this).closest(`.content-body`).find(`.m-box[name="Transportor"]`).length > 0)
+                            // trigger sự kiện trên item xã/phường
+                            me.updateTransportorInfo();
+                        else me.updateOrderTotal();
                     });
+                    if (wardId) {
+                        me.SelectItem(wardBox, wardId);
+                        me.updateTransportorInfo();
+                    }
+                    return result;
                 })
                 .fail(function (res) {
                     console.log(res);
                 })
         }
+        else return false;
     }
 
     /**
@@ -633,17 +648,16 @@ class Owner extends Base {
             if (cbTrans.length > 0)
                 me.updateTransportorInfo(cbTrans);
             var autoCompleteProduct = $(selectedItem).closest(`.m-autoComplete[name="Product"]`);
-            if (autoCompleteProduct.length > 0){
-                var productId= $(selectedItem).data("keyId");
+            if (autoCompleteProduct.length > 0) {
+                var productId = $(selectedItem).data("keyId");
                 me.addProductToCart(productId, null);
             }
-            if ($(selectedItem).closest(`.input-box[fieldName="Ward"] .m-box`).length > 0){
-               if($(selectedItem).closest(`.content-body`).find(`.m-box[name="Transportor"]`).length > 0)
-                // trigger sự kiện trên item xã/phường
-                     me.updateTransportorInfo();
+            if ($(selectedItem).closest(`.input-box[fieldName="Ward"] .m-box`).length > 0) {
+                if ($(selectedItem).closest(`.content-body`).find(`.m-box[name="Transportor"]`).length > 0)
+                    // trigger sự kiện trên item xã/phường
+                    me.updateTransportorInfo();
                 else me.updateOrderTotal();
             }
-                
             else if ($(selectedItem).closest(`.input-box[fieldName="District"] .m-box`).length > 0)
                 // load lại comboBox xã/phường
                 me.onclick_DistrictItem(selectedItem);
@@ -688,18 +702,17 @@ class Owner extends Base {
                 .done(function (res) {
                     var data = res.Data;
                     fee = data.ShippingFee;
-                    expectedDeliveryDate = formatDate(data.ExpectedDeliveryDate, "dd/mm/yyyy");
+                    expectedDeliveryDate = data.ExpectedDeliveryDate; 
                     // bind dữ liệu và hiển thị thông tin vận chuyển
                     var contentBox = $(comboBoxTrans).closest(`.content-box`);
                     var feeField = $(contentBox).find(`input[fieldName="ShippingFee"]`);
-                    $(feeField).val(formatMoney(fee));
-                    $(feeField).attr("value", fee);
-                    $(feeField).attr("validate", true);
-                    $(feeField).removeClass("m-input-warning");
+                    $(feeField).val(formatMoney(fee)).attr("value", fee).attr("validate", true).removeClass("m-input-warning");
                     me.updateOrderTotal();
-                    var extraInfo = $(contentBox).find(`.extra-info`);
-                    $(extraInfo).find(`span`).text(expectedDeliveryDate);
-                    $(extraInfo).removeClass("displayNone");
+                    var extraInfo = $(contentBox).find(`.extra-info span`);
+                    var formatType = $(extraInfo).attr("formatType");
+                  
+                    $(extraInfo).text(formatDate(expectedDeliveryDate, formatType)).attr("value", expectedDeliveryDate);
+                    $(extraInfo).parent().removeClass("displayNone");
                 })
                 .fail(function (res) {
                     console.log(res);
@@ -709,7 +722,7 @@ class Owner extends Base {
             console.log(e);
         }
     }
-        
+
     /**
      * Hiển thị form Sửa thông tin khi double click vào 1 đơn hàng
      * CreatedBy dtnga (21/11/2020)
@@ -776,9 +789,9 @@ class Owner extends Base {
             var form = $(targetForm);
             $(`.m-loading`).removeClass("displayNone");
             // bind thông tin chung:
-            $(targetForm).find(`.orderNote`).text(obj["OrderNote"]);
-            $(targetForm).find(`.createdBy`).text(obj["CreatedByName"]);
-            $(targetForm).find(`.modifiedBy`).text(obj["ModifiedByName"]);
+            $(targetForm).find(`.orderCode`).text(obj["OrderCode"]).attr("value", obj["OrderCode"]);
+            $(targetForm).find(`.createdBy`).text(obj["CreatedByName"]).attr("value", obj["CreatedByName"]);
+            $(targetForm).find(`.modifiedBy`).text(obj["ModifiedByName"]).attr("value", obj["CreatedByName"]);
             // bind trạng thái đơn hàng
             var cbState = $(form).find(`.m-box[name="OrderState"]`);
             var stateId = obj["OrderStateId"];
@@ -790,7 +803,7 @@ class Owner extends Base {
                     me.buidProductDetail(item);
                 });
             }
-            $(form).find(`textarea[fieldname="OrderNote"]`).val(obj["OrderNote"]);
+            $(form).find(`textarea[fieldname="OrderNote"]`).val(obj["OrderNote"]).attr("value", obj["OrderNote"]);;
             // bind thông tin người nhận
             var customer = obj["Customer"];
             var targetBox = $(form).find(`.content-box[name="customer"]`);
@@ -801,10 +814,12 @@ class Owner extends Base {
             me.SelectItem(cbTran, transId);
             var paidOrderBy = obj["ShippingPaidBy"];
             $(form).find(`input[type="radio"][fieldName="ShippingPaidBy"][radioValue=` + paidOrderBy + `]`).prop("checked", true);
-            $(form).find(`textarea[fieldname="ShippingNote"]`).val(obj["ShippingNote"]);
+            $(form).find(`textarea[fieldname="ShippingNote"]`).val(obj["ShippingNote"]).attr("value", obj["ShippingNote"]);;
             // bind thông tin thanh toán
             me.updateOrderTotal();
-            $(`.m-loading`).addClass("displayNone");
+            setTimeout(function () {
+                $(`.m-loading`).addClass("displayNone");
+            }, 1000);
         }
         catch (e) {
             console.log(e);
@@ -821,7 +836,7 @@ class Owner extends Base {
         var shippingFee = convertInt($(container).find(`input[fieldName="ShippingFee"]`).attr("value"));
         if (!shippingFee) shippingFee = 0;
         var shippingPaidBy = $(container).find(`input[type="radio"][fieldName="ShippingPaidBy"]:checked`).attr("radioValue");
-        if(!shippingPaidBy) shippingPaidBy=1; // khách trả tiền (addOrder-saler)
+        if (!shippingPaidBy) shippingPaidBy = 1; // khách trả tiền (addOrder-saler)
         else shippingPaidBy = convertInt(shippingPaidBy);
         var totalField = $(container).find(`input[fieldName="OrderTotal"]`);
         var insufficientCashField = $(container).find(`input[fieldName="InsufficientCash"]`); // Số tiền thừa/thiếu
@@ -831,8 +846,7 @@ class Owner extends Base {
             total = total + shippingFee;
         }
         // cửa hàng trả phí vận chuyển
-        $(totalField).val(formatMoney(total));
-        $(totalField).attr("value", total);
+        $(totalField).val(formatMoney(total)).attr("value", total).attr("validate", true);
         var insufficientCash = 0;
         if (total < paidMoney) {
             // thừa tiền
@@ -843,8 +857,8 @@ class Owner extends Base {
         else
             insufficientCash = total - paidMoney;
 
-        $(insufficientCashField).val(formatMoney(insufficientCash));
-        $(insufficientCashField).attr("value", insufficientCash);
+        $(insufficientCashField).val(formatMoney(insufficientCash)).attr("value", insufficientCash).attr("validate", true);
+        
 
     }
 
@@ -861,31 +875,46 @@ class Owner extends Base {
         }
     }
 
-    /** 
-     * Sự kiện khi click nút tạo đơn hàng 
-     * CreatedBy dtnga (28/12/2020)
-     * */
-    onClickCreateOrder() {
-        try {
-            var me = this;
-            var container = $(`.content-body:visible`);
-
-        }
-        catch (e) {
-            console(e);
-        }
-    }
-
+    
     /**
      * Sự kiện khi click nút cập nhật đơn hàng
      * CreatedBy dtnga (28/12/2020)
-     * */
-    onClickUpdateOrder() {
+     * @param {any} butttonSave
+     */
+    onClickUpdateOrder(butttonSave) {
+         var me = this;
         try {
-
+            me.formMode = "edit";
+            me.showLoadingMark();
+            var container = $(butttonSave).closest(".m-dialog");
+            if (!butttonSave)
+                container = $(`.content-body:visible .m-dialog`);
+            var obj = me.GetOrderDataForm(container);
+            obj["OrderId"] = $(container).data("keyId");
+            // Lưu và thêm
+            $.ajax({
+                url: me.host + me.getRoute(),
+                method: "PUT",
+                data: JSON.stringify(obj),
+                contentType: "application/json",
+                dataType: "json"
+            })
+                .done(function (res) {
+                    me.hideLoadingMark();
+                    $(container).addClass("displayNone");
+                    me.loadData(1);
+                    me.showToastMesseger("Cập nhật đơn hàng thành công", "success");
+                })
+                .fail(function (res) {
+                    me.hideLoadingMark();
+                    $(container).addClass("displayNone");
+                    me.showToastMesseger("Cập nhật đơn hàng không thành công", "success");
+                    console.log(res);
+                })
         }
+
         catch (e) {
-            console(e);
+            console.log(e);
         }
     }
 

@@ -20,7 +20,7 @@
 /*-------------------------*/
 /*dialog*/
 .dialog-detail {
-    width: 60%;
+    width: 65%;
     height: 85%;
     border-radius: 5px;
     position: fixed;
@@ -90,11 +90,11 @@
         }
 
         .dialog-detail .dialog-body .dialog-col-mid {
-            width: calc(40% - 24px);
+            width: calc(50% - 24px);
         }
 
         .dialog-detail .dialog-body .dialog-col-right {
-            width: 40%;
+            width: 30%;
         }
 
         .dialog-detail .dialog-body .content-box {
@@ -277,7 +277,7 @@
     }
 
 .input-box-medium {
-    width: 100%;
+    width: 75%;
     margin-right: 10px;
 }
 
@@ -298,9 +298,4 @@
     display: flex;
     margin-top: 4px;
     align-items: center;
-}
-
-;
-}
-;
 }

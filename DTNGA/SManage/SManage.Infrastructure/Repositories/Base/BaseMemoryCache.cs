@@ -45,7 +45,7 @@ namespace SManage.Infrastructure
         /// CreatedBy dtnga (11/11/2020)
         public void SetCache(string key, object data)
         {
-            _memoryCache.Set(key, data, TimeSpan.FromDays(1));
+            _memoryCache.Set(key, data, TimeSpan.FromMinutes(5));
         }
 
         /// <summary>

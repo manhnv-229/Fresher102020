@@ -37,16 +37,16 @@ namespace SManage.ApplicationCore.Entities.DTO
         [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Id đơn vị vận chuyển không được bỏ trống")]
         [MustExist]
         [DisplayName("Id đơn vị vận chuyển")]
-        public Guid TransportorId { get; set; }
+        public Guid? TransportorId { get; set; }
 
         [DisplayName("Ngày nhận hàng dự kiến")]
-        public DateTime ExpectedDeliveryDate { get; set; }
+        public DateTime? ExpectedDeliveryDate { get; set; }
 
         /// <summary>
         ///  Ngày nhận hàng thực tế, nếu chưa tạo thì lấy bằng ngày hiện tại
         /// </summary>
         [DisplayName("Ngày nhận hàng thực tế")]
-        public DateTime RealDeliveryDate { get; set; }
+        public DateTime? RealDeliveryDate { get; set; }
 
         [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Phí vận chuyển không được bỏ trống")]
         [DisplayName("Phí vận chuyển")]
@@ -91,14 +91,15 @@ namespace SManage.ApplicationCore.Entities.DTO
                 ModifiedDate= order.ModifiedDate,
                 ModifiedByName= order.ModifiedByName,
                 CustomerId= (Guid)order.CustomerId,
-                TransportorId= (Guid)order.TransportorId,
-                ExpectedDeliveryDate= (DateTime)order.ExpectedDeliveryDate,
-                RealDeliveryDate= (DateTime)order.RealDeliveryDate,
+                TransportorId= order.TransportorId,
+                ExpectedDeliveryDate= order.ExpectedDeliveryDate,
+                RealDeliveryDate= order.RealDeliveryDate,
                 ShippingFee= (decimal)order.ShippingFee,
                 ShippingPaidBy= (int)order.ShippingPaidBy,
 
             };
         }
+
         #endregion
     }
 }

@@ -139,11 +139,16 @@ namespace SManage.API.Controllers
                 if (response.Success == false)
                     return StatusCode(400, response);
                 else
+                {
+                    // cập nhật dữ liệu từ cache
+                    var order = await _orderService.ProcessingOrder((Order)response.Data);
+                    _baseMemoryCache.SetCache(order.OrderId.ToString(), order);
                     return StatusCode(200, response.Data);
+                }
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApplicationCore.Properties.Resources.Exception);
+                return StatusCode(500, ex);
             }
         }
 

@@ -126,6 +126,12 @@
                                     <div class="m-icon sort-icon"></div>
                                 </div>
                             </th>
+                            <th class="field-long" fieldName="OrderNote">
+                                <div class="thead-box">
+                                    <div class="thead-text">Ghi chú</div>
+                                    <div class="m-icon sort-icon"></div>
+                                </div>
+                            </th>
                             <th fieldName="CreatedDate" formatType="hh:mm dd/mm/yyyy" class="text-align-center">
                                 <div class="thead-box center">
                                     <div class="thead-text">Thời gian tạo</div>
@@ -209,19 +215,19 @@
                                     <div class="input-line">
                                         <div class="input-box input-box-small">
                                             <div class="input-title">Mã đơn hàng</div>
-                                            <span class="orderNote" fieldName="OrderCode">...</span>
+                                            <span class="orderCode" fieldName="OrderCode">...</span>
                                         </div>
                                     </div>
                                     <div class="input-line">
                                         <div class="input-box input-box-small">
                                             <div class="input-title">Người tạo</div>
-                                            <span class="createdBy" fieldName="CreatedBy">...</span>
+                                            <span class="createdBy" fieldName="CreatedByName">...</span>
                                         </div>
                                     </div>
                                     <div class="input-line">
                                         <div class="input-box input-box-small">
                                             <div class="input-title">Người xử lý</div>
-                                            <span class="modifiedBy" fieldName="ModifiedBy">...</span>
+                                            <span class="modifiedBy" fieldName="ModifiedByName">...</span>
                                         </div>
                                     </div>
                                     <div class="input-line">
@@ -330,20 +336,20 @@
                                 </div>
                                 <div class="box-body">
                                     <div class="input-line">
-                                        <div class="input-box input-box-small">
+                                        <div class="input-box input-box-medium">
                                             <div class="input-title">Đơn vị vận chuyển (<span>*</span>)</div>
                                             <div class="error-validate error-empty displayNone">Đơn vị vận chuyển không được bỏ trống</div>
                                             <div class="m-combobox m-box" id="cb-transportor" fieldName="TransportorId" name="Transportor" validate="false"></div>
                                         </div>
                                     </div>
                                     <div class="input-line">
-                                        <div class="input-box input-box-small">
+                                        <div class="input-box input-box-medium">
                                             <div class="input-title">Phí vận chuyển (<span>*</span>)</div>
                                             <div class="error-validate error-empty displayNone">Phí vận chuyển không được bỏ trống</div>
                                             <input class="m-input" type="text" value="0" typeFormat="money" required fieldName="ShippingFee" validate="false" />
                                         </div>
                                     </div>
-                                    <div class="extra-info displayNone" name="ExpectedDeliveryDate">Thời gian nhận hàng dự kiến: <span fieldName="ExpectedDeliveryDate"></span></div>
+                                    <div class="extra-info displayNone" name="ExpectedDeliveryDate">Thời gian nhận hàng dự kiến: <span fieldName="ExpectedDeliveryDate" formatType="dd/mm/yyyy"></span></div>
                                     
                                     <div class="input-line">
                                         <div class="input-box input-box-small">
@@ -377,19 +383,19 @@
                                 </div>
                                 <div class="box-body">
                                     <div class="input-line">
-                                        <div class="input-box input-box-small">
+                                        <div class="input-box input-box-medium">
                                             <div class="input-title">Tổng số tiền</div>
                                             <input class=" m-input green-text bold" type="text" typeformat="money" required fieldName="OrderTotal" validate="true" value="0" />
                                         </div>
                                     </div>
                                     <div class="input-line">
-                                        <div class="input-box input-box-small">
+                                        <div class="input-box input-box-medium">
                                             <div class="input-title">Số tiền đã thanh toán</div>
-                                            <input class="m-input green-text bold" type="text" typeformat="money" required fieldName="Paid" validate="true" value="0" />
+                                            <input class="m-input green-text bold" type="text" typeformat="money" fieldName="Paid" value="0" />
                                         </div>
                                     </div>
                                     <div class="input-line">
-                                        <div class="input-box input-box-small">
+                                        <div class="input-box input-box-medium">
                                             <div class="input-title insufficient-cash">Số tiền thiếu</div>
                                             <div class="input-title excess-cash displayNone">Số tiền thừa</div>
                                             <input class=" m-input green-text bold"  type="text" typeformat="money" required fieldName="OrderTotal" validate="true" value="0" />
@@ -738,14 +744,14 @@
                                 </div>
                                 <div class="box-body">
                                     <div class="input-line">
-                                        <div class="input-box input-box-medium">
+                                        <div class="input-box input-box-big">
                                             <div class="input-title">Mã đơn vị vận chuyển (<span>*</span>)</div>
                                             <div class="error-validate error-empty displayNone">Mã đơn vị vận chuyển không được phép bỏ trống</div>
                                             <input class="m-input" type="text" maxlength="20" required fieldName="TransportorCode" validate="false" />
                                         </div>
                                     </div>
                                     <div class="input-line">
-                                        <div class="input-box input-box-medium">
+                                        <div class="input-box input-box-big">
                                             <div class="input-title">Tên đơn vị vận chuyển (<span>*</span>)</div>
                                             <div class="error-validate error-empty displayNone">Tên đơn vị vận chuyển không được phép bỏ trống</div>
                                             <input class="m-input" type="text"  fieldName="TransportorName" required validate="false" />
@@ -762,28 +768,28 @@
                                 </div>
                                 <div class="box-body">
                                     <div class="input-line">
-                                        <div class="input-box input-box-medium">
+                                        <div class="input-box input-box-big">
                                             <div class="input-title">Chi phí vận chuyển nội tỉnh (<span>*</span>)</div>
                                             <div class="error-validate error-empty displayNone">Chi phí vận chuyển không được phép bỏ trống</div>
                                             <input class="m-input" type="text" typeformat="money" fieldName="InnerFee" required validate="false" />
                                         </div>
                                     </div>
                                     <div class="input-line">
-                                        <div class="input-box input-box-medium">
+                                        <div class="input-box input-box-big">
                                             <div class="input-title">Thời gian xử lý đơn hàng nội tỉnh (<span>*</span>)</div>
                                             <div class="error-validate error-empty displayNone">Thời gian xử lý không được phép bỏ trống</div>
                                             <input class="m-input" type="number" value="1" min="1" fieldName="InnerDeliveryTime" required validate="false"  />
                                         </div>
                                     </div>
                                     <div class="input-line">
-                                        <div class="input-box input-box-medium">
+                                        <div class="input-box input-box-big">
                                             <div class="input-title">Chi phí vận chuyển ngoại tỉnh (<span>*</span>)</div>
                                             <div class="error-validate error-empty displayNone">Chi phí vận chuyển không được phép bỏ trống</div>
                                             <input class="m-input" type="text" typeformat="money" fieldName="OutsideFee" required validate="false" />
                                         </div>
                                     </div>
                                     <div class="input-line">
-                                        <div class="input-box input-box-medium">
+                                        <div class="input-box input-box-big">
                                             <div class="input-title">Thời gian xử lý đơn hàng ngoại tỉnh (<span>*</span>)</div>
                                             <div class="error-validate error-empty displayNone">Thời gian xử lý không được phép bỏ trống</div>
                                             <input class="m-input" type="number" value="1" min="1" fieldName="OutsideDeliveryTime" required validate="false" />
@@ -938,14 +944,14 @@
                                 </div>
                                 <div class="box-body">
                                     <div class="input-line">
-                                        <div class="input-box input-box-medium">
+                                        <div class="input-box input-box-big">
                                             <div class="input-title">Tên nhân viên (<span>*</span>)</div>
                                             <div class="error-validate error-empty displayNone">Tên nhân viên không được phép bỏ trống</div>
                                             <input class="m-input" type="text" required fieldName="FullName" validate="false" />
                                         </div>
                                     </div>
                                     <div class="input-line">
-                                        <div class="input-box input-box-medium">
+                                        <div class="input-box input-box-big">
                                             <div class="input-title">Ngày sinh</div>
                                             <input class="m-input" type="date" fieldName="DateOfBirth" />
                                         </div>
@@ -976,13 +982,13 @@
                                 </div>
                                 <div class="box-body">
                                     <div class="input-line">
-                                        <div class="input-box input-box-medium">
+                                        <div class="input-box input-box-big">
                                             <div class="input-title">Tên đăng nhập</div>
                                             <input class="m-input" type="text" fieldName="AccountName" />
                                         </div>
                                     </div>
                                     <div class="input-line">
-                                        <div class="input-box input-box-medium">
+                                        <div class="input-box input-box-big">
                                             <div class="input-title">Mật khẩu</div>
                                             <input class="m-input" type="password" fieldName="Password" />
                                         </div>
@@ -998,14 +1004,14 @@
                                 </div>
                                 <div class="box-body">
                                     <div class="input-line">
-                                        <div class="input-box input-box-medium">
+                                        <div class="input-box input-box-big">
                                             <div class="input-title">Số điện thoại (<span>*</span>)</div>
                                             <div class="error-validate error-empty displayNone">Số điện thoại không được phép bỏ trống</div>
                                             <input class="m-input" type="text" required fieldName="PhoneNumber" validate="false" />
                                         </div>
                                     </div>
                                     <div class="input-line">
-                                        <div class="input-box input-box-medium">
+                                        <div class="input-box input-box-big">
                                             <div class="input-title">Email</div>
                                             <input class="m-input" type="email" fieldName="Email" placeholder="nguyenvanan123@gmail.com" />
                                         </div>
