@@ -136,6 +136,8 @@ namespace SManage.API.Controllers
                 {
                     return StatusCode(400, ModelState);
                 }
+
+                newUser.UserInfoId = Guid.NewGuid();
                 var response = await _baseService.InsertAsync<UserInfo>(newUser);
                 if (response.Success == false)
                     return StatusCode(400, response);

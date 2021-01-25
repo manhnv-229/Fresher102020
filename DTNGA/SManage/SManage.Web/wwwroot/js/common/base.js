@@ -1042,6 +1042,7 @@ class Base {
                     })
                     .fail(function (res) {
                         console.log(res);
+                        me.hideLoadingMark();
                         $(`.m-dialog:visible`).addClass("displayNone");
                         me.showToastMesseger(me.mesHeader + "không thành công", "fail");
                     })
@@ -1075,7 +1076,7 @@ class Base {
                     dataType: "json"
                 })
                     .done(function (res) {
-                        $(`.m-loading`).addClass("displayNone");
+                        me.hideLoadingMark();
                         me.showToastMesseger(me.mesHeader + " thành công", "success");
                         me.loadData();
                         $(form).find(".header-text").text("THÊM");
@@ -1084,6 +1085,7 @@ class Base {
                     })
                     .fail(function (res) {
                         console.log(res);
+                        me.hideLoadingMark();
                         $(`.m-dialog:visible`).addClass("displayNone");
                         me.showToastMesseger(me.mesHeader + "không thành công", "fail");
                     })

@@ -14,3 +14,6 @@
     margin-left: 16px;
     margin-right: 0;
 }
+#order-management .dialog-detail .dialog-footer {
+    justify-content: flex-start;
+}

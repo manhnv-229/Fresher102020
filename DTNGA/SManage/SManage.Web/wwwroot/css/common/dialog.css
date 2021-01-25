@@ -249,9 +249,10 @@
     display: flex;
     background-color: #E9EBEE;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-end;
     border-radius: 0 0 4px 4px;
 }
+
 
     .dialog-detail .dialog-footer button {
         margin-right: 16px;

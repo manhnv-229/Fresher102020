@@ -130,6 +130,7 @@ namespace SManage.API.Controllers
                 {
                     return StatusCode(400, ModelState);
                 }
+                newTrans.TransportorId = Guid.NewGuid();
                 var response = await _transportorService.InsertAsync<Transportor>(newTrans);
                 if (response.Success == false)
                     return StatusCode(400, response);
