@@ -181,7 +181,7 @@ class Owner extends Base {
                 me.onClick_btnRefresh(this);
             });
 
-            $(`#btn-create`).on("click", me.onClick_btnCreate.bind(me));
+            $(`.content-body`).find(`#btn-create`).on("click", function () { me.onClick_btnCreate() });
             $(`#btn-clear`).on("click", me.onClick_btnClear.bind(me));
             //sự kiện khi nhập trường Tìm kiếm
             $(`.content-filter input[type="search"]`).on("search", function () {
@@ -437,8 +437,9 @@ class Owner extends Base {
         var me = this;
         if (!customer)
             return;
-        
         if (!targetBox) targetBox = $(`.content-body:visible .content-box[name="customer"]`);
+        $(targetBox).find(`input`).removeClass(`m-input-warning`);
+        $(targetBox).find(`.error-validate`).addClass("displayNone");
         //thông tin chung
         var customerName = !customer["FullName"] ? '' : customer["FullName"];
         var phoneNumber = !customer["PhoneNumber"] ? '' : customer["PhoneNumber"]
@@ -477,11 +478,12 @@ class Owner extends Base {
                         me.loadWard(district["AdministrativeAreaCode"], wardBox, wardId);
                     }
                 }
+                 me.ValidateForm(targetBox);
             })
             .fail(function (res) {
                 console.log(res);
             })
-        me.ValidateForm(targetBox);
+       
     }
 
     /** Thực hiện tự động bind dữ liệu tỉnh/thành

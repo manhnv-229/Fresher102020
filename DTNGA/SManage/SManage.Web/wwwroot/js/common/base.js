@@ -855,12 +855,15 @@ class Base {
     onClick_btnCreate() {
          var me = this;
         try {
-            me.formMode = "add";
-            me.showLoadingMark();
             var container = $(`.content-body:visible`);
+            var valid= me.ValidateForm(container);
+            if(valid){
+                 me.formMode = "add";
+            me.showLoadingMark();
             var obj= me.GetOrderDataForm(container);
             // Lưu và thêm
-            $.ajax({
+            
+                $.ajax({
                 url: me.host + me.getRoute(),
                 method: "POST",
                 data: JSON.stringify(obj),
@@ -879,6 +882,10 @@ class Base {
                     me.showToastMesseger("Thêm đơn hàng không thành công", "success");
                     console.log(res);
                 })
+            
+            }
+           
+           
         }
 
         catch (e) {

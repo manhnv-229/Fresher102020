@@ -146,6 +146,8 @@ namespace SManage.ApplicationCore.Services
             // Tạo Id mới
             var entityName = entity.GetType().Name;
             var idProp = entity.GetType().GetProperty(entityName + "Id");
+            var idValue = idProp.GetValue(entity);
+            if( idValue==null || idValue == (Object) new Guid())
             idProp.SetValue(entity, Guid.NewGuid());
             var createdDateProp = entity.GetType().GetProperty("CreatedDate");
             createdDateProp.SetValue(entity, DateTime.Now);
@@ -352,6 +354,8 @@ namespace SManage.ApplicationCore.Services
                     var secondValue = prop.GetValue(secondObject);
                     if (prop.PropertyType == typeof(string))
                     {
+                        firstValue = firstValue ?? "";
+                        secondValue = secondValue ?? "";
                         if (firstValue.Equals(secondValue) == false)
                             prop.SetValue(firstObject, secondValue);
                     }
