@@ -77,7 +77,7 @@ class Base {
         try {
             var me = this;
             var fullName = me.userInfo["FullName"];
-            var userId = me.userInfo["UserId"];
+            var userId = me.userInfo["UserInfoId"];
             $(`.header .username`).text(fullName);
             $(`.header .username`).data("keyId", userId).data("accountId", me.userInfo["AccountId"]);
         }
@@ -1639,6 +1639,7 @@ class Base {
         else if (me.formMode == "add") {
             $(dialog).find(`.header-text.add-header`).removeClass("displayNone");
             $(dialog).find(`.header-text.edit-header`).addClass("displayNone");
+            $(dialog).find(`input[type="password"]`).prop("disabled", false);
         }
         $(dialog).removeClass("displayNone");
         $(dialog).find(`input, textarea`)[0].focus();
@@ -1761,6 +1762,9 @@ class Base {
                 }
             });
             obj["CreatedByName"] = $(targetForm).closest(`body`).find(`.header .username`).text();
+            var comboBoxShop = $(`#cb-Shop`);
+            var shopId = $(comboBoxShop).data("keyId");
+            obj["ShopId"] = shopId;
             return obj;
         }
         catch (e) {

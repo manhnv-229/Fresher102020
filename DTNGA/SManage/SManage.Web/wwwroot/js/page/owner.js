@@ -43,7 +43,7 @@ class Owner extends Base {
 
             // danh sách cửa hàng
             //lấy danh sách cửa hàng theo UserId từ API
-            var userId = me.userInfo["UserId"];
+            var userId = me.userInfo["UserInfoId"];
             var route = "/api/v1/Users/" + userId + "/shops";
             $.ajax({
                 url: me.host + route,

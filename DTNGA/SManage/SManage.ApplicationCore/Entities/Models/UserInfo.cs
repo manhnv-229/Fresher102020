@@ -8,9 +8,9 @@ namespace SManage.ApplicationCore.Entities
     public partial class UserInfo : BaseEntity
     {
        
-       
+        [Unduplicated]
         [DisplayName("Id Người dùng")]
-        public Guid UserId { get; set; }
+        public Guid UserInfoId { get; set; }
         
         [DisplayName("Tên")]
         public string FirstName { get; set; }
@@ -28,7 +28,7 @@ namespace SManage.ApplicationCore.Entities
         [DisplayName("Giới tính")]
         public int? Gender { get; set; }
 
-        
+        [Unduplicated]
         [DisplayName("Số điện thoại")]
         public string PhoneNumber { get; set; }
         
@@ -40,7 +40,7 @@ namespace SManage.ApplicationCore.Entities
         public string Address { get; set; }
 
         [DisplayName("Mã đơn vị hành chính")]
-        public string AdministrativeAreaCode { get; set; }
+        public Guid? AdministrativeAreaId { get; set; }
 
         [DisplayName("Mã vai trò")]
         public string RoleCode { get; set; }

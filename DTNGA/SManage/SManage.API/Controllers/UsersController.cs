@@ -53,12 +53,12 @@ namespace SManage.API.Controllers
                 {
                     return StatusCode(400, ModelState);
                 }
-                newUser.UserId = Guid.NewGuid();
+                newUser.UserInfoId = Guid.NewGuid();
                 var response = await _baseService.InsertAsync<UserInfo>(newUser);
                 if (response.Success == false)
                     return StatusCode(400, response);
                 else
-                    return StatusCode(201, newUser.UserId);
+                    return StatusCode(201, newUser.UserInfoId);
             }
             catch (Exception ex)
             {
@@ -85,7 +85,7 @@ namespace SManage.API.Controllers
                 if (response.Success == false)
                     return StatusCode(400, response);
                 else
-                    return StatusCode(200, newUser.UserId);
+                    return StatusCode(200, newUser.UserInfoId);
             }
             catch (Exception ex)
             {

@@ -146,9 +146,7 @@ namespace SManage.ApplicationCore.Services
             // Tạo Id mới
             var entityName = entity.GetType().Name;
             var idProp = entity.GetType().GetProperty(entityName + "Id");
-            var idValue = idProp.GetValue(entity);
-            if (idValue == null)
-                idProp.SetValue(entity, Guid.NewGuid());
+            idProp.SetValue(entity, Guid.NewGuid());
             var createdDateProp = entity.GetType().GetProperty("CreatedDate");
             createdDateProp.SetValue(entity, DateTime.Now);
             // Kiểm tra hợp lệ
