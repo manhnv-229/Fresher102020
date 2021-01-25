@@ -958,7 +958,6 @@ class Base {
     }
 
 
-
     validateShopppingCart() {
 
     }
@@ -1087,6 +1086,7 @@ class Base {
             console.log(e);
         }
     }
+
 
     /** Hàm hỗ trợ focus nhập liệu
      * CreatedBy dtnga (25/11/2020)

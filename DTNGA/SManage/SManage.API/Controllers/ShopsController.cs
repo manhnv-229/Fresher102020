@@ -121,7 +121,84 @@ namespace SManage.API.Controllers
             return Ok(user);
         }
 
+        /// <summary>
+        /// Thêm người dùng mới
+        /// </summary>
+        /// <param name="newUser">Thông tin người dùng mới</param>
+        /// <returns>Id người dùng đã thêm mới</returns>
+        /// CreatedBy dtnga (17/12/2020)
+        [HttpPost("Salers")]
+        public async Task<IActionResult> AddNewAsync([FromBody] UserInfo newUser)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return StatusCode(400, ModelState);
+                }
+                var response = await _baseService.InsertAsync<UserInfo>(newUser);
+                if (response.Success == false)
+                    return StatusCode(400, response);
+                else
+                    return StatusCode(201, newUser.UserId);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500,ex);
+            }
+        }
 
+
+        /// <summary>
+        /// Cập nhật thông tin người dùng
+        /// </summary>
+        /// <param name="newUser"></param>
+        /// <returns>Id người dùng đã cập nhật</returns>
+        /// CreatedBy dtnga (17/12/2020)
+        [HttpPut("Salers")]
+        public async Task<IActionResult> UpdateAsync([FromBody] UserInfo newUser)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return StatusCode(400, ModelState);
+                }
+                var response = await _baseService.UpdateAsync<UserInfo>(newUser);
+                if (response.Success == false)
+                    return StatusCode(400, response);
+                else
+                    return StatusCode(200, newUser.UserId);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
+
+        /// <summary>
+        /// Thực hiện xóa nhiều người dùng
+        /// </summary>
+        /// <param name="range">danh sách chứa Id các người dùng cần xóa</param>
+        /// <returns>Danh sách Id người dùng đã xóa</returns>
+        /// CreatedBy dtnga (23/12/2020)
+        [HttpDelete("Salers")]
+        public async Task<IActionResult> DeleteRangeAsync([FromBody] List<Guid> range)
+        {
+            try
+            {
+                if (range.Count == 0) return StatusCode(400, ApplicationCore.Properties.Resources.EmptyInput);
+                var response = await _baseService.DeleteRangeAsync<UserInfo>(range);
+                if (response.Success == false)
+                    return StatusCode(400, response);
+                else
+                    return Ok(range);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
     }
 
 }

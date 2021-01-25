@@ -173,6 +173,7 @@ class Owner extends Base {
             $(`.content-body`).find(`#btn-add`).on("click", function () {
                 me.onClick_btnAdd(this);
             });
+
             $(`.content-body`).find(`#btnDelete`).on("click", function () {
                 me.onClick_btnDelete(this);
             });
@@ -222,6 +223,10 @@ class Owner extends Base {
             $(dialog).find(`#btn-save`).on("click", function (e) {
                 event.stopPropagation();
                 me.onClick_btnSave(this);
+            });
+            $(dialog).find(`#btn-saveAdd`).on("click", function (e) {
+                event.stopPropagation();
+                me.onClick_btnSaveAdd(this);
             });
 
             $(`.content-body[name="order"] .m-dialog`).find(`#btn-save`).off("click").on("click", function (e) {
